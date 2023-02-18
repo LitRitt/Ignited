@@ -36,21 +36,6 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Chris Rittenhouse</string>
-		<key>link</key>
-		<string>https://github.com/LitRitt</string>
-		<key>linkName</key>
-		<string>github.com/LitRitt</string>
-		<key>contributions</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Genesis Skin</string>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>name</key>
 		<string>Noah Keck</string>
 		<key>link</key>
 		<string>https://github.com/noah978</string>

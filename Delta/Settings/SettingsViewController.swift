@@ -46,8 +46,6 @@ private extension SettingsViewController
     {
         case riley
         case shane
-        case caroline
-        case grant
         case litRitt
         case contributors
         case softwareLicenses
@@ -423,9 +421,7 @@ extension SettingsViewController
             {
             case .riley: self.openTwitter(username: "rileytestut")
             case .shane: self.openTwitter(username: "shanegillio")
-            case .caroline: self.openTwitter(username: "1carolinemoore")
-            case .grant: self.openTwitter(username: "grantgliner")
-            case .litRitt: self.openTwitter(username: "litritt_z")
+            case .litRitt: self.openTwitter(username: "lit_ritt")
             case .contributors:
                 guard #available(iOS 14, *) else { return }
                 self.showContributors()
@@ -444,16 +440,6 @@ extension SettingsViewController
             let row = CreditsRow(rawValue: indexPath.row)!
             switch row
             {
-            case .grant:
-                // Hide row on iOS 14 and above
-                guard #available(iOS 14, *) else { break primary }
-                return 0.0
-                
-            case .litRitt:
-                // Hide row on iOS 14 and above
-                guard #available(iOS 14, *) else { break primary }
-                return 0.0
-                
             case .contributors:
                 // Hide row on iOS 13 and below
                 guard #unavailable(iOS 14) else { break primary }
