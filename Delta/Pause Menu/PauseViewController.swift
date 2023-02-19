@@ -19,7 +19,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem].compactMap { $0 }
+        return [self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem, self.rewindItem].compactMap { $0 }
     }
     
     /// Pause Items
@@ -28,6 +28,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var cheatCodesItem: MenuItem?
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
+    var rewindItem: MenuItem?
     
     /// PauseInfoProviding
     var pauseText: String?
@@ -114,9 +115,9 @@ extension PauseViewController
         case "saveStates":
             let saveStatesViewController = segue.destination as! SaveStatesViewController
             saveStatesViewController.delegate = self.saveStatesViewControllerDelegate
+            saveStatesViewController.mode = self.saveStatesViewControllerMode
             saveStatesViewController.game = self.emulatorCore?.game as? Game
             saveStatesViewController.emulatorCore = self.emulatorCore
-            saveStatesViewController.mode = self.saveStatesViewControllerMode
             
         case "cheats":
             let cheatsViewController = segue.destination as! CheatsViewController
@@ -172,6 +173,14 @@ private extension PauseViewController
             self.saveStatesViewControllerMode = .loading
             self.performSegue(withIdentifier: "saveStates", sender: self)
         })
+        
+        if Settings.isRewindEnabled
+        {
+            self.rewindItem = MenuItem(text: NSLocalizedString("Rewind", comment: ""), image: #imageLiteral(resourceName: "Rewind"), action: { [unowned self] _ in
+                self.saveStatesViewControllerMode = .rewind
+                self.performSegue(withIdentifier: "saveStates", sender: self)
+            })
+        }
         
         self.cheatCodesItem = MenuItem(text: NSLocalizedString("Cheat Codes", comment: ""), image: #imageLiteral(resourceName: "CheatCodes"), action: { [unowned self] _ in
             self.performSegue(withIdentifier: "cheats", sender: self)
