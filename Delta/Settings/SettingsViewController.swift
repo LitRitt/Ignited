@@ -22,6 +22,7 @@ private extension SettingsViewController
         case controllerOpacity
         case gameAudio
         case hapticFeedback
+        case rewind
         case syncing
         case hapticTouch
         case cores
@@ -50,6 +51,12 @@ private extension SettingsViewController
         case contributors
         case softwareLicenses
     }
+    
+    enum RewindRow: Int, CaseIterable
+    {
+        case enabled
+        case interval
+    }
 }
 
 class SettingsViewController: UITableViewController
@@ -65,6 +72,10 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var versionLabel: UILabel!
     
     @IBOutlet private var syncingServiceLabel: UILabel!
+    
+    @IBOutlet private var rewindEnabledSwitch: UISwitch!
+    @IBOutlet private var rewindIntervalSlider: UISlider!
+    @IBOutlet private var rewindIntervalLabel: UILabel!
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
     
@@ -180,6 +191,10 @@ private extension SettingsViewController
         self.thumbstickHapticFeedbackEnabledSwitch.isOn = Settings.isThumbstickHapticFeedbackEnabled
         self.previewsEnabledSwitch.isOn = Settings.isPreviewsEnabled
         
+        self.rewindEnabledSwitch.isOn = Settings.isRewindEnabled
+        self.rewindIntervalSlider.value = Float(Settings.rewindTimerInterval)
+        self.updateRewindIntervalLabel()
+        
         self.tableView.reloadData()
     }
     
@@ -187,6 +202,12 @@ private extension SettingsViewController
     {
         let percentage = String(format: "%.f", Settings.translucentControllerSkinOpacity * 100) + "%"
         self.controllerOpacityLabel.text = percentage
+    }
+    
+    func updateRewindIntervalLabel()
+    {
+        let rewindTimerIntervalString = String(Settings.rewindTimerInterval)
+        self.rewindIntervalLabel.text = rewindTimerIntervalString
     }
     
     func isSectionHidden(_ section: Section) -> Bool
@@ -255,6 +276,33 @@ private extension SettingsViewController
     @IBAction func toggleRespectSilentMode(_ sender: UISwitch)
     {
         Settings.respectSilentMode = sender.isOn
+    }
+    
+    @IBAction func toggleRewindEnabled(_ sender: UISwitch) {
+        Settings.isRewindEnabled = sender.isOn
+    }
+    
+    @IBAction func changeRewindInterval(_ sender: UISlider) {
+        let roundedValue = Int((sender.value / 1).rounded() * 1)
+        
+        if roundedValue != Settings.rewindTimerInterval
+        {
+            self.selectionFeedbackGenerator?.selectionChanged()
+        }
+        
+        Settings.rewindTimerInterval = Int(roundedValue)
+        
+        self.updateRewindIntervalLabel()
+    }
+    
+    @IBAction func beginChangingRewindInterval(_ sender: UISlider) {
+        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        self.selectionFeedbackGenerator?.prepare()
+    }
+    
+    @IBAction func didFinishChangingRewindInterval(_ sender: UISlider) {
+        sender.value = Float(Settings.rewindTimerInterval)
+        self.selectionFeedbackGenerator = nil
     }
     
     func openTwitter(username: String)
@@ -328,7 +376,7 @@ extension SettingsViewController
         let section = Section(rawValue: sectionIndex)!
         switch section
         {
-        case .controllers: return 1 // Temporarily hide other controller indexes until controller logic is finalized
+        case .controllers: return 4 // Temporarily hide other controller indexes until controller logic is finalized
         case .controllerSkins: return System.registeredSystems.count
         case .syncing: return SyncManager.shared.coordinator?.account == nil ? 1 : super.tableView(tableView, numberOfRowsInSection: sectionIndex)
         default:
@@ -383,7 +431,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .controllerOpacity, .gameAudio, .hapticFeedback, .hapticTouch, .patreon, .credits: break
+        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits: break
         }
 
         return cell
@@ -399,7 +447,7 @@ extension SettingsViewController
         case .controllers: self.performSegue(withIdentifier: Segue.controllers.rawValue, sender: cell)
         case .controllerSkins: self.performSegue(withIdentifier: Segue.controllerSkins.rawValue, sender: cell)
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .controllerOpacity, .gameAudio, .hapticFeedback, .hapticTouch, .syncing: break
+        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
         case .patreon:
             let patreonURL = URL(string: "https://www.patreon.com/litritt")!
             
