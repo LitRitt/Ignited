@@ -276,6 +276,8 @@ private extension SettingsViewController
     @IBAction func toggleRespectSilentMode(_ sender: UISwitch)
     {
         Settings.respectSilentMode = sender.isOn
+    }
+    
     @IBAction func toggleRewindEnabled(_ sender: UISwitch) {
         Settings.isRewindEnabled = sender.isOn
     }
@@ -374,7 +376,7 @@ extension SettingsViewController
         let section = Section(rawValue: sectionIndex)!
         switch section
         {
-        case .controllers: return 1 // Temporarily hide other controller indexes until controller logic is finalized
+        case .controllers: return 4 // Temporarily hide other controller indexes until controller logic is finalized
         case .controllerSkins: return System.registeredSystems.count
         case .syncing: return SyncManager.shared.coordinator?.account == nil ? 1 : super.tableView(tableView, numberOfRowsInSection: sectionIndex)
         default:
@@ -429,8 +431,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .controllerOpacity, .gameAudio, .hapticFeedback, .hapticTouch, .patreon, .credits: break
-        case .controllerOpacity, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits: break
+        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits: break
         }
 
         return cell
@@ -446,8 +447,7 @@ extension SettingsViewController
         case .controllers: self.performSegue(withIdentifier: Segue.controllers.rawValue, sender: cell)
         case .controllerSkins: self.performSegue(withIdentifier: Segue.controllerSkins.rawValue, sender: cell)
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .controllerOpacity, .gameAudio, .hapticFeedback, .hapticTouch, .syncing: break
-        case .controllerOpacity, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
+        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
         case .patreon:
             let patreonURL = URL(string: "https://www.patreon.com/litritt")!
             

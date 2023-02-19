@@ -220,6 +220,9 @@ extension Settings
         set {
             UserDefaults.standard.respectSilentMode = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.respectSilentMode])
+        }
+    }
+    
     static var isRewindEnabled: Bool {
         set { UserDefaults.standard.isRewindEnabled = newValue }
         get {
