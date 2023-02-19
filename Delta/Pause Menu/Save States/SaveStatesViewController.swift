@@ -24,7 +24,6 @@ extension SaveStatesViewController
     {
         case saving
         case loading
-        case rewind
     }
     
     enum Section: Int
@@ -33,7 +32,6 @@ extension SaveStatesViewController
         case quick
         case general
         case locked
-        case rewind
     }
 }
 
@@ -104,11 +102,6 @@ extension SaveStatesViewController
         case .loading:
             self.title = NSLocalizedString("Load State", comment: "")
             self.placeholderView.detailTextLabel.text = NSLocalizedString("You can create a new save state by pressing the Save State option in the pause menu.", comment: "")
-            self.navigationItem.rightBarButtonItems?.removeFirst()
-            
-        case .rewind:
-            self.title = NSLocalizedString("Rewind State", comment: "")
-            self.placeholderView.detailTextLabel.text = NSLocalizedString("Rewind States will appear here as gameplay advances.", comment: "")
             self.navigationItem.rightBarButtonItems?.removeFirst()
         }
         
@@ -202,15 +195,13 @@ private extension SaveStatesViewController
         fetchRequest.returnsObjectsAsFaults = false
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.type), ascending: true), NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: Settings.sortSaveStatesByOldestFirst)]
         
-        let rewindEvaluationOperator = self.mode == .rewind ? "==" : "!="
-        
         if let system = System(gameType: self.game.type)
         {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %@ AND %K \(rewindEvaluationOperator) %@", #keyPath(SaveState.game), self.game, #keyPath(SaveState.coreIdentifier), system.deltaCore.identifier, #keyPath(SaveState.type), NSNumber(value: SaveStateType.rewind.rawValue))
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %@", #keyPath(SaveState.game), self.game, #keyPath(SaveState.coreIdentifier), system.deltaCore.identifier)
         }
         else
         {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K \(rewindEvaluationOperator) %@", #keyPath(SaveState.game), self.game, , #keyPath(SaveState.type), NSNumber(value: SaveStateType.rewind.rawValue))
+            fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(SaveState.game), self.game)
         }
         
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: #keyPath(SaveState.type), cacheName: nil)
@@ -287,16 +278,7 @@ private extension SaveStatesViewController
         cell.maximumImageSize = CGSize(width: self.prototypeCellWidthConstraint.constant, height: (self.prototypeCellWidthConstraint.constant / dimensions.width) * dimensions.height)
         
         cell.textLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        
-        if self.mode == .rewind
-        {
-            let differenceInSeconds = Int(Date().timeIntervalSince(saveState.modifiedDate))
-            cell.textLabel.text = "\(differenceInSeconds)s Ago"
-        }
-        else
-        {
-            cell.textLabel.text = saveState.localizedName
-        }
+        cell.textLabel.text = saveState.localizedName
     }
     
     func configure(_ headerView: SaveStatesCollectionHeaderView, forSection section: Int)
@@ -311,7 +293,6 @@ private extension SaveStatesViewController
         case .quick: title = NSLocalizedString("Quick Save", comment: "")
         case .general: title = NSLocalizedString("General", comment: "")
         case .locked: title = NSLocalizedString("Locked", comment: "")
-        case .rewind: title = NSLocalizedString("Rewind", comment: "")
         }
         
         headerView.textLabel.text = title
@@ -524,7 +505,7 @@ private extension SaveStatesViewController
     
     func actionsForSaveState(_ saveState: SaveState) -> [Action]?
     {
-        guard saveState.type != .auto && saveState.type != .rewind else { return nil }
+        guard saveState.type != .auto else { return nil }
         
         let isPreviewAvailable: Bool
         
@@ -580,7 +561,6 @@ private extension SaveStatesViewController
                 self.unlockSaveState(saveState)
             })
             actions.append(unlockAction)
-        case .rewind: break
         }
         
         let deleteAction = Action(title: NSLocalizedString("Delete", comment: ""), style: .destructive, image: UIImage(symbolNameIfAvailable: "trash"), action: { [unowned self] action in
@@ -751,7 +731,7 @@ extension SaveStatesViewController
             let section = self.correctedSectionForSectionIndex(indexPath.section)
             switch section
             {
-            case .auto, .rewind: break
+            case .auto: break
             case .quick, .general:
                 let backgroundContext = DatabaseManager.shared.newBackgroundContext()
                 backgroundContext.performAndWait() {
@@ -767,7 +747,6 @@ extension SaveStatesViewController
             }
             
         case .loading: self.loadSaveState(saveState)
-        case .rewind: self.loadSaveState(saveState)
         }
     }
 }

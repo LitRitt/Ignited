@@ -377,77 +377,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Rewind" id="mN0-A6-HBK">
-                                <string key="footerTitle">When enabled, during gameplay the emulation state will be saved every X seconds for a rolling 2 minutes, allowing you to rewind.</string>
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SwitchCell" id="17D-Po-KE6" customClass="SwitchTableViewCell">
-                                        <rect key="frame" x="0.0" y="933" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="17D-Po-KE6" id="H5k-tz-nwf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enabled" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyg-aR-1dc">
-                                                    <rect key="frame" x="8" y="11.5" width="302" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2vH-86-vWn">
-                                                    <rect key="frame" x="318" y="6.5" width="51" height="31"/>
-                                                    <color key="onTintColor" name="Purple"/>
-                                                    <connections>
-                                                        <action selector="toggleRewindEnabled:" destination="eHi-aO-uGS" eventType="primaryActionTriggered" id="9DT-Aa-2ei"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="2vH-86-vWn" secondAttribute="trailing" id="0kG-ec-g1D"/>
-                                                <constraint firstItem="2vH-86-vWn" firstAttribute="centerY" secondItem="H5k-tz-nwf" secondAttribute="centerY" id="SQq-W5-PyG"/>
-                                                <constraint firstItem="pyg-aR-1dc" firstAttribute="centerY" secondItem="H5k-tz-nwf" secondAttribute="centerY" id="fir-Jm-rou"/>
-                                                <constraint firstItem="pyg-aR-1dc" firstAttribute="leading" secondItem="H5k-tz-nwf" secondAttribute="leadingMargin" id="iX6-OY-O85"/>
-                                                <constraint firstItem="2vH-86-vWn" firstAttribute="leading" secondItem="pyg-aR-1dc" secondAttribute="trailing" constant="8" symbolic="YES" id="mGf-kt-RYd"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="YeK-oW-T4j">
-                                        <rect key="frame" x="0.0" y="977" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="YeK-oW-T4j" id="aiY-4g-tPC">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="3" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="QOu-J2-up0">
-                                                    <rect key="frame" x="46" y="5.5" width="323" height="34"/>
-                                                    <connections>
-                                                        <action selector="beginChangingRewindInterval:" destination="eHi-aO-uGS" eventType="touchDown" id="GoD-nL-URk"/>
-                                                        <action selector="changeRewindInterval:" destination="eHi-aO-uGS" eventType="valueChanged" id="TXw-J0-Y3a"/>
-                                                        <action selector="didFinishChangingRewindInterval:" destination="eHi-aO-uGS" eventType="touchUpInside" id="9Ax-mf-N3A"/>
-                                                        <action selector="didFinishChangingRewindInterval:" destination="eHi-aO-uGS" eventType="touchUpOutside" id="JWh-IF-W2d"/>
-                                                        <action selector="didFinishChangingRewindInterval:" destination="eHi-aO-uGS" eventType="touchCancel" id="LQq-oP-XL3"/>
-                                                    </connections>
-                                                </slider>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="px6-iD-MdO">
-                                                    <rect key="frame" x="8" y="11" width="25" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="25" id="gxC-cr-g7d"/>
-                                                        <constraint firstAttribute="height" constant="21" id="znk-d7-bX2"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="QOu-J2-up0" secondAttribute="trailing" id="PMu-bc-xQ9"/>
-                                                <constraint firstItem="px6-iD-MdO" firstAttribute="leading" secondItem="aiY-4g-tPC" secondAttribute="leadingMargin" id="hq8-jf-hVU"/>
-                                                <constraint firstAttribute="centerY" secondItem="QOu-J2-up0" secondAttribute="centerY" id="qbB-Vs-lfg"/>
-                                                <constraint firstItem="QOu-J2-up0" firstAttribute="leading" secondItem="px6-iD-MdO" secondAttribute="trailing" constant="15" id="tQ4-zl-aeM"/>
-                                                <constraint firstItem="px6-iD-MdO" firstAttribute="top" secondItem="aiY-4g-tPC" secondAttribute="top" constant="11" id="tk9-YL-qBD"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Delta Sync" footerTitle="Sync your games, save data, save states, and cheats between devices." id="y6U-7a-bnX" userLabel="Syncing">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DetailCell" textLabel="4U1-fe-PIb" detailTextLabel="kLY-5g-v8n" style="IBUITableViewCellStyleValue1" id="bwW-PG-BcV">
@@ -724,9 +653,6 @@
                         <outlet property="controllerOpacitySlider" destination="whi-If-wFf" id="6Cx-HY-xLG"/>
                         <outlet property="previewsEnabledSwitch" destination="OJE-9e-9i3" id="Ndg-eN-PPs"/>
                         <outlet property="respectSilentModeSwitch" destination="mlO-iy-zU2" id="TDT-cx-kCf"/>
-                        <outlet property="rewindEnabledSwitch" destination="2vH-86-vWn" id="CGL-hL-sd3"/>
-                        <outlet property="rewindIntervalLabel" destination="px6-iD-MdO" id="Wlq-XY-gdN"/>
-                        <outlet property="rewindIntervalSlider" destination="QOu-J2-up0" id="5uX-xk-tf2"/>
                         <outlet property="syncingServiceLabel" destination="kLY-5g-v8n" id="zzx-qM-q1g"/>
                         <outlet property="thumbstickHapticFeedbackEnabledSwitch" destination="19A-ef-F3V" id="K03-kQ-lv3"/>
                         <outlet property="versionLabel" destination="Str-BY-agW" id="gU2-L0-pYt"/>
