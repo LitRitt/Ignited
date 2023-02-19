@@ -401,12 +401,12 @@ extension SettingsViewController
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
         case .controllerOpacity, .gameAudio, .hapticFeedback, .hapticTouch, .syncing: break
         case .patreon:
-            let patreonURL = URL(string: "altstore://patreon")!
+            let patreonURL = URL(string: "https://www.patreon.com/litritt")!
             
             UIApplication.shared.open(patreonURL, options: [:]) { (success) in
                 guard !success else { return }
                 
-                let patreonURL = URL(string: "https://www.patreon.com/rileytestut")!
+                let patreonURL = URL(string: "https://www.patreon.com/litritt")!
                 
                 let safariViewController = SFSafariViewController(url: patreonURL)
                 safariViewController.preferredControlTintColor = .deltaPurple
