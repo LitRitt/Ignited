@@ -210,7 +210,7 @@ private extension SaveStatesViewController
         }
         else
         {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K \(rewindEvaluationOperator) %@", #keyPath(SaveState.game), self.game, #keyPath(SaveState.type), NSNumber(value: SaveStateType.rewind.rawValue))
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K \(rewindEvaluationOperator) %@", #keyPath(SaveState.game), self.game, , #keyPath(SaveState.type), NSNumber(value: SaveStateType.rewind.rawValue))
         }
         
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: #keyPath(SaveState.type), cacheName: nil)
