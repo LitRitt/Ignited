@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "DeltaCore",
-        "repositoryURL": "https://github.com/Lit-Development/DeltaCore.git",
-        "state": {
-          "branch": "main",
-          "revision": "81362dd5def310f4dd908513574c7e2fd10c7d75",
-          "version": null
-        }
-      },
-      {
         "package": "ZIPFoundation",
         "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
         "state": {
