@@ -59,7 +59,13 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>Genesis file extension fix</string>
+				<string>Deltroid</string>
+				<key>link</key>
+				<string>https://github.com/lonkelle/Deltroid</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Genesis File Extension Fix</string>
 				<key>link</key>
 				<string>https://github.com/lonkelle/Deltroid/commit/0c05444f30108b73274579fcffb49632af2026bf</string>
 			</dict>
@@ -79,6 +85,21 @@
 				<string>Dark Mode</string>
 				<key>link</key>
 				<string>https://github.com/rileytestut/Delta/pull/82</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Caroline Moore</string>
+		<key>link</key>
+		<string>https://twitter.com/1carolinemoore</string>
+		<key>linkName</key>
+		<string>@1carolinemoore</string>
+		<key>contributions</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Legacy Skins</string>
 			</dict>
 		</array>
 	</dict>
