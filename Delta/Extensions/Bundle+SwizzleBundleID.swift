@@ -16,19 +16,11 @@ extension Bundle
         
         #if LITE
         
-        #if BETA
-        infoDictionary?[kCFBundleIdentifierKey as String] = "com.rileytestut.Delta.Lite.Beta"
-        #else
         infoDictionary?[kCFBundleIdentifierKey as String] = "com.rileytestut.Delta.Lite"
-        #endif
         
         #else
         
-        #if BETA
-        infoDictionary?[kCFBundleIdentifierKey as String] = "com.rileytestut.Delta.AltStore.Beta"
-        #else
         infoDictionary?[kCFBundleIdentifierKey as String] = "com.rileytestut.Delta.AltStore"
-        #endif
         
         #endif
         
