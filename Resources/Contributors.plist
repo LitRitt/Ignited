@@ -50,6 +50,23 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Joelle Stickney</string>
+		<key>link</key>
+		<string>https://github.com/lonkelle</string>
+		<key>linkName</key>
+		<string>github.com/lonkelle</string>
+		<key>contributions</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Genesis file extension fix</string>
+				<key>link</key>
+				<string>https://github.com/lonkelle/Deltroid/commit/0c05444f30108b73274579fcffb49632af2026bf</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Eric Lewis</string>
 		<key>link</key>
 		<string>https://github.com/ericlewis</string>
