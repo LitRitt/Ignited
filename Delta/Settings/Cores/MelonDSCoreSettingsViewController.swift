@@ -142,7 +142,7 @@ private extension MelonDSCoreSettingsViewController
 {
     func isSectionHidden(_ section: Section) -> Bool
     {
-        let isBeta = false
+        let isBeta = true
         
         switch section
         {
