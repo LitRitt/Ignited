@@ -3,17 +3,17 @@
   "version": "0.1",
   "summary": "Nintendo 64 plug-in for Delta emulator.",
   "description": "iOS framework that wraps Mupen64Plus to allow playing Nintendo 64 games with Delta emulator.",
-  "homepage": "https://github.com/rileytestut/N64DeltaCore",
+  "homepage": "https://github.com/Lit-Development/N64DeltaCore",
   "platforms": {
     "ios": "12.0"
   },
   "source": {
-    "git": "https://github.com/rileytestut/N64DeltaCore.git"
+    "git": "https://github.com/Lit-Development/N64DeltaCore.git"
   },
   "authors": {
-    "Riley Testut": "riley@rileytestut.com"
+    "Chris Rittenhouse": "dev@litritt.com"
   },
-  "social_media_url": "https://twitter.com/rileytestut",
+  "social_media_url": "https://twitter.com/lit_ritt",
   "source_files": [
     "N64DeltaCore/**/*.{h,m,mm,cpp,swift}",
     "N64DeltaCore/N64DeltaCore.h",

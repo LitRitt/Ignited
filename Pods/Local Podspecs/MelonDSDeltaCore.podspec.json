@@ -3,17 +3,17 @@
   "version": "0.1",
   "summary": "Nintendo DS plug-in for Delta emulator.",
   "description": "iOS framework that wraps melonDS to allow playing Nintendo DS games with Delta emulator.",
-  "homepage": "https://github.com/rileytestut/MelonDSDeltaCore",
+  "homepage": "https://github.com/Lit-Development/MelonDSDeltaCore",
   "platforms": {
     "ios": "12.0"
   },
   "source": {
-    "git": "https://github.com/rileytestut/MelonDSDeltaCore.git"
+    "git": "https://github.com/Lit-Development/MelonDSDeltaCore.git"
   },
   "authors": {
-    "Riley Testut": "riley@rileytestut.com"
+    "Chris Rittenhouse": "dev@litritt.com"
   },
-  "social_media_url": "https://twitter.com/rileytestut",
+  "social_media_url": "https://twitter.com/lit_ritt",
   "source_files": [
     "MelonDSDeltaCore/**/*.{swift}",
     "MelonDSDeltaCore/MelonDSDeltaCore.h",

@@ -208,6 +208,7 @@
 /* Begin PBXFileReference section */
 		22506DA00971C4300AF90A35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19FF50F55441BC2B2248241 /* Pods-Delta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Delta/Pods-Delta.release.xcconfig"; sourceTree = "<group>"; };
+		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
 		BF00BEA525B758AA00C8607D /* SystemBIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemBIOS.swift; sourceTree = "<group>"; };
 		BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = openvgdb.sqlite; sourceTree = "<group>"; };
 		BF0418131D01E93400E85BCF /* GBADeltaCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBADeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -357,7 +358,7 @@
 		BFEF24F21F7DD4FB00454C62 /* SaveStateMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStateMigrationPolicy.swift; sourceTree = "<group>"; };
 		BFF0742B1E9DC17500ACDF4A /* GBCDeltaCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBCDeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA4C081E8A24D600D87934 /* GameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
-		BFFA71D71AAC406100EE9DD1 /* Delta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delta.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFA71D71AAC406100EE9DD1 /* Delta Ignited.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delta Ignited.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA71DB1AAC406100EE9DD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFFA71E11AAC406100EE9DD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -410,6 +411,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC11456429A444C4005E95A8 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				AC11456529A444C4005E95A8 /* DeltaCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		BF090CEE1B490C1A00DCAB45 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -832,6 +841,7 @@
 		BFFA71CE1AAC406100EE9DD1 = {
 			isa = PBXGroup;
 			children = (
+				AC11456429A444C4005E95A8 /* Packages */,
 				BFFA71D91AAC406100EE9DD1 /* Delta */,
 				BF9F4FCD1AAD7B25004C9500 /* Frameworks */,
 				BFEC732F1AAECCBD00650035 /* Resources */,
@@ -843,7 +853,7 @@
 		BFFA71D81AAC406100EE9DD1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFFA71D71AAC406100EE9DD1 /* Delta.app */,
+				BFFA71D71AAC406100EE9DD1 /* Delta Ignited.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -968,7 +978,7 @@
 				D524F4A0273DE9A100D500B2 /* AltKit */,
 			);
 			productName = Delta;
-			productReference = BFFA71D71AAC406100EE9DD1 /* Delta.app */;
+			productReference = BFFA71D71AAC406100EE9DD1 /* Delta Ignited.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

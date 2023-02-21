@@ -3,17 +3,17 @@
   "version": "0.1",
   "summary": "Game Boy Color plug-in for Delta emulator.",
   "description": "iOS framework that wraps Gambatte to allow playing GBC games with Delta emulator.",
-  "homepage": "https://github.com/rileytestut/GBCDeltaCore",
+  "homepage": "https://github.com/Lit-Development/GBCDeltaCore",
   "platforms": {
     "ios": "12.0"
   },
   "source": {
-    "git": "https://github.com/rileytestut/GBCDeltaCore.git"
+    "git": "https://github.com/Lit-Development/GBCDeltaCore.git"
   },
   "authors": {
-    "Riley Testut": "riley@rileytestut.com"
+    "Chris Rittenhouse": "dev@litritt.com"
   },
-  "social_media_url": "https://twitter.com/rileytestut",
+  "social_media_url": "https://twitter.com/lit_ritt",
   "source_files": [
     "GBCDeltaCore/**/*.{h,m,mm,cpp,swift}",
     "gambatte/libgambatte/include/*.h",

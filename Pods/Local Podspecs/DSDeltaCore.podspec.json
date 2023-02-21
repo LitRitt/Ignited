@@ -3,17 +3,17 @@
   "version": "0.1",
   "summary": "Nintendo DS plug-in for Delta emulator.",
   "description": "iOS framework that wraps DeSmuME to allow playing Nintendo DS games with Delta emulator.",
-  "homepage": "https://github.com/rileytestut/DSDeltaCore",
+  "homepage": "https://github.com/Lit-Development/DSDeltaCore",
   "platforms": {
     "ios": "12.0"
   },
   "source": {
-    "git": "https://github.com/rileytestut/DSDeltaCore.git"
+    "git": "https://github.com/Lit-Development/DSDeltaCore.git"
   },
   "authors": {
-    "Riley Testut": "riley@rileytestut.com"
+    "Chris Rittenhouse": "dev@litritt.com"
   },
-  "social_media_url": "https://twitter.com/rileytestut",
+  "social_media_url": "https://twitter.com/lit_ritt",
   "source_files": [
     "DSDeltaCore/**/*.{swift}",
     "DSDeltaCore/Bridge/DSEmulatorBridge.mm",

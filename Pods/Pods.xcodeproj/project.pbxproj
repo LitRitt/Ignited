@@ -3183,7 +3183,7 @@
 		8406B153DF09A3DC829DAF90D1C24127 /* NstMachine.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstMachine.hpp; sourceTree = "<group>"; };
 		844403BA0FA3541347B6E706E52FA73E /* Platform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Platform.h; sourceTree = "<group>"; };
 		844F6EF3E43F3AF5908FCC044DE872CF /* NstDatabase.xml */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; path = NstDatabase.xml; sourceTree = "<group>"; };
-		845FBEA4FB904AF17C7B0B84C08416E3 /* DeltaCore.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = DeltaCore.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		845FBEA4FB904AF17C7B0B84C08416E3 /* DeltaCore.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = DeltaCore.podspec; sourceTree = "<group>"; tabWidth = 2; };
 		8462BCA1FC7115AE1A6D25D42A9EB3A3 /* sdd1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = sdd1.h; sourceTree = "<group>"; };
 		849846DBBB863B9383830F30D108134F /* Standard.deltamapping */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.bplist; path = Standard.deltamapping; sourceTree = "<group>"; };
 		84A11738FCB471CAF4902770A804B011 /* NstSoundRenderer.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstSoundRenderer.hpp; sourceTree = "<group>"; };
@@ -3366,7 +3366,7 @@
 		9C04A9D6572366B902256741978C0EE5 /* glsl_CombinerProgramImpl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = glsl_CombinerProgramImpl.h; sourceTree = "<group>"; };
 		9C0AAAEC4A92ECADA81C17B1B0BF40E8 /* FIFOSampleBuffer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = FIFOSampleBuffer.h; sourceTree = "<group>"; };
 		9C6B6DEF81FE4555CE25B440FD2493BF /* vi_controller.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = vi_controller.h; sourceTree = "<group>"; };
-		9CA80A61ABF26FA89F4E22A30284B0DD /* Pods-Delta */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-Delta"; path = "libPods-Delta.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CA80A61ABF26FA89F4E22A30284B0DD /* libPods-Delta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Delta.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CFBE66FFB04AC7622932A698B834898 /* KeyboardGameController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardGameController.swift; sourceTree = "<group>"; };
 		9D1E150EA94D5A0A5026F379E1681155 /* SDWebImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SDWebImage-umbrella.h"; sourceTree = "<group>"; };
 		9D2A88F941018214B1FCA8BC763A0D81 /* Glsl.inl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Glsl.inl; sourceTree = "<group>"; };
@@ -8187,7 +8187,7 @@
 				9816EFF6A2268AAEA7B1C19BBE416477 /* Mupen64Plus.bundle */,
 				1E5356E04E92615CFF0666E5987CE594 /* NESDeltaCore */,
 				487C7DB0A7257F16983BEF8324BEF561 /* NESDeltaCore.bundle */,
-				9CA80A61ABF26FA89F4E22A30284B0DD /* Pods-Delta */,
+				9CA80A61ABF26FA89F4E22A30284B0DD /* libPods-Delta.a */,
 				4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */,
 				B0B214D775196BA7CA8E17E53048A493 /* SDWebImage */,
 				53A730F4F4248E7E3F38F8409A2DE97C /* SMCalloutView */,
@@ -10113,7 +10113,7 @@
 			);
 			name = "Pods-Delta";
 			productName = "Pods-Delta";
-			productReference = 9CA80A61ABF26FA89F4E22A30284B0DD /* Pods-Delta */;
+			productReference = 9CA80A61ABF26FA89F4E22A30284B0DD /* libPods-Delta.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		3847153A6E5EEFB86565BA840768F429 /* SDWebImage */ = {
