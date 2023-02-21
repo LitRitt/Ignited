@@ -4,16 +4,47 @@
 <array>
 	<dict>
 		<key>name</key>
-		<string>Grant Gliner</string>
+		<string>Ian Clawson</string>
 		<key>link</key>
-		<string>https://twitter.com/GrantGliner</string>
+		<string>https://github.com/ianclawson</string>
 		<key>linkName</key>
-		<string>@GrantGliner</string>
+		<string>github.com/ianclawson</string>
 		<key>contributions</key>
 		<array>
 			<dict>
 				<key>name</key>
-				<string>Pause Menu Icons</string>
+				<string>Extended MFi Support</string>
+				<key>link</key>
+				<string>https://github.com/lonkelle/Deltroid/pull/7</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Save State Rewind</string>
+				<key>link</key>
+				<string>https://github.com/lonkelle/Deltroid/pull/8</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Local Multiplayer</string>
+				<key>link</key>
+				<string>https://github.com/lonkelle/Deltroid/pull/9</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Noah Keck</string>
+		<key>link</key>
+		<string>https://github.com/noah978</string>
+		<key>linkName</key>
+		<string>github.com/noah978</string>
+		<key>contributions</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>CheatBase</string>
+				<key>link</key>
+				<string>https://github.com/CheatBase/CheatBase</string>
 			</dict>
 		</array>
 	</dict>
@@ -36,18 +67,16 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Noah Keck</string>
+		<string>Grant Gliner</string>
 		<key>link</key>
-		<string>https://github.com/noah978</string>
+		<string>https://twitter.com/GrantGliner</string>
 		<key>linkName</key>
-		<string>github.com/noah978</string>
+		<string>@GrantGliner</string>
 		<key>contributions</key>
 		<array>
 			<dict>
 				<key>name</key>
-				<string>CheatBase</string>
-				<key>link</key>
-				<string>https://github.com/CheatBase/CheatBase</string>
+				<string>Pause Menu Icons</string>
 			</dict>
 		</array>
 	</dict>
