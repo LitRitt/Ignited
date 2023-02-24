@@ -1117,7 +1117,12 @@ extension GameViewController
         
         if activate
         {
-            emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
+            let unlockFrameRateEnabled = Settings.isUnlockFrameRateEnabled
+            if unlockFrameRateEnabled {
+                emulatorCore.rate = 0.5
+            } else {
+                emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
+            }
         }
         else
         {
@@ -1265,7 +1270,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
                 
-        case .syncingService, .isAltJITEnabled: break
+        case .isUnlockFrameRateEnabled, .syncingService, .isAltJITEnabled: break
         }
     }
     

@@ -40,6 +40,7 @@ extension Settings
         case isThumbstickHapticFeedbackEnabled
         case isAltJITEnabled
         case respectSilentMode
+        case isUnlockFrameRateEnabled
     }
 }
 
@@ -66,6 +67,7 @@ struct Settings
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 5,
+                        #keyPath(UserDefaults.isUnlockFrameRateEnabled): false,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
         
@@ -234,6 +236,14 @@ extension Settings
         get {
             let rewindTimerInterval = UserDefaults.standard.rewindTimerInterval
             return rewindTimerInterval
+        }
+    }
+    
+    static var isUnlockFrameRateEnabled: Bool {
+        set { UserDefaults.standard.isUnlockFrameRateEnabled = newValue }
+        get {
+            let isUnlockFrameRateEnabled = UserDefaults.standard.isUnlockFrameRateEnabled
+            return isUnlockFrameRateEnabled
         }
     }
     
@@ -438,4 +448,6 @@ private extension UserDefaults
     @NSManaged var respectSilentMode: Bool
     @NSManaged var isRewindEnabled: Bool
     @NSManaged var rewindTimerInterval: Int
+    
+    @NSManaged var isUnlockFrameRateEnabled: Bool
 }
