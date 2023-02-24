@@ -19,6 +19,7 @@ private extension SettingsViewController
     {
         case controllers
         case controllerSkins
+        case skinDownloads
         case controllerOpacity
         case gameAudio
         case hapticFeedback
@@ -35,6 +36,14 @@ private extension SettingsViewController
         case controllers = "controllersSegue"
         case controllerSkins = "controllerSkinsSegue"
         case dsSettings = "dsSettingsSegue"
+    }
+    
+    enum SkinDownloadsRow: Int, CaseIterable
+    {
+        case litDesign
+        case skinGenerator
+        case deltaSkins
+        case skins4Delta
     }
 
     enum SyncingRow: Int, CaseIterable
@@ -305,6 +314,14 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
+    func openSkinWebsite(site: String)
+    {
+        let safariURL = URL(string: site)!
+        let safariViewController = SFSafariViewController(url: safariURL)
+        safariViewController.preferredControlTintColor = .deltaPurple
+        self.present(safariViewController, animated: true, completion: nil)
+    }
+    
     func openTwitter(username: String)
     {
         let twitterAppURL = URL(string: "twitter://user?screen_name=" + username)!
@@ -431,7 +448,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits: break
+        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits: break
         }
 
         return cell
@@ -446,6 +463,15 @@ extension SettingsViewController
         {
         case .controllers: self.performSegue(withIdentifier: Segue.controllers.rawValue, sender: cell)
         case .controllerSkins: self.performSegue(withIdentifier: Segue.controllerSkins.rawValue, sender: cell)
+        case .skinDownloads:
+            let row = SkinDownloadsRow(rawValue: indexPath.row)!
+            switch row
+            {
+            case .litDesign: self.openSkinWebsite(site: "https://design.litritt.com")
+            case .skinGenerator: self.openSkinWebsite(site: "https://generator.skins4delta.com")
+            case .deltaSkins: self.openSkinWebsite(site: "https://delta-skins.github.io")
+            case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
+            }
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
         case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
         case .patreon:
