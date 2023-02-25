@@ -374,14 +374,14 @@ private extension SettingsViewController
     
     func changeCustomFastForwardSpeed()
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds below 100% will slow down gameplay instead of speeding it up.", comment: ""), preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("\nSpeeds above 100% will speed up gameplay, and are useful for saving time in cutscenes and dialogue.\n\nSpeeds below 100% will slow down gameplay, and are useful for precisely timing inputs.", comment: ""), preferredStyle: .alert)
         
-        var speedOneTitle = "25%"
-        var speedTwoTitle = "50%"
-        var speedThreeTitle = "200%"
-        var speedFourTitle = "400%"
-        var speedFiveTitle = "800%"
-        var speedSixTitle = "1600%"
+        var speedOneTitle = "🐢 25%"
+        var speedTwoTitle = "🍯 50%"
+        var speedThreeTitle = "🏃🏽 200%"
+        var speedFourTitle = "🐇 400%"
+        var speedFiveTitle = "🏎️ 800%"
+        var speedSixTitle = "⚡️ 1600%"
         
         switch Settings.customFastForwardSpeed
         {
