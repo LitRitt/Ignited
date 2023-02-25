@@ -90,6 +90,11 @@ extension ControllerSkin: ControllerSkinProtocol
     {
         return self.controllerSkin?.aspectRatio(for: traits)
     }
+    
+    public func previewSize(for traits: DeltaCore.ControllerSkin.Traits) -> CGSize?
+    {
+        return self.controllerSkin?.previewSize(for: traits)
+    }
 }
 
 extension ControllerSkin: Syncable

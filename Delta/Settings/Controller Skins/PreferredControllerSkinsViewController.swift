@@ -130,8 +130,8 @@ extension PreferredControllerSkinsViewController
         
         switch section
         {
-        case .portrait: aspectRatio = self.portraitControllerSkin?.aspectRatio(for: self.makeTraits(orientation: .portrait, in: window))
-        case .landscape: aspectRatio = self.landscapeControllerSkin?.aspectRatio(for: self.makeTraits(orientation: .landscape, in: window))
+        case .portrait: aspectRatio = self.portraitControllerSkin?.previewSize(for: self.makeTraits(orientation: .portrait, in: window))
+        case .landscape: aspectRatio = self.landscapeControllerSkin?.previewSize(for: self.makeTraits(orientation: .landscape, in: window))
         }
         
         guard let unwrappedAspectRatio = aspectRatio else { return super.tableView(tableView, heightForRowAt: indexPath) }
@@ -204,7 +204,7 @@ private extension PreferredControllerSkinsViewController
             if let portraitControllerSkin = self.portraitControllerSkin
             {
                 let skin = context.object(with: portraitControllerSkin.objectID) as! ControllerSkin
-                portraitImage = skin.image(for: portraitTraits, preferredSize: UIScreen.main.defaultControllerSkinSize)
+                portraitImage = skin.image(for: portraitTraits, preferredSize: UIScreen.main.previewSkinSize)
             }
             else
             {
@@ -214,7 +214,7 @@ private extension PreferredControllerSkinsViewController
             if let landscapeControllerSkin = self.landscapeControllerSkin
             {
                 let skin = context.object(with: landscapeControllerSkin.objectID) as! ControllerSkin
-                landscapeImage = skin.image(for: landscapeTraits, preferredSize: UIScreen.main.defaultControllerSkinSize)
+                landscapeImage = skin.image(for: landscapeTraits, preferredSize: UIScreen.main.previewSkinSize)
             }
             else
             {

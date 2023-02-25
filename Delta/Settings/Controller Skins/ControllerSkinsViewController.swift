@@ -88,7 +88,7 @@ private extension ControllerSkinsViewController
         }
         
         self.dataSource.prefetchHandler = { [unowned self] (controllerSkin, indexPath, completionHandler) in
-            let imageOperation = LoadControllerSkinImageOperation(controllerSkin: controllerSkin, traits: self.traits, size: UIScreen.main.defaultControllerSkinSize)
+            let imageOperation = LoadControllerSkinImageOperation(controllerSkin: controllerSkin, traits: self.traits, size: UIScreen.main.previewSkinSize)
             imageOperation.resultHandler = { (image, error) in
                 completionHandler(image, error)
             }
@@ -198,13 +198,16 @@ extension ControllerSkinsViewController
     {
         let controllerSkin = self.dataSource.item(at: indexPath)
         
-        guard let traits = controllerSkin.supportedTraits(for: self.traits), let size = controllerSkin.aspectRatio(for: traits) else { return 150 }
-                
-        let scale = (self.view.bounds.width / size.width)
+        guard let traits = controllerSkin.supportedTraits(for: self.traits) else { return 150 }
         
-        let height = min(size.height * scale, self.view.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 30)
-        
-        return height
+        var height = 200.0
+        let safeHeight = (self.view.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 30)
+        if let size = controllerSkin.previewSize(for: traits)
+        {
+            let scale = (self.view.bounds.width / size.width)
+            height = size.height * scale
+        }
+        return min(height, safeHeight)
     }
 }
 
