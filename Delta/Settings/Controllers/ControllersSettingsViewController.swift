@@ -88,6 +88,7 @@ class ControllersSettingsViewController: UITableViewController
         super.viewDidLoad()
         
         let gameControllers = [self.localDeviceController as GameController] + self.connectedControllers
+        self.gameController = gameControllers[0] // Fixes "Customize Controls" being shown on p2-4 when no controllers are connected
         for gameController in gameControllers
         {
             if gameController.playerIndex == self.playerIndex
