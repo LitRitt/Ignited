@@ -142,8 +142,6 @@ private extension MelonDSCoreSettingsViewController
 {
     func isSectionHidden(_ section: Section) -> Bool
     {
-        let isBeta = true
-        
         switch section
         {
         case .performance:
@@ -154,13 +152,9 @@ private extension MelonDSCoreSettingsViewController
             // Using DeSmuME core, which doesn't require BIOS.
             return true
         
-        case .dsiBIOS where Settings.preferredCore(for: .ds) == DS.core || !isBeta:
+        case .dsiBIOS where Settings.preferredCore(for: .ds) == DS.core:
             // Using DeSmuME core, which doesn't require BIOS,
             // or using public Delta version, which doesn't support DSi (yet).
-            return true
-            
-        case .changeCore where !isBeta:
-            // Using public Delta version, which only supports melonDS core.
             return true
             
         default: return false
@@ -185,7 +179,7 @@ private extension MelonDSCoreSettingsViewController
         }
         
         let safariViewController = SFSafariViewController(url: url)
-        safariViewController.preferredControlTintColor = .deltaPurple
+        safariViewController.preferredControlTintColor = .ignitedOrange
         self.present(safariViewController, animated: true, completion: nil)
     }
     
