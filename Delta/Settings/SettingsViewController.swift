@@ -26,7 +26,7 @@ private extension SettingsViewController
         case rewind
         case syncing
         case hapticTouch
-        case unlockFrameRate
+        case fastForward
         case cores
         case patreon
         case credits
@@ -67,6 +67,12 @@ private extension SettingsViewController
         case enabled
         case interval
     }
+    
+    enum FastForwardRow: Int, CaseIterable
+    {
+        case enabled
+        case speed
+    }
 }
 
 class SettingsViewController: UITableViewController
@@ -87,7 +93,7 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var rewindIntervalSlider: UISlider!
     @IBOutlet private var rewindIntervalLabel: UILabel!
     
-    @IBOutlet private var unlockFrameRateSwitch: UISwitch!
+    @IBOutlet private var customFastForwardSwitch: UISwitch!
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
     
@@ -207,7 +213,7 @@ private extension SettingsViewController
         self.rewindIntervalSlider.value = Float(Settings.rewindTimerInterval)
         self.updateRewindIntervalLabel()
         
-        self.unlockFrameRateSwitch.isOn = Settings.isUnlockFrameRateEnabled
+        self.customFastForwardSwitch.isOn = Settings.isCustomFastForwardEnabled
         
         self.tableView.reloadData()
     }
@@ -292,8 +298,8 @@ private extension SettingsViewController
         Settings.respectSilentMode = sender.isOn
     }
     
-    @IBAction func toggleUnlockFrameRate(_ sender: UISwitch) {
-        Settings.isUnlockFrameRateEnabled = sender.isOn
+    @IBAction func toggleCustomFastForward(_ sender: UISwitch) {
+        Settings.isCustomFastForwardEnabled = sender.isOn
     }
     
     @IBAction func toggleRewindEnabled(_ sender: UISwitch) {
@@ -380,7 +386,7 @@ private extension SettingsViewController
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnlockFrameRateEnabled, .isAltJITEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .customFastForwardSpeed, .isAltJITEnabled: break
         }
     }
 
@@ -457,7 +463,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .unlockFrameRate, .patreon, .credits: break
+        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .fastForward, .patreon, .credits: break
         }
 
         return cell
@@ -482,7 +488,7 @@ extension SettingsViewController
             case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
             }
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .unlockFrameRate, .syncing: break
+        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .fastForward, .syncing: break
         case .patreon:
             let patreonURL = URL(string: "https://www.patreon.com/litritt")!
             

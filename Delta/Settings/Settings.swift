@@ -40,7 +40,8 @@ extension Settings
         case isThumbstickHapticFeedbackEnabled
         case isAltJITEnabled
         case respectSilentMode
-        case isUnlockFrameRateEnabled
+        case isCustomFastForwardEnabled
+        case customFastForwardSpeed
     }
 }
 
@@ -67,7 +68,8 @@ struct Settings
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 5,
-                        #keyPath(UserDefaults.isUnlockFrameRateEnabled): false,
+                        #keyPath(UserDefaults.isCustomFastForwardEnabled): false,
+                        #keyPath(UserDefaults.customFastForwardSpeed): 8,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
         
@@ -239,11 +241,19 @@ extension Settings
         }
     }
     
-    static var isUnlockFrameRateEnabled: Bool {
-        set { UserDefaults.standard.isUnlockFrameRateEnabled = newValue }
+    static var isCustomFastForwardEnabled: Bool {
+        set { UserDefaults.standard.isCustomFastForwardEnabled = newValue }
         get {
-            let isUnlockFrameRateEnabled = UserDefaults.standard.isUnlockFrameRateEnabled
-            return isUnlockFrameRateEnabled
+            let isCustomFastForwardEnabled = UserDefaults.standard.isCustomFastForwardEnabled
+            return isCustomFastForwardEnabled
+        }
+    }
+    
+    static var customFastForwardSpeed: CGFloat {
+        set { UserDefaults.standard.customFastForwardSpeed = newValue }
+        get {
+            let customFastForwardSpeed = UserDefaults.standard.customFastForwardSpeed
+            return customFastForwardSpeed
         }
     }
     
@@ -449,5 +459,6 @@ private extension UserDefaults
     @NSManaged var isRewindEnabled: Bool
     @NSManaged var rewindTimerInterval: Int
     
-    @NSManaged var isUnlockFrameRateEnabled: Bool
+    @NSManaged var isCustomFastForwardEnabled: Bool
+    @NSManaged var customFastForwardSpeed: CGFloat
 }

@@ -1117,9 +1117,9 @@ extension GameViewController
         
         if activate
         {
-            let unlockFrameRateEnabled = Settings.isUnlockFrameRateEnabled
-            if unlockFrameRateEnabled {
-                emulatorCore.rate = 0.5
+            let customFastForwardEnabled = Settings.isCustomFastForwardEnabled
+            if customFastForwardEnabled {
+                emulatorCore.rate = 8
             } else {
                 emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
             }
@@ -1270,7 +1270,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
                 
-        case .isUnlockFrameRateEnabled, .syncingService, .isAltJITEnabled: break
+        case .isCustomFastForwardEnabled, .customFastForwardSpeed, .syncingService, .isAltJITEnabled: break
         }
     }
     
