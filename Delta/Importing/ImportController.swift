@@ -103,6 +103,7 @@ class ImportController: NSObject
                 alertController.addAction(action)
             }
             
+            // TODO: copy this code to fix alerts for change core and fast forward speed
             if let sourceView = self.sourceView
             {
                 alertController.popoverPresentationController?.sourceView = sourceView.superview
