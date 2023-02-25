@@ -94,6 +94,7 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var rewindIntervalLabel: UILabel!
     
     @IBOutlet private var customFastForwardSwitch: UISwitch!
+    @IBOutlet private var customFastForwardSpeedLabel: UILabel!
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
     
@@ -214,6 +215,7 @@ private extension SettingsViewController
         self.updateRewindIntervalLabel()
         
         self.customFastForwardSwitch.isOn = Settings.isCustomFastForwardEnabled
+        self.updateCustomFastForwardSpeedLabel()
         
         self.tableView.reloadData()
     }
@@ -222,6 +224,12 @@ private extension SettingsViewController
     {
         let percentage = String(format: "%.f", Settings.translucentControllerSkinOpacity * 100) + "%"
         self.controllerOpacityLabel.text = percentage
+    }
+    
+    func updateCustomFastForwardSpeedLabel()
+    {
+        let speed = String(format: "%.f", Settings.customFastForwardSpeed * 100) + "%"
+        self.customFastForwardSpeedLabel.text = speed
     }
     
     func updateRewindIntervalLabel()
@@ -329,6 +337,11 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
+    func changeFastForwardSpeed()
+    {
+        Settings.customFastForwardSpeed = 8
+    }
+    
     func openSkinWebsite(site: String)
     {
         let safariURL = URL(string: site)!
@@ -357,6 +370,62 @@ private extension SettingsViewController
                 self.present(safariViewController, animated: true, completion: nil)
             }
         }
+    }
+    
+    func changeCustomFastForwardSpeed()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds below 100% will slow down gameplay instead of speeding it up.", comment: ""), preferredStyle: .actionSheet)
+        
+        var speedOneTitle = "25%"
+        var speedTwoTitle = "50%"
+        var speedThreeTitle = "200%"
+        var speedFourTitle = "400%"
+        var speedFiveTitle = "800%"
+        var speedSixTitle = "1600%"
+        
+        switch Settings.customFastForwardSpeed
+        {
+        case 0.25: speedOneTitle += " ✓"
+        case 0.5: speedTwoTitle += " ✓"
+        case 2.0: speedThreeTitle += " ✓"
+        case 4.0: speedFourTitle += " ✓"
+        case 8.0: speedFiveTitle += " ✓"
+        case 16.0: speedSixTitle += " ✓"
+        default: break
+        }
+        
+        alertController.addAction(UIAlertAction(title: speedOneTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 0.25
+            self.tableView.reloadData()
+        }))
+        alertController.addAction(UIAlertAction(title: speedTwoTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 0.5
+            self.tableView.reloadData()
+        }))
+        alertController.addAction(UIAlertAction(title: speedThreeTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 2.0
+            self.tableView.reloadData()
+        }))
+        alertController.addAction(UIAlertAction(title: speedFourTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 4.0
+            self.tableView.reloadData()
+        }))
+        alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 8.0
+            self.tableView.reloadData()
+        }))
+        alertController.addAction(UIAlertAction(title: speedSixTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 16.0
+            self.tableView.reloadData()
+        }))
+        alertController.addAction(.cancel)
+        self.present(alertController, animated: true, completion: nil)
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow
+        {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+        self.update()
     }
     
     @available(iOS 14, *)
@@ -463,6 +532,15 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
+        case .fastForward:
+            switch FastForwardRow.allCases[indexPath.row]
+            {
+            case .speed:
+                cell.detailTextLabel?.text = String(format: "%.f", Settings.customFastForwardSpeed * 100) + "%"
+                
+            case .enabled: break
+            }
+            
         case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .fastForward, .patreon, .credits: break
         }
 
@@ -488,7 +566,15 @@ extension SettingsViewController
             case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
             }
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .fastForward, .syncing: break
+        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
+        case .fastForward:
+            let row = FastForwardRow(rawValue: indexPath.row)!
+            switch row
+            {
+            case .speed:
+                self.changeCustomFastForwardSpeed()
+            case .enabled: break
+            }
         case .patreon:
             let patreonURL = URL(string: "https://www.patreon.com/litritt")!
             
