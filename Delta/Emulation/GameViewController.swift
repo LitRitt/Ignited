@@ -1119,7 +1119,8 @@ extension GameViewController
         {
             let customFastForwardEnabled = Settings.isCustomFastForwardEnabled
             if customFastForwardEnabled {
-                emulatorCore.rate = 8
+                let customFastForwardSpeed = Settings.customFastForwardSpeed
+                emulatorCore.rate = customFastForwardSpeed
             } else {
                 emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
             }
@@ -1270,7 +1271,10 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
                 
-        case .isCustomFastForwardEnabled, .customFastForwardSpeed, .syncingService, .isAltJITEnabled: break
+        case .isCustomFastForwardEnabled, .customFastForwardSpeed
+            self.performFastForwardAction(activate: false)
+            
+        case .syncingService, .isAltJITEnabled: break
         }
     }
     
