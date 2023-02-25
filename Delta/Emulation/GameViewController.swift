@@ -1271,7 +1271,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
                 
-        case .isCustomFastForwardEnabled, .customFastForwardSpeed
+        case .isCustomFastForwardEnabled, .customFastForwardSpeed:
             self.performFastForwardAction(activate: false)
             
         case .syncingService, .isAltJITEnabled: break
