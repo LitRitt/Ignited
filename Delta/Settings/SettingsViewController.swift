@@ -425,7 +425,6 @@ private extension SettingsViewController
         {
             self.tableView.deselectRow(at: indexPath, animated: true)
         }
-        self.update()
     }
     
     @available(iOS 14, *)
@@ -557,8 +556,7 @@ extension SettingsViewController
         case .controllers: self.performSegue(withIdentifier: Segue.controllers.rawValue, sender: cell)
         case .controllerSkins: self.performSegue(withIdentifier: Segue.controllerSkins.rawValue, sender: cell)
         case .skinDownloads:
-            let row = SkinDownloadsRow(rawValue: indexPath.row)!
-            switch row
+            switch SkinDownloadsRow.allCases[indexPath.row]
             {
             case .litDesign: self.openSkinWebsite(site: "https://design.litritt.com")
             case .skinGenerator: self.openSkinWebsite(site: "https://generator.skins4delta.com")
@@ -568,8 +566,7 @@ extension SettingsViewController
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
         case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
         case .fastForward:
-            let row = FastForwardRow(rawValue: indexPath.row)!
-            switch row
+            switch FastForwardRow.allCases[indexPath.row]
             {
             case .speed:
                 self.changeCustomFastForwardSpeed()

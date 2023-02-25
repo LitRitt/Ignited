@@ -2382,7 +2382,7 @@
 		1C8AF4CC1A659AC6382CFC356A0E46E8 /* GPU3D.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GPU3D.h; sourceTree = "<group>"; };
 		1C9E2FAC3B0BCD4CAF1070323704128C /* F5Indi_Naboo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = F5Indi_Naboo.h; sourceTree = "<group>"; };
 		1CAC7BD1A9DBB436A379B63568AB915F /* ARMInterpreter_Branch.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = ARMInterpreter_Branch.cpp; sourceTree = "<group>"; };
-		1CBA76EDD27FA2D20B1EA0F0BF7F082C /* SwiftyDropbox */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SwiftyDropbox; path = libSwiftyDropbox.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CBA76EDD27FA2D20B1EA0F0BF7F082C /* libSwiftyDropbox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftyDropbox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CBCD15F20F318500823C4E873BB6568 /* RSTNibView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTNibView.h; path = Roxas/RSTNibView.h; sourceTree = "<group>"; };
 		1CD8779AE248D2A01EAEB45063005C71 /* TeamLogRoutes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TeamLogRoutes.swift; path = Source/SwiftyDropbox/Shared/Generated/TeamLogRoutes.swift; sourceTree = "<group>"; };
 		1D28337CD2487A0BB2C9A58E121AD619 /* UdpSocket.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = UdpSocket.hpp; sourceTree = "<group>"; };
@@ -2455,7 +2455,7 @@
 		249E3E889143B437B35E6E41D194917D /* NstApiNsf.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstApiNsf.hpp; sourceTree = "<group>"; };
 		24AA279D040856030E6831B7389C2433 /* File.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		24AFD84AB2FD9F2A10CA2637C8A63A31 /* ftlist.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ftlist.h; sourceTree = "<group>"; };
-		251C6319AD50CB50F18D50CBF727F8B2 /* GoogleToolboxForMac */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GoogleToolboxForMac; path = libGoogleToolboxForMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		251C6319AD50CB50F18D50CBF727F8B2 /* libGoogleToolboxForMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGoogleToolboxForMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C367213C4B5972B0DA19F3A696F4B4 /* Arm64Emitter.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = Arm64Emitter.cpp; sourceTree = "<group>"; };
 		25C73FB51C8BC62E6168E00A2CC8D348 /* Vector2.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = Vector2.hpp; sourceTree = "<group>"; };
 		25D7615688AA86FED1AC4BB20B4DDA61 /* GBATypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GBATypes.h; sourceTree = "<group>"; };
@@ -2712,7 +2712,7 @@
 		487C7DB0A7257F16983BEF8324BEF561 /* NESDeltaCore.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NESDeltaCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		48907C43DF6930F8003108EB5C6F7BA3 /* transferpak.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = transferpak.h; sourceTree = "<group>"; };
 		4898E73F069A8D1192DE3114754EC447 /* path.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = path.h; sourceTree = "<group>"; };
-		48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = ZIPFoundation; path = libZIPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZIPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A7DBA86C0D8564FAED27D377B220EC /* SessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionDelegate.swift; path = Source/SessionDelegate.swift; sourceTree = "<group>"; };
 		48B37C8C22C518C72C0677EACF6B53BB /* NESDeltaCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NESDeltaCore.release.xcconfig; sourceTree = "<group>"; };
 		48E3315E7F70EED2C80DA34DF0D097BE /* SDL_opengles2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SDL_opengles2.h; sourceTree = "<group>"; };
@@ -2799,7 +2799,7 @@
 		538BECA09BF84EBE9DC16158EAFD9155 /* KeyedContainers+ManagedValues.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "KeyedContainers+ManagedValues.swift"; sourceTree = "<group>"; };
 		538F365E94CEC13764BF9209E73CA629 /* callbacks.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = callbacks.h; sourceTree = "<group>"; };
 		539E45C97BD611AE9D428625F336FB19 /* glsl_CombinerProgramImpl.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = glsl_CombinerProgramImpl.cpp; sourceTree = "<group>"; };
-		53A730F4F4248E7E3F38F8409A2DE97C /* SMCalloutView */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SMCalloutView; path = libSMCalloutView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		53A730F4F4248E7E3F38F8409A2DE97C /* libSMCalloutView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSMCalloutView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D2A4DA49C20418137EF65E0F9A5665 /* Combiner.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = Combiner.cpp; sourceTree = "<group>"; };
 		53D5CF409D168FA18D40984A454645CB /* pif.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pif.h; sourceTree = "<group>"; };
 		53E70D960C0611443A19CD7A1BDD1E9A /* Color.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
@@ -2880,7 +2880,7 @@
 		5D5AB3E63C0BFFC9BC0F3867C18DD5A0 /* NstBoardBmcSuperHiK300in1.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBmcSuperHiK300in1.hpp; sourceTree = "<group>"; };
 		5D6B56947558FEC359A8FAD9606E9D30 /* SaveStateProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SaveStateProtocol.swift; sourceTree = "<group>"; };
 		5D77FFE1795D8F5D3B1ECC1F477F9831 /* RSTNavigationController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTNavigationController.h; path = Roxas/RSTNavigationController.h; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = Alamofire; path = libAlamofire.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* libAlamofire.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAlamofire.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D877B8846666B99FE70DE7336946A59 /* PACKED.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PACKED.h; sourceTree = "<group>"; };
 		5DA7BCFC9344385E53F2B5E834573B31 /* NstBoardSuperGamePocahontas2.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardSuperGamePocahontas2.hpp; sourceTree = "<group>"; };
 		5DD7DBBB3619EE9EEDB725158C211C8C /* GTLRDriveObjects.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLRDriveObjects.m; path = Source/GeneratedServices/Drive/GTLRDriveObjects.m; sourceTree = "<group>"; };
@@ -3532,7 +3532,7 @@
 		B068E4E7AE4132AAFBBBCBD24D7A4C81 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderOperation.m; path = SDWebImage/SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
 		B07414167222C856E21B5FC7AAF6B460 /* iniparser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = iniparser.h; sourceTree = "<group>"; };
 		B0765CD98C1CE1F2F85791B602FF2798 /* DeltaCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DeltaCore.release.xcconfig; sourceTree = "<group>"; };
-		B0B214D775196BA7CA8E17E53048A493 /* SDWebImage */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SDWebImage; path = libSDWebImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSDWebImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B408436ECD4E39C149235FDFEBD2E7 /* bootrom_hle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = bootrom_hle.h; sourceTree = "<group>"; };
 		B0F1D9E539EEFAF751D9F3EA1ED557D0 /* alist.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = alist.c; sourceTree = "<group>"; };
 		B1044F71995C46DC0FE073BBF10E9B13 /* statesaver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = statesaver.h; sourceTree = "<group>"; };
@@ -3657,7 +3657,7 @@
 		C0B8F180095207EB3A174AD98D9EEA8A /* dummy_video_capture.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = dummy_video_capture.c; sourceTree = "<group>"; };
 		C12184A008E6E70912A403A00B2444CD /* UICollectionViewCell+Nibs.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UICollectionViewCell+Nibs.m"; path = "Roxas/UICollectionViewCell+Nibs.m"; sourceTree = "<group>"; };
 		C16D5BBBB45CF1D60FC6565D2CDFF1D2 /* ImmediatePanGestureRecognizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImmediatePanGestureRecognizer.swift; sourceTree = "<group>"; };
-		C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GTMSessionFetcher; path = libGTMSessionFetcher.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1998E0D8085221AD87F89B614C10E52 /* libGTMSessionFetcher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGTMSessionFetcher.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C34BC62D8AE93049CDE7C85B326781 /* filters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = filters.h; sourceTree = "<group>"; };
 		C1E5AA6870CC28BC8E70CADC5B21CF0A /* NstBoardAcclaimMcAcc.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardAcclaimMcAcc.hpp; sourceTree = "<group>"; };
 		C22261743FC02934DB3B9E84F128F39D /* re2.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = re2.c; sourceTree = "<group>"; };
@@ -4045,7 +4045,7 @@
 		F5B730FDD71B3F180AF4FF2879E85E0B /* PluginAPI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PluginAPI.h; sourceTree = "<group>"; };
 		F5DBEFEA68B991BD01BA0CF549877402 /* NstBoardBmcCtc65.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBmcCtc65.hpp; sourceTree = "<group>"; };
 		F5EA96C879945AA782B43E8FA302CAF0 /* UIImage+GIF.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GIF.m"; path = "SDWebImage/UIImage+GIF.m"; sourceTree = "<group>"; };
-		F5FA45A44C42CC2CA3A324A3E914CE19 /* SQLite.swift */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SQLite.swift; path = libSQLite.swift.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FA45A44C42CC2CA3A324A3E914CE19 /* libSQLite.swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSQLite.swift.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61DE044858B67B90D6336505827DB42 /* Textures.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Textures.h; sourceTree = "<group>"; };
 		F61EAC2ED0D1C52D33AAF703B7E82775 /* NstImageDatabase.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstImageDatabase.hpp; sourceTree = "<group>"; };
 		F648589D7F71D454423402C87BE80886 /* pngerror.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pngerror.c; sourceTree = "<group>"; };
@@ -4097,7 +4097,7 @@
 		FD34A13CC25429000B2C00EA6D1109C1 /* OGLRender_3_2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OGLRender_3_2.h; sourceTree = "<group>"; };
 		FD3FE35BB5ADC5C277235F5BC08B9FF5 /* NstBoardTxcTw.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardTxcTw.hpp; sourceTree = "<group>"; };
 		FD4C92660B79698510464254D3D020F9 /* NstBoardSxRom.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardSxRom.hpp; sourceTree = "<group>"; };
-		FD519882861480B93B563B477CE1FA29 /* GoogleAPIClientForREST */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GoogleAPIClientForREST; path = libGoogleAPIClientForREST.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD519882861480B93B563B477CE1FA29 /* libGoogleAPIClientForREST.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGoogleAPIClientForREST.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDE03E8868705921E4D7F341382087D9 /* NLS.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = NLS.h; sourceTree = "<group>"; };
 		FE37500E60282A9A4012827461E8C2AC /* RTree.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RTree.swift; path = Sources/SQLite/Extensions/RTree.swift; sourceTree = "<group>"; };
 		FE9FC99EFA7CFDE7A20553D6A647FCE9 /* 65c816.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = 65c816.h; sourceTree = "<group>"; };
@@ -8168,7 +8168,7 @@
 		D8BFD1E747ACBB25E1D8A439EB1DF0FF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */,
+				5D797E9A5C5782CE845840781FA1CC81 /* libAlamofire.a */,
 				F93477FBF1E4488E506F9BB79AF57D38 /* DeltaCore */,
 				54ECA01A22C32DC89AB39DF9BFFD5FB6 /* DeltaCore.bundle */,
 				8DF503EB5BF2CD824792BFD2BBC0992F /* DSDeltaCore */,
@@ -8177,9 +8177,9 @@
 				30131336E11D11700AC99D314BDC275C /* GBADeltaCore.bundle */,
 				D4C010E8572FAE8B51DFDBF2300ECF30 /* GBCDeltaCore */,
 				1F23DBC67505E77BE77552D6D84A3DAA /* GBCDeltaCore.bundle */,
-				FD519882861480B93B563B477CE1FA29 /* GoogleAPIClientForREST */,
-				251C6319AD50CB50F18D50CBF727F8B2 /* GoogleToolboxForMac */,
-				C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */,
+				FD519882861480B93B563B477CE1FA29 /* libGoogleAPIClientForREST.a */,
+				251C6319AD50CB50F18D50CBF727F8B2 /* libGoogleToolboxForMac.a */,
+				C1998E0D8085221AD87F89B614C10E52 /* libGTMSessionFetcher.a */,
 				DBC0113CF73BE24525E670D024A85BE7 /* Harmony */,
 				4C22C82316853ABB688358B93486CF8E /* MelonDSDeltaCore */,
 				ECD0868BC2D1CFC2A22DDD56F79CF4B1 /* melonDS.bundle */,
@@ -8189,13 +8189,13 @@
 				487C7DB0A7257F16983BEF8324BEF561 /* NESDeltaCore.bundle */,
 				9CA80A61ABF26FA89F4E22A30284B0DD /* libPods-Delta.a */,
 				4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */,
-				B0B214D775196BA7CA8E17E53048A493 /* SDWebImage */,
-				53A730F4F4248E7E3F38F8409A2DE97C /* SMCalloutView */,
+				B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */,
+				53A730F4F4248E7E3F38F8409A2DE97C /* libSMCalloutView.a */,
 				FA400832D3E46B39D5EC83D09A7572FC /* SNESDeltaCore */,
 				7D751206A951D9727B38F71A2BB990AA /* SNESDeltaCore.bundle */,
-				F5FA45A44C42CC2CA3A324A3E914CE19 /* SQLite.swift */,
-				1CBA76EDD27FA2D20B1EA0F0BF7F082C /* SwiftyDropbox */,
-				48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */,
+				F5FA45A44C42CC2CA3A324A3E914CE19 /* libSQLite.swift.a */,
+				1CBA76EDD27FA2D20B1EA0F0BF7F082C /* libSwiftyDropbox.a */,
+				48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8848,10 +8848,6 @@
 				1320E5BFA1D8B4B505EA483ED8A39EA2 /* Err.hpp in Headers */,
 				58ECB8B387694A62EACE695D41C846D0 /* Event.hpp in Headers */,
 				64591A567DE87303BDC45618602D464E /* Export.hpp in Headers */,
-				64591A567DE87303BDC45618602D464E /* Export.hpp in Headers */,
-				64591A567DE87303BDC45618602D464E /* Export.hpp in Headers */,
-				64591A567DE87303BDC45618602D464E /* Export.hpp in Headers */,
-				64591A567DE87303BDC45618602D464E /* Export.hpp in Headers */,
 				480710B240A5CDFF0559E787DF0E603E /* expr.cpp.h in Headers */,
 				D122AE9661B5C72F28248B8D0F657BC7 /* exprNode.h in Headers */,
 				31C7FDFCD4F92F8CB515C341B0521551 /* ffmpeg.h in Headers */,
@@ -8971,7 +8967,6 @@
 				6C99798BDFEFD3B20CE8C05C36605A05 /* VideoMode.hpp in Headers */,
 				61DDE33DB21B0485A22AB432474C44D1 /* View.hpp in Headers */,
 				5FB2D13E4B91CF3712AE59C3527CA3B6 /* Window.hpp in Headers */,
-				5FB2D13E4B91CF3712AE59C3527CA3B6 /* Window.hpp in Headers */,
 				345DB77CA3ACD8F5349E96CB1974BDE2 /* WindowHandle.hpp in Headers */,
 				8F0A7C9537CC614C4674F9B2D2A9B9FA /* WindowStyle.hpp in Headers */,
 			);
@@ -8994,7 +8989,6 @@
 				A62E45F7B06CBEBA72B66B96EE5E7E79 /* ARMInterpreter_Branch.h in Headers */,
 				0C9923278CE84C8DFCD515E22D038E5B /* ARMInterpreter_LoadStore.h in Headers */,
 				AD0E344A997AD26FC7549EC26B651E54 /* ARMJIT.h in Headers */,
-				3DB7323EA3C2947107848876AC1232AA /* ARMJIT_Compiler.h in Headers */,
 				3DB7323EA3C2947107848876AC1232AA /* ARMJIT_Compiler.h in Headers */,
 				BE565F3778315FD427DDF6D5954EA12E /* ARMJIT_Internal.h in Headers */,
 				4DA630F8407D87AA8945A199AE0FD4AC /* ARMJIT_Memory.h in Headers */,
@@ -9060,8 +9054,6 @@
 				6C1C5F53B8923B6CDC9C72A95CD17A48 /* assem_x64.h in Headers */,
 				C383175B44EA6E9E0183F88266B3CFF7 /* assem_x86.h in Headers */,
 				9DD4D560458F67FAFA2FEE50C63F2157 /* assemble.h in Headers */,
-				9DD4D560458F67FAFA2FEE50C63F2157 /* assemble.h in Headers */,
-				0C284F60C3B0BAA1DC839BF3E1AEC44A /* assemble_struct.h in Headers */,
 				0C284F60C3B0BAA1DC839BF3E1AEC44A /* assemble_struct.h in Headers */,
 				D03D59240777C6D768BEDC173E01C8FF /* audio.h in Headers */,
 				5FB7801D1F95A1B18A2B96E3A54C7C8B /* audio_out_backend.h in Headers */,
@@ -9070,7 +9062,6 @@
 				48618265AD48A0C16361A64FEDF52EC3 /* bldno.h in Headers */,
 				99D199737A22001D43A2FE0A62424820 /* bootrom_hle.h in Headers */,
 				D7690E9C48AD553615A4E3BCCD09EA7D /* cached_interp.h in Headers */,
-				3CBF4C3E5B87549F49989D340468FA3E /* callbacks.h in Headers */,
 				3CBF4C3E5B87549F49989D340468FA3E /* callbacks.h in Headers */,
 				596B5F7D3D539458F423C2ED01BF2B84 /* cart.h in Headers */,
 				F27810503A84E1DF0956A50AFF1B9685 /* cart_rom.h in Headers */,
@@ -9102,7 +9093,6 @@
 				639336CE68C120C515CC3852F2BFCE74 /* dd_controller.h in Headers */,
 				F75AA663567F70EB6EE15E16E8FAED0E /* DebugDump.h in Headers */,
 				4097865A62524EBB97CACA88B1BE2308 /* Debugger.h in Headers */,
-				782907F055EA6D3FC4F2C09832180AEF /* debugger.h in Headers */,
 				782907F055EA6D3FC4F2C09832180AEF /* debugger.h in Headers */,
 				2708FDA15B13FA1487A3C19952BB85F0 /* DepthBuffer.h in Headers */,
 				6BC4CCA4C9146427474BE443DF5921D8 /* DepthBufferRender.h in Headers */,
@@ -9234,7 +9224,6 @@
 				766364A61BD96E8E06B3BB0623F11575 /* instr_counters.h in Headers */,
 				8BE8E4EF68AD338F6E09101AE8B45C99 /* internal.h in Headers */,
 				AA8BFFEBD1899027723D5A4460D06960 /* interpret.h in Headers */,
-				AA8BFFEBD1899027723D5A4460D06960 /* interpret.h in Headers */,
 				1672975D7F15FE31FF63BE23A778D1DE /* interrupt.h in Headers */,
 				0607391166E576D57529A8213C27EE2B /* ioapi.h in Headers */,
 				5C9EE4B2855B3E26304B8EBE6D527961 /* joybus.h in Headers */,
@@ -9248,18 +9237,11 @@
 				ED9E1F1714C7881F7457330B8EB57F2F /* Log.h in Headers */,
 				C212D5F9CCB38B2C9C6EC61F6EE5DB9A /* m64282fp.h in Headers */,
 				0CFCDE8B5ED872227B37CA05AD43202B /* m64p_common.h in Headers */,
-				0CFCDE8B5ED872227B37CA05AD43202B /* m64p_common.h in Headers */,
-				4AFF8DEB69359B8B2CA8177ACD939A59 /* m64p_config.h in Headers */,
 				4AFF8DEB69359B8B2CA8177ACD939A59 /* m64p_config.h in Headers */,
 				84B90202FCB206D3EE5CB11B42A4FF8C /* m64p_debugger.h in Headers */,
-				84B90202FCB206D3EE5CB11B42A4FF8C /* m64p_debugger.h in Headers */,
-				155C6B4AC56F537E3939623BFDEB49B6 /* m64p_frontend.h in Headers */,
 				155C6B4AC56F537E3939623BFDEB49B6 /* m64p_frontend.h in Headers */,
 				D2AB544407CCD947AEC9FE0A42BD6A94 /* m64p_plugin.h in Headers */,
-				D2AB544407CCD947AEC9FE0A42BD6A94 /* m64p_plugin.h in Headers */,
 				E14EF0F9CC8432791A33CDA29691E656 /* m64p_types.h in Headers */,
-				E14EF0F9CC8432791A33CDA29691E656 /* m64p_types.h in Headers */,
-				D407F246DE6CCDB2477ACF3302500F72 /* m64p_vidext.h in Headers */,
 				D407F246DE6CCDB2477ACF3302500F72 /* m64p_vidext.h in Headers */,
 				B91E4B1C667B72D91AF291405D413583 /* main.h in Headers */,
 				C0D3240457C5FBB34D12CB60E56EAEE5 /* mbc3_rtc.h in Headers */,
@@ -9308,8 +9290,6 @@
 				D6E3B6785FEB890BC5F5DB58A53D9E0D /* PluginAPI.h in Headers */,
 				07CD31E48E6448463B2C3AF5BABEE26B /* plugins_compat.h in Headers */,
 				0CD2F9DBC9A4A151FFDB3807E9DCE1BA /* png.h in Headers */,
-				0CD2F9DBC9A4A151FFDB3807E9DCE1BA /* png.h in Headers */,
-				4DFA14954BF5B65C2EE7980325CD193E /* pngconf.h in Headers */,
 				4DFA14954BF5B65C2EE7980325CD193E /* pngconf.h in Headers */,
 				03F69E1B6A8FE4C726F20F3808FFC4FB /* pngdebug.h in Headers */,
 				79DBECA257851FBCB205412764428665 /* PngFile.h in Headers */,
@@ -9318,9 +9298,6 @@
 				4AE548438346884D8C008C3725A5731E /* pngpriv.h in Headers */,
 				B3F3911E43AC3362EFF36C379F53482C /* pngstest-errors.h in Headers */,
 				06FB8FD5F0A5AAE514A086E4C8DCA8A1 /* pngstruct.h in Headers */,
-				06FB8FD5F0A5AAE514A086E4C8DCA8A1 /* pngstruct.h in Headers */,
-				EA9018991B3D1E7F972855D322B8402F /* pngusr.h in Headers */,
-				EA9018991B3D1E7F972855D322B8402F /* pngusr.h in Headers */,
 				EA9018991B3D1E7F972855D322B8402F /* pngusr.h in Headers */,
 				FB4CC6A36E964220C63B0E2A59173476 /* PostProcessor.h in Headers */,
 				23C86C9C4B27471DDDB716565A00F9CF /* preproc.h in Headers */,
@@ -9337,7 +9314,6 @@
 				F8456082844E1B329908912F845EE35E /* readpng2.h in Headers */,
 				74297C31967EB18C71FCB4D36664DAF5 /* recomp.h in Headers */,
 				98A945722B4E2B419F453E297C09BC1A /* recomp_types.h in Headers */,
-				0D3DF0B2A22FFD61063C98ADD6597183 /* regcache.h in Headers */,
 				0D3DF0B2A22FFD61063C98ADD6597183 /* regcache.h in Headers */,
 				06F8DBEA4D853FFBE22D99A5A1B130AE /* resource.h in Headers */,
 				27E301E6FA110770C8916E8D2FD6038C /* Revision.h in Headers */,
@@ -9432,7 +9408,6 @@
 				EDAB744BBA4BCE3883336694ACA84DC8 /* writepng.h in Headers */,
 				7CF75B42B130C582663AE9836DD9B194 /* WriteToRDRAM.h in Headers */,
 				D48A9D81633B41243E369A033A340C2F /* wst.h in Headers */,
-				9597CA8E12E580E17B545CF789A2CC98 /* xxhash.h in Headers */,
 				9597CA8E12E580E17B545CF789A2CC98 /* xxhash.h in Headers */,
 				13BFA5D2EE0427A36F80C6433D518B8E /* zconf.h in Headers */,
 				086F748E1A9BAFE3B7F5C38FE204832F /* ZilmarGFX_1_3.h in Headers */,
@@ -10130,7 +10105,7 @@
 			);
 			name = SDWebImage;
 			productName = SDWebImage;
-			productReference = B0B214D775196BA7CA8E17E53048A493 /* SDWebImage */;
+			productReference = B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		38A7AA32705A9662332E76FA75B50858 /* MelonDSDeltaCore */ = {
@@ -10168,7 +10143,7 @@
 			);
 			name = SQLite.swift;
 			productName = SQLite.swift;
-			productReference = F5FA45A44C42CC2CA3A324A3E914CE19 /* SQLite.swift */;
+			productReference = F5FA45A44C42CC2CA3A324A3E914CE19 /* libSQLite.swift.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		530F469AED058B94728C278CCA514500 /* DeltaCore */ = {
@@ -10334,7 +10309,7 @@
 			);
 			name = ZIPFoundation;
 			productName = ZIPFoundation;
-			productReference = 48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */;
+			productReference = 48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		B5D1BA64AC676FF46408FCDE19A05767 /* Roxas */ = {
@@ -10368,7 +10343,7 @@
 			);
 			name = SMCalloutView;
 			productName = SMCalloutView;
-			productReference = 53A730F4F4248E7E3F38F8409A2DE97C /* SMCalloutView */;
+			productReference = 53A730F4F4248E7E3F38F8409A2DE97C /* libSMCalloutView.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D47C581D39D227080F83B16A22A56664 /* GoogleToolboxForMac */ = {
@@ -10385,7 +10360,7 @@
 			);
 			name = GoogleToolboxForMac;
 			productName = GoogleToolboxForMac;
-			productReference = 251C6319AD50CB50F18D50CBF727F8B2 /* GoogleToolboxForMac */;
+			productReference = 251C6319AD50CB50F18D50CBF727F8B2 /* libGoogleToolboxForMac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D676E21115185671D7258A56944ABE98 /* GTMSessionFetcher */ = {
@@ -10402,7 +10377,7 @@
 			);
 			name = GTMSessionFetcher;
 			productName = GTMSessionFetcher;
-			productReference = C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */;
+			productReference = C1998E0D8085221AD87F89B614C10E52 /* libGTMSessionFetcher.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D7958E869B6C0073DB3025514393D7A3 /* GoogleAPIClientForREST */ = {
@@ -10420,7 +10395,7 @@
 			);
 			name = GoogleAPIClientForREST;
 			productName = GoogleAPIClientForREST;
-			productReference = FD519882861480B93B563B477CE1FA29 /* GoogleAPIClientForREST */;
+			productReference = FD519882861480B93B563B477CE1FA29 /* libGoogleAPIClientForREST.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		DB59C68809324297BEDAF0CC3F931B27 /* GBCDeltaCore */ = {
@@ -10495,7 +10470,7 @@
 			);
 			name = Alamofire;
 			productName = Alamofire;
-			productReference = 5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */;
+			productReference = 5D797E9A5C5782CE845840781FA1CC81 /* libAlamofire.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		FF39B7A1D9F00620D9F56635ABBB2C03 /* SwiftyDropbox */ = {
@@ -10514,7 +10489,7 @@
 			);
 			name = SwiftyDropbox;
 			productName = SwiftyDropbox;
-			productReference = 1CBA76EDD27FA2D20B1EA0F0BF7F082C /* SwiftyDropbox */;
+			productReference = 1CBA76EDD27FA2D20B1EA0F0BF7F082C /* libSwiftyDropbox.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -10524,7 +10499,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					3F2C1776D90B62B156DB52C41A5C419C = {
+						LastSwiftMigration = "";
+					};
+					FF39B7A1D9F00620D9F56635ABBB2C03 = {
+						LastSwiftMigration = "";
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 11.0";
@@ -11194,7 +11177,6 @@
 				2BC2BB178AC7CBFFCF85C03F6CF60A1C /* txWidestringWrapper.cpp in Sources */,
 				7A914AE8439D1E345E8D7359930C4576 /* VI.cpp in Sources */,
 				45195ED1CB958C58F3AD6D329094A285 /* video_capture_backend.c in Sources */,
-				5E2E5979813CAEBB76617D229B539A40 /* xxhash.c in Sources */,
 				5E2E5979813CAEBB76617D229B539A40 /* xxhash.c in Sources */,
 				3C237B0C04B8C25EA1818A407170D381 /* ZlutTexture.cpp in Sources */,
 				C451574651DD1E09E2EC19AD04066A14 /* ZSort.cpp in Sources */,
@@ -12146,7 +12128,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/ZIPFoundation/ZIPFoundation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/ZIPFoundation/ZIPFoundation.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12187,7 +12169,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SMCalloutView/SMCalloutView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SMCalloutView/SMCalloutView.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12250,7 +12232,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SDWebImage/SDWebImage.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12327,6 +12309,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -12383,7 +12366,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleAPIClientForREST/GoogleAPIClientForREST-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/GoogleAPIClientForREST/GoogleAPIClientForREST.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12408,7 +12391,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/GoogleToolboxForMac/GoogleToolboxForMac.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12620,6 +12603,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -12655,7 +12639,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleAPIClientForREST/GoogleAPIClientForREST-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/GoogleAPIClientForREST/GoogleAPIClientForREST.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12679,7 +12663,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/Alamofire/Alamofire.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12728,7 +12712,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12770,7 +12754,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SMCalloutView/SMCalloutView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SMCalloutView/SMCalloutView.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12812,7 +12796,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/GoogleToolboxForMac/GoogleToolboxForMac.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12835,7 +12819,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12853,7 +12837,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SDWebImage/SDWebImage.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12892,7 +12876,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13003,7 +12987,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SQLite/SQLite.swift.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13014,7 +12998,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -13146,7 +13130,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyDropbox/SwiftyDropbox-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SwiftyDropbox/SwiftyDropbox.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13157,7 +13141,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -13195,7 +13179,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/ZIPFoundation/ZIPFoundation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/ZIPFoundation/ZIPFoundation.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13244,7 +13228,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/Alamofire/Alamofire.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13300,7 +13284,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13343,7 +13327,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SQLite/SQLite.swift.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13354,7 +13338,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -13366,7 +13350,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13409,7 +13393,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyDropbox/SwiftyDropbox-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/SwiftyDropbox/SwiftyDropbox.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13420,7 +13404,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -13451,7 +13435,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/GTMSessionFetcher/GTMSessionFetcher.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13473,7 +13457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13492,7 +13476,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = Headers/Public/GTMSessionFetcher/GTMSessionFetcher.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";

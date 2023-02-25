@@ -15,7 +15,7 @@ import MelonDSDeltaCore
 
 import Roxas
 
-protocol CheatsViewControllerDelegate: class
+protocol CheatsViewControllerDelegate: AnyObject
 {
     func cheatsViewController(_ cheatsViewController: CheatsViewController, activateCheat cheat: Cheat)
     func cheatsViewController(_ cheatsViewController: CheatsViewController, deactivateCheat cheat: Cheat)
