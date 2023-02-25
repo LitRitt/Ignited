@@ -194,7 +194,7 @@ private extension ContributorsView
         guard let hostingController = viewModel.hostingController else { return }
         
         let safariViewController = SFSafariViewController(url: url)
-        safariViewController.preferredControlTintColor = .deltaPurple
+        safariViewController.preferredControlTintColor = .ignitedOrange
         hostingController.present(safariViewController, animated: true)
     }
 }

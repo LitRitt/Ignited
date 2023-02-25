@@ -346,7 +346,7 @@ private extension SettingsViewController
     {
         let safariURL = URL(string: site)!
         let safariViewController = SFSafariViewController(url: safariURL)
-        safariViewController.preferredControlTintColor = .deltaPurple
+        safariViewController.preferredControlTintColor = .ignitedOrange
         self.present(safariViewController, animated: true, completion: nil)
     }
     
@@ -366,7 +366,7 @@ private extension SettingsViewController
                 let safariURL = URL(string: "https://twitter.com/" + username)!
                 
                 let safariViewController = SFSafariViewController(url: safariURL)
-                safariViewController.preferredControlTintColor = .deltaPurple
+                safariViewController.preferredControlTintColor = .ignitedOrange
                 self.present(safariViewController, animated: true, completion: nil)
             }
         }
@@ -541,7 +541,7 @@ extension SettingsViewController
             case .enabled: break
             }
             
-        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .fastForward, .patreon, .credits: break
+        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits: break
         }
 
         return cell
@@ -584,7 +584,7 @@ extension SettingsViewController
                 let patreonURL = URL(string: "https://www.patreon.com/litritt")!
                 
                 let safariViewController = SFSafariViewController(url: patreonURL)
-                safariViewController.preferredControlTintColor = .deltaPurple
+                safariViewController.preferredControlTintColor = .ignitedOrange
                 self.present(safariViewController, animated: true, completion: nil)
             }
             

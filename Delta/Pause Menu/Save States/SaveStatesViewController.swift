@@ -12,7 +12,7 @@ import CoreData
 import DeltaCore
 import Roxas
 
-protocol SaveStatesViewControllerDelegate: class
+protocol SaveStatesViewControllerDelegate: AnyObject
 {
     func saveStatesViewController(_ saveStatesViewController: SaveStatesViewController, updateSaveState saveState: SaveState)
     func saveStatesViewController(_ saveStatesViewController: SaveStatesViewController, loadSaveState saveState: SaveStateProtocol)
@@ -507,7 +507,7 @@ private extension SaveStatesViewController
         let toastView = RSTToastView()
         toastView.textLabel.text = Settings.sortSaveStatesByOldestFirst ? NSLocalizedString("Oldest First", comment: "") : NSLocalizedString("Newest First", comment: "")
         toastView.presentationEdge = .top
-        toastView.tintColor = UIColor.deltaPurple
+        toastView.tintColor = UIColor.ignitedOrange
         toastView.show(in: self.view, duration: 2.0)
     }
     

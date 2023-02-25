@@ -150,7 +150,7 @@ private extension AppDelegate
     
     func configureAppearance()
     {
-        self.window?.tintColor = UIColor.deltaPurple
+        self.window?.tintColor = UIColor.ignitedOrange
     }
 }
 

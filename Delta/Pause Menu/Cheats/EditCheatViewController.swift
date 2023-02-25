@@ -12,7 +12,7 @@ import CoreData
 import DeltaCore
 import Roxas
 
-protocol EditCheatViewControllerDelegate: class
+protocol EditCheatViewControllerDelegate: AnyObject
 {
     func editCheatViewController(_ editCheatViewController: EditCheatViewController, activateCheat cheat: Cheat, previousCheat: Cheat?)
     func editCheatViewController(_ editCheatViewController: EditCheatViewController, deactivateCheat cheat: Cheat)
