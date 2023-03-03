@@ -253,6 +253,9 @@ private extension SettingsViewController
                 return self.view.traitCollection.forceTouchCapability != .available
             }
             
+        // Hide Rewind section until GBC crashes are fixed
+        case .rewind: return true
+            
         default: return false
         }
     }
