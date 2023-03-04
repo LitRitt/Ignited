@@ -30,6 +30,7 @@ private extension SettingsViewController
         case cores
         case patreon
         case credits
+        case updates
     }
     
     enum Segue: String
@@ -58,7 +59,6 @@ private extension SettingsViewController
         case riley
         case shane
         case litRitt
-        case updates
         case contributors
         case softwareLicenses
     }
@@ -252,6 +252,17 @@ private extension SettingsViewController
             else
             {
                 return self.view.traitCollection.forceTouchCapability != .available
+            }
+            
+        case .updates:
+            if #unavailable(iOS 14)
+            {
+                return true
+            }
+            else
+            {
+                return false
+                
             }
             
         // Hide Rewind section until GBC crashes are fixed
@@ -551,7 +562,7 @@ extension SettingsViewController
             case .enabled: break
             }
             
-        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits: break
+        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
         }
 
         return cell
@@ -605,15 +616,15 @@ extension SettingsViewController
             case .riley: self.openTwitter(username: "rileytestut")
             case .shane: self.openTwitter(username: "shanegillio")
             case .litRitt: self.openTwitter(username: "lit_ritt")
-            case .updates:
-                guard#available(iOS 14, *) else { return }
-                self.showUpdates()
             case .contributors:
                 guard #available(iOS 14, *) else { return }
                 self.showContributors()
                 
             case .softwareLicenses: break
             }
+        case .updates:
+            guard #available(iOS 14, *) else { return }
+            self.showUpdates()
         }
     }
     
@@ -626,13 +637,17 @@ extension SettingsViewController
             let row = CreditsRow(rawValue: indexPath.row)!
             switch row
             {
-            case .contributors, .updates:
+            case .contributors:
                 // Hide row on iOS 13 and below
                 guard #unavailable(iOS 14) else { break primary }
                 return 0.0
                 
             default: break
             }
+            
+        case .updates:
+            guard #unavailable(iOS 14) else { break primary }
+            return 0.0
             
         default: break
         }

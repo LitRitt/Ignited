@@ -4,6 +4,27 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>0.6.1</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.6.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Change formatting of updates screen</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Move updates to its own section in settings</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>0.6.0</string>
 		<key>link</key>
 		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.6.0</string>
