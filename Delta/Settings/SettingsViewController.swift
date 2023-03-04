@@ -58,6 +58,7 @@ private extension SettingsViewController
         case riley
         case shane
         case litRitt
+        case updates
         case contributors
         case softwareLicenses
     }
@@ -431,6 +432,13 @@ private extension SettingsViewController
     }
     
     @available(iOS 14, *)
+    func showUpdates()
+    {
+        let hostingController = UpdatesView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    @available(iOS 14, *)
     func showContributors()
     {
         let hostingController = ContributorsView.makeViewController()
@@ -597,6 +605,9 @@ extension SettingsViewController
             case .riley: self.openTwitter(username: "rileytestut")
             case .shane: self.openTwitter(username: "shanegillio")
             case .litRitt: self.openTwitter(username: "lit_ritt")
+            case .updates:
+                guard#available(iOS 14, *) else { return }
+                self.showUpdates()
             case .contributors:
                 guard #available(iOS 14, *) else { return }
                 self.showContributors()
@@ -615,7 +626,7 @@ extension SettingsViewController
             let row = CreditsRow(rawValue: indexPath.row)!
             switch row
             {
-            case .contributors:
+            case .contributors, .updates:
                 // Hide row on iOS 13 and below
                 guard #unavailable(iOS 14) else { break primary }
                 return 0.0

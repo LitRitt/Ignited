@@ -33,6 +33,9 @@
 
 /* Begin PBXBuildFile section */
 		1FA4ABA79AB72914FE414A61 /* libPods-Delta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC866E433B3BA9AE18ABA1EC /* libPods-Delta.a */; };
+		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
+		AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F6029B2C0F4005B27DD /* UpdatesView.swift */; };
+		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
 		BF00BEA625B758AA00C8607D /* SystemBIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00BEA525B758AA00C8607D /* SystemBIOS.swift */; };
 		BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */; };
 		BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF04E6FE1DB8625C000F35D3 /* ControllerSkinsViewController.swift */; };
@@ -209,6 +212,9 @@
 		22506DA00971C4300AF90A35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19FF50F55441BC2B2248241 /* Pods-Delta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Delta/Pods-Delta.release.xcconfig"; sourceTree = "<group>"; };
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
+		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
+		AC503F6029B2C0F4005B27DD /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
+		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
 		BF00BEA525B758AA00C8607D /* SystemBIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemBIOS.swift; sourceTree = "<group>"; };
 		BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = openvgdb.sqlite; sourceTree = "<group>"; };
 		BF0418131D01E93400E85BCF /* GBADeltaCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBADeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -417,6 +423,15 @@
 				AC11456529A444C4005E95A8 /* DeltaCore */,
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		AC503F5D29B2B863005B27DD /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+				AC503F5E29B2BD25005B27DD /* Update.swift */,
+				AC503F6029B2C0F4005B27DD /* UpdatesView.swift */,
+			);
+			path = Updates;
 			sourceTree = "<group>";
 		};
 		BF090CEE1B490C1A00DCAB45 /* Extensions */ = {
@@ -750,6 +765,7 @@
 		BFAA1FEB1B8AA4E800495943 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				AC503F5D29B2B863005B27DD /* Updates */,
 				BFAA1FEC1B8AA4FA00495943 /* Settings.swift */,
 				BF5E7F451B9A652600AE44F8 /* Settings.storyboard */,
 				BF5E7F431B9A650B00AE44F8 /* SettingsViewController.swift */,
@@ -812,6 +828,7 @@
 				BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */,
 				D5D797E7298DC9E200738869 /* cheatbase.zip */,
 				D53415A6298C78BC00FD67B1 /* Contributors.plist */,
+				AC503F6229B2C709005B27DD /* Updates.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1049,6 +1066,7 @@
 				BF3540001C5DA3C500C1184C /* PausePresentationControllerContentView.xib in Resources */,
 				BF5E7F461B9A652600AE44F8 /* Settings.storyboard in Resources */,
 				BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */,
+				AC503F6329B2C709005B27DD /* Updates.plist in Resources */,
 				D53415A7298C78BC00FD67B1 /* Contributors.plist in Resources */,
 				BF71CF8A1FE904B1001F1613 /* GameTableViewCell.xib in Resources */,
 				BFFC46461D59861000AF2CC6 /* LaunchScreen.storyboard in Resources */,
@@ -1192,6 +1210,7 @@
 				BFA0D1271D3AE1F600565894 /* GameViewController.swift in Sources */,
 				BF59428A1E09BC8B0051894B /* _SaveState.swift in Sources */,
 				BFC1F2CC22F9515F00606A45 /* CopyDeepLinkActivity.swift in Sources */,
+				AC503F5F29B2BD25005B27DD /* Update.swift in Sources */,
 				BF5942801E09BC830051894B /* SaveState.swift in Sources */,
 				BF59428E1E09BCFB0051894B /* ImportController.swift in Sources */,
 				BF13A7581D5D2FD9000BB055 /* EmulatorCore+Cheats.swift in Sources */,
@@ -1201,6 +1220,7 @@
 				BF6424831F5B8F3F00D6AB44 /* ListMenuViewController.swift in Sources */,
 				BF1020E31F95B05B00313182 /* DeltaToDelta2.xcmappingmodel in Sources */,
 				BF6BF3131EB7E47F008E83CD /* ImportOption.swift in Sources */,
+				AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */,
 				BFEE943D23F2180200CDA07D /* Delta4ToDelta5.xcmappingmodel in Sources */,
 				BF31878B1D489AAA00BD020D /* CheatValidator.swift in Sources */,
 				BFFC46201D59823500AF2CC6 /* InitialGamesStoryboardSegue.swift in Sources */,
@@ -1509,7 +1529,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 66;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1517,7 +1537,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.5.3;
+				MARKETING_VERSION = 0.6.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.ignited;
 				PROVISIONING_PROFILE = "";
@@ -1543,7 +1563,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 66;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1551,7 +1571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.5.3;
+				MARKETING_VERSION = 0.6.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DIMPACTOR";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.ignited;
 				PROVISIONING_PROFILE = "";

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>version</key>
+		<string>0.6.0</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.6.0</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>In-app updates changelog</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.5.3</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.5.3</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Update local multiplayer controller settings logic</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Remove rewind feature due to crashes</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.5.2</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.5.2</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Add new GBC skin with matching style and previews</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.5.1</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.5.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Implemented preview feature in default GBA skin</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.5.0</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.5.0</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Controller skin previews in settings</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.4.1</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.4.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Made the custom fast forward speed popup pretty and informative</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed crashes on iPad related to popup menus</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed crash in player 2-4 settings page</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.4.0</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.4.0</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Custom fast forward speed settings</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.3.0</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.3.0</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Links to skin download sites added to settings</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Inset and rounded settings tables</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Add/update footers for all settings sections</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.2.1</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.2.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Genesis core made available</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Remove beta checks</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Update contributors page</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Genesis file extension fix</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.2.0</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.2.0</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Extended MFi input support</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Save state rewind</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Local multiplayer</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Update contributors page</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Update links in settings</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.1.0</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>New app icon</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>New box art</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>New DS home icon</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>New launch screen icon</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>New default GBA skin</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>
