@@ -149,7 +149,8 @@ struct VersionCell: View
             HStack {
                 Text("Version " + self.version)
                     .bold()
-                    .font(.system(size: 20)) // Match Settings screen
+                    .foregroundColor(Color(UIColor.ignitedOrange))
+                    .font(.system(size: 20))
                 
                 Spacer()
                 
@@ -200,25 +201,25 @@ struct ChangeCell: View
                     switch self.type
                     {
                     case "feature":
-                        Text("[Feature]")
+                        Text("[Feature]").bold()
                             .foregroundColor(.green)
                             .font(.system(size: 17))
                     case "update":
-                        Text("[Update]")
+                        Text("[Update]").bold()
                             .foregroundColor(.yellow)
                             .font(.system(size: 17))
                     case "bugfix":
-                        Text("[BugFix]")
+                        Text("[BugFix]").bold()
                             .foregroundColor(.red)
                             .font(.system(size: 17))
                     default:
-                        Text(self.type)
+                        Text("[Change]").bold()
                             .font(.system(size: 17))
                     }
                 }
                 
                 self.description
-                    .font(.system(size: 15))
+                    .font(.system(size: 17))
                 
                 Spacer()
                 
