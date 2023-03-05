@@ -4,6 +4,27 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>0.6.2</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.6.2</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Support for patron OTA installation</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fix controller skin previews not showing on standard size iPhones</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>0.6.1</string>
 		<key>link</key>
 		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.6.1</string>
