@@ -409,23 +409,28 @@ private extension SettingsViewController
     
     func changeCustomFastForwardSpeed()
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay, and are useful for saving time in cutscenes and dialogue.\n\nSpeeds below 100% will slow down gameplay, and are useful for precisely timing inputs.", comment: ""), preferredStyle: .alert)
+        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay. Speeds below 100% will slow down gameplay.", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        var speedOneTitle = "🐢 25%"
-        var speedTwoTitle = "🍯 50%"
-        var speedThreeTitle = "🏃🏽 200%"
-        var speedFourTitle = "🐇 400%"
-        var speedFiveTitle = "🏎️ 800%"
-        var speedSixTitle = "⚡️ 1600%"
+        var speedOneTitle = "25%"
+        var speedTwoTitle = "50%"
+        var speedThreeTitle = "150%"
+        var speedFourTitle = "200%"
+        var speedFiveTitle = "400%"
+        var speedSixTitle = "800%"
+        var speedSevenTitle = "1600%"
         
         switch Settings.customFastForwardSpeed
         {
         case 0.25: speedOneTitle += " ✓"
         case 0.5: speedTwoTitle += " ✓"
-        case 2.0: speedThreeTitle += " ✓"
-        case 4.0: speedFourTitle += " ✓"
-        case 8.0: speedFiveTitle += " ✓"
-        case 16.0: speedSixTitle += " ✓"
+        case 1.5: speedThreeTitle += " ✓"
+        case 2.0: speedFourTitle += " ✓"
+        case 4.0: speedFiveTitle += " ✓"
+        case 8.0: speedSixTitle += " ✓"
+        case 16.0: speedSevenTitle += " ✓"
         default: break
         }
         
@@ -436,16 +441,19 @@ private extension SettingsViewController
             Settings.customFastForwardSpeed = 0.5
         }))
         alertController.addAction(UIAlertAction(title: speedThreeTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 1.5
+        }))
+        alertController.addAction(UIAlertAction(title: speedFourTitle, style: .default, handler: { (action) in
             Settings.customFastForwardSpeed = 2.0
         }))
         if Settings.isUnsafeFastForwardSpeedsEnabled {
-            alertController.addAction(UIAlertAction(title: speedFourTitle, style: .default, handler: { (action) in
+            alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
                 Settings.customFastForwardSpeed = 4.0
             }))
-            alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
+            alertController.addAction(UIAlertAction(title: speedSixTitle, style: .default, handler: { (action) in
                 Settings.customFastForwardSpeed = 8.0
             }))
-            alertController.addAction(UIAlertAction(title: speedSixTitle, style: .default, handler: { (action) in
+            alertController.addAction(UIAlertAction(title: speedSevenTitle, style: .default, handler: { (action) in
                 Settings.customFastForwardSpeed = 16.0
             }))
         }

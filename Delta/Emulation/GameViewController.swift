@@ -1123,10 +1123,8 @@ extension GameViewController
                 let promptSpeedEnabled = Settings.isPromptSpeedEnabled
                 
                 if promptSpeedEnabled {
-                    if let pauseViewController = self.pauseViewController
-                    {
-                        pauseViewController.dismiss()
-                        self.resumeEmulation() // Emulation pauses until input without this
+                    if let pauseView = self.pauseViewController {
+                        pauseView.dismiss()
                     }
                     self.promptFastForwardSpeed()
                 } else {
@@ -1145,38 +1143,48 @@ extension GameViewController
     
     func promptFastForwardSpeed()
     {
-        guard let emulatorCore = self.emulatorCore else { return }
+        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay. Speeds below 100% will slow down gameplay.", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay, and are useful for saving time in cutscenes and dialogue.\n\nSpeeds below 100% will slow down gameplay, and are useful for precisely timing inputs.", comment: ""), preferredStyle: .actionSheet)
-        
-        alertController.addAction(UIAlertAction(title: "🐢 25%", style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 0.25
-            emulatorCore.rate = 0.25
+        alertController.addAction(UIAlertAction(title: "25%", style: .default, handler: { (action) in
+            self.setFastForwardSpeed(speed: 0.25)
         }))
-        alertController.addAction(UIAlertAction(title: "🍯 50%", style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 0.5
-            emulatorCore.rate = 0.5
+        alertController.addAction(UIAlertAction(title: "50%", style: .default, handler: { (action) in
+            self.setFastForwardSpeed(speed: 0.5)
         }))
-        alertController.addAction(UIAlertAction(title: "🏃🏽 200%", style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 2.0
-            emulatorCore.rate = 2.0
+        alertController.addAction(UIAlertAction(title: "150%", style: .default, handler: { (action) in
+            self.setFastForwardSpeed(speed: 1.5)
+        }))
+        alertController.addAction(UIAlertAction(title: "200%", style: .default, handler: { (action) in
+            self.setFastForwardSpeed(speed: 2.0)
         }))
         if Settings.isUnsafeFastForwardSpeedsEnabled {
-            alertController.addAction(UIAlertAction(title: "🐇 400%", style: .default, handler: { (action) in
-                Settings.customFastForwardSpeed = 4.0
-                emulatorCore.rate = 4.0
+            alertController.addAction(UIAlertAction(title: "400%", style: .default, handler: { (action) in
+                self.setFastForwardSpeed(speed: 4.0)
             }))
-            alertController.addAction(UIAlertAction(title: "🏎️ 800%", style: .default, handler: { (action) in
-                Settings.customFastForwardSpeed = 8.0
-                emulatorCore.rate = 8.0
+            alertController.addAction(UIAlertAction(title: "800%", style: .default, handler: { (action) in
+                self.setFastForwardSpeed(speed: 8.0)
             }))
-            alertController.addAction(UIAlertAction(title: "⚡️ 1600%", style: .default, handler: { (action) in
-                Settings.customFastForwardSpeed = 16.0
-                emulatorCore.rate = 16.0
+            alertController.addAction(UIAlertAction(title: "1600%", style: .default, handler: { (action) in
+                self.setFastForwardSpeed(speed: 16.0)
             }))
         }
-        alertController.addAction(.cancel)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            self.setFastForwardSpeed()
+        }))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func setFastForwardSpeed(speed: Double = 0) {
+        if speed != 0 {
+            guard let emulatorCore = self.emulatorCore else { return }
+            
+            Settings.customFastForwardSpeed = speed
+            emulatorCore.rate = speed
+        }
+        self.resumeEmulation()
     }
 }
 
