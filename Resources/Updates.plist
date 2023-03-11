@@ -25,6 +25,12 @@
 				<key>type</key>
 				<string>update</string>
 				<key>description</key>
+				<string>Add 150% speed setting</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
 				<string>Game will auto-save on every fast forward activation</string>
 			</dict>
 			<dict>
