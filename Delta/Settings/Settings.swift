@@ -74,8 +74,8 @@ struct Settings
                         #keyPath(UserDefaults.rewindTimerInterval): 5,
                         #keyPath(UserDefaults.isCustomFastForwardEnabled): false,
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
-                        #keyPath(UserDefaults.isPromptSpeedEnabled): false,
-                        #keyPath(UserDefaults.customFastForwardSpeed): 2.0,
+                        #keyPath(UserDefaults.isPromptSpeedEnabled): true,
+                        #keyPath(UserDefaults.customFastForwardSpeed): 1.5,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
         
