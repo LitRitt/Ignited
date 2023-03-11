@@ -330,7 +330,7 @@ private extension SettingsViewController
     @IBAction func toggleUnsafeFastForwardSpeeds(_ sender: UISwitch) {
         if sender.isOn
         {
-            let alertController = UIAlertController(title: NSLocalizedString("⚠️ Unsafe Speeds ⚠️", comment: ""), message: NSLocalizedString("Using these speed settings can cause unstability and rarely crashes. Proceed with caution, use sparingly, and save often.", comment: ""), preferredStyle: .alert)
+            let alertController = UIAlertController(title: NSLocalizedString("⚠️ Unsafe Speeds ⚠️", comment: ""), message: NSLocalizedString("Using these speed settings can cause instability and rarely crashes. Proceed with caution, use sparingly, and save often.", comment: ""), preferredStyle: .alert)
             
             alertController.addAction(UIAlertAction(title: "Enable", style: .destructive, handler: { (action) in
                 Settings.isUnsafeFastForwardSpeedsEnabled = sender.isOn
