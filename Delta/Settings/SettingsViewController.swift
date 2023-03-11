@@ -74,6 +74,7 @@ private extension SettingsViewController
         case enabled
         case unsafeSpeeds
         case speed
+        case prompt
     }
 }
 
@@ -98,6 +99,7 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var customFastForwardSwitch: UISwitch!
     @IBOutlet private var unsafeFastForwardSpeedsSwitch: UISwitch!
     @IBOutlet private var customFastForwardSpeedLabel: UILabel!
+    @IBOutlet private var promptSpeedSwitch: UISwitch!
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
     
@@ -211,6 +213,7 @@ private extension SettingsViewController
         
         self.customFastForwardSwitch.isOn = Settings.isCustomFastForwardEnabled
         self.unsafeFastForwardSpeedsSwitch.isOn = Settings.isUnsafeFastForwardSpeedsEnabled
+        self.promptSpeedSwitch.isOn = Settings.isPromptSpeedEnabled
         self.updateCustomFastForwardSpeedLabel()
         
         self.tableView.reloadData()
@@ -318,6 +321,10 @@ private extension SettingsViewController
     
     @IBAction func toggleCustomFastForward(_ sender: UISwitch) {
         Settings.isCustomFastForwardEnabled = sender.isOn
+    }
+    
+    @IBAction func togglePromptSpeed(_ sender: UISwitch) {
+        Settings.isPromptSpeedEnabled = sender.isOn
     }
     
     @IBAction func toggleUnsafeFastForwardSpeeds(_ sender: UISwitch) {
@@ -485,7 +492,7 @@ private extension SettingsViewController
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval: break
         }
         self.update()
     }
@@ -569,7 +576,7 @@ extension SettingsViewController
             case .speed:
                 cell.detailTextLabel?.text = String(format: "%.f", Settings.customFastForwardSpeed * 100) + "%"
                 
-            case .enabled, .unsafeSpeeds: break
+            case .enabled, .unsafeSpeeds, .prompt: break
             }
             
         case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
@@ -602,7 +609,7 @@ extension SettingsViewController
             {
             case .speed:
                 self.changeCustomFastForwardSpeed()
-            case .enabled, .unsafeSpeeds: break
+            case .enabled, .unsafeSpeeds, .prompt: break
             }
         case .patreon:
             let patreonURL = URL(string: "https://www.patreon.com/litritt")!

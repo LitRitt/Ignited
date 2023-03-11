@@ -766,7 +766,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
             {
                 let saveStates = try fetchRequest.execute()
                 
-                if let saveState = saveStates.first, saveStates.count >= 2
+                if let saveState = saveStates.first, saveStates.count >= 4
                 {
                     // If there are two or more auto save states, update the oldest one
                     self.update(saveState, with: self.pausedSaveState)
@@ -1118,17 +1118,65 @@ extension GameViewController
         if activate
         {
             let customFastForwardEnabled = Settings.isCustomFastForwardEnabled
+            
             if customFastForwardEnabled {
-                let customFastForwardSpeed = Settings.customFastForwardSpeed
-                emulatorCore.rate = customFastForwardSpeed
+                let promptSpeedEnabled = Settings.isPromptSpeedEnabled
+                
+                if promptSpeedEnabled {
+                    if let pauseViewController = self.pauseViewController
+                    {
+                        pauseViewController.dismiss()
+                        self.resumeEmulation() // Emulation pauses until input without this
+                    }
+                    self.promptFastForwardSpeed()
+                } else {
+                    emulatorCore.rate = Settings.customFastForwardSpeed
+                }
             } else {
                 emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
             }
+            self.updateAutoSaveState()
         }
         else
         {
             emulatorCore.rate = emulatorCore.deltaCore.supportedRates.lowerBound
         }
+    }
+    
+    func promptFastForwardSpeed()
+    {
+        guard let emulatorCore = self.emulatorCore else { return }
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay, and are useful for saving time in cutscenes and dialogue.\n\nSpeeds below 100% will slow down gameplay, and are useful for precisely timing inputs.", comment: ""), preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "🐢 25%", style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 0.25
+            emulatorCore.rate = 0.25
+        }))
+        alertController.addAction(UIAlertAction(title: "🍯 50%", style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 0.5
+            emulatorCore.rate = 0.5
+        }))
+        alertController.addAction(UIAlertAction(title: "🏃🏽 200%", style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 2.0
+            emulatorCore.rate = 2.0
+        }))
+        if Settings.isUnsafeFastForwardSpeedsEnabled {
+            alertController.addAction(UIAlertAction(title: "🐇 400%", style: .default, handler: { (action) in
+                Settings.customFastForwardSpeed = 4.0
+                emulatorCore.rate = 4.0
+            }))
+            alertController.addAction(UIAlertAction(title: "🏎️ 800%", style: .default, handler: { (action) in
+                Settings.customFastForwardSpeed = 8.0
+                emulatorCore.rate = 8.0
+            }))
+            alertController.addAction(UIAlertAction(title: "⚡️ 1600%", style: .default, handler: { (action) in
+                Settings.customFastForwardSpeed = 16.0
+                emulatorCore.rate = 16.0
+            }))
+        }
+        alertController.addAction(.cancel)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -1270,15 +1318,12 @@ private extension GameViewController
             
         case .respectSilentMode:
             self.updateAudio()
-                
-        case .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .customFastForwardSpeed:
-            self.performFastForwardAction(activate: false)
             
         case .isRewindEnabled, .rewindTimerInterval:
             // TODO: Do something here?
             break
             
-        case .syncingService, .isAltJITEnabled: break
+        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed: break
         }
     }
     

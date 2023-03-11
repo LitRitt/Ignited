@@ -42,6 +42,7 @@ extension Settings
         case respectSilentMode
         case isCustomFastForwardEnabled
         case isUnsafeFastForwardSpeedsEnabled
+        case isPromptSpeedEnabled
         case customFastForwardSpeed
         case isRewindEnabled
         case rewindTimerInterval
@@ -73,6 +74,7 @@ struct Settings
                         #keyPath(UserDefaults.rewindTimerInterval): 5,
                         #keyPath(UserDefaults.isCustomFastForwardEnabled): false,
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
+                        #keyPath(UserDefaults.isPromptSpeedEnabled): false,
                         #keyPath(UserDefaults.customFastForwardSpeed): 2.0,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
@@ -274,6 +276,17 @@ extension Settings
         get {
             let isUnsafeFastForwardSpeedsEnabled = UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled
             return isUnsafeFastForwardSpeedsEnabled
+        }
+    }
+    
+    static var isPromptSpeedEnabled: Bool {
+        set {
+            UserDefaults.standard.isPromptSpeedEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isPromptSpeedEnabled])
+        }
+        get {
+            let isSpeedPromptEnabled = UserDefaults.standard.isPromptSpeedEnabled
+            return isSpeedPromptEnabled
         }
     }
     
@@ -493,5 +506,6 @@ private extension UserDefaults
     
     @NSManaged var isCustomFastForwardEnabled: Bool
     @NSManaged var isUnsafeFastForwardSpeedsEnabled: Bool
+    @NSManaged var isPromptSpeedEnabled: Bool
     @NSManaged var customFastForwardSpeed: CGFloat
 }
