@@ -41,7 +41,10 @@ extension Settings
         case isAltJITEnabled
         case respectSilentMode
         case isCustomFastForwardEnabled
+        case isUnsafeFastForwardSpeedsEnabled
         case customFastForwardSpeed
+        case isRewindEnabled
+        case rewindTimerInterval
     }
 }
 
@@ -69,7 +72,8 @@ struct Settings
                         #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 5,
                         #keyPath(UserDefaults.isCustomFastForwardEnabled): false,
-                        #keyPath(UserDefaults.customFastForwardSpeed): 8.0,
+                        #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
+                        #keyPath(UserDefaults.customFastForwardSpeed): 2.0,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
         
@@ -196,7 +200,9 @@ extension Settings
     }
     
     static var isPreviewsEnabled: Bool {
-        set { UserDefaults.standard.isPreviewsEnabled = newValue }
+        set {
+            UserDefaults.standard.isPreviewsEnabled = newValue
+        }
         get {
             let isPreviewsEnabled = UserDefaults.standard.isPreviewsEnabled
             return isPreviewsEnabled
@@ -226,7 +232,10 @@ extension Settings
     }
     
     static var isRewindEnabled: Bool {
-        set { UserDefaults.standard.isRewindEnabled = newValue }
+        set {
+            UserDefaults.standard.isRewindEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isRewindEnabled])
+        }
         get {
             let isRewindEnabled = UserDefaults.standard.isRewindEnabled
             return isRewindEnabled
@@ -234,7 +243,11 @@ extension Settings
     }
     
     static var rewindTimerInterval: Int {
-        set { UserDefaults.standard.rewindTimerInterval = newValue }
+        set {
+            UserDefaults.standard.rewindTimerInterval = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.rewindTimerInterval])
+            
+        }
         get {
             let rewindTimerInterval = UserDefaults.standard.rewindTimerInterval
             return rewindTimerInterval
@@ -242,15 +255,34 @@ extension Settings
     }
     
     static var isCustomFastForwardEnabled: Bool {
-        set { UserDefaults.standard.isCustomFastForwardEnabled = newValue }
+        set {
+            UserDefaults.standard.isCustomFastForwardEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isCustomFastForwardEnabled])
+            
+        }
         get {
             let isCustomFastForwardEnabled = UserDefaults.standard.isCustomFastForwardEnabled
             return isCustomFastForwardEnabled
         }
     }
     
+    static var isUnsafeFastForwardSpeedsEnabled: Bool {
+        set {
+            UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isUnsafeFastForwardSpeedsEnabled])
+        }
+        get {
+            let isUnsafeFastForwardSpeedsEnabled = UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled
+            return isUnsafeFastForwardSpeedsEnabled
+        }
+    }
+    
     static var customFastForwardSpeed: CGFloat {
-        set { UserDefaults.standard.customFastForwardSpeed = newValue }
+        set {
+            UserDefaults.standard.customFastForwardSpeed = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isCustomFastForwardEnabled])
+            
+        }
         get {
             let customFastForwardSpeed = UserDefaults.standard.customFastForwardSpeed
             return customFastForwardSpeed
@@ -460,5 +492,6 @@ private extension UserDefaults
     @NSManaged var rewindTimerInterval: Int
     
     @NSManaged var isCustomFastForwardEnabled: Bool
+    @NSManaged var isUnsafeFastForwardSpeedsEnabled: Bool
     @NSManaged var customFastForwardSpeed: CGFloat
 }

@@ -72,6 +72,7 @@ private extension SettingsViewController
     enum FastForwardRow: Int, CaseIterable
     {
         case enabled
+        case unsafeSpeeds
         case speed
     }
 }
@@ -95,6 +96,7 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var rewindIntervalLabel: UILabel!
     
     @IBOutlet private var customFastForwardSwitch: UISwitch!
+    @IBOutlet private var unsafeFastForwardSpeedsSwitch: UISwitch!
     @IBOutlet private var customFastForwardSpeedLabel: UILabel!
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
@@ -118,19 +120,11 @@ class SettingsViewController: UITableViewController
         
         if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
         {
-            #if LITE
-            self.versionLabel.text = NSLocalizedString(String(format: "Delta Lite %@", version), comment: "Delta Version")
-            #else
-            self.versionLabel.text = NSLocalizedString(String(format: "Delta Ignited %@", version), comment: "Delta Version")
-            #endif
+            self.versionLabel.text = NSLocalizedString(String(format: "Delta Ignited %@", version), comment: "Delta Ignited Version")
         }
         else
         {
-            #if LITE
-            self.versionLabel.text = NSLocalizedString("Delta Lite", comment: "")
-            #else
             self.versionLabel.text = NSLocalizedString("Delta Ignited", comment: "")
-            #endif
         }
     }
     
@@ -216,6 +210,7 @@ private extension SettingsViewController
         self.updateRewindIntervalLabel()
         
         self.customFastForwardSwitch.isOn = Settings.isCustomFastForwardEnabled
+        self.unsafeFastForwardSpeedsSwitch.isOn = Settings.isUnsafeFastForwardSpeedsEnabled
         self.updateCustomFastForwardSpeedLabel()
         
         self.tableView.reloadData()
@@ -325,6 +320,29 @@ private extension SettingsViewController
         Settings.isCustomFastForwardEnabled = sender.isOn
     }
     
+    @IBAction func toggleUnsafeFastForwardSpeeds(_ sender: UISwitch) {
+        if sender.isOn
+        {
+            let alertController = UIAlertController(title: NSLocalizedString("⚠️ Unsafe Speeds ⚠️", comment: ""), message: NSLocalizedString("Using these speed settings can cause unstability and rarely crashes. Proceed with caution, use sparingly, and save often.", comment: ""), preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Enable", style: .destructive, handler: { (action) in
+                Settings.isUnsafeFastForwardSpeedsEnabled = sender.isOn
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                self.unsafeFastForwardSpeedsSwitch.isOn = false
+            }))
+            self.present(alertController, animated: true, completion: nil)
+        }
+        else
+        {
+            Settings.isUnsafeFastForwardSpeedsEnabled = sender.isOn
+            if Settings.customFastForwardSpeed > 2.0
+            {
+                Settings.customFastForwardSpeed = 2.0
+            }
+        }
+    }
+    
     @IBAction func toggleRewindEnabled(_ sender: UISwitch) {
         Settings.isRewindEnabled = sender.isOn
     }
@@ -350,11 +368,6 @@ private extension SettingsViewController
     @IBAction func didFinishChangingRewindInterval(_ sender: UISlider) {
         sender.value = Float(Settings.rewindTimerInterval)
         self.selectionFeedbackGenerator = nil
-    }
-    
-    func changeFastForwardSpeed()
-    {
-        Settings.customFastForwardSpeed = 8
     }
     
     func openSkinWebsite(site: String)
@@ -411,28 +424,24 @@ private extension SettingsViewController
         
         alertController.addAction(UIAlertAction(title: speedOneTitle, style: .default, handler: { (action) in
             Settings.customFastForwardSpeed = 0.25
-            self.tableView.reloadData()
         }))
         alertController.addAction(UIAlertAction(title: speedTwoTitle, style: .default, handler: { (action) in
             Settings.customFastForwardSpeed = 0.5
-            self.tableView.reloadData()
         }))
         alertController.addAction(UIAlertAction(title: speedThreeTitle, style: .default, handler: { (action) in
             Settings.customFastForwardSpeed = 2.0
-            self.tableView.reloadData()
         }))
-        alertController.addAction(UIAlertAction(title: speedFourTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 4.0
-            self.tableView.reloadData()
-        }))
-        alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 8.0
-            self.tableView.reloadData()
-        }))
-        alertController.addAction(UIAlertAction(title: speedSixTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 16.0
-            self.tableView.reloadData()
-        }))
+        if Settings.isUnsafeFastForwardSpeedsEnabled {
+            alertController.addAction(UIAlertAction(title: speedFourTitle, style: .default, handler: { (action) in
+                Settings.customFastForwardSpeed = 4.0
+            }))
+            alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
+                Settings.customFastForwardSpeed = 8.0
+            }))
+            alertController.addAction(UIAlertAction(title: speedSixTitle, style: .default, handler: { (action) in
+                Settings.customFastForwardSpeed = 16.0
+            }))
+        }
         alertController.addAction(.cancel)
         self.present(alertController, animated: true, completion: nil)
         
@@ -476,8 +485,9 @@ private extension SettingsViewController
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .customFastForwardSpeed, .isAltJITEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval: break
         }
+        self.update()
     }
 
     @objc func externalGameControllerDidConnect(_ notification: Notification)
@@ -559,7 +569,7 @@ extension SettingsViewController
             case .speed:
                 cell.detailTextLabel?.text = String(format: "%.f", Settings.customFastForwardSpeed * 100) + "%"
                 
-            case .enabled: break
+            case .enabled, .unsafeSpeeds: break
             }
             
         case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
@@ -592,7 +602,7 @@ extension SettingsViewController
             {
             case .speed:
                 self.changeCustomFastForwardSpeed()
-            case .enabled: break
+            case .enabled, .unsafeSpeeds: break
             }
         case .patreon:
             let patreonURL = URL(string: "https://www.patreon.com/litritt")!
