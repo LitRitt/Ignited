@@ -582,6 +582,7 @@ private extension GameViewController
             Settings.localControllerPlayerIndex = 0
         }
         
+        //TODO: Make toggle to show skins with controller connected
         // If Settings.localControllerPlayerIndex is non-nil, and there isn't a connected controller with same playerIndex, show controller view.
         if let index = Settings.localControllerPlayerIndex, !ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0.playerIndex == index })
         {
@@ -658,7 +659,9 @@ private extension GameViewController
         
         self.controllerView.isButtonHapticFeedbackEnabled = Settings.isButtonHapticFeedbackEnabled
         self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
+        self.controllerView.isUseAltRepresentationEnabled = Settings.isUseAltRepresentationEnabled
         
+        self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
     }
     
@@ -1119,20 +1122,23 @@ extension GameViewController
         
         if activate
         {
-            let customFastForwardEnabled = Settings.isCustomFastForwardEnabled
-            
-            if customFastForwardEnabled {
-                let promptSpeedEnabled = Settings.isPromptSpeedEnabled
-                
-                if promptSpeedEnabled {
-                    if let pauseView = self.pauseViewController {
+            if Settings.isCustomFastForwardEnabled
+            {
+                if Settings.isPromptSpeedEnabled
+                {
+                    if let pauseView = self.pauseViewController
+                    {
                         pauseView.dismiss()
                     }
                     self.promptFastForwardSpeed()
-                } else {
+                }
+                else
+                {
                     emulatorCore.rate = Settings.customFastForwardSpeed
                 }
-            } else {
+            }
+            else
+            {
                 emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
             }
             self.updateAutoSaveState()
@@ -1179,8 +1185,10 @@ extension GameViewController
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func setFastForwardSpeed(speed: Double = 0) {
-        if speed != 0 {
+    func setFastForwardSpeed(speed: Double = 0)
+    {
+        if speed != 0
+        {
             guard let emulatorCore = self.emulatorCore else { return }
             
             Settings.customFastForwardSpeed = speed
@@ -1189,12 +1197,39 @@ extension GameViewController
         self.resumeEmulation()
     }
     
-    func performAltRepresentationsAction() {
-        Settings.isUseAltRepresentationEnabled = !Settings.isUseAltRepresentationEnabled
+    func performAltRepresentationsAction()
+    {
+        let enabled = !Settings.isUseAltRepresentationEnabled
+        Settings.isUseAltRepresentationEnabled = enabled
         
-        self.controllerView.isUseAltRepresentationEnabled = Settings.isUseAltRepresentationEnabled
-        self.controllerView.updateControllerSkin()
-        self.updateControllerSkin()
+        func presentToastView()
+        {
+            let text: String
+            if enabled
+            {
+                text = NSLocalizedString("Alternate Skin Enabled", comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Alternate Skin Disabled", comment: "")
+            }
+            let toastView = RSTToastView(text: text, detailText: nil)
+            toastView.edgeOffset.vertical = 8
+            self.show(toastView, duration: 1.0)
+        }
+        
+        DispatchQueue.main.async {
+            if let transitionCoordinator = self.transitionCoordinator
+            {
+                transitionCoordinator.animate(alongsideTransition: nil) { (context) in
+                    presentToastView()
+                }
+            }
+            else
+            {
+                presentToastView()
+            }
+        }
     }
 }
 
@@ -1338,7 +1373,7 @@ private extension GameViewController
             self.updateAudio()
             
         case .isRewindEnabled, .rewindTimerInterval:
-            // TODO: Do something here?
+            // TODO: Make changing my settings do stuffz
             break
             
         case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed: break
