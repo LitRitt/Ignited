@@ -20,7 +20,7 @@ private extension SettingsViewController
         case controllers
         case controllerSkins
         case skinDownloads
-        case controllerOpacity
+        case skinOptions
         case gameAudio
         case hapticFeedback
         case rewind
@@ -76,12 +76,19 @@ private extension SettingsViewController
         case speed
         case prompt
     }
+    
+    enum SkinOptionsRow: Int, CaseIterable
+    {
+        case opacity
+        case alwaysShow
+    }
 }
 
 class SettingsViewController: UITableViewController
 {
     @IBOutlet private var controllerOpacityLabel: UILabel!
     @IBOutlet private var controllerOpacitySlider: UISlider!
+    @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
     
     @IBOutlet private var respectSilentModeSwitch: UISwitch!
     @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
@@ -188,6 +195,7 @@ private extension SettingsViewController
     {
         self.controllerOpacitySlider.value = Float(Settings.translucentControllerSkinOpacity)
         self.updateControllerOpacityLabel()
+        self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
         
         self.respectSilentModeSwitch.isOn = Settings.respectSilentMode
         
@@ -299,6 +307,11 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
+    @IBAction func toggleAlwaysShowControllerSkin(_ sender: UISwitch)
+    {
+        Settings.isAlwaysShowControllerSkinEnabled = sender.isOn
+    }
+    
     @IBAction func toggleButtonHapticFeedbackEnabled(_ sender: UISwitch)
     {
         Settings.isButtonHapticFeedbackEnabled = sender.isOn
@@ -319,15 +332,18 @@ private extension SettingsViewController
         Settings.respectSilentMode = sender.isOn
     }
     
-    @IBAction func toggleCustomFastForward(_ sender: UISwitch) {
+    @IBAction func toggleCustomFastForward(_ sender: UISwitch)
+    {
         Settings.isCustomFastForwardEnabled = sender.isOn
     }
     
-    @IBAction func togglePromptSpeed(_ sender: UISwitch) {
+    @IBAction func togglePromptSpeed(_ sender: UISwitch)
+    {
         Settings.isPromptSpeedEnabled = sender.isOn
     }
     
-    @IBAction func toggleUnsafeFastForwardSpeeds(_ sender: UISwitch) {
+    @IBAction func toggleUnsafeFastForwardSpeeds(_ sender: UISwitch)
+    {
         if sender.isOn
         {
             let alertController = UIAlertController(title: NSLocalizedString("⚠️ Unsafe Speeds ⚠️", comment: ""), message: NSLocalizedString("Using these speed settings can cause instability and rarely crashes. Proceed with caution, use sparingly, and save often.", comment: ""), preferredStyle: .alert)
@@ -350,11 +366,13 @@ private extension SettingsViewController
         }
     }
     
-    @IBAction func toggleRewindEnabled(_ sender: UISwitch) {
+    @IBAction func toggleRewindEnabled(_ sender: UISwitch)
+    {
         Settings.isRewindEnabled = sender.isOn
     }
     
-    @IBAction func changeRewindInterval(_ sender: UISlider) {
+    @IBAction func changeRewindInterval(_ sender: UISlider)
+    {
         let roundedValue = Int((sender.value / 1).rounded() * 1)
         
         if roundedValue != Settings.rewindTimerInterval
@@ -367,12 +385,14 @@ private extension SettingsViewController
         self.updateRewindIntervalLabel()
     }
     
-    @IBAction func beginChangingRewindInterval(_ sender: UISlider) {
+    @IBAction func beginChangingRewindInterval(_ sender: UISlider)
+    {
         self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
         self.selectionFeedbackGenerator?.prepare()
     }
     
-    @IBAction func didFinishChangingRewindInterval(_ sender: UISlider) {
+    @IBAction func didFinishChangingRewindInterval(_ sender: UISlider)
+    {
         sender.value = Float(Settings.rewindTimerInterval)
         self.selectionFeedbackGenerator = nil
     }
@@ -500,7 +520,7 @@ private extension SettingsViewController
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isUseAltRepresentationsEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled: break
         }
         self.update()
     }
@@ -587,7 +607,7 @@ extension SettingsViewController
             case .enabled, .unsafeSpeeds, .prompt: break
             }
             
-        case .skinDownloads, .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
+        case .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
         }
 
         return cell
@@ -611,7 +631,7 @@ extension SettingsViewController
             case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
             }
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .controllerOpacity, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
+        case .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {

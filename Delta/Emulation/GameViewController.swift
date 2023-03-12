@@ -415,6 +415,11 @@ extension GameViewController
                 self.performFastForwardAction(activate: item.isSelected)
             }
             
+            pauseViewController.altSkinItem?.isSelected = Settings.isAltRepresentationsEnabled
+            pauseViewController.altSkinItem?.action = { [unowned self] item in
+                self.performAltRepresentationsAction()
+            }
+            
             pauseViewController.sustainButtonsItem?.isSelected = gameController.sustainedInputs.count > 0
             pauseViewController.sustainButtonsItem?.action = { [unowned self, unowned pauseViewController] item in
                 
@@ -601,8 +606,16 @@ private extension GameViewController
             }
             else
             {
-                self.controllerView.isHidden = true
-                self.controllerView.playerIndex = nil
+                if !Settings.isAlwaysShowControllerSkinEnabled
+                {
+                    self.controllerView.isHidden = true
+                    self.controllerView.playerIndex = nil
+                }
+                else
+                {
+                    self.controllerView.isHidden = false
+                    self.controllerView.playerIndex = 0
+                }
             }
 
             Settings.localControllerPlayerIndex = nil
@@ -659,7 +672,7 @@ private extension GameViewController
         
         self.controllerView.isButtonHapticFeedbackEnabled = Settings.isButtonHapticFeedbackEnabled
         self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
-        self.controllerView.isAltRepresentationsEnabled = Settings.isUseAltRepresentationEnabled
+        self.controllerView.isAltRepresentationsEnabled = Settings.isAltRepresentationsEnabled
         
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
@@ -1228,12 +1241,9 @@ extension GameViewController
     
     func performAltRepresentationsAction()
     {
-        let enabled = !Settings.isUseAltRepresentationEnabled
-        Settings.isUseAltRepresentationEnabled = enabled
-        
+        let enabled = !Settings.isAltRepresentationsEnabled
+        Settings.isAltRepresentationsEnabled = enabled
         self.controllerView.isAltRepresentationsEnabled = enabled
-        self.controllerView.updateControllerSkin()
-        self.updateControllers()
         
         let text: String
         if enabled
@@ -1390,7 +1400,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUseAltRepresentationsEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled:
             self.updateControllers()
 
         case .preferredControllerSkin:

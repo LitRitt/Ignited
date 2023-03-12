@@ -46,7 +46,8 @@ extension Settings
         case customFastForwardSpeed
         case isRewindEnabled
         case rewindTimerInterval
-        case isUseAltRepresentationsEnabled
+        case isAltRepresentationsEnabled
+        case isAlwaysShowControllerSkinEnabled
     }
 }
 
@@ -78,6 +79,7 @@ struct Settings
                         #keyPath(UserDefaults.isPromptSpeedEnabled): true,
                         #keyPath(UserDefaults.customFastForwardSpeed): 1.5,
                         #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
+                        #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
         
@@ -304,14 +306,25 @@ extension Settings
         }
     }
     
-    static var isUseAltRepresentationEnabled: Bool {
+    static var isAltRepresentationsEnabled: Bool {
         set {
             UserDefaults.standard.isUseAltRepresentationsEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isUseAltRepresentationsEnabled])
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsEnabled])
         }
         get {
             let isUseAltRepresentationsEnabled = UserDefaults.standard.isUseAltRepresentationsEnabled
             return isUseAltRepresentationsEnabled
+        }
+    }
+    
+    static var isAlwaysShowControllerSkinEnabled: Bool {
+        set {
+            UserDefaults.standard.isAlwaysShowControllerSkinEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAlwaysShowControllerSkinEnabled])
+        }
+        get {
+            let isAlwaysShowControllerSkinEnabled = UserDefaults.standard.isAlwaysShowControllerSkinEnabled
+            return isAlwaysShowControllerSkinEnabled
         }
     }
     
@@ -396,7 +409,7 @@ extension Settings
         case .landscape: preferredControllerSkin = game.preferredLandscapeSkin
         }
         
-        let alt = Settings.isUseAltRepresentationEnabled
+        let alt = Settings.isAltRepresentationsEnabled
         if let controllerSkin = preferredControllerSkin, let _ = controllerSkin.supportedTraits(for: traits, alt: alt)
         {
             // Check if there are supported traits, which includes fallback traits for X <-> non-X devices.
@@ -524,4 +537,5 @@ private extension UserDefaults
     @NSManaged var customFastForwardSpeed: CGFloat
     
     @NSManaged var isUseAltRepresentationsEnabled: Bool
+    @NSManaged var isAlwaysShowControllerSkinEnabled: Bool
 }
