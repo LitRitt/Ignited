@@ -603,6 +603,7 @@ private extension GameViewController
             {
                 self.controllerView.isHidden = false
                 self.controllerView.playerIndex = 0
+                Settings.localControllerPlayerIndex = nil
             }
             else
             {
@@ -610,15 +611,15 @@ private extension GameViewController
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil
+                    Settings.localControllerPlayerIndex = nil
                 }
                 else
                 {
                     self.controllerView.isHidden = false
                     self.controllerView.playerIndex = 0
+                    Settings.localControllerPlayerIndex = 0
                 }
             }
-
-            Settings.localControllerPlayerIndex = nil
         }
         
         self.view.setNeedsLayout()
