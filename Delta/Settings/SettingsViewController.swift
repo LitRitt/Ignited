@@ -89,6 +89,7 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var controllerOpacityLabel: UILabel!
     @IBOutlet private var controllerOpacitySlider: UISlider!
     @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
+    @IBOutlet private var altRepresentationsSwitch: UISwitch!
     
     @IBOutlet private var respectSilentModeSwitch: UISwitch!
     @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
@@ -196,6 +197,7 @@ private extension SettingsViewController
         self.controllerOpacitySlider.value = Float(Settings.translucentControllerSkinOpacity)
         self.updateControllerOpacityLabel()
         self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
+        self.altRepresentationsSwitch.isOn = Settings.isAltRepresentationsEnabled
         
         self.respectSilentModeSwitch.isOn = Settings.respectSilentMode
         
@@ -307,9 +309,9 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
-    @IBAction func toggleAlwaysShowControllerSkin(_ sender: UISwitch)
+    @IBAction func toggleAltRepresentationsEnabled(_ sender: UISwitch)
     {
-        Settings.isAlwaysShowControllerSkinEnabled = sender.isOn
+        Settings.isAltRepresentationsEnabled = sender.isOn
     }
     
     @IBAction func toggleButtonHapticFeedbackEnabled(_ sender: UISwitch)
@@ -722,7 +724,12 @@ extension SettingsViewController
         }
         else
         {
-            return super.tableView(tableView, titleForFooterInSection: section.rawValue)
+            switch section
+            {
+            case .skinOptions: return NSLocalizedString("Opacity - Determines how translucent the controller appears, if supported by the skin.\n\nAlways Show - Will show the skin even if a controller is connected.\n\nUse Alternate Skin - Toggles using the alternate theme/layout, if supported by the skin.", comment: "")
+            default:
+                return super.tableView(tableView, titleForFooterInSection: section.rawValue)
+            }
         }
     }
     
