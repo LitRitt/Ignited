@@ -128,10 +128,12 @@ extension PreferredControllerSkinsViewController
         
         let aspectRatio: CGSize?
         
+        let alt = Settings.isUseAltRepresentationsEnabled
+        
         switch section
         {
-        case .portrait: aspectRatio = self.portraitControllerSkin?.previewSize(for: self.makeTraits(orientation: .portrait, in: window))
-        case .landscape: aspectRatio = self.landscapeControllerSkin?.previewSize(for: self.makeTraits(orientation: .landscape, in: window))
+        case .portrait: aspectRatio = self.portraitControllerSkin?.previewSize(for: self.makeTraits(orientation: .portrait, in: window), alt: alt)
+        case .landscape: aspectRatio = self.landscapeControllerSkin?.previewSize(for: self.makeTraits(orientation: .landscape, in: window), alt: alt)
         }
         
         guard let unwrappedAspectRatio = aspectRatio else { return super.tableView(tableView, heightForRowAt: indexPath) }
@@ -201,10 +203,12 @@ private extension PreferredControllerSkinsViewController
             let portraitImage: UIImage?
             let landscapeImage: UIImage?
             
+            let alt = Settings.isUseAltRepresentationsEnabled
+            
             if let portraitControllerSkin = self.portraitControllerSkin
             {
                 let skin = context.object(with: portraitControllerSkin.objectID) as! ControllerSkin
-                portraitImage = skin.image(for: portraitTraits, preferredSize: UIScreen.main.previewSkinSize)
+                portraitImage = skin.image(for: portraitTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt)
             }
             else
             {
@@ -214,7 +218,7 @@ private extension PreferredControllerSkinsViewController
             if let landscapeControllerSkin = self.landscapeControllerSkin
             {
                 let skin = context.object(with: landscapeControllerSkin.objectID) as! ControllerSkin
-                landscapeImage = skin.image(for: landscapeTraits, preferredSize: UIScreen.main.previewSkinSize)
+                landscapeImage = skin.image(for: landscapeTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt)
             }
             else
             {

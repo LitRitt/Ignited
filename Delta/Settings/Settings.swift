@@ -46,6 +46,7 @@ extension Settings
         case customFastForwardSpeed
         case isRewindEnabled
         case rewindTimerInterval
+        case isUseAltRepresentationsEnabled
     }
 }
 
@@ -76,6 +77,7 @@ struct Settings
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
                         #keyPath(UserDefaults.isPromptSpeedEnabled): true,
                         #keyPath(UserDefaults.customFastForwardSpeed): 1.5,
+                        #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
         
@@ -302,6 +304,17 @@ extension Settings
         }
     }
     
+    static var isUseAltRepresentationsEnabled: Bool {
+        set {
+            UserDefaults.standard.isUseAltRepresentationsEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isUseAltRepresentationsEnabled])
+        }
+        get {
+            let isUseAltRepresentationsEnabled = UserDefaults.standard.isUseAltRepresentationsEnabled
+            return isUseAltRepresentationsEnabled
+        }
+    }
+    
     static func preferredCore(for gameType: GameType) -> DeltaCoreProtocol?
     {
         let key = self.preferredCoreSettingsKey(for: gameType)
@@ -508,4 +521,6 @@ private extension UserDefaults
     @NSManaged var isUnsafeFastForwardSpeedsEnabled: Bool
     @NSManaged var isPromptSpeedEnabled: Bool
     @NSManaged var customFastForwardSpeed: CGFloat
+    
+    @NSManaged var isUseAltRepresentationsEnabled: Bool
 }

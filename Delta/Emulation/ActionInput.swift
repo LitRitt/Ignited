@@ -19,6 +19,7 @@ enum ActionInput: String
     case quickLoad
     case fastForward
     case toggleFastForward
+    case toggleAltRepresentations
 }
 
 extension ActionInput: Input

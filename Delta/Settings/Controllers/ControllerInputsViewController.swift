@@ -258,7 +258,7 @@ private extension ControllerInputsViewController
                 image = #imageLiteral(resourceName: "FastForward")
                 text = NSLocalizedString("Fast Forward", comment: "")
                 
-            case .toggleFastForward: continue
+            case .toggleFastForward, .toggleAltRepresentations: continue
             }
             
             let item = MenuItem(text: text, image: image) { [unowned self] (item) in
@@ -277,10 +277,11 @@ private extension ControllerInputsViewController
     
     func prepareCallouts()
     {
+        let alt = Settings.isUseAltRepresentationsEnabled
         guard
             let controllerView = self.gameViewController.controllerView,
             let traits = controllerView.controllerSkinTraits,
-            let items = controllerView.controllerSkin?.items(for: traits),
+            let items = controllerView.controllerSkin?.items(for: traits, alt: alt),
             let controllerViewInputMapping = controllerView.defaultInputMapping,
             let inputMapping = self.inputMappings[self.system]
         else { return }
@@ -492,10 +493,12 @@ private extension ControllerInputsViewController
     {
         guard let input = self.calloutViews.first(where: { $0.value == calloutView })?.key else { return nil }
         
+        let alt = Settings.isUseAltRepresentationsEnabled
+        
         guard
             let controllerView = self.gameViewController.controllerView,
             let traits = controllerView.controllerSkinTraits,
-            let items = controllerView.controllerSkin?.items(for: traits)
+            let items = controllerView.controllerSkin?.items(for: traits, alt: alt)
         else { return nil }
         
         if let item = items.first(where: { $0.inputs.allInputs.contains(where: { $0.stringValue == input.stringValue })})

@@ -500,7 +500,7 @@ private extension SettingsViewController
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isUseAltRepresentationsEnabled: break
         }
         self.update()
     }

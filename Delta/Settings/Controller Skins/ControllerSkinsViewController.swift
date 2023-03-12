@@ -202,7 +202,8 @@ extension ControllerSkinsViewController
         
         var height = 200.0
         let safeHeight = (self.view.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 30)
-        if let size = controllerSkin.previewSize(for: traits)
+        let alt = Settings.isUseAltRepresentationsEnabled
+        if let size = controllerSkin.previewSize(for: traits, alt: alt)
         {
             let scale = (self.view.bounds.width / size.width)
             height = size.height * scale

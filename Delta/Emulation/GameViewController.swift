@@ -251,6 +251,7 @@ class GameViewController: DeltaCore.GameViewController
             case .toggleFastForward:
                 let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
                 self.performFastForwardAction(activate: !isFastForwarding)
+            case .toggleAltRepresentations: self.performAltRepresentationsAction()
             }
         }
     }
@@ -276,6 +277,7 @@ class GameViewController: DeltaCore.GameViewController
             case .quickLoad: break
             case .fastForward: self.performFastForwardAction(activate: false)
             case .toggleFastForward: break
+            case .toggleAltRepresentations: break
             }
         }
     }
@@ -1186,6 +1188,14 @@ extension GameViewController
         }
         self.resumeEmulation()
     }
+    
+    func performAltRepresentationsAction() {
+        Settings.isUseAltRepresentationsEnabled = !Settings.isUseAltRepresentationsEnabled
+        
+        self.controllerView.isUseAltRepresentationsEnabled = Settings.isUseAltRepresentationsEnabled
+        self.controllerView.updateControllerSkin()
+        self.updateControllerSkin()
+    }
 }
 
 //MARK: - GameViewControllerDelegate -
@@ -1307,7 +1317,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUseAltRepresentationsEnabled:
             self.updateControllers()
 
         case .preferredControllerSkin:
