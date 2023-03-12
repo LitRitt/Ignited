@@ -1190,9 +1190,9 @@ extension GameViewController
     }
     
     func performAltRepresentationsAction() {
-        Settings.isUseAltRepresentationsEnabled = !Settings.isUseAltRepresentationsEnabled
+        Settings.isUseAltRepresentationEnabled = !Settings.isUseAltRepresentationEnabled
         
-        self.controllerView.isUseAltRepresentationsEnabled = Settings.isUseAltRepresentationsEnabled
+        self.controllerView.isUseAltRepresentationEnabled = Settings.isUseAltRepresentationEnabled
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
     }

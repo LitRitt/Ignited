@@ -128,7 +128,7 @@ extension PreferredControllerSkinsViewController
         
         let aspectRatio: CGSize?
         
-        let alt = Settings.isUseAltRepresentationsEnabled
+        let alt = Settings.isUseAltRepresentationEnabled
         
         switch section
         {
@@ -203,7 +203,7 @@ private extension PreferredControllerSkinsViewController
             let portraitImage: UIImage?
             let landscapeImage: UIImage?
             
-            let alt = Settings.isUseAltRepresentationsEnabled
+            let alt = Settings.isUseAltRepresentationEnabled
             
             if let portraitControllerSkin = self.portraitControllerSkin
             {

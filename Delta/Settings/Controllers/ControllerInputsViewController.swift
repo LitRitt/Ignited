@@ -277,7 +277,7 @@ private extension ControllerInputsViewController
     
     func prepareCallouts()
     {
-        let alt = Settings.isUseAltRepresentationsEnabled
+        let alt = Settings.isUseAltRepresentationEnabled
         guard
             let controllerView = self.gameViewController.controllerView,
             let traits = controllerView.controllerSkinTraits,
@@ -493,7 +493,7 @@ private extension ControllerInputsViewController
     {
         guard let input = self.calloutViews.first(where: { $0.value == calloutView })?.key else { return nil }
         
-        let alt = Settings.isUseAltRepresentationsEnabled
+        let alt = Settings.isUseAltRepresentationEnabled
         
         guard
             let controllerView = self.gameViewController.controllerView,

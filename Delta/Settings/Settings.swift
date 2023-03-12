@@ -304,7 +304,7 @@ extension Settings
         }
     }
     
-    static var isUseAltRepresentationsEnabled: Bool {
+    static var isUseAltRepresentationEnabled: Bool {
         set {
             UserDefaults.standard.isUseAltRepresentationsEnabled = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isUseAltRepresentationsEnabled])
