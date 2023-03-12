@@ -727,6 +727,9 @@ private extension GameViewController
                 
                 try context.save()
                 try game.gameSaveURL.setExtendedAttribute(name: "com.rileytestut.delta.sha1Hash", value: hash)
+                
+                let text = NSLocalizedString("Saved Game Data", comment: "")
+                self.presentToastView(text: text)
             }
             catch CocoaError.fileNoSuchFile
             {
@@ -789,6 +792,10 @@ extension GameViewController: SaveStatesViewControllerDelegate
                     
                     self.update(saveState, with: self.pausedSaveState)
                 }
+                
+                //TODO: Auto save toasts don't work
+//                let text = NSLocalizedString("Auto Saved State", comment: "")
+//                self.presentToastView(text: text)
             }
             catch
             {
@@ -879,6 +886,9 @@ extension GameViewController: SaveStatesViewControllerDelegate
         saveState.modifiedDate = Date()
         saveState.coreIdentifier = self.emulatorCore?.deltaCore.identifier
         
+        let text = NSLocalizedString("Saved Game Save State", comment: "")
+        self.presentToastView(text: text)
+        
         if isRunning && shouldSuspendEmulation
         {
             self.resumeEmulation()
@@ -926,6 +936,9 @@ extension GameViewController: SaveStatesViewControllerDelegate
             {
                 try self.emulatorCore?.load(saveState)
             }
+            
+            let text = NSLocalizedString("Loaded Game Save State", comment: "")
+            self.presentToastView(text: text)
         }
         catch EmulatorCore.SaveStateError.doesNotExist
         {
@@ -1087,6 +1100,9 @@ extension GameViewController
                     
                     self.update(saveState)
                 }
+                
+                let text = NSLocalizedString("Saved Quick State State", comment: "")
+                self.presentToastView(text: text)
             }
             catch
             {
@@ -1108,6 +1124,9 @@ extension GameViewController
             if let quickSaveState = try DatabaseManager.shared.viewContext.fetch(fetchRequest).first
             {
                 self.load(quickSaveState)
+                
+                let text = NSLocalizedString("Loaded Quick Save State", comment: "")
+                self.presentToastView(text: text)
             }
         }
         catch
@@ -1119,6 +1138,7 @@ extension GameViewController
     func performFastForwardAction(activate: Bool)
     {
         guard let emulatorCore = self.emulatorCore else { return }
+        let text: String
         
         if activate
         {
@@ -1135,17 +1155,22 @@ extension GameViewController
                 else
                 {
                     emulatorCore.rate = Settings.customFastForwardSpeed
+                    text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+                    self.presentToastView(text: text)
                 }
             }
             else
             {
                 emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
+                text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+                self.presentToastView(text: text)
             }
-            self.updateAutoSaveState()
         }
         else
         {
             emulatorCore.rate = emulatorCore.deltaCore.supportedRates.lowerBound
+            text = NSLocalizedString("Fast Forward Disabled", comment: "")
+            self.presentToastView(text: text)
         }
     }
     
@@ -1191,8 +1216,12 @@ extension GameViewController
         {
             guard let emulatorCore = self.emulatorCore else { return }
             
+            self.updateAutoSaveState() // Safety Save each activation of fast forward
+            
             Settings.customFastForwardSpeed = speed
             emulatorCore.rate = speed
+            let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
+            self.presentToastView(text: text)
         }
         self.resumeEmulation()
     }
@@ -1202,32 +1231,37 @@ extension GameViewController
         let enabled = !Settings.isUseAltRepresentationEnabled
         Settings.isUseAltRepresentationEnabled = enabled
         
-        func presentToastView()
+        let text: String
+        if enabled
         {
-            let text: String
-            if enabled
-            {
-                text = NSLocalizedString("Alternate Skin Enabled", comment: "")
-            }
-            else
-            {
-                text = NSLocalizedString("Alternate Skin Disabled", comment: "")
-            }
-            let toastView = RSTToastView(text: text, detailText: nil)
-            toastView.edgeOffset.vertical = 8
-            self.show(toastView, duration: 1.0)
+            text = NSLocalizedString("Alternate Skin Enabled", comment: "")
         }
-        
+        else
+        {
+            text = NSLocalizedString("Alternate Skin Disabled", comment: "")
+        }
+        self.presentToastView(text: text)
+    }
+}
+
+//MARK: - Toast Notifications -
+/// Toast Notifications
+extension GameViewController
+{
+    func presentToastView(text: String, duration: Double = 1.0)
+    {
+        let toastView = RSTToastView(text: text, detailText: nil)
+        toastView.edgeOffset.vertical = 8
         DispatchQueue.main.async {
             if let transitionCoordinator = self.transitionCoordinator
             {
                 transitionCoordinator.animate(alongsideTransition: nil) { (context) in
-                    presentToastView()
+                    self.show(toastView, duration: duration)
                 }
             }
             else
             {
-                presentToastView()
+                self.show(toastView, duration: duration)
             }
         }
     }
