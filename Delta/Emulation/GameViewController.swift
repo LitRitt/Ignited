@@ -659,7 +659,7 @@ private extension GameViewController
         
         self.controllerView.isButtonHapticFeedbackEnabled = Settings.isButtonHapticFeedbackEnabled
         self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
-        self.controllerView.isUseAltRepresentationEnabled = Settings.isUseAltRepresentationEnabled
+        self.controllerView.isAltRepresentationsEnabled = Settings.isUseAltRepresentationEnabled
         
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
@@ -1230,6 +1230,10 @@ extension GameViewController
     {
         let enabled = !Settings.isUseAltRepresentationEnabled
         Settings.isUseAltRepresentationEnabled = enabled
+        
+        self.controllerView.isAltRepresentationsEnabled = enabled
+        self.controllerView.updateControllerSkin()
+        self.updateControllers()
         
         let text: String
         if enabled

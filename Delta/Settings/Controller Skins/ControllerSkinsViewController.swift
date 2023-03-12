@@ -198,11 +198,11 @@ extension ControllerSkinsViewController
     {
         let controllerSkin = self.dataSource.item(at: indexPath)
         
-        guard let traits = controllerSkin.supportedTraits(for: self.traits) else { return 150 }
+        let alt = Settings.isUseAltRepresentationEnabled
+        guard let traits = controllerSkin.supportedTraits(for: self.traits, alt: alt) else { return 150 }
         
         var height = 200.0
         let safeHeight = (self.view.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 30)
-        let alt = Settings.isUseAltRepresentationEnabled
         if let size = controllerSkin.previewSize(for: traits, alt: alt)
         {
             let scale = (self.view.bounds.width / size.width)

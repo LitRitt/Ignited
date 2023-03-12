@@ -19,7 +19,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem, self.rewindItem, self.skinSwapItem].compactMap { $0 }
+        return [self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem, self.rewindItem, self.altSkinItem].compactMap { $0 }
     }
     
     /// Pause Items
@@ -29,7 +29,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
     var rewindItem: MenuItem?
-    var skinSwapItem: MenuItem?
+    var altSkinItem: MenuItem?
     
     /// PauseInfoProviding
     var pauseText: String?
@@ -189,7 +189,7 @@ private extension PauseViewController
         
         self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""), image: #imageLiteral(resourceName: "FastForward"), action: { _ in })
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""), image: #imageLiteral(resourceName: "SustainButtons"), action: { _ in })
-        self.skinSwapItem = MenuItem(text: NSLocalizedString("Swap Skin", comment: ""), image: #imageLiteral(resourceName: "SkinSwap"), action: { _ in })
+        self.altSkinItem = MenuItem(text: NSLocalizedString("Alternate Skin", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
     }
     
     func updateSafeAreaInsets()

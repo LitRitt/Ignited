@@ -396,7 +396,8 @@ extension Settings
         case .landscape: preferredControllerSkin = game.preferredLandscapeSkin
         }
         
-        if let controllerSkin = preferredControllerSkin, let _ = controllerSkin.supportedTraits(for: traits)
+        let alt = Settings.isUseAltRepresentationEnabled
+        if let controllerSkin = preferredControllerSkin, let _ = controllerSkin.supportedTraits(for: traits, alt: alt)
         {
             // Check if there are supported traits, which includes fallback traits for X <-> non-X devices.
             return controllerSkin
