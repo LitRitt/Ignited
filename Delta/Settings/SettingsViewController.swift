@@ -81,6 +81,7 @@ private extension SettingsViewController
     {
         case opacity
         case alwaysShow
+        case altSkin
     }
 }
 
@@ -231,7 +232,7 @@ private extension SettingsViewController
     
     func updateControllerOpacityLabel()
     {
-        let percentage = String(format: "%.f", Settings.translucentControllerSkinOpacity * 100) + "%"
+        let percentage = "Opacity: " + String(format: "%.f", Settings.translucentControllerSkinOpacity * 100) + "%"
         self.controllerOpacityLabel.text = percentage
     }
     
@@ -307,6 +308,11 @@ private extension SettingsViewController
     {
         sender.value = Float(Settings.translucentControllerSkinOpacity)
         self.selectionFeedbackGenerator = nil
+    }
+    
+    @IBAction func toggleAlwaysShowControllerSkin(_ sender: UISwitch)
+    {
+        Settings.isAlwaysShowControllerSkinEnabled = sender.isOn
     }
     
     @IBAction func toggleAltRepresentationsEnabled(_ sender: UISwitch)
@@ -524,7 +530,6 @@ private extension SettingsViewController
             
         case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled: break
         }
-        self.update()
     }
 
     @objc func externalGameControllerDidConnect(_ notification: Notification)
