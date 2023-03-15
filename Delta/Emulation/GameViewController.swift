@@ -251,6 +251,7 @@ class GameViewController: DeltaCore.GameViewController
             case .toggleFastForward:
                 let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
                 self.performFastForwardAction(activate: !isFastForwarding)
+            case .toggleAltRepresentations: self.performAltRepresentationsAction()
             }
         }
     }
@@ -276,6 +277,7 @@ class GameViewController: DeltaCore.GameViewController
             case .quickLoad: break
             case .fastForward: self.performFastForwardAction(activate: false)
             case .toggleFastForward: break
+            case .toggleAltRepresentations: break
             }
         }
     }
@@ -411,6 +413,11 @@ extension GameViewController
             pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
             pauseViewController.fastForwardItem?.action = { [unowned self] item in
                 self.performFastForwardAction(activate: item.isSelected)
+            }
+            
+            pauseViewController.altSkinItem?.isSelected = Settings.isAltRepresentationsEnabled
+            pauseViewController.altSkinItem?.action = { [unowned self] item in
+                self.performAltRepresentationsAction()
             }
             
             pauseViewController.sustainButtonsItem?.isSelected = gameController.sustainedInputs.count > 0
@@ -580,6 +587,7 @@ private extension GameViewController
             Settings.localControllerPlayerIndex = 0
         }
         
+        //TODO: Make toggle to show skins with controller connected
         // If Settings.localControllerPlayerIndex is non-nil, and there isn't a connected controller with same playerIndex, show controller view.
         if let index = Settings.localControllerPlayerIndex, !ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0.playerIndex == index })
         {
@@ -595,14 +603,23 @@ private extension GameViewController
             {
                 self.controllerView.isHidden = false
                 self.controllerView.playerIndex = 0
+                Settings.localControllerPlayerIndex = nil
             }
             else
             {
-                self.controllerView.isHidden = true
-                self.controllerView.playerIndex = nil
+                if !Settings.isAlwaysShowControllerSkinEnabled
+                {
+                    self.controllerView.isHidden = true
+                    self.controllerView.playerIndex = nil
+                    Settings.localControllerPlayerIndex = nil
+                }
+                else
+                {
+                    self.controllerView.isHidden = false
+                    self.controllerView.playerIndex = 0
+                    Settings.localControllerPlayerIndex = 0
+                }
             }
-
-            Settings.localControllerPlayerIndex = nil
         }
         
         self.view.setNeedsLayout()
@@ -656,7 +673,9 @@ private extension GameViewController
         
         self.controllerView.isButtonHapticFeedbackEnabled = Settings.isButtonHapticFeedbackEnabled
         self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
+        self.controllerView.isAltRepresentationsEnabled = Settings.isAltRepresentationsEnabled
         
+        self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
     }
     
@@ -722,6 +741,9 @@ private extension GameViewController
                 
                 try context.save()
                 try game.gameSaveURL.setExtendedAttribute(name: "com.rileytestut.delta.sha1Hash", value: hash)
+                
+                let text = NSLocalizedString("Saved Game Data", comment: "")
+                self.presentToastView(text: text)
             }
             catch CocoaError.fileNoSuchFile
             {
@@ -784,6 +806,10 @@ extension GameViewController: SaveStatesViewControllerDelegate
                     
                     self.update(saveState, with: self.pausedSaveState)
                 }
+                
+                //TODO: Auto save toasts don't work
+//                let text = NSLocalizedString("Auto Saved State", comment: "")
+//                self.presentToastView(text: text)
             }
             catch
             {
@@ -874,6 +900,9 @@ extension GameViewController: SaveStatesViewControllerDelegate
         saveState.modifiedDate = Date()
         saveState.coreIdentifier = self.emulatorCore?.deltaCore.identifier
         
+        let text = NSLocalizedString("Saved Game Save State", comment: "")
+        self.presentToastView(text: text)
+        
         if isRunning && shouldSuspendEmulation
         {
             self.resumeEmulation()
@@ -921,6 +950,9 @@ extension GameViewController: SaveStatesViewControllerDelegate
             {
                 try self.emulatorCore?.load(saveState)
             }
+            
+            let text = NSLocalizedString("Loaded Game Save State", comment: "")
+            self.presentToastView(text: text)
         }
         catch EmulatorCore.SaveStateError.doesNotExist
         {
@@ -1082,6 +1114,9 @@ extension GameViewController
                     
                     self.update(saveState)
                 }
+                
+                let text = NSLocalizedString("Saved Quick State State", comment: "")
+                self.presentToastView(text: text)
             }
             catch
             {
@@ -1103,6 +1138,9 @@ extension GameViewController
             if let quickSaveState = try DatabaseManager.shared.viewContext.fetch(fetchRequest).first
             {
                 self.load(quickSaveState)
+                
+                let text = NSLocalizedString("Loaded Quick Save State", comment: "")
+                self.presentToastView(text: text)
             }
         }
         catch
@@ -1114,30 +1152,39 @@ extension GameViewController
     func performFastForwardAction(activate: Bool)
     {
         guard let emulatorCore = self.emulatorCore else { return }
+        let text: String
         
         if activate
         {
-            let customFastForwardEnabled = Settings.isCustomFastForwardEnabled
-            
-            if customFastForwardEnabled {
-                let promptSpeedEnabled = Settings.isPromptSpeedEnabled
-                
-                if promptSpeedEnabled {
-                    if let pauseView = self.pauseViewController {
+            if Settings.isCustomFastForwardEnabled
+            {
+                if Settings.isPromptSpeedEnabled
+                {
+                    if let pauseView = self.pauseViewController
+                    {
                         pauseView.dismiss()
                     }
                     self.promptFastForwardSpeed()
-                } else {
-                    emulatorCore.rate = Settings.customFastForwardSpeed
                 }
-            } else {
-                emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
+                else
+                {
+                    emulatorCore.rate = Settings.customFastForwardSpeed
+                    text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+                    self.presentToastView(text: text)
+                }
             }
-            self.updateAutoSaveState()
+            else
+            {
+                emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
+                text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+                self.presentToastView(text: text)
+            }
         }
         else
         {
             emulatorCore.rate = emulatorCore.deltaCore.supportedRates.lowerBound
+            text = NSLocalizedString("Fast Forward Disabled", comment: "")
+            self.presentToastView(text: text)
         }
     }
     
@@ -1177,14 +1224,61 @@ extension GameViewController
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func setFastForwardSpeed(speed: Double = 0) {
-        if speed != 0 {
+    func setFastForwardSpeed(speed: Double = 0)
+    {
+        if speed != 0
+        {
             guard let emulatorCore = self.emulatorCore else { return }
+            
+            self.updateAutoSaveState() // Safety Save each activation of fast forward
             
             Settings.customFastForwardSpeed = speed
             emulatorCore.rate = speed
+            let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
+            self.presentToastView(text: text)
         }
         self.resumeEmulation()
+    }
+    
+    func performAltRepresentationsAction()
+    {
+        let enabled = !Settings.isAltRepresentationsEnabled
+        Settings.isAltRepresentationsEnabled = enabled
+        self.controllerView.isAltRepresentationsEnabled = enabled
+        
+        let text: String
+        if enabled
+        {
+            text = NSLocalizedString("Alternate Skin Enabled", comment: "")
+        }
+        else
+        {
+            text = NSLocalizedString("Alternate Skin Disabled", comment: "")
+        }
+        self.presentToastView(text: text)
+    }
+}
+
+//MARK: - Toast Notifications -
+/// Toast Notifications
+extension GameViewController
+{
+    func presentToastView(text: String, duration: Double = 1.0)
+    {
+        let toastView = RSTToastView(text: text, detailText: nil)
+        toastView.edgeOffset.vertical = 8
+        DispatchQueue.main.async {
+            if let transitionCoordinator = self.transitionCoordinator
+            {
+                transitionCoordinator.animate(alongsideTransition: nil) { (context) in
+                    self.show(toastView, duration: duration)
+                }
+            }
+            else
+            {
+                self.show(toastView, duration: duration)
+            }
+        }
     }
 }
 
@@ -1307,7 +1401,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -1328,7 +1422,7 @@ private extension GameViewController
             self.updateAudio()
             
         case .isRewindEnabled, .rewindTimerInterval:
-            // TODO: Do something here?
+            // TODO: Make changing my settings do stuffz
             break
             
         case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed: break

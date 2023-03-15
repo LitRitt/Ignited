@@ -46,6 +46,8 @@ extension Settings
         case customFastForwardSpeed
         case isRewindEnabled
         case rewindTimerInterval
+        case isAltRepresentationsEnabled
+        case isAlwaysShowControllerSkinEnabled
     }
 }
 
@@ -76,6 +78,8 @@ struct Settings
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
                         #keyPath(UserDefaults.isPromptSpeedEnabled): true,
                         #keyPath(UserDefaults.customFastForwardSpeed): 1.5,
+                        #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
+                        #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
         
@@ -302,6 +306,28 @@ extension Settings
         }
     }
     
+    static var isAltRepresentationsEnabled: Bool {
+        set {
+            UserDefaults.standard.isUseAltRepresentationsEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsEnabled])
+        }
+        get {
+            let isUseAltRepresentationsEnabled = UserDefaults.standard.isUseAltRepresentationsEnabled
+            return isUseAltRepresentationsEnabled
+        }
+    }
+    
+    static var isAlwaysShowControllerSkinEnabled: Bool {
+        set {
+            UserDefaults.standard.isAlwaysShowControllerSkinEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAlwaysShowControllerSkinEnabled])
+        }
+        get {
+            let isAlwaysShowControllerSkinEnabled = UserDefaults.standard.isAlwaysShowControllerSkinEnabled
+            return isAlwaysShowControllerSkinEnabled
+        }
+    }
+    
     static func preferredCore(for gameType: GameType) -> DeltaCoreProtocol?
     {
         let key = self.preferredCoreSettingsKey(for: gameType)
@@ -383,7 +409,8 @@ extension Settings
         case .landscape: preferredControllerSkin = game.preferredLandscapeSkin
         }
         
-        if let controllerSkin = preferredControllerSkin, let _ = controllerSkin.supportedTraits(for: traits)
+        let alt = Settings.isAltRepresentationsEnabled
+        if let controllerSkin = preferredControllerSkin, let _ = controllerSkin.supportedTraits(for: traits, alt: alt)
         {
             // Check if there are supported traits, which includes fallback traits for X <-> non-X devices.
             return controllerSkin
@@ -508,4 +535,7 @@ private extension UserDefaults
     @NSManaged var isUnsafeFastForwardSpeedsEnabled: Bool
     @NSManaged var isPromptSpeedEnabled: Bool
     @NSManaged var customFastForwardSpeed: CGFloat
+    
+    @NSManaged var isUseAltRepresentationsEnabled: Bool
+    @NSManaged var isAlwaysShowControllerSkinEnabled: Bool
 }

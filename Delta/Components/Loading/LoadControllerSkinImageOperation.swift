@@ -65,12 +65,14 @@ class LoadControllerSkinImageOperation: RSTLoadOperation<UIImage, ControllerSkin
     
     override func loadResult(completion: @escaping (UIImage?, Swift.Error?) -> Void)
     {
-        guard let traits = self.controllerSkin.supportedTraits(for: self.traits) else {
+        let alt = Settings.isAltRepresentationsEnabled
+        
+        guard let traits = self.controllerSkin.supportedTraits(for: self.traits, alt: alt) else {
             completion(nil, Error.unsupportedTraits)
             return
         }
         
-        guard let image = self.controllerSkin.image(for: traits, preferredSize: self.size) else {
+        guard let image = self.controllerSkin.image(for: traits, preferredSize: self.size, alt: alt) else {
             completion(nil, Error.doesNotExist)
             return
         }
