@@ -82,6 +82,7 @@ private extension SettingsViewController
         case opacity
         case alwaysShow
         case altSkin
+        case debug
     }
 }
 
@@ -91,6 +92,7 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var controllerOpacitySlider: UISlider!
     @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
     @IBOutlet private var altRepresentationsSwitch: UISwitch!
+    @IBOutlet private var debugModeSwitch: UISwitch!
     
     @IBOutlet private var respectSilentModeSwitch: UISwitch!
     @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
@@ -199,6 +201,7 @@ private extension SettingsViewController
         self.updateControllerOpacityLabel()
         self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
         self.altRepresentationsSwitch.isOn = Settings.isAltRepresentationsEnabled
+        self.debugModeSwitch.isOn = Settings.isDebugModeEnabled
         
         self.respectSilentModeSwitch.isOn = Settings.respectSilentMode
         
@@ -318,6 +321,11 @@ private extension SettingsViewController
     @IBAction func toggleAltRepresentationsEnabled(_ sender: UISwitch)
     {
         Settings.isAltRepresentationsEnabled = sender.isOn
+    }
+    
+    @IBAction func toggleDebugModeEnabled(_ sender: UISwitch)
+    {
+        Settings.isDebugModeEnabled = sender.isOn
     }
     
     @IBAction func toggleButtonHapticFeedbackEnabled(_ sender: UISwitch)
@@ -528,7 +536,7 @@ private extension SettingsViewController
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled: break
         }
     }
 
@@ -731,7 +739,8 @@ extension SettingsViewController
         {
             switch section
             {
-            case .skinOptions: return NSLocalizedString("Opacity - Determines how translucent the controller appears, if supported by the skin.\n\nAlways Show - Will show the skin even if a controller is connected.\n\nUse Alternate Skin - Toggles using the alternate theme/layout, if supported by the skin.", comment: "")
+            case .skinOptions: return NSLocalizedString("Opacity - Determines how translucent the controller appears, if supported by the skin.\n\nAlways Show - Will show the skin even if a controller is connected.\n\nUse Alternate Skin - Toggles using the alternate theme/layout, if supported by the skin.\n\nDebug Mode - Determines whether the controller skin debug overlay is shown", comment: "")
+            case .fastForward: return NSLocalizedString("Custom Speed - Determines whether the default fast forward speeds will be overridden\n\nUnsafe Speeds - Shows speeds faster than the safe defaults\n\nChange Speed - Select a speed to override the default\n\nAsk on Activation - Determines whether you will be prompted to choose a speed each time you activate it.", comment: "")
             default:
                 return super.tableView(tableView, titleForFooterInSection: section.rawValue)
             }

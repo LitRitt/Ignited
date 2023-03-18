@@ -420,6 +420,11 @@ extension GameViewController
                 self.performAltRepresentationsAction()
             }
             
+            pauseViewController.debugModeItem?.isSelected = Settings.isDebugModeEnabled
+            pauseViewController.debugModeItem?.action = { [unowned self] item in
+                self.performDebugModeAction()
+            }
+            
             pauseViewController.sustainButtonsItem?.isSelected = gameController.sustainedInputs.count > 0
             pauseViewController.sustainButtonsItem?.action = { [unowned self, unowned pauseViewController] item in
                 
@@ -587,7 +592,6 @@ private extension GameViewController
             Settings.localControllerPlayerIndex = 0
         }
         
-        //TODO: Make toggle to show skins with controller connected
         // If Settings.localControllerPlayerIndex is non-nil, and there isn't a connected controller with same playerIndex, show controller view.
         if let index = Settings.localControllerPlayerIndex, !ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0.playerIndex == index })
         {
@@ -674,6 +678,7 @@ private extension GameViewController
         self.controllerView.isButtonHapticFeedbackEnabled = Settings.isButtonHapticFeedbackEnabled
         self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
         self.controllerView.isAltRepresentationsEnabled = Settings.isAltRepresentationsEnabled
+        self.controllerView.isDebugModeEnabled = Settings.isDebugModeEnabled
         
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
@@ -806,10 +811,6 @@ extension GameViewController: SaveStatesViewControllerDelegate
                     
                     self.update(saveState, with: self.pausedSaveState)
                 }
-                
-                //TODO: Auto save toasts don't work
-//                let text = NSLocalizedString("Auto Saved State", comment: "")
-//                self.presentToastView(text: text)
             }
             catch
             {
@@ -1019,6 +1020,16 @@ extension GameViewController: CheatsViewControllerDelegate
     func cheatsViewController(_ cheatsViewController: CheatsViewController, deactivateCheat cheat: Cheat)
     {
         self.emulatorCore?.deactivate(cheat)
+    }
+}
+
+//MARK: - Debug -
+/// Debug
+private extension GameViewController
+{
+    func updateDebug()
+    {
+        self.controllerView?.isDebugModeEnabled = Settings.isDebugModeEnabled
     }
 }
 
@@ -1246,6 +1257,11 @@ extension GameViewController
         Settings.isAltRepresentationsEnabled = enabled
         self.controllerView.isAltRepresentationsEnabled = enabled
         
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
         let text: String
         if enabled
         {
@@ -1254,6 +1270,29 @@ extension GameViewController
         else
         {
             text = NSLocalizedString("Alternate Skin Disabled", comment: "")
+        }
+        self.presentToastView(text: text)
+    }
+    
+    func performDebugModeAction()
+    {
+        let enabled = !Settings.isDebugModeEnabled
+        Settings.isDebugModeEnabled = enabled
+        self.controllerView.isDebugModeEnabled = enabled
+        
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let text: String
+        if enabled
+        {
+            text = NSLocalizedString("Debug Mode Enabled", comment: "")
+        }
+        else
+        {
+            text = NSLocalizedString("Debug Mode Disabled", comment: "")
         }
         self.presentToastView(text: text)
     }
@@ -1401,7 +1440,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -1421,11 +1460,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
             
-        case .isRewindEnabled, .rewindTimerInterval:
-            // TODO: Make changing my settings do stuffz
-            break
-            
-        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed: break
+        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval: break
         }
     }
     
