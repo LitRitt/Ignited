@@ -29,10 +29,10 @@ extension SaveStatesViewController
     
     enum Section: Int
     {
-        case auto
-        case quick
         case general
+        case quick
         case locked
+        case auto
         case rewind
     }
 }
@@ -307,10 +307,10 @@ private extension SaveStatesViewController
         
         switch section
         {
-        case .auto: title = NSLocalizedString("Auto Save", comment: "")
-        case .quick: title = NSLocalizedString("Quick Save", comment: "")
         case .general: title = NSLocalizedString("General", comment: "")
+        case .quick: title = NSLocalizedString("Quick Save", comment: "")
         case .locked: title = NSLocalizedString("Locked", comment: "")
+        case .auto: title = NSLocalizedString("Auto Save", comment: "")
         case .rewind: title = NSLocalizedString("Rewind", comment: "")
         }
         
