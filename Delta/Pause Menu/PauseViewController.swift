@@ -191,7 +191,12 @@ private extension PauseViewController
         
         self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""), image: #imageLiteral(resourceName: "FastForward"), action: { _ in })
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""), image: #imageLiteral(resourceName: "SustainButtons"), action: { _ in })
-        self.altSkinItem = MenuItem(text: NSLocalizedString("Alternate Skin", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
+        
+        if Settings.isAltRepresentationsAvailable
+        {
+            self.altSkinItem = MenuItem(text: NSLocalizedString("Alternate Skin", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
+        }
+        
         self.debugModeItem = MenuItem(text: NSLocalizedString("Debug Mode", comment: ""), image: #imageLiteral(resourceName: "Debug"), action: { _ in })
     }
     

@@ -49,6 +49,7 @@ extension Settings
         case isAltRepresentationsEnabled
         case isAlwaysShowControllerSkinEnabled
         case isDebugModeEnabled
+        case isAltRepresentationsAvailable
     }
 }
 
@@ -80,6 +81,7 @@ struct Settings
                         #keyPath(UserDefaults.isPromptSpeedEnabled): true,
                         #keyPath(UserDefaults.customFastForwardSpeed): 1.5,
                         #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
+                        #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
                         #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
                         #keyPath(UserDefaults.isDebugModeEnabled): false,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
@@ -316,6 +318,17 @@ extension Settings
         }
     }
     
+    static var isAltRepresentationsAvailable: Bool {
+        set {
+            UserDefaults.standard.isAltRepresentationsAvailable = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsAvailable])
+        }
+        get {
+            let isAltRepresentationsAvailable = UserDefaults.standard.isAltRepresentationsAvailable
+            return isAltRepresentationsAvailable
+        }
+    }
+    
     static var isAlwaysShowControllerSkinEnabled: Bool {
         set {
             UserDefaults.standard.isAlwaysShowControllerSkinEnabled = newValue
@@ -547,6 +560,7 @@ private extension UserDefaults
     @NSManaged var customFastForwardSpeed: CGFloat
     
     @NSManaged var isUseAltRepresentationsEnabled: Bool
+    @NSManaged var isAltRepresentationsAvailable: Bool
     @NSManaged var isAlwaysShowControllerSkinEnabled: Bool
     
     @NSManaged var isDebugModeEnabled: Bool

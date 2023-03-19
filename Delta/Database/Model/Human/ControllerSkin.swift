@@ -39,6 +39,10 @@ public class ControllerSkin: _ControllerSkin
         return self.controllerSkin?.isDebugModeEnabled ?? false
     }
     
+    public var hasAltRepresentations: Bool {
+        return self.controllerSkin?.hasAltRepresentations ?? false
+    }
+    
     private lazy var controllerSkin: DeltaCore.ControllerSkin? = {
         let controllerSkin = self.isStandard ? DeltaCore.ControllerSkin.standardControllerSkin(for: self.gameType) : DeltaCore.ControllerSkin(fileURL: self.fileURL)
         return controllerSkin

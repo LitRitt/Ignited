@@ -711,6 +711,9 @@ private extension GameViewController
             self.controllerView.controllerSkin = touchControllerSkin
         }
         
+        let altRepresentationsAvailable = self.controllerView.controllerSkin?.hasAltRepresentations as! Bool
+        Settings.isAltRepresentationsAvailable = altRepresentationsAvailable
+        
         self.view.setNeedsLayout()
     }
 }
@@ -1460,7 +1463,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
             
-        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval: break
+        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable: break
         }
     }
     
