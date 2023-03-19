@@ -154,7 +154,7 @@ private extension MelonDSCoreSettingsViewController
         
         case .dsiBIOS where Settings.preferredCore(for: .ds) == DS.core:
             // Using DeSmuME core, which doesn't require BIOS,
-            // or using public Delta version, which doesn't support DSi (yet).
+            // or using public Ignited version, which doesn't support DSi (yet).
             return true
             
         default: return false

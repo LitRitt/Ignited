@@ -149,7 +149,7 @@ extension SaveState: Syncable
            
         if let coreIdentifier = record.remoteMetadata?[.coreID]
         {
-            // SaveState was synced to older version of Delta and lost its coreIdentifier,
+            // SaveState was synced to older version of Ignited and lost its coreIdentifier,
             // but it remains in the remote metadata so we can reassign it.
             self.coreIdentifier = coreIdentifier
         }

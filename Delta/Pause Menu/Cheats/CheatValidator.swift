@@ -29,7 +29,7 @@ extension CheatValidator
             case .invalidGame: return NSLocalizedString("There is no associated game with this cheat.", comment: "")
             case .duplicateName: return NSLocalizedString("A cheat already exists with this name.", comment: "")
             case .duplicateCode: return NSLocalizedString("A cheat already exists with this code.", comment: "")
-            case .unknownCheatType: return NSLocalizedString("Delta does not support this cheat type.", comment: "")
+            case .unknownCheatType: return NSLocalizedString("Ignited does not support this cheat type.", comment: "")
             }
         }
     }

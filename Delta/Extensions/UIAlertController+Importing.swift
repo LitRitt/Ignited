@@ -74,8 +74,8 @@ extension UIAlertController
                 
                 switch importType
                 {
-                case .games: message = NSLocalizedString("Delta was unable to import games. Please try again later.", comment: "")
-                case .controllerSkins: message = NSLocalizedString("Delta was unable to import controller skins. Please try again later.", comment: "")
+                case .games: message = NSLocalizedString("Ignited was unable to import games. Please try again later.", comment: "")
+                case .controllerSkins: message = NSLocalizedString("Ignited was unable to import controller skins. Please try again later.", comment: "")
                 }
             }
         }

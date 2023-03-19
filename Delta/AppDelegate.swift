@@ -50,9 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         // Fabric doesn't allow us to change what value it uses for the bundle identifier.
         // Normally this wouldn't be an issue, except AltStore creates a unique bundle identifier per user.
-        // Rather than have every copy of Delta be listed separately in Fabric, we temporarily swizzle Bundle.infoDictionary
+        // Rather than have every copy of Ignited be listed separately in Fabric, we temporarily swizzle Bundle.infoDictionary
         // to return a constant identifier while Fabric is starting up. This way, Fabric will now group
-        // all copies of Delta under the bundle identifier "com.rileytestut.Delta.AltStore".
+        // all copies of Ignited under the bundle identifier "com.rileytestut.Delta.AltStore".
         Bundle.swizzleBundleID {
             Fabric.with([Crashlytics.self])
         }
