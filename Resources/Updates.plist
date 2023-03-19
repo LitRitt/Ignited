@@ -4,6 +4,96 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>0.7.1</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.7.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Alternate Skin pause menu item now only shows is the current skin supports it</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Debug Mode pause menu item now only shows if the current skin&apos;s debug property is set to true, or debug mode is manually enabled in settings</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Reordered save state menu sections. General at the top and Quick/Auto at the bottom</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Rebrand to from Delta Ignited to just Ignited</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
+		<string>0.7.0</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.7.0</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Alt Skins - An alternate skin appearance that can be swapped to from a skin or menu item</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Toast Notifications - You will now receive short in-game popups when you save, load, or toggle something</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Always Show Skin Toggle - You now have the option to always show the skin image, even when a controller connected</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Game will auto-save on every fast forward activation</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>In-App Debug Toggle</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated footer descriptions for Controller Skin Options and Fast Forward sections in settings</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Added Alternate Skin and Debug Mode pause menu items</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed a bug where the user preferred DS core was changed to MelonDS every time the app started</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>0.6.3</string>
 		<key>link</key>
 		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v0.6.3</string>
