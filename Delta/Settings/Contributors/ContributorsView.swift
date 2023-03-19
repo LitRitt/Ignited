@@ -79,7 +79,7 @@ struct ContributorsView: View
     var body: some View {
         List {
             Section(content: {}, footer: {
-                Text("These individuals have contributed to the open-source Delta Ignited project on GitHub.\n\nThank you to all our contributors, your help is much appreciated 🧡")
+                Text("These individuals have contributed to the open-source Ignited project on GitHub.\n\nThank you to all our contributors, your help is much appreciated 🧡")
                     .font(.subheadline)
             })
             

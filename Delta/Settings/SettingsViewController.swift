@@ -133,11 +133,11 @@ class SettingsViewController: UITableViewController
         
         if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
         {
-            self.versionLabel.text = NSLocalizedString(String(format: "Delta Ignited %@", version), comment: "Delta Ignited Version")
+            self.versionLabel.text = NSLocalizedString(String(format: "Ignited %@", version), comment: "Ignited Version")
         }
         else
         {
-            self.versionLabel.text = NSLocalizedString("Delta Ignited", comment: "")
+            self.versionLabel.text = NSLocalizedString("Ignited", comment: "")
         }
     }
     
