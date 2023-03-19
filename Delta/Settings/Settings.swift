@@ -46,10 +46,11 @@ extension Settings
         case customFastForwardSpeed
         case isRewindEnabled
         case rewindTimerInterval
+        case isAltRepresentationsAvailable
         case isAltRepresentationsEnabled
         case isAlwaysShowControllerSkinEnabled
         case isDebugModeEnabled
-        case isAltRepresentationsAvailable
+        case isSkinDebugModeEnabled
     }
 }
 
@@ -84,6 +85,7 @@ struct Settings
                         #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
                         #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
                         #keyPath(UserDefaults.isDebugModeEnabled): false,
+                        #keyPath(UserDefaults.isSkinDebugModeEnabled): false,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
     }
@@ -351,6 +353,17 @@ extension Settings
         }
     }
     
+    static var isSkinDebugModeEnabled: Bool {
+        set {
+            UserDefaults.standard.isSkinDebugModeEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isSkinDebugModeEnabled])
+        }
+        get {
+            let isSkinDebugModeEnabled = UserDefaults.standard.isSkinDebugModeEnabled
+            return isSkinDebugModeEnabled
+        }
+    }
+    
     static func preferredCore(for gameType: GameType) -> DeltaCoreProtocol?
     {
         let key = self.preferredCoreSettingsKey(for: gameType)
@@ -564,4 +577,5 @@ private extension UserDefaults
     @NSManaged var isAlwaysShowControllerSkinEnabled: Bool
     
     @NSManaged var isDebugModeEnabled: Bool
+    @NSManaged var isSkinDebugModeEnabled: Bool
 }
