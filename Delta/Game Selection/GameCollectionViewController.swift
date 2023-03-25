@@ -308,6 +308,10 @@ private extension GameCollectionViewController
         cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
         cell.imageView.layer.cornerRadius = 15
         
+        cell.layer.shadowOpacity = 0.75
+        cell.layer.shadowRadius = 3.0
+        cell.layer.shadowOffset = CGSize(width: 0, height: 3)
+        
         if self.theme == .translucent
         {
             cell.imageView.layer.opacity = 0.5
