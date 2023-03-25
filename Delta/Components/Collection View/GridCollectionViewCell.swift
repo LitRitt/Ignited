@@ -184,7 +184,16 @@ private extension GridCollectionViewCell
         self.imageViewWidthConstraint.constant = self.maximumImageSize.width
         self.imageViewHeightConstraint.constant = self.maximumImageSize.height
         
-        self.textLabelVerticalSpacingConstraint.constant = 8
+        if self.maximumImageSize.height < self.maximumImageSize.width
+        {
+            let offset = (self.maximumImageSize.width - self.maximumImageSize.height) / 2
+            self.textLabelVerticalSpacingConstraint.constant = 8 - offset
+        }
+        else
+        {
+            self.textLabelVerticalSpacingConstraint.constant = 8
+        }
+        
         self.textLabelFocusedVerticalSpacingConstraint?.constant = self.maximumImageSize.height / 10.0
     }
 }
