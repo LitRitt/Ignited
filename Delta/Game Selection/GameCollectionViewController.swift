@@ -274,6 +274,8 @@ private extension GameCollectionViewController
             
             let cell = cell as! GridCollectionViewCell
             cell.imageView.image = image
+            
+            self.updateAspectRatio(cell: cell, image: image)
         }
     }
     
@@ -340,6 +342,32 @@ private extension GameCollectionViewController
         cell.textLabel.text = game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
         cell.tintColor = cell.textLabel.textColor
+    }
+    
+    func updateAspectRatio(cell: GridCollectionViewCell, image: UIImage)
+    {
+        let bounds = cell.imageView.layer.bounds
+        let aspectRatio = image.size.width / image.size.height
+        var offset: CGFloat
+        let adjustedBounds: CGRect
+        
+        if aspectRatio < 1 // Vertical
+        {
+            offset = (bounds.width - (bounds.height * aspectRatio)) / 2
+            if offset > 20 { offset = 20 }
+            adjustedBounds = CGRect(x: bounds.minX + offset, y: bounds.minY, width: bounds.width - (offset * 2), height: bounds.height)
+        }
+        else // Horizontal
+        {
+            offset = (bounds.height - (bounds.width / aspectRatio)) / 2
+            if offset > 20 { offset = 20 }
+            adjustedBounds = CGRect(x: bounds.minX, y: bounds.minY + offset, width: bounds.width, height: bounds.height - (offset * 2))
+            cell.frame.origin.y += offset
+        }
+        
+        cell.imageView.layer.bounds = adjustedBounds
+        cell.maximumImageSize = CGSize(width: adjustedBounds.width, height: adjustedBounds.height)
+        cell.imageView.topAnchor.constraint(equalTo: cell.contentView.topAnchor).constant = offset
     }
     
     //MARK: - Emulation
