@@ -274,7 +274,6 @@ private extension GameCollectionViewController
             
             let cell = cell as! GridCollectionViewCell
             cell.imageView.image = image
-            cell.isImageViewVibrancyEnabled = false
         }
     }
     
@@ -298,18 +297,32 @@ private extension GameCollectionViewController
     {
         let game = self.dataSource.item(at: indexPath)
         
-        switch self.theme
+        cell.imageView.backgroundColor = self.view.tintColor.darker(componentDelta: 0.1)
+        cell.imageView.tintColor = UIColor.white
+        cell.imageView.clipsToBounds = true
+        cell.imageView.contentMode = .scaleToFill
+        
+        cell.imageView.layer.borderWidth = 1.2
+        cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
+        cell.imageView.layer.cornerRadius = 15
+        
+        if self.theme == .translucent
         {
-        case .opaque:
-            cell.isTextLabelVibrancyEnabled = false
-            cell.isImageViewVibrancyEnabled = false
-            
-        case .translucent:
-            cell.isTextLabelVibrancyEnabled = true
-            cell.isImageViewVibrancyEnabled = true
+            cell.imageView.layer.opacity = 0.5
+            cell.textLabel.layer.opacity = 0.5
         }
         
-        cell.imageView.image = #imageLiteral(resourceName: "BoxArt")
+        switch game.gameCollection?.system
+        {
+        case .nes: cell.imageView.image = #imageLiteral(resourceName: "NES")
+        case .snes: cell.imageView.image = #imageLiteral(resourceName: "SNES")
+        case .genesis: cell.imageView.image = #imageLiteral(resourceName: "GENESIS")
+        case .n64: cell.imageView.image = #imageLiteral(resourceName: "N64")
+        case .gbc: cell.imageView.image = #imageLiteral(resourceName: "GBC")
+        case .gba: cell.imageView.image = #imageLiteral(resourceName: "GBA")
+        case .ds: cell.imageView.image = #imageLiteral(resourceName: "DS")
+        default: return
+        }
         
         if self.traitCollection.horizontalSizeClass == .regular
         {
@@ -325,7 +338,7 @@ private extension GameCollectionViewController
         cell.maximumImageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         
         cell.textLabel.text = game.name
-        cell.textLabel.textColor = UIColor.gray
+        cell.textLabel.textColor = UIColor.ignitedLightGray
         cell.tintColor = cell.textLabel.textColor
     }
     

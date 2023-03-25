@@ -263,7 +263,7 @@ private extension GamesViewController
     {
         switch self.theme
         {
-        case .opaque: self.view.backgroundColor = UIColor.deltaDarkGray
+        case .opaque: self.view.backgroundColor = UIColor.ignitedDarkGray
         case .translucent: self.view.backgroundColor = nil
         }
                 

@@ -221,7 +221,7 @@ private extension SaveStatesViewController
         switch self.theme
         {
         case .opaque:
-            self.view.backgroundColor = UIColor.deltaDarkGray
+            self.view.backgroundColor = UIColor.ignitedDarkGray
             
             self.vibrancyView.effect = nil
             

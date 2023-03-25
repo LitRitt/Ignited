@@ -52,7 +52,7 @@ class GamesDatabaseBrowserViewController: UITableViewController
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.deltaDarkGray
+        self.view.backgroundColor = UIColor.ignitedDarkGray
         
         self.tableView.register(GameTableViewCell.nib!, forCellReuseIdentifier: RSTCellContentGenericCellIdentifier)
         
@@ -117,13 +117,6 @@ private extension GamesDatabaseBrowserViewController
             
             let cell = cell as! GameTableViewCell
             
-            let artworkDisplaySize = AVMakeRect(aspectRatio: image.size, insideRect: cell.artworkImageView.bounds)
-            let offset = (cell.artworkImageView.bounds.width - artworkDisplaySize.width) / 2
-            
-            // Offset artworkImageViewLeadingConstraint and artworkImageViewTrailingConstraint to right-align artworkImageView
-            cell.artworkImageViewLeadingConstraint.constant += offset
-            cell.artworkImageViewTrailingConstraint.constant -= offset
-            
             cell.artworkImageView.image = image
             cell.artworkImageView.superview?.layoutIfNeeded()
         }
@@ -154,10 +147,19 @@ private extension GamesDatabaseBrowserViewController
 {
     func configure(cell: GameTableViewCell, with metadata: GameMetadata, for indexPath: IndexPath)
     {
-        cell.backgroundColor = UIColor.deltaDarkGray
+        cell.backgroundColor = UIColor.ignitedDarkGray
         
         cell.nameLabel.text = metadata.name ?? NSLocalizedString("Unknown", comment: "")
-        cell.artworkImageView.image = #imageLiteral(resourceName: "BoxArt")
+        cell.artworkImageView.image = #imageLiteral(resourceName: "NES")
+        
+        cell.artworkImageView.layer.masksToBounds = true
+        cell.artworkImageView.layer.borderWidth = 1.2
+        cell.artworkImageView.layer.cornerRadius = 15
+        cell.artworkImageView.contentMode = .scaleToFill
+        
+        cell.artworkImageView.tintColor = UIColor.white
+        cell.artworkImageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
+        cell.artworkImageView.backgroundColor = self.view.tintColor.darker(componentDelta: 0.1)
         
         cell.artworkImageViewLeadingConstraint.constant = 15
         cell.artworkImageViewTrailingConstraint.constant = 15
