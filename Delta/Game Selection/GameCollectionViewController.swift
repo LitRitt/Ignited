@@ -299,7 +299,7 @@ private extension GameCollectionViewController
     {
         let game = self.dataSource.item(at: indexPath)
         
-        cell.imageView.backgroundColor = self.view.tintColor.darker(componentDelta: 0.1)
+        cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
         cell.imageView.tintColor = UIColor.white
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill

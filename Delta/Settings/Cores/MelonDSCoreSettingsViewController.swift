@@ -179,7 +179,7 @@ private extension MelonDSCoreSettingsViewController
         }
         
         let safariViewController = SFSafariViewController(url: url)
-        safariViewController.preferredControlTintColor = .ignitedOrange
+        safariViewController.preferredControlTintColor = UIColor.themeColor
         self.present(safariViewController, animated: true, completion: nil)
     }
     

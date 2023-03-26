@@ -251,7 +251,7 @@ private extension UpdatesView
         guard let hostingController = viewModel.hostingController else { return }
         
         let safariViewController = SFSafariViewController(url: url)
-        safariViewController.preferredControlTintColor = .ignitedOrange
+        safariViewController.preferredControlTintColor = UIColor.themeColor
         hostingController.present(safariViewController, animated: true)
     }
 }

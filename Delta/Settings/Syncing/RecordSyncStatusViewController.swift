@@ -176,7 +176,7 @@ extension RecordSyncStatusViewController
             else
             {
                 cell.textLabel?.text = NSLocalizedString("View Versions", comment: "")
-                cell.textLabel?.textColor = .ignitedOrange
+                cell.textLabel?.textColor = UIColor.themeColor
             }
             
         default: break

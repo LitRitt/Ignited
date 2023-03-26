@@ -17,6 +17,7 @@ private extension SettingsViewController
 {
     enum Section: Int
     {
+        case theme
         case controllers
         case controllerSkins
         case skinDownloads
@@ -88,6 +89,8 @@ private extension SettingsViewController
 
 class SettingsViewController: UITableViewController
 {
+    @IBOutlet private var themeColorLabel: UILabel!
+    
     @IBOutlet private var controllerOpacityLabel: UILabel!
     @IBOutlet private var controllerOpacitySlider: UISlider!
     @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
@@ -197,6 +200,7 @@ private extension SettingsViewController
 {
     func update()
     {
+        self.updateThemeColorLabel()
         self.controllerOpacitySlider.value = Float(Settings.translucentControllerSkinOpacity)
         self.updateControllerOpacityLabel()
         self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
@@ -230,7 +234,18 @@ private extension SettingsViewController
         self.promptSpeedSwitch.isOn = Settings.isPromptSpeedEnabled
         self.updateCustomFastForwardSpeedLabel()
         
+        self.view.tintColor = .themeColor
+        
         self.tableView.reloadData()
+    }
+    
+    func updateThemeColorLabel()
+    {
+        self.themeColorLabel.layer.cornerRadius = 5
+        self.themeColorLabel.layer.borderWidth = 1
+        self.themeColorLabel.layer.borderColor = UIColor.gray.cgColor
+        self.themeColorLabel.textColor = UIColor.themeColor
+        self.themeColorLabel.backgroundColor = UIColor.themeColor
     }
     
     func updateControllerOpacityLabel()
@@ -417,7 +432,7 @@ private extension SettingsViewController
     {
         let safariURL = URL(string: site)!
         let safariViewController = SFSafariViewController(url: safariURL)
-        safariViewController.preferredControlTintColor = .ignitedOrange
+        safariViewController.preferredControlTintColor = UIColor.themeColor
         self.present(safariViewController, animated: true, completion: nil)
     }
     
@@ -437,7 +452,7 @@ private extension SettingsViewController
                 let safariURL = URL(string: "https://twitter.com/" + username)!
                 
                 let safariViewController = SFSafariViewController(url: safariURL)
-                safariViewController.preferredControlTintColor = .ignitedOrange
+                safariViewController.preferredControlTintColor = UIColor.themeColor
                 self.present(safariViewController, animated: true, completion: nil)
             }
         }
@@ -515,6 +530,37 @@ private extension SettingsViewController
         let hostingController = ContributorsView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
+    
+    func changeThemeColor()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Change Theme Color", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        var orangeTitle = "Orange"
+        var purpleTitle = "Purple"
+        
+        switch Settings.themeColor
+        {
+        case .orange: orangeTitle += " ✓"
+        case .purple: purpleTitle += " ✓"
+        }
+        
+        alertController.addAction(UIAlertAction(title: orangeTitle, style: .default, handler: { (action) in
+            Settings.themeColor = .orange
+        }))
+        alertController.addAction(UIAlertAction(title: purpleTitle, style: .default, handler: { (action) in
+            Settings.themeColor = .purple
+        }))
+        alertController.addAction(.cancel)
+        self.present(alertController, animated: true, completion: nil)
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow
+        {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
 }
 
 private extension SettingsViewController
@@ -535,8 +581,10 @@ private extension SettingsViewController
             {
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
+        case .themeColor, .customFastForwardSpeed:
+            self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled: break
         }
     }
 
@@ -622,7 +670,7 @@ extension SettingsViewController
             case .enabled, .unsafeSpeeds, .prompt: break
             }
             
-        case .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
         }
 
         return cell
@@ -635,6 +683,7 @@ extension SettingsViewController
 
         switch section
         {
+        case .theme: self.changeThemeColor()
         case .controllers: self.performSegue(withIdentifier: Segue.controllers.rawValue, sender: cell)
         case .controllerSkins: self.performSegue(withIdentifier: Segue.controllerSkins.rawValue, sender: cell)
         case .skinDownloads:
@@ -663,7 +712,7 @@ extension SettingsViewController
                 let patreonURL = URL(string: "https://www.patreon.com/litritt")!
                 
                 let safariViewController = SFSafariViewController(url: patreonURL)
-                safariViewController.preferredControlTintColor = .ignitedOrange
+                safariViewController.preferredControlTintColor = UIColor.themeColor
                 self.present(safariViewController, animated: true, completion: nil)
             }
             
@@ -739,8 +788,8 @@ extension SettingsViewController
         {
             switch section
             {
-            case .skinOptions: return NSLocalizedString("Opacity - Determines how translucent the controller appears, if supported by the skin.\n\nAlways Show - Will show the skin even if a controller is connected.\n\nUse Alternate Skin - Toggles using the alternate theme/layout, if supported by the skin.\n\nDebug Mode - Determines whether the controller skin debug overlay is shown", comment: "")
-            case .fastForward: return NSLocalizedString("Custom Speed - Determines whether the default fast forward speeds will be overridden\n\nUnsafe Speeds - Shows speeds faster than the safe defaults\n\nChange Speed - Select a speed to override the default\n\nAsk on Activation - Determines whether you will be prompted to choose a speed each time you activate it.", comment: "")
+            case .skinOptions: return NSLocalizedString("Opacity - Determines how translucent the controller skin appears.\nAlways Show - Will show the skin even if a controller is connected.\nUse Alternate Skin - Toggles using the alternate skin.\nDebug Mode - Determines whether the controller skin debug overlay is shown.", comment: "")
+            case .fastForward: return NSLocalizedString("Custom Speed - Determines whether the custom speeds will be used.\nUnsafe Speeds - Shows speeds that may cause issues.\nChange Speed - Select a custom speed to use.\nAsk on Activation - Determines whether you will be prompted to choose a speed each activation.", comment: "")
             default:
                 return super.tableView(tableView, titleForFooterInSection: section.rawValue)
             }

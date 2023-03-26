@@ -32,6 +32,7 @@ extension Settings
     
     enum Name: String
     {
+        case themeColor
         case localControllerPlayerIndex
         case translucentControllerSkinOpacity
         case preferredControllerSkin
@@ -61,13 +62,20 @@ extension Settings
         case recent
         case manual
     }
+    
+    enum ThemeColor: String
+    {
+        case orange
+        case purple
+    }
 }
 
 struct Settings
 {
     static func registerDefaults()
     {
-        let defaults = [#keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
+        let defaults = [#keyPath(UserDefaults.themeColor): ThemeColor.orange.rawValue,
+                        #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
                         #keyPath(UserDefaults.isButtonHapticFeedbackEnabled): true,
                         #keyPath(UserDefaults.isThumbstickHapticFeedbackEnabled): true,
@@ -93,6 +101,18 @@ struct Settings
 
 extension Settings
 {
+    /// Theme
+    static var themeColor: ThemeColor {
+        set {
+            UserDefaults.standard.themeColor = newValue.rawValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.themeColor])
+        }
+        get {
+            let theme = ThemeColor(rawValue: UserDefaults.standard.themeColor) ?? .orange
+            return theme
+        }
+    }
+    
     /// Controllers
     static var localControllerPlayerIndex: Int? = 0 {
         didSet {
@@ -300,7 +320,7 @@ extension Settings
     static var customFastForwardSpeed: CGFloat {
         set {
             UserDefaults.standard.customFastForwardSpeed = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isCustomFastForwardEnabled])
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.customFastForwardSpeed])
             
         }
         get {
@@ -546,6 +566,8 @@ private extension Settings
 
 private extension UserDefaults
 {
+    @NSManaged var themeColor: String
+    
     @NSManaged var translucentControllerSkinOpacity: CGFloat
     @NSManaged var previousGameCollectionIdentifier: String?
     
