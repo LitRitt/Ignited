@@ -104,6 +104,8 @@ extension GameCollectionViewController
             self.collectionView?.addGestureRecognizer(longPressGestureRecognizer)
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.settingsDidChange(_:)), name: .settingsDidChange, object: nil)
+        
         self.update()
     }
     
@@ -885,6 +887,23 @@ private extension GameCollectionViewController
         
         let alertController = UIAlertController(actions: actions)
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc func settingsDidChange(_ notification: Notification)
+    {
+        guard let settingsName = notification.userInfo?[Settings.NotificationUserInfoKey.name] as? Settings.Name else { return }
+        
+        switch settingsName
+        {
+        case .themeColor:
+            // update/reloadData fucks up vertical spacing, iterate over cells and update color instead
+            for cell in self.collectionView?.visibleCells ?? []
+            {
+                let cell = cell as! GridCollectionViewCell
+                cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
+            }
+        default: break
+        }
     }
 }
 

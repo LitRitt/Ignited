@@ -12,6 +12,7 @@ extension UIColor
 {
     static let ignitedOrange = UIColor(named: "Orange")!
     static let deltaPurple = UIColor(named: "Purple")!
+    static let ignitedMint = UIColor(named: "Mint")!
     static let ignitedDarkGray = UIColor(named: "DarkGray")!
     static let ignitedLightGray = UIColor(named: "LightGray")!
     
@@ -20,9 +21,23 @@ extension UIColor
         switch Settings.themeColor
         {
         case .orange:
-            return UIColor.ignitedOrange
+            return ignitedOrange
         case .purple:
-            return UIColor.deltaPurple
+            return deltaPurple
+        case .blue:
+            return UIColor.systemBlue
+        case .red:
+            return UIColor.systemRed
+        case .green:
+            return UIColor.systemGreen
+        case .teal:
+            return UIColor.systemTeal
+        case .pink:
+            return UIColor.systemPink
+        case .yellow:
+            return UIColor.systemYellow
+        case .mint:
+            return ignitedMint
         }
     }
 }

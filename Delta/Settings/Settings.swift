@@ -67,6 +67,13 @@ extension Settings
     {
         case orange
         case purple
+        case blue
+        case red
+        case green
+        case teal
+        case pink
+        case yellow
+        case mint
     }
 }
 
