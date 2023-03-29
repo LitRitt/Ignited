@@ -244,7 +244,15 @@ private extension GameCollectionViewController
             layout.minimumInteritemSpacing = 25 // 30 == only 3 games per line for iPad mini 6 in portrait
             
         case .unspecified, .compact:
-            layout.itemWidth = 90
+            switch UIScreen.main.bounds.width
+            {
+            case 0...350:
+                layout.itemWidth = 90
+            case 351...400:
+                layout.itemWidth = 100
+            default:
+                layout.itemWidth = 110
+            }
             layout.minimumInteritemSpacing = 12
             
         @unknown default: break
