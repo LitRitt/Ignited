@@ -45,7 +45,15 @@ class GridCollectionViewCell: UICollectionViewCell
         }
     }
     
+    var offset: CGFloat = 0 {
+        didSet {
+            self.imageViewTopAnchorConstraint.constant = self.offset
+        }
+    }
+    
     private var vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .dark)))
+    
+    private var imageViewTopAnchorConstraint: NSLayoutConstraint!
     
     private var imageViewWidthConstraint: NSLayoutConstraint!
     private var imageViewHeightConstraint: NSLayoutConstraint!
@@ -109,7 +117,8 @@ class GridCollectionViewCell: UICollectionViewCell
         // Image View
         self.imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        self.imageViewTopAnchorConstraint = self.imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor)
+        self.imageViewTopAnchorConstraint.isActive = true
         self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         
         self.imageViewWidthConstraint = self.imageView.widthAnchor.constraint(equalToConstant: self.maximumImageSize.width)

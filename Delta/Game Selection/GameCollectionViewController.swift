@@ -277,7 +277,7 @@ private extension GameCollectionViewController
             let cell = cell as! GridCollectionViewCell
             cell.imageView.image = image
             
-            self.updateAspectRatio(cell: cell, image: image)
+            self.updateAspectRatio(cell: cell)
         }
     }
     
@@ -310,15 +310,9 @@ private extension GameCollectionViewController
         cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
         cell.imageView.layer.cornerRadius = 15
         
-        cell.layer.shadowOpacity = 0.75
+        cell.layer.shadowOpacity = 0.5
         cell.layer.shadowRadius = 3.0
         cell.layer.shadowOffset = CGSize(width: 0, height: 3)
-        
-        if self.theme == .translucent
-        {
-            cell.imageView.layer.opacity = 0.5
-            cell.textLabel.layer.opacity = 0.5
-        }
         
         switch game.gameCollection?.system
         {
@@ -350,30 +344,31 @@ private extension GameCollectionViewController
         cell.tintColor = cell.textLabel.textColor
     }
     
-    func updateAspectRatio(cell: GridCollectionViewCell, image: UIImage)
+    func updateAspectRatio(cell: GridCollectionViewCell)
     {
         let bounds = cell.imageView.layer.bounds
-        let aspectRatio = image.size.width / image.size.height
+        let aspectRatio = cell.imageView.image!.size.width / cell.imageView.image!.size.height
+        let maxOffset = max(cell.maximumImageSize.width, cell.maximumImageSize.height) * 0.25
+        
         var offset: CGFloat
         let adjustedBounds: CGRect
         
         if aspectRatio < 1 // Vertical
         {
             offset = (bounds.width - (bounds.height * aspectRatio)) / 2
-            if offset > 20 { offset = 20 }
+            if offset > maxOffset { offset = maxOffset }
             adjustedBounds = CGRect(x: bounds.minX + offset, y: bounds.minY, width: bounds.width - (offset * 2), height: bounds.height)
         }
         else // Horizontal
         {
             offset = (bounds.height - (bounds.width / aspectRatio)) / 2
-            if offset > 20 { offset = 20 }
+            if offset > maxOffset { offset = maxOffset }
             adjustedBounds = CGRect(x: bounds.minX, y: bounds.minY + offset, width: bounds.width, height: bounds.height - (offset * 2))
-            cell.frame.origin.y += offset
+            cell.offset = offset
         }
         
         cell.imageView.layer.bounds = adjustedBounds
         cell.maximumImageSize = CGSize(width: adjustedBounds.width, height: adjustedBounds.height)
-        cell.imageView.topAnchor.constraint(equalTo: cell.contentView.topAnchor).constant = offset
     }
     
     //MARK: - Emulation
@@ -1134,15 +1129,7 @@ extension GameCollectionViewController
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
         
-        if let image = cell.imageView.image
-        {
-            let artworkFrame = AVMakeRect(aspectRatio: image.size, insideRect: cell.imageView.bounds)
-            
-            let bezierPath = UIBezierPath(rect: artworkFrame)
-            parameters.visiblePath = bezierPath
-        }
-
-        let preview = UITargetedPreview(view: cell.imageView, parameters: parameters)
+        let preview = UITargetedPreview(view: cell.imageView)
         return preview
     }
     
