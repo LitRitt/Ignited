@@ -390,9 +390,9 @@ private extension SettingsViewController
         else
         {
             Settings.isUnsafeFastForwardSpeedsEnabled = sender.isOn
-            if Settings.customFastForwardSpeed > 2.0
+            if Settings.customFastForwardSpeed > 4.0
             {
-                Settings.customFastForwardSpeed = 2.0
+                Settings.customFastForwardSpeed = 4.0
             }
         }
     }
