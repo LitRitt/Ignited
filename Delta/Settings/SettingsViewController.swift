@@ -674,7 +674,7 @@ private extension SettingsViewController
         case .themeColor, .customFastForwardSpeed:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize: break
         }
     }
 

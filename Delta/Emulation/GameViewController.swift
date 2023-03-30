@@ -1463,7 +1463,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
             
-        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor: break
+        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize: break
         }
     }
     

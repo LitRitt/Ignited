@@ -32,6 +32,7 @@ extension Settings
     
     enum Name: String
     {
+        case gameArtworkSize
         case themeColor
         case localControllerPlayerIndex
         case translucentControllerSkinOpacity
@@ -75,6 +76,12 @@ extension Settings
         case yellow
         case mint
     }
+    
+    enum ArtworkSize: String{
+        case small
+        case medium
+        case large
+    }
 }
 
 struct Settings
@@ -82,6 +89,7 @@ struct Settings
     static func registerDefaults()
     {
         let defaults = [#keyPath(UserDefaults.themeColor): ThemeColor.orange.rawValue,
+                        #keyPath(UserDefaults.gameArtworkSize): ArtworkSize.medium.rawValue,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
                         #keyPath(UserDefaults.isButtonHapticFeedbackEnabled): true,
@@ -117,6 +125,18 @@ extension Settings
         get {
             let theme = ThemeColor(rawValue: UserDefaults.standard.themeColor) ?? .orange
             return theme
+        }
+    }
+    
+    /// Artwork
+    static var gameArtworkSize: ArtworkSize {
+        set {
+            UserDefaults.standard.gameArtworkSize = newValue.rawValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkSize])
+        }
+        get {
+            let size = ArtworkSize(rawValue: UserDefaults.standard.gameArtworkSize) ?? .medium
+            return size
         }
     }
     
@@ -574,6 +594,7 @@ private extension Settings
 private extension UserDefaults
 {
     @NSManaged var themeColor: String
+    @NSManaged var gameArtworkSize: String
     
     @NSManaged var translucentControllerSkinOpacity: CGFloat
     @NSManaged var previousGameCollectionIdentifier: String?

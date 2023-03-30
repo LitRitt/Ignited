@@ -442,6 +442,31 @@ extension GamesViewController: ImportControllerDelegate
     }
 }
 
+/// Artwork Size
+private extension GamesViewController
+{
+    @IBAction func changeArtworkSize()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Change Album Artwork Size", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "Small", style: .default, handler: { (action) in
+            Settings.gameArtworkSize = .small
+        }))
+        alertController.addAction(UIAlertAction(title: "Medium", style: .default, handler: { (action) in
+            Settings.gameArtworkSize = .medium
+        }))
+        alertController.addAction(UIAlertAction(title: "Large", style: .default, handler: { (action) in
+            Settings.gameArtworkSize = .large
+        }))
+        alertController.addAction(.cancel)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+}
+
 //MARK: - Syncing -
 /// Syncing
 private extension GamesViewController

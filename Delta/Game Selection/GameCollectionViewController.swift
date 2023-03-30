@@ -54,6 +54,33 @@ class GameCollectionViewController: UICollectionViewController
         }
     }
     
+    var itemWidth: CGFloat {
+        get {
+            let layout = self.collectionViewLayout as! GridCollectionViewLayout
+            
+            var itemsPerRow: CGFloat
+            switch Settings.gameArtworkSize
+            {
+            case .small:
+                itemsPerRow = 4.0
+            case .medium:
+                itemsPerRow = 3.0
+            case .large:
+                itemsPerRow = 2.0
+            }
+            
+            if self.traitCollection.horizontalSizeClass == .regular
+            {
+                itemsPerRow = floor(itemsPerRow * 1.5)
+            }
+            
+            let deviceWidth = UIScreen.main.fixedCoordinateSpace.bounds.width
+            let itemWidth = floor((deviceWidth - (layout.minimumInteritemSpacing * (itemsPerRow + 1))) / itemsPerRow)
+            
+            return itemWidth
+        }
+    }
+    
     internal let dataSource: RSTFetchedResultsCollectionViewPrefetchingDataSource<Game, UIImage>
     
     weak var activeEmulatorCore: EmulatorCore?
@@ -240,23 +267,15 @@ private extension GameCollectionViewController
         switch self.traitCollection.horizontalSizeClass
         {
         case .regular:
-            layout.itemWidth = 150
             layout.minimumInteritemSpacing = 25 // 30 == only 3 games per line for iPad mini 6 in portrait
             
         case .unspecified, .compact:
-            switch UIScreen.main.bounds.width
-            {
-            case 0...350:
-                layout.itemWidth = 90
-            case 351...400:
-                layout.itemWidth = 100
-            default:
-                layout.itemWidth = 110
-            }
             layout.minimumInteritemSpacing = 12
             
         @unknown default: break
         }
+        
+        layout.itemWidth = self.itemWidth
         
         self.collectionView.reloadData()
     }
@@ -375,7 +394,7 @@ private extension GameCollectionViewController
             cell.offset = offset
         }
         
-        cell.imageView.layer.bounds = adjustedBounds
+        cell.aspectRatio = aspectRatio
         cell.maximumImageSize = CGSize(width: adjustedBounds.width, height: adjustedBounds.height)
     }
     
@@ -905,6 +924,34 @@ private extension GameCollectionViewController
                 let cell = cell as! GridCollectionViewCell
                 cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
             }
+            
+        case .gameArtworkSize:
+            let layout = self.collectionViewLayout as! GridCollectionViewLayout
+            
+            for cell in self.collectionView?.visibleCells ?? []
+            {
+                let cell = cell as! GridCollectionViewCell
+                let size: CGSize
+                
+                if cell.aspectRatio < 1
+                {
+                    size = CGSize(width: self.itemWidth * cell.aspectRatio, height: self.itemWidth)
+                }
+                else
+                {
+                    size = CGSize(width: self.itemWidth, height: self.itemWidth / cell.aspectRatio)
+                }
+                
+                UIView.animate(withDuration: 0.2) {
+                    cell.maximumImageSize = size
+                }
+            }
+            
+            UIView.animate(withDuration: 0.2) {
+                layout.itemWidth = self.itemWidth
+            }
+//            self.collectionView.setNeedsLayout()
+            
         default: break
         }
     }

@@ -51,6 +51,8 @@ class GridCollectionViewCell: UICollectionViewCell
         }
     }
     
+    var aspectRatio: CGFloat = 1.0
+    
     private var vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .dark)))
     
     private var imageViewTopAnchorConstraint: NSLayoutConstraint!
@@ -197,6 +199,7 @@ private extension GridCollectionViewCell
         {
             let offset = (self.maximumImageSize.width - self.maximumImageSize.height) / 2
             self.textLabelVerticalSpacingConstraint.constant = 8 - offset
+            self.imageViewTopAnchorConstraint.constant = offset
         }
         else
         {
