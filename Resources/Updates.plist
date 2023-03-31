@@ -4,9 +4,24 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.0.1</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.0.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed a link in settings</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.0</string>
 		<key>link</key>
-		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.0</string>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.0.0</string>
 		<key>changes</key>
 		<array>
 			<dict>
