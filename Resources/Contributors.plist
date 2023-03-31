@@ -4,30 +4,18 @@
 <array>
 	<dict>
 		<key>name</key>
-		<string>Ian Clawson</string>
+		<string>Riley Testut</string>
 		<key>link</key>
-		<string>https://github.com/ianclawson</string>
+		<string>https://github.com/rileytestut</string>
 		<key>linkName</key>
-		<string>github.com/ianclawson</string>
+		<string>github.com/rileytestut</string>
 		<key>contributions</key>
 		<array>
 			<dict>
 				<key>name</key>
-				<string>Extended MFi Support</string>
+				<string>Delta</string>
 				<key>link</key>
-				<string>https://github.com/lonkelle/Deltroid/pull/7</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Save State Rewind</string>
-				<key>link</key>
-				<string>https://github.com/lonkelle/Deltroid/pull/8</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Local Multiplayer</string>
-				<key>link</key>
-				<string>https://github.com/lonkelle/Deltroid/pull/9</string>
+				<string>https://github.com/rileytestut/Delta</string>
 			</dict>
 		</array>
 	</dict>
@@ -50,6 +38,29 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Ian Clawson</string>
+		<key>link</key>
+		<string>https://github.com/ianclawson</string>
+		<key>linkName</key>
+		<string>github.com/ianclawson</string>
+		<key>contributions</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Extended MFi Support</string>
+				<key>link</key>
+				<string>https://github.com/lonkelle/Deltroid/pull/7</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Local Multiplayer</string>
+				<key>link</key>
+				<string>https://github.com/lonkelle/Deltroid/pull/9</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Joelle Stickney</string>
 		<key>link</key>
 		<string>https://github.com/lonkelle</string>
@@ -62,12 +73,6 @@
 				<string>Deltroid</string>
 				<key>link</key>
 				<string>https://github.com/lonkelle/Deltroid</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Genesis File Extension Fix</string>
-				<key>link</key>
-				<string>https://github.com/lonkelle/Deltroid/commit/0c05444f30108b73274579fcffb49632af2026bf</string>
 			</dict>
 		</array>
 	</dict>

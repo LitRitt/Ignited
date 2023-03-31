@@ -57,9 +57,7 @@ private extension SettingsViewController
     
     enum CreditsRow: Int, CaseIterable
     {
-        case riley
-        case shane
-        case litRitt
+        case developer
         case contributors
         case softwareLicenses
     }
@@ -436,26 +434,12 @@ private extension SettingsViewController
         self.present(safariViewController, animated: true, completion: nil)
     }
     
-    func openTwitter(username: String)
+    func openHomePage()
     {
-        let twitterAppURL = URL(string: "twitter://user?screen_name=" + username)!
-        UIApplication.shared.open(twitterAppURL, options: [:]) { (success) in
-            if success
-            {
-                if let selectedIndexPath = self.tableView.indexPathForSelectedRow
-                {
-                    self.tableView.deselectRow(at: selectedIndexPath, animated: true)
-                }
-            }
-            else
-            {
-                let safariURL = URL(string: "https://twitter.com/" + username)!
-                
-                let safariViewController = SFSafariViewController(url: safariURL)
-                safariViewController.preferredControlTintColor = UIColor.themeColor
-                self.present(safariViewController, animated: true, completion: nil)
-            }
-        }
+        let safariURL = URL(string: "https://litritt.com/")!
+        let safariViewController = SFSafariViewController(url: safariURL)
+        safariViewController.preferredControlTintColor = UIColor.themeColor
+        self.present(safariViewController, animated: true, completion: nil)
     }
     
     func changeCustomFastForwardSpeed()
@@ -812,9 +796,7 @@ extension SettingsViewController
             let row = CreditsRow(rawValue: indexPath.row)!
             switch row
             {
-            case .riley: self.openTwitter(username: "rileytestut")
-            case .shane: self.openTwitter(username: "shanegillio")
-            case .litRitt: self.openTwitter(username: "lit_ritt")
+            case .developer: self.openHomePage()
             case .contributors:
                 guard #available(iOS 14, *) else { return }
                 self.showContributors()

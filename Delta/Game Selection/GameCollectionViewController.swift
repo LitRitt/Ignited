@@ -942,15 +942,12 @@ private extension GameCollectionViewController
                     size = CGSize(width: self.itemWidth, height: self.itemWidth / cell.aspectRatio)
                 }
                 
-                UIView.animate(withDuration: 0.2) {
-                    cell.maximumImageSize = size
-                }
+                cell.maximumImageSize = size
             }
             
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.1) {
                 layout.itemWidth = self.itemWidth
             }
-//            self.collectionView.setNeedsLayout()
             
         default: break
         }
