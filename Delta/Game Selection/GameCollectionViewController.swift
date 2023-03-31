@@ -54,6 +54,30 @@ class GameCollectionViewController: UICollectionViewController
         }
     }
     
+    var minimumSpacing: CGFloat {
+        get {
+            let layout = self.collectionViewLayout as! GridCollectionViewLayout
+            
+            var minimumSpacing: CGFloat
+            switch Settings.gameArtworkSize
+            {
+            case .small:
+                minimumSpacing = 12
+            case .medium:
+                minimumSpacing = 16
+            case .large:
+                minimumSpacing = 20
+            }
+            
+            if self.traitCollection.horizontalSizeClass == .regular
+            {
+                minimumSpacing *= 1.5
+            }
+            
+            return minimumSpacing
+        }
+    }
+    
     var itemWidth: CGFloat {
         get {
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
@@ -264,17 +288,7 @@ private extension GameCollectionViewController
     {
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
         
-        switch self.traitCollection.horizontalSizeClass
-        {
-        case .regular:
-            layout.minimumInteritemSpacing = 25 // 30 == only 3 games per line for iPad mini 6 in portrait
-            
-        case .unspecified, .compact:
-            layout.minimumInteritemSpacing = 12
-            
-        @unknown default: break
-        }
-        
+        layout.minimumInteritemSpacing = self.minimumSpacing
         layout.itemWidth = self.itemWidth
         
         self.collectionView.reloadData()
@@ -928,6 +942,8 @@ private extension GameCollectionViewController
         case .gameArtworkSize:
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
             
+            layout.minimumInteritemSpacing = self.minimumSpacing
+            
             for cell in self.collectionView?.visibleCells ?? []
             {
                 let cell = cell as! GridCollectionViewCell
@@ -945,7 +961,7 @@ private extension GameCollectionViewController
                 cell.maximumImageSize = size
             }
             
-            UIView.animate(withDuration: 0.1) {
+            UIView.animate(withDuration: 0.3) {
                 layout.itemWidth = self.itemWidth
             }
             
