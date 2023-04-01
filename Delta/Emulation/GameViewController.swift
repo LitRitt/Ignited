@@ -1221,10 +1221,10 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "200%", style: .default, handler: { (action) in
             self.setFastForwardSpeed(speed: 2.0)
         }))
+        alertController.addAction(UIAlertAction(title: "400%", style: .default, handler: { (action) in
+            self.setFastForwardSpeed(speed: 4.0)
+        }))
         if Settings.isUnsafeFastForwardSpeedsEnabled {
-            alertController.addAction(UIAlertAction(title: "400%", style: .default, handler: { (action) in
-                self.setFastForwardSpeed(speed: 4.0)
-            }))
             alertController.addAction(UIAlertAction(title: "800%", style: .default, handler: { (action) in
                 self.setFastForwardSpeed(speed: 8.0)
             }))

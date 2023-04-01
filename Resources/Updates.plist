@@ -11,9 +11,15 @@
 		<array>
 			<dict>
 				<key>type</key>
-				<string>update</string>
+				<string>feature</string>
 				<key>description</key>
 				<string>Added color highlighting to currently running game</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Make artwork spacing dynamic like size</string>
 			</dict>
 			<dict>
 				<key>type</key>

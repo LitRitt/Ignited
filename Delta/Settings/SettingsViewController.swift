@@ -481,10 +481,10 @@ private extension SettingsViewController
         alertController.addAction(UIAlertAction(title: speedFourTitle, style: .default, handler: { (action) in
             Settings.customFastForwardSpeed = 2.0
         }))
+        alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
+            Settings.customFastForwardSpeed = 4.0
+        }))
         if Settings.isUnsafeFastForwardSpeedsEnabled {
-            alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
-                Settings.customFastForwardSpeed = 4.0
-            }))
             alertController.addAction(UIAlertAction(title: speedSixTitle, style: .default, handler: { (action) in
                 Settings.customFastForwardSpeed = 8.0
             }))
