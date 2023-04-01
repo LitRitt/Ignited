@@ -351,9 +351,20 @@ private extension GameCollectionViewController
         cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
         cell.imageView.layer.cornerRadius = 15
         
-        cell.layer.shadowOpacity = 0.5
-        cell.layer.shadowRadius = 3.0
-        cell.layer.shadowOffset = CGSize(width: 0, height: 3)
+        if let currentCore = self.activeEmulatorCore, game.fileURL == currentCore.game.fileURL
+        {
+            cell.layer.shadowColor = UIColor.themeColor.cgColor
+            cell.layer.shadowOpacity = 1.0
+            cell.layer.shadowRadius = 5.0
+            cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+        }
+        else
+        {
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 3.0
+            cell.layer.shadowOffset = CGSize(width: 0, height: 3)
+        }
         
         switch game.gameCollection?.system
         {
