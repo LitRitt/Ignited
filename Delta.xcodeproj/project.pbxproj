@@ -36,6 +36,7 @@
 		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
 		AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F6029B2C0F4005B27DD /* UpdatesView.swift */; };
 		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
+		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC8E5BCA29CCF77700F32D19 /* UIColor+Adjust.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */; };
 		BF00BEA625B758AA00C8607D /* SystemBIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00BEA525B758AA00C8607D /* SystemBIOS.swift */; };
 		BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */; };
@@ -216,6 +217,7 @@
 		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		AC503F6029B2C0F4005B27DD /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
+		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
 		AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Adjust.swift"; sourceTree = "<group>"; };
 		BF00BEA525B758AA00C8607D /* SystemBIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemBIOS.swift; sourceTree = "<group>"; };
 		BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = openvgdb.sqlite; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				BF5942681E09BBD00051894B /* GridCollectionViewCell.swift */,
+				AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */,
 				BF5942691E09BBD00051894B /* GridCollectionViewLayout.swift */,
 			);
 			path = "Collection View";
@@ -1262,6 +1265,7 @@
 				BF5942701E09BC5D0051894B /* GamesDatabase.swift in Sources */,
 				BF34FA071CF0F510006624C7 /* EditCheatViewController.swift in Sources */,
 				BF1F45A421AF274D00EF9895 /* SyncResultViewController.swift in Sources */,
+				AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */,
 				BF3D6C53220286750083E05A /* Delta3ToDelta4.xcmappingmodel in Sources */,
 				BF5942881E09BC8B0051894B /* _Game.swift in Sources */,
 				BF56450D220239B800A8EA26 /* GameControllerInputMappingMigrationPolicy.swift in Sources */,
@@ -1534,7 +1538,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 75;
+				CURRENT_PROJECT_VERSION = 76;
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1542,7 +1546,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.ignited;
 				PROVISIONING_PROFILE = "";
@@ -1569,7 +1573,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 75;
+				CURRENT_PROJECT_VERSION = 76;
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1577,7 +1581,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DIMPACTOR";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.ignited;
 				PROVISIONING_PROFILE = "";

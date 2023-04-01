@@ -47,7 +47,7 @@ class GameCollectionViewController: UICollectionViewController
             {
                 if let indexPath = self.collectionView?.indexPath(for: cell)
                 {
-                    self.configure(cell as! GridCollectionViewCell, for: indexPath)
+                    self.configure(cell as! GridCollectionViewGameCell, for: indexPath)
                 }
                 
             }
@@ -111,7 +111,7 @@ class GameCollectionViewController: UICollectionViewController
     
     private var activeSaveState: SaveStateProtocol?
     
-    private let prototypeCell = GridCollectionViewCell()
+    private let prototypeCell = GridCollectionViewGameCell()
     
     private var _performingPreviewTransition = false
     private weak var _previewTransitionViewController: PreviewGameViewController?
@@ -298,7 +298,7 @@ private extension GameCollectionViewController
     func prepareDataSource()
     {
         self.dataSource.cellConfigurationHandler = { [weak self] (cell, item, indexPath) in
-            self?.configure(cell as! GridCollectionViewCell, for: indexPath)
+            self?.configure(cell as! GridCollectionViewGameCell, for: indexPath)
         }
         
         self.dataSource.prefetchHandler = { (game, indexPath, completionHandler) in
@@ -315,10 +315,10 @@ private extension GameCollectionViewController
         self.dataSource.prefetchCompletionHandler = { (cell, image, indexPath, error) in
             guard let image = image else { return }
             
-            let cell = cell as! GridCollectionViewCell
+            let cell = cell as! GridCollectionViewGameCell
             cell.imageView.image = image
             
-            self.updateAspectRatio(cell: cell)
+            self.updateImage(cell: cell, image: image)
         }
     }
     
@@ -338,9 +338,9 @@ private extension GameCollectionViewController
     }
     
     //MARK: - Configure Cells
-    func configure(_ cell: GridCollectionViewCell, for indexPath: IndexPath)
+    func configure(_ cell: GridCollectionViewGameCell, for indexPath: IndexPath)
     {
-        let game = self.dataSource.item(at: indexPath)
+        let game = self.dataSource.item(at: indexPath) as! Game
         
         cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
         cell.imageView.tintColor = UIColor.white
@@ -389,18 +389,18 @@ private extension GameCollectionViewController
         }
         
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
-        cell.maximumImageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
+        cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         
         cell.textLabel.text = game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
         cell.tintColor = cell.textLabel.textColor
     }
     
-    func updateAspectRatio(cell: GridCollectionViewCell)
+    func updateImage(cell: GridCollectionViewGameCell, image: UIImage)
     {
-        let bounds = cell.imageView.layer.bounds
-        let aspectRatio = cell.imageView.image!.size.width / cell.imageView.image!.size.height
-        let maxOffset = max(cell.maximumImageSize.width, cell.maximumImageSize.height) * 0.25
+        let bounds = CGRect(x: 0, y: 0, width: self.itemWidth, height: self.itemWidth)
+        let aspectRatio = image.size.width / image.size.height
+        let maxOffset = self.itemWidth * 0.25
         
         var offset: CGFloat
         let adjustedBounds: CGRect
@@ -410,17 +410,18 @@ private extension GameCollectionViewController
             offset = (bounds.width - (bounds.height * aspectRatio)) / 2
             if offset > maxOffset { offset = maxOffset }
             adjustedBounds = CGRect(x: bounds.minX + offset, y: bounds.minY, width: bounds.width - (offset * 2), height: bounds.height)
+            cell.verticalOffset = 0
         }
         else // Horizontal
         {
             offset = (bounds.height - (bounds.width / aspectRatio)) / 2
             if offset > maxOffset { offset = maxOffset }
             adjustedBounds = CGRect(x: bounds.minX, y: bounds.minY + offset, width: bounds.width, height: bounds.height - (offset * 2))
-            cell.offset = offset
+            cell.verticalOffset = offset
         }
         
         cell.aspectRatio = aspectRatio
-        cell.maximumImageSize = CGSize(width: adjustedBounds.width, height: adjustedBounds.height)
+        cell.imageSize = CGSize(width: adjustedBounds.width, height: adjustedBounds.height)
     }
     
     //MARK: - Emulation
@@ -942,39 +943,8 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case .themeColor:
-            // update/reloadData fucks up vertical spacing, iterate over cells and update color instead
-            for cell in self.collectionView?.visibleCells ?? []
-            {
-                let cell = cell as! GridCollectionViewCell
-                cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
-            }
-            
-        case .gameArtworkSize:
-            let layout = self.collectionViewLayout as! GridCollectionViewLayout
-            
-            layout.minimumInteritemSpacing = self.minimumSpacing
-            
-            for cell in self.collectionView?.visibleCells ?? []
-            {
-                let cell = cell as! GridCollectionViewCell
-                let size: CGSize
-                
-                if cell.aspectRatio < 1
-                {
-                    size = CGSize(width: self.itemWidth * cell.aspectRatio, height: self.itemWidth)
-                }
-                else
-                {
-                    size = CGSize(width: self.itemWidth, height: self.itemWidth / cell.aspectRatio)
-                }
-                
-                cell.maximumImageSize = size
-            }
-            
-            UIView.animate(withDuration: 0.3) {
-                layout.itemWidth = self.itemWidth
-            }
+        case .themeColor, .gameArtworkSize:
+            self.update()
             
         default: break
         }
@@ -1203,7 +1173,7 @@ extension GameCollectionViewController
     override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
     {
         guard let indexPath = configuration.identifier as? NSIndexPath else { return nil }
-        guard let cell = collectionView.cellForItem(at: indexPath as IndexPath) as? GridCollectionViewCell else { return nil }
+        guard let cell = collectionView.cellForItem(at: indexPath as IndexPath) as? GridCollectionViewGameCell else { return nil }
         
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear

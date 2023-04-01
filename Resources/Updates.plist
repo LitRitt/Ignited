@@ -13,19 +13,13 @@
 				<key>type</key>
 				<string>update</string>
 				<key>description</key>
-				<string>Made artwork spacing logic more dynamic</string>
+				<string>Added color highlighting to currently running game</string>
 			</dict>
 			<dict>
 				<key>type</key>
-				<string>update</string>
+				<string>bugfix</string>
 				<key>description</key>
-				<string>Moved artwork size button to left side to better fit iPad layout</string>
-			</dict>
-			<dict>
-				<key>type</key>
-				<string>update</string>
-				<key>description</key>
-				<string>Remove asset for settings gear, use system icon instead</string>
+				<string>Fixed some artwork bugs caused by resizing</string>
 			</dict>
 		</array>
 	</dict>

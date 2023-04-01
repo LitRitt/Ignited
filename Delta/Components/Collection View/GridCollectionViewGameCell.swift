@@ -1,51 +1,25 @@
 //
-//  GridCollectionViewCell.swift
+//  GridCollectionViewGameCell.swift
 //  Delta
 //
-//  Created by Riley Testut on 10/21/15.
-//  Copyright © 2015 Riley Testut. All rights reserved.
+//  Created by Chris Rittenhouse on 4/1/23.
+//  Copyright © 2023 Lit Development. All rights reserved.
 //
 
 import UIKit
 
-class GridCollectionViewCell: UICollectionViewCell
+class GridCollectionViewGameCell: UICollectionViewCell
 {
     let imageView = UIImageView()
     let textLabel = UILabel()
     
-    var isImageViewVibrancyEnabled = true {
+    var imageSize: CGSize = CGSize(width: 100, height: 100) {
         didSet {
-            if self.isImageViewVibrancyEnabled
-            {
-                self.vibrancyView.contentView.addSubview(self.imageView)
-            }
-            else
-            {
-                self.contentView.addSubview(self.imageView)
-            }
+            self.updateImageSize()
         }
     }
-    
-    var isTextLabelVibrancyEnabled = true {
-        didSet {
-            if self.isTextLabelVibrancyEnabled
-            {
-                self.vibrancyView.contentView.addSubview(self.textLabel)
-            }
-            else
-            {
-                self.contentView.addSubview(self.textLabel)
-            }
-        }
-    }
-    
-    var maximumImageSize: CGSize = CGSize(width: 100, height: 100) {
-        didSet {
-            self.updateMaximumImageSize()
-        }
-    }
-    
-    private var vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .dark)))
+    var verticalOffset: CGFloat = 0
+    var aspectRatio: CGFloat = 1.0
     
     private var imageViewTopAnchorConstraint: NSLayoutConstraint!
     
@@ -79,11 +53,7 @@ class GridCollectionViewCell: UICollectionViewCell
         self.clipsToBounds = false
         self.contentView.clipsToBounds = false
         
-        self.vibrancyView.translatesAutoresizingMaskIntoConstraints = false
-        self.vibrancyView.contentView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(self.vibrancyView)
-        
-        self.imageView.contentMode = .scaleAspectFit
+        self.imageView.contentMode = .scaleToFill
         #if os(tvOS)
             self.imageView.adjustsImageWhenAncestorFocused = true
         #endif
@@ -96,18 +66,6 @@ class GridCollectionViewCell: UICollectionViewCell
         
         /* Auto Layout */
         
-        // Vibrancy View
-        // Need to add explicit constraints for vibrancyView + vibrancyView.contentView or else Auto Layout won't calculate correct size 🙄
-        self.vibrancyView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
-        self.vibrancyView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
-        self.vibrancyView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-        self.vibrancyView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-        
-        self.vibrancyView.contentView.topAnchor.constraint(equalTo: self.vibrancyView.topAnchor).isActive = true
-        self.vibrancyView.contentView.bottomAnchor.constraint(equalTo: self.vibrancyView.bottomAnchor).isActive = true
-        self.vibrancyView.contentView.leadingAnchor.constraint(equalTo: self.vibrancyView.leadingAnchor).isActive = true
-        self.vibrancyView.contentView.trailingAnchor.constraint(equalTo: self.vibrancyView.trailingAnchor).isActive = true
-        
         // Image View
         self.imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -115,10 +73,10 @@ class GridCollectionViewCell: UICollectionViewCell
         self.imageViewTopAnchorConstraint.isActive = true
         self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         
-        self.imageViewWidthConstraint = self.imageView.widthAnchor.constraint(equalToConstant: self.maximumImageSize.width)
+        self.imageViewWidthConstraint = self.imageView.widthAnchor.constraint(equalToConstant: self.imageSize.width)
         self.imageViewWidthConstraint.isActive = true
         
-        self.imageViewHeightConstraint = self.imageView.heightAnchor.constraint(equalToConstant: self.maximumImageSize.height)
+        self.imageViewHeightConstraint = self.imageView.heightAnchor.constraint(equalToConstant: self.imageSize.height)
         self.imageViewHeightConstraint.isActive = true
         
         
@@ -145,7 +103,7 @@ class GridCollectionViewCell: UICollectionViewCell
         #endif
         
         
-        self.updateMaximumImageSize()
+        self.updateImageSize()
     }
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
@@ -162,7 +120,6 @@ class GridCollectionViewCell: UICollectionViewCell
                 self.textLabelFocusedVerticalSpacingConstraint?.isActive = true
                 
                 self.textLabel.textColor = UIColor.white
-                
             }
             else
             {
@@ -180,14 +137,16 @@ class GridCollectionViewCell: UICollectionViewCell
     }
 }
 
-private extension GridCollectionViewCell
+private extension GridCollectionViewGameCell
 {
-    func updateMaximumImageSize()
+    func updateImageSize()
     {
-        self.imageViewWidthConstraint.constant = self.maximumImageSize.width
-        self.imageViewHeightConstraint.constant = self.maximumImageSize.height
+        self.imageViewWidthConstraint.constant = self.imageSize.width
+        self.imageViewHeightConstraint.constant = self.imageSize.height
         
-        self.textLabelVerticalSpacingConstraint.constant = 8
-        self.textLabelFocusedVerticalSpacingConstraint?.constant = self.maximumImageSize.height / 10.0
+        self.textLabelVerticalSpacingConstraint.constant = 8 - self.verticalOffset
+        self.imageViewTopAnchorConstraint.constant = self.verticalOffset
+        
+        self.textLabelFocusedVerticalSpacingConstraint?.constant = self.imageSize.height / 10.0
     }
 }
