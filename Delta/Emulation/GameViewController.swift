@@ -245,6 +245,7 @@ class GameViewController: DeltaCore.GameViewController
             
             switch actionInput
             {
+            case .restart: self.performRestartAction()
             case .quickSave: self.performQuickSaveAction()
             case .quickLoad: self.performQuickLoadAction()
             case .fastForward: self.performFastForwardAction(activate: true)
@@ -273,6 +274,7 @@ class GameViewController: DeltaCore.GameViewController
             
             switch actionInput
             {
+            case .restart: break
             case .quickSave: break
             case .quickLoad: break
             case .fastForward: self.performFastForwardAction(activate: false)
@@ -380,22 +382,6 @@ extension GameViewController
             {
                 gamesViewController.theme = .translucent
                 gamesViewController.activeEmulatorCore = emulatorCore
-                
-                self.updateAutoSaveState()
-            }
-            else
-            {
-                gamesViewController.theme = .opaque
-            }
-            
-        case "restart":
-            let gamesViewController = (segue.destination as! UINavigationController).topViewController as! GamesViewController
-            
-            if let emulatorCore = self.emulatorCore
-            {
-                gamesViewController.theme = .translucent
-                gamesViewController.activeEmulatorCore = emulatorCore
-//                gamesViewController.shouldRestart = true
                 
                 self.updateAutoSaveState()
             }
