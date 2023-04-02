@@ -1290,7 +1290,8 @@ extension GameViewController
         {
             guard let emulatorCore = self.emulatorCore else { return }
             
-            emulatorCore.rate = Settings.customFastForwardSpeed
+            Settings.customFastForwardSpeed = speed
+            emulatorCore.rate = speed
             let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
             self.presentToastView(text: text)
         }
