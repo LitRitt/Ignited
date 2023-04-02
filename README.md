@@ -1,16 +1,16 @@
-# Delta
+# Ignited
 
-> Delta is an all-in-one classic video game emulator for non-jailbroken iOS devices. 
+> Ignited is an all-in-one classic video game emulator for non-jailbroken iOS devices. 
 
 [![Swift Version](https://img.shields.io/badge/swift-5.0-orange.svg)](https://swift.org/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-Delta is an iOS application that allows you to emulate and play video games for several classic video game systems, including Game Boy Advance, Nintendo 64, and Nintendo DS. Delta is the spiritual successor to [GBA4iOS](http://www.gba4iosapp.com) — a Game Boy Advance emulator for iOS devices [Paul Thorsen](https://twitter.com/pau1thor) and I made while in high school together — rebuilt from the ground up with modern iOS features and support for more systems.
+Ignited is an iOS application that allows you to emulate and play video games for several classic video game systems, including Game Boy Advance, Nintendo 64, and Nintendo DS. Ignited is the spiritual successor to [GBA4iOS](http://www.gba4iosapp.com) — a Game Boy Advance emulator for iOS devices [Paul Thorsen](https://twitter.com/pau1thor) and I made while in high school together — rebuilt from the ground up with modern iOS features and support for more systems.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/705880/115471008-203aa480-a1ec-11eb-8aba-237a46799543.png" width=75%><br/>
-  <em>Mario and Pokémon and properties of Nintendo Co., Ltd. and are not associated with Delta or AltStore LLC.</em>
+  <em>Mario and Pokémon and properties of Nintendo Co., Ltd. and are not associated with Ignited or AltStore LLC.</em>
 </p>
 
 ## Supported Systems
@@ -20,7 +20,7 @@ Delta is an iOS application that allows you to emulate and play video games for 
 - Game Boy / Game Boy Color (GBC)
 - Game Boy Advance (GBA)
 - Nintendo DS (DS)
-- Sega Genesis / Mega Drive (GEN) **(in progress)**
+- Sega Genesis / Mega Drive (GEN)
 
 ## Features
 - Accurate, full speed emulation thanks to mature underlying emulator cores.
@@ -51,12 +51,12 @@ Delta is an iOS application that allows you to emulate and play video games for 
 - Fast Forwarding
     - Speed through slower parts of games by running the game much faster than normal.
     - Easily enable or disable from the pause menu, or optionally with a mapped button on an external controller.
-- Delta Sync
+- Ignited Sync
     - Sync your games, game saves, save states, cheats, controller skins, and controller mappings between devices.
     - View version histories of everything you sync and optionally restore them to earlier versions.
     - Supports both Google Drive and Dropbox.
 - Hold Button
-    - Choose buttons for Delta to hold down on your behalf, freeing up your thumbs to press other buttons instead.
+    - Choose buttons for Ignited to hold down on your behalf, freeing up your thumbs to press other buttons instead.
     - Perfect for games that typically require one button be held down constantly (ex: run button in Mario games, or the A button in Mario Kart).
 - 3D/Haptic Touch
     - Use 3D or Haptic Touch to “peek” at games, save states, and cheat codes.
@@ -87,28 +87,28 @@ Delta is an iOS application that allows you to emulate and play video games for 
   <img src="https://user-images.githubusercontent.com/705880/114452847-c1db4980-9b8d-11eb-8f8f-de7998562222.png" width=100px height=100px>
 </p>
 
-Delta was originally developed under the impression Apple would allow it into the App Store. Unfortunately Apple later changed their minds, leaving me no choice but to find a new way to distribute Delta. Long story short, this led me to create [AltStore](https://github.com/rileytestut/AltStore), which now serves as the official way to install Delta onto your device.
+Ignited was originally developed under the impression Apple would allow it into the App Store. Unfortunately Apple later changed their minds, leaving me no choice but to find a new way to distribute Ignited. Long story short, this led me to create [AltStore](https://github.com/rileytestut/AltStore), which now serves as the official way to install Ignited onto your device.
 
-To install Delta with AltStore:
+To install Ignited with AltStore:
 1. Download AltServer for Mac or PC from https://altstore.io
 2. Connect your iOS device to your computer via lightning cable (or USB-C for iPads).
 3. [Follow these instructions](https://altstore.io/faq/) to install AltStore onto your device with AltServer.
 2. Open AltStore on your device, then navigate to the "Browse" tab.
-3. Find Delta, then press the `FREE` button to start installing the app.
+3. Find Ignited, then press the `FREE` button to start installing the app.
 
-Once you've installed Delta with AltStore, **you'll need to refresh it at least once every 7 days to prevent it from expiring** and requiring a re-installation. AltStore will periodically attempt to refresh your apps in the background when on the same WiFi as AltServer, but you can also manually refresh apps by pressing "Refresh All" in AltStore. AltStore will also let you know whenever a new update is released, allowing you to update Delta directly within AltStore.
+Once you've installed Ignited with AltStore, **you'll need to refresh it at least once every 7 days to prevent it from expiring** and requiring a re-installation. AltStore will periodically attempt to refresh your apps in the background when on the same WiFi as AltServer, but you can also manually refresh apps by pressing "Refresh All" in AltStore. AltStore will also let you know whenever a new update is released, allowing you to update Ignited directly within AltStore.
 
-Alternatively, you are welcome to download the compiled `.ipa`'s from [Releases](https://github.com/rileytestut/Delta/releases) and sideload them using whatever sideloading method you prefer, but you will not receive automatic updates and will have to manually update Delta by re-sideloading each new version.
+Alternatively, you are welcome to download the compiled `.ipa`'s from [Releases](https://github.com/Lit-Development/Ignited/releases) and sideload them using whatever sideloading method you prefer, but you will not receive automatic updates and will have to manually update Ignited by re-sideloading each new version.
 
 ## Project Overview
 
-Delta was designed from the beginning to be modular, and for that reason each "Delta Core" has its own GitHub repo and is added as a submodule to the main Delta project. Additionally, Delta uses two of my own private frameworks I use to share common functionality between my apps: Roxas and Harmony.
+Ignited was designed from the beginning to be modular, and for that reason each "Ignited Core" has its own GitHub repo and is added as a submodule to the main Ignited project. Additionally, Ignited uses two of my own private frameworks I use to share common functionality between my apps: Roxas and Harmony.
 
-[**Delta**](https://github.com/rileytestut/Delta)  
-Delta is just a regular, sandboxed iOS application. The Delta app repo (aka this one) contains all the code specific to the Delta app itself, such as storyboards, app-specific view controllers, database logic, etc.
+[**Ignited**](https://github.com/Lit-Development/Ignited)  
+Ignited is just a regular, sandboxed iOS application. The Ignited app repo (aka this one) contains all the code specific to the Ignited app itself, such as storyboards, app-specific view controllers, database logic, etc.
 
 [**DeltaCore**](https://github.com/rileytestut/DeltaCore)  
-DeltaCore serves as the “middle-man” between the high-level app code and the specific emulation cores. By working with this framework, you have access to all the core Delta features, such as emulation, controller skins, save states, cheat codes, etc. Other potential emulator apps will use this framework extensively.
+DeltaCore serves as the “middle-man” between the high-level app code and the specific emulation cores. By working with this framework, you have access to all the core Ignited features, such as emulation, controller skins, save states, cheat codes, etc. Other potential emulator apps will use this framework extensively.
 
 [**Roxas**](https://github.com/rileytestut/Roxas)    
 Roxas is my own framework used across my projects, developed to simplify a variety of common tasks used in iOS development.
@@ -117,7 +117,7 @@ Roxas is my own framework used across my projects, developed to simplify a varie
 Harmony is my personal syncing framework designed to sync Core Data databases. Harmony listens for changes to an app's persistent store, then syncs any changes with a remote file service (such as Google Drive or Dropbox).
 
 **Delta Cores**  
-Each system in Delta is implemented as its own "Delta Core", which serves as a standard emulation API Delta can understand regardless of the underlying core. For the most part, you don't interact directly with specific Delta Cores, but rather indirectly through `DeltaCore`.
+Each system in Ignited is implemented as its own "Delta Core", which serves as a standard emulation API Ignited can understand regardless of the underlying core. For the most part, you don't interact directly with specific Delta Cores, but rather indirectly through `DeltaCore`.
 - [NESDeltaCore](https://github.com/rileytestut/NESDeltaCore)
 - [SNESDeltaCore](https://github.com/rileytestut/SNESDeltaCore)
 - [N64DeltaCore](https://github.com/rileytestut/N64DeltaCore)
@@ -129,9 +129,9 @@ Each system in Delta is implemented as its own "Delta Core", which serves as a s
 ## Project Requirements
 - Xcode 12
 - Swift 5+
-- iOS 12.2 or later
+- iOS 14 or later
 
-Why iOS 12.2 or later? Doing so allows me to distribute Delta without embedding Swift libraries inside. This helps me afford bandwidth costs by reducing download sizes by roughly 30%, but also noticeably improves how long it takes to install/refresh Delta with AltStore. If you're compiling Delta yourself, however, you should be able to lower the deployment target to iOS 12.0 without any issues.
+Why iOS 12.2 or later? Doing so allows me to distribute Ignited without embedding Swift libraries inside. This helps me afford bandwidth costs by reducing download sizes by roughly 30%, but also noticeably improves how long it takes to install/refresh Ignited with AltStore. If you're compiling Ignited yourself, however, you should be able to lower the deployment target to iOS 12.0 without any issues.
 
 ## Compilation Instructions
 
