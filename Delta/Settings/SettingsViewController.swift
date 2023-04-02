@@ -22,6 +22,8 @@ private extension SettingsViewController
         case controllerSkins
         case skinDownloads
         case skinOptions
+        case autoLoad
+        case toasts
         case gameAudio
         case hapticFeedback
         case rewind
@@ -94,6 +96,8 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
     @IBOutlet private var altRepresentationsSwitch: UISwitch!
     @IBOutlet private var debugModeSwitch: UISwitch!
+    @IBOutlet private var autoLoadSaveSwitch: UISwitch!
+    @IBOutlet private var showToastNotificationsSwitch: UISwitch!
     
     @IBOutlet private var respectSilentModeSwitch: UISwitch!
     @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
@@ -205,6 +209,8 @@ private extension SettingsViewController
         self.altRepresentationsSwitch.isOn = Settings.isAltRepresentationsEnabled
         self.debugModeSwitch.isOn = Settings.isDebugModeEnabled
         
+        self.showToastNotificationsSwitch.isOn = Settings.showToastNotifications
+        self.autoLoadSaveSwitch.isOn = Settings.autoLoadSave
         self.respectSilentModeSwitch.isOn = Settings.respectSilentMode
         
         self.syncingServiceLabel.text = Settings.syncingService?.localizedName
@@ -354,6 +360,16 @@ private extension SettingsViewController
     @IBAction func togglePreviewsEnabled(_ sender: UISwitch)
     {
         Settings.isPreviewsEnabled = sender.isOn
+    }
+    
+    @IBAction func toggleShowToastNotifications(_ sender: UISwitch)
+    {
+        Settings.showToastNotifications = sender.isOn
+    }
+    
+    @IBAction func toggleAutoLoadSave(_ sender: UISwitch)
+    {
+        Settings.autoLoadSave = sender.isOn
     }
     
     @IBAction func toggleRespectSilentMode(_ sender: UISwitch)
@@ -658,7 +674,7 @@ private extension SettingsViewController
         case .themeColor, .customFastForwardSpeed:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave: break
         }
     }
 
@@ -744,7 +760,7 @@ extension SettingsViewController
             case .enabled, .unsafeSpeeds, .prompt: break
             }
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts: break
         }
 
         return cell
@@ -769,7 +785,7 @@ extension SettingsViewController
             case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
             }
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
+        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {

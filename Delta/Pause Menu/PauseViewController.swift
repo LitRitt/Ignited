@@ -19,10 +19,11 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem, self.rewindItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
+        return [self.restartItem, self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem, self.rewindItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
     }
     
     /// Pause Items
+    var restartItem: MenuItem?
     var saveStateItem: MenuItem?
     var loadStateItem: MenuItem?
     var cheatCodesItem: MenuItem?
@@ -158,6 +159,7 @@ private extension PauseViewController
 {
     func updatePauseItems()
     {
+        self.restartItem = nil
         self.saveStateItem = nil
         self.loadStateItem = nil
         self.cheatCodesItem = nil
@@ -166,6 +168,8 @@ private extension PauseViewController
         self.debugModeItem = nil
         
         guard self.emulatorCore != nil else { return }
+        
+        self.restartItem = MenuItem(text: NSLocalizedString("Restart", comment: ""), image: #imageLiteral(resourceName: "Restart"), action: { _ in })
         
         self.saveStateItem = MenuItem(text: NSLocalizedString("Save State", comment: ""), image: #imageLiteral(resourceName: "SaveSaveState"), action: { [unowned self] _ in
             self.saveStatesViewControllerMode = .saving

@@ -441,14 +441,9 @@ private extension GameCollectionViewController
                 }
                 
                 let cell = self.collectionView.cellForItem(at: indexPath)
-                self.performSegue(withIdentifier: "unwindFromGames", sender: cell)
-            }
-            catch LaunchError.alreadyRunning
-            {
-                let alertController = UIAlertController(title: NSLocalizedString("Game Paused", comment: ""), message: NSLocalizedString("Would you like to resume where you left off, or restart the game?", comment: ""), preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-                alertController.addAction(UIAlertAction(title: NSLocalizedString("Resume", comment: ""), style: .default, handler: { (action) in
-                    
+                
+                if Settings.autoLoadSave
+                {
                     let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
                     fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
                     fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
@@ -462,19 +457,33 @@ private extension GameCollectionViewController
                     {
                         print(error)
                     }
-                    
-                    // Disable videoManager to prevent flash of black
-                    self.activeEmulatorCore?.videoManager.isEnabled = false
-                    
-                    launchGame(ignoringErrors: [LaunchError.alreadyRunning])
-                    
-                    // The game hasn't changed, so the activeEmulatorCore is the same as before, so we need to enable videoManager it again
-                    self.activeEmulatorCore?.videoManager.isEnabled = true
-                }))
-                alertController.addAction(UIAlertAction(title: NSLocalizedString("Restart", comment: ""), style: .destructive, handler: { (action) in
-                    launchGame(ignoringErrors: [LaunchError.alreadyRunning])
-                }))
-                self.present(alertController, animated: true)
+                }
+                
+                self.performSegue(withIdentifier: "unwindFromGames", sender: cell)
+            }
+            catch LaunchError.alreadyRunning
+            {
+                let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+                
+                do
+                {
+                    let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                    self.activeSaveState = saveStates?.last
+                }
+                catch
+                {
+                    print(error)
+                }
+                
+                // Disable videoManager to prevent flash of black
+                self.activeEmulatorCore?.videoManager.isEnabled = false
+                
+                launchGame(ignoringErrors: [LaunchError.alreadyRunning])
+                
+                // The game hasn't changed, so the activeEmulatorCore is the same as before, so we need to enable videoManager it again
+                self.activeEmulatorCore?.videoManager.isEnabled = true
             }
             catch LaunchError.downloadingGameSave
             {

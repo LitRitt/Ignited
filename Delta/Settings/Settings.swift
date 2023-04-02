@@ -32,6 +32,7 @@ extension Settings
     
     enum Name: String
     {
+        case autoLoadSave
         case gameArtworkSize
         case themeColor
         case localControllerPlayerIndex
@@ -97,6 +98,8 @@ struct Settings
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): true,
                         #keyPath(UserDefaults.isPreviewsEnabled): true,
                         #keyPath(UserDefaults.isAltJITEnabled): false,
+                        #keyPath(UserDefaults.autoLoadSave): true,
+                        #keyPath(UserDefaults.showToastNotifications): true,
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 5,
@@ -273,6 +276,27 @@ extension Settings
         set {
             UserDefaults.standard.isAltJITEnabled = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltJITEnabled])
+        }
+    }
+    
+    static var showToastNotifications: Bool {
+        get {
+            let showToastNotifications = UserDefaults.standard.showToastNotifications
+            return showToastNotifications
+        }
+        set {
+            UserDefaults.standard.showToastNotifications = newValue
+        }
+    }
+    
+    static var autoLoadSave: Bool {
+        get {
+            let autoLoadSave = UserDefaults.standard.autoLoadSave
+            return autoLoadSave
+        }
+        set {
+            UserDefaults.standard.autoLoadSave = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.autoLoadSave])
         }
     }
     
@@ -613,6 +637,8 @@ private extension UserDefaults
     
     @NSManaged var isAltJITEnabled: Bool
     
+    @NSManaged var showToastNotifications: Bool
+    @NSManaged var autoLoadSave: Bool
     @NSManaged var respectSilentMode: Bool
     @NSManaged var isRewindEnabled: Bool
     @NSManaged var rewindTimerInterval: Int

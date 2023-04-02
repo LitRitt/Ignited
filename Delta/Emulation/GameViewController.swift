@@ -388,6 +388,22 @@ extension GameViewController
                 gamesViewController.theme = .opaque
             }
             
+        case "restart":
+            let gamesViewController = (segue.destination as! UINavigationController).topViewController as! GamesViewController
+            
+            if let emulatorCore = self.emulatorCore
+            {
+                gamesViewController.theme = .translucent
+                gamesViewController.activeEmulatorCore = emulatorCore
+//                gamesViewController.shouldRestart = true
+                
+                self.updateAutoSaveState()
+            }
+            else
+            {
+                gamesViewController.theme = .opaque
+            }
+            
         case "pause":
             
             if let game = self.game
@@ -405,10 +421,14 @@ extension GameViewController
             self.pausingGameController = gameController
             
             let pauseViewController = segue.destination as! PauseViewController
-            pauseViewController.pauseText = (self.game as? Game)?.name ?? NSLocalizedString("Delta", comment: "")
+            pauseViewController.pauseText = (self.game as? Game)?.name ?? NSLocalizedString("Ignited", comment: "")
             pauseViewController.emulatorCore = self.emulatorCore
             pauseViewController.saveStatesViewControllerDelegate = self
             pauseViewController.cheatsViewControllerDelegate = self
+            
+            pauseViewController.restartItem?.action = { [unowned self] item in
+                self.performRestartAction()
+            }
             
             pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
             pauseViewController.fastForwardItem?.action = { [unowned self] item in
@@ -750,7 +770,7 @@ private extension GameViewController
                 try context.save()
                 try game.gameSaveURL.setExtendedAttribute(name: "com.rileytestut.delta.sha1Hash", value: hash)
                 
-                let text = NSLocalizedString("Saved Game Data", comment: "")
+                let text = NSLocalizedString("Game Saved", comment: "")
                 self.presentToastView(text: text)
             }
             catch CocoaError.fileNoSuchFile
@@ -904,7 +924,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
         saveState.modifiedDate = Date()
         saveState.coreIdentifier = self.emulatorCore?.deltaCore.identifier
         
-        let text = NSLocalizedString("Saved Game Save State", comment: "")
+        let text = NSLocalizedString("Saved State " + saveState.localizedName, comment: "")
         self.presentToastView(text: text)
         
         if isRunning && shouldSuspendEmulation
@@ -954,8 +974,15 @@ extension GameViewController: SaveStatesViewControllerDelegate
             {
                 try self.emulatorCore?.load(saveState)
             }
-            
-            let text = NSLocalizedString("Loaded Game Save State", comment: "")
+            let text: String
+            if let state = saveState as? SaveState
+            {
+                text = NSLocalizedString("Loaded State " + state.localizedName, comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Loaded State", comment: "")
+            }
             self.presentToastView(text: text)
         }
         catch EmulatorCore.SaveStateError.doesNotExist
@@ -1104,6 +1131,25 @@ private extension GameViewController
 /// Action Inputs
 extension GameViewController
 {
+    func performRestartAction()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Restart Game?", comment: ""), message: NSLocalizedString("An autosave will be made for you.", comment: ""), preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Restart", comment: ""), style: .destructive, handler: { (action) in
+            self.updateAutoSaveState()
+            self.game = self.game
+            self.resumeEmulation()
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
+            self.resumeEmulation()
+        }))
+        
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        self.present(alertController, animated: true)
+    }
+    
     func performQuickSaveAction()
     {
         guard let game = self.game as? Game else { return }
@@ -1129,7 +1175,7 @@ extension GameViewController
                     self.update(saveState)
                 }
                 
-                let text = NSLocalizedString("Saved Quick State State", comment: "")
+                let text = NSLocalizedString("Quick Saved", comment: "")
                 self.presentToastView(text: text)
             }
             catch
@@ -1153,7 +1199,7 @@ extension GameViewController
             {
                 self.load(quickSaveState)
                 
-                let text = NSLocalizedString("Loaded Quick Save State", comment: "")
+                let text = NSLocalizedString("Quick Loaded", comment: "")
                 self.presentToastView(text: text)
             }
         }
@@ -1244,10 +1290,7 @@ extension GameViewController
         {
             guard let emulatorCore = self.emulatorCore else { return }
             
-            self.updateAutoSaveState() // Safety Save each activation of fast forward
-            
-            Settings.customFastForwardSpeed = speed
-            emulatorCore.rate = speed
+            emulatorCore.rate = Settings.customFastForwardSpeed
             let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
             self.presentToastView(text: text)
         }
@@ -1307,18 +1350,21 @@ extension GameViewController
 {
     func presentToastView(text: String, duration: Double = 1.0)
     {
-        let toastView = RSTToastView(text: text, detailText: nil)
-        toastView.edgeOffset.vertical = 8
-        DispatchQueue.main.async {
-            if let transitionCoordinator = self.transitionCoordinator
-            {
-                transitionCoordinator.animate(alongsideTransition: nil) { (context) in
+        if Settings.showToastNotifications
+        {
+            let toastView = RSTToastView(text: text, detailText: nil)
+            toastView.edgeOffset.vertical = 8
+            DispatchQueue.main.async {
+                if let transitionCoordinator = self.transitionCoordinator
+                {
+                    transitionCoordinator.animate(alongsideTransition: nil) { (context) in
+                        self.show(toastView, duration: duration)
+                    }
+                }
+                else
+                {
                     self.show(toastView, duration: duration)
                 }
-            }
-            else
-            {
-                self.show(toastView, duration: duration)
             }
         }
     }
@@ -1463,7 +1509,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
             
-        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize: break
+        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave: break
         }
     }
     
