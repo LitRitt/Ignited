@@ -924,8 +924,20 @@ extension GameViewController: SaveStatesViewControllerDelegate
         saveState.modifiedDate = Date()
         saveState.coreIdentifier = self.emulatorCore?.deltaCore.identifier
         
-        let text = NSLocalizedString("Saved State " + saveState.localizedName, comment: "")
-        self.presentToastView(text: text)
+        let text: String
+        if saveState.type != .quick
+        {
+            text = NSLocalizedString("Saved State " + saveState.localizedName, comment: "")
+        }
+        else
+        {
+            text = NSLocalizedString("Quick Saved", comment: "")
+        }
+        
+        if saveState.type != .auto
+        {
+            self.presentToastView(text: text)
+        }
         
         if isRunning && shouldSuspendEmulation
         {
@@ -977,13 +989,21 @@ extension GameViewController: SaveStatesViewControllerDelegate
             let text: String
             if let state = saveState as? SaveState
             {
-                text = NSLocalizedString("Loaded State " + state.localizedName, comment: "")
+                if state.type != .quick
+                {
+                    text = NSLocalizedString("Loaded State " + state.localizedName, comment: "")
+                }
+                else
+                {
+                    text = NSLocalizedString("Quick Loaded", comment: "")
+                }
+                self.presentToastView(text: text)
             }
             else
             {
                 text = NSLocalizedString("Loaded State", comment: "")
+                self.presentToastView(text: text)
             }
-            self.presentToastView(text: text)
         }
         catch EmulatorCore.SaveStateError.doesNotExist
         {
@@ -1174,9 +1194,6 @@ extension GameViewController
                     
                     self.update(saveState)
                 }
-                
-                let text = NSLocalizedString("Quick Saved", comment: "")
-                self.presentToastView(text: text)
             }
             catch
             {
@@ -1198,9 +1215,6 @@ extension GameViewController
             if let quickSaveState = try DatabaseManager.shared.viewContext.fetch(fetchRequest).first
             {
                 self.load(quickSaveState)
-                
-                let text = NSLocalizedString("Quick Loaded", comment: "")
-                self.presentToastView(text: text)
             }
         }
         catch
