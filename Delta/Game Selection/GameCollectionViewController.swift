@@ -348,15 +348,15 @@ private extension GameCollectionViewController
         cell.imageView.contentMode = .scaleToFill
         
         cell.imageView.layer.borderWidth = 1.2
-        cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
         cell.imageView.layer.cornerRadius = 15
         
         if let currentCore = self.activeEmulatorCore, game.fileURL == currentCore.game.fileURL
         {
             cell.layer.shadowColor = UIColor.themeColor.cgColor
             cell.layer.shadowOpacity = 1.0
-            cell.layer.shadowRadius = 5.0
+            cell.layer.shadowRadius = 8.0
             cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+            cell.imageView.layer.borderColor = UIColor.themeColor.lighter(componentDelta: 0.1).cgColor
         }
         else
         {
@@ -364,6 +364,7 @@ private extension GameCollectionViewController
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 3.0
             cell.layer.shadowOffset = CGSize(width: 0, height: 3)
+            cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
         }
         
         switch game.gameCollection?.system
@@ -393,7 +394,6 @@ private extension GameCollectionViewController
         
         cell.textLabel.text = game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
-        cell.tintColor = cell.textLabel.textColor
     }
     
     func updateImage(cell: GridCollectionViewGameCell, image: UIImage)

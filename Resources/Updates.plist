@@ -23,6 +23,12 @@
 			</dict>
 			<dict>
 				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Made the current game highlighting stand out more</string>
+			</dict>
+			<dict>
+				<key>type</key>
 				<string>bugfix</string>
 				<key>description</key>
 				<string>Fixed last unthemed elements buried in settings</string>
