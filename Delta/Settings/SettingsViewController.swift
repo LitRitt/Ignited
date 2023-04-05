@@ -85,6 +85,14 @@ private extension SettingsViewController
         case altSkin
         case debug
     }
+    
+    enum HapticsRow: Int, CaseIterable
+    {
+        case buttons
+        case sticks
+        case clicky
+        case strength
+    }
 }
 
 class SettingsViewController: UITableViewController
@@ -103,6 +111,9 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
     @IBOutlet private var thumbstickHapticFeedbackEnabledSwitch: UISwitch!
     @IBOutlet private var previewsEnabledSwitch: UISwitch!
+    @IBOutlet private var clickyHapticSwitch: UISwitch!
+    @IBOutlet private var hapticStrengthLabel: UILabel!
+    @IBOutlet private var hapticStrengthSlider: UISlider!
     
     @IBOutlet private var versionLabel: UILabel!
     
@@ -227,6 +238,10 @@ private extension SettingsViewController
         
         self.buttonHapticFeedbackEnabledSwitch.isOn = Settings.isButtonHapticFeedbackEnabled
         self.thumbstickHapticFeedbackEnabledSwitch.isOn = Settings.isThumbstickHapticFeedbackEnabled
+        self.clickyHapticSwitch.isOn = Settings.isClickyHapticEnabled
+        self.hapticStrengthSlider.value = Float(Settings.hapticFeedbackStrength)
+        self.updateHapticStrengthLabel()
+        
         self.previewsEnabledSwitch.isOn = Settings.isPreviewsEnabled
         
         self.rewindEnabledSwitch.isOn = Settings.isRewindEnabled
@@ -256,6 +271,12 @@ private extension SettingsViewController
     {
         let percentage = "Opacity: " + String(format: "%.f", Settings.translucentControllerSkinOpacity * 100) + "%"
         self.controllerOpacityLabel.text = percentage
+    }
+    
+    func updateHapticStrengthLabel()
+    {
+        let strength = "Strength: " + String(format: "%.f", Settings.hapticFeedbackStrength * 100) + "%"
+        self.hapticStrengthLabel.text = strength
     }
     
     func updateCustomFastForwardSpeedLabel()
@@ -330,6 +351,37 @@ private extension SettingsViewController
     {
         sender.value = Float(Settings.translucentControllerSkinOpacity)
         self.selectionFeedbackGenerator = nil
+    }
+    
+    @IBAction func beginChangingHapticStrength(with sender: UISlider)
+    {
+        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        self.selectionFeedbackGenerator?.prepare()
+    }
+    
+    @IBAction func changeHapticStrength(with sender: UISlider)
+    {
+        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
+        
+        if roundedValue != Settings.hapticFeedbackStrength
+        {
+            self.selectionFeedbackGenerator?.selectionChanged()
+        }
+        
+        Settings.hapticFeedbackStrength = CGFloat(roundedValue)
+        
+        self.updateHapticStrengthLabel()
+    }
+    
+    @IBAction func didFinishChangingHapticStrength(with sender: UISlider)
+    {
+        sender.value = Float(Settings.hapticFeedbackStrength)
+        self.selectionFeedbackGenerator = nil
+    }
+    
+    @IBAction func toggleClickyHaptic(_ sender: UISwitch)
+    {
+        Settings.isClickyHapticEnabled = sender.isOn
     }
     
     @IBAction func toggleAlwaysShowControllerSkin(_ sender: UISwitch)
@@ -674,7 +726,7 @@ private extension SettingsViewController
         case .themeColor, .customFastForwardSpeed:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength: break
         }
     }
 

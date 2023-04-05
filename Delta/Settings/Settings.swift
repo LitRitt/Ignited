@@ -41,6 +41,8 @@ extension Settings
         case syncingService
         case isButtonHapticFeedbackEnabled
         case isThumbstickHapticFeedbackEnabled
+        case isClickyHapticEnabled
+        case hapticFeedbackStrength
         case isAltJITEnabled
         case respectSilentMode
         case isCustomFastForwardEnabled
@@ -95,6 +97,8 @@ struct Settings
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
                         #keyPath(UserDefaults.isButtonHapticFeedbackEnabled): true,
                         #keyPath(UserDefaults.isThumbstickHapticFeedbackEnabled): true,
+                        #keyPath(UserDefaults.isClickyHapticEnabled): true,
+                        #keyPath(UserDefaults.hapticFeedbackStrength): 1.0,
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): true,
                         #keyPath(UserDefaults.isPreviewsEnabled): true,
                         #keyPath(UserDefaults.isAltJITEnabled): false,
@@ -248,6 +252,26 @@ extension Settings
             UserDefaults.standard.isThumbstickHapticFeedbackEnabled = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isThumbstickHapticFeedbackEnabled])
         }
+    }
+    
+    static var isClickyHapticEnabled: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.isClickyHapticEnabled
+            return isEnabled
+        }
+        set {
+            UserDefaults.standard.isClickyHapticEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isClickyHapticEnabled])
+        }
+    }
+    
+    static var hapticFeedbackStrength: CGFloat {
+        set {
+            guard newValue != self.hapticFeedbackStrength else { return }
+            UserDefaults.standard.hapticFeedbackStrength = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.hapticFeedbackStrength])
+        }
+        get { return UserDefaults.standard.hapticFeedbackStrength }
     }
     
     static var sortSaveStatesByOldestFirst: Bool {
@@ -630,6 +654,8 @@ private extension UserDefaults
     
     @NSManaged var isButtonHapticFeedbackEnabled: Bool
     @NSManaged var isThumbstickHapticFeedbackEnabled: Bool
+    @NSManaged var isClickyHapticEnabled: Bool
+    @NSManaged var hapticFeedbackStrength: CGFloat
     
     @NSManaged var sortSaveStatesByOldestFirst: Bool
     

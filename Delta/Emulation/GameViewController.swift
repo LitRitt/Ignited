@@ -683,6 +683,8 @@ private extension GameViewController
         
         self.controllerView.isButtonHapticFeedbackEnabled = Settings.isButtonHapticFeedbackEnabled
         self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
+        self.controllerView.isClickyHapticEnabled = Settings.isClickyHapticEnabled
+        self.controllerView.hapticFeedbackStrength = Settings.hapticFeedbackStrength
         self.controllerView.isAltRepresentationsEnabled = Settings.isAltRepresentationsEnabled
         self.controllerView.isDebugModeEnabled = Settings.isDebugModeEnabled
         
@@ -1490,7 +1492,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .hapticFeedbackStrength:
             self.updateControllers()
 
         case .preferredControllerSkin:
