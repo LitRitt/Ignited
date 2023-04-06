@@ -611,9 +611,16 @@ private extension GameViewController
                let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
                controllerSkin.hasTouchScreen(for: traits)
             {
+                if !Settings.isAlwaysShowControllerSkinEnabled
+                {
+                    Settings.localControllerPlayerIndex = nil
+                }
+                else
+                {
+                    Settings.localControllerPlayerIndex = 0
+                }
                 self.controllerView.isHidden = false
                 self.controllerView.playerIndex = 0
-                Settings.localControllerPlayerIndex = nil
             }
             else
             {
