@@ -463,6 +463,10 @@ extension GameViewController
             case .genesis?:
                 // GPGX core does not support cheats yet.
                 pauseViewController.cheatCodesItem = nil
+                
+            case .gbc?:
+                // Rewind is disabled on GBC. Crashes gambette
+                pauseViewController.rewindItem = nil
 
             default: break
             }
@@ -929,7 +933,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
             text = NSLocalizedString("Quick Saved", comment: "")
         }
         
-        if saveState.type != .auto
+        if saveState.type != .auto, saveState.type != .rewind
         {
             self.presentToastView(text: text)
         }
@@ -1691,6 +1695,9 @@ private extension GameViewController
         guard Settings.isRewindEnabled == true,
               self.emulatorCore?.state == .running,
               let game = self.game as? Game else { return }
+        
+        // disable on GBC. saving state without pausing emulation crashes gambette
+        guard self.game?.type != .gbc else { return }
         
         // first; cap number of rewind states to 30. do this by deleting oldest state if >= 30 exist
         let fetchRequest: NSFetchRequest<SaveState> = SaveState.fetchRequest()

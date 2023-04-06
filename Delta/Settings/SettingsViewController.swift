@@ -315,11 +315,7 @@ private extension SettingsViewController
             else
             {
                 return false
-                
             }
-            
-        // Hide Rewind section until GBC crashes are fixed
-        case .rewind: return true
             
         default: return false
         }
