@@ -317,6 +317,8 @@ private extension SettingsViewController
                 return false
             }
             
+        case .hapticFeedback: return self.view.traitCollection.userInterfaceIdiom == .pad
+            
         default: return false
         }
     }
