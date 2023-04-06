@@ -924,13 +924,11 @@ extension GameViewController: SaveStatesViewControllerDelegate
         saveState.coreIdentifier = self.emulatorCore?.deltaCore.identifier
         
         let text: String
-        if saveState.type != .quick
+        switch saveState.type
         {
-            text = NSLocalizedString("Saved State " + saveState.localizedName, comment: "")
-        }
-        else
-        {
-            text = NSLocalizedString("Quick Saved", comment: "")
+        case .general, .locked: text = NSLocalizedString("Saved State " + saveState.localizedName, comment: "")
+        case .quick: text = NSLocalizedString("Quick Saved", comment: "")
+        default: text = NSLocalizedString("Saved State ", comment: "")
         }
         
         if saveState.type != .auto, saveState.type != .rewind
@@ -988,13 +986,11 @@ extension GameViewController: SaveStatesViewControllerDelegate
             let text: String
             if let state = saveState as? SaveState
             {
-                if state.type != .quick
+                switch state.type
                 {
-                    text = NSLocalizedString("Loaded State " + state.localizedName, comment: "")
-                }
-                else
-                {
-                    text = NSLocalizedString("Quick Loaded", comment: "")
+                case .quick: text = NSLocalizedString("Quick Loaded", comment: "")
+                case .rewind: text = NSLocalizedString("Rewound to " + state.localizedName, comment: "")
+                default: text = NSLocalizedString("Loaded State " + state.localizedName, comment: "")
                 }
                 self.presentToastView(text: text)
             }
