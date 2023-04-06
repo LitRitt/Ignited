@@ -17,21 +17,21 @@ private extension SettingsViewController
 {
     enum Section: Int
     {
-        case theme
-        case controllers
-        case controllerSkins
-        case skinDownloads
-        case skinOptions
-        case autoLoad
-        case toasts
-        case gameAudio
-        case hapticFeedback
-        case rewind
+        case patreon
         case syncing
+        case theme
+        case autoLoad
+        case hapticFeedback
         case hapticTouch
         case fastForward
+        case gameAudio
+        case toasts
+        case controllers
+        case controllerSkins
+        case skinOptions
+        case skinDownloads
+        case rewind
         case cores
-        case patreon
         case credits
         case updates
     }
@@ -72,7 +72,6 @@ private extension SettingsViewController
     
     enum FastForwardRow: Int, CaseIterable
     {
-        case enabled
         case unsafeSpeeds
         case speed
         case prompt
@@ -104,16 +103,20 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
     @IBOutlet private var altRepresentationsSwitch: UISwitch!
     @IBOutlet private var debugModeSwitch: UISwitch!
+    
     @IBOutlet private var autoLoadSaveSwitch: UISwitch!
+    
     @IBOutlet private var showToastNotificationsSwitch: UISwitch!
     
     @IBOutlet private var respectSilentModeSwitch: UISwitch!
+    
     @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
     @IBOutlet private var thumbstickHapticFeedbackEnabledSwitch: UISwitch!
-    @IBOutlet private var previewsEnabledSwitch: UISwitch!
     @IBOutlet private var clickyHapticSwitch: UISwitch!
     @IBOutlet private var hapticStrengthLabel: UILabel!
     @IBOutlet private var hapticStrengthSlider: UISlider!
+    
+    @IBOutlet private var previewsEnabledSwitch: UISwitch!
     
     @IBOutlet private var versionLabel: UILabel!
     
@@ -123,10 +126,9 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var rewindIntervalSlider: UISlider!
     @IBOutlet private var rewindIntervalLabel: UILabel!
     
-    @IBOutlet private var customFastForwardSwitch: UISwitch!
-    @IBOutlet private var unsafeFastForwardSpeedsSwitch: UISwitch!
-    @IBOutlet private var customFastForwardSpeedLabel: UILabel!
     @IBOutlet private var promptSpeedSwitch: UISwitch!
+    @IBOutlet private var fastForwardSpeedLabel: UILabel!
+    @IBOutlet private var unsafeFastForwardSpeedsSwitch: UISwitch!
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
     
@@ -248,7 +250,6 @@ private extension SettingsViewController
         self.rewindIntervalSlider.value = Float(Settings.rewindTimerInterval)
         self.updateRewindIntervalLabel()
         
-        self.customFastForwardSwitch.isOn = Settings.isCustomFastForwardEnabled
         self.unsafeFastForwardSpeedsSwitch.isOn = Settings.isUnsafeFastForwardSpeedsEnabled
         self.promptSpeedSwitch.isOn = Settings.isPromptSpeedEnabled
         self.updateCustomFastForwardSpeedLabel()
@@ -281,8 +282,8 @@ private extension SettingsViewController
     
     func updateCustomFastForwardSpeedLabel()
     {
-        let speed = String(format: "%.f", Settings.customFastForwardSpeed * 100) + "%"
-        self.customFastForwardSpeedLabel.text = speed
+        let speed = String(format: "%.f", Settings.fastForwardSpeed * 100) + "%"
+        self.fastForwardSpeedLabel.text = speed
     }
     
     func updateRewindIntervalLabel()
@@ -429,11 +430,6 @@ private extension SettingsViewController
         Settings.respectSilentMode = sender.isOn
     }
     
-    @IBAction func toggleCustomFastForward(_ sender: UISwitch)
-    {
-        Settings.isCustomFastForwardEnabled = sender.isOn
-    }
-    
     @IBAction func togglePromptSpeed(_ sender: UISwitch)
     {
         Settings.isPromptSpeedEnabled = sender.isOn
@@ -443,7 +439,7 @@ private extension SettingsViewController
     {
         if sender.isOn
         {
-            let alertController = UIAlertController(title: NSLocalizedString("⚠️ Unsafe Speeds ⚠️", comment: ""), message: NSLocalizedString("Using these speed settings can cause instability and rarely crashes. Proceed with caution, use sparingly, and save often.", comment: ""), preferredStyle: .alert)
+            let alertController = UIAlertController(title: NSLocalizedString("⚠️ Unsafe Speeds ⚠️", comment: ""), message: NSLocalizedString("This setting enables 8x and 16x options. Using these speeds can cause instability and rarely crashes. Proceed with caution, use sparingly, and save often.", comment: ""), preferredStyle: .alert)
             
             alertController.addAction(UIAlertAction(title: "Enable", style: .destructive, handler: { (action) in
                 Settings.isUnsafeFastForwardSpeedsEnabled = sender.isOn
@@ -456,9 +452,9 @@ private extension SettingsViewController
         else
         {
             Settings.isUnsafeFastForwardSpeedsEnabled = sender.isOn
-            if Settings.customFastForwardSpeed > 4.0
+            if Settings.fastForwardSpeed > 4.0
             {
-                Settings.customFastForwardSpeed = 4.0
+                Settings.fastForwardSpeed = 4.0
             }
         }
     }
@@ -514,7 +510,7 @@ private extension SettingsViewController
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay. Speeds below 100% will slow down gameplay.", comment: ""), preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY * 1.5, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         var speedOneTitle = "25%"
@@ -525,7 +521,7 @@ private extension SettingsViewController
         var speedSixTitle = "800%"
         var speedSevenTitle = "1600%"
         
-        switch Settings.customFastForwardSpeed
+        switch Settings.fastForwardSpeed
         {
         case 0.25: speedOneTitle += " ✓"
         case 0.5: speedTwoTitle += " ✓"
@@ -538,26 +534,26 @@ private extension SettingsViewController
         }
         
         alertController.addAction(UIAlertAction(title: speedOneTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 0.25
+            Settings.fastForwardSpeed = 0.25
         }))
         alertController.addAction(UIAlertAction(title: speedTwoTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 0.5
+            Settings.fastForwardSpeed = 0.5
         }))
         alertController.addAction(UIAlertAction(title: speedThreeTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 1.5
+            Settings.fastForwardSpeed = 1.5
         }))
         alertController.addAction(UIAlertAction(title: speedFourTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 2.0
+            Settings.fastForwardSpeed = 2.0
         }))
         alertController.addAction(UIAlertAction(title: speedFiveTitle, style: .default, handler: { (action) in
-            Settings.customFastForwardSpeed = 4.0
+            Settings.fastForwardSpeed = 4.0
         }))
         if Settings.isUnsafeFastForwardSpeedsEnabled {
             alertController.addAction(UIAlertAction(title: speedSixTitle, style: .default, handler: { (action) in
-                Settings.customFastForwardSpeed = 8.0
+                Settings.fastForwardSpeed = 8.0
             }))
             alertController.addAction(UIAlertAction(title: speedSevenTitle, style: .default, handler: { (action) in
-                Settings.customFastForwardSpeed = 16.0
+                Settings.fastForwardSpeed = 16.0
             }))
         }
         alertController.addAction(.cancel)
@@ -723,10 +719,10 @@ private extension SettingsViewController
             {
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
-        case .themeColor, .customFastForwardSpeed:
+        case .themeColor, .fastForwardSpeed:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength: break
         }
     }
 
@@ -803,16 +799,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .fastForward:
-            switch FastForwardRow.allCases[indexPath.row]
-            {
-            case .speed:
-                cell.detailTextLabel?.text = String(format: "%.f", Settings.customFastForwardSpeed * 100) + "%"
-                
-            case .enabled, .unsafeSpeeds, .prompt: break
-            }
-            
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward: break
         }
 
         return cell
@@ -843,7 +830,7 @@ extension SettingsViewController
             {
             case .speed:
                 self.changeCustomFastForwardSpeed()
-            case .enabled, .unsafeSpeeds, .prompt: break
+            case .unsafeSpeeds, .prompt: break
             }
         case .patreon:
             let patreonURL = URL(string: "https://www.patreon.com/litritt")!
@@ -926,13 +913,7 @@ extension SettingsViewController
         }
         else
         {
-            switch section
-            {
-            case .skinOptions: return NSLocalizedString("Opacity - Determines how translucent the controller skin appears.\nAlways Show - Will show the skin even if a controller is connected.\nUse Alternate Skin - Toggles using the alternate skin.\nDebug Mode - Determines whether the controller skin debug overlay is shown.", comment: "")
-            case .fastForward: return NSLocalizedString("Custom Speed - Determines whether the custom speeds will be used.\nUnsafe Speeds - Shows speeds that may cause issues.\nChange Speed - Select a custom speed to use.\nAsk on Activation - Determines whether you will be prompted to choose a speed each activation.", comment: "")
-            default:
-                return super.tableView(tableView, titleForFooterInSection: section.rawValue)
-            }
+            return super.tableView(tableView, titleForFooterInSection: section.rawValue)
         }
     }
     

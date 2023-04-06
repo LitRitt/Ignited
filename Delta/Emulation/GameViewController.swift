@@ -1225,33 +1225,24 @@ extension GameViewController
         
         if activate
         {
-            if Settings.isCustomFastForwardEnabled
+            if Settings.isPromptSpeedEnabled
             {
-                if Settings.isPromptSpeedEnabled
+                if let pauseView = self.pauseViewController
                 {
-                    if let pauseView = self.pauseViewController
-                    {
-                        pauseView.dismiss()
-                    }
-                    self.promptFastForwardSpeed()
+                    pauseView.dismiss()
                 }
-                else
-                {
-                    emulatorCore.rate = Settings.customFastForwardSpeed
-                    text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
-                    self.presentToastView(text: text)
-                }
+                self.promptFastForwardSpeed()
             }
             else
             {
-                emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
+                emulatorCore.rate = Settings.fastForwardSpeed
                 text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
                 self.presentToastView(text: text)
             }
         }
         else
         {
-            emulatorCore.rate = emulatorCore.deltaCore.supportedRates.lowerBound
+            emulatorCore.rate = 1.0
             text = NSLocalizedString("Fast Forward Disabled", comment: "")
             self.presentToastView(text: text)
         }
@@ -1261,7 +1252,7 @@ extension GameViewController
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay. Speeds below 100% will slow down gameplay.", comment: ""), preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY * 1.5, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         alertController.addAction(UIAlertAction(title: "25%", style: .default, handler: { (action) in
@@ -1299,7 +1290,7 @@ extension GameViewController
         {
             guard let emulatorCore = self.emulatorCore else { return }
             
-            Settings.customFastForwardSpeed = speed
+            Settings.fastForwardSpeed = speed
             emulatorCore.rate = speed
             let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
             self.presentToastView(text: text)
@@ -1519,7 +1510,7 @@ private extension GameViewController
         case .respectSilentMode:
             self.updateAudio()
             
-        case .syncingService, .isAltJITEnabled, .isCustomFastForwardEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .customFastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave: break
+        case .syncingService, .isAltJITEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .fastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave: break
         }
     }
     

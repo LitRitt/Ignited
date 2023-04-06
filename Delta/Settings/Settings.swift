@@ -45,10 +45,9 @@ extension Settings
         case hapticFeedbackStrength
         case isAltJITEnabled
         case respectSilentMode
-        case isCustomFastForwardEnabled
         case isUnsafeFastForwardSpeedsEnabled
         case isPromptSpeedEnabled
-        case customFastForwardSpeed
+        case fastForwardSpeed
         case isRewindEnabled
         case rewindTimerInterval
         case isAltRepresentationsAvailable
@@ -107,10 +106,9 @@ struct Settings
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 5,
-                        #keyPath(UserDefaults.isCustomFastForwardEnabled): true,
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
                         #keyPath(UserDefaults.isPromptSpeedEnabled): true,
-                        #keyPath(UserDefaults.customFastForwardSpeed): 4.0,
+                        #keyPath(UserDefaults.fastForwardSpeed): 4.0,
                         #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
                         #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
                         #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
@@ -358,18 +356,6 @@ extension Settings
         }
     }
     
-    static var isCustomFastForwardEnabled: Bool {
-        set {
-            UserDefaults.standard.isCustomFastForwardEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isCustomFastForwardEnabled])
-            
-        }
-        get {
-            let isCustomFastForwardEnabled = UserDefaults.standard.isCustomFastForwardEnabled
-            return isCustomFastForwardEnabled
-        }
-    }
-    
     static var isUnsafeFastForwardSpeedsEnabled: Bool {
         set {
             UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled = newValue
@@ -392,15 +378,15 @@ extension Settings
         }
     }
     
-    static var customFastForwardSpeed: CGFloat {
+    static var fastForwardSpeed: CGFloat {
         set {
-            UserDefaults.standard.customFastForwardSpeed = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.customFastForwardSpeed])
+            UserDefaults.standard.fastForwardSpeed = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.fastForwardSpeed])
             
         }
         get {
-            let customFastForwardSpeed = UserDefaults.standard.customFastForwardSpeed
-            return customFastForwardSpeed
+            let fastForwardSpeed = UserDefaults.standard.fastForwardSpeed
+            return fastForwardSpeed
         }
     }
     
@@ -669,10 +655,9 @@ private extension UserDefaults
     @NSManaged var isRewindEnabled: Bool
     @NSManaged var rewindTimerInterval: Int
     
-    @NSManaged var isCustomFastForwardEnabled: Bool
     @NSManaged var isUnsafeFastForwardSpeedsEnabled: Bool
     @NSManaged var isPromptSpeedEnabled: Bool
-    @NSManaged var customFastForwardSpeed: CGFloat
+    @NSManaged var fastForwardSpeed: CGFloat
     
     @NSManaged var isUseAltRepresentationsEnabled: Bool
     @NSManaged var isAltRepresentationsAvailable: Bool
