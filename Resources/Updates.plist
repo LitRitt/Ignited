@@ -4,6 +4,39 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.1.4</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.1.4</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Re-enabled Save State Rewind - Disabled on GBC to prevent crashes with gambette</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Added new Advanced section to settings - Moved alt skin and debug toggles there</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Custom fast forward speed is now default - Toggle removed</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed the Always Show Skin settings not working on DS</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.1.3</string>
 		<key>link</key>
 		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.1.3</string>
