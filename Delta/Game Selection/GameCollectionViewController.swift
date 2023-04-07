@@ -156,6 +156,7 @@ extension GameCollectionViewController
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.settingsDidChange(_:)), name: .settingsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.resumeCurrentGame), name: .resumePlaying, object: nil)
         
         self.update()
     }
@@ -224,6 +225,57 @@ extension GameCollectionViewController
             
             let indexPath = self.collectionView!.indexPath(for: cell)!
             let game = self.dataSource.item(at: indexPath)
+            
+            destinationViewController.game = game
+            
+            if let emulatorBridge = destinationViewController.emulatorCore?.deltaCore.emulatorBridge as? MelonDSEmulatorBridge
+            {
+                //TODO: Update this to work with multiple processes by retrieving emulatorBridge directly from emulatorCore.
+                
+                if game.identifier == Game.melonDSDSiBIOSIdentifier
+                {
+                    emulatorBridge.systemType = .dsi
+                }
+                else
+                {
+                    emulatorBridge.systemType = .ds
+                }
+                
+                emulatorBridge.isJITEnabled = ProcessInfo.processInfo.isJITAvailable
+            }
+            
+            if let saveState = self.activeSaveState
+            {
+                // Must be synchronous or else there will be a flash of black
+                destinationViewController.emulatorCore?.start()
+                destinationViewController.emulatorCore?.pause()
+                
+                do
+                {
+                    try destinationViewController.emulatorCore?.load(saveState)
+                }
+                catch EmulatorCore.SaveStateError.doesNotExist
+                {
+                    print("Save State does not exist.")
+                }
+                catch
+                {
+                    print(error)
+                }
+                
+                destinationViewController.emulatorCore?.resume()
+            }
+            
+            self.activeSaveState = nil
+            
+            if _performingPreviewTransition
+            {
+                _previewTransitionDestinationViewController = destinationViewController
+            }
+            
+        case "resumeCurrentGame":
+            let destinationViewController = segue.destination as! GameViewController
+            let game = sender as! Game
             
             destinationViewController.game = game
             
@@ -944,6 +996,31 @@ private extension GameCollectionViewController
         
         let alertController = UIAlertController(actions: actions)
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc func resumeCurrentGame()
+    {
+        guard let emulatorCore = self.activeEmulatorCore else { return }
+        guard let game = emulatorCore.game as? Game else { return }
+        
+        if Settings.autoLoadSave
+        {
+            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+            
+            do
+            {
+                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                self.activeSaveState = saveStates?.last
+            }
+            catch
+            {
+                print(error)
+            }
+        }
+        
+        self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
     }
     
     @objc func settingsDidChange(_ notification: Notification)

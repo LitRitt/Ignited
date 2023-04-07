@@ -91,6 +91,7 @@
                         </connections>
                     </collectionView>
                     <connections>
+                        <segue destination="X2o-q6-XD5" kind="unwind" identifier="resumeCurrentGame" unwindAction="unwindFromGamesViewControllerWith:" id="k8d-Xn-maU"/>
                         <segue destination="X2o-q6-XD5" kind="unwind" identifier="unwindFromGames" unwindAction="unwindFromGamesViewControllerWith:" id="k8C-Xn-maU"/>
                         <segue destination="MPk-bF-nkj" kind="presentation" identifier="saveStates" customClass="SaveStatesStoryboardSegue" customModule="Ignited" customModuleProvider="target" id="1Xp-2J-0cq"/>
                         <segue destination="qdE-gb-V2e" kind="presentation" identifier="preferredControllerSkins" id="i6y-cP-3WM"/>

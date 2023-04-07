@@ -382,12 +382,14 @@ extension GameViewController
             {
                 gamesViewController.theme = .translucent
                 gamesViewController.activeEmulatorCore = emulatorCore
+                gamesViewController.showResumeButton = true
                 
                 self.updateAutoSaveState()
             }
             else
             {
                 gamesViewController.theme = .opaque
+                gamesViewController.showResumeButton = false
             }
             
         case "pause":

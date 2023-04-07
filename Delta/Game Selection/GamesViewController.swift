@@ -40,9 +40,19 @@ class GamesViewController: UIViewController
         return .lightContent
     }
     
+    public var showResumeButton: Bool = false {
+        didSet {
+            toggleResumeButton(toggle: showResumeButton)
+        }
+    }
+    
     private var pageViewController: UIPageViewController!
     private var placeholderView: RSTPlaceholderView!
     private var pageControl: UIPageControl!
+    private var resumeButton: UIBarButtonItem!
+    
+    private var toolbarFlexibleSpacer : UIBarButtonItem!
+    private var toolbarFixedSpacer: UIBarButtonItem!
     
     private let fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>
     
@@ -107,6 +117,12 @@ extension GamesViewController
         
         self.pageControl.centerXAnchor.constraint(equalTo: (self.navigationController?.toolbar.centerXAnchor)!, constant: 0).isActive = true
         self.pageControl.centerYAnchor.constraint(equalTo: (self.navigationController?.toolbar.centerYAnchor)!, constant: 0).isActive = true
+        
+        self.resumeButton = UIBarButtonItem(title: "Resume", style: .done, target: self, action: #selector(self.resumeCurrentGame))
+        
+        self.toolbarFlexibleSpacer = UIBarButtonItem(systemItem: .flexibleSpace)
+        self.toolbarFixedSpacer = UIBarButtonItem(systemItem: .fixedSpace)
+        self.toolbarFixedSpacer.width = 8
         
         if let navigationController = self.navigationController
         {
@@ -275,6 +291,18 @@ private extension GamesViewController
             }
         }
     }
+    
+    public func toggleResumeButton(toggle: Bool)
+    {
+        if toggle
+        {
+            self.setToolbarItems([self.toolbarFlexibleSpacer, self.resumeButton, self.toolbarFixedSpacer], animated: true)
+        }
+        else
+        {
+            self.setToolbarItems([], animated: true)
+        }
+    }
 }
 
 // MARK: - Helper Methods -
@@ -370,6 +398,12 @@ private extension GamesViewController
             self.pageViewController.view.setHidden(true, animated: animated)
             self.placeholderView.setHidden(false, animated: animated)
         }
+    }
+    
+    @objc func resumeCurrentGame()
+    {
+        NotificationCenter.default.post(name: .resumePlaying, object: nil, userInfo: [:])
+        self.toggleResumeButton(toggle: false)
     }
 }
 
@@ -682,4 +716,11 @@ extension GamesViewController: UIAdaptivePresentationControllerDelegate
     {
         self.sync()
     }
+}
+
+//MARK: - Notification.Name
+/// Notification.Name
+public extension Notification.Name
+{
+    static let resumePlaying = Notification.Name("resumeCurrentGameNotification")
 }
