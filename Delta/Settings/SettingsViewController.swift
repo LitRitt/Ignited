@@ -21,17 +21,18 @@ private extension SettingsViewController
         case syncing
         case theme
         case autoLoad
+        case rewind
         case hapticFeedback
         case hapticTouch
         case fastForward
         case gameAudio
         case toasts
-        case controllers
-        case controllerSkins
         case skinOptions
+        case controllerSkins
+        case controllers
         case skinDownloads
-        case rewind
         case cores
+        case advanced
         case credits
         case updates
     }
@@ -252,7 +253,7 @@ private extension SettingsViewController
         
         self.unsafeFastForwardSpeedsSwitch.isOn = Settings.isUnsafeFastForwardSpeedsEnabled
         self.promptSpeedSwitch.isOn = Settings.isPromptSpeedEnabled
-        self.updateCustomFastForwardSpeedLabel()
+        self.updateFastForwardSpeedLabel()
         
         self.view.tintColor = .themeColor
         
@@ -280,7 +281,7 @@ private extension SettingsViewController
         self.hapticStrengthLabel.text = strength
     }
     
-    func updateCustomFastForwardSpeedLabel()
+    func updateFastForwardSpeedLabel()
     {
         let speed = String(format: "%.f", Settings.fastForwardSpeed * 100) + "%"
         self.fastForwardSpeedLabel.text = speed
@@ -288,8 +289,8 @@ private extension SettingsViewController
     
     func updateRewindIntervalLabel()
     {
-        let rewindTimerIntervalString = String(Settings.rewindTimerInterval)
-        self.rewindIntervalLabel.text = rewindTimerIntervalString
+        let interval = "Interval: " + String(Settings.rewindTimerInterval) + "s"
+        self.rewindIntervalLabel.text = interval
     }
     
     func isSectionHidden(_ section: Section) -> Bool
@@ -797,7 +798,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced: break
         }
 
         return cell
@@ -822,7 +823,7 @@ extension SettingsViewController
             case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
             }
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing: break
+        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .advanced: break
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {
