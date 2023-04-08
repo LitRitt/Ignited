@@ -27,6 +27,12 @@
 				<key>description</key>
 				<string>Resume Button added to game collection screen beside the page dots</string>
 			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed controller skins losing transparency on device rotation</string>
+			</dict>
 		</array>
 	</dict>
 	<dict>
