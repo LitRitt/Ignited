@@ -136,16 +136,7 @@ private extension AppDelegate
 {
     func registerCores()
     {
-        #if LITE
-        
-        Delta.register(System.nes.deltaCore)
-        Delta.register(System.gbc.deltaCore)
-        
-        #else
-        
         System.allCases.forEach { Delta.register($0.deltaCore) }
-        
-        #endif
     }
     
     func configureAppearance()

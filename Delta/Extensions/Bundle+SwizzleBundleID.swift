@@ -14,15 +14,7 @@ extension Bundle
     @objc private var swizzled_infoDictionary: [String : Any]? {
         var infoDictionary = self.swizzled_infoDictionary
         
-        #if LITE
-        
-        infoDictionary?[kCFBundleIdentifierKey as String] = "com.rileytestut.Delta.Lite"
-        
-        #else
-        
-        infoDictionary?[kCFBundleIdentifierKey as String] = "com.rileytestut.Delta.AltStore"
-        
-        #endif
+        infoDictionary?[kCFBundleIdentifierKey as String] = "com.litritt.ignited.AltStore"
         
         return infoDictionary
     }
