@@ -22,6 +22,7 @@ private extension SettingsViewController
         case theme
         case autoLoad
         case rewind
+        case overlay
         case hapticFeedback
         case hapticTouch
         case fastForward
@@ -82,16 +83,28 @@ private extension SettingsViewController
     {
         case opacity
         case alwaysShow
-        case altSkin
-        case debug
     }
     
     enum HapticsRow: Int, CaseIterable
     {
+        case clicky
         case buttons
         case sticks
-        case clicky
         case strength
+    }
+    
+    enum OverlayRow: Int, CaseIterable
+    {
+        case buttons
+        case themed
+        case opacity
+        case size
+    }
+    
+    enum AdvancedRow: Int, CaseIterable
+    {
+        case altSkin
+        case debug
     }
 }
 
@@ -116,6 +129,13 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var clickyHapticSwitch: UISwitch!
     @IBOutlet private var hapticStrengthLabel: UILabel!
     @IBOutlet private var hapticStrengthSlider: UISlider!
+    
+    @IBOutlet private var buttonTouchOverlayEnabledSwitch: UISwitch!
+    @IBOutlet private var touchOverlayThemeEnabledSwitch: UISwitch!
+    @IBOutlet private var touchOverlayOpacityLabel: UILabel!
+    @IBOutlet private var touchOverlayOpacitySlider: UISlider!
+    @IBOutlet private var touchOverlaySizeLabel: UILabel!
+    @IBOutlet private var touchOverlaySizeSlider: UISlider!
     
     @IBOutlet private var previewsEnabledSwitch: UISwitch!
     
@@ -245,6 +265,13 @@ private extension SettingsViewController
         self.hapticStrengthSlider.value = Float(Settings.hapticFeedbackStrength)
         self.updateHapticStrengthLabel()
         
+        self.buttonTouchOverlayEnabledSwitch.isOn = Settings.isButtonTouchOverlayEnabled
+        self.touchOverlayThemeEnabledSwitch.isOn = Settings.isTouchOverlayThemeEnabled
+        self.touchOverlayOpacitySlider.value = Float(Settings.touchOverlayOpacity)
+        self.updateTouchOverlayOpacityLabel()
+        self.touchOverlaySizeSlider.value = Float(Settings.touchOverlaySize)
+        self.updateTouchOverlaySizeLabel()
+        
         self.previewsEnabledSwitch.isOn = Settings.isPreviewsEnabled
         
         self.rewindEnabledSwitch.isOn = Settings.isRewindEnabled
@@ -279,6 +306,18 @@ private extension SettingsViewController
     {
         let strength = "Strength: " + String(format: "%.f", Settings.hapticFeedbackStrength * 100) + "%"
         self.hapticStrengthLabel.text = strength
+    }
+    
+    func updateTouchOverlayOpacityLabel()
+    {
+        let opacity = "Opacity: " + String(format: "%.f", Settings.touchOverlayOpacity * 100) + "%"
+        self.touchOverlayOpacityLabel.text = opacity
+    }
+    
+    func updateTouchOverlaySizeLabel()
+    {
+        let size = "Size: " + String(format: "%.f", Settings.touchOverlaySize * 100) + "%"
+        self.touchOverlaySizeLabel.text = size
     }
     
     func updateFastForwardSpeedLabel()
@@ -407,6 +446,68 @@ private extension SettingsViewController
     @IBAction func toggleThumbstickHapticFeedbackEnabled(_ sender: UISwitch)
     {
         Settings.isThumbstickHapticFeedbackEnabled = sender.isOn
+    }
+    
+    @IBAction func toggleButtonTouchOverlayEnabled(_ sender: UISwitch)
+    {
+        Settings.isButtonTouchOverlayEnabled = sender.isOn
+    }
+    
+    @IBAction func toggleTouchOverlayThemeEnabled(_ sender: UISwitch)
+    {
+        Settings.isTouchOverlayThemeEnabled = sender.isOn
+    }
+    
+    @IBAction func beginChangingTouchOverlayOpacity(with sender: UISlider)
+    {
+        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        self.selectionFeedbackGenerator?.prepare()
+    }
+    
+    @IBAction func changeTouchOverlayOpacity(with sender: UISlider)
+    {
+        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
+        
+        if roundedValue != Settings.touchOverlayOpacity
+        {
+            self.selectionFeedbackGenerator?.selectionChanged()
+        }
+        
+        Settings.touchOverlayOpacity = CGFloat(roundedValue)
+        
+        self.updateTouchOverlayOpacityLabel()
+    }
+    
+    @IBAction func didFinishChangingTouchOverlayOpacity(with sender: UISlider)
+    {
+        sender.value = Float(Settings.touchOverlayOpacity)
+        self.selectionFeedbackGenerator = nil
+    }
+    
+    @IBAction func beginChangingTouchOverlaySize(with sender: UISlider)
+    {
+        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        self.selectionFeedbackGenerator?.prepare()
+    }
+    
+    @IBAction func changeTouchOverlaySize(with sender: UISlider)
+    {
+        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
+        
+        if roundedValue != Settings.touchOverlaySize
+        {
+            self.selectionFeedbackGenerator?.selectionChanged()
+        }
+        
+        Settings.touchOverlaySize = CGFloat(roundedValue)
+        
+        self.updateTouchOverlaySizeLabel()
+    }
+    
+    @IBAction func didFinishChangingTouchOverlaySize(with sender: UISlider)
+    {
+        sender.value = Float(Settings.touchOverlaySize)
+        self.selectionFeedbackGenerator = nil
     }
     
     @IBAction func togglePreviewsEnabled(_ sender: UISwitch)
@@ -721,7 +822,7 @@ private extension SettingsViewController
         case .themeColor, .fastForwardSpeed:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled: break
         }
     }
 
@@ -798,7 +899,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay: break
         }
 
         return cell
@@ -823,7 +924,7 @@ extension SettingsViewController
             case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
             }
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .advanced: break
+        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .advanced, .overlay: break
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {

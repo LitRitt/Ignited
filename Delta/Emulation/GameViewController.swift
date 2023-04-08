@@ -698,6 +698,12 @@ private extension GameViewController
         self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
         self.controllerView.isClickyHapticEnabled = Settings.isClickyHapticEnabled
         self.controllerView.hapticFeedbackStrength = Settings.hapticFeedbackStrength
+        
+        self.controllerView.isButtonTouchOverlayEnabled = Settings.isButtonTouchOverlayEnabled
+        self.controllerView.touchOverlayOpacity = Settings.touchOverlayOpacity
+        self.controllerView.touchOverlaySize = Settings.touchOverlaySize
+        self.controllerView.touchOverlayColor = Settings.isTouchOverlayThemeEnabled ? UIColor.themeColor : UIColor.white
+        
         self.controllerView.isAltRepresentationsEnabled = Settings.isAltRepresentationsEnabled
         self.controllerView.isDebugModeEnabled = Settings.isDebugModeEnabled
         
@@ -1492,7 +1498,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .hapticFeedbackStrength:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled:
             self.updateControllers()
 
         case .preferredControllerSkin:

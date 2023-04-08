@@ -43,6 +43,10 @@ extension Settings
         case isThumbstickHapticFeedbackEnabled
         case isClickyHapticEnabled
         case hapticFeedbackStrength
+        case isButtonTouchOverlayEnabled
+        case touchOverlayOpacity
+        case touchOverlaySize
+        case isTouchOverlayThemeEnabled
         case isAltJITEnabled
         case respectSilentMode
         case isUnsafeFastForwardSpeedsEnabled
@@ -94,18 +98,22 @@ struct Settings
                         #keyPath(UserDefaults.gameArtworkSize): ArtworkSize.medium.rawValue,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
-                        #keyPath(UserDefaults.isButtonHapticFeedbackEnabled): true,
-                        #keyPath(UserDefaults.isThumbstickHapticFeedbackEnabled): true,
-                        #keyPath(UserDefaults.isClickyHapticEnabled): true,
+                        #keyPath(UserDefaults.isButtonHapticFeedbackEnabled): UIDevice.current.userInterfaceIdiom != .pad,
+                        #keyPath(UserDefaults.isThumbstickHapticFeedbackEnabled): UIDevice.current.userInterfaceIdiom != .pad,
+                        #keyPath(UserDefaults.isClickyHapticEnabled): UIDevice.current.userInterfaceIdiom != .pad,
                         #keyPath(UserDefaults.hapticFeedbackStrength): 1.0,
+                        #keyPath(UserDefaults.isButtonTouchOverlayEnabled): UIDevice.current.userInterfaceIdiom == .pad,
+                        #keyPath(UserDefaults.isTouchOverlayThemeEnabled): true,
+                        #keyPath(UserDefaults.touchOverlayOpacity): 0.7,
+                        #keyPath(UserDefaults.touchOverlaySize): 1.0,
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): true,
                         #keyPath(UserDefaults.isPreviewsEnabled): true,
                         #keyPath(UserDefaults.isAltJITEnabled): false,
                         #keyPath(UserDefaults.autoLoadSave): true,
                         #keyPath(UserDefaults.showToastNotifications): true,
                         #keyPath(UserDefaults.respectSilentMode): true,
-                        #keyPath(UserDefaults.isRewindEnabled): false,
-                        #keyPath(UserDefaults.rewindTimerInterval): 5,
+                        #keyPath(UserDefaults.isRewindEnabled): true,
+                        #keyPath(UserDefaults.rewindTimerInterval): 15,
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
                         #keyPath(UserDefaults.isPromptSpeedEnabled): true,
                         #keyPath(UserDefaults.fastForwardSpeed): 4.0,
@@ -270,6 +278,46 @@ extension Settings
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.hapticFeedbackStrength])
         }
         get { return UserDefaults.standard.hapticFeedbackStrength }
+    }
+    
+    static var isButtonTouchOverlayEnabled: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.isButtonTouchOverlayEnabled
+            return isEnabled
+        }
+        set {
+            UserDefaults.standard.isButtonTouchOverlayEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonTouchOverlayEnabled])
+        }
+    }
+    
+    static var isTouchOverlayThemeEnabled: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.isTouchOverlayThemeEnabled
+            return isEnabled
+        }
+        set {
+            UserDefaults.standard.isTouchOverlayThemeEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isTouchOverlayThemeEnabled])
+        }
+    }
+    
+    static var touchOverlayOpacity: CGFloat {
+        set {
+            guard newValue != self.touchOverlayOpacity else { return }
+            UserDefaults.standard.touchOverlayOpacity = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlayOpacity])
+        }
+        get { return UserDefaults.standard.touchOverlayOpacity }
+    }
+    
+    static var touchOverlaySize: CGFloat {
+        set {
+            guard newValue != self.touchOverlaySize else { return }
+            UserDefaults.standard.touchOverlaySize = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlaySize])
+        }
+        get { return UserDefaults.standard.touchOverlaySize }
     }
     
     static var sortSaveStatesByOldestFirst: Bool {
@@ -642,6 +690,11 @@ private extension UserDefaults
     @NSManaged var isThumbstickHapticFeedbackEnabled: Bool
     @NSManaged var isClickyHapticEnabled: Bool
     @NSManaged var hapticFeedbackStrength: CGFloat
+    
+    @NSManaged var isButtonTouchOverlayEnabled: Bool
+    @NSManaged var isTouchOverlayThemeEnabled: Bool
+    @NSManaged var touchOverlayOpacity: CGFloat
+    @NSManaged var touchOverlaySize: CGFloat
     
     @NSManaged var sortSaveStatesByOldestFirst: Bool
     
