@@ -2399,7 +2399,7 @@
 		1E2085B3FF507E08C3040D7E3D3C295B /* Expression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Expression.swift; path = Sources/SQLite/Typed/Expression.swift; sourceTree = "<group>"; };
 		1E386BD0BB0ECC459FA522E26E6F0D42 /* NstApiMachine.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstApiMachine.hpp; sourceTree = "<group>"; };
 		1E4A756F26BAC97D488ACFDC54789A73 /* TxHiResCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = TxHiResCache.h; sourceTree = "<group>"; };
-		1E5356E04E92615CFF0666E5987CE594 /* NESDeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = NESDeltaCore; path = libNESDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E5356E04E92615CFF0666E5987CE594 /* libNESDeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNESDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E6FEE1D998C78DF19ACA08E81C7A395 /* NstXml.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstXml.hpp; sourceTree = "<group>"; };
 		1EB109D8EAF10C56E1B3A5EA385A22B0 /* winlnxdefs.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = winlnxdefs.h; sourceTree = "<group>"; };
 		1EC4DA03D57871D39A99EA01B272D4B9 /* exprNode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = exprNode.h; sourceTree = "<group>"; };
@@ -2676,7 +2676,7 @@
 		43DB8C4B29085E6FE14954933B1854B8 /* ZlutTexture.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = ZlutTexture.cpp; sourceTree = "<group>"; };
 		43E8E60E56CB19A317F1DD05A4167EEE /* BPMDetect.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BPMDetect.h; sourceTree = "<group>"; };
 		43E9A99CB2F0F566B1EC79D4A6B08A4E /* DebugDump.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = DebugDump.cpp; sourceTree = "<group>"; };
-		4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = Roxas; path = libRoxas.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4405793D5AF1EFD9D2BDA30AA0D2E514 /* libRoxas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRoxas.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		440F728629AA81492F2374B22D158C8D /* Standard.deltamapping */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.bplist; name = Standard.deltamapping; path = DSDeltaCore/Standard.deltamapping; sourceTree = "<group>"; };
 		443636AEB2461813DE19CAAEDB8822E0 /* Result+Dropbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Result+Dropbox.swift"; sourceTree = "<group>"; };
 		446BF4A4F470F437E4E1A9162BB485EA /* NstVideoFilter2xSaI.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstVideoFilter2xSaI.hpp; sourceTree = "<group>"; };
@@ -2747,7 +2747,7 @@
 		4BD7237D2B6E99690A20999A48E4C078 /* glsl_ShaderPart.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = glsl_ShaderPart.h; sourceTree = "<group>"; };
 		4BEB9E9721620F578D0426BDB238AD95 /* NstApiEmulator.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstApiEmulator.hpp; sourceTree = "<group>"; };
 		4BEF3307500AE238F67BF21F7A5E2B90 /* UIResponder+FirstResponder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIResponder+FirstResponder.swift"; sourceTree = "<group>"; };
-		4C22C82316853ABB688358B93486CF8E /* MelonDSDeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = MelonDSDeltaCore; path = libMelonDSDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C22C82316853ABB688358B93486CF8E /* libMelonDSDeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMelonDSDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C38F52C216C0E25C48A8788DB91AA20 /* tima.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = tima.h; sourceTree = "<group>"; };
 		4C48CBBB6A97428E4D4CBC314A140585 /* Archive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Archive.swift; path = Sources/ZIPFoundation/Archive.swift; sourceTree = "<group>"; };
 		4C619FD58ECE5046BFBE7F16F5A14C4E /* NstInpPad.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstInpPad.hpp; sourceTree = "<group>"; };
@@ -3193,7 +3193,7 @@
 		85754E8C95C188FEED2D1D983314697D /* DriveService+Versions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DriveService+Versions.swift"; path = "Backends/Drive/Harmony-Drive/DriveService+Versions.swift"; sourceTree = "<group>"; };
 		858C0A79D272BFFC52B94D2BDD345A3E /* n64_cic_nus_6105.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = n64_cic_nus_6105.h; sourceTree = "<group>"; };
 		85919A3037781B06E86122A531B658CD /* NstBoardIremHolyDiver.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardIremHolyDiver.hpp; sourceTree = "<group>"; };
-		85A4BD81985AEDB6D9BA5E50804225D0 /* GBADeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GBADeltaCore; path = libGBADeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		85A4BD81985AEDB6D9BA5E50804225D0 /* libGBADeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGBADeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A6245DFC193CE3EA72958A69D9422B /* F3DEX2ACCLAIM.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = F3DEX2ACCLAIM.cpp; sourceTree = "<group>"; };
 		85C95C30CA6D9ACC3BEE5F8DA5DE54DD /* RSTCellContentCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTCellContentCell.h; path = Roxas/RSTCellContentCell.h; sourceTree = "<group>"; };
 		86100202ABE49603FD3A794305B6D352 /* T3DUX.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = T3DUX.h; sourceTree = "<group>"; };
@@ -3258,7 +3258,7 @@
 		8D7F02896E229D7D3C9C8484A39D3F5A /* Collation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Collation.swift; path = Sources/SQLite/Typed/Collation.swift; sourceTree = "<group>"; };
 		8D9428685D97EB224E9E3B526F26AAE0 /* RSTCollectionViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = RSTCollectionViewCell.xib; path = Roxas/RSTCollectionViewCell.xib; sourceTree = "<group>"; };
 		8DD1E0498241FC67768C582366F133EA /* cpuexec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = cpuexec.h; sourceTree = "<group>"; };
-		8DF503EB5BF2CD824792BFD2BBC0992F /* DSDeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = DSDeltaCore; path = libDSDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DF503EB5BF2CD824792BFD2BBC0992F /* libDSDeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDSDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E216815BF6887E071400BA9F9EC1309 /* Roxas-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Roxas-dummy.m"; sourceTree = "<group>"; };
 		8E8FA7EDDF2D182E85D908AB189426B6 /* KeyboardResponder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 		8E91E986A8B15803FB3C1B92D9C417DF /* GPU2D.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = GPU2D.cpp; sourceTree = "<group>"; };
@@ -3707,7 +3707,7 @@
 		C84C3D0F11A5EB1115FFB93D23447AE9 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachabilityManager.swift; path = Source/NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		C858F6B7C21B35E28BD8E19BAD707358 /* Utf.inl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Utf.inl; sourceTree = "<group>"; };
 		C896FF6056EF6073CCFEB25599D37DC1 /* StoneValidators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StoneValidators.swift; path = Source/SwiftyDropbox/Shared/Generated/StoneValidators.swift; sourceTree = "<group>"; };
-		C8D6AC695498645EEE4A66FCEF97D848 /* N64DeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = N64DeltaCore; path = libN64DeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8D6AC695498645EEE4A66FCEF97D848 /* libN64DeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libN64DeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C920ABE1CD32898FDE28D05E300426D3 /* TxDbg_ios.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; path = TxDbg_ios.mm; sourceTree = "<group>"; };
 		C92E2E1748A19DE3690F0128F51ADC9A /* sdl2_compat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = sdl2_compat.h; sourceTree = "<group>"; };
 		C942DF0812B9968B0756146F887EC48D /* NstBoardWaixingZs.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardWaixingZs.hpp; sourceTree = "<group>"; };
@@ -3790,7 +3790,7 @@
 		D456E5925A2BB22F574458B154CD52B1 /* DS.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DS.swift; sourceTree = "<group>"; };
 		D4873789421471F74045B1971C0619DF /* rdp_core.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = rdp_core.h; sourceTree = "<group>"; };
 		D4A12ACDD79A62B65966F290DFCF5A2B /* NstBoardBmcVt5201.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBmcVt5201.hpp; sourceTree = "<group>"; };
-		D4C010E8572FAE8B51DFDBF2300ECF30 /* GBCDeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GBCDeltaCore; path = libGBCDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4C010E8572FAE8B51DFDBF2300ECF30 /* libGBCDeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGBCDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D507E9DF501F229BE997E2B64B0BB402 /* eeprom.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = eeprom.h; sourceTree = "<group>"; };
 		D51E188D838AEB69093123ABC8902093 /* netplay.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = netplay.h; sourceTree = "<group>"; };
 		D55E6137C8C963C0E24FF6F3246DAA3D /* FABAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABAttributes.h; path = iOS/Fabric.framework/Headers/FABAttributes.h; sourceTree = "<group>"; };
@@ -3826,7 +3826,7 @@
 		DB683D01C648B7B51BB512DE2E9B3032 /* Config.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = Config.hpp; sourceTree = "<group>"; };
 		DBAAF6DBA09834539A368667AF5A1211 /* GoogleAPIClientForREST.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleAPIClientForREST.debug.xcconfig; sourceTree = "<group>"; };
 		DBAD4BC508BBD2D2F2B465DE8AC80A4F /* debugger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = debugger.h; sourceTree = "<group>"; };
-		DBC0113CF73BE24525E670D024A85BE7 /* Harmony */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = Harmony; path = libHarmony.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBC0113CF73BE24525E670D024A85BE7 /* libHarmony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHarmony.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1F1562FB4035D9C7758E467FC2B3 /* scmrev.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = scmrev.h; sourceTree = "<group>"; };
 		DBE5AAAEAFCFBBAABEDE5B784FC05231 /* pngusr.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pngusr.h; sourceTree = "<group>"; };
 		DBEBC13C2601FDB2E7F4D976B174D79A /* TouchControllerSkin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TouchControllerSkin.swift; sourceTree = "<group>"; };
@@ -4070,13 +4070,13 @@
 		F8B187821DFE47A48AFFE8B8496B8C46 /* UISpringTimingParameters+Conveniences.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UISpringTimingParameters+Conveniences.m"; path = "Roxas/UISpringTimingParameters+Conveniences.m"; sourceTree = "<group>"; };
 		F8D5906CA330B4B62AECE7C268055484 /* NstBoardBandaiKaraokeStudio.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBandaiKaraokeStudio.hpp; sourceTree = "<group>"; };
 		F8E8726464D823B37E1B6D05F7E27255 /* TeamCommon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TeamCommon.swift; path = Source/SwiftyDropbox/Shared/Generated/TeamCommon.swift; sourceTree = "<group>"; };
-		F93477FBF1E4488E506F9BB79AF57D38 /* DeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = DeltaCore; path = libDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F93477FBF1E4488E506F9BB79AF57D38 /* libDeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F94637A21D42A1D3D7F8F0AF2786C782 /* GTLRUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLRUtilities.m; path = Source/Utilities/GTLRUtilities.m; sourceTree = "<group>"; };
 		F97D6695C3982D8DC4829D7E999A38BD /* NstBoardSachenS8259.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardSachenS8259.hpp; sourceTree = "<group>"; };
 		F9D1DD6FEAB8A8054D0D87545594975D /* DSDeltaCore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DSDeltaCore.modulemap; sourceTree = "<group>"; };
 		FA1D9AA72B3CADFD9096721DB32617A0 /* NstApu.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstApu.hpp; sourceTree = "<group>"; };
 		FA3064445067E4146CB67ECCE9C42918 /* NstApiRewinder.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstApiRewinder.hpp; sourceTree = "<group>"; };
-		FA400832D3E46B39D5EC83D09A7572FC /* SNESDeltaCore */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SNESDeltaCore; path = libSNESDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA400832D3E46B39D5EC83D09A7572FC /* libSNESDeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSNESDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA484256A9984FA401CB7DA5848C4481 /* TxTexCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = TxTexCache.h; sourceTree = "<group>"; };
 		FA6FE92B481663C99D272E1A4763D254 /* F3DDKR.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = F3DDKR.h; sourceTree = "<group>"; };
 		FAB191CE78DD029B3A0A1ADEAE1F8064 /* NstSoundPcm.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstSoundPcm.hpp; sourceTree = "<group>"; };
@@ -8169,29 +8169,29 @@
 			isa = PBXGroup;
 			children = (
 				5D797E9A5C5782CE845840781FA1CC81 /* libAlamofire.a */,
-				F93477FBF1E4488E506F9BB79AF57D38 /* DeltaCore */,
+				F93477FBF1E4488E506F9BB79AF57D38 /* libDeltaCore.a */,
 				54ECA01A22C32DC89AB39DF9BFFD5FB6 /* DeltaCore.bundle */,
-				8DF503EB5BF2CD824792BFD2BBC0992F /* DSDeltaCore */,
+				8DF503EB5BF2CD824792BFD2BBC0992F /* libDSDeltaCore.a */,
 				4A6CEB53419EF6042E06B56676D1DAF8 /* DSDeltaCore.bundle */,
-				85A4BD81985AEDB6D9BA5E50804225D0 /* GBADeltaCore */,
+				85A4BD81985AEDB6D9BA5E50804225D0 /* libGBADeltaCore.a */,
 				30131336E11D11700AC99D314BDC275C /* GBADeltaCore.bundle */,
-				D4C010E8572FAE8B51DFDBF2300ECF30 /* GBCDeltaCore */,
+				D4C010E8572FAE8B51DFDBF2300ECF30 /* libGBCDeltaCore.a */,
 				1F23DBC67505E77BE77552D6D84A3DAA /* GBCDeltaCore.bundle */,
 				FD519882861480B93B563B477CE1FA29 /* libGoogleAPIClientForREST.a */,
 				251C6319AD50CB50F18D50CBF727F8B2 /* libGoogleToolboxForMac.a */,
 				C1998E0D8085221AD87F89B614C10E52 /* libGTMSessionFetcher.a */,
-				DBC0113CF73BE24525E670D024A85BE7 /* Harmony */,
-				4C22C82316853ABB688358B93486CF8E /* MelonDSDeltaCore */,
+				DBC0113CF73BE24525E670D024A85BE7 /* libHarmony.a */,
+				4C22C82316853ABB688358B93486CF8E /* libMelonDSDeltaCore.a */,
 				ECD0868BC2D1CFC2A22DDD56F79CF4B1 /* melonDS.bundle */,
-				C8D6AC695498645EEE4A66FCEF97D848 /* N64DeltaCore */,
+				C8D6AC695498645EEE4A66FCEF97D848 /* libN64DeltaCore.a */,
 				9816EFF6A2268AAEA7B1C19BBE416477 /* Mupen64Plus.bundle */,
-				1E5356E04E92615CFF0666E5987CE594 /* NESDeltaCore */,
+				1E5356E04E92615CFF0666E5987CE594 /* libNESDeltaCore.a */,
 				487C7DB0A7257F16983BEF8324BEF561 /* NESDeltaCore.bundle */,
 				9CA80A61ABF26FA89F4E22A30284B0DD /* libPods-Delta.a */,
-				4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */,
+				4405793D5AF1EFD9D2BDA30AA0D2E514 /* libRoxas.a */,
 				B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */,
 				53A730F4F4248E7E3F38F8409A2DE97C /* libSMCalloutView.a */,
-				FA400832D3E46B39D5EC83D09A7572FC /* SNESDeltaCore */,
+				FA400832D3E46B39D5EC83D09A7572FC /* libSNESDeltaCore.a */,
 				7D751206A951D9727B38F71A2BB990AA /* SNESDeltaCore.bundle */,
 				F5FA45A44C42CC2CA3A324A3E914CE19 /* libSQLite.swift.a */,
 				1CBA76EDD27FA2D20B1EA0F0BF7F082C /* libSwiftyDropbox.a */,
@@ -9974,7 +9974,7 @@
 			);
 			name = NESDeltaCore;
 			productName = NESDeltaCore;
-			productReference = 1E5356E04E92615CFF0666E5987CE594 /* NESDeltaCore */;
+			productReference = 1E5356E04E92615CFF0666E5987CE594 /* libNESDeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		126073BF5D2BF3A4BDD22FE9062C9D20 /* N64DeltaCore */ = {
@@ -9995,7 +9995,7 @@
 			);
 			name = N64DeltaCore;
 			productName = N64DeltaCore;
-			productReference = C8D6AC695498645EEE4A66FCEF97D848 /* N64DeltaCore */;
+			productReference = C8D6AC695498645EEE4A66FCEF97D848 /* libN64DeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		141E2D29C29A1BC1ABA3483321DF3C88 /* SNESDeltaCore */ = {
@@ -10015,7 +10015,7 @@
 			);
 			name = SNESDeltaCore;
 			productName = SNESDeltaCore;
-			productReference = FA400832D3E46B39D5EC83D09A7572FC /* SNESDeltaCore */;
+			productReference = FA400832D3E46B39D5EC83D09A7572FC /* libSNESDeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		1B47E46598F87113B00B3B25BBF51B32 /* DeltaCore-DeltaCore */ = {
@@ -10125,7 +10125,7 @@
 			);
 			name = MelonDSDeltaCore;
 			productName = MelonDSDeltaCore;
-			productReference = 4C22C82316853ABB688358B93486CF8E /* MelonDSDeltaCore */;
+			productReference = 4C22C82316853ABB688358B93486CF8E /* libMelonDSDeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		3F2C1776D90B62B156DB52C41A5C419C /* SQLite.swift */ = {
@@ -10164,7 +10164,7 @@
 			);
 			name = DeltaCore;
 			productName = DeltaCore;
-			productReference = F93477FBF1E4488E506F9BB79AF57D38 /* DeltaCore */;
+			productReference = F93477FBF1E4488E506F9BB79AF57D38 /* libDeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		5B32FEE5AD13CB944235C9158BECB929 /* MelonDSDeltaCore-melonDS */ = {
@@ -10220,7 +10220,7 @@
 			);
 			name = Harmony;
 			productName = Harmony;
-			productReference = DBC0113CF73BE24525E670D024A85BE7 /* Harmony */;
+			productReference = DBC0113CF73BE24525E670D024A85BE7 /* libHarmony.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		6538136F848A07F507372CCFB40CEB88 /* SNESDeltaCore-SNESDeltaCore */ = {
@@ -10257,7 +10257,7 @@
 			);
 			name = GBADeltaCore;
 			productName = GBADeltaCore;
-			productReference = 85A4BD81985AEDB6D9BA5E50804225D0 /* GBADeltaCore */;
+			productReference = 85A4BD81985AEDB6D9BA5E50804225D0 /* libGBADeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		7F839870ECBE0065B4BCC02E5F98F48A /* NESDeltaCore-NESDeltaCore */ = {
@@ -10326,7 +10326,7 @@
 			);
 			name = Roxas;
 			productName = Roxas;
-			productReference = 4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */;
+			productReference = 4405793D5AF1EFD9D2BDA30AA0D2E514 /* libRoxas.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D20492B6476142DCA0C455340876BB98 /* SMCalloutView */ = {
@@ -10415,7 +10415,7 @@
 			);
 			name = GBCDeltaCore;
 			productName = GBCDeltaCore;
-			productReference = D4C010E8572FAE8B51DFDBF2300ECF30 /* GBCDeltaCore */;
+			productReference = D4C010E8572FAE8B51DFDBF2300ECF30 /* libGBCDeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		DCBC8D45C727B1472F26E79661AF11B0 /* DSDeltaCore */ = {
@@ -10435,7 +10435,7 @@
 			);
 			name = DSDeltaCore;
 			productName = DSDeltaCore;
-			productReference = 8DF503EB5BF2CD824792BFD2BBC0992F /* DSDeltaCore */;
+			productReference = 8DF503EB5BF2CD824792BFD2BBC0992F /* libDSDeltaCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E5449403CBE67599315B4D26019FA175 /* DSDeltaCore-DSDeltaCore */ = {
@@ -12011,7 +12011,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/N64DeltaCore/N64DeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/N64DeltaCore/N64DeltaCore.modulemap;
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
@@ -12036,7 +12036,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/MelonDSDeltaCore/MelonDSDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/MelonDSDeltaCore/MelonDSDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12061,7 +12061,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/NESDeltaCore/NESDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/NESDeltaCore/NESDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12085,7 +12085,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = MelonDSDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/MelonDSDeltaCore/ResourceBundle-melonDS-MelonDSDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = melonDS;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12103,7 +12103,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/DSDeltaCore/DSDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/DSDeltaCore/DSDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12128,7 +12128,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/ZIPFoundation/ZIPFoundation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/ZIPFoundation/ZIPFoundation.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12152,7 +12152,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = GBCDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/GBCDeltaCore/ResourceBundle-GBCDeltaCore-GBCDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = GBCDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12194,7 +12194,7 @@
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Delta/Pods-Delta.modulemap";
 				OTHER_LDFLAGS = "";
@@ -12215,7 +12215,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = NESDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/NESDeltaCore/ResourceBundle-NESDeltaCore-NESDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = NESDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12258,7 +12258,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/DSDeltaCore/DSDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/DSDeltaCore/DSDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12328,7 +12328,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -12349,7 +12349,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = NESDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/NESDeltaCore/ResourceBundle-NESDeltaCore-NESDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = NESDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12415,7 +12415,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = DSDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/DSDeltaCore/ResourceBundle-DSDeltaCore-DSDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = DSDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12433,7 +12433,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Roxas/Roxas-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Roxas/Roxas.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12458,7 +12458,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GBADeltaCore/GBADeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GBADeltaCore/GBADeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12484,7 +12484,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/MelonDSDeltaCore/MelonDSDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/MelonDSDeltaCore/MelonDSDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12509,7 +12509,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = N64DeltaCore;
 				INFOPLIST_FILE = "Target Support Files/N64DeltaCore/ResourceBundle-Mupen64Plus-N64DeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = Mupen64Plus;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12527,7 +12527,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Roxas/Roxas-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Roxas/Roxas.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12553,7 +12553,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/N64DeltaCore/N64DeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/N64DeltaCore/N64DeltaCore.modulemap;
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
@@ -12619,7 +12619,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -12663,7 +12663,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Alamofire/Alamofire.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12689,7 +12689,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SNESDeltaCore/SNESDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SNESDeltaCore/SNESDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12712,7 +12712,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12732,7 +12732,7 @@
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Delta/Pods-Delta.modulemap";
 				OTHER_LDFLAGS = "";
@@ -12779,7 +12779,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = MelonDSDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/MelonDSDeltaCore/ResourceBundle-melonDS-MelonDSDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = melonDS;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12819,7 +12819,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12861,7 +12861,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = SNESDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/SNESDeltaCore/ResourceBundle-SNESDeltaCore-SNESDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = SNESDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12876,7 +12876,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12895,7 +12895,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = SNESDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/SNESDeltaCore/ResourceBundle-SNESDeltaCore-SNESDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = SNESDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12913,7 +12913,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GBADeltaCore/GBADeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GBADeltaCore/GBADeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12938,7 +12938,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/NESDeltaCore/NESDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/NESDeltaCore/NESDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12962,7 +12962,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Harmony/Harmony-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Harmony/Harmony.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12987,7 +12987,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SQLite/SQLite.swift.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13011,7 +13011,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = GBCDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/GBCDeltaCore/ResourceBundle-GBCDeltaCore-GBCDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = GBCDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13028,7 +13028,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = DeltaCore;
 				INFOPLIST_FILE = "Target Support Files/DeltaCore/ResourceBundle-DeltaCore-DeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = DeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13045,7 +13045,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = N64DeltaCore;
 				INFOPLIST_FILE = "Target Support Files/N64DeltaCore/ResourceBundle-Mupen64Plus-N64DeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = Mupen64Plus;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13063,7 +13063,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GBCDeltaCore/GBCDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GBCDeltaCore/GBCDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13088,7 +13088,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = GBADeltaCore;
 				INFOPLIST_FILE = "Target Support Files/GBADeltaCore/ResourceBundle-GBADeltaCore-GBADeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = GBADeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13106,7 +13106,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SNESDeltaCore/SNESDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SNESDeltaCore/SNESDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13130,7 +13130,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyDropbox/SwiftyDropbox-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SwiftyDropbox/SwiftyDropbox.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13155,7 +13155,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Harmony/Harmony-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Harmony/Harmony.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13179,7 +13179,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/ZIPFoundation/ZIPFoundation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/ZIPFoundation/ZIPFoundation.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13205,7 +13205,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/DeltaCore/DeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/DeltaCore/DeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13228,7 +13228,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Alamofire/Alamofire.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13252,7 +13252,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = DeltaCore;
 				INFOPLIST_FILE = "Target Support Files/DeltaCore/ResourceBundle-DeltaCore-DeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = DeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13269,7 +13269,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = DSDeltaCore;
 				INFOPLIST_FILE = "Target Support Files/DSDeltaCore/ResourceBundle-DSDeltaCore-DSDeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = DSDeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13284,7 +13284,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13303,7 +13303,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/DeltaCore/DeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/DeltaCore/DeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13327,7 +13327,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SQLite/SQLite.swift.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13369,7 +13369,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GBCDeltaCore/GBCDeltaCore-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GBCDeltaCore/GBCDeltaCore.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13393,7 +13393,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyDropbox/SwiftyDropbox-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SwiftyDropbox/SwiftyDropbox.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13418,7 +13418,7 @@
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				IBSC_MODULE = GBADeltaCore;
 				INFOPLIST_FILE = "Target Support Files/GBADeltaCore/ResourceBundle-GBADeltaCore-GBADeltaCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = GBADeltaCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
