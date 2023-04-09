@@ -66,17 +66,14 @@ extension CheatsViewController
         
         self.registerForPreviewing(with: self, sourceView: self.tableView)
         
-        if #available(iOS 14, *)
-        {
-            self.updateAddCheatMenu()
-        }
+        self.updateAddCheatMenu()
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
-        if #available(iOS 14, *), self.cheatBaseCheats == nil
+        if self.cheatBaseCheats == nil
         {
             self.fetchCheatBaseCheats()
         }
@@ -111,7 +108,7 @@ private extension CheatsViewController
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
     }
     
-    @available(iOS 14, *) @MainActor
+    @MainActor
     func updateAddCheatMenu()
     {
         // CheatBase only contains DS cheats for now, so hide option completely for other systems.
@@ -153,7 +150,6 @@ private extension CheatsViewController
         editCheatViewController.presentWithPresentingViewController(self)
     }
     
-    @available(iOS 14, *)
     func fetchCheatBaseCheats()
     {
         Task {
@@ -172,7 +168,6 @@ private extension CheatsViewController
         }
     }
     
-    @available(iOS 14, *)
     func searchCheatBase()
     {
         var rootView = CheatBaseView(game: self.game, cheats: self.cheatBaseCheats)

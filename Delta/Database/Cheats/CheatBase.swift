@@ -67,7 +67,6 @@ extension Table
     }
 }
 
-@available(iOS 14, *)
 class CheatBase: GamesDatabase
 {
     static let cheatsVersion = 1

@@ -143,11 +143,7 @@ private extension ControllersSettingsViewController
         cell.detailTextLabel?.text = nil
         cell.tintColor = UIColor.themeColor
         
-        if #available(iOS 13.0, *) {
-            cell.textLabel?.textColor = .label
-        } else {
-            cell.textLabel?.textColor = .darkText
-        }
+        cell.textLabel?.textColor = .label
         
         switch Section(rawValue: indexPath.section)!
         {

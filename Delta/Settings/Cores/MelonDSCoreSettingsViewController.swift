@@ -29,7 +29,6 @@ private extension MelonDSCoreSettingsViewController
         case changeCore
     }
     
-    @available(iOS 13, *)
     enum BIOSError: LocalizedError
     {
         case unknownSize(URL)
@@ -203,12 +202,9 @@ private extension MelonDSCoreSettingsViewController
         }
         
         let documentPicker = UIDocumentPickerViewController(documentTypes: supportedTypes, in: .import)
-        documentPicker.delegate = self
         
-        if #available(iOS 13.0, *)
-        {
-            documentPicker.overrideUserInterfaceStyle = .dark
-        }
+        documentPicker.delegate = self
+        documentPicker.overrideUserInterfaceStyle = .dark
         
         self.present(documentPicker, animated: true, completion: nil)
     }
@@ -482,32 +478,29 @@ extension MelonDSCoreSettingsViewController: UIDocumentPickerDelegate
         
         do
         {
-            if #available(iOS 13.0, *)
+            // Validate file size first (since that's easiest for users to understand).
+            
+            let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
+            guard let fileSize = attributes[.size] as? Int else { throw BIOSError.unknownSize(fileURL) }
+            
+            let measurement = Measurement<UnitInformationStorage>(value: Double(fileSize), unit: .bytes)
+            guard bios.validFileSizes.contains(where: { $0.contains(measurement) }) else { throw BIOSError.incorrectSize(fileURL, size: fileSize, validSizes: bios.validFileSizes) }
+            
+            if bios.expectedMD5Hash != nil || !bios.unsupportedMD5Hashes.isEmpty
             {
-                // Validate file size first (since that's easiest for users to understand).
+                // Only calculate hash if we need to.
                 
-                let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
-                guard let fileSize = attributes[.size] as? Int else { throw BIOSError.unknownSize(fileURL) }
+                let data = try Data(contentsOf: fileURL)
                 
-                let measurement = Measurement<UnitInformationStorage>(value: Double(fileSize), unit: .bytes)
-                guard bios.validFileSizes.contains(where: { $0.contains(measurement) }) else { throw BIOSError.incorrectSize(fileURL, size: fileSize, validSizes: bios.validFileSizes) }
+                let md5Hash = Insecure.MD5.hash(data: data)
+                let hashString = md5Hash.compactMap { String(format: "%02x", $0) }.joined()
                 
-                if bios.expectedMD5Hash != nil || !bios.unsupportedMD5Hashes.isEmpty
+                if let expectedMD5Hash = bios.expectedMD5Hash
                 {
-                    // Only calculate hash if we need to.
-                    
-                    let data = try Data(contentsOf: fileURL)
-                    
-                    let md5Hash = Insecure.MD5.hash(data: data)
-                    let hashString = md5Hash.compactMap { String(format: "%02x", $0) }.joined()
-                    
-                    if let expectedMD5Hash = bios.expectedMD5Hash
-                    {
-                        guard hashString == expectedMD5Hash else { throw BIOSError.incorrectHash(fileURL, hash: hashString, expectedHash: expectedMD5Hash) }
-                    }
-                    
-                    guard !bios.unsupportedMD5Hashes.contains(hashString) else { throw BIOSError.unsupportedHash(fileURL, hash: hashString) }
+                    guard hashString == expectedMD5Hash else { throw BIOSError.incorrectHash(fileURL, hash: hashString, expectedHash: expectedMD5Hash) }
                 }
+                
+                guard !bios.unsupportedMD5Hashes.contains(hashString) else { throw BIOSError.unsupportedHash(fileURL, hash: hashString) }
             }
             
             try FileManager.default.copyItem(at: fileURL, to: bios.fileURL, shouldReplace: true)

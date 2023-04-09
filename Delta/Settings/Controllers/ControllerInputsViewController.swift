@@ -67,7 +67,7 @@ class ControllerInputsViewController: UIViewController
         
         self.gameViewController.controllerView.addReceiver(self)
         
-        if let navigationController = self.navigationController, #available(iOS 13, *)
+        if let navigationController = self.navigationController
         {
             navigationController.overrideUserInterfaceStyle = .dark
             navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance // Fixes invisible navigation bar on iPad.
@@ -213,10 +213,7 @@ private extension ControllerInputsViewController
         listMenuViewController.title = NSLocalizedString("Game System", comment: "")
         
         let navigationController = UINavigationController(rootViewController: listMenuViewController)
-        if #available(iOS 13, *)
-        {
-            navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
-        }
+        navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
         
         let popoverMenuController = PopoverMenuController(popoverViewController: navigationController)
         self.navigationItem.popoverMenuController = popoverMenuController

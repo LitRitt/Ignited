@@ -19,7 +19,6 @@ protocol SystemBIOS
     var unsupportedMD5Hashes: Set<String> { get }
     
     // RangeSet would be preferable, but it's not in Swift stdlib yet.
-    @available(iOS 13, *)
     var validFileSizes: Set<ClosedRange<Measurement<UnitInformationStorage>>> { get }
 }
 
@@ -62,7 +61,6 @@ enum DSBIOS: SystemBIOS, CaseIterable
         }
     }
     
-    @available(iOS 13, *)
     var validFileSizes: Set<ClosedRange<Measurement<UnitInformationStorage>>> {
         // From http://melonds.kuribo64.net/faq.php
         switch self
@@ -120,7 +118,6 @@ enum DSiBIOS: SystemBIOS, CaseIterable
         }
     }
     
-    @available(iOS 13, *)
     var validFileSizes: Set<ClosedRange<Measurement<UnitInformationStorage>>> {
         // From http://melonds.kuribo64.net/faq.php
         switch self

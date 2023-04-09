@@ -124,11 +124,7 @@ private extension AppIconShortcutsViewController
     
     func configureGameCell(_ cell: GameTableViewCell, with game: Game, for indexPath: IndexPath)
     {        
-        if #available(iOS 13.0, *) {
-            cell.nameLabel?.textColor = .label
-        } else {
-            cell.nameLabel?.textColor = .darkText
-        }
+        cell.nameLabel?.textColor = .label
                 
         cell.nameLabel.text = game.name
         cell.artworkImageView.image = #imageLiteral(resourceName: "NES")

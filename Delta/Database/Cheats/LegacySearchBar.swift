@@ -9,7 +9,6 @@
 import UIKit
 import SwiftUI
 
-@available(iOS 13, *)
 struct LegacySearchBar: UIViewRepresentable
 {
     class Coordinator: NSObject, UISearchBarDelegate

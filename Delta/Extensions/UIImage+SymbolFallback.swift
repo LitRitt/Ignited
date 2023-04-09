@@ -12,13 +12,6 @@ extension UIImage
 {
     convenience init?(symbolNameIfAvailable name: String)
     {
-        if #available(iOS 13, *)
-        {
-            self.init(systemName: name)
-        }
-        else
-        {
-            return nil
-        }
+        self.init(systemName: name)
     }
 }

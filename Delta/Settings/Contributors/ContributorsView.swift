@@ -9,7 +9,6 @@
 import SwiftUI
 import SafariServices
 
-@available(iOS 14, *)
 private extension NavigationLink where Label == EmptyView, Destination == EmptyView
 {
     // Copied from https://stackoverflow.com/a/66891173
@@ -18,7 +17,6 @@ private extension NavigationLink where Label == EmptyView, Destination == EmptyV
     }
 }
 
-@available(iOS 14, *)
 extension ContributorsView
 {
     fileprivate class ViewModel: ObservableObject
@@ -67,7 +65,6 @@ extension ContributorsView
     }
 }
 
-@available(iOS 14, *)
 struct ContributorsView: View
 {
     @StateObject
@@ -132,7 +129,6 @@ struct ContributorsView: View
     }
 }
 
-@available(iOS 14, *)
 struct ContributionCell: View
 {
     var name: Text
@@ -186,7 +182,6 @@ struct ContributionCell: View
     }
 }
 
-@available(iOS 14, *)
 private extension ContributorsView
 {
     func openURL(_ url: URL)

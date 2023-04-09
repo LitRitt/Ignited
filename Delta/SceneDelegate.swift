@@ -11,7 +11,7 @@ import UIKit
 import DeltaCore
 import Harmony
 
-@objc(SceneDelegate) @available(iOS 13, *)
+@objc(SceneDelegate)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate
 {
     var window: UIWindow? {
@@ -88,7 +88,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
     }
 }
 
-@available(iOS 13, *)
 extension SceneDelegate
 {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
@@ -104,7 +103,6 @@ extension SceneDelegate
     }
 }
 
-@available(iOS 13, *)
 private extension SceneDelegate
 {
     func handle(_ deepLink: DeepLink)

@@ -255,7 +255,7 @@ private extension DatabaseManager
                     try FileManager.default.copyItem(at: bundleURL, to: DatabaseManager.gamesDatabaseURL, shouldReplace: true)
                 }
                 
-                if #available(iOS 14, *), !FileManager.default.fileExists(atPath: DatabaseManager.cheatBaseURL.path) || CheatBase.cheatsVersion != CheatBase.previousCheatsVersion
+                if !FileManager.default.fileExists(atPath: DatabaseManager.cheatBaseURL.path) || CheatBase.cheatsVersion != CheatBase.previousCheatsVersion
                 {
                     guard let archiveURL = Bundle.main.url(forResource: "cheatbase", withExtension: "zip") else { throw GamesDatabase.Error.doesNotExist }
                     

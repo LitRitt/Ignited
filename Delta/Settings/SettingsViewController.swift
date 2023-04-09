@@ -366,29 +366,7 @@ private extension SettingsViewController
     {
         switch section
         {
-        case .hapticTouch:
-            if #available(iOS 13, *)
-            {
-                // All devices on iOS 13 support either 3D touch or Haptic Touch.
-                return false
-            }
-            else
-            {
-                return self.view.traitCollection.forceTouchCapability != .available
-            }
-            
-        case .updates:
-            if #unavailable(iOS 14)
-            {
-                return true
-            }
-            else
-            {
-                return false
-            }
-            
         case .hapticFeedback: return self.view.traitCollection.userInterfaceIdiom == .pad
-            
         default: return false
         }
     }
@@ -736,14 +714,12 @@ private extension SettingsViewController
         }
     }
     
-    @available(iOS 14, *)
     func showUpdates()
     {
         let hostingController = UpdatesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    @available(iOS 14, *)
     func showContributors()
     {
         let hostingController = ContributorsView.makeViewController()
@@ -1033,44 +1009,12 @@ extension SettingsViewController
             switch row
             {
             case .developer: self.openHomePage()
-            case .contributors:
-                guard #available(iOS 14, *) else { return }
-                self.showContributors()
-                
+            case .contributors: self.showContributors()
             case .softwareLicenses: break
             }
             
-        case .updates:
-            guard #available(iOS 14, *) else { return }
-            self.showUpdates()
+        case .updates: self.showUpdates()
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-    primary:
-        switch Section(rawValue: indexPath.section)!
-        {
-        case .credits:
-            let row = CreditsRow(rawValue: indexPath.row)!
-            switch row
-            {
-            case .contributors:
-                // Hide row on iOS 13 and below
-                guard #unavailable(iOS 14) else { break primary }
-                return 0.0
-                
-            default: break
-            }
-            
-        case .updates:
-            guard #unavailable(iOS 14) else { break primary }
-            return 0.0
-            
-        default: break
-        }
-        
-        return super.tableView(tableView, heightForRowAt: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?

@@ -146,15 +146,6 @@ extension GameCollectionViewController
         self.collectionView?.prefetchDataSource = self.dataSource
         self.collectionView?.delegate = self
         
-        if #available(iOS 13, *) {}
-        else
-        {
-            self.registerForPreviewing(with: self, sourceView: self.collectionView!)
-            
-            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(GameCollectionViewController.handleLongPressGesture(_:)))
-            self.collectionView?.addGestureRecognizer(longPressGestureRecognizer)
-        }
-        
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.settingsDidChange(_:)), name: .settingsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.resumeCurrentGame), name: .resumePlaying, object: nil)
         
@@ -1215,7 +1206,6 @@ extension GameCollectionViewController: UICollectionViewDelegateFlowLayout
     }
 }
 
-@available(iOS 13.0, *)
 extension GameCollectionViewController
 {
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?

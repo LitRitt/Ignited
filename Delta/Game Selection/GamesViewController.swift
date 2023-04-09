@@ -126,46 +126,31 @@ extension GamesViewController
         
         if let navigationController = self.navigationController
         {
-            if #available(iOS 13.0, *)
+            navigationController.overrideUserInterfaceStyle = .dark
+                
+            let navigationBarAppearance = navigationController.navigationBar.standardAppearance.copy()
+            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .dark)
+            navigationController.navigationBar.standardAppearance = navigationBarAppearance
+            navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            
+            let toolbarAppearance = navigationController.toolbar.standardAppearance.copy()
+            toolbarAppearance.backgroundEffect = UIBlurEffect(style: .dark)
+            navigationController.toolbar.standardAppearance = toolbarAppearance
+            
+            if #available(iOS 15, *)
             {
-                navigationController.overrideUserInterfaceStyle = .dark
-                
-                let navigationBarAppearance = navigationController.navigationBar.standardAppearance.copy()
-                navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .dark)
-                navigationController.navigationBar.standardAppearance = navigationBarAppearance
-                navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-                
-                let toolbarAppearance = navigationController.toolbar.standardAppearance.copy()
-                toolbarAppearance.backgroundEffect = UIBlurEffect(style: .dark)
-                navigationController.toolbar.standardAppearance = toolbarAppearance
-                
-                if #available(iOS 15, *)
-                {
-                    navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance
-                }
+                navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance
             }
-            else
-            {
-                navigationController.navigationBar.barStyle = .blackTranslucent
-                navigationController.toolbar.barStyle = .blackTranslucent
-            }            
         }
         
-        if #available(iOS 14, *)
-        {
-            self.importController.presentingViewController = self
-            
-            let importActions = self.importController.makeActions().menuActions
-            let importMenu = UIMenu(title: NSLocalizedString("Import From…", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: importActions)
-            self.importButton.menu = importMenu
+        self.importController.presentingViewController = self
+        
+        let importActions = self.importController.makeActions().menuActions
+        let importMenu = UIMenu(title: NSLocalizedString("Import From…", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: importActions)
+        self.importButton.menu = importMenu
 
-            self.importButton.action = nil
-            self.importButton.target = nil
-        }
-        else
-        {
-            self.importController.barButtonItem = self.importButton
-        }
+        self.importButton.action = nil
+        self.importButton.target = nil
         
         self.prepareSearchController()
         

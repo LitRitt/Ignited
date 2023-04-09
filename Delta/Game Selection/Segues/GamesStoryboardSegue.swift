@@ -107,26 +107,13 @@ extension GamesStoryboardSegue: UIViewControllerAnimatedTransitioning
                     topToolbar.barStyle = navigationController.toolbar.barStyle
                     transitionContext.destinationView.insertSubview(topToolbar, at: 1)
                     
-                    if #available(iOS 13, *)
-                    {
-                        let appearance = UIToolbarAppearance(barAppearance: navigationController.navigationBar.standardAppearance)
-                        topToolbar.standardAppearance = appearance
-                        
-                        topToolbar.topAnchor.constraint(equalTo: topViewController.view.topAnchor, constant: -padding).isActive = true
-                        topToolbar.leftAnchor.constraint(equalTo: topViewController.view.leftAnchor, constant: -padding).isActive = true
-                        topToolbar.rightAnchor.constraint(equalTo: topViewController.view.rightAnchor, constant: padding).isActive = true
-                        topToolbar.bottomAnchor.constraint(equalTo: topViewController.view.safeAreaLayoutGuide.topAnchor).isActive = true
-                    }
-                    else
-                    {
-                        topToolbar.topAnchor.constraint(equalTo: navigationController.navigationBar.topAnchor, constant: -padding).isActive = true
-                        topToolbar.leftAnchor.constraint(equalTo: navigationController.navigationBar.leftAnchor, constant: -padding).isActive = true
-                        topToolbar.rightAnchor.constraint(equalTo: navigationController.navigationBar.rightAnchor, constant: padding).isActive = true
-                        
-                        // There is no easy way to determine the extra height necessary at this point of the transition, so hard code for now.
-                        let additionalSearchBarHeight = 44 as CGFloat
-                        topToolbar.heightAnchor.constraint(equalToConstant: navigationController.topViewController!.view.safeAreaInsets.top + additionalSearchBarHeight).isActive = true
-                    }
+                    let appearance = UIToolbarAppearance(barAppearance: navigationController.navigationBar.standardAppearance)
+                    topToolbar.standardAppearance = appearance
+                    
+                    topToolbar.topAnchor.constraint(equalTo: topViewController.view.topAnchor, constant: -padding).isActive = true
+                    topToolbar.leftAnchor.constraint(equalTo: topViewController.view.leftAnchor, constant: -padding).isActive = true
+                    topToolbar.rightAnchor.constraint(equalTo: topViewController.view.rightAnchor, constant: padding).isActive = true
+                    topToolbar.bottomAnchor.constraint(equalTo: topViewController.view.safeAreaLayoutGuide.topAnchor).isActive = true
                     
                     topPaddingToolbar = topToolbar
                 }
@@ -138,23 +125,13 @@ extension GamesStoryboardSegue: UIViewControllerAnimatedTransitioning
                     bottomToolbar.barStyle = navigationController.toolbar.barStyle
                     transitionContext.destinationView.insertSubview(bottomToolbar, belowSubview: navigationController.navigationBar)
                     
-                    if #available(iOS 13, *)
-                    {
-                        let appearance = UIToolbarAppearance(barAppearance: navigationController.toolbar.standardAppearance)
-                        bottomToolbar.standardAppearance = appearance
-                        
-                        bottomToolbar.topAnchor.constraint(equalTo: topViewController.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-                        bottomToolbar.bottomAnchor.constraint(equalTo: topViewController.view.bottomAnchor, constant: padding).isActive = true
-                        bottomToolbar.leftAnchor.constraint(equalTo: topViewController.view.leftAnchor, constant: -padding).isActive = true
-                        bottomToolbar.rightAnchor.constraint(equalTo: topViewController.view.rightAnchor, constant: padding).isActive = true
-                    }
-                    else
-                    {
-                        bottomToolbar.topAnchor.constraint(equalTo: navigationController.toolbar.topAnchor).isActive = true
-                        bottomToolbar.bottomAnchor.constraint(equalTo: navigationController.toolbar.bottomAnchor, constant: padding).isActive = true
-                        bottomToolbar.leftAnchor.constraint(equalTo: navigationController.toolbar.leftAnchor, constant: -padding).isActive = true
-                        bottomToolbar.rightAnchor.constraint(equalTo: navigationController.toolbar.rightAnchor, constant: padding).isActive = true
-                    }
+                    let appearance = UIToolbarAppearance(barAppearance: navigationController.toolbar.standardAppearance)
+                    bottomToolbar.standardAppearance = appearance
+                    
+                    bottomToolbar.topAnchor.constraint(equalTo: topViewController.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+                    bottomToolbar.bottomAnchor.constraint(equalTo: topViewController.view.bottomAnchor, constant: padding).isActive = true
+                    bottomToolbar.leftAnchor.constraint(equalTo: topViewController.view.leftAnchor, constant: -padding).isActive = true
+                    bottomToolbar.rightAnchor.constraint(equalTo: topViewController.view.rightAnchor, constant: padding).isActive = true
                     
                     bottomPaddingToolbar = bottomToolbar
                 }

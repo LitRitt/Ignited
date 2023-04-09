@@ -10,7 +10,6 @@ import SwiftUI
 
 import enum SQLite.Result
 
-@available(iOS 14, *)
 extension CheatBaseView
 {
     private class ViewModel: ObservableObject
@@ -78,7 +77,6 @@ extension CheatBaseView
     }
 }
 
-@available(iOS 14, *)
 struct CheatBaseView: View
 {
     let game: Game?
@@ -263,7 +261,6 @@ struct CheatBaseView: View
     }
 }
 
-@available(iOS 14, *)
 private extension CheatBaseView
 {
     func choose(_ cheatMetadata: CheatMetadata)

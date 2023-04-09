@@ -117,15 +117,6 @@ extension SaveStatesViewController
         
         self.prepareEmulatorCoreSaveState()
         
-        if #available(iOS 13, *) {}
-        else
-        {
-            self.registerForPreviewing(with: self, sourceView: self.collectionView!)
-            
-            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(SaveStatesViewController.handleLongPressGesture(_:)))
-            self.collectionView?.addGestureRecognizer(longPressGestureRecognizer)
-        }
-        
         self.navigationController?.navigationBar.barStyle = .blackTranslucent
         self.navigationController?.toolbar.barStyle = .blackTranslucent
         
@@ -437,16 +428,7 @@ private extension SaveStatesViewController
     
     func updatePreviewSaveState(_ saveState: SaveState?)
     {
-        let message: String
-        
-        if #available(iOS 13, *)
-        {
-            message = NSLocalizedString("The Preview Save State is loaded whenever you long press this game from the Main Menu. Are you sure you want to change it?", comment: "")
-        }
-        else
-        {
-            message = NSLocalizedString("The Preview Save State is loaded whenever you 3D Touch this game from the Main Menu. Are you sure you want to change it?", comment: "")
-        }
+        let message = NSLocalizedString("The Preview Save State is loaded whenever you long press this game from the Main Menu. Are you sure you want to change it?", comment: "")
         
         let alertController = UIAlertController(title: NSLocalizedString("Change Preview Save State?", comment: ""), message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
@@ -526,35 +508,21 @@ private extension SaveStatesViewController
     {
         guard saveState.type != .auto && saveState.type != .rewind else { return nil }
         
-        let isPreviewAvailable: Bool
+        var actions = [Action]()
         
-        if #available(iOS 13, *)
+        if saveState.game?.previewSaveState != saveState
         {
-            isPreviewAvailable = true
+            let previewAction = Action(title: NSLocalizedString("Set as Preview Save State", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "eye.fill"), action: { [unowned self] action in
+                self.updatePreviewSaveState(saveState)
+            })
+            actions.append(previewAction)
         }
         else
         {
-            isPreviewAvailable = (self.traitCollection.forceTouchCapability == .available)
-        }
-        
-        var actions = [Action]()
-        
-        if isPreviewAvailable
-        {
-            if saveState.game?.previewSaveState != saveState
-            {
-                let previewAction = Action(title: NSLocalizedString("Set as Preview Save State", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "eye.fill"), action: { [unowned self] action in
-                    self.updatePreviewSaveState(saveState)
-                })
-                actions.append(previewAction)
-            }
-            else
-            {
-                let previewAction = Action(title: NSLocalizedString("Remove as Preview Save State", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "eye.slash.fill"), action: { [unowned self] action in
-                    self.updatePreviewSaveState(nil)
-                })
-                actions.append(previewAction)
-            }
+            let previewAction = Action(title: NSLocalizedString("Remove as Preview Save State", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "eye.slash.fill"), action: { [unowned self] action in
+                self.updatePreviewSaveState(nil)
+            })
+            actions.append(previewAction)
         }
         
         let cancelAction = Action(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, action: nil)
@@ -792,7 +760,6 @@ extension SaveStatesViewController: UICollectionViewDelegateFlowLayout
     }
 }
 
-@available(iOS 13.0, *)
 extension SaveStatesViewController
 {
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
