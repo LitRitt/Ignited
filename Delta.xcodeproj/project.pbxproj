@@ -36,6 +36,8 @@
 		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
 		AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F6029B2C0F4005B27DD /* UpdatesView.swift */; };
 		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
+		AC53406229E32B70009EDF08 /* 8bit.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406129E32B70009EDF08 /* 8bit.caf */; };
+		AC53406429E33098009EDF08 /* snap.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406329E33097009EDF08 /* snap.caf */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC8E5BCA29CCF77700F32D19 /* UIColor+Adjust.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */; };
 		BF00BEA625B758AA00C8607D /* SystemBIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00BEA525B758AA00C8607D /* SystemBIOS.swift */; };
@@ -217,6 +219,8 @@
 		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		AC503F6029B2C0F4005B27DD /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
+		AC53406129E32B70009EDF08 /* 8bit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 8bit.caf; sourceTree = "<group>"; };
+		AC53406329E33097009EDF08 /* snap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = snap.caf; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
 		AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Adjust.swift"; sourceTree = "<group>"; };
 		BF00BEA525B758AA00C8607D /* SystemBIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemBIOS.swift; sourceTree = "<group>"; };
@@ -436,6 +440,15 @@
 				AC503F6029B2C0F4005B27DD /* UpdatesView.swift */,
 			);
 			path = Updates;
+			sourceTree = "<group>";
+		};
+		AC53406029E32139009EDF08 /* Button Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				AC53406329E33097009EDF08 /* snap.caf */,
+				AC53406129E32B70009EDF08 /* 8bit.caf */,
+			);
+			path = "Button Sounds";
 			sourceTree = "<group>";
 		};
 		BF090CEE1B490C1A00DCAB45 /* Extensions */ = {
@@ -908,6 +921,7 @@
 		BFFA71DA1AAC406100EE9DD1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AC53406029E32139009EDF08 /* Button Sounds */,
 				BF090CF11B490D8300DCAB45 /* Delta-Bridging-Header.h */,
 				BF27CC861BC9E3C600A20D89 /* Delta.entitlements */,
 				BFFA71DB1AAC406100EE9DD1 /* Info.plist */,
@@ -1067,11 +1081,13 @@
 			files = (
 				D5D797E9298DCC7300738869 /* cheatbase.zip in Resources */,
 				BFFA71E21AAC406100EE9DD1 /* Main.storyboard in Resources */,
+				AC53406429E33098009EDF08 /* snap.caf in Resources */,
 				BF6BF3211EB82362008E83CD /* GamesDatabase.storyboard in Resources */,
 				BFAB9F88219A4B670080EC7D /* GoogleService-Info.plist in Resources */,
 				BF3540001C5DA3C500C1184C /* PausePresentationControllerContentView.xib in Resources */,
 				BF5E7F461B9A652600AE44F8 /* Settings.storyboard in Resources */,
 				BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */,
+				AC53406229E32B70009EDF08 /* 8bit.caf in Resources */,
 				AC503F6329B2C709005B27DD /* Updates.plist in Resources */,
 				D53415A7298C78BC00FD67B1 /* Contributors.plist in Resources */,
 				BF71CF8A1FE904B1001F1613 /* GameTableViewCell.xib in Resources */,

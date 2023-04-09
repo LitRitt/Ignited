@@ -43,6 +43,8 @@ extension Settings
         case isThumbstickHapticFeedbackEnabled
         case isClickyHapticEnabled
         case hapticFeedbackStrength
+        case isButtonAudioFeedbackEnabled
+        case buttonAudioFeedbackSound
         case isButtonTouchOverlayEnabled
         case touchOverlayOpacity
         case touchOverlaySize
@@ -83,10 +85,18 @@ extension Settings
         case mint
     }
     
-    enum ArtworkSize: String{
+    enum ArtworkSize: String
+    {
         case small
         case medium
         case large
+    }
+    
+    enum ButtonSoundMode: String
+    {
+        case system
+        case snappy
+        case bit8
     }
 }
 
@@ -98,6 +108,7 @@ struct Settings
                         #keyPath(UserDefaults.gameArtworkSize): ArtworkSize.medium.rawValue,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
+                        #keyPath(UserDefaults.buttonAudioFeedbackSound): ButtonSoundMode.system.rawValue,
                         #keyPath(UserDefaults.isButtonHapticFeedbackEnabled): UIDevice.current.userInterfaceIdiom != .pad,
                         #keyPath(UserDefaults.isThumbstickHapticFeedbackEnabled): UIDevice.current.userInterfaceIdiom != .pad,
                         #keyPath(UserDefaults.isClickyHapticEnabled): UIDevice.current.userInterfaceIdiom != .pad,
@@ -112,6 +123,7 @@ struct Settings
                         #keyPath(UserDefaults.autoLoadSave): true,
                         #keyPath(UserDefaults.showToastNotifications): true,
                         #keyPath(UserDefaults.respectSilentMode): true,
+                        #keyPath(UserDefaults.isButtonAudioFeedbackEnabled): false,
                         #keyPath(UserDefaults.isRewindEnabled): true,
                         #keyPath(UserDefaults.rewindTimerInterval): 15,
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
@@ -278,6 +290,28 @@ extension Settings
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.hapticFeedbackStrength])
         }
         get { return UserDefaults.standard.hapticFeedbackStrength }
+    }
+    
+    static var isButtonAudioFeedbackEnabled: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.isButtonAudioFeedbackEnabled
+            return isEnabled
+        }
+        set {
+            UserDefaults.standard.isButtonAudioFeedbackEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonAudioFeedbackEnabled])
+        }
+    }
+    
+    static var buttonAudioFeedbackSound: ButtonSoundMode {
+        set {
+            UserDefaults.standard.buttonAudioFeedbackSound = newValue.rawValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.buttonAudioFeedbackSound])
+        }
+        get {
+            let size = ButtonSoundMode(rawValue: UserDefaults.standard.buttonAudioFeedbackSound) ?? .system
+            return size
+        }
     }
     
     static var isButtonTouchOverlayEnabled: Bool {
@@ -690,6 +724,9 @@ private extension UserDefaults
     @NSManaged var isThumbstickHapticFeedbackEnabled: Bool
     @NSManaged var isClickyHapticEnabled: Bool
     @NSManaged var hapticFeedbackStrength: CGFloat
+    
+    @NSManaged var isButtonAudioFeedbackEnabled: Bool
+    @NSManaged var buttonAudioFeedbackSound: String
     
     @NSManaged var isButtonTouchOverlayEnabled: Bool
     @NSManaged var isTouchOverlayThemeEnabled: Bool

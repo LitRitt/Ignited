@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 import DeltaCore
 import GBADeltaCore
@@ -699,6 +700,8 @@ private extension GameViewController
         self.controllerView.isClickyHapticEnabled = Settings.isClickyHapticEnabled
         self.controllerView.hapticFeedbackStrength = Settings.hapticFeedbackStrength
         
+        self.controllerView.isButtonAudioFeedbackEnabled = Settings.isButtonAudioFeedbackEnabled
+        
         self.controllerView.isButtonTouchOverlayEnabled = Settings.isButtonTouchOverlayEnabled
         self.controllerView.touchOverlayOpacity = Settings.touchOverlayOpacity
         self.controllerView.touchOverlaySize = Settings.touchOverlaySize
@@ -709,6 +712,25 @@ private extension GameViewController
         
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
+        
+        self.updateButtonAudioFeedbackSound()
+    }
+    
+    func updateButtonAudioFeedbackSound()
+    {
+        let buttonSoundURL: URL
+        switch Settings.buttonAudioFeedbackSound
+        {
+        case .system: buttonSoundURL = URL(fileURLWithPath: "/System/Library/Audio/UISounds/Tock.caf")
+        case .snappy: buttonSoundURL = Bundle.main.url(forResource: "snap", withExtension: "caf")!
+        case .bit8: buttonSoundURL = Bundle.main.url(forResource: "8bit", withExtension: "caf")!
+        }
+        self.controllerView.buttonPressedSoundURL = buttonSoundURL
+    }
+    
+    func playButtonAudioFeedbackSound()
+    {
+        AudioServicesPlaySystemSound(self.controllerView.buttonPressedSoundID)
     }
     
     func updateControllerSkin()
@@ -1498,7 +1520,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .isButtonTouchOverlayEnabled, .isTouchOverlayThemeEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .isButtonTouchOverlayEnabled, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -1526,6 +1548,10 @@ private extension GameViewController
             
         case .respectSilentMode:
             self.updateAudio()
+            
+        case .buttonAudioFeedbackSound:
+            self.updateControllers()
+            self.playButtonAudioFeedbackSound()
             
         case .syncingService, .isAltJITEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .fastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave: break
         }
