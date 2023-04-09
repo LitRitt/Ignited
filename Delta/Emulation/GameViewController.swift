@@ -1498,7 +1498,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .isButtonTouchOverlayEnabled, .isTouchOverlayThemeEnabled:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -1514,6 +1514,15 @@ private extension GameViewController
             
         case .translucentControllerSkinOpacity:
             self.controllerView.translucentControllerSkinOpacity = Settings.translucentControllerSkinOpacity
+            
+        case .hapticFeedbackStrength:
+            self.controllerView.hapticFeedbackStrength = Settings.hapticFeedbackStrength
+            
+        case .touchOverlayOpacity:
+            self.controllerView.touchOverlayOpacity = Settings.touchOverlayOpacity
+            
+        case .touchOverlaySize:
+            self.controllerView.touchOverlaySize = Settings.touchOverlaySize
             
         case .respectSilentMode:
             self.updateAudio()
