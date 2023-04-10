@@ -3,7 +3,7 @@
 //  Delta
 //
 //  Created by Chris Rittenhouse on 3/3/23.
-//  Copyright © 2023 Riley Testut. All rights reserved.
+//  Copyright © 2023 Lit Development. All rights reserved.
 //
 
 import Foundation
@@ -11,6 +11,7 @@ import Foundation
 struct Update: Identifiable, Decodable
 {
     var version: String
+    var date: String
     
     var id: String {
         // Use names as identifiers for now.

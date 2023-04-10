@@ -3,7 +3,7 @@
 //  Delta
 //
 //  Created by Chris Rittenhouse on 3/3/23.
-//  Copyright © 2023 Riley Testut. All rights reserved.
+//  Copyright © 2023 Lit Development. All rights reserved.
 //
 
 import SwiftUI
@@ -78,7 +78,7 @@ struct UpdatesView: View
             ForEach(viewModel.updates ?? []) { update in
                 Section {
                     // First row = Update version
-                    VersionCell(version: update.version, url: update.url) { webViewURL in
+                    VersionCell(version: update.version, date: update.date, url: update.url) { webViewURL in
                         viewModel.webViewURL = webViewURL
                     }
                     
@@ -127,6 +127,7 @@ struct UpdatesView: View
 struct VersionCell: View
 {
     var version: String
+    var date: String
     var url: URL?
     
     var action: (URL) -> Void
@@ -143,7 +144,7 @@ struct VersionCell: View
             
         } label: {
             HStack {
-                Text("Version " + self.version)
+                Text("Version " + self.version + " - " + self.date)
                     .bold()
                     .font(.system(size: 17))
                 
@@ -190,26 +191,23 @@ struct ChangeCell: View
             
         } label: {
             HStack {
-                if self.type != nil
+                switch self.type
                 {
-                    switch self.type
-                    {
-                    case "feature":
-                        Text("Feature").bold()
-                            .foregroundColor(.green)
-                            .font(.system(size: 17))
-                    case "update":
-                        Text("Update").bold()
-                            .foregroundColor(.yellow)
-                            .font(.system(size: 17))
-                    case "bugfix":
-                        Text("BugFix").bold()
-                            .foregroundColor(.red)
-                            .font(.system(size: 17))
-                    default:
-                        Text("Change").bold()
-                            .font(.system(size: 17))
-                    }
+                case "feature":
+                    Text("Feature").bold()
+                        .foregroundColor(.green)
+                        .font(.system(size: 17))
+                case "update":
+                    Text("Update").bold()
+                        .foregroundColor(.yellow)
+                        .font(.system(size: 17))
+                case "bugfix":
+                    Text("BugFix").bold()
+                        .foregroundColor(.red)
+                        .font(.system(size: 17))
+                default:
+                    Text("Change").bold()
+                        .font(.system(size: 17))
                 }
                 
                 self.description
