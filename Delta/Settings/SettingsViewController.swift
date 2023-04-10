@@ -20,6 +20,7 @@ private extension SettingsViewController
         case patreon
         case syncing
         case theme
+        case gameAudio
         case autoLoad
         case rewind
         case overlay
@@ -27,7 +28,6 @@ private extension SettingsViewController
         case audioFeedback
         case hapticTouch
         case fastForward
-        case gameAudio
         case toasts
         case skinOptions
         case controllerSkins
@@ -89,6 +89,8 @@ private extension SettingsViewController
     enum GameAudioRow: Int, CaseIterable
     {
         case respectSilent
+        case playOverMedia
+        case volume
     }
     
     enum HapticsRow: Int, CaseIterable
@@ -135,6 +137,9 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var showToastNotificationsSwitch: UISwitch!
     
     @IBOutlet private var respectSilentModeSwitch: UISwitch!
+    @IBOutlet private var playOverOtherMediaSwitch: UISwitch!
+    @IBOutlet private var gameVolumeLabel: UILabel!
+    @IBOutlet private var gameVolumeSlider: UISlider!
     
     @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
     @IBOutlet private var thumbstickHapticFeedbackEnabledSwitch: UISwitch!
@@ -260,7 +265,11 @@ private extension SettingsViewController
         
         self.showToastNotificationsSwitch.isOn = Settings.showToastNotifications
         self.autoLoadSaveSwitch.isOn = Settings.autoLoadSave
+        
         self.respectSilentModeSwitch.isOn = Settings.respectSilentMode
+        self.playOverOtherMediaSwitch.isOn = Settings.playOverOtherMedia
+        self.gameVolumeSlider.value = Float(Settings.gameVolume)
+        self.updateGameVolumeSlider()
         
         self.syncingServiceLabel.text = Settings.syncingService?.localizedName
         
@@ -318,6 +327,12 @@ private extension SettingsViewController
     {
         let percentage = "Opacity: " + String(format: "%.f", Settings.translucentControllerSkinOpacity * 100) + "%"
         self.controllerOpacityLabel.text = percentage
+    }
+    
+    func updateGameVolumeSlider()
+    {
+        let percentage = "Volume: " + String(format: "%.f", Settings.gameVolume * 100) + "%"
+        self.gameVolumeLabel.text = percentage
     }
     
     func updateHapticStrengthLabel()
@@ -397,6 +412,32 @@ private extension SettingsViewController
     @IBAction func didFinishChangingControllerOpacity(with sender: UISlider)
     {
         sender.value = Float(Settings.translucentControllerSkinOpacity)
+        self.selectionFeedbackGenerator = nil
+    }
+    
+    @IBAction func beginChangingGameVolume(with sender: UISlider)
+    {
+        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        self.selectionFeedbackGenerator?.prepare()
+    }
+    
+    @IBAction func changeGameVolume(with sender: UISlider)
+    {
+        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
+        
+        if roundedValue != Settings.gameVolume
+        {
+            self.selectionFeedbackGenerator?.selectionChanged()
+        }
+        
+        Settings.gameVolume = CGFloat(roundedValue)
+        
+        self.updateGameVolumeSlider()
+    }
+    
+    @IBAction func didFinishChangingGameVolume(with sender: UISlider)
+    {
+        sender.value = Float(Settings.gameVolume)
         self.selectionFeedbackGenerator = nil
     }
     
@@ -541,6 +582,11 @@ private extension SettingsViewController
     @IBAction func toggleRespectSilentMode(_ sender: UISwitch)
     {
         Settings.respectSilentMode = sender.isOn
+    }
+    
+    @IBAction func togglePlayOverOtherMedia(_ sender: UISwitch)
+    {
+        Settings.playOverOtherMedia = sender.isOn
     }
     
     @IBAction func togglePromptSpeed(_ sender: UISwitch)
@@ -869,7 +915,7 @@ private extension SettingsViewController
         case .themeColor, .fastForwardSpeed, .buttonAudioFeedbackSound:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .playOverOtherMedia, .gameVolume: break
         }
     }
 

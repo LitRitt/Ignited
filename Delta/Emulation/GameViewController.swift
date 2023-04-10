@@ -1115,6 +1115,8 @@ private extension GameViewController
     func updateAudio()
     {
         self.emulatorCore?.audioManager.respectsSilentMode = Settings.respectSilentMode
+        self.emulatorCore?.audioManager.playWithOtherMedia = Settings.playOverOtherMedia
+        self.emulatorCore?.audioManager.audioVolume = Float(Settings.gameVolume)
     }
 }
 
@@ -1546,7 +1548,7 @@ private extension GameViewController
         case .touchOverlaySize:
             self.controllerView.touchOverlaySize = Settings.touchOverlaySize
             
-        case .respectSilentMode:
+        case .respectSilentMode, .playOverOtherMedia, .gameVolume:
             self.updateAudio()
             
         case .buttonAudioFeedbackSound:

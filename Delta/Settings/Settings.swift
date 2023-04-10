@@ -51,6 +51,8 @@ extension Settings
         case isTouchOverlayThemeEnabled
         case isAltJITEnabled
         case respectSilentMode
+        case playOverOtherMedia
+        case gameVolume
         case isUnsafeFastForwardSpeedsEnabled
         case isPromptSpeedEnabled
         case fastForwardSpeed
@@ -123,6 +125,8 @@ struct Settings
                         #keyPath(UserDefaults.autoLoadSave): true,
                         #keyPath(UserDefaults.showToastNotifications): true,
                         #keyPath(UserDefaults.respectSilentMode): true,
+                        #keyPath(UserDefaults.playOverOtherMedia): true,
+                        #keyPath(UserDefaults.gameVolume): 1.0,
                         #keyPath(UserDefaults.isButtonAudioFeedbackEnabled): false,
                         #keyPath(UserDefaults.isRewindEnabled): true,
                         #keyPath(UserDefaults.rewindTimerInterval): 15,
@@ -413,6 +417,26 @@ extension Settings
             UserDefaults.standard.respectSilentMode = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.respectSilentMode])
         }
+    }
+    
+    static var playOverOtherMedia: Bool {
+        get {
+            let playOverOtherMedia = UserDefaults.standard.playOverOtherMedia
+            return playOverOtherMedia
+        }
+        set {
+            UserDefaults.standard.playOverOtherMedia = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.playOverOtherMedia])
+        }
+    }
+    
+    static var gameVolume: CGFloat {
+        set {
+            guard newValue != self.gameVolume else { return }
+            UserDefaults.standard.gameVolume = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameVolume])
+        }
+        get { return UserDefaults.standard.gameVolume }
     }
     
     static var isRewindEnabled: Bool {
@@ -741,7 +765,11 @@ private extension UserDefaults
     
     @NSManaged var showToastNotifications: Bool
     @NSManaged var autoLoadSave: Bool
+    
     @NSManaged var respectSilentMode: Bool
+    @NSManaged var playOverOtherMedia: Bool
+    @NSManaged var gameVolume: CGFloat
+    
     @NSManaged var isRewindEnabled: Bool
     @NSManaged var rewindTimerInterval: Int
     
