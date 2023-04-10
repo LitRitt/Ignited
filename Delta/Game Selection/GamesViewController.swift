@@ -40,9 +40,15 @@ class GamesViewController: UIViewController
         return .lightContent
     }
     
+    public var showUpdates: Bool = false {
+        didSet {
+            if self.showUpdates { self.displayUpdates() }
+        }
+    }
+    
     public var showResumeButton: Bool = false {
         didSet {
-            toggleResumeButton(toggle: showResumeButton)
+            self.toggleResumeButton(toggle: showResumeButton)
         }
     }
     
@@ -277,7 +283,7 @@ private extension GamesViewController
         }
     }
     
-    public func toggleResumeButton(toggle: Bool)
+    func toggleResumeButton(toggle: Bool)
     {
         if toggle
         {
@@ -286,6 +292,19 @@ private extension GamesViewController
         else
         {
             self.setToolbarItems([], animated: true)
+        }
+    }
+    
+    func displayUpdates()
+    {
+        guard let buildNumber = Bundle.main.buildNumber else { return }
+        
+        if Settings.lastUpdateShown < buildNumber
+        {
+            let hostingController = UpdatesView.makeViewController()
+            self.navigationController?.pushViewController(hostingController, animated: true)
+            
+            Settings.lastUpdateShown = buildNumber
         }
     }
 }

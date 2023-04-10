@@ -106,7 +106,8 @@ struct Settings
 {
     static func registerDefaults()
     {
-        let defaults = [#keyPath(UserDefaults.themeColor): ThemeColor.orange.rawValue,
+        let defaults = [#keyPath(UserDefaults.lastUpdateShown): 1,
+                        #keyPath(UserDefaults.themeColor): ThemeColor.orange.rawValue,
                         #keyPath(UserDefaults.gameArtworkSize): ArtworkSize.medium.rawValue,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
@@ -145,6 +146,12 @@ struct Settings
 
 extension Settings
 {
+    /// Update
+    static var lastUpdateShown: Int {
+        set { UserDefaults.standard.lastUpdateShown = newValue }
+        get { return UserDefaults.standard.lastUpdateShown }
+    }
+    
     /// Theme
     static var themeColor: ThemeColor {
         set {
@@ -733,6 +740,8 @@ private extension Settings
 
 private extension UserDefaults
 {
+    @NSManaged var lastUpdateShown: Int
+    
     @NSManaged var themeColor: String
     @NSManaged var gameArtworkSize: String
     
