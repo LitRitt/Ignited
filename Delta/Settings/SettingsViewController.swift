@@ -119,6 +119,7 @@ private extension SettingsViewController
     {
         case altSkin
         case debug
+        case resetBuildCounter
     }
 }
 
@@ -773,6 +774,16 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
+    func resetBuildCounter()
+    {
+        Settings.lastUpdateShown = 1
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow
+        {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
     func changeThemeColor()
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Theme Color", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
@@ -1019,7 +1030,7 @@ extension SettingsViewController
             }
             
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .advanced, .overlay: break
+        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .overlay: break
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {
@@ -1034,6 +1045,14 @@ extension SettingsViewController
             case .sound:
                 self.changeButtonAudioFeedbackSound()
             case .buttons: break
+            }
+            
+        case .advanced:
+            switch AdvancedRow.allCases[indexPath.row]
+            {
+            case .resetBuildCounter:
+                self.resetBuildCounter()
+            case .altSkin, .debug: break
             }
             
         case .patreon:
