@@ -4,6 +4,33 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.2</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.2</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Game Volume - Change the game volume relative to your device volume</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Toggle for whether game audio should play when other audio is playing in the background</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated OpenVGDB database</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.1</string>
 		<key>link</key>
 		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.1</string>
