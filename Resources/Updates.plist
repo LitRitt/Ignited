@@ -4,6 +4,35 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.4</string>
+		<key>date</key>
+		<string>4/11/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.4</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Disabled auto-load save on DSi Home Screen</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Removed cheats, save, load, and rewind pause menu items from DSi Home Screen</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Removed cheats from DS Home Screen</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.3</string>
 		<key>date</key>
 		<string>4/10/2023</string>
