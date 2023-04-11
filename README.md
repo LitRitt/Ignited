@@ -4,11 +4,11 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-Ignited is a multi-core emulator front-end for iOS devices. It provides a beautiful user interface and rich features that other emulators lack. An experience that feels right at home on your premium devices. Join the [Discord](https://discord.gg/qEtKFJt5dR) to follow along with development, suggest new features, and chat. Become a [Patron](https://patreon.com/litritt) to support development and unlock benefits, such as being able to install Ignited straight from this page without having to sideloading it.
+Ignited is a multi-core emulator front-end for iOS devices. It provides a beautiful user interface and rich features that other emulators lack. An experience that feels right at home on your premium devices. Join the [Discord](https://discord.gg/qEtKFJt5dR) to follow along with development, suggest new features, and chat. Become a [Patron](https://patreon.com/litritt) to support development and unlock benefits, such as being able to install Ignited straight from this page without having to sideload it.
 
 <p align="center">
   <img src="https://github.com/Lit-Development/Assets/blob/main/apps/delta-ignited/device-previews.png?raw=true" width=100%><br/>
-  <em>Mario and Metroid and properties of Nintendo Co., Ltd. and are not associated with Ignited or AltStore LLC.</em>
+  <em>Mario and Metroid and properties of Nintendo Co., Ltd. and are not associated with Ignited or Lit Development.</em>
 </p>
 
 ## Supported Systems
