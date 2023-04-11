@@ -481,6 +481,21 @@ extension GameViewController
             default: break
             }
             
+            let url = self.game?.fileURL
+            let fileName = url!.path.components(separatedBy: "/").last
+            
+            switch fileName
+            {
+            case "dsi.bios":
+                pauseViewController.rewindItem = nil
+                pauseViewController.saveStateItem = nil
+                pauseViewController.loadStateItem = nil
+                pauseViewController.cheatCodesItem = nil
+                
+            case "ds.bios":
+                pauseViewController.cheatCodesItem = nil
+            }
+            
             self.pauseViewController = pauseViewController
             
         default: break
