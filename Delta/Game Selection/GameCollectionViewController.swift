@@ -485,7 +485,9 @@ private extension GameCollectionViewController
                 
                 let cell = self.collectionView.cellForItem(at: indexPath)
                 
-                if Settings.autoLoadSave
+                if Settings.autoLoadSave,
+                   game.identifier != Game.melonDSBIOSIdentifier,
+                   game.identifier != Game.melonDSDSiBIOSIdentifier
                 {
                     let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
                     fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -994,7 +996,9 @@ private extension GameCollectionViewController
         guard let emulatorCore = self.activeEmulatorCore else { return }
         guard let game = emulatorCore.game as? Game else { return }
         
-        if Settings.autoLoadSave
+        if Settings.autoLoadSave,
+           game.identifier != Game.melonDSBIOSIdentifier,
+           game.identifier != Game.melonDSDSiBIOSIdentifier
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
             fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
