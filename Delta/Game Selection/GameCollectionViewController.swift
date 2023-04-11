@@ -243,7 +243,11 @@ extension GameCollectionViewController
                 
                 do
                 {
-                    try destinationViewController.emulatorCore?.load(saveState)
+                    // don't load save states on DSi home screen
+                    if game.identifier != Game.melonDSDSiBIOSIdentifier
+                    {
+                        try destinationViewController.emulatorCore?.load(saveState)
+                    }
                 }
                 catch EmulatorCore.SaveStateError.doesNotExist
                 {
@@ -294,7 +298,11 @@ extension GameCollectionViewController
                 
                 do
                 {
-                    try destinationViewController.emulatorCore?.load(saveState)
+                    // don't load save states on DSi home screen
+                    if game.identifier != Game.melonDSDSiBIOSIdentifier
+                    {
+                        try destinationViewController.emulatorCore?.load(saveState)
+                    }
                 }
                 catch EmulatorCore.SaveStateError.doesNotExist
                 {
@@ -485,9 +493,7 @@ private extension GameCollectionViewController
                 
                 let cell = self.collectionView.cellForItem(at: indexPath)
                 
-                if Settings.autoLoadSave,
-                   game.identifier != Game.melonDSBIOSIdentifier,
-                   game.identifier != Game.melonDSDSiBIOSIdentifier
+                if Settings.autoLoadSave
                 {
                     let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
                     fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -617,6 +623,31 @@ private extension GameCollectionViewController
                 else { throw LaunchError.biosNotFound }
             }
         }
+    }
+    
+    @objc func resumeCurrentGame()
+    {
+        guard let emulatorCore = self.activeEmulatorCore else { return }
+        guard let game = emulatorCore.game as? Game else { return }
+        
+        if Settings.autoLoadSave
+        {
+            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+            
+            do
+            {
+                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                self.activeSaveState = saveStates?.last
+            }
+            catch
+            {
+                print(error)
+            }
+        }
+        
+        self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
     }
 }
 
@@ -989,33 +1020,6 @@ private extension GameCollectionViewController
         
         let alertController = UIAlertController(actions: actions)
         self.present(alertController, animated: true, completion: nil)
-    }
-    
-    @objc func resumeCurrentGame()
-    {
-        guard let emulatorCore = self.activeEmulatorCore else { return }
-        guard let game = emulatorCore.game as? Game else { return }
-        
-        if Settings.autoLoadSave,
-           game.identifier != Game.melonDSBIOSIdentifier,
-           game.identifier != Game.melonDSDSiBIOSIdentifier
-        {
-            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
-            
-            do
-            {
-                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
-                self.activeSaveState = saveStates?.last
-            }
-            catch
-            {
-                print(error)
-            }
-        }
-        
-        self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
     }
     
     @objc func settingsDidChange(_ notification: Notification)
