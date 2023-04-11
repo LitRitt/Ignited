@@ -172,8 +172,8 @@ extension DatabaseManager
             }
             
             let insertedGames = [
-                (name: NSLocalizedString("Home Screen", comment: ""), identifier: Game.melonDSBIOSIdentifier),
-                (name: NSLocalizedString("Home Screen (DSi)", comment: ""), identifier: Game.melonDSDSiBIOSIdentifier)
+                (name: NSLocalizedString("DS Home Screen", comment: ""), identifier: Game.melonDSBIOSIdentifier),
+                (name: NSLocalizedString("DSi Home Screen (Beta)", comment: ""), identifier: Game.melonDSDSiBIOSIdentifier)
             ].compactMap(makeBIOS)
             
             // Break if we didn't create any new Games.
