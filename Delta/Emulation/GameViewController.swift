@@ -492,8 +492,10 @@ extension GameViewController
                 pauseViewController.loadStateItem = nil
                 pauseViewController.cheatCodesItem = nil
                 
-            case "ds.bios":
+            case "nds.bios":
                 pauseViewController.cheatCodesItem = nil
+                
+            default: break
             }
             
             self.pauseViewController = pauseViewController
