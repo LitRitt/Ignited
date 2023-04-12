@@ -120,6 +120,7 @@ private extension SettingsViewController
         case altSkin
         case debug
         case resetBuildCounter
+        case clearAutoStates
     }
 }
 
@@ -784,6 +785,49 @@ private extension SettingsViewController
         }
     }
     
+    func clearAutoSaveStates()
+    {
+        let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        gameFetchRequest.returnsObjectsAsFaults = false
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            do
+            {
+                let games = try gameFetchRequest.execute()
+                
+                for tempGame in games
+                {
+                    let stateFetchRequest = SaveState.fetchRequest(for: tempGame, type: .auto)
+                    
+                    do
+                    {
+                        let saveStates = try stateFetchRequest.execute()
+                        
+                        for autoSaveState in saveStates
+                        {
+                            let saveState = context.object(with: autoSaveState.objectID)
+                            context.delete(saveState)
+                        }
+                        context.saveWithErrorLogging()
+                    }
+                    catch
+                    {
+                        print("Failed to delete auto save states.")
+                    }
+                }
+            }
+            catch
+            {
+                print("Failed to fetch games.")
+            }
+        }
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow
+        {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
     func changeThemeColor()
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Theme Color", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
@@ -1052,6 +1096,8 @@ extension SettingsViewController
             {
             case .resetBuildCounter:
                 self.resetBuildCounter()
+            case .clearAutoStates:
+                self.clearAutoSaveStates()
             case .altSkin, .debug: break
             }
             
