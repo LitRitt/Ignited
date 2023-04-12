@@ -869,7 +869,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
             {
                 let saveStates = try fetchRequest.execute()
                 
-                if let saveState = saveStates.first, saveStates.count >= 4
+                if let saveState = saveStates.first, saveStates.count >= 2
                 {
                     // If there are two or more auto save states, update the oldest one
                     self.update(saveState, with: self.pausedSaveState)
