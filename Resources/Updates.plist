@@ -4,6 +4,29 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.5</string>
+		<key>date</key>
+		<string>4/12/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.5</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed importing game saves with auto-load save state enabled</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Added advanced setting to clear auto save states from every game</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.4</string>
 		<key>date</key>
 		<string>4/11/2023</string>
