@@ -939,6 +939,8 @@ private extension GameCollectionViewController
     
     func importSaveFile(for game: Game, from fileURL: URL?, error: Error?)
     {
+        var importSuccess = false
+        
         // Dispatch to main queue so we can access game.gameSaveURL on its context's thread (main thread).
         DispatchQueue.main.async {
             do
@@ -956,6 +958,8 @@ private extension GameCollectionViewController
                     {
                         SyncManager.shared.recordController?.updateRecord(for: gameSave)
                     }
+                    
+                    importSuccess = true
                 }
             }
             catch
@@ -971,6 +975,34 @@ private extension GameCollectionViewController
                 else
                 {
                     self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    
+        // delay by 0.5 seconds to not interfere with game save overwrite above
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            // delete auto save states so game starts fresh after import
+            if importSuccess
+            {
+                let fetchRequest = SaveState.fetchRequest(for: game, type: .auto)
+                
+                DatabaseManager.shared.performBackgroundTask { (context) in
+                    do
+                    {
+                        let saveStates = try fetchRequest.execute()
+                        
+                        for autoSaveState in saveStates
+                        {
+                            let saveState = context.object(with: autoSaveState.objectID)
+                            context.delete(saveState)
+                        }
+                        context.saveWithErrorLogging()
+                    }
+                    catch
+                    {
+                        print("Failed to delete auto save states after game save import.")
+                    }
                 }
             }
         }
