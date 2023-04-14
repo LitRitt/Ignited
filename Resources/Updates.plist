@@ -4,6 +4,23 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.6</string>
+		<key>date</key>
+		<string>4/14/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.6</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Game Screenshots - save a screenshot of the game screen to your photos with a pause menu item or controller skin button</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.5</string>
 		<key>date</key>
 		<string>4/12/2023</string>
