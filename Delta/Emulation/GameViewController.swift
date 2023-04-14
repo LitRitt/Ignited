@@ -249,6 +249,7 @@ class GameViewController: DeltaCore.GameViewController
             case .restart: self.performRestartAction()
             case .quickSave: self.performQuickSaveAction()
             case .quickLoad: self.performQuickLoadAction()
+            case .screenshot: self.performScreenshotAction()
             case .fastForward: self.performFastForwardAction(activate: true)
             case .toggleFastForward:
                 let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
@@ -278,6 +279,7 @@ class GameViewController: DeltaCore.GameViewController
             case .restart: break
             case .quickSave: break
             case .quickLoad: break
+            case .screenshot: break
             case .fastForward: self.performFastForwardAction(activate: false)
             case .toggleFastForward: break
             case .toggleAltRepresentations: break
@@ -424,6 +426,10 @@ extension GameViewController
             
             pauseViewController.restartItem?.action = { [unowned self] item in
                 self.performRestartAction()
+            }
+            
+            pauseViewController.screenshotItem?.action = { [unowned self] item in
+                self.performScreenshotAction()
             }
             
             pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
@@ -1219,6 +1225,18 @@ extension GameViewController
             pauseView.dismiss()
         }
         self.present(alertController, animated: true)
+    }
+    
+    func performScreenshotAction()
+    {
+        guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
+        
+        UIImageWriteToSavedPhotosAlbum(snapshot, nil, nil, nil)
+        
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
     }
     
     func performQuickSaveAction()

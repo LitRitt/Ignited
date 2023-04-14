@@ -19,13 +19,14 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.restartItem, self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem, self.rewindItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
+        return [self.restartItem, self.saveStateItem, self.loadStateItem, self.screenshotItem, self.cheatCodesItem, self.fastForwardItem, self.sustainButtonsItem, self.rewindItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
     }
     
     /// Pause Items
     var restartItem: MenuItem?
     var saveStateItem: MenuItem?
     var loadStateItem: MenuItem?
+    var screenshotItem: MenuItem?
     var cheatCodesItem: MenuItem?
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
@@ -159,6 +160,7 @@ private extension PauseViewController
         self.restartItem = nil
         self.saveStateItem = nil
         self.loadStateItem = nil
+        self.screenshotItem = nil
         self.cheatCodesItem = nil
         self.sustainButtonsItem = nil
         self.fastForwardItem = nil
@@ -167,6 +169,8 @@ private extension PauseViewController
         guard self.emulatorCore != nil else { return }
         
         self.restartItem = MenuItem(text: NSLocalizedString("Restart", comment: ""), image: #imageLiteral(resourceName: "Restart"), action: { _ in })
+        
+        self.screenshotItem = MenuItem(text: NSLocalizedString("Screenshot", comment: ""), image: #imageLiteral(resourceName: "Screenshot"), action: { _ in })
         
         self.saveStateItem = MenuItem(text: NSLocalizedString("Save State", comment: ""), image: #imageLiteral(resourceName: "SaveSaveState"), action: { [unowned self] _ in
             self.saveStatesViewControllerMode = .saving
