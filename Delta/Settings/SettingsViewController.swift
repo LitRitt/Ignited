@@ -29,6 +29,7 @@ private extension SettingsViewController
         case hapticTouch
         case fastForward
         case toasts
+        case gameArtwork
         case skinOptions
         case controllerSkins
         case controllers
@@ -115,6 +116,12 @@ private extension SettingsViewController
         case size
     }
     
+    enum GameArtworkRow: Int, CaseIterable
+    {
+        case roundedCorners
+        case shadows
+    }
+    
     enum AdvancedRow: Int, CaseIterable
     {
         case altSkin
@@ -133,6 +140,10 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
     @IBOutlet private var altRepresentationsSwitch: UISwitch!
     @IBOutlet private var debugModeSwitch: UISwitch!
+    
+    @IBOutlet private var gameArtworkRoundedCornersEnabledSwitch: UISwitch!
+    @IBOutlet private var gameArtworkBordersEnabledSwitch: UISwitch!
+    @IBOutlet private var gameArtworkShadowsEnabledSwitch: UISwitch!
     
     @IBOutlet private var autoLoadSaveSwitch: UISwitch!
     
@@ -265,6 +276,10 @@ private extension SettingsViewController
         self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
         self.altRepresentationsSwitch.isOn = Settings.isAltRepresentationsEnabled
         self.debugModeSwitch.isOn = Settings.isDebugModeEnabled
+        
+        self.gameArtworkRoundedCornersEnabledSwitch.isOn = Settings.gameArtworkRoundedCornersEnabled
+        self.gameArtworkShadowsEnabledSwitch.isOn = Settings.gameArtworkShadowsEnabled
+        self.gameArtworkBordersEnabledSwitch.isOn = Settings.gameArtworkBordersEnabled
         
         self.showToastNotificationsSwitch.isOn = Settings.showToastNotifications
         self.autoLoadSaveSwitch.isOn = Settings.autoLoadSave
@@ -470,9 +485,19 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
-    @IBAction func toggleClickyHaptic(_ sender: UISwitch)
+    @IBAction func toggleGameArtworkRoundedCornersEnabled(_ sender: UISwitch)
     {
-        Settings.isClickyHapticEnabled = sender.isOn
+        Settings.gameArtworkRoundedCornersEnabled = sender.isOn
+    }
+    
+    @IBAction func toggleGameArtworkBordersEnabled(_ sender: UISwitch)
+    {
+        Settings.gameArtworkBordersEnabled = sender.isOn
+    }
+    
+    @IBAction func toggleGameArtworkShadowsEnabled(_ sender: UISwitch)
+    {
+        Settings.gameArtworkShadowsEnabled = sender.isOn
     }
     
     @IBAction func toggleAlwaysShowControllerSkin(_ sender: UISwitch)
@@ -993,7 +1018,7 @@ private extension SettingsViewController
         case .themeColor, .fastForwardSpeed, .buttonAudioFeedbackSound:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .playOverOtherMedia, .gameVolume: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .playOverOtherMedia, .gameVolume, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled: break
         }
     }
 
@@ -1070,7 +1095,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork: break
         }
 
         return cell
@@ -1096,7 +1121,7 @@ extension SettingsViewController
             }
             
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .overlay: break
+        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .overlay, .gameArtwork: break
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {

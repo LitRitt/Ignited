@@ -398,8 +398,33 @@ private extension GameCollectionViewController
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
-        cell.imageView.layer.borderWidth = 1.2
-        cell.imageView.layer.cornerRadius = 15
+        if Settings.gameArtworkRoundedCornersEnabled
+        {
+            cell.imageView.layer.cornerRadius = 15
+        }
+        else
+        {
+            cell.imageView.layer.cornerRadius = 0
+        }
+        
+        if Settings.gameArtworkBordersEnabled
+        {
+            cell.imageView.layer.borderWidth = 1.2
+        }
+        else
+        {
+            cell.imageView.layer.borderWidth = 0.0
+        }
+        
+        if Settings.gameArtworkShadowsEnabled
+        {
+            cell.layer.shadowOpacity = 0.5
+        }
+        else
+        {
+            cell.layer.shadowOpacity = 0.0
+        }
+        cell.layer.shadowRadius = 3.0
         
         if let currentCore = self.activeEmulatorCore, game.fileURL == currentCore.game.fileURL
         {
@@ -412,8 +437,6 @@ private extension GameCollectionViewController
         else
         {
             cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 3.0
             cell.layer.shadowOffset = CGSize(width: 0, height: 3)
             cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
         }
@@ -1060,7 +1083,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case .themeColor, .gameArtworkSize:
+        case .themeColor, .gameArtworkSize, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled:
             self.update()
             
         default: break
