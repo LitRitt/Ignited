@@ -4,6 +4,35 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.7</string>
+		<key>date</key>
+		<string>4/14/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.7</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Added options to toggle game artwork borders, shadows, and rounded corners</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Added confirmation popup to advanced settings</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Game screenshots are now scaled up by 5x before being saved</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.6</string>
 		<key>date</key>
 		<string>4/14/2023</string>
