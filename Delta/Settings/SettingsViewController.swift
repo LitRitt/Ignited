@@ -672,7 +672,7 @@ private extension SettingsViewController
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay. Speeds below 100% will slow down gameplay.", comment: ""), preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY * 1.5, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         var speedOneTitle = "25%"
@@ -731,7 +731,7 @@ private extension SettingsViewController
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Button Audio Sound", comment: ""), message: NSLocalizedString("The chosen sound will be played when you press a button.", comment: ""), preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY * 1.5, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         var systemTitle = "System Keyboard"
@@ -777,7 +777,17 @@ private extension SettingsViewController
     
     func resetBuildCounter()
     {
-        Settings.lastUpdateShown = 1
+        let alertController = UIAlertController(title: NSLocalizedString("Reset Build Counter?", comment: ""), message: NSLocalizedString("This will cause the updates screens to be shown on next launch.", comment: ""), preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+            Settings.lastUpdateShown = 1
+        }))
+        alertController.addAction(.cancel)
+        
+        self.present(alertController, animated: true, completion: nil)
         
         if let indexPath = self.tableView.indexPathForSelectedRow
         {
@@ -787,40 +797,52 @@ private extension SettingsViewController
     
     func clearAutoSaveStates()
     {
-        let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
-        gameFetchRequest.returnsObjectsAsFaults = false
+        let alertController = UIAlertController(title: NSLocalizedString("⚠️ Clear States? ⚠️", comment: ""), message: NSLocalizedString("This will delete all auto save states from every game. The auto-load save states feature relies on these auto save states to resume your game where you left off. Deleting them can be useful to reduce the size of your Sync backup.", comment: ""), preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        DatabaseManager.shared.performBackgroundTask { (context) in
-            do
-            {
-                let games = try gameFetchRequest.execute()
-                
-                for tempGame in games
+        alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+            
+            let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+            gameFetchRequest.returnsObjectsAsFaults = false
+            
+            DatabaseManager.shared.performBackgroundTask { (context) in
+                do
                 {
-                    let stateFetchRequest = SaveState.fetchRequest(for: tempGame, type: .auto)
+                    let games = try gameFetchRequest.execute()
                     
-                    do
+                    for tempGame in games
                     {
-                        let saveStates = try stateFetchRequest.execute()
+                        let stateFetchRequest = SaveState.fetchRequest(for: tempGame, type: .auto)
                         
-                        for autoSaveState in saveStates
+                        do
                         {
-                            let saveState = context.object(with: autoSaveState.objectID)
-                            context.delete(saveState)
+                            let saveStates = try stateFetchRequest.execute()
+                            
+                            for autoSaveState in saveStates
+                            {
+                                let saveState = context.object(with: autoSaveState.objectID)
+                                context.delete(saveState)
+                            }
+                            context.saveWithErrorLogging()
                         }
-                        context.saveWithErrorLogging()
-                    }
-                    catch
-                    {
-                        print("Failed to delete auto save states.")
+                        catch
+                        {
+                            print("Failed to delete auto save states.")
+                        }
                     }
                 }
+                catch
+                {
+                    print("Failed to fetch games.")
+                }
             }
-            catch
-            {
-                print("Failed to fetch games.")
-            }
-        }
+        }))
+        
+        alertController.addAction(.cancel)
+        
+        self.present(alertController, animated: true, completion: nil)
         
         if let indexPath = self.tableView.indexPathForSelectedRow
         {
