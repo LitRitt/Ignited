@@ -1230,8 +1230,17 @@ extension GameViewController
     func performScreenshotAction()
     {
         guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
+        let scale = 5.0
+        let size = CGSize(width: snapshot.size.width * scale, height: snapshot.size.height * scale)
         
-        UIImageWriteToSavedPhotosAlbum(snapshot, nil, nil, nil)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        
+        snapshot.draw(in: CGRect(origin: CGPoint.zero, size: size))
+        let scaledSnapshot = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        UIImageWriteToSavedPhotosAlbum(scaledSnapshot!, nil, nil, nil)
         
         if let pauseView = self.pauseViewController
         {
