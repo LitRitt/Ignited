@@ -34,6 +34,7 @@ private extension SettingsViewController
         case controllerSkins
         case controllers
         case skinDownloads
+        case resourceLinks
         case cores
         case advanced
         case credits
@@ -120,6 +121,12 @@ private extension SettingsViewController
     {
         case roundedCorners
         case shadows
+    }
+    
+    enum ResourceLinksRow: Int, CaseIterable
+    {
+        case romPatcher
+        case saveConverter
     }
     
     enum AdvancedRow: Int, CaseIterable
@@ -677,7 +684,7 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
-    func openSkinWebsite(site: String)
+    func openWebsite(site: String)
     {
         let safariURL = URL(string: site)!
         let safariViewController = SFSafariViewController(url: safariURL)
@@ -1095,7 +1102,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork, .resourceLinks: break
         }
 
         return cell
@@ -1114,10 +1121,17 @@ extension SettingsViewController
         case .skinDownloads:
             switch SkinDownloadsRow.allCases[indexPath.row]
             {
-            case .litDesign: self.openSkinWebsite(site: "https://design.litritt.com")
-            case .skinGenerator: self.openSkinWebsite(site: "https://generator.skins4delta.com")
-            case .deltaSkins: self.openSkinWebsite(site: "https://delta-skins.github.io")
-            case .skins4Delta: self.openSkinWebsite(site: "https://skins4delta.com")
+            case .litDesign: self.openWebsite(site: "https://design.litritt.com")
+            case .skinGenerator: self.openWebsite(site: "https://generator.skins4delta.com")
+            case .deltaSkins: self.openWebsite(site: "https://delta-skins.github.io")
+            case .skins4Delta: self.openWebsite(site: "https://skins4delta.com")
+            }
+            
+        case .resourceLinks:
+            switch ResourceLinksRow.allCases[indexPath.row]
+            {
+            case .romPatcher: self.openWebsite(site: "https://www.marcrobledo.com/RomPatcher.js/")
+            case .saveConverter: self.openWebsite(site: "https://www.save-editor.com/tools/wse_ds_save_converter.html")
             }
             
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
