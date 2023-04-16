@@ -4,6 +4,23 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.8</string>
+		<key>date</key>
+		<string>4/15/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.8</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Added Resource Links section to settings - Added Rom Patcher JS link</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.7</string>
 		<key>date</key>
 		<string>4/15/2023</string>

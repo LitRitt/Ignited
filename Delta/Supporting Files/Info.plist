@@ -434,6 +434,15 @@
 					<string>bin</string>
 					<string>md</string>
 					<string>smd</string>
+					<string>sms</string>
+					<string>gg</string>
+					<string>sg</string>
+					<string>iso</string>
+					<string>bin</string>
+					<string>cue</string>
+					<string>mdx</string>
+					<string>m3u</string>
+					<string>chd</string>
 				</array>
 			</dict>
 		</dict>

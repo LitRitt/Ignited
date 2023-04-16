@@ -137,7 +137,7 @@ extension DeltaCore.GameType
         case "gbc", "gb": self = .gbc
         case "gba": self = .gba
         case "ds", "nds": self = .ds
-        case "gen", "bin", "md", "smd": self = .genesis
+        case "gen", "bin", "md", "smd", "sms", "gg", "sg", "iso", "bin", "cue", "mdx", "m3u", "chd": self = .genesis
         default: return nil
         }
     }
