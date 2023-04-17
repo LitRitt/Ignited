@@ -6,7 +6,7 @@
 		<key>version</key>
 		<string>1.2.8</string>
 		<key>date</key>
-		<string>4/15/2023</string>
+		<string>4/16/2023</string>
 		<key>link</key>
 		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.8</string>
 		<key>changes</key>
@@ -15,7 +15,19 @@
 				<key>type</key>
 				<string>feature</string>
 				<key>description</key>
-				<string>Added Resource Links section to settings - Added Rom Patcher JS link</string>
+				<string>Added toggle to show or hide the statur bar while in-game</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Added Resource Links section to settings - Added Rom Patcher JS and DS Save Converter links</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Added remaining file extensions for all systems supported by the Genesis Plus GX core</string>
 			</dict>
 		</array>
 	</dict>
