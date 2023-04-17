@@ -152,7 +152,7 @@ $ git submodule update --init --recursive
 7. Build + run app! 🎉
 
 ## Licensing
-Due to the licensing of emulator cores used by Delta, I have no choice but to distribute Delta under the **AGPLv3 license**. That being said, I explicitly give permission for anyone to use, modify, and distribute all *my* original code for this project in any form, with or without attribution, without fear of legal consequences (dependencies remain under their original licenses, however).
+Due to the licensing of emulator cores used by Ignited, I have no choice but to distribute Ignited under the **AGPLv3 license**. That being said, I explicitly give permission for anyone to use, modify, and distribute all *my* original code for this project in any form, with or without attribution, without fear of legal consequences (dependencies remain under their original licenses, however).
 
 ## Contact Me
 
