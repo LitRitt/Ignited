@@ -15,7 +15,7 @@
 				<key>type</key>
 				<string>feature</string>
 				<key>description</key>
-				<string>Added toggle to show or hide the statur bar while in-game</string>
+				<string>Added toggle to show or hide the status bar while in-game</string>
 			</dict>
 			<dict>
 				<key>type</key>
