@@ -52,6 +52,7 @@ extension Settings
         case touchOverlayOpacity
         case touchOverlaySize
         case isTouchOverlayThemeEnabled
+        case statusBarEnabled
         case isAltJITEnabled
         case respectSilentMode
         case playOverOtherMedia
@@ -131,6 +132,7 @@ struct Settings
                         #keyPath(UserDefaults.isAltJITEnabled): false,
                         #keyPath(UserDefaults.autoLoadSave): true,
                         #keyPath(UserDefaults.showToastNotifications): true,
+                        #keyPath(UserDefaults.statusBarEnabled): false,
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.playOverOtherMedia): true,
                         #keyPath(UserDefaults.gameVolume): 1.0,
@@ -212,6 +214,17 @@ extension Settings
         set {
             UserDefaults.standard.gameArtworkShadowsEnabled = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkShadowsEnabled])
+        }
+    }
+    
+    static var statusBarEnabled: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.statusBarEnabled
+            return isEnabled
+        }
+        set {
+            UserDefaults.standard.statusBarEnabled = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.statusBarEnabled])
         }
     }
     
@@ -814,6 +827,8 @@ private extension UserDefaults
     @NSManaged var isPreviewsEnabled: Bool
     
     @NSManaged var isAltJITEnabled: Bool
+    
+    @NSManaged var statusBarEnabled: Bool
     
     @NSManaged var showToastNotifications: Bool
     @NSManaged var autoLoadSave: Bool

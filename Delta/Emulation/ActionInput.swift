@@ -19,6 +19,7 @@ enum ActionInput: String
     case quickSave
     case quickLoad
     case screenshot
+    case statusBar
     case fastForward
     case toggleFastForward
     case toggleAltRepresentations

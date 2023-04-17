@@ -185,6 +185,10 @@ class GameViewController: DeltaCore.GameViewController
         return .all
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return !Settings.statusBarEnabled
+    }
+    
     required init()
     {
         super.init()
@@ -250,6 +254,7 @@ class GameViewController: DeltaCore.GameViewController
             case .quickSave: self.performQuickSaveAction()
             case .quickLoad: self.performQuickLoadAction()
             case .screenshot: self.performScreenshotAction()
+            case .statusBar: self.performStatusBarAction()
             case .fastForward: self.performFastForwardAction(activate: true)
             case .toggleFastForward:
                 let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
@@ -280,6 +285,7 @@ class GameViewController: DeltaCore.GameViewController
             case .quickSave: break
             case .quickLoad: break
             case .screenshot: break
+            case .statusBar: break
             case .fastForward: self.performFastForwardAction(activate: false)
             case .toggleFastForward: break
             case .toggleAltRepresentations: break
@@ -430,6 +436,11 @@ extension GameViewController
             
             pauseViewController.screenshotItem?.action = { [unowned self] item in
                 self.performScreenshotAction()
+            }
+            
+            pauseViewController.statusBarItem?.isSelected = Settings.statusBarEnabled
+            pauseViewController.statusBarItem?.action = { [unowned self] item in
+                self.performStatusBarAction()
             }
             
             pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
@@ -761,6 +772,11 @@ private extension GameViewController
     func playButtonAudioFeedbackSound()
     {
         AudioServicesPlaySystemSound(self.controllerView.buttonPressedSoundID)
+    }
+    
+    func updateStatusBar()
+    {
+        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     func updateControllerSkin()
@@ -1227,6 +1243,18 @@ extension GameViewController
         self.present(alertController, animated: true)
     }
     
+    func performStatusBarAction()
+    {
+        Settings.statusBarEnabled = !Settings.statusBarEnabled
+        
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        self.updateStatusBar()
+    }
+    
     func performScreenshotAction()
     {
         guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
@@ -1605,6 +1633,9 @@ private extension GameViewController
         case .buttonAudioFeedbackSound:
             self.updateControllers()
             self.playButtonAudioFeedbackSound()
+            
+        case .statusBarEnabled:
+            self.updateStatusBar()
             
         case .syncingService, .isAltJITEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .fastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled: break
         }
