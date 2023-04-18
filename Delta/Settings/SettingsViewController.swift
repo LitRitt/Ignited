@@ -538,6 +538,11 @@ private extension SettingsViewController
         Settings.isDebugModeEnabled = sender.isOn
     }
     
+    @IBAction func toggleClickyHapticEnabled(_ sender: UISwitch)
+    {
+        Settings.isClickyHapticEnabled = sender.isOn
+    }
+    
     @IBAction func toggleButtonHapticFeedbackEnabled(_ sender: UISwitch)
     {
         Settings.isButtonHapticFeedbackEnabled = sender.isOn
