@@ -4,6 +4,41 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.9</string>
+		<key>date</key>
+		<string>4/18/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.9</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Added page for Lit Patrons shoutout</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Changed rewind to be disabled by default</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixed a crash when toggling clicky haptics</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Removed unsupported file extensions on GPGX</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.8</string>
 		<key>date</key>
 		<string>4/16/2023</string>
