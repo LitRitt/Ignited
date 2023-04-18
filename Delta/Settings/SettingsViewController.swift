@@ -137,6 +137,12 @@ private extension SettingsViewController
         case resetBuildCounter
         case clearAutoStates
     }
+    
+    enum PatreonRow: Int, CaseIterable
+    {
+        case patreonLink
+        case patrons
+    }
 }
 
 class SettingsViewController: UITableViewController
@@ -817,6 +823,12 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
+    func showPatrons()
+    {
+        let hostingController = PatronsView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
     func resetBuildCounter()
     {
         let alertController = UIAlertController(title: NSLocalizedString("Reset Build Counter?", comment: ""), message: NSLocalizedString("This will cause the updates screens to be shown on next launch.", comment: ""), preferredStyle: .alert)
@@ -1173,16 +1185,22 @@ extension SettingsViewController
             }
             
         case .patreon:
-            let patreonURL = URL(string: "https://www.patreon.com/litritt")!
-            
-            UIApplication.shared.open(patreonURL, options: [:]) { (success) in
-                guard !success else { return }
-                
+            switch PatreonRow.allCases[indexPath.row]
+            {
+            case .patreonLink:
                 let patreonURL = URL(string: "https://www.patreon.com/litritt")!
                 
-                let safariViewController = SFSafariViewController(url: patreonURL)
-                safariViewController.preferredControlTintColor = UIColor.themeColor
-                self.present(safariViewController, animated: true, completion: nil)
+                UIApplication.shared.open(patreonURL, options: [:]) { (success) in
+                    guard !success else { return }
+                    
+                    let patreonURL = URL(string: "https://www.patreon.com/litritt")!
+                    
+                    let safariViewController = SFSafariViewController(url: patreonURL)
+                    safariViewController.preferredControlTintColor = UIColor.themeColor
+                    self.present(safariViewController, animated: true, completion: nil)
+                }
+                
+            case .patrons: self.showPatrons()
             }
             
             tableView.deselectRow(at: indexPath, animated: true)
