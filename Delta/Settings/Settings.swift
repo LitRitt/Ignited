@@ -137,7 +137,7 @@ struct Settings
                         #keyPath(UserDefaults.playOverOtherMedia): true,
                         #keyPath(UserDefaults.gameVolume): 1.0,
                         #keyPath(UserDefaults.isButtonAudioFeedbackEnabled): false,
-                        #keyPath(UserDefaults.isRewindEnabled): true,
+                        #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 15,
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
                         #keyPath(UserDefaults.isPromptSpeedEnabled): true,
