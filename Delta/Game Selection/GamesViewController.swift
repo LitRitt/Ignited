@@ -116,6 +116,7 @@ extension GamesViewController
         self.pageControl = UIPageControl()
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         self.pageControl.hidesForSinglePage = false
+        self.pageControl.allowsContinuousInteraction = false
         self.pageControl.numberOfPages = 3
         self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
         self.pageControl.pageIndicatorTintColor = UIColor.lightGray
