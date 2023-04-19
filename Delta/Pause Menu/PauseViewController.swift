@@ -19,7 +19,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.restartItem, self.screenshotItem, self.statusBarItem, self.saveStateItem, self.loadStateItem, self.cheatCodesItem, self.rewindItem, self.fastForwardItem, self.sustainButtonsItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
+        return [self.restartItem, self.screenshotItem, self.saveStateItem, self.loadStateItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
     }
     
     /// Pause Items
