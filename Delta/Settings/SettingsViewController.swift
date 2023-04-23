@@ -31,6 +31,7 @@ private extension SettingsViewController
         case toasts
         case statusBar
         case gameArtwork
+        case screenshots
         case skinOptions
         case controllerSkins
         case controllers
@@ -143,6 +144,13 @@ private extension SettingsViewController
         case patreonLink
         case patrons
     }
+    
+    enum ScreenshotsRow: Int, CaseIterable
+    {
+        case files
+        case photos
+        case scale
+    }
 }
 
 class SettingsViewController: UITableViewController
@@ -199,6 +207,10 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var promptSpeedSwitch: UISwitch!
     @IBOutlet private var fastForwardSpeedLabel: UILabel!
     @IBOutlet private var unsafeFastForwardSpeedsSwitch: UISwitch!
+    
+    @IBOutlet private var screenshotSaveToFilesSwitch: UISwitch!
+    @IBOutlet private var screenshotSaveToPhotosSwitch: UISwitch!
+    @IBOutlet private var screenshotImageScaleLabel: UILabel!
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
     
@@ -345,6 +357,10 @@ private extension SettingsViewController
         self.promptSpeedSwitch.isOn = Settings.isPromptSpeedEnabled
         self.updateFastForwardSpeedLabel()
         
+        self.screenshotSaveToFilesSwitch.isOn = Settings.screenshotSaveToFiles
+        self.screenshotSaveToPhotosSwitch.isOn = Settings.screenshotSaveToPhotos
+        self.updateScreenshotImageScaleLabel()
+        
         self.view.tintColor = .themeColor
         
         self.tableView.reloadData()
@@ -405,6 +421,12 @@ private extension SettingsViewController
     {
         let speed = String(format: "%.f", Settings.fastForwardSpeed * 100) + "%"
         self.fastForwardSpeedLabel.text = speed
+    }
+    
+    func updateScreenshotImageScaleLabel()
+    {
+        let scale = "\(Settings.screenshotImageScale.rawValue)x"
+        self.screenshotImageScaleLabel.text = scale
     }
     
     func updateRewindIntervalLabel()
@@ -650,6 +672,16 @@ private extension SettingsViewController
         Settings.isPromptSpeedEnabled = sender.isOn
     }
     
+    @IBAction func toggleScreenshotSaveToFiles(_ sender: UISwitch)
+    {
+        Settings.screenshotSaveToFiles = sender.isOn
+    }
+    
+    @IBAction func toggleScreenshotSaveToPhotos(_ sender: UISwitch)
+    {
+        Settings.screenshotSaveToPhotos = sender.isOn
+    }
+    
     @IBAction func toggleUnsafeFastForwardSpeeds(_ sender: UISwitch)
     {
         if sender.isOn
@@ -806,6 +838,52 @@ private extension SettingsViewController
         }))
         alertController.addAction(UIAlertAction(title: bit8Title, style: .default, handler: { (action) in
             Settings.buttonAudioFeedbackSound = .bit8
+        }))
+        alertController.addAction(.cancel)
+        self.present(alertController, animated: true, completion: nil)
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow
+        {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    func changeScreenshotImageScale()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Change Screenshot Image Scale", comment: ""), message: NSLocalizedString("Game screenshots will be saved at this scale. 1x is the native resolution of the system.", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        var x1Title = "1x"
+        var x2Title = "2x"
+        var x3Title = "3x"
+        var x4Title = "4x"
+        var x5Title = "5x"
+        
+        switch Settings.screenshotImageScale
+        {
+        case .x1: x1Title += " ✓"
+        case .x2: x2Title += " ✓"
+        case .x3: x3Title += " ✓"
+        case .x4: x4Title += " ✓"
+        case .x5: x5Title += " ✓"
+        }
+        
+        alertController.addAction(UIAlertAction(title: x1Title, style: .default, handler: { (action) in
+            Settings.screenshotImageScale = .x1
+        }))
+        alertController.addAction(UIAlertAction(title: x2Title, style: .default, handler: { (action) in
+            Settings.screenshotImageScale = .x2
+        }))
+        alertController.addAction(UIAlertAction(title: x3Title, style: .default, handler: { (action) in
+            Settings.screenshotImageScale = .x3
+        }))
+        alertController.addAction(UIAlertAction(title: x4Title, style: .default, handler: { (action) in
+            Settings.screenshotImageScale = .x4
+        }))
+        alertController.addAction(UIAlertAction(title: x5Title, style: .default, handler: { (action) in
+            Settings.screenshotImageScale = .x5
         }))
         alertController.addAction(.cancel)
         self.present(alertController, animated: true, completion: nil)
@@ -1049,10 +1127,10 @@ private extension SettingsViewController
             {
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
-        case .themeColor, .fastForwardSpeed, .buttonAudioFeedbackSound:
+        case .themeColor, .fastForwardSpeed, .buttonAudioFeedbackSound, .screenshotImageScale:
             self.update()
             
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .playOverOtherMedia, .gameVolume, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled, .statusBarEnabled: break
+        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .playOverOtherMedia, .gameVolume, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled, .statusBarEnabled, .screenshotSaveToPhotos, .screenshotSaveToFiles, .screenshotImageScale: break
         }
     }
 
@@ -1129,7 +1207,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork, .resourceLinks, .statusBar: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork, .resourceLinks, .statusBar, .screenshots: break
         }
 
         return cell
@@ -1177,6 +1255,14 @@ extension SettingsViewController
             case .sound:
                 self.changeButtonAudioFeedbackSound()
             case .buttons: break
+            }
+            
+        case .screenshots:
+            switch ScreenshotsRow.allCases[indexPath.row]
+            {
+            case .scale:
+                self.changeScreenshotImageScale()
+            case .files, .photos: break
             }
             
         case .advanced:

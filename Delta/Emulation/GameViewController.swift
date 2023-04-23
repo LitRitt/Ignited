@@ -1263,31 +1263,53 @@ extension GameViewController
     func performScreenshotAction()
     {
         guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
-        let scale = 5.0
+        
+        let scale = Settings.screenshotImageScale.rawValue
         let size = CGSize(width: snapshot.size.width * scale, height: snapshot.size.height * scale)
         
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        UIGraphicsGetCurrentContext()!.interpolationQuality = .none
+
         snapshot.draw(in: CGRect(origin: CGPoint.zero, size: size))
         let scaledSnapshot = UIGraphicsGetImageFromCurrentImageContext()
-        
+
         UIGraphicsEndImageContext()
         
-        UIImageWriteToSavedPhotosAlbum(scaledSnapshot!, nil, nil, nil)
+        if Settings.screenshotSaveToPhotos
+        {
+            UIImageWriteToSavedPhotosAlbum(scaledSnapshot!, nil, nil, nil)
+        }
         
-        let data = scaledSnapshot!.pngData()
-        let filename = getDocumentsDirectory().appendingPathComponent("screenshot.png")
-        try? data!.write(to: filename)
+        if Settings.screenshotSaveToFiles
+        {
+            let data = scaledSnapshot!.pngData()
+            
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let folderName = paths[0].appendingPathComponent("Screenshots")
+            try? FileManager.default.createDirectory(at: folderName, withIntermediateDirectories: true, attributes: nil)
+            
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+            
+            let fileName: URL
+            if let game = self.game
+            {
+                let gameDeepTitle = (game.fileURL.lastPathComponent as NSString).deletingPathExtension
+                fileName = folderName.appendingPathComponent(gameDeepTitle + "_" + dateFormatter.string(from: date) + ".png")
+            }
+            else
+            {
+                fileName = folderName.appendingPathComponent(dateFormatter.string(from: date) + ".png")
+            }
+            
+            try? data!.write(to: fileName)
+        }
         
         if let pauseView = self.pauseViewController
         {
             pauseView.dismiss()
         }
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
     }
     
     func performQuickSaveAction()
@@ -1651,7 +1673,7 @@ private extension GameViewController
         case .statusBarEnabled:
             self.updateStatusBar()
             
-        case .syncingService, .isAltJITEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .fastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled: break
+        case .syncingService, .isAltJITEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .fastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled, .screenshotSaveToFiles, .screenshotSaveToPhotos, .screenshotImageScale: break
         }
     }
     

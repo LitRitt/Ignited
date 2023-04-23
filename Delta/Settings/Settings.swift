@@ -67,6 +67,9 @@ extension Settings
         case isAlwaysShowControllerSkinEnabled
         case isDebugModeEnabled
         case isSkinDebugModeEnabled
+        case screenshotSaveToPhotos
+        case screenshotSaveToFiles
+        case screenshotImageScale
     }
 }
 
@@ -104,6 +107,19 @@ extension Settings
         case snappy
         case bit8
     }
+    
+    enum ScreenshotScale: Double, CaseIterable, CustomStringConvertible
+    {
+        case x1 = 1
+        case x2 = 2
+        case x3 = 3
+        case x4 = 4
+        case x5 = 5
+        
+        var description: String {
+            return "\(self.rawValue)x"
+        }
+    }
 }
 
 struct Settings
@@ -136,6 +152,9 @@ struct Settings
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.playOverOtherMedia): true,
                         #keyPath(UserDefaults.gameVolume): 1.0,
+                        #keyPath(UserDefaults.screenshotSaveToFiles): true,
+                        #keyPath(UserDefaults.screenshotSaveToPhotos): false,
+                        #keyPath(UserDefaults.screenshotImageScale): ScreenshotScale.x1.rawValue,
                         #keyPath(UserDefaults.isButtonAudioFeedbackEnabled): false,
                         #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 15,
@@ -610,6 +629,39 @@ extension Settings
         }
     }
     
+    static var screenshotSaveToFiles: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.screenshotSaveToFiles
+            return isEnabled
+        }
+        set {
+            UserDefaults.standard.screenshotSaveToFiles = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToFiles])
+        }
+    }
+    
+    static var screenshotSaveToPhotos: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.screenshotSaveToPhotos
+            return isEnabled
+        }
+        set {
+            UserDefaults.standard.screenshotSaveToPhotos = newValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToPhotos])
+        }
+    }
+    
+    static var screenshotImageScale: ScreenshotScale {
+        set {
+            UserDefaults.standard.screenshotImageScale = newValue.rawValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotImageScale])
+        }
+        get {
+            let size = ScreenshotScale(rawValue: UserDefaults.standard.screenshotImageScale) ?? .x1
+            return size
+        }
+    }
+    
     static func preferredCore(for gameType: GameType) -> DeltaCoreProtocol?
     {
         let key = self.preferredCoreSettingsKey(for: gameType)
@@ -850,4 +902,8 @@ private extension UserDefaults
     
     @NSManaged var isDebugModeEnabled: Bool
     @NSManaged var isSkinDebugModeEnabled: Bool
+    
+    @NSManaged var screenshotSaveToFiles: Bool
+    @NSManaged var screenshotSaveToPhotos: Bool
+    @NSManaged var screenshotImageScale: CGFloat
 }
