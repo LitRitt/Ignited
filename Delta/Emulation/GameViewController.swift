@@ -189,6 +189,10 @@ class GameViewController: DeltaCore.GameViewController
         return !Settings.statusBarEnabled
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     required init()
     {
         super.init()
@@ -1270,10 +1274,19 @@ extension GameViewController
         
         UIImageWriteToSavedPhotosAlbum(scaledSnapshot!, nil, nil, nil)
         
+        let data = scaledSnapshot!.pngData()
+        let filename = getDocumentsDirectory().appendingPathComponent("screenshot.png")
+        try? data!.write(to: filename)
+        
         if let pauseView = self.pauseViewController
         {
             pauseView.dismiss()
         }
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
     
     func performQuickSaveAction()
