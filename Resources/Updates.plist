@@ -4,6 +4,53 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.2.10</string>
+		<key>date</key>
+		<string>4/23/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.2.10</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>New Screenshot options - Save to Files, Save to Photos, Image Scale</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Forced light status bar during gameplay</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated licenses page formatting</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Reordered pause menu buttons and adjusted spacing to 4 items per row</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Adjusted settings slider labels to fit with bold system text</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Removed unimplemented swipable page control</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.2.9</string>
 		<key>date</key>
 		<string>4/18/2023</string>
