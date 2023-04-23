@@ -177,6 +177,7 @@ class GameViewController: DeltaCore.GameViewController
     
     private var presentedJITAlert = false
     
+    // TODO: Code for preferred game orientation goes here
     override var shouldAutorotate: Bool {
         return !self.isGyroActive
     }
