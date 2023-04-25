@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
 import DeltaCore
 import GBADeltaCore
@@ -1263,53 +1264,66 @@ extension GameViewController
     func performScreenshotAction()
     {
         guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
-        
-        let scale = Settings.screenshotImageScale.rawValue
-        let size = CGSize(width: snapshot.size.width * scale, height: snapshot.size.height * scale)
-        
-        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-        UIGraphicsGetCurrentContext()!.interpolationQuality = .none
 
-        snapshot.draw(in: CGRect(origin: CGPoint.zero, size: size))
-        let scaledSnapshot = UIGraphicsGetImageFromCurrentImageContext()
-
-        UIGraphicsEndImageContext()
+        let imageScale = Settings.screenshotImageScale.rawValue
+        let imageSize = CGSize(width: snapshot.size.width * imageScale, height: snapshot.size.height * imageScale)
         
-        if Settings.screenshotSaveToPhotos
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        let renderer = UIGraphicsImageRenderer(size: imageSize, format: format)
+
+        let scaledSnapshot = renderer.image { (context) in
+            context.cgContext.interpolationQuality = .none
+            snapshot.draw(in: CGRect(origin: .zero, size: imageSize))
+        }
+
+        if Settings.screenshotSaveToPhotos,
+           PHPhotoLibrary.isAuthorized
         {
-            UIImageWriteToSavedPhotosAlbum(scaledSnapshot!, nil, nil, nil)
+            PHPhotoLibrary.saveUIImage(image: scaledSnapshot)
         }
         
         if Settings.screenshotSaveToFiles
         {
-            let data = scaledSnapshot!.pngData()
+            guard let data = scaledSnapshot.pngData() else { return }
             
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            let folderName = paths[0].appendingPathComponent("Screenshots")
-            try? FileManager.default.createDirectory(at: folderName, withIntermediateDirectories: true, attributes: nil)
+            let screenshotsDirectory = FileManager.default.documentsDirectory.appendingPathComponent("Screenshots")
+            
+            do
+            {
+                try FileManager.default.createDirectory(at: screenshotsDirectory, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch
+            {
+                print(error)
+            }
             
             let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
             
             let fileName: URL
-            if let game = self.game
+            if let game = self.game as? Game
             {
-                let gameDeepTitle = (game.fileURL.lastPathComponent as NSString).deletingPathExtension
-                fileName = folderName.appendingPathComponent(gameDeepTitle + "_" + dateFormatter.string(from: date) + ".png")
+                let filename = game.name + "_" + dateFormatter.string(from: date) + ".png"
+                fileName = screenshotsDirectory.appendingPathComponent(filename)
             }
             else
             {
-                fileName = folderName.appendingPathComponent(dateFormatter.string(from: date) + ".png")
+                fileName = screenshotsDirectory.appendingPathComponent(dateFormatter.string(from: date) + ".png")
             }
             
-            try? data!.write(to: fileName)
+            do
+            {
+                try data.write(to: fileName)
+            }
+            catch
+            {
+                print(error)
+            }
         }
         
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
+        self.pauseViewController?.screenshotItem?.isSelected = false
     }
     
     func performQuickSaveAction()
