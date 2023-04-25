@@ -1277,10 +1277,12 @@ extension GameViewController
             snapshot.draw(in: CGRect(origin: .zero, size: imageSize))
         }
 
-        if Settings.screenshotSaveToPhotos,
-           PHPhotoLibrary.isAuthorized
+        if Settings.screenshotSaveToPhotos
         {
-            PHPhotoLibrary.saveUIImage(image: scaledSnapshot)
+            PHPhotoLibrary.runIfAuthorized
+            {
+                PHPhotoLibrary.saveUIImage(image: scaledSnapshot)
+            }
         }
         
         if Settings.screenshotSaveToFiles
