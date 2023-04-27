@@ -853,6 +853,9 @@ private extension GameViewController
                 
                 let text = NSLocalizedString("Game Saved", comment: "")
                 self.presentToastView(text: text)
+                
+                // update auto save state to prevent overwriting newer game saves when loading latest auto save
+                self.updateAutoSaveState()
             }
             catch CocoaError.fileNoSuchFile
             {
