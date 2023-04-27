@@ -653,21 +653,18 @@ private extension GameCollectionViewController
         guard let emulatorCore = self.activeEmulatorCore else { return }
         guard let game = emulatorCore.game as? Game else { return }
         
-        if Settings.autoLoadSave
+        let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+        fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+        
+        do
         {
-            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
-            
-            do
-            {
-                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
-                self.activeSaveState = saveStates?.last
-            }
-            catch
-            {
-                print(error)
-            }
+            let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+            self.activeSaveState = saveStates?.last
+        }
+        catch
+        {
+            print(error)
         }
         
         self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
