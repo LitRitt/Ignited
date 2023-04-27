@@ -1517,22 +1517,12 @@ extension GameViewController
 {
     func presentToastView(text: String, duration: Double = 1.0)
     {
-        if Settings.showToastNotifications
-        {
-            let toastView = RSTToastView(text: text, detailText: nil)
-            toastView.edgeOffset.vertical = 8
-            DispatchQueue.main.async {
-                if let transitionCoordinator = self.transitionCoordinator
-                {
-                    transitionCoordinator.animate(alongsideTransition: nil) { (context) in
-                        self.show(toastView, duration: duration)
-                    }
-                }
-                else
-                {
-                    self.show(toastView, duration: duration)
-                }
-            }
+        guard Settings.showToastNotifications else { return }
+        
+        let toastView = RSTToastView(text: text, detailText: nil)
+        toastView.edgeOffset.vertical = 8
+        DispatchQueue.main.async {
+            self.show(toastView, duration: duration)
         }
     }
 }
