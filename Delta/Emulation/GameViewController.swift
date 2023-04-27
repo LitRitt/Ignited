@@ -1240,6 +1240,7 @@ extension GameViewController
             self.updateAutoSaveState()
             self.game = self.game
             self.resumeEmulation()
+            self.presentToastView(text: NSLocalizedString("Game Restarted", comment: ""))
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
             self.resumeEmulation()
@@ -1262,6 +1263,17 @@ extension GameViewController
         }
         
         self.updateStatusBar()
+        
+        let text: String
+        if Settings.statusBarEnabled
+        {
+            text = NSLocalizedString("Status Bar Enabled", comment: "")
+        }
+        else
+        {
+            text = NSLocalizedString("Status Bar Disabled", comment: "")
+        }
+        self.presentToastView(text: text)
     }
     
     func performScreenshotAction()
@@ -1327,6 +1339,8 @@ extension GameViewController
                 print(error)
             }
         }
+        
+        self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
         
         self.pauseViewController?.screenshotItem?.isSelected = false
     }
