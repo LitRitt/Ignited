@@ -67,6 +67,7 @@ extension Settings
         case isAlwaysShowControllerSkinEnabled
         case isDebugModeEnabled
         case isSkinDebugModeEnabled
+        case skinDebugDevice
         case screenshotSaveToPhotos
         case screenshotSaveToFiles
         case screenshotImageScale
@@ -120,6 +121,14 @@ extension Settings
             return "\(self.rawValue)x"
         }
     }
+    
+    enum SkinDebugDevice: String
+    {
+        case standard
+        case edgeToEdge
+        case ipad
+        case splitView
+    }
 }
 
 struct Settings
@@ -166,6 +175,7 @@ struct Settings
                         #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
                         #keyPath(UserDefaults.isDebugModeEnabled): false,
                         #keyPath(UserDefaults.isSkinDebugModeEnabled): false,
+                        #keyPath(UserDefaults.skinDebugDevice): SkinDebugDevice.edgeToEdge.rawValue,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
     }
@@ -629,6 +639,17 @@ extension Settings
         }
     }
     
+    static var skinDebugDevice: SkinDebugDevice {
+        set {
+            UserDefaults.standard.skinDebugDevice = newValue.rawValue
+            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.skinDebugDevice])
+        }
+        get {
+            let device = SkinDebugDevice(rawValue: UserDefaults.standard.skinDebugDevice) ?? .edgeToEdge
+            return device
+        }
+    }
+    
     static var screenshotSaveToFiles: Bool {
         get {
             let isEnabled = UserDefaults.standard.screenshotSaveToFiles
@@ -902,6 +923,7 @@ private extension UserDefaults
     
     @NSManaged var isDebugModeEnabled: Bool
     @NSManaged var isSkinDebugModeEnabled: Bool
+    @NSManaged var skinDebugDevice: String
     
     @NSManaged var screenshotSaveToFiles: Bool
     @NSManaged var screenshotSaveToPhotos: Bool

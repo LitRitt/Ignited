@@ -464,6 +464,10 @@ extension GameViewController
                 self.performDebugModeAction()
             }
             
+            pauseViewController.debugDeviceItem?.action = { [unowned self] item in
+                self.performDebugDeviceAction()
+            }
+            
             pauseViewController.sustainButtonsItem?.isSelected = gameController.sustainedInputs.count > 0
             pauseViewController.sustainButtonsItem?.action = { [unowned self, unowned pauseViewController] item in
                 
@@ -789,7 +793,35 @@ private extension GameViewController
     {
         guard let game = self.game as? Game, let window = self.view.window else { return }
         
-        let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+        var traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+        
+        if Settings.isSkinDebugModeEnabled || Settings.isDebugModeEnabled
+        {
+            switch Settings.skinDebugDevice
+            {
+            case .edgeToEdge:
+                traits.device = .iphone
+                traits.displayType = .edgeToEdge
+                
+            case .standard:
+                traits.device = .iphone
+                traits.displayType = .standard
+                
+            case .ipad:
+                traits.device = .ipad
+                traits.displayType = .standard
+                
+            case .splitView:
+                traits.device = .ipad
+                traits.displayType = .splitView
+            }
+            
+            self.controllerView.overrideControllerSkinTraits = traits
+        }
+        else
+        {
+            self.controllerView.overrideControllerSkinTraits = nil
+        }
         
         if Settings.localControllerPlayerIndex != nil
         {
@@ -1523,6 +1555,42 @@ extension GameViewController
         }
         self.presentToastView(text: text)
     }
+    
+    func performDebugDeviceAction()
+    {
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Choose Skin Debug Device", comment: ""), message: NSLocalizedString("This allows you to test your skins on devices that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "iPhone - Standard", style: .default, handler: { (action) in
+            Settings.skinDebugDevice = .standard
+            self.resumeEmulation()
+            self.presentToastView(text: NSLocalizedString("Debugging as Standard iPhone", comment: ""))
+        }))
+        alertController.addAction(UIAlertAction(title: "iPhone - Edge to Edge", style: .default, handler: { (action) in
+            Settings.skinDebugDevice = .edgeToEdge
+            self.resumeEmulation()
+            self.presentToastView(text: NSLocalizedString("Debugging as Edge to Edge iPhone", comment: ""))
+        }))
+        alertController.addAction(UIAlertAction(title: "iPad - Standard", style: .default, handler: { (action) in
+            Settings.skinDebugDevice = .ipad
+            self.resumeEmulation()
+            self.presentToastView(text: NSLocalizedString("Debugging as Standard iPad", comment: ""))
+        }))
+        alertController.addAction(UIAlertAction(title: "iPad - Split View", style: .default, handler: { (action) in
+            Settings.skinDebugDevice = .splitView
+            self.resumeEmulation()
+            self.presentToastView(text: NSLocalizedString("Debugging as SplitView iPad", comment: ""))
+        }))
+        alertController.addAction(.cancel)
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
 //MARK: - Toast Notifications -
@@ -1660,7 +1728,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .isButtonTouchOverlayEnabled, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled:
+        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .isButtonTouchOverlayEnabled, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .skinDebugDevice:
             self.updateControllers()
 
         case .preferredControllerSkin:
