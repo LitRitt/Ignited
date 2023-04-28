@@ -140,6 +140,8 @@ class PausePresentationController: UIPresentationController
     {
         super.containerViewDidLayoutSubviews()
         
+        guard let presentedView = self.presentedView else { return }
+        
         // Magical calculations. If you edit ANY of them, you have to make sure everything still lays out correctly on *all* devices
         // So, I'd recommend that you not touch this :)
         
@@ -167,13 +169,13 @@ class PausePresentationController: UIPresentationController
         
         
         // Ensure width is correct
-        self.presentedView?.bounds.size.width = self.containerView!.bounds.width
-        self.presentedView?.setNeedsLayout()
-        self.presentedView?.layoutIfNeeded()
+        presentedView.bounds.size.width = self.containerView!.bounds.width
+        presentedView.setNeedsLayout()
+        presentedView.layoutIfNeeded()
         
         if self.presentingViewController.transitionCoordinator == nil
         {
-            self.presentedView?.frame = self.frameOfPresentedViewInContainerView
+            presentedView.frame = self.frameOfPresentedViewInContainerView
         }
         
         // Unhide pauseIconImageView so its height is involved with layout calculations
@@ -196,5 +198,10 @@ class PausePresentationController: UIPresentationController
         
         self.contentView.setNeedsLayout() // Ensures that layout will actually occur (sometimes the system thinks a layout is not needed, which messes up calculations)
         self.contentView.layoutIfNeeded()
+        
+        presentedView.frame = CGRect(origin: CGPoint(x: 0, y: self.contentView.frame.maxY), size: presentedView.frame.size)
+        
+        presentedView.setNeedsLayout()
+        presentedView.layoutIfNeeded()
     }
 }
