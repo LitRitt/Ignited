@@ -1462,22 +1462,19 @@ extension GameViewController
     
     func promptFastForwardSpeed()
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Fast Forward Speed", comment: ""), message: NSLocalizedString("Speeds above 100% will speed up gameplay. Speeds below 100% will slow down gameplay.", comment: ""), preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
         alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        alertController.addAction(UIAlertAction(title: "25%", style: .default, handler: { (action) in
-            self.setFastForwardSpeed(speed: 0.25)
-        }))
-        alertController.addAction(UIAlertAction(title: "50%", style: .default, handler: { (action) in
-            self.setFastForwardSpeed(speed: 0.5)
-        }))
         alertController.addAction(UIAlertAction(title: "150%", style: .default, handler: { (action) in
             self.setFastForwardSpeed(speed: 1.5)
         }))
         alertController.addAction(UIAlertAction(title: "200%", style: .default, handler: { (action) in
             self.setFastForwardSpeed(speed: 2.0)
+        }))
+        alertController.addAction(UIAlertAction(title: "300%", style: .default, handler: { (action) in
+            self.setFastForwardSpeed(speed: 3.0)
         }))
         alertController.addAction(UIAlertAction(title: "400%", style: .default, handler: { (action) in
             self.setFastForwardSpeed(speed: 4.0)
