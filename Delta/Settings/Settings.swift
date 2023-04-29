@@ -157,6 +157,7 @@ struct Settings
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.playOverOtherMedia): true,
                         #keyPath(UserDefaults.gameVolume): 1.0,
+                        #keyPath(UserDefaults.toastNotificationDuration): 1.5,
                         #keyPath(UserDefaults.screenshotSaveToFiles): true,
                         #keyPath(UserDefaults.screenshotSaveToPhotos): false,
                         #keyPath(UserDefaults.screenshotImageScale): ScreenshotScale.x1.rawValue,
@@ -481,6 +482,16 @@ extension Settings
         }
     }
     
+    static var toastNotificationDuration: CGFloat {
+        set {
+            UserDefaults.standard.toastNotificationDuration = newValue
+        }
+        get {
+            let duration = UserDefaults.standard.toastNotificationDuration
+            return duration
+        }
+    }
+    
     static var autoLoadSave: Bool {
         get {
             let autoLoadSave = UserDefaults.standard.autoLoadSave
@@ -538,7 +549,6 @@ extension Settings
         set {
             UserDefaults.standard.rewindTimerInterval = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.rewindTimerInterval])
-            
         }
         get {
             let rewindTimerInterval = UserDefaults.standard.rewindTimerInterval
@@ -572,7 +582,6 @@ extension Settings
         set {
             UserDefaults.standard.fastForwardSpeed = newValue
             NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.fastForwardSpeed])
-            
         }
         get {
             let fastForwardSpeed = UserDefaults.standard.fastForwardSpeed
@@ -900,6 +909,8 @@ private extension UserDefaults
     @NSManaged var statusBarEnabled: Bool
     
     @NSManaged var showToastNotifications: Bool
+    @NSManaged var toastNotificationDuration: CGFloat
+    
     @NSManaged var autoLoadSave: Bool
     
     @NSManaged var respectSilentMode: Bool

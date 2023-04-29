@@ -1597,14 +1597,14 @@ extension GameViewController
 /// Toast Notifications
 extension GameViewController
 {
-    func presentToastView(text: String, duration: Double = 1.0)
+    func presentToastView(text: String)
     {
         guard Settings.showToastNotifications else { return }
         
         let toastView = RSTToastView(text: text, detailText: nil)
         toastView.edgeOffset.vertical = 8
         DispatchQueue.main.async {
-            self.show(toastView, duration: duration)
+            self.show(toastView, duration: Settings.toastNotificationDuration)
         }
     }
 }
