@@ -109,17 +109,13 @@ extension Settings
         case bit8
     }
     
-    enum ScreenshotScale: Double, CaseIterable, CustomStringConvertible
+    enum ScreenshotScale: Double, CaseIterable
     {
         case x1 = 1
         case x2 = 2
         case x3 = 3
         case x4 = 4
         case x5 = 5
-        
-        var description: String {
-            return "\(self.rawValue)x"
-        }
     }
     
     enum SkinDebugDevice: String
