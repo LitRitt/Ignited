@@ -1372,9 +1372,12 @@ extension GameViewController
             }
         }
         
-        self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
         
-        self.pauseViewController?.screenshotItem?.isSelected = false
+        self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
     }
     
     func performQuickSaveAction()
