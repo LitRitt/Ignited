@@ -40,7 +40,30 @@
 		AC53406229E32B70009EDF08 /* 8bit.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406129E32B70009EDF08 /* 8bit.caf */; };
 		AC53406429E33098009EDF08 /* snap.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406329E33097009EDF08 /* snap.caf */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
+		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
+		AC8C212629FDAE100044748D /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C20F929FDAA640044748D /* Feature.swift */; };
+		AC8C212729FDAE100044748D /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C20FB29FDAA760044748D /* Option.swift */; };
+		AC8C212829FDAE400044748D /* UserDefaults+OptionValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C211329FDAC460044748D /* UserDefaults+OptionValues.swift */; };
+		AC8C212929FDAE400044748D /* Collection+Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C211529FDAC660044748D /* Collection+Optionals.swift */; };
+		AC8C212A29FDAE400044748D /* NotificationName+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C211729FDAC800044748D /* NotificationName+Settings.swift */; };
+		AC8C212B29FDAE400044748D /* EnvironmentValues+FeatureOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C211929FDACB30044748D /* EnvironmentValues+FeatureOption.swift */; };
+		AC8C212C29FDAE400044748D /* AnyFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210B29FDABCB0044748D /* AnyFeature.swift */; };
+		AC8C212D29FDAE400044748D /* AnyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210D29FDABF20044748D /* AnyOption.swift */; };
+		AC8C212E29FDAE400044748D /* FeatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210F29FDAC050044748D /* FeatureContainer.swift */; };
+		AC8C212F29FDAE400044748D /* OptionalProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C211129FDAC240044748D /* OptionalProtocol.swift */; };
+		AC8C213029FDAE400044748D /* SettingsName.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210129FDAB000044748D /* SettingsName.swift */; };
+		AC8C213129FDAE400044748D /* SettingsUserInfoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210329FDAB270044748D /* SettingsUserInfoKey.swift */; };
+		AC8C213229FDAE400044748D /* OptionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210529FDAB4A0044748D /* OptionValue.swift */; };
+		AC8C213329FDAE400044748D /* LocalizedOptionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210729FDAB630044748D /* LocalizedOptionValue.swift */; };
+		AC8C213429FDAE400044748D /* DisplayInlineKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C210929FDAB760044748D /* DisplayInlineKey.swift */; };
+		AC8C213529FDAE400044748D /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C20FD29FDAAB90044748D /* OptionPickerView.swift */; };
+		AC8C213629FDAE400044748D /* OptionToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C20FF29FDAACB0044748D /* OptionToggleView.swift */; };
+		AC8C213929FDAF390044748D /* FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C213829FDAF390044748D /* FeaturesView.swift */; };
+		AC8C213B29FDAFA60044748D /* FeatureDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C213A29FDAFA60044748D /* FeatureDetailView.swift */; };
 		AC8E5BCA29CCF77700F32D19 /* UIColor+Adjust.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */; };
+		ACB3CB8729FDCECD002B53DE /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8629FDCECD002B53DE /* Features.swift */; };
+		ACB3CB8A29FDCF2A002B53DE /* GameScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8929FDCF2A002B53DE /* GameScreenshots.swift */; };
+		ACB3CB8C29FDCF4D002B53DE /* ToastNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8B29FDCF4D002B53DE /* ToastNotifications.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
 		ACD727D729EE10740028B8A8 /* Patrons.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACD727D629EE10740028B8A8 /* Patrons.plist */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
@@ -193,6 +216,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AC720C0B29FDC0A800483B47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFFA71CF1AAC406100EE9DD1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC8C211E29FDAD970044748D;
+			remoteInfo = Features;
+		};
 		BFEBE58225D3388F00222319 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFFA71CF1AAC406100EE9DD1 /* Project object */;
@@ -203,6 +233,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AC8C211D29FDAD970044748D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BF08DC3325CE07C3007A9CF4 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,7 +266,30 @@
 		AC53406129E32B70009EDF08 /* 8bit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 8bit.caf; sourceTree = "<group>"; };
 		AC53406329E33097009EDF08 /* snap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = snap.caf; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
+		AC8C20F929FDAA640044748D /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		AC8C20FB29FDAA760044748D /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		AC8C20FD29FDAAB90044748D /* OptionPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
+		AC8C20FF29FDAACB0044748D /* OptionToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionToggleView.swift; sourceTree = "<group>"; };
+		AC8C210129FDAB000044748D /* SettingsName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsName.swift; sourceTree = "<group>"; };
+		AC8C210329FDAB270044748D /* SettingsUserInfoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUserInfoKey.swift; sourceTree = "<group>"; };
+		AC8C210529FDAB4A0044748D /* OptionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionValue.swift; sourceTree = "<group>"; };
+		AC8C210729FDAB630044748D /* LocalizedOptionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedOptionValue.swift; sourceTree = "<group>"; };
+		AC8C210929FDAB760044748D /* DisplayInlineKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInlineKey.swift; sourceTree = "<group>"; };
+		AC8C210B29FDABCB0044748D /* AnyFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyFeature.swift; sourceTree = "<group>"; };
+		AC8C210D29FDABF20044748D /* AnyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyOption.swift; sourceTree = "<group>"; };
+		AC8C210F29FDAC050044748D /* FeatureContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureContainer.swift; sourceTree = "<group>"; };
+		AC8C211129FDAC240044748D /* OptionalProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalProtocol.swift; sourceTree = "<group>"; };
+		AC8C211329FDAC460044748D /* UserDefaults+OptionValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+OptionValues.swift"; sourceTree = "<group>"; };
+		AC8C211529FDAC660044748D /* Collection+Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Optionals.swift"; sourceTree = "<group>"; };
+		AC8C211729FDAC800044748D /* NotificationName+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+Settings.swift"; sourceTree = "<group>"; };
+		AC8C211929FDACB30044748D /* EnvironmentValues+FeatureOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+FeatureOption.swift"; sourceTree = "<group>"; };
+		AC8C211F29FDAD970044748D /* libFeatures.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFeatures.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC8C213829FDAF390044748D /* FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesView.swift; sourceTree = "<group>"; };
+		AC8C213A29FDAFA60044748D /* FeatureDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureDetailView.swift; sourceTree = "<group>"; };
 		AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Adjust.swift"; sourceTree = "<group>"; };
+		ACB3CB8629FDCECD002B53DE /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
+		ACB3CB8929FDCF2A002B53DE /* GameScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenshots.swift; sourceTree = "<group>"; };
+		ACB3CB8B29FDCF4D002B53DE /* ToastNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotifications.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
 		ACD727D629EE10740028B8A8 /* Patrons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Patrons.plist; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
@@ -412,6 +474,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AC8C211C29FDAD970044748D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BFFA71D41AAC406100EE9DD1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -421,6 +490,7 @@
 				BF69FBA223E375A20051BEEA /* libVBA-M.a in Frameworks */,
 				BFFDF04623E3D3A600931B96 /* libMupen64Plus.a in Frameworks */,
 				BFDCA1E6244EBAA900B8FBDB /* liblibDeSmuME.a in Frameworks */,
+				AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */,
 				BFCADF1E25D22FE2008D78FB /* Systems.framework in Frameworks */,
 				BF69FBC923E3A8380051BEEA /* libNestopia.a in Frameworks */,
 				D524F4A1273DE9A100D500B2 /* AltKit in Frameworks */,
@@ -457,6 +527,96 @@
 				AC53406129E32B70009EDF08 /* 8bit.caf */,
 			);
 			path = "Button Sounds";
+			sourceTree = "<group>";
+		};
+		AC8C20F429FDAA130044748D /* Features */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		AC8C20F529FDAA430044748D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AC8C20FD29FDAAB90044748D /* OptionPickerView.swift */,
+				AC8C20FF29FDAACB0044748D /* OptionToggleView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AC8C20F629FDAA4A0044748D /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				AC8C210129FDAB000044748D /* SettingsName.swift */,
+				AC8C210329FDAB270044748D /* SettingsUserInfoKey.swift */,
+				AC8C210529FDAB4A0044748D /* OptionValue.swift */,
+				AC8C210729FDAB630044748D /* LocalizedOptionValue.swift */,
+				AC8C210929FDAB760044748D /* DisplayInlineKey.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		AC8C20F729FDAA4F0044748D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				AC8C210B29FDABCB0044748D /* AnyFeature.swift */,
+				AC8C210D29FDABF20044748D /* AnyOption.swift */,
+				AC8C210F29FDAC050044748D /* FeatureContainer.swift */,
+				AC8C211129FDAC240044748D /* OptionalProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		AC8C20F829FDAA550044748D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AC8C211329FDAC460044748D /* UserDefaults+OptionValues.swift */,
+				AC8C211529FDAC660044748D /* Collection+Optionals.swift */,
+				AC8C211729FDAC800044748D /* NotificationName+Settings.swift */,
+				AC8C211929FDACB30044748D /* EnvironmentValues+FeatureOption.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AC8C212029FDAD980044748D /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				AC8C20F829FDAA550044748D /* Extensions */,
+				AC8C20F729FDAA4F0044748D /* Protocols */,
+				AC8C20F629FDAA4A0044748D /* Types */,
+				AC8C20F529FDAA430044748D /* Views */,
+				AC8C20F929FDAA640044748D /* Feature.swift */,
+				AC8C20FB29FDAA760044748D /* Option.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		AC8C213729FDAF1B0044748D /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				AC8C213829FDAF390044748D /* FeaturesView.swift */,
+				AC8C213A29FDAFA60044748D /* FeatureDetailView.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		ACB3CB8529FDCEAD002B53DE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3CB8829FDCF17002B53DE /* Features */,
+				ACB3CB8629FDCECD002B53DE /* Features.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		ACB3CB8829FDCF17002B53DE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3CB8929FDCF2A002B53DE /* GameScreenshots.swift */,
+				ACB3CB8B29FDCF4D002B53DE /* ToastNotifications.swift */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 		ACD727D129EE0B200028B8A8 /* Patrons */ = {
@@ -802,6 +962,7 @@
 		BFAA1FEB1B8AA4E800495943 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				AC8C213729FDAF1B0044748D /* Features */,
 				ACD727D129EE0B200028B8A8 /* Patrons */,
 				BFAA1FEC1B8AA4FA00495943 /* Settings.swift */,
 				BF5E7F451B9A652600AE44F8 /* Settings.storyboard */,
@@ -897,8 +1058,10 @@
 		BFFA71CE1AAC406100EE9DD1 = {
 			isa = PBXGroup;
 			children = (
+				AC8C20F429FDAA130044748D /* Features */,
 				AC11456429A444C4005E95A8 /* Packages */,
 				BFFA71D91AAC406100EE9DD1 /* Delta */,
+				AC8C212029FDAD980044748D /* Features */,
 				BF9F4FCD1AAD7B25004C9500 /* Frameworks */,
 				BFEC732F1AAECCBD00650035 /* Resources */,
 				BFFA71D81AAC406100EE9DD1 /* Products */,
@@ -910,6 +1073,7 @@
 			isa = PBXGroup;
 			children = (
 				BFFA71D71AAC406100EE9DD1 /* Ignited.app */,
+				AC8C211F29FDAD970044748D /* libFeatures.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -917,6 +1081,7 @@
 		BFFA71D91AAC406100EE9DD1 /* Delta */ = {
 			isa = PBXGroup;
 			children = (
+				ACB3CB8529FDCEAD002B53DE /* Features */,
 				BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */,
 				D5A98CE1284EF14B00E023E5 /* SceneDelegate.swift */,
 				BFFA71E01AAC406100EE9DD1 /* Main.storyboard */,
@@ -1013,6 +1178,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AC8C211E29FDAD970044748D /* Features */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC8C212329FDAD980044748D /* Build configuration list for PBXNativeTarget "Features" */;
+			buildPhases = (
+				AC8C211B29FDAD970044748D /* Sources */,
+				AC8C211C29FDAD970044748D /* Frameworks */,
+				AC8C211D29FDAD970044748D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Features;
+			productName = Features;
+			productReference = AC8C211F29FDAD970044748D /* libFeatures.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		BFFA71D61AAC406100EE9DD1 /* Delta */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFFA71F61AAC406100EE9DD1 /* Build configuration list for PBXNativeTarget "Delta" */;
@@ -1028,6 +1210,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AC720C0C29FDC0A800483B47 /* PBXTargetDependency */,
 				BFEBE58325D3388F00222319 /* PBXTargetDependency */,
 			);
 			name = Delta;
@@ -1045,10 +1228,13 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastSwiftUpdateCheck = 1230;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = "Lit Development";
 				TargetAttributes = {
+					AC8C211E29FDAD970044748D = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					BF14D8941DE7A512002CA1BE = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 6XVY5G3U44;
@@ -1090,6 +1276,7 @@
 				BFFA71D61AAC406100EE9DD1 /* Delta */,
 				BF14D8941DE7A512002CA1BE /* mogenerator */,
 				BF6E70B925D2187800E41CD1 /* Systems */,
+				AC8C211E29FDAD970044748D /* Features */,
 			);
 		};
 /* End PBXProject section */
@@ -1230,6 +1417,30 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AC8C211B29FDAD970044748D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC8C212E29FDAE400044748D /* FeatureContainer.swift in Sources */,
+				AC8C213029FDAE400044748D /* SettingsName.swift in Sources */,
+				AC8C212629FDAE100044748D /* Feature.swift in Sources */,
+				AC8C212D29FDAE400044748D /* AnyOption.swift in Sources */,
+				AC8C212F29FDAE400044748D /* OptionalProtocol.swift in Sources */,
+				AC8C213429FDAE400044748D /* DisplayInlineKey.swift in Sources */,
+				AC8C213629FDAE400044748D /* OptionToggleView.swift in Sources */,
+				AC8C212C29FDAE400044748D /* AnyFeature.swift in Sources */,
+				AC8C213329FDAE400044748D /* LocalizedOptionValue.swift in Sources */,
+				AC8C212A29FDAE400044748D /* NotificationName+Settings.swift in Sources */,
+				AC8C212929FDAE400044748D /* Collection+Optionals.swift in Sources */,
+				AC8C213129FDAE400044748D /* SettingsUserInfoKey.swift in Sources */,
+				AC8C213529FDAE400044748D /* OptionPickerView.swift in Sources */,
+				AC8C212729FDAE100044748D /* Option.swift in Sources */,
+				AC8C212B29FDAE400044748D /* EnvironmentValues+FeatureOption.swift in Sources */,
+				AC8C213229FDAE400044748D /* OptionValue.swift in Sources */,
+				AC8C212829FDAE400044748D /* UserDefaults+OptionValues.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BFFA71D31AAC406100EE9DD1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1237,6 +1448,7 @@
 				BFB3645823245A6000CD0EB1 /* LicensesViewController.swift in Sources */,
 				BFC6F7B81F435BC500221B96 /* Input+Display.swift in Sources */,
 				BF59426A1E09BBD00051894B /* GridCollectionViewCell.swift in Sources */,
+				AC8C213B29FDAFA60044748D /* FeatureDetailView.swift in Sources */,
 				BF6BF3181EB82111008E83CD /* iTunesImportOption.swift in Sources */,
 				BF647A6A22FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift in Sources */,
 				BFF6452E1F7CC5060056533E /* GameControllerInputMappingTransformer.swift in Sources */,
@@ -1256,6 +1468,7 @@
 				BFC1F2CC22F9515F00606A45 /* CopyDeepLinkActivity.swift in Sources */,
 				AC503F5F29B2BD25005B27DD /* Update.swift in Sources */,
 				BF5942801E09BC830051894B /* SaveState.swift in Sources */,
+				AC8C213929FDAF390044748D /* FeaturesView.swift in Sources */,
 				BF59428E1E09BCFB0051894B /* ImportController.swift in Sources */,
 				BF13A7581D5D2FD9000BB055 /* EmulatorCore+Cheats.swift in Sources */,
 				BF48F74E219A16DA00BC2FC1 /* SyncingServicesViewController.swift in Sources */,
@@ -1301,6 +1514,7 @@
 				D5864970297734280081477E /* CheatMetadata.swift in Sources */,
 				BF8DDD241F4F6C880088A21B /* InputCalloutView.swift in Sources */,
 				BF5942701E09BC5D0051894B /* GamesDatabase.swift in Sources */,
+				ACB3CB8A29FDCF2A002B53DE /* GameScreenshots.swift in Sources */,
 				BF34FA071CF0F510006624C7 /* EditCheatViewController.swift in Sources */,
 				BF1F45A421AF274D00EF9895 /* SyncResultViewController.swift in Sources */,
 				AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */,
@@ -1347,11 +1561,13 @@
 				BF1173501DA32CF600047DF8 /* ControllersSettingsViewController.swift in Sources */,
 				BFFC461E1D59823500AF2CC6 /* GamesPresentationController.swift in Sources */,
 				BF99A5971DC2F9C400468E9E /* ControllerSkinTableViewCell.swift in Sources */,
+				ACB3CB8C29FDCF4D002B53DE /* ToastNotifications.swift in Sources */,
 				BFE9908024451E15006409A7 /* MelonDSCoreSettingsViewController.swift in Sources */,
 				BF5942861E09BC8B0051894B /* _Cheat.swift in Sources */,
 				BF5E7F441B9A650B00AE44F8 /* SettingsViewController.swift in Sources */,
 				BF8CA9361F5F651900499FDD /* PopoverMenuController.swift in Sources */,
 				BFEF24F31F7DD4FD00454C62 /* SaveStateMigrationPolicy.swift in Sources */,
+				ACB3CB8729FDCECD002B53DE /* Features.swift in Sources */,
 				BF5942931E09BD1A0051894B /* NSFetchedResultsController+Conveniences.m in Sources */,
 				BF4828881F90290F00028B97 /* Action.swift in Sources */,
 				ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */,
@@ -1369,6 +1585,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AC720C0C29FDC0A800483B47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC8C211E29FDAD970044748D /* Features */;
+			targetProxy = AC720C0B29FDC0A800483B47 /* PBXContainerItemProxy */;
+		};
 		BFEBE58325D3388F00222319 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BF6E70B925D2187800E41CD1 /* Systems */;
@@ -1416,6 +1637,53 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AC8C212429FDAD980044748D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AC8C212529FDAD980044748D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		BF14D8951DE7A512002CA1BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1640,6 +1908,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AC8C212329FDAD980044748D /* Build configuration list for PBXNativeTarget "Features" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC8C212429FDAD980044748D /* Debug */,
+				AC8C212529FDAD980044748D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BF14D8971DE7A512002CA1BE /* Build configuration list for PBXAggregateTarget "mogenerator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

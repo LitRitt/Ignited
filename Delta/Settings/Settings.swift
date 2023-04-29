@@ -9,69 +9,59 @@
 import Foundation
 
 import DeltaCore
+import Features
 import MelonDSDeltaCore
 
 import Roxas
 
-extension Notification.Name
+extension Settings.NotificationUserInfoKey
 {
-    static let settingsDidChange = Notification.Name("SettingsDidChangeNotification")
+    static let system: Settings.NotificationUserInfoKey = "system"
+    static let traits: Settings.NotificationUserInfoKey = "traits"
+    static let core: Settings.NotificationUserInfoKey = "core"
 }
 
-extension Settings
+extension Settings.Name
 {
-    enum NotificationUserInfoKey: String
-    {
-        case name
-        
-        case system
-        case traits
-        
-        case core
-    }
-    
-    enum Name: String
-    {
-        case autoLoadSave
-        case gameArtworkSize
-        case gameArtworkRoundedCornersEnabled
-        case gameArtworkBordersEnabled
-        case gameArtworkShadowsEnabled
-        case themeColor
-        case localControllerPlayerIndex
-        case translucentControllerSkinOpacity
-        case preferredControllerSkin
-        case syncingService
-        case isButtonHapticFeedbackEnabled
-        case isThumbstickHapticFeedbackEnabled
-        case isClickyHapticEnabled
-        case hapticFeedbackStrength
-        case isButtonAudioFeedbackEnabled
-        case buttonAudioFeedbackSound
-        case isButtonTouchOverlayEnabled
-        case touchOverlayOpacity
-        case touchOverlaySize
-        case isTouchOverlayThemeEnabled
-        case statusBarEnabled
-        case isAltJITEnabled
-        case respectSilentMode
-        case playOverOtherMedia
-        case gameVolume
-        case isUnsafeFastForwardSpeedsEnabled
-        case isPromptSpeedEnabled
-        case fastForwardSpeed
-        case isRewindEnabled
-        case rewindTimerInterval
-        case isAltRepresentationsAvailable
-        case isAltRepresentationsEnabled
-        case isAlwaysShowControllerSkinEnabled
-        case isDebugModeEnabled
-        case isSkinDebugModeEnabled
-        case skinDebugDevice
-        case screenshotSaveToPhotos
-        case screenshotSaveToFiles
-        case screenshotImageScale
-    }
+    static let localControllerPlayerIndex: Settings.Name = "localControllerPlayerIndex"
+    static let translucentControllerSkinOpacity: Settings.Name = "translucentControllerSkinOpacity"
+    static let preferredControllerSkin: Settings.Name = "preferredControllerSkin"
+    static let syncingService: Settings.Name = "syncingService"
+    static let isButtonHapticFeedbackEnabled: Settings.Name = "isButtonHapticFeedbackEnabled"
+    static let isThumbstickHapticFeedbackEnabled: Settings.Name = "isThumbstickHapticFeedbackEnabled"
+    static let isAltJITEnabled: Settings.Name = "isAltJITEnabled"
+    static let respectSilentMode: Settings.Name = "respectSilentMode"
+    static let autoLoadSave: Settings.Name = "autoLoadSave"
+    static let gameArtworkSize: Settings.Name = "gameArtworkSize"
+    static let gameArtworkRoundedCornersEnabled: Settings.Name = "gameArtworkRoundedCornersEnabled"
+    static let gameArtworkBordersEnabled: Settings.Name = "gameArtworkBordersEnabled"
+    static let gameArtworkShadowsEnabled: Settings.Name = "gameArtworkShadowsEnabled"
+    static let themeColor: Settings.Name = "themeColor"
+    static let isClickyHapticEnabled: Settings.Name = "isClickyHapticEnabled"
+    static let hapticFeedbackStrength: Settings.Name = "hapticFeedbackStrength"
+    static let isButtonAudioFeedbackEnabled: Settings.Name = "isButtonAudioFeedbackEnabled"
+    static let buttonAudioFeedbackSound: Settings.Name = "buttonAudioFeedbackSound"
+    static let isButtonTouchOverlayEnabled: Settings.Name = "isButtonTouchOverlayEnabled"
+    static let touchOverlayOpacity: Settings.Name = "touchOverlayOpacity"
+    static let touchOverlaySize: Settings.Name = "touchOverlaySize"
+    static let isTouchOverlayThemeEnabled: Settings.Name = "isTouchOverlayThemeEnabled"
+    static let statusBarEnabled: Settings.Name = "statusBarEnabled"
+    static let playOverOtherMedia: Settings.Name = "playOverOtherMedia"
+    static let gameVolume: Settings.Name = "gameVolume"
+    static let isUnsafeFastForwardSpeedsEnabled: Settings.Name = "isUnsafeFastForwardSpeedsEnabled"
+    static let isPromptSpeedEnabled: Settings.Name = "isPromptSpeedEnabled"
+    static let fastForwardSpeed: Settings.Name = "fastForwardSpeed"
+    static let isRewindEnabled: Settings.Name = "isRewindEnabled"
+    static let rewindTimerInterval: Settings.Name = "rewindTimerInterval"
+    static let isAltRepresentationsAvailable: Settings.Name = "isAltRepresentationsAvailable"
+    static let isAltRepresentationsEnabled: Settings.Name = "isAltRepresentationsEnabled"
+    static let isAlwaysShowControllerSkinEnabled: Settings.Name = "isAlwaysShowControllerSkinEnabled"
+    static let isDebugModeEnabled: Settings.Name = "isDebugModeEnabled"
+    static let isSkinDebugModeEnabled: Settings.Name = "isSkinDebugModeEnabled"
+    static let skinDebugDevice: Settings.Name = "skinDebugDevice"
+    static let screenshotSaveToPhotos: Settings.Name = "screenshotSaveToPhotos"
+    static let screenshotSaveToFiles: Settings.Name = "screenshotSaveToFiles"
+    static let screenshotImageScale: Settings.Name = "screenshotImageScale"
 }
 
 extension Settings
@@ -125,6 +115,11 @@ extension Settings
         case ipad
         case splitView
     }
+    
+    typealias Name = SettingsName
+    typealias NotificationUserInfoKey = SettingsUserInfoKey
+    
+    static let didChangeNotification = Notification.Name.settingsDidChange
 }
 
 struct Settings
@@ -190,7 +185,7 @@ extension Settings
     static var themeColor: ThemeColor {
         set {
             UserDefaults.standard.themeColor = newValue.rawValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.themeColor])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.themeColor])
         }
         get {
             let theme = ThemeColor(rawValue: UserDefaults.standard.themeColor) ?? .orange
@@ -202,7 +197,7 @@ extension Settings
     static var gameArtworkSize: ArtworkSize {
         set {
             UserDefaults.standard.gameArtworkSize = newValue.rawValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkSize])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkSize])
         }
         get {
             let size = ArtworkSize(rawValue: UserDefaults.standard.gameArtworkSize) ?? .medium
@@ -217,7 +212,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.gameArtworkRoundedCornersEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkRoundedCornersEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkRoundedCornersEnabled])
         }
     }
     
@@ -228,7 +223,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.gameArtworkBordersEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkBordersEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkBordersEnabled])
         }
     }
     
@@ -239,7 +234,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.gameArtworkShadowsEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkShadowsEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkShadowsEnabled])
         }
     }
     
@@ -250,7 +245,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.statusBarEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.statusBarEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.statusBarEnabled])
         }
     }
     
@@ -258,7 +253,7 @@ extension Settings
     static var localControllerPlayerIndex: Int? = 0 {
         didSet {
             guard self.localControllerPlayerIndex != oldValue else { return }
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.localControllerPlayerIndex])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.localControllerPlayerIndex])
         }
     }
     
@@ -266,7 +261,7 @@ extension Settings
         set {
             guard newValue != self.translucentControllerSkinOpacity else { return }
             UserDefaults.standard.translucentControllerSkinOpacity = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.translucentControllerSkinOpacity])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.translucentControllerSkinOpacity])
         }
         get { return UserDefaults.standard.translucentControllerSkinOpacity }
     }
@@ -335,7 +330,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.syncingService = newValue?.rawValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.syncingService])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.syncingService])
         }
     }
     
@@ -346,7 +341,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.isButtonHapticFeedbackEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonHapticFeedbackEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonHapticFeedbackEnabled])
         }
     }
     
@@ -357,7 +352,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.isThumbstickHapticFeedbackEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isThumbstickHapticFeedbackEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isThumbstickHapticFeedbackEnabled])
         }
     }
     
@@ -368,7 +363,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.isClickyHapticEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isClickyHapticEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isClickyHapticEnabled])
         }
     }
     
@@ -376,7 +371,7 @@ extension Settings
         set {
             guard newValue != self.hapticFeedbackStrength else { return }
             UserDefaults.standard.hapticFeedbackStrength = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.hapticFeedbackStrength])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.hapticFeedbackStrength])
         }
         get { return UserDefaults.standard.hapticFeedbackStrength }
     }
@@ -388,14 +383,14 @@ extension Settings
         }
         set {
             UserDefaults.standard.isButtonAudioFeedbackEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonAudioFeedbackEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonAudioFeedbackEnabled])
         }
     }
     
     static var buttonAudioFeedbackSound: ButtonSoundMode {
         set {
             UserDefaults.standard.buttonAudioFeedbackSound = newValue.rawValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.buttonAudioFeedbackSound])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.buttonAudioFeedbackSound])
         }
         get {
             let size = ButtonSoundMode(rawValue: UserDefaults.standard.buttonAudioFeedbackSound) ?? .system
@@ -410,7 +405,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.isButtonTouchOverlayEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonTouchOverlayEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonTouchOverlayEnabled])
         }
     }
     
@@ -421,7 +416,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.isTouchOverlayThemeEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isTouchOverlayThemeEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isTouchOverlayThemeEnabled])
         }
     }
     
@@ -429,7 +424,7 @@ extension Settings
         set {
             guard newValue != self.touchOverlayOpacity else { return }
             UserDefaults.standard.touchOverlayOpacity = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlayOpacity])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlayOpacity])
         }
         get { return UserDefaults.standard.touchOverlayOpacity }
     }
@@ -438,7 +433,7 @@ extension Settings
         set {
             guard newValue != self.touchOverlaySize else { return }
             UserDefaults.standard.touchOverlaySize = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlaySize])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlaySize])
         }
         get { return UserDefaults.standard.touchOverlaySize }
     }
@@ -468,7 +463,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.isAltJITEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltJITEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltJITEnabled])
         }
     }
     
@@ -499,7 +494,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.autoLoadSave = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.autoLoadSave])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.autoLoadSave])
         }
     }
     
@@ -510,7 +505,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.respectSilentMode = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.respectSilentMode])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.respectSilentMode])
         }
     }
     
@@ -521,7 +516,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.playOverOtherMedia = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.playOverOtherMedia])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.playOverOtherMedia])
         }
     }
     
@@ -529,7 +524,7 @@ extension Settings
         set {
             guard newValue != self.gameVolume else { return }
             UserDefaults.standard.gameVolume = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameVolume])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameVolume])
         }
         get { return UserDefaults.standard.gameVolume }
     }
@@ -537,7 +532,7 @@ extension Settings
     static var isRewindEnabled: Bool {
         set {
             UserDefaults.standard.isRewindEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isRewindEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isRewindEnabled])
         }
         get {
             let isRewindEnabled = UserDefaults.standard.isRewindEnabled
@@ -548,7 +543,7 @@ extension Settings
     static var rewindTimerInterval: Int {
         set {
             UserDefaults.standard.rewindTimerInterval = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.rewindTimerInterval])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.rewindTimerInterval])
         }
         get {
             let rewindTimerInterval = UserDefaults.standard.rewindTimerInterval
@@ -559,7 +554,7 @@ extension Settings
     static var isUnsafeFastForwardSpeedsEnabled: Bool {
         set {
             UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isUnsafeFastForwardSpeedsEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isUnsafeFastForwardSpeedsEnabled])
         }
         get {
             let isUnsafeFastForwardSpeedsEnabled = UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled
@@ -570,7 +565,7 @@ extension Settings
     static var isPromptSpeedEnabled: Bool {
         set {
             UserDefaults.standard.isPromptSpeedEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isPromptSpeedEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isPromptSpeedEnabled])
         }
         get {
             let isSpeedPromptEnabled = UserDefaults.standard.isPromptSpeedEnabled
@@ -581,7 +576,7 @@ extension Settings
     static var fastForwardSpeed: CGFloat {
         set {
             UserDefaults.standard.fastForwardSpeed = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.fastForwardSpeed])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.fastForwardSpeed])
         }
         get {
             let fastForwardSpeed = UserDefaults.standard.fastForwardSpeed
@@ -592,7 +587,7 @@ extension Settings
     static var isAltRepresentationsEnabled: Bool {
         set {
             UserDefaults.standard.isUseAltRepresentationsEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsEnabled])
         }
         get {
             let isUseAltRepresentationsEnabled = UserDefaults.standard.isUseAltRepresentationsEnabled
@@ -603,7 +598,7 @@ extension Settings
     static var isAltRepresentationsAvailable: Bool {
         set {
             UserDefaults.standard.isAltRepresentationsAvailable = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsAvailable])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsAvailable])
         }
         get {
             let isAltRepresentationsAvailable = UserDefaults.standard.isAltRepresentationsAvailable
@@ -614,7 +609,7 @@ extension Settings
     static var isAlwaysShowControllerSkinEnabled: Bool {
         set {
             UserDefaults.standard.isAlwaysShowControllerSkinEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAlwaysShowControllerSkinEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAlwaysShowControllerSkinEnabled])
         }
         get {
             let isAlwaysShowControllerSkinEnabled = UserDefaults.standard.isAlwaysShowControllerSkinEnabled
@@ -625,7 +620,7 @@ extension Settings
     static var isDebugModeEnabled: Bool {
         set {
             UserDefaults.standard.isDebugModeEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isDebugModeEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isDebugModeEnabled])
         }
         get {
             let isDebugModeEnabled = UserDefaults.standard.isDebugModeEnabled
@@ -636,7 +631,7 @@ extension Settings
     static var isSkinDebugModeEnabled: Bool {
         set {
             UserDefaults.standard.isSkinDebugModeEnabled = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isSkinDebugModeEnabled])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isSkinDebugModeEnabled])
         }
         get {
             let isSkinDebugModeEnabled = UserDefaults.standard.isSkinDebugModeEnabled
@@ -647,7 +642,7 @@ extension Settings
     static var skinDebugDevice: SkinDebugDevice {
         set {
             UserDefaults.standard.skinDebugDevice = newValue.rawValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.skinDebugDevice])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.skinDebugDevice])
         }
         get {
             let device = SkinDebugDevice(rawValue: UserDefaults.standard.skinDebugDevice) ?? .edgeToEdge
@@ -662,7 +657,7 @@ extension Settings
         }
         set {
             UserDefaults.standard.screenshotSaveToFiles = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToFiles])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToFiles])
         }
     }
     
@@ -673,14 +668,14 @@ extension Settings
         }
         set {
             UserDefaults.standard.screenshotSaveToPhotos = newValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToPhotos])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToPhotos])
         }
     }
     
     static var screenshotImageScale: ScreenshotScale {
         set {
             UserDefaults.standard.screenshotImageScale = newValue.rawValue
-            NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotImageScale])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotImageScale])
         }
         get {
             let size = ScreenshotScale(rawValue: UserDefaults.standard.screenshotImageScale) ?? .x1
@@ -705,7 +700,7 @@ extension Settings
         let key = self.preferredCoreSettingsKey(for: gameType)
         
         UserDefaults.standard.set(core.identifier, forKey: key)
-        NotificationCenter.default.post(name: .settingsDidChange, object: nil, userInfo: [NotificationUserInfoKey.name: key, NotificationUserInfoKey.core: core])
+        NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: key, NotificationUserInfoKey.core: core])
     }
     
     static func preferredControllerSkin(for system: System, traits: DeltaCore.ControllerSkin.Traits) -> ControllerSkin?
@@ -756,7 +751,7 @@ extension Settings
         
         UserDefaults.standard.set(controllerSkin?.identifier, forKey: userDefaultKey)
         
-        NotificationCenter.default.post(name: .settingsDidChange, object: controllerSkin, userInfo: [NotificationUserInfoKey.name: Name.preferredControllerSkin, NotificationUserInfoKey.system: system, NotificationUserInfoKey.traits: traits])
+        NotificationCenter.default.post(name: Settings.didChangeNotification, object: controllerSkin, userInfo: [NotificationUserInfoKey.name: Name.preferredControllerSkin, NotificationUserInfoKey.system: system, NotificationUserInfoKey.traits: traits])
     }
     
     static func preferredControllerSkin(for game: Game, traits: DeltaCore.ControllerSkin.Traits) -> ControllerSkin?
@@ -815,7 +810,7 @@ extension Settings
         
         if let system = System(gameType: game.type)
         {
-            NotificationCenter.default.post(name: .settingsDidChange, object: controllerSkin, userInfo: [NotificationUserInfoKey.name: Name.preferredControllerSkin, NotificationUserInfoKey.system: system, NotificationUserInfoKey.traits: traits])
+            NotificationCenter.default.post(name: Settings.didChangeNotification, object: controllerSkin, userInfo: [NotificationUserInfoKey.name: Name.preferredControllerSkin, NotificationUserInfoKey.system: system, NotificationUserInfoKey.traits: traits])
         }
     }
 }

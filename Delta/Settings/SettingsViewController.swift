@@ -19,6 +19,7 @@ private extension SettingsViewController
     {
         case patreon
         case syncing
+        case features
         case theme
         case gameAudio
         case autoLoad
@@ -230,7 +231,7 @@ class SettingsViewController: UITableViewController
     {
         super.init(coder: aDecoder)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.settingsDidChange(with:)), name: .settingsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.settingsDidChange(with:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.externalGameControllerDidConnect(_:)), name: .externalGameControllerDidConnect, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.externalGameControllerDidDisconnect(_:)), name: .externalGameControllerDidDisconnect, object: nil)
     }
@@ -955,6 +956,12 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
+    func showFeatures()
+    {
+        let hostingController = FeaturesView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
     func resetBuildCounter()
     {
         let alertController = UIAlertController(title: NSLocalizedString("Reset Build Counter?", comment: ""), message: NSLocalizedString("This will cause the updates screens to be shown on next launch.", comment: ""), preferredStyle: .alert)
@@ -1174,6 +1181,8 @@ private extension SettingsViewController
             self.update()
             
         case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .playOverOtherMedia, .gameVolume, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled, .statusBarEnabled, .screenshotSaveToPhotos, .screenshotSaveToFiles, .screenshotImageScale, .skinDebugDevice: break
+            
+        default: break
         }
     }
 
@@ -1250,7 +1259,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork, .resourceLinks, .statusBar, .screenshots: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork, .resourceLinks, .statusBar, .screenshots, .features: break
         }
 
         return cell
@@ -1274,6 +1283,8 @@ extension SettingsViewController
             case .deltaSkins: self.openWebsite(site: "https://delta-skins.github.io")
             case .skins4Delta: self.openWebsite(site: "https://skins4delta.com")
             }
+            
+        case .features: self.showFeatures()
             
         case .resourceLinks:
             switch ResourceLinksRow.allCases[indexPath.row]
