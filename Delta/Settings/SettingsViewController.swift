@@ -24,9 +24,6 @@ private extension SettingsViewController
         case gameAudio
         case autoLoad
         case rewind
-        case overlay
-        case hapticFeedback
-        case audioFeedback
         case hapticTouch
         case fastForward
         case toasts
@@ -49,6 +46,11 @@ private extension SettingsViewController
         case controllers = "controllersSegue"
         case controllerSkins = "controllerSkinsSegue"
         case dsSettings = "dsSettingsSegue"
+    }
+    
+    enum FeaturesRow: Int, CaseIterable
+    {
+        case touchFeedback
     }
     
     enum SkinDownloadsRow: Int, CaseIterable
@@ -96,28 +98,6 @@ private extension SettingsViewController
         case respectSilent
         case playOverMedia
         case volume
-    }
-    
-    enum HapticsRow: Int, CaseIterable
-    {
-        case clicky
-        case buttons
-        case sticks
-        case strength
-    }
-    
-    enum AudioFeedbackRow: Int, CaseIterable
-    {
-        case buttons
-        case sound
-    }
-    
-    enum OverlayRow: Int, CaseIterable
-    {
-        case buttons
-        case themed
-        case opacity
-        case size
     }
     
     enum GameArtworkRow: Int, CaseIterable
@@ -185,23 +165,7 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var gameVolumeLabel: UILabel!
     @IBOutlet private var gameVolumeSlider: UISlider!
     
-    @IBOutlet private var buttonHapticFeedbackEnabledSwitch: UISwitch!
-    @IBOutlet private var thumbstickHapticFeedbackEnabledSwitch: UISwitch!
-    @IBOutlet private var clickyHapticSwitch: UISwitch!
-    @IBOutlet private var hapticStrengthLabel: UILabel!
-    @IBOutlet private var hapticStrengthSlider: UISlider!
-    
-    @IBOutlet private var buttonAudioFeedbackEnabledSwitch: UISwitch!
-    @IBOutlet private var buttonAudioFeedbackSoundLabel: UILabel!
-    
     @IBOutlet private var statusBarEnabledSwitch: UISwitch!
-    
-    @IBOutlet private var buttonTouchOverlayEnabledSwitch: UISwitch!
-    @IBOutlet private var touchOverlayThemeEnabledSwitch: UISwitch!
-    @IBOutlet private var touchOverlayOpacityLabel: UILabel!
-    @IBOutlet private var touchOverlayOpacitySlider: UISlider!
-    @IBOutlet private var touchOverlaySizeLabel: UILabel!
-    @IBOutlet private var touchOverlaySizeSlider: UISlider!
     
     @IBOutlet private var previewsEnabledSwitch: UISwitch!
     
@@ -343,22 +307,6 @@ private extension SettingsViewController
             print(error)
         }
         
-        self.buttonHapticFeedbackEnabledSwitch.isOn = Settings.isButtonHapticFeedbackEnabled
-        self.thumbstickHapticFeedbackEnabledSwitch.isOn = Settings.isThumbstickHapticFeedbackEnabled
-        self.clickyHapticSwitch.isOn = Settings.isClickyHapticEnabled
-        self.hapticStrengthSlider.value = Float(Settings.hapticFeedbackStrength)
-        self.updateHapticStrengthLabel()
-        
-        self.buttonAudioFeedbackEnabledSwitch.isOn = Settings.isButtonAudioFeedbackEnabled
-        self.updateButtonAudioFeedbackSoundLabel()
-        
-        self.buttonTouchOverlayEnabledSwitch.isOn = Settings.isButtonTouchOverlayEnabled
-        self.touchOverlayThemeEnabledSwitch.isOn = Settings.isTouchOverlayThemeEnabled
-        self.touchOverlayOpacitySlider.value = Float(Settings.touchOverlayOpacity)
-        self.updateTouchOverlayOpacityLabel()
-        self.touchOverlaySizeSlider.value = Float(Settings.touchOverlaySize)
-        self.updateTouchOverlaySizeLabel()
-        
         self.previewsEnabledSwitch.isOn = Settings.isPreviewsEnabled
         
         self.rewindEnabledSwitch.isOn = Settings.isRewindEnabled
@@ -405,36 +353,6 @@ private extension SettingsViewController
         self.gameVolumeLabel.text = percentage
     }
     
-    func updateHapticStrengthLabel()
-    {
-        let strength = "Strength: " + String(format: "%.f", Settings.hapticFeedbackStrength * 100) + "%"
-        self.hapticStrengthLabel.text = strength
-    }
-    
-    func updateButtonAudioFeedbackSoundLabel()
-    {
-        let sound: String
-        switch Settings.buttonAudioFeedbackSound
-        {
-        case .system: sound = NSLocalizedString("System", comment: "")
-        case .snappy: sound = NSLocalizedString("Snappy", comment: "")
-        case .bit8: sound = NSLocalizedString("8-Bit", comment: "")
-        }
-        self.buttonAudioFeedbackSoundLabel.text = sound
-    }
-    
-    func updateTouchOverlayOpacityLabel()
-    {
-        let opacity = "Opacity: " + String(format: "%.f", Settings.touchOverlayOpacity * 100) + "%"
-        self.touchOverlayOpacityLabel.text = opacity
-    }
-    
-    func updateTouchOverlaySizeLabel()
-    {
-        let size = "Size: " + String(format: "%.f", Settings.touchOverlaySize * 100) + "%"
-        self.touchOverlaySizeLabel.text = size
-    }
-    
     func updateFastForwardSpeedLabel()
     {
         let speed = String(format: "%.f", Settings.fastForwardSpeed * 100) + "%"
@@ -457,7 +375,6 @@ private extension SettingsViewController
     {
         switch section
         {
-        case .hapticFeedback: return self.view.traitCollection.userInterfaceIdiom == .pad
         default: return false
         }
     }
@@ -517,32 +434,6 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
-    @IBAction func beginChangingHapticStrength(with sender: UISlider)
-    {
-        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-        self.selectionFeedbackGenerator?.prepare()
-    }
-    
-    @IBAction func changeHapticStrength(with sender: UISlider)
-    {
-        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
-        
-        if roundedValue != Settings.hapticFeedbackStrength
-        {
-            self.selectionFeedbackGenerator?.selectionChanged()
-        }
-        
-        Settings.hapticFeedbackStrength = CGFloat(roundedValue)
-        
-        self.updateHapticStrengthLabel()
-    }
-    
-    @IBAction func didFinishChangingHapticStrength(with sender: UISlider)
-    {
-        sender.value = Float(Settings.hapticFeedbackStrength)
-        self.selectionFeedbackGenerator = nil
-    }
-    
     @IBAction func toggleGameArtworkRoundedCornersEnabled(_ sender: UISwitch)
     {
         Settings.gameArtworkRoundedCornersEnabled = sender.isOn
@@ -576,88 +467,6 @@ private extension SettingsViewController
     @IBAction func toggleDebugModeEnabled(_ sender: UISwitch)
     {
         Settings.isDebugModeEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleClickyHapticEnabled(_ sender: UISwitch)
-    {
-        Settings.isClickyHapticEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleButtonHapticFeedbackEnabled(_ sender: UISwitch)
-    {
-        Settings.isButtonHapticFeedbackEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleThumbstickHapticFeedbackEnabled(_ sender: UISwitch)
-    {
-        Settings.isThumbstickHapticFeedbackEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleButtonAudioFeedbackEnabled(_ sender: UISwitch)
-    {
-        Settings.isButtonAudioFeedbackEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleButtonTouchOverlayEnabled(_ sender: UISwitch)
-    {
-        Settings.isButtonTouchOverlayEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleTouchOverlayThemeEnabled(_ sender: UISwitch)
-    {
-        Settings.isTouchOverlayThemeEnabled = sender.isOn
-    }
-    
-    @IBAction func beginChangingTouchOverlayOpacity(with sender: UISlider)
-    {
-        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-        self.selectionFeedbackGenerator?.prepare()
-    }
-    
-    @IBAction func changeTouchOverlayOpacity(with sender: UISlider)
-    {
-        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
-        
-        if roundedValue != Settings.touchOverlayOpacity
-        {
-            self.selectionFeedbackGenerator?.selectionChanged()
-        }
-        
-        Settings.touchOverlayOpacity = CGFloat(roundedValue)
-        
-        self.updateTouchOverlayOpacityLabel()
-    }
-    
-    @IBAction func didFinishChangingTouchOverlayOpacity(with sender: UISlider)
-    {
-        sender.value = Float(Settings.touchOverlayOpacity)
-        self.selectionFeedbackGenerator = nil
-    }
-    
-    @IBAction func beginChangingTouchOverlaySize(with sender: UISlider)
-    {
-        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-        self.selectionFeedbackGenerator?.prepare()
-    }
-    
-    @IBAction func changeTouchOverlaySize(with sender: UISlider)
-    {
-        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
-        
-        if roundedValue != Settings.touchOverlaySize
-        {
-            self.selectionFeedbackGenerator?.selectionChanged()
-        }
-        
-        Settings.touchOverlaySize = CGFloat(roundedValue)
-        
-        self.updateTouchOverlaySizeLabel()
-    }
-    
-    @IBAction func didFinishChangingTouchOverlaySize(with sender: UISlider)
-    {
-        sender.value = Float(Settings.touchOverlaySize)
-        self.selectionFeedbackGenerator = nil
     }
     
     @IBAction func togglePreviewsEnabled(_ sender: UISwitch)
@@ -856,42 +665,6 @@ private extension SettingsViewController
         }
     }
     
-    func changeButtonAudioFeedbackSound()
-    {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Button Audio Sound", comment: ""), message: NSLocalizedString("The chosen sound will be played when you press a button.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        var systemTitle = "System Keyboard"
-        var snappyTitle = "Snappy Button"
-        var bit8Title = "8-Bit Button"
-        
-        switch Settings.buttonAudioFeedbackSound
-        {
-        case .system: systemTitle += " ✓"
-        case .snappy: snappyTitle += " ✓"
-        case .bit8: bit8Title += " ✓"
-        }
-        
-        alertController.addAction(UIAlertAction(title: systemTitle, style: .default, handler: { (action) in
-            Settings.buttonAudioFeedbackSound = .system
-        }))
-        alertController.addAction(UIAlertAction(title: snappyTitle, style: .default, handler: { (action) in
-            Settings.buttonAudioFeedbackSound = .snappy
-        }))
-        alertController.addAction(UIAlertAction(title: bit8Title, style: .default, handler: { (action) in
-            Settings.buttonAudioFeedbackSound = .bit8
-        }))
-        alertController.addAction(.cancel)
-        self.present(alertController, animated: true, completion: nil)
-        
-        if let indexPath = self.tableView.indexPathForSelectedRow
-        {
-            self.tableView.deselectRow(at: indexPath, animated: true)
-        }
-    }
-    
     func changeScreenshotImageScale()
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Screenshot Image Scale", comment: ""), message: NSLocalizedString("Game screenshots will be saved at this scale. 1x is the native resolution of the system.", comment: ""), preferredStyle: .actionSheet)
@@ -956,9 +729,9 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    func showFeatures()
+    func showTouchFeedbackFeatures()
     {
-        let hostingController = FeaturesView.makeViewController()
+        let hostingController = TouchFeedbackFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -1177,10 +950,8 @@ private extension SettingsViewController
             {
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
-        case .themeColor, .fastForwardSpeed, .buttonAudioFeedbackSound, .screenshotImageScale:
+        case .themeColor, .fastForwardSpeed, .screenshotImageScale:
             self.update()
-            
-        case .localControllerPlayerIndex, .preferredControllerSkin, .translucentControllerSkinOpacity, .respectSilentMode, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .isAltJITEnabled, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsEnabled, .isAltRepresentationsAvailable, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isSkinDebugModeEnabled, .gameArtworkSize, .autoLoadSave, .isClickyHapticEnabled, .hapticFeedbackStrength, .isButtonTouchOverlayEnabled, .touchOverlayOpacity, .touchOverlaySize, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .playOverOtherMedia, .gameVolume, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled, .statusBarEnabled, .screenshotSaveToPhotos, .screenshotSaveToFiles, .screenshotImageScale, .skinDebugDevice: break
             
         default: break
         }
@@ -1259,7 +1030,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .overlay, .audioFeedback, .gameArtwork, .resourceLinks, .statusBar, .screenshots, .features: break
+        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .gameArtwork, .resourceLinks, .statusBar, .screenshots, .features: break
         }
 
         return cell
@@ -1284,7 +1055,11 @@ extension SettingsViewController
             case .skins4Delta: self.openWebsite(site: "https://skins4delta.com")
             }
             
-        case .features: self.showFeatures()
+        case .features:
+            switch FeaturesRow.allCases[indexPath.row]
+            {
+            case .touchFeedback: self.showTouchFeedbackFeatures()
+            }
             
         case .resourceLinks:
             switch ResourceLinksRow.allCases[indexPath.row]
@@ -1294,21 +1069,13 @@ extension SettingsViewController
             }
             
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticFeedback, .hapticTouch, .syncing, .overlay, .gameArtwork, .statusBar: break
+        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticTouch, .syncing, .gameArtwork, .statusBar: break
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {
             case .speed:
                 self.changeCustomFastForwardSpeed()
             case .unsafeSpeeds, .prompt: break
-            }
-            
-        case .audioFeedback:
-            switch AudioFeedbackRow.allCases[indexPath.row]
-            {
-            case .sound:
-                self.changeButtonAudioFeedbackSound()
-            case .buttons: break
             }
             
         case .screenshots:

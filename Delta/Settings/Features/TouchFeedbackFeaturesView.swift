@@ -1,5 +1,5 @@
 //
-//  FeaturesView.swift
+//  TouchFeedbackFeaturesView.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 4/29/23.
@@ -11,7 +11,7 @@ import Combine
 
 import Features
 
-extension FeaturesView
+extension TouchFeedbackFeaturesView
 {
     private class ViewModel: ObservableObject
     {
@@ -21,14 +21,14 @@ extension FeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = Features.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = TouchFeedbackFeatures.shared.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }
     }
 }
 
-struct FeaturesView: View
+struct TouchFeedbackFeaturesView: View
 {
     @StateObject
     private var viewModel: ViewModel = ViewModel()
@@ -56,14 +56,14 @@ struct FeaturesView: View
     }
 }
 
-extension FeaturesView
+extension TouchFeedbackFeaturesView
 {
     static func makeViewController() -> UIHostingController<some View>
     {
-        let featuresView = FeaturesView()
+        let featuresView = TouchFeedbackFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Features", comment: "")
+        hostingController.title = NSLocalizedString("Touch Feedback Features", comment: "")
         return hostingController
     }
 }
@@ -95,3 +95,4 @@ private struct FeatureSection<T: AnyFeature>: View
         }
     }
 }
+

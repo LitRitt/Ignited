@@ -21,7 +21,7 @@ struct FeatureDetailView<Feature: AnyFeature>: View
                 Toggle(isOn: $feature.isEnabled.animation()) {
                     Text(feature.name)
                         .bold()
-                }
+                }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
             } footer: {
                 if let description = feature.description
                 {

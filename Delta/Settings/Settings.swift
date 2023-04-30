@@ -27,8 +27,6 @@ extension Settings.Name
     static let translucentControllerSkinOpacity: Settings.Name = "translucentControllerSkinOpacity"
     static let preferredControllerSkin: Settings.Name = "preferredControllerSkin"
     static let syncingService: Settings.Name = "syncingService"
-    static let isButtonHapticFeedbackEnabled: Settings.Name = "isButtonHapticFeedbackEnabled"
-    static let isThumbstickHapticFeedbackEnabled: Settings.Name = "isThumbstickHapticFeedbackEnabled"
     static let isAltJITEnabled: Settings.Name = "isAltJITEnabled"
     static let respectSilentMode: Settings.Name = "respectSilentMode"
     static let autoLoadSave: Settings.Name = "autoLoadSave"
@@ -37,14 +35,6 @@ extension Settings.Name
     static let gameArtworkBordersEnabled: Settings.Name = "gameArtworkBordersEnabled"
     static let gameArtworkShadowsEnabled: Settings.Name = "gameArtworkShadowsEnabled"
     static let themeColor: Settings.Name = "themeColor"
-    static let isClickyHapticEnabled: Settings.Name = "isClickyHapticEnabled"
-    static let hapticFeedbackStrength: Settings.Name = "hapticFeedbackStrength"
-    static let isButtonAudioFeedbackEnabled: Settings.Name = "isButtonAudioFeedbackEnabled"
-    static let buttonAudioFeedbackSound: Settings.Name = "buttonAudioFeedbackSound"
-    static let isButtonTouchOverlayEnabled: Settings.Name = "isButtonTouchOverlayEnabled"
-    static let touchOverlayOpacity: Settings.Name = "touchOverlayOpacity"
-    static let touchOverlaySize: Settings.Name = "touchOverlaySize"
-    static let isTouchOverlayThemeEnabled: Settings.Name = "isTouchOverlayThemeEnabled"
     static let statusBarEnabled: Settings.Name = "statusBarEnabled"
     static let playOverOtherMedia: Settings.Name = "playOverOtherMedia"
     static let gameVolume: Settings.Name = "gameVolume"
@@ -92,13 +82,6 @@ extension Settings
         case large
     }
     
-    enum ButtonSoundMode: String
-    {
-        case system
-        case snappy
-        case bit8
-    }
-    
     enum ScreenshotScale: Double, CaseIterable
     {
         case x1 = 1
@@ -134,15 +117,6 @@ struct Settings
                         #keyPath(UserDefaults.gameArtworkShadowsEnabled): true,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
-                        #keyPath(UserDefaults.buttonAudioFeedbackSound): ButtonSoundMode.system.rawValue,
-                        #keyPath(UserDefaults.isButtonHapticFeedbackEnabled): UIDevice.current.userInterfaceIdiom != .pad,
-                        #keyPath(UserDefaults.isThumbstickHapticFeedbackEnabled): UIDevice.current.userInterfaceIdiom != .pad,
-                        #keyPath(UserDefaults.isClickyHapticEnabled): UIDevice.current.userInterfaceIdiom != .pad,
-                        #keyPath(UserDefaults.hapticFeedbackStrength): 1.0,
-                        #keyPath(UserDefaults.isButtonTouchOverlayEnabled): UIDevice.current.userInterfaceIdiom == .pad,
-                        #keyPath(UserDefaults.isTouchOverlayThemeEnabled): true,
-                        #keyPath(UserDefaults.touchOverlayOpacity): 0.7,
-                        #keyPath(UserDefaults.touchOverlaySize): 1.0,
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
                         #keyPath(UserDefaults.isPreviewsEnabled): true,
                         #keyPath(UserDefaults.isAltJITEnabled): false,
@@ -156,7 +130,6 @@ struct Settings
                         #keyPath(UserDefaults.screenshotSaveToFiles): true,
                         #keyPath(UserDefaults.screenshotSaveToPhotos): false,
                         #keyPath(UserDefaults.screenshotImageScale): ScreenshotScale.x1.rawValue,
-                        #keyPath(UserDefaults.isButtonAudioFeedbackEnabled): false,
                         #keyPath(UserDefaults.isRewindEnabled): false,
                         #keyPath(UserDefaults.rewindTimerInterval): 15,
                         #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
@@ -332,110 +305,6 @@ extension Settings
             UserDefaults.standard.syncingService = newValue?.rawValue
             NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.syncingService])
         }
-    }
-    
-    static var isButtonHapticFeedbackEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.isButtonHapticFeedbackEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.isButtonHapticFeedbackEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonHapticFeedbackEnabled])
-        }
-    }
-    
-    static var isThumbstickHapticFeedbackEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.isThumbstickHapticFeedbackEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.isThumbstickHapticFeedbackEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isThumbstickHapticFeedbackEnabled])
-        }
-    }
-    
-    static var isClickyHapticEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.isClickyHapticEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.isClickyHapticEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isClickyHapticEnabled])
-        }
-    }
-    
-    static var hapticFeedbackStrength: CGFloat {
-        set {
-            guard newValue != self.hapticFeedbackStrength else { return }
-            UserDefaults.standard.hapticFeedbackStrength = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.hapticFeedbackStrength])
-        }
-        get { return UserDefaults.standard.hapticFeedbackStrength }
-    }
-    
-    static var isButtonAudioFeedbackEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.isButtonAudioFeedbackEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.isButtonAudioFeedbackEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonAudioFeedbackEnabled])
-        }
-    }
-    
-    static var buttonAudioFeedbackSound: ButtonSoundMode {
-        set {
-            UserDefaults.standard.buttonAudioFeedbackSound = newValue.rawValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.buttonAudioFeedbackSound])
-        }
-        get {
-            let size = ButtonSoundMode(rawValue: UserDefaults.standard.buttonAudioFeedbackSound) ?? .system
-            return size
-        }
-    }
-    
-    static var isButtonTouchOverlayEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.isButtonTouchOverlayEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.isButtonTouchOverlayEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isButtonTouchOverlayEnabled])
-        }
-    }
-    
-    static var isTouchOverlayThemeEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.isTouchOverlayThemeEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.isTouchOverlayThemeEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isTouchOverlayThemeEnabled])
-        }
-    }
-    
-    static var touchOverlayOpacity: CGFloat {
-        set {
-            guard newValue != self.touchOverlayOpacity else { return }
-            UserDefaults.standard.touchOverlayOpacity = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlayOpacity])
-        }
-        get { return UserDefaults.standard.touchOverlayOpacity }
-    }
-    
-    static var touchOverlaySize: CGFloat {
-        set {
-            guard newValue != self.touchOverlaySize else { return }
-            UserDefaults.standard.touchOverlaySize = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.touchOverlaySize])
-        }
-        get { return UserDefaults.standard.touchOverlaySize }
     }
     
     static var sortSaveStatesByOldestFirst: Bool {
@@ -881,19 +750,6 @@ private extension UserDefaults
     @NSManaged var gameShortcutIdentifiers: [String]
     
     @NSManaged var syncingService: String?
-    
-    @NSManaged var isButtonHapticFeedbackEnabled: Bool
-    @NSManaged var isThumbstickHapticFeedbackEnabled: Bool
-    @NSManaged var isClickyHapticEnabled: Bool
-    @NSManaged var hapticFeedbackStrength: CGFloat
-    
-    @NSManaged var isButtonAudioFeedbackEnabled: Bool
-    @NSManaged var buttonAudioFeedbackSound: String
-    
-    @NSManaged var isButtonTouchOverlayEnabled: Bool
-    @NSManaged var isTouchOverlayThemeEnabled: Bool
-    @NSManaged var touchOverlayOpacity: CGFloat
-    @NSManaged var touchOverlaySize: CGFloat
     
     @NSManaged var sortSaveStatesByOldestFirst: Bool
     

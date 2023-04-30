@@ -746,17 +746,19 @@ private extension GameViewController
             self.shouldResetSustainedInputs = false
         }
         
-        self.controllerView.isButtonHapticFeedbackEnabled = Settings.isButtonHapticFeedbackEnabled
-        self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.isThumbstickHapticFeedbackEnabled
-        self.controllerView.isClickyHapticEnabled = Settings.isClickyHapticEnabled
-        self.controllerView.hapticFeedbackStrength = Settings.hapticFeedbackStrength
+        let vibrationEnabled = TouchFeedbackFeatures.shared.vibration.isEnabled
+        self.controllerView.isButtonHapticFeedbackEnabled = TouchFeedbackFeatures.shared.vibration.buttonsEnabled && vibrationEnabled
+        self.controllerView.isThumbstickHapticFeedbackEnabled = TouchFeedbackFeatures.shared.vibration.sticksEnabled && vibrationEnabled
+        self.controllerView.isClickyHapticEnabled = TouchFeedbackFeatures.shared.vibration.releaseEnabled && vibrationEnabled
+        self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.vibration.strength
         
-        self.controllerView.isButtonAudioFeedbackEnabled = Settings.isButtonAudioFeedbackEnabled
+        self.controllerView.isButtonAudioFeedbackEnabled = TouchFeedbackFeatures.shared.audio.isEnabled
         
-        self.controllerView.isButtonTouchOverlayEnabled = Settings.isButtonTouchOverlayEnabled
-        self.controllerView.touchOverlayOpacity = Settings.touchOverlayOpacity
-        self.controllerView.touchOverlaySize = Settings.touchOverlaySize
-        self.controllerView.touchOverlayColor = Settings.isTouchOverlayThemeEnabled ? UIColor.themeColor : UIColor.white
+        self.controllerView.isButtonTouchOverlayEnabled = TouchFeedbackFeatures.shared.overlay.isEnabled
+        self.controllerView.touchOverlayOpacity = TouchFeedbackFeatures.shared.overlay.opacity
+        self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.overlay.size
+        
+        self.controllerView.touchOverlayColor = TouchFeedbackFeatures.shared.overlay.themed ? UIColor.themeColor : UIColor.white
         
         self.controllerView.isAltRepresentationsEnabled = Settings.isAltRepresentationsEnabled
         self.controllerView.isDebugModeEnabled = Settings.isDebugModeEnabled
@@ -770,10 +772,10 @@ private extension GameViewController
     func updateButtonAudioFeedbackSound()
     {
         let buttonSoundURL: URL
-        switch Settings.buttonAudioFeedbackSound
+        switch TouchFeedbackFeatures.shared.audio.sound
         {
-        case .system: buttonSoundURL = URL(fileURLWithPath: "/System/Library/Audio/UISounds/Tock.caf")
-        case .snappy: buttonSoundURL = Bundle.main.url(forResource: "snap", withExtension: "caf")!
+        case .none: buttonSoundURL = URL(fileURLWithPath: "/System/Library/Audio/UISounds/Tock.caf")
+        case .snap: buttonSoundURL = Bundle.main.url(forResource: "snap", withExtension: "caf")!
         case .bit8: buttonSoundURL = Bundle.main.url(forResource: "8bit", withExtension: "caf")!
         }
         self.controllerView.buttonPressedSoundURL = buttonSoundURL
@@ -1728,7 +1730,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, .isButtonHapticFeedbackEnabled, .isThumbstickHapticFeedbackEnabled, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, .isClickyHapticEnabled, .isButtonTouchOverlayEnabled, .isTouchOverlayThemeEnabled, .isButtonAudioFeedbackEnabled, .skinDebugDevice:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.vibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.vibration.$sticksEnabled.settingsKey, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, .isDebugModeEnabled, TouchFeedbackFeatures.shared.vibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.overlay.settingsKey, TouchFeedbackFeatures.shared.overlay.settingsKey, TouchFeedbackFeatures.shared.audio.settingsKey, .skinDebugDevice:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -1745,19 +1747,19 @@ private extension GameViewController
         case .translucentControllerSkinOpacity:
             self.controllerView.translucentControllerSkinOpacity = Settings.translucentControllerSkinOpacity
             
-        case .hapticFeedbackStrength:
-            self.controllerView.hapticFeedbackStrength = Settings.hapticFeedbackStrength
+        case TouchFeedbackFeatures.shared.vibration.$strength.settingsKey:
+            self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.vibration.strength
             
-        case .touchOverlayOpacity:
-            self.controllerView.touchOverlayOpacity = Settings.touchOverlayOpacity
+        case TouchFeedbackFeatures.shared.overlay.$opacity.settingsKey:
+            self.controllerView.touchOverlayOpacity = TouchFeedbackFeatures.shared.overlay.opacity
             
-        case .touchOverlaySize:
-            self.controllerView.touchOverlaySize = Settings.touchOverlaySize
+        case TouchFeedbackFeatures.shared.overlay.$size.settingsKey:
+            self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.overlay.size
             
         case .respectSilentMode, .playOverOtherMedia, .gameVolume:
             self.updateAudio()
             
-        case .buttonAudioFeedbackSound:
+        case TouchFeedbackFeatures.shared.audio.$sound.settingsKey:
             self.updateControllers()
             self.playButtonAudioFeedbackSound()
             
