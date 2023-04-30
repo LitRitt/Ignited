@@ -398,32 +398,19 @@ private extension GameCollectionViewController
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
-        if Settings.gameArtworkRoundedCornersEnabled
+        if UserInterfaceFeatures.shared.artwork.isEnabled
+        {
+            cell.imageView.layer.cornerRadius = UserInterfaceFeatures.shared.artwork.cornerRadius
+            cell.imageView.layer.borderWidth = UserInterfaceFeatures.shared.artwork.borderWidth
+            cell.layer.shadowOpacity = Float(UserInterfaceFeatures.shared.artwork.shadowOpacity)
+        }
+        else
         {
             cell.imageView.layer.cornerRadius = 15
-        }
-        else
-        {
-            cell.imageView.layer.cornerRadius = 0
-        }
-        
-        if Settings.gameArtworkBordersEnabled
-        {
             cell.imageView.layer.borderWidth = 1.2
-        }
-        else
-        {
-            cell.imageView.layer.borderWidth = 0.0
-        }
-        
-        if Settings.gameArtworkShadowsEnabled
-        {
             cell.layer.shadowOpacity = 0.5
         }
-        else
-        {
-            cell.layer.shadowOpacity = 0.0
-        }
+        
         cell.layer.shadowRadius = 3.0
         
         if let currentCore = self.activeEmulatorCore, game.fileURL == currentCore.game.fileURL
@@ -1080,7 +1067,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case .themeColor, .gameArtworkSize, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled:
+        case .themeColor, .gameArtworkSize, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey:
             self.update()
             
         default: break

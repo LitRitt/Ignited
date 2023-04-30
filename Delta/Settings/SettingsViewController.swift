@@ -28,7 +28,6 @@ private extension SettingsViewController
         case fastForward
         case toasts
         case statusBar
-        case gameArtwork
         case screenshots
         case skinOptions
         case controllerSkins
@@ -50,6 +49,7 @@ private extension SettingsViewController
     
     enum FeaturesRow: Int, CaseIterable
     {
+        case userInterface
         case touchFeedback
     }
     
@@ -149,10 +149,6 @@ class SettingsViewController: UITableViewController
     @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
     @IBOutlet private var altRepresentationsSwitch: UISwitch!
     @IBOutlet private var debugModeSwitch: UISwitch!
-    
-    @IBOutlet private var gameArtworkRoundedCornersEnabledSwitch: UISwitch!
-    @IBOutlet private var gameArtworkBordersEnabledSwitch: UISwitch!
-    @IBOutlet private var gameArtworkShadowsEnabledSwitch: UISwitch!
     
     @IBOutlet private var autoLoadSaveSwitch: UISwitch!
     
@@ -277,10 +273,6 @@ private extension SettingsViewController
         self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
         self.altRepresentationsSwitch.isOn = Settings.isAltRepresentationsEnabled
         self.debugModeSwitch.isOn = Settings.isDebugModeEnabled
-        
-        self.gameArtworkRoundedCornersEnabledSwitch.isOn = Settings.gameArtworkRoundedCornersEnabled
-        self.gameArtworkShadowsEnabledSwitch.isOn = Settings.gameArtworkShadowsEnabled
-        self.gameArtworkBordersEnabledSwitch.isOn = Settings.gameArtworkBordersEnabled
         
         self.statusBarEnabledSwitch.isOn = Settings.statusBarEnabled
         
@@ -432,21 +424,6 @@ private extension SettingsViewController
     {
         sender.value = Float(Settings.gameVolume)
         self.selectionFeedbackGenerator = nil
-    }
-    
-    @IBAction func toggleGameArtworkRoundedCornersEnabled(_ sender: UISwitch)
-    {
-        Settings.gameArtworkRoundedCornersEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleGameArtworkBordersEnabled(_ sender: UISwitch)
-    {
-        Settings.gameArtworkBordersEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleGameArtworkShadowsEnabled(_ sender: UISwitch)
-    {
-        Settings.gameArtworkShadowsEnabled = sender.isOn
     }
     
     @IBAction func toggleStatusBarEnabled(_ sender: UISwitch)
@@ -726,6 +703,12 @@ private extension SettingsViewController
     func showPatrons()
     {
         let hostingController = PatronsView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showUserInterfaceFeatures()
+    {
+        let hostingController = UserInterfaceFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -1030,7 +1013,7 @@ extension SettingsViewController
             let preferredCore = Settings.preferredCore(for: .ds)
             cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
             
-        case .theme, .skinDownloads, .skinOptions, .gameAudio, .rewind, .hapticTouch, .patreon, .credits, .updates, .autoLoad, .toasts, .fastForward, .advanced, .gameArtwork, .resourceLinks, .statusBar, .screenshots, .features: break
+        default: break
         }
 
         return cell
@@ -1058,6 +1041,7 @@ extension SettingsViewController
         case .features:
             switch FeaturesRow.allCases[indexPath.row]
             {
+            case .userInterface: self.showUserInterfaceFeatures()
             case .touchFeedback: self.showTouchFeedbackFeatures()
             }
             
@@ -1069,7 +1053,7 @@ extension SettingsViewController
             }
             
         case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
-        case .toasts, .autoLoad, .skinOptions, .gameAudio, .rewind, .hapticTouch, .syncing, .gameArtwork, .statusBar: break
+            
         case .fastForward:
             switch FastForwardRow.allCases[indexPath.row]
             {
@@ -1127,6 +1111,8 @@ extension SettingsViewController
             }
             
         case .updates: self.showUpdates()
+            
+        default: break
         }
     }
     

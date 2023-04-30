@@ -24,15 +24,15 @@ struct TouchFeedbackVibrationOptions
             description: "Vibrate on input release.")
     var releaseEnabled: Bool = true
     
-    @Option(name: "Strength", description: "The strength of vibrations.", detailView: { strength in
+    @Option(name: "Strength", description: "The strength of vibrations.", detailView: { value in
         VStack {
             HStack {
-                Text("Strength: \(strength.wrappedValue * 100, specifier: "%.f")%")
+                Text("Strength: \(value.wrappedValue * 100, specifier: "%.f")%")
                 Spacer()
             }
             HStack {
                 Text("5%")
-                Slider(value: strength, in: 0.05...1.00, step: 0.05)
+                Slider(value: value, in: 0.05...1.00, step: 0.05)
                 Text("100%")
             }
         }.displayInline()

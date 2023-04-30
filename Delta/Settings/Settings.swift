@@ -112,9 +112,6 @@ struct Settings
         let defaults = [#keyPath(UserDefaults.lastUpdateShown): 1,
                         #keyPath(UserDefaults.themeColor): ThemeColor.orange.rawValue,
                         #keyPath(UserDefaults.gameArtworkSize): ArtworkSize.medium.rawValue,
-                        #keyPath(UserDefaults.gameArtworkRoundedCornersEnabled): true,
-                        #keyPath(UserDefaults.gameArtworkBordersEnabled): true,
-                        #keyPath(UserDefaults.gameArtworkShadowsEnabled): true,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
@@ -175,39 +172,6 @@ extension Settings
         get {
             let size = ArtworkSize(rawValue: UserDefaults.standard.gameArtworkSize) ?? .medium
             return size
-        }
-    }
-    
-    static var gameArtworkRoundedCornersEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.gameArtworkRoundedCornersEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.gameArtworkRoundedCornersEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkRoundedCornersEnabled])
-        }
-    }
-    
-    static var gameArtworkBordersEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.gameArtworkBordersEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.gameArtworkBordersEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkBordersEnabled])
-        }
-    }
-    
-    static var gameArtworkShadowsEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.gameArtworkShadowsEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.gameArtworkShadowsEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkShadowsEnabled])
         }
     }
     
@@ -738,10 +702,6 @@ private extension UserDefaults
     
     @NSManaged var themeColor: String
     @NSManaged var gameArtworkSize: String
-    
-    @NSManaged var gameArtworkRoundedCornersEnabled: Bool
-    @NSManaged var gameArtworkBordersEnabled: Bool
-    @NSManaged var gameArtworkShadowsEnabled: Bool
     
     @NSManaged var translucentControllerSkinOpacity: CGFloat
     @NSManaged var previousGameCollectionIdentifier: String?
