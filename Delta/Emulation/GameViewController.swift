@@ -188,11 +188,13 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     override var prefersStatusBarHidden: Bool {
-        return !Settings.statusBarEnabled
+        return !(UserInterfaceFeatures.shared.statusBar.isOn && UserInterfaceFeatures.shared.statusBar.isEnabled)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        guard let style = UIStatusBarStyle(rawValue: UserInterfaceFeatures.shared.statusBar.style.rawValue) else { return .default }
+        
+        return style
     }
     
     required init()
@@ -444,7 +446,7 @@ extension GameViewController
                 self.performScreenshotAction()
             }
             
-            pauseViewController.statusBarItem?.isSelected = Settings.statusBarEnabled
+            pauseViewController.statusBarItem?.isSelected = UserInterfaceFeatures.shared.statusBar.isOn
             pauseViewController.statusBarItem?.action = { [unowned self] item in
                 self.performStatusBarAction()
             }
@@ -884,9 +886,11 @@ private extension GameViewController
                 
                 try context.save()
                 try game.gameSaveURL.setExtendedAttribute(name: "com.rileytestut.delta.sha1Hash", value: hash)
-                
-                let text = NSLocalizedString("Game Saved", comment: "")
-                self.presentToastView(text: text)
+                if UserInterfaceFeatures.shared.toasts.gameSave
+                {
+                    let text = NSLocalizedString("Game Saved", comment: "")
+                    self.presentToastView(text: text)
+                }
                 
                 // update auto save state to prevent overwriting newer game saves when loading latest auto save
                 self.updateAutoSaveState()
@@ -1042,17 +1046,20 @@ extension GameViewController: SaveStatesViewControllerDelegate
         saveState.modifiedDate = Date()
         saveState.coreIdentifier = self.emulatorCore?.deltaCore.identifier
         
-        let text: String
-        switch saveState.type
+        if UserInterfaceFeatures.shared.toasts.stateSave
         {
-        case .general, .locked: text = NSLocalizedString("Saved State " + saveState.localizedName, comment: "")
-        case .quick: text = NSLocalizedString("Quick Saved", comment: "")
-        default: text = NSLocalizedString("Saved State ", comment: "")
-        }
-        
-        if saveState.type != .auto, saveState.type != .rewind
-        {
-            self.presentToastView(text: text)
+            let text: String
+            switch saveState.type
+            {
+            case .general, .locked: text = NSLocalizedString("Saved State " + saveState.localizedName, comment: "")
+            case .quick: text = NSLocalizedString("Quick Saved", comment: "")
+            default: text = NSLocalizedString("Saved State ", comment: "")
+            }
+            
+            if saveState.type != .auto, saveState.type != .rewind
+            {
+                self.presentToastView(text: text)
+            }
         }
         
         if isRunning && shouldSuspendEmulation
@@ -1102,21 +1109,25 @@ extension GameViewController: SaveStatesViewControllerDelegate
             {
                 try self.emulatorCore?.load(saveState)
             }
-            let text: String
-            if let state = saveState as? SaveState
+            
+            if UserInterfaceFeatures.shared.toasts.stateLoad
             {
-                switch state.type
+                let text: String
+                if let state = saveState as? SaveState
                 {
-                case .quick: text = NSLocalizedString("Quick Loaded", comment: "")
-                case .rewind: text = NSLocalizedString("Rewound to " + state.localizedName, comment: "")
-                default: text = NSLocalizedString("Loaded State " + state.localizedName, comment: "")
+                    switch state.type
+                    {
+                    case .quick: text = NSLocalizedString("Quick Loaded", comment: "")
+                    case .rewind: text = NSLocalizedString("Rewound to " + state.localizedName, comment: "")
+                    default: text = NSLocalizedString("Loaded State " + state.localizedName, comment: "")
+                    }
+                    self.presentToastView(text: text)
                 }
-                self.presentToastView(text: text)
-            }
-            else
-            {
-                text = NSLocalizedString("Loaded State", comment: "")
-                self.presentToastView(text: text)
+                else
+                {
+                    text = NSLocalizedString("Loaded State", comment: "")
+                    self.presentToastView(text: text)
+                }
             }
         }
         catch EmulatorCore.SaveStateError.doesNotExist
@@ -1274,7 +1285,10 @@ extension GameViewController
             self.updateAutoSaveState()
             self.game = self.game
             self.resumeEmulation()
-            self.presentToastView(text: NSLocalizedString("Game Restarted", comment: ""))
+            if UserInterfaceFeatures.shared.toasts.restart
+            {
+                self.presentToastView(text: NSLocalizedString("Game Restarted", comment: ""))
+            }
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
             self.resumeEmulation()
@@ -1289,7 +1303,7 @@ extension GameViewController
     
     func performStatusBarAction()
     {
-        Settings.statusBarEnabled = !Settings.statusBarEnabled
+        UserInterfaceFeatures.shared.statusBar.isOn = !UserInterfaceFeatures.shared.statusBar.isOn
         
         if let pauseView = self.pauseViewController
         {
@@ -1298,16 +1312,19 @@ extension GameViewController
         
         self.updateStatusBar()
         
-        let text: String
-        if Settings.statusBarEnabled
+        if UserInterfaceFeatures.shared.toasts.statusBar
         {
-            text = NSLocalizedString("Status Bar Enabled", comment: "")
+            let text: String
+            if UserInterfaceFeatures.shared.statusBar.isOn
+            {
+                text = NSLocalizedString("Status Bar Enabled", comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Status Bar Disabled", comment: "")
+            }
+            self.presentToastView(text: text)
         }
-        else
-        {
-            text = NSLocalizedString("Status Bar Disabled", comment: "")
-        }
-        self.presentToastView(text: text)
     }
     
     func performScreenshotAction()
@@ -1379,7 +1396,10 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
+        if UserInterfaceFeatures.shared.toasts.screenshot
+        {
+            self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
+        }
     }
     
     func performQuickSaveAction()
@@ -1453,15 +1473,21 @@ extension GameViewController
             else
             {
                 emulatorCore.rate = Settings.fastForwardSpeed
-                text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
-                self.presentToastView(text: text)
+                if UserInterfaceFeatures.shared.toasts.fastForward
+                {
+                    text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+                    self.presentToastView(text: text)
+                }
             }
         }
         else
         {
             emulatorCore.rate = 1.0
-            text = NSLocalizedString("Fast Forward Disabled", comment: "")
-            self.presentToastView(text: text)
+            if UserInterfaceFeatures.shared.toasts.fastForward
+            {
+                text = NSLocalizedString("Fast Forward Disabled", comment: "")
+                self.presentToastView(text: text)
+            }
         }
     }
     
@@ -1506,8 +1532,11 @@ extension GameViewController
             
             Settings.fastForwardSpeed = speed
             emulatorCore.rate = speed
-            let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
-            self.presentToastView(text: text)
+            if UserInterfaceFeatures.shared.toasts.fastForward
+            {
+                let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
+                self.presentToastView(text: text)
+            }
         }
         self.resumeEmulation()
     }
@@ -1523,16 +1552,19 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        let text: String
-        if enabled
+        if UserInterfaceFeatures.shared.toasts.altSkin
         {
-            text = NSLocalizedString("Alternate Skin Enabled", comment: "")
+            let text: String
+            if enabled
+            {
+                text = NSLocalizedString("Alternate Skin Enabled", comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Alternate Skin Disabled", comment: "")
+            }
+            self.presentToastView(text: text)
         }
-        else
-        {
-            text = NSLocalizedString("Alternate Skin Disabled", comment: "")
-        }
-        self.presentToastView(text: text)
     }
     
     func performDebugModeAction()
@@ -1546,16 +1578,19 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        let text: String
-        if enabled
+        if UserInterfaceFeatures.shared.toasts.debug
         {
-            text = NSLocalizedString("Debug Mode Enabled", comment: "")
+            let text: String
+            if enabled
+            {
+                text = NSLocalizedString("Debug Mode Enabled", comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Debug Mode Disabled", comment: "")
+            }
+            self.presentToastView(text: text)
         }
-        else
-        {
-            text = NSLocalizedString("Debug Mode Disabled", comment: "")
-        }
-        self.presentToastView(text: text)
     }
     
     func performDebugDeviceAction()
@@ -1573,22 +1608,34 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "iPhone - Standard", style: .default, handler: { (action) in
             Settings.skinDebugDevice = .standard
             self.resumeEmulation()
-            self.presentToastView(text: NSLocalizedString("Debugging as Standard iPhone", comment: ""))
+            if UserInterfaceFeatures.shared.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Debugging as Standard iPhone", comment: ""))
+            }
         }))
         alertController.addAction(UIAlertAction(title: "iPhone - Edge to Edge", style: .default, handler: { (action) in
             Settings.skinDebugDevice = .edgeToEdge
             self.resumeEmulation()
-            self.presentToastView(text: NSLocalizedString("Debugging as Edge to Edge iPhone", comment: ""))
+            if UserInterfaceFeatures.shared.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Debugging as Edge to Edge iPhone", comment: ""))
+            }
         }))
         alertController.addAction(UIAlertAction(title: "iPad - Standard", style: .default, handler: { (action) in
             Settings.skinDebugDevice = .ipad
             self.resumeEmulation()
-            self.presentToastView(text: NSLocalizedString("Debugging as Standard iPad", comment: ""))
+            if UserInterfaceFeatures.shared.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Debugging as Standard iPad", comment: ""))
+            }
         }))
         alertController.addAction(UIAlertAction(title: "iPad - Split View", style: .default, handler: { (action) in
             Settings.skinDebugDevice = .splitView
             self.resumeEmulation()
-            self.presentToastView(text: NSLocalizedString("Debugging as SplitView iPad", comment: ""))
+            if UserInterfaceFeatures.shared.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Debugging as SplitView iPad", comment: ""))
+            }
         }))
         alertController.addAction(.cancel)
         self.present(alertController, animated: true, completion: nil)
@@ -1601,12 +1648,12 @@ extension GameViewController
 {
     func presentToastView(text: String)
     {
-        guard Settings.showToastNotifications else { return }
+        guard UserInterfaceFeatures.shared.toasts.isEnabled else { return }
         
         let toastView = RSTToastView(text: text, detailText: nil)
         toastView.edgeOffset.vertical = 8
         DispatchQueue.main.async {
-            self.show(toastView, duration: Settings.toastNotificationDuration)
+            self.show(toastView, duration: UserInterfaceFeatures.shared.toasts.duration)
         }
     }
 }
@@ -1763,10 +1810,8 @@ private extension GameViewController
             self.updateControllers()
             self.playButtonAudioFeedbackSound()
             
-        case .statusBarEnabled:
+        case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey:
             self.updateStatusBar()
-            
-        case .syncingService, .isAltJITEnabled, .isUnsafeFastForwardSpeedsEnabled, .isPromptSpeedEnabled, .fastForwardSpeed, .isRewindEnabled, .rewindTimerInterval, .isAltRepresentationsAvailable, .isSkinDebugModeEnabled, .themeColor, .gameArtworkSize, .autoLoadSave, .gameArtworkRoundedCornersEnabled, .gameArtworkShadowsEnabled, .gameArtworkBordersEnabled, .screenshotSaveToFiles, .screenshotSaveToPhotos, .screenshotImageScale: break
             
         default: break
         }

@@ -17,10 +17,14 @@ struct UserInterfaceFeatures: FeatureContainer
              options: GameArtworkOptions())
     var artwork
     
-    @Feature(name: "Toast Notifications")
+    @Feature(name: "Toast Notifications",
+             description: "Show toast notifications as a confirmation for various in-game actions.",
+             options: ToastNotificationOptions())
     var toasts
     
-    @Feature(name: "Show Status Bar")
+    @Feature(name: "Show Status Bar",
+             description: "Show the Status Bar during gameplay.",
+             options: StatusBarOptions())
     var statusBar
     
     private init()

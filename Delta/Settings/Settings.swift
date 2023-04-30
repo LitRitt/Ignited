@@ -31,11 +31,7 @@ extension Settings.Name
     static let respectSilentMode: Settings.Name = "respectSilentMode"
     static let autoLoadSave: Settings.Name = "autoLoadSave"
     static let gameArtworkSize: Settings.Name = "gameArtworkSize"
-    static let gameArtworkRoundedCornersEnabled: Settings.Name = "gameArtworkRoundedCornersEnabled"
-    static let gameArtworkBordersEnabled: Settings.Name = "gameArtworkBordersEnabled"
-    static let gameArtworkShadowsEnabled: Settings.Name = "gameArtworkShadowsEnabled"
     static let themeColor: Settings.Name = "themeColor"
-    static let statusBarEnabled: Settings.Name = "statusBarEnabled"
     static let playOverOtherMedia: Settings.Name = "playOverOtherMedia"
     static let gameVolume: Settings.Name = "gameVolume"
     static let isUnsafeFastForwardSpeedsEnabled: Settings.Name = "isUnsafeFastForwardSpeedsEnabled"
@@ -118,12 +114,9 @@ struct Settings
                         #keyPath(UserDefaults.isPreviewsEnabled): true,
                         #keyPath(UserDefaults.isAltJITEnabled): false,
                         #keyPath(UserDefaults.autoLoadSave): true,
-                        #keyPath(UserDefaults.showToastNotifications): true,
-                        #keyPath(UserDefaults.statusBarEnabled): false,
                         #keyPath(UserDefaults.respectSilentMode): true,
                         #keyPath(UserDefaults.playOverOtherMedia): true,
                         #keyPath(UserDefaults.gameVolume): 1.0,
-                        #keyPath(UserDefaults.toastNotificationDuration): 1.5,
                         #keyPath(UserDefaults.screenshotSaveToFiles): true,
                         #keyPath(UserDefaults.screenshotSaveToPhotos): false,
                         #keyPath(UserDefaults.screenshotImageScale): ScreenshotScale.x1.rawValue,
@@ -172,17 +165,6 @@ extension Settings
         get {
             let size = ArtworkSize(rawValue: UserDefaults.standard.gameArtworkSize) ?? .medium
             return size
-        }
-    }
-    
-    static var statusBarEnabled: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.statusBarEnabled
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.statusBarEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.statusBarEnabled])
         }
     }
     
@@ -297,26 +279,6 @@ extension Settings
         set {
             UserDefaults.standard.isAltJITEnabled = newValue
             NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltJITEnabled])
-        }
-    }
-    
-    static var showToastNotifications: Bool {
-        get {
-            let showToastNotifications = UserDefaults.standard.showToastNotifications
-            return showToastNotifications
-        }
-        set {
-            UserDefaults.standard.showToastNotifications = newValue
-        }
-    }
-    
-    static var toastNotificationDuration: CGFloat {
-        set {
-            UserDefaults.standard.toastNotificationDuration = newValue
-        }
-        get {
-            let duration = UserDefaults.standard.toastNotificationDuration
-            return duration
         }
     }
     
@@ -716,11 +678,6 @@ private extension UserDefaults
     @NSManaged var isPreviewsEnabled: Bool
     
     @NSManaged var isAltJITEnabled: Bool
-    
-    @NSManaged var statusBarEnabled: Bool
-    
-    @NSManaged var showToastNotifications: Bool
-    @NSManaged var toastNotificationDuration: CGFloat
     
     @NSManaged var autoLoadSave: Bool
     

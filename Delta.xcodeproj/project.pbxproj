@@ -33,6 +33,7 @@
 
 /* Begin PBXBuildFile section */
 		1FA4ABA79AB72914FE414A61 /* libPods-Delta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC866E433B3BA9AE18ABA1EC /* libPods-Delta.a */; };
+		AC185A8529FEA24C002DE52F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC185A8429FEA24C002DE52F /* StatusBar.swift */; };
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtwork.swift */; };
 		AC27348229FE992800B4CB2E /* UserInterfaceFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */; };
@@ -265,6 +266,7 @@
 		22506DA00971C4300AF90A35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19FF50F55441BC2B2248241 /* Pods-Delta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Delta/Pods-Delta.release.xcconfig"; sourceTree = "<group>"; };
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
+		AC185A8429FEA24C002DE52F /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtwork.swift; sourceTree = "<group>"; };
 		AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeaturesView.swift; sourceTree = "<group>"; };
@@ -528,6 +530,8 @@
 			children = (
 				AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */,
 				AC27347F29FE950E00B4CB2E /* GameArtwork.swift */,
+				ACB3CB8B29FDCF4D002B53DE /* ToastNotifications.swift */,
+				AC185A8429FEA24C002DE52F /* StatusBar.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -630,7 +634,6 @@
 			isa = PBXGroup;
 			children = (
 				ACB3CB8929FDCF2A002B53DE /* GameScreenshots.swift */,
-				ACB3CB8B29FDCF4D002B53DE /* ToastNotifications.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -1528,6 +1531,7 @@
 				BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */,
 				D53415A5298C782A00FD67B1 /* ContributorsView.swift in Sources */,
 				BF5942891E09BC8B0051894B /* _GameCollection.swift in Sources */,
+				AC185A8529FEA24C002DE52F /* StatusBar.swift in Sources */,
 				BF34FA111CF1899D006624C7 /* CheatTextView.swift in Sources */,
 				D524F4A5273DEBB400D500B2 /* ServerManager+Delta.swift in Sources */,
 				D5AAF27729884F8600F21ACF /* CheatDevice.swift in Sources */,

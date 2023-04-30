@@ -26,8 +26,6 @@ private extension SettingsViewController
         case rewind
         case hapticTouch
         case fastForward
-        case toasts
-        case statusBar
         case screenshots
         case skinOptions
         case controllerSkins
@@ -132,12 +130,6 @@ private extension SettingsViewController
         case photos
         case scale
     }
-    
-    enum ToastNotificationsRow: Int, CaseIterable
-    {
-        case enabled
-        case duration
-    }
 }
 
 class SettingsViewController: UITableViewController
@@ -152,16 +144,10 @@ class SettingsViewController: UITableViewController
     
     @IBOutlet private var autoLoadSaveSwitch: UISwitch!
     
-    @IBOutlet private var showToastNotificationsSwitch: UISwitch!
-    @IBOutlet private var toastNotificationDurationLabel: UILabel!
-    @IBOutlet private var toastNotificationDurationSlider: UISlider!
-    
     @IBOutlet private var respectSilentModeSwitch: UISwitch!
     @IBOutlet private var playOverOtherMediaSwitch: UISwitch!
     @IBOutlet private var gameVolumeLabel: UILabel!
     @IBOutlet private var gameVolumeSlider: UISlider!
-    
-    @IBOutlet private var statusBarEnabledSwitch: UISwitch!
     
     @IBOutlet private var previewsEnabledSwitch: UISwitch!
     
@@ -274,12 +260,6 @@ private extension SettingsViewController
         self.altRepresentationsSwitch.isOn = Settings.isAltRepresentationsEnabled
         self.debugModeSwitch.isOn = Settings.isDebugModeEnabled
         
-        self.statusBarEnabledSwitch.isOn = Settings.statusBarEnabled
-        
-        self.showToastNotificationsSwitch.isOn = Settings.showToastNotifications
-        self.toastNotificationDurationSlider.value = Float(Settings.toastNotificationDuration)
-        self.updateToastNotificationDurationLabel()
-        
         self.autoLoadSaveSwitch.isOn = Settings.autoLoadSave
         
         self.respectSilentModeSwitch.isOn = Settings.respectSilentMode
@@ -325,12 +305,6 @@ private extension SettingsViewController
         self.themeColorLabel.layer.borderColor = UIColor.gray.cgColor
         self.themeColorLabel.textColor = UIColor.themeColor
         self.themeColorLabel.backgroundColor = UIColor.themeColor
-    }
-    
-    func updateToastNotificationDurationLabel()
-    {
-        let duration = "Duration: " + String(format: "%.1f", Settings.toastNotificationDuration) + "s"
-        self.toastNotificationDurationLabel.text = duration
     }
     
     func updateControllerOpacityLabel()
@@ -426,11 +400,6 @@ private extension SettingsViewController
         self.selectionFeedbackGenerator = nil
     }
     
-    @IBAction func toggleStatusBarEnabled(_ sender: UISwitch)
-    {
-        Settings.statusBarEnabled = sender.isOn
-    }
-    
     @IBAction func toggleAlwaysShowControllerSkin(_ sender: UISwitch)
     {
         Settings.isAlwaysShowControllerSkinEnabled = sender.isOn
@@ -449,37 +418,6 @@ private extension SettingsViewController
     @IBAction func togglePreviewsEnabled(_ sender: UISwitch)
     {
         Settings.isPreviewsEnabled = sender.isOn
-    }
-    
-    @IBAction func toggleShowToastNotifications(_ sender: UISwitch)
-    {
-        Settings.showToastNotifications = sender.isOn
-    }
-    
-    @IBAction func beginChangingToastNotificationDuration(with sender: UISlider)
-    {
-        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-        self.selectionFeedbackGenerator?.prepare()
-    }
-    
-    @IBAction func changeToastNotificationDuration(with sender: UISlider)
-    {
-        let roundedValue = CGFloat((sender.value / 0.5).rounded() * 0.5)
-        
-        if roundedValue != Settings.toastNotificationDuration
-        {
-            self.selectionFeedbackGenerator?.selectionChanged()
-        }
-        
-        Settings.toastNotificationDuration = CGFloat(roundedValue)
-        
-        self.updateToastNotificationDurationLabel()
-    }
-    
-    @IBAction func didFinishChangingToastNotificationDuration(with sender: UISlider)
-    {
-        sender.value = Float(Settings.toastNotificationDuration)
-        self.selectionFeedbackGenerator = nil
     }
     
     @IBAction func toggleAutoLoadSave(_ sender: UISwitch)
