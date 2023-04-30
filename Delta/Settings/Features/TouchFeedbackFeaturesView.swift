@@ -36,7 +36,7 @@ struct TouchFeedbackFeaturesView: View
     var body: some View {
         Form {
             Section(content: {}, footer: {
-                Text("These features have been added by contributors to the open-source Delta project on GitHub and are currently being tested.\n\nYou may encounter bugs when using these features.")
+                Text("These features change how you receive feedback when you press an input.")
                     .font(.subheadline)
             })
             

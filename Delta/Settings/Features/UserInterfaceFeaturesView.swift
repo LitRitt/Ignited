@@ -36,7 +36,7 @@ struct UserInterfaceFeaturesView: View
     var body: some View {
         Form {
             Section(content: {}, footer: {
-                Text("These features have been added by contributors to the open-source Delta project on GitHub and are currently being tested.\n\nYou may encounter bugs when using these features.")
+                Text("These features affect the way the user interface looks and functions.")
                     .font(.subheadline)
             })
             
