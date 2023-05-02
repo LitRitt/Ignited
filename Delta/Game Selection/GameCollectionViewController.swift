@@ -59,7 +59,7 @@ class GameCollectionViewController: UICollectionViewController
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
             
             var minimumSpacing: CGFloat
-            switch Settings.gameArtworkSize
+            switch UserInterfaceFeatures.shared.artwork.size
             {
             case .small:
                 minimumSpacing = 12
@@ -83,7 +83,7 @@ class GameCollectionViewController: UICollectionViewController
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
             
             var itemsPerRow: CGFloat
-            switch Settings.gameArtworkSize
+            switch UserInterfaceFeatures.shared.artwork.size
             {
             case .small:
                 itemsPerRow = 4.0
@@ -503,7 +503,7 @@ private extension GameCollectionViewController
                 
                 let cell = self.collectionView.cellForItem(at: indexPath)
                 
-                if Settings.autoLoadSave
+                if GameplayFeatures.shared.autoLoad.isEnabled
                 {
                     let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
                     fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -1067,7 +1067,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case .themeColor, .gameArtworkSize, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey:
+        case .themeColor, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey:
             self.update()
             
         default: break

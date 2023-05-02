@@ -28,26 +28,13 @@ extension Settings.Name
     static let preferredControllerSkin: Settings.Name = "preferredControllerSkin"
     static let syncingService: Settings.Name = "syncingService"
     static let isAltJITEnabled: Settings.Name = "isAltJITEnabled"
-    static let respectSilentMode: Settings.Name = "respectSilentMode"
-    static let autoLoadSave: Settings.Name = "autoLoadSave"
     static let gameArtworkSize: Settings.Name = "gameArtworkSize"
     static let themeColor: Settings.Name = "themeColor"
-    static let playOverOtherMedia: Settings.Name = "playOverOtherMedia"
-    static let gameVolume: Settings.Name = "gameVolume"
-    static let isUnsafeFastForwardSpeedsEnabled: Settings.Name = "isUnsafeFastForwardSpeedsEnabled"
-    static let isPromptSpeedEnabled: Settings.Name = "isPromptSpeedEnabled"
-    static let fastForwardSpeed: Settings.Name = "fastForwardSpeed"
-    static let isRewindEnabled: Settings.Name = "isRewindEnabled"
-    static let rewindTimerInterval: Settings.Name = "rewindTimerInterval"
     static let isAltRepresentationsAvailable: Settings.Name = "isAltRepresentationsAvailable"
     static let isAltRepresentationsEnabled: Settings.Name = "isAltRepresentationsEnabled"
     static let isAlwaysShowControllerSkinEnabled: Settings.Name = "isAlwaysShowControllerSkinEnabled"
-    static let isDebugModeEnabled: Settings.Name = "isDebugModeEnabled"
     static let isSkinDebugModeEnabled: Settings.Name = "isSkinDebugModeEnabled"
     static let skinDebugDevice: Settings.Name = "skinDebugDevice"
-    static let screenshotSaveToPhotos: Settings.Name = "screenshotSaveToPhotos"
-    static let screenshotSaveToFiles: Settings.Name = "screenshotSaveToFiles"
-    static let screenshotImageScale: Settings.Name = "screenshotImageScale"
 }
 
 extension Settings
@@ -78,15 +65,6 @@ extension Settings
         case large
     }
     
-    enum ScreenshotScale: Double, CaseIterable
-    {
-        case x1 = 1
-        case x2 = 2
-        case x3 = 3
-        case x4 = 4
-        case x5 = 5
-    }
-    
     enum SkinDebugDevice: String
     {
         case standard
@@ -107,28 +85,14 @@ struct Settings
     {
         let defaults = [#keyPath(UserDefaults.lastUpdateShown): 1,
                         #keyPath(UserDefaults.themeColor): ThemeColor.orange.rawValue,
-                        #keyPath(UserDefaults.gameArtworkSize): ArtworkSize.medium.rawValue,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
                         #keyPath(UserDefaults.isPreviewsEnabled): true,
                         #keyPath(UserDefaults.isAltJITEnabled): false,
-                        #keyPath(UserDefaults.autoLoadSave): true,
-                        #keyPath(UserDefaults.respectSilentMode): true,
-                        #keyPath(UserDefaults.playOverOtherMedia): true,
-                        #keyPath(UserDefaults.gameVolume): 1.0,
-                        #keyPath(UserDefaults.screenshotSaveToFiles): true,
-                        #keyPath(UserDefaults.screenshotSaveToPhotos): false,
-                        #keyPath(UserDefaults.screenshotImageScale): ScreenshotScale.x1.rawValue,
-                        #keyPath(UserDefaults.isRewindEnabled): false,
-                        #keyPath(UserDefaults.rewindTimerInterval): 15,
-                        #keyPath(UserDefaults.isUnsafeFastForwardSpeedsEnabled): false,
-                        #keyPath(UserDefaults.isPromptSpeedEnabled): true,
-                        #keyPath(UserDefaults.fastForwardSpeed): 4.0,
                         #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
                         #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
                         #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
-                        #keyPath(UserDefaults.isDebugModeEnabled): false,
                         #keyPath(UserDefaults.isSkinDebugModeEnabled): false,
                         #keyPath(UserDefaults.skinDebugDevice): SkinDebugDevice.edgeToEdge.rawValue,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
@@ -153,18 +117,6 @@ extension Settings
         get {
             let theme = ThemeColor(rawValue: UserDefaults.standard.themeColor) ?? .orange
             return theme
-        }
-    }
-    
-    /// Artwork
-    static var gameArtworkSize: ArtworkSize {
-        set {
-            UserDefaults.standard.gameArtworkSize = newValue.rawValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameArtworkSize])
-        }
-        get {
-            let size = ArtworkSize(rawValue: UserDefaults.standard.gameArtworkSize) ?? .medium
-            return size
         }
     }
     
@@ -282,103 +234,6 @@ extension Settings
         }
     }
     
-    static var autoLoadSave: Bool {
-        get {
-            let autoLoadSave = UserDefaults.standard.autoLoadSave
-            return autoLoadSave
-        }
-        set {
-            UserDefaults.standard.autoLoadSave = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.autoLoadSave])
-        }
-    }
-    
-    static var respectSilentMode: Bool {
-        get {
-            let respectSilentMode = UserDefaults.standard.respectSilentMode
-            return respectSilentMode
-        }
-        set {
-            UserDefaults.standard.respectSilentMode = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.respectSilentMode])
-        }
-    }
-    
-    static var playOverOtherMedia: Bool {
-        get {
-            let playOverOtherMedia = UserDefaults.standard.playOverOtherMedia
-            return playOverOtherMedia
-        }
-        set {
-            UserDefaults.standard.playOverOtherMedia = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.playOverOtherMedia])
-        }
-    }
-    
-    static var gameVolume: CGFloat {
-        set {
-            guard newValue != self.gameVolume else { return }
-            UserDefaults.standard.gameVolume = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.gameVolume])
-        }
-        get { return UserDefaults.standard.gameVolume }
-    }
-    
-    static var isRewindEnabled: Bool {
-        set {
-            UserDefaults.standard.isRewindEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isRewindEnabled])
-        }
-        get {
-            let isRewindEnabled = UserDefaults.standard.isRewindEnabled
-            return isRewindEnabled
-        }
-    }
-    
-    static var rewindTimerInterval: Int {
-        set {
-            UserDefaults.standard.rewindTimerInterval = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.rewindTimerInterval])
-        }
-        get {
-            let rewindTimerInterval = UserDefaults.standard.rewindTimerInterval
-            return rewindTimerInterval
-        }
-    }
-    
-    static var isUnsafeFastForwardSpeedsEnabled: Bool {
-        set {
-            UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isUnsafeFastForwardSpeedsEnabled])
-        }
-        get {
-            let isUnsafeFastForwardSpeedsEnabled = UserDefaults.standard.isUnsafeFastForwardSpeedsEnabled
-            return isUnsafeFastForwardSpeedsEnabled
-        }
-    }
-    
-    static var isPromptSpeedEnabled: Bool {
-        set {
-            UserDefaults.standard.isPromptSpeedEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isPromptSpeedEnabled])
-        }
-        get {
-            let isSpeedPromptEnabled = UserDefaults.standard.isPromptSpeedEnabled
-            return isSpeedPromptEnabled
-        }
-    }
-    
-    static var fastForwardSpeed: CGFloat {
-        set {
-            UserDefaults.standard.fastForwardSpeed = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.fastForwardSpeed])
-        }
-        get {
-            let fastForwardSpeed = UserDefaults.standard.fastForwardSpeed
-            return fastForwardSpeed
-        }
-    }
-    
     static var isAltRepresentationsEnabled: Bool {
         set {
             UserDefaults.standard.isUseAltRepresentationsEnabled = newValue
@@ -412,17 +267,6 @@ extension Settings
         }
     }
     
-    static var isDebugModeEnabled: Bool {
-        set {
-            UserDefaults.standard.isDebugModeEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isDebugModeEnabled])
-        }
-        get {
-            let isDebugModeEnabled = UserDefaults.standard.isDebugModeEnabled
-            return isDebugModeEnabled
-        }
-    }
-    
     static var isSkinDebugModeEnabled: Bool {
         set {
             UserDefaults.standard.isSkinDebugModeEnabled = newValue
@@ -442,39 +286,6 @@ extension Settings
         get {
             let device = SkinDebugDevice(rawValue: UserDefaults.standard.skinDebugDevice) ?? .edgeToEdge
             return device
-        }
-    }
-    
-    static var screenshotSaveToFiles: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.screenshotSaveToFiles
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.screenshotSaveToFiles = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToFiles])
-        }
-    }
-    
-    static var screenshotSaveToPhotos: Bool {
-        get {
-            let isEnabled = UserDefaults.standard.screenshotSaveToPhotos
-            return isEnabled
-        }
-        set {
-            UserDefaults.standard.screenshotSaveToPhotos = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotSaveToPhotos])
-        }
-    }
-    
-    static var screenshotImageScale: ScreenshotScale {
-        set {
-            UserDefaults.standard.screenshotImageScale = newValue.rawValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.screenshotImageScale])
-        }
-        get {
-            let size = ScreenshotScale(rawValue: UserDefaults.standard.screenshotImageScale) ?? .x1
-            return size
         }
     }
     
@@ -679,28 +490,10 @@ private extension UserDefaults
     
     @NSManaged var isAltJITEnabled: Bool
     
-    @NSManaged var autoLoadSave: Bool
-    
-    @NSManaged var respectSilentMode: Bool
-    @NSManaged var playOverOtherMedia: Bool
-    @NSManaged var gameVolume: CGFloat
-    
-    @NSManaged var isRewindEnabled: Bool
-    @NSManaged var rewindTimerInterval: Int
-    
-    @NSManaged var isUnsafeFastForwardSpeedsEnabled: Bool
-    @NSManaged var isPromptSpeedEnabled: Bool
-    @NSManaged var fastForwardSpeed: CGFloat
-    
     @NSManaged var isUseAltRepresentationsEnabled: Bool
     @NSManaged var isAltRepresentationsAvailable: Bool
     @NSManaged var isAlwaysShowControllerSkinEnabled: Bool
     
-    @NSManaged var isDebugModeEnabled: Bool
     @NSManaged var isSkinDebugModeEnabled: Bool
     @NSManaged var skinDebugDevice: String
-    
-    @NSManaged var screenshotSaveToFiles: Bool
-    @NSManaged var screenshotSaveToPhotos: Bool
-    @NSManaged var screenshotImageScale: CGFloat
 }

@@ -1,5 +1,5 @@
 //
-//  UserInterfaceFeaturesView.swift
+//  GameplayFeaturesView.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 4/30/23.
@@ -11,7 +11,7 @@ import Combine
 
 import Features
 
-extension UserInterfaceFeaturesView
+extension GameplayFeaturesView
 {
     private class ViewModel: ObservableObject
     {
@@ -21,14 +21,14 @@ extension UserInterfaceFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = UserInterfaceFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = GameplayFeatures.shared.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }
     }
 }
 
-struct UserInterfaceFeaturesView: View
+struct GameplayFeaturesView: View
 {
     @StateObject
     private var viewModel: ViewModel = ViewModel()
@@ -36,7 +36,7 @@ struct UserInterfaceFeaturesView: View
     var body: some View {
         Form {
             Section(content: {}, footer: {
-                Text("These features affect the way the user interface looks and functions.")
+                Text("These features change how you interact with your games.")
                     .font(.subheadline)
             })
             
@@ -56,14 +56,14 @@ struct UserInterfaceFeaturesView: View
     }
 }
 
-extension UserInterfaceFeaturesView
+extension GameplayFeaturesView
 {
     static func makeViewController() -> UIHostingController<some View>
     {
-        let featuresView = UserInterfaceFeaturesView()
+        let featuresView = GameplayFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("User Interface Features", comment: "")
+        hostingController.title = NSLocalizedString("Gameplay Features", comment: "")
         return hostingController
     }
 }

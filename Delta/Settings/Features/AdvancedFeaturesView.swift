@@ -1,8 +1,8 @@
 //
-//  UserInterfaceFeaturesView.swift
+//  AdvancedFeaturesView.swift
 //  Delta
 //
-//  Created by Chris Rittenhouse on 4/30/23.
+//  Created by Chris Rittenhouse on 5/1/23.
 //  Copyright © 2023 Lit Development. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import Combine
 
 import Features
 
-extension UserInterfaceFeaturesView
+extension AdvancedFeaturesView
 {
     private class ViewModel: ObservableObject
     {
@@ -21,14 +21,14 @@ extension UserInterfaceFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = UserInterfaceFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = AdvancedFeatures.shared.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }
     }
 }
 
-struct UserInterfaceFeaturesView: View
+struct AdvancedFeaturesView: View
 {
     @StateObject
     private var viewModel: ViewModel = ViewModel()
@@ -36,7 +36,7 @@ struct UserInterfaceFeaturesView: View
     var body: some View {
         Form {
             Section(content: {}, footer: {
-                Text("These features affect the way the user interface looks and functions.")
+                Text("These features are for debugging and troubleshooting purposes. Normal users are advised to avoid this area.")
                     .font(.subheadline)
             })
             
@@ -56,14 +56,14 @@ struct UserInterfaceFeaturesView: View
     }
 }
 
-extension UserInterfaceFeaturesView
+extension AdvancedFeaturesView
 {
     static func makeViewController() -> UIHostingController<some View>
     {
-        let featuresView = UserInterfaceFeaturesView()
+        let featuresView = AdvancedFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("User Interface Features", comment: "")
+        hostingController.title = NSLocalizedString("Advanced Features", comment: "")
         return hostingController
     }
 }

@@ -12,20 +12,20 @@ struct TouchFeedbackFeatures: FeatureContainer
 {
     static let shared = TouchFeedbackFeatures()
     
-    @Feature(name: "Vibration",
+    @Feature(name: "Vibration Feedback",
              description: "Play vibrations when interacting with controller skins.",
              options: TouchFeedbackVibrationOptions())
-    var vibration
+    var touchVibration
     
-    @Feature(name: "Audio",
+    @Feature(name: "Audio Feedback",
              description: "Play sounds when interacting with controller skins.",
              options: TouchFeedbackAudioOptions())
-    var audio
+    var touchAudio
     
-    @Feature(name: "Overlay",
+    @Feature(name: "Overlay Feedback",
              description: "Display an overlay when interacting with controller skins.",
              options: TouchFeedbackOverlayOptions())
-    var overlay
+    var touchOverlay
     
     private init()
     {

@@ -1,5 +1,5 @@
 //
-//  GameScreenshots.swift
+//  GameScreenshot.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 4/24/23.
@@ -41,7 +41,7 @@ extension ScreenshotSize: LocalizedOptionValue
     }
 }
 
-struct GameScreenshotsOptions
+struct GameScreenshotOptions
 {
     @Option(name: "Save to Files", description: "Save the screenshot to the app's directory in Files.")
     var saveToFiles: Bool = true

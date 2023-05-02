@@ -221,7 +221,9 @@ private extension PreviewGameViewController
             }
         }
         
-        self.emulatorCore?.updateCheats()
+        if GameplayFeatures.shared.cheats.isEnabled {
+            self.emulatorCore?.updateCheats()
+        }
         
         // Re-enable emulatorCore to update gameView again
         self.emulatorCore?.add(self.gameView)

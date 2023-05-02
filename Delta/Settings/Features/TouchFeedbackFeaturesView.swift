@@ -67,32 +67,3 @@ extension TouchFeedbackFeaturesView
         return hostingController
     }
 }
-
-private struct FeatureSection<T: AnyFeature>: View
-{
-    @ObservedObject
-    var feature: T
-    
-    var body: some View {
-        Section {
-            NavigationLink(destination: FeatureDetailView(feature: feature)) {
-                HStack {
-                    Text(feature.name)
-                    Spacer()
-                    
-                    if feature.isEnabled
-                    {
-                        Text("On")
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-        }  footer: {
-            if let description = feature.description
-            {
-                Text(description)
-            }
-        }
-    }
-}
-

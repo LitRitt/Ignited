@@ -10,8 +10,31 @@ import SwiftUI
 
 import Features
 
+enum ArtworkSize: String, CaseIterable, CustomStringConvertible
+{
+    case small = "Small"
+    case medium = "Medium"
+    case large = "Large"
+    
+    var description: String {
+        return self.rawValue
+    }
+}
+
+extension ArtworkSize: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        Text(self.description)
+    }
+}
+
 struct GameArtworkOptions
 {
+    @Option(name: "Artwork Size",
+            description: "Change the size of game artwork.",
+            values: ArtworkSize.allCases)
+    var size: ArtworkSize = .medium
+    
     @Option(name: "Corner Radius", description: "How round the corners should be.", detailView: { value in
         VStack {
             HStack {

@@ -492,13 +492,13 @@ private extension GamesViewController
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         alertController.addAction(UIAlertAction(title: "Small", style: .default, handler: { (action) in
-            Settings.gameArtworkSize = .small
+            UserInterfaceFeatures.shared.artwork.size = .small
         }))
         alertController.addAction(UIAlertAction(title: "Medium", style: .default, handler: { (action) in
-            Settings.gameArtworkSize = .medium
+            UserInterfaceFeatures.shared.artwork.size = .medium
         }))
         alertController.addAction(UIAlertAction(title: "Large", style: .default, handler: { (action) in
-            Settings.gameArtworkSize = .large
+            UserInterfaceFeatures.shared.artwork.size = .large
         }))
         alertController.addAction(.cancel)
         

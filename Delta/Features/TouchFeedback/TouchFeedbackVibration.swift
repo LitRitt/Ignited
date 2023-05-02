@@ -12,6 +12,21 @@ import Features
 
 struct TouchFeedbackVibrationOptions
 {
+    @Option(name: "Strength", description: "The strength of vibrations.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Strength: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...1.0, step: 0.05)
+                Text("100%")
+            }
+        }.displayInline()
+    })
+    var strength: Double = 1.0
+    
     @Option(name: "Buttons",
             description: "Vibrate on button press.")
     var buttonsEnabled: Bool = true
@@ -23,19 +38,4 @@ struct TouchFeedbackVibrationOptions
     @Option(name: "Release",
             description: "Vibrate on input release.")
     var releaseEnabled: Bool = true
-    
-    @Option(name: "Strength", description: "The strength of vibrations.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Strength: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("5%")
-                Slider(value: value, in: 0.05...1.00, step: 0.05)
-                Text("100%")
-            }
-        }.displayInline()
-    })
-    var strength: Double = 1.0
 }

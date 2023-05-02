@@ -1,8 +1,8 @@
 //
-//  FeatureDetailView.swift
+//  FeatureSectionView.swift
 //  Delta
 //
-//  Created by Chris Rittenhouse on 4/29/23.
+//  Created by Chris Rittenhouse on 5/2/23.
 //  Copyright © 2023 Lit Development. All rights reserved.
 //
 
@@ -10,7 +10,48 @@ import SwiftUI
 
 import Features
 
-struct FeatureDetailView<Feature: AnyFeature>: View
+struct FeatureSection<T: AnyFeature>: View
+{
+    @ObservedObject
+    var feature: T
+    
+    var body: some View {
+        Section {
+            if feature.allOptions.isEmpty != ((feature.allOptions.first?.key == "isOn") && (feature.allOptions.count == 1))
+            {
+                Toggle(feature.name, isOn: $feature.isEnabled)
+                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            }
+            else
+            {
+                NavigationLink(destination: FeatureDetailView(feature: feature)) {
+                    HStack {
+                        Text(feature.name)
+                        Spacer()
+                        
+                        if feature.isEnabled
+                        {
+                            Text("On")
+                                .foregroundColor(.secondary)
+                        }
+                        else
+                        {
+                            Text("Off")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+        }  footer: {
+            if let description = feature.description
+            {
+                Text(description)
+            }
+        }
+    }
+}
+
+private struct FeatureDetailView<Feature: AnyFeature>: View
 {
     @ObservedObject
     var feature: Feature
@@ -123,3 +164,4 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
         }
     }
 }
+
