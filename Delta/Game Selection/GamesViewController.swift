@@ -11,6 +11,7 @@ import CoreData
 import MobileCoreServices
 
 import DeltaCore
+import Features
 
 import Roxas
 import Harmony
@@ -634,7 +635,7 @@ private extension GamesViewController
         
         switch settingsName
         {
-        case .themeColor:
+        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey:
             self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
         default: break
         }

@@ -45,26 +45,6 @@ extension Settings
         case manual
     }
     
-    enum ThemeColor: String
-    {
-        case orange
-        case purple
-        case blue
-        case red
-        case green
-        case teal
-        case pink
-        case yellow
-        case mint
-    }
-    
-    enum ArtworkSize: String
-    {
-        case small
-        case medium
-        case large
-    }
-    
     enum SkinDebugDevice: String
     {
         case standard
@@ -84,7 +64,6 @@ struct Settings
     static func registerDefaults()
     {
         let defaults = [#keyPath(UserDefaults.lastUpdateShown): 1,
-                        #keyPath(UserDefaults.themeColor): ThemeColor.orange.rawValue,
                         #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
@@ -106,18 +85,6 @@ extension Settings
     static var lastUpdateShown: Int {
         set { UserDefaults.standard.lastUpdateShown = newValue }
         get { return UserDefaults.standard.lastUpdateShown }
-    }
-    
-    /// Theme
-    static var themeColor: ThemeColor {
-        set {
-            UserDefaults.standard.themeColor = newValue.rawValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.themeColor])
-        }
-        get {
-            let theme = ThemeColor(rawValue: UserDefaults.standard.themeColor) ?? .orange
-            return theme
-        }
     }
     
     /// Controllers

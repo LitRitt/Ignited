@@ -188,13 +188,11 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     override var prefersStatusBarHidden: Bool {
-        return !(UserInterfaceFeatures.shared.statusBar.isOn && UserInterfaceFeatures.shared.statusBar.isEnabled)
+        return !((UserInterfaceFeatures.shared.statusBar.isOn && UserInterfaceFeatures.shared.statusBar.isEnabled) || (!UserInterfaceFeatures.shared.statusBar.useToggle && UserInterfaceFeatures.shared.statusBar.isEnabled))
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        guard let style = UIStatusBarStyle(rawValue: UserInterfaceFeatures.shared.statusBar.style.rawValue) else { return .default }
-        
-        return style
+        return UIStatusBarStyle(rawValue: UserInterfaceFeatures.shared.statusBar.style.rawValue) ?? .default
     }
     
     required init()
@@ -1833,7 +1831,7 @@ private extension GameViewController
             self.updateControllers()
             self.playButtonAudioFeedbackSound()
             
-        case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey:
+        case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey, UserInterfaceFeatures.shared.statusBar.$useToggle.settingsKey:
             self.updateStatusBar()
             
         default: break

@@ -189,7 +189,7 @@ private extension PauseViewController
             self.screenshotItem = MenuItem(text: NSLocalizedString("Screenshot", comment: ""), image: #imageLiteral(resourceName: "Screenshot"), action: { _ in })
         }
         
-        if UserInterfaceFeatures.shared.statusBar.isEnabled
+        if UserInterfaceFeatures.shared.statusBar.isEnabled && UserInterfaceFeatures.shared.statusBar.useToggle
         {
             self.statusBarItem = MenuItem(text: NSLocalizedString("Status Bar", comment: ""), image: #imageLiteral(resourceName: "StatusBar"), action: { _ in })
         }

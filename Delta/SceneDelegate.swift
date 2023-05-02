@@ -10,6 +10,7 @@ import UIKit
 
 import DeltaCore
 import Harmony
+import Features
 
 @objc(SceneDelegate)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate
@@ -194,7 +195,7 @@ private extension SceneDelegate
         
         switch settingsName
         {
-        case .themeColor:
+        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey:
             self.window?.tintColor = UIColor.themeColor
             self.window?.setNeedsLayout()
         default: break

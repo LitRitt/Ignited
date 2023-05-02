@@ -27,6 +27,11 @@ struct UserInterfaceFeatures: FeatureContainer
              options: StatusBarOptions())
     var statusBar
     
+    @Feature(name: "Theme Color",
+             description: "Change the accent color of the app.",
+             options: ThemeColorOptions())
+    var theme
+    
     private init()
     {
         self.prepareFeatures()

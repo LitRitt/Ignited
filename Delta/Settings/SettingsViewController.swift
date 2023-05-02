@@ -20,7 +20,6 @@ private extension SettingsViewController
         case patreon
         case syncing
         case features
-        case theme
         case controllers
         case controllerSkins
         case skinOptions
@@ -187,7 +186,6 @@ private extension SettingsViewController
 {
     func update()
     {
-        self.updateThemeColorLabel()
         self.controllerOpacitySlider.value = Float(Settings.translucentControllerSkinOpacity)
         self.updateControllerOpacityLabel()
         self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
@@ -209,15 +207,6 @@ private extension SettingsViewController
         self.view.tintColor = .themeColor
         
         self.tableView.reloadData()
-    }
-    
-    func updateThemeColorLabel()
-    {
-        self.themeColorLabel.layer.cornerRadius = 5
-        self.themeColorLabel.layer.borderWidth = 1
-        self.themeColorLabel.layer.borderColor = UIColor.gray.cgColor
-        self.themeColorLabel.textColor = UIColor.themeColor
-        self.themeColorLabel.backgroundColor = UIColor.themeColor
     }
     
     func updateControllerOpacityLabel()
@@ -395,127 +384,6 @@ private extension SettingsViewController
             self.tableView.deselectRow(at: indexPath, animated: true)
         }
     }
-    
-    func changeThemeColor()
-    {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Theme Color", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        var orangeTitle = "Orange"
-        var purpleTitle = "Purple"
-        var blueTitle = "Blue"
-        var redTitle = "Red"
-        var greenTitle = "Green"
-        var tealTitle = "Teal"
-        var pinkTitle = "Pink"
-        var yellowTitle = "Yellow"
-        var mintTitle = "Mint"
-
-        switch Settings.themeColor
-        {
-        case .orange: orangeTitle += " ✓"
-        case .purple: purpleTitle += " ✓"
-        case .blue: blueTitle += " ✓"
-        case .red: redTitle += " ✓"
-        case .green: greenTitle += " ✓"
-        case .teal: tealTitle += " ✓"
-        case .pink: pinkTitle += " ✓"
-        case .yellow: yellowTitle += " ✓"
-        case .mint: mintTitle += " ✓"
-        }
-        
-        let pinkAction = UIAlertAction(title: pinkTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .pink {
-                Settings.themeColor = .pink
-                UIApplication.shared.setAlternateIconName("IconPink")
-            }
-        })
-        pinkAction.setValue(UIColor.systemPink, forKey: "titleTextColor")
-        alertController.addAction(pinkAction)
-        
-        let redAction = UIAlertAction(title: redTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .red {
-                Settings.themeColor = .red
-                UIApplication.shared.setAlternateIconName("IconRed")
-            }
-        })
-        redAction.setValue(UIColor.systemRed, forKey: "titleTextColor")
-        alertController.addAction(redAction)
-        
-        let orangeAction = UIAlertAction(title: orangeTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .orange {
-                Settings.themeColor = .orange
-                UIApplication.shared.setAlternateIconName(nil)
-            }
-        })
-        orangeAction.setValue(UIColor.ignitedOrange, forKey: "titleTextColor")
-        alertController.addAction(orangeAction)
-        
-        let yellowAction = UIAlertAction(title: yellowTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .yellow {
-                Settings.themeColor = .yellow
-                UIApplication.shared.setAlternateIconName("IconYellow")
-            }
-        })
-        yellowAction.setValue(UIColor.systemYellow, forKey: "titleTextColor")
-        alertController.addAction(yellowAction)
-        
-        let greenAction = UIAlertAction(title: greenTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .green {
-                Settings.themeColor = .green
-                UIApplication.shared.setAlternateIconName("IconGreen")
-            }
-        })
-        greenAction.setValue(UIColor.systemGreen, forKey: "titleTextColor")
-        alertController.addAction(greenAction)
-        
-        let mintAction = UIAlertAction(title: mintTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .mint {
-                Settings.themeColor = .mint
-                UIApplication.shared.setAlternateIconName("IconMint")
-            }
-        })
-        mintAction.setValue(UIColor.ignitedMint, forKey: "titleTextColor")
-        alertController.addAction(mintAction)
-        
-        let tealAction = UIAlertAction(title: tealTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .teal {
-                Settings.themeColor = .teal
-                UIApplication.shared.setAlternateIconName("IconTeal")
-            }
-        })
-        tealAction.setValue(UIColor.systemTeal, forKey: "titleTextColor")
-        alertController.addAction(tealAction)
-        
-        let blueAction = UIAlertAction(title: blueTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .pink {
-                Settings.themeColor = .blue
-                UIApplication.shared.setAlternateIconName("IconBlue")
-            }
-        })
-        blueAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
-        alertController.addAction(blueAction)
-        
-        let purpleAction = UIAlertAction(title: purpleTitle, style: .default, handler: { (action) in
-            if Settings.themeColor != .purple {
-                Settings.themeColor = .purple
-                UIApplication.shared.setAlternateIconName("IconPurple")
-            }
-        })
-        purpleAction.setValue(UIColor.deltaPurple, forKey: "titleTextColor")
-        alertController.addAction(purpleAction)
-        
-        alertController.addAction(.cancel)
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-        if let indexPath = self.tableView.indexPathForSelectedRow
-        {
-            self.tableView.deselectRow(at: indexPath, animated: true)
-        }
-    }
 }
 
 private extension SettingsViewController
@@ -536,8 +404,6 @@ private extension SettingsViewController
             {
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
-        case .themeColor:
-            self.update()
             
         case AdvancedFeatures.shared.powerUser.$clearAutoSaves.settingsKey:
             guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
@@ -650,7 +516,6 @@ extension SettingsViewController
 
         switch section
         {
-        case .theme: self.changeThemeColor()
         case .controllers: self.performSegue(withIdentifier: Segue.controllers.rawValue, sender: cell)
         case .controllerSkins: self.performSegue(withIdentifier: Segue.controllerSkins.rawValue, sender: cell)
         case .skinDownloads:

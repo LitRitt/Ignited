@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SwiftUI
+
+import Features
 
 extension UIColor
 {
@@ -18,26 +21,42 @@ extension UIColor
     
     static var themeColor: UIColor
     {
-        switch Settings.themeColor
+        if UserInterfaceFeatures.shared.theme.isEnabled
         {
-        case .orange:
+            if UserInterfaceFeatures.shared.theme.useCustom
+            {
+                guard let color = UserInterfaceFeatures.shared.theme.customColor.cgColor else { return .ignitedOrange }
+                
+                return UIColor(cgColor: color)
+            }
+            else
+            {
+                switch UserInterfaceFeatures.shared.theme.accentColor
+                {
+                case .orange:
+                    return ignitedOrange
+                case .purple:
+                    return deltaPurple
+                case .blue:
+                    return UIColor.systemBlue
+                case .red:
+                    return UIColor.systemRed
+                case .green:
+                    return UIColor.systemGreen
+                case .teal:
+                    return UIColor.systemTeal
+                case .pink:
+                    return UIColor.systemPink
+                case .yellow:
+                    return UIColor.systemYellow
+                case .mint:
+                    return ignitedMint
+                }
+            }
+        }
+        else
+        {
             return ignitedOrange
-        case .purple:
-            return deltaPurple
-        case .blue:
-            return UIColor.systemBlue
-        case .red:
-            return UIColor.systemRed
-        case .green:
-            return UIColor.systemGreen
-        case .teal:
-            return UIColor.systemTeal
-        case .pink:
-            return UIColor.systemPink
-        case .yellow:
-            return UIColor.systemYellow
-        case .mint:
-            return ignitedMint
         }
     }
 }
