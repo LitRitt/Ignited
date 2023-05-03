@@ -384,6 +384,42 @@ private extension SettingsViewController
             self.tableView.deselectRow(at: indexPath, animated: true)
         }
     }
+    
+    func updateAppIcon()
+    {
+        if UserInterfaceFeatures.shared.appIcon.isEnabled
+        {
+            if UserInterfaceFeatures.shared.appIcon.useTheme
+            {
+                guard UserInterfaceFeatures.shared.theme.isEnabled else
+                {
+                    UIApplication.shared.setAlternateIconName(nil)
+                    return
+                }
+                
+                switch UserInterfaceFeatures.shared.theme.accentColor
+                {
+                case .pink: UIApplication.shared.setAlternateIconName("IconPink")
+                case .red: UIApplication.shared.setAlternateIconName("IconRed")
+                case .orange: UIApplication.shared.setAlternateIconName(nil)
+                case .yellow: UIApplication.shared.setAlternateIconName("IconYellow")
+                case .green: UIApplication.shared.setAlternateIconName("IconGreen")
+                case .mint: UIApplication.shared.setAlternateIconName("IconMint")
+                case .teal: UIApplication.shared.setAlternateIconName("IconTeal")
+                case .blue: UIApplication.shared.setAlternateIconName("IconBlue")
+                case .purple: UIApplication.shared.setAlternateIconName("IconPurple")
+                }
+            }
+            else
+            {
+                UIApplication.shared.setAlternateIconName(nil)
+            }
+        }
+        else
+        {
+            UIApplication.shared.setAlternateIconName(nil)
+        }
+    }
 }
 
 private extension SettingsViewController
@@ -423,8 +459,10 @@ private extension SettingsViewController
                     AdvancedFeatures.shared.powerUser.resetBuildCounter = false
                     self.resetBuildCounter()
                 }
-                
             }
+            
+        case UserInterfaceFeatures.shared.appIcon.settingsKey, UserInterfaceFeatures.shared.appIcon.$useTheme.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey:
+            self.updateAppIcon()
             
         default: break
         }

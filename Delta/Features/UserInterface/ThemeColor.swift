@@ -14,13 +14,13 @@ enum ThemeColor: String, CaseIterable, CustomStringConvertible
 {
     case pink = "Pink"
     case red = "Red"
-    case orange = "Ignited Orange"
+    case orange = "Orange"
     case yellow = "Yellow"
     case green = "Green"
     case mint = "Mint"
     case teal = "Teal"
     case blue = "Blue"
-    case purple = "Delta Purple"
+    case purple = "Purple"
     
     var description: String {
         return self.rawValue
