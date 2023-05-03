@@ -83,6 +83,7 @@
 		ACCD9DB52A01A54200B235C4 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */; };
 		ACCD9DB72A01AF9F00B235C4 /* Color+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */; };
 		ACCD9DB92A01BA5500B235C4 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */; };
+		ACCD9DBB2A01E48B00B235C4 /* ControllerSkins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DBA2A01E48B00B235C4 /* ControllerSkins.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
 		ACD727D729EE10740028B8A8 /* Patrons.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACD727D629EE10740028B8A8 /* Patrons.plist */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
@@ -328,6 +329,7 @@
 		ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
 		ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+RawRepresentable.swift"; sourceTree = "<group>"; };
 		ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
+		ACCD9DBA2A01E48B00B235C4 /* ControllerSkins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerSkins.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
 		ACD727D629EE10740028B8A8 /* Patrons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Patrons.plist; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 				AC185A8429FEA24C002DE52F /* StatusBar.swift */,
 				ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */,
 				ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */,
+				ACCD9DBA2A01E48B00B235C4 /* ControllerSkins.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -1546,6 +1549,7 @@
 				BF59428E1E09BCFB0051894B /* ImportController.swift in Sources */,
 				ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlay.swift in Sources */,
 				BF13A7581D5D2FD9000BB055 /* EmulatorCore+Cheats.swift in Sources */,
+				ACCD9DBB2A01E48B00B235C4 /* ControllerSkins.swift in Sources */,
 				BF48F74E219A16DA00BC2FC1 /* SyncingServicesViewController.swift in Sources */,
 				AC8E5BCA29CCF77700F32D19 /* UIColor+Adjust.swift in Sources */,
 				BFE593CA21F3F8B7003412A6 /* GameSave.swift in Sources */,
@@ -1938,7 +1942,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1946,7 +1950,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0b2;
+				MARKETING_VERSION = 1.4.0b3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.litritt.ignited;
 				PROVISIONING_PROFILE = "";
@@ -1973,7 +1977,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEVELOPMENT_TEAM = AQKFQ7V9C4;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1981,7 +1985,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0b2;
+				MARKETING_VERSION = 1.4.0b3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DIMPACTOR";
 				PRODUCT_BUNDLE_IDENTIFIER = com.litritt.ignited;
 				PROVISIONING_PROFILE = "";

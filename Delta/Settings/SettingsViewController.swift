@@ -22,10 +22,9 @@ private extension SettingsViewController
         case features
         case controllers
         case controllerSkins
-        case skinOptions
-        case skinDownloads
-        case hapticTouch
+        case shortcuts
         case cores
+        case skinDownloads
         case resourceLinks
         case credits
         case updates
@@ -67,12 +66,6 @@ private extension SettingsViewController
         case softwareLicenses
     }
     
-    enum SkinOptionsRow: Int, CaseIterable
-    {
-        case opacity
-        case alwaysShow
-    }
-    
     enum ResourceLinksRow: Int, CaseIterable
     {
         case romPatcher
@@ -88,14 +81,6 @@ private extension SettingsViewController
 
 class SettingsViewController: UITableViewController
 {
-    @IBOutlet private var themeColorLabel: UILabel!
-    
-    @IBOutlet private var controllerOpacityLabel: UILabel!
-    @IBOutlet private var controllerOpacitySlider: UISlider!
-    @IBOutlet private var controllerSkinAlwaysShowSwitch: UISwitch!
-    
-    @IBOutlet private var previewsEnabledSwitch: UISwitch!
-    
     @IBOutlet private var versionLabel: UILabel!
     
     @IBOutlet private var syncingServiceLabel: UILabel!
@@ -186,10 +171,6 @@ private extension SettingsViewController
 {
     func update()
     {
-        self.controllerOpacitySlider.value = Float(Settings.translucentControllerSkinOpacity)
-        self.updateControllerOpacityLabel()
-        self.controllerSkinAlwaysShowSwitch.isOn = Settings.isAlwaysShowControllerSkinEnabled
-        
         self.syncingServiceLabel.text = Settings.syncingService?.localizedName
         
         do
@@ -202,17 +183,9 @@ private extension SettingsViewController
             print(error)
         }
         
-        self.previewsEnabledSwitch.isOn = Settings.isPreviewsEnabled
-        
-        self.view.tintColor = .themeColor
+        self.view.tintColor = UIColor.themeColor
         
         self.tableView.reloadData()
-    }
-    
-    func updateControllerOpacityLabel()
-    {
-        let percentage = "Opacity: " + String(format: "%.f", Settings.translucentControllerSkinOpacity * 100) + "%"
-        self.controllerOpacityLabel.text = percentage
     }
     
     func isSectionHidden(_ section: Section) -> Bool
@@ -226,45 +199,9 @@ private extension SettingsViewController
 
 private extension SettingsViewController
 {
-    @IBAction func beginChangingControllerOpacity(with sender: UISlider)
-    {
-        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-        self.selectionFeedbackGenerator?.prepare()
-    }
-    
-    @IBAction func changeControllerOpacity(with sender: UISlider)
-    {
-        let roundedValue = CGFloat((sender.value / 0.05).rounded() * 0.05)
-        
-        if roundedValue != Settings.translucentControllerSkinOpacity
-        {
-            self.selectionFeedbackGenerator?.selectionChanged()
-        }
-        
-        Settings.translucentControllerSkinOpacity = CGFloat(roundedValue)
-        
-        self.updateControllerOpacityLabel()
-    }
-    
-    @IBAction func didFinishChangingControllerOpacity(with sender: UISlider)
-    {
-        sender.value = Float(Settings.translucentControllerSkinOpacity)
-        self.selectionFeedbackGenerator = nil
-    }
-    
-    @IBAction func toggleAlwaysShowControllerSkin(_ sender: UISwitch)
-    {
-        Settings.isAlwaysShowControllerSkinEnabled = sender.isOn
-    }
-    
     @IBAction func toggleAltRepresentationsEnabled(_ sender: UISwitch)
     {
         Settings.isAltRepresentationsEnabled = sender.isOn
-    }
-    
-    @IBAction func togglePreviewsEnabled(_ sender: UISwitch)
-    {
-        Settings.isPreviewsEnabled = sender.isOn
     }
     
     func openWebsite(site: String)
@@ -626,7 +563,7 @@ extension SettingsViewController
         
         switch section
         {
-        case .hapticTouch where self.view.traitCollection.forceTouchCapability == .available: return NSLocalizedString("3D Touch", comment: "")
+        case .shortcuts where self.view.traitCollection.forceTouchCapability == .available: return NSLocalizedString("3D Touch", comment: "")
         default: return super.tableView(tableView, titleForHeaderInSection: section.rawValue)
         }
     }

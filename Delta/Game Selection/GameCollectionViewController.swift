@@ -1278,7 +1278,7 @@ extension GameCollectionViewController
             }
                         
             let previewViewController = self.makePreviewGameViewController(for: game)
-            previewViewController.isLivePreview = Settings.isPreviewsEnabled
+            previewViewController.isLivePreview = UserInterfaceFeatures.shared.previews.isEnabled
             
             guard previewViewController.isLivePreview || previewViewController.previewSaveState != nil else { return nil }
             self._previewTransitionViewController = previewViewController

@@ -24,15 +24,11 @@ extension Settings.NotificationUserInfoKey
 extension Settings.Name
 {
     static let localControllerPlayerIndex: Settings.Name = "localControllerPlayerIndex"
-    static let translucentControllerSkinOpacity: Settings.Name = "translucentControllerSkinOpacity"
     static let preferredControllerSkin: Settings.Name = "preferredControllerSkin"
     static let syncingService: Settings.Name = "syncingService"
     static let isAltJITEnabled: Settings.Name = "isAltJITEnabled"
-    static let gameArtworkSize: Settings.Name = "gameArtworkSize"
-    static let themeColor: Settings.Name = "themeColor"
     static let isAltRepresentationsAvailable: Settings.Name = "isAltRepresentationsAvailable"
     static let isAltRepresentationsEnabled: Settings.Name = "isAltRepresentationsEnabled"
-    static let isAlwaysShowControllerSkinEnabled: Settings.Name = "isAlwaysShowControllerSkinEnabled"
     static let isSkinDebugModeEnabled: Settings.Name = "isSkinDebugModeEnabled"
     static let skinDebugDevice: Settings.Name = "skinDebugDevice"
 }
@@ -64,14 +60,11 @@ struct Settings
     static func registerDefaults()
     {
         let defaults = [#keyPath(UserDefaults.lastUpdateShown): 1,
-                        #keyPath(UserDefaults.translucentControllerSkinOpacity): 0.7,
                         #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
                         #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
-                        #keyPath(UserDefaults.isPreviewsEnabled): true,
                         #keyPath(UserDefaults.isAltJITEnabled): false,
                         #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
                         #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
-                        #keyPath(UserDefaults.isAlwaysShowControllerSkinEnabled): false,
                         #keyPath(UserDefaults.isSkinDebugModeEnabled): false,
                         #keyPath(UserDefaults.skinDebugDevice): SkinDebugDevice.edgeToEdge.rawValue,
                         Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
@@ -93,15 +86,6 @@ extension Settings
             guard self.localControllerPlayerIndex != oldValue else { return }
             NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.localControllerPlayerIndex])
         }
-    }
-    
-    static var translucentControllerSkinOpacity: CGFloat {
-        set {
-            guard newValue != self.translucentControllerSkinOpacity else { return }
-            UserDefaults.standard.translucentControllerSkinOpacity = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.translucentControllerSkinOpacity])
-        }
-        get { return UserDefaults.standard.translucentControllerSkinOpacity }
     }
     
     static var previousGameCollection: GameCollection? {
@@ -180,16 +164,6 @@ extension Settings
         }
     }
     
-    static var isPreviewsEnabled: Bool {
-        set {
-            UserDefaults.standard.isPreviewsEnabled = newValue
-        }
-        get {
-            let isPreviewsEnabled = UserDefaults.standard.isPreviewsEnabled
-            return isPreviewsEnabled
-        }
-    }
-    
     static var isAltJITEnabled: Bool {
         get {
             let isAltJITEnabled = UserDefaults.standard.isAltJITEnabled
@@ -220,17 +194,6 @@ extension Settings
         get {
             let isAltRepresentationsAvailable = UserDefaults.standard.isAltRepresentationsAvailable
             return isAltRepresentationsAvailable
-        }
-    }
-    
-    static var isAlwaysShowControllerSkinEnabled: Bool {
-        set {
-            UserDefaults.standard.isAlwaysShowControllerSkinEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAlwaysShowControllerSkinEnabled])
-        }
-        get {
-            let isAlwaysShowControllerSkinEnabled = UserDefaults.standard.isAlwaysShowControllerSkinEnabled
-            return isAlwaysShowControllerSkinEnabled
         }
     }
     
@@ -440,10 +403,6 @@ private extension UserDefaults
 {
     @NSManaged var lastUpdateShown: Int
     
-    @NSManaged var themeColor: String
-    @NSManaged var gameArtworkSize: String
-    
-    @NSManaged var translucentControllerSkinOpacity: CGFloat
     @NSManaged var previousGameCollectionIdentifier: String?
     
     @NSManaged var gameShortcutsMode: String
@@ -453,13 +412,10 @@ private extension UserDefaults
     
     @NSManaged var sortSaveStatesByOldestFirst: Bool
     
-    @NSManaged var isPreviewsEnabled: Bool
-    
     @NSManaged var isAltJITEnabled: Bool
     
     @NSManaged var isUseAltRepresentationsEnabled: Bool
     @NSManaged var isAltRepresentationsAvailable: Bool
-    @NSManaged var isAlwaysShowControllerSkinEnabled: Bool
     
     @NSManaged var isSkinDebugModeEnabled: Bool
     @NSManaged var skinDebugDevice: String

@@ -27,7 +27,7 @@ struct UserInterfaceFeatures: FeatureContainer
              options: StatusBarOptions())
     var statusBar
     
-    @Feature(name: "Theme Color",
+    @Feature(name: "App Theme Color",
              description: "Change the accent color of the app.",
              options: ThemeColorOptions())
     var theme
@@ -36,6 +36,15 @@ struct UserInterfaceFeatures: FeatureContainer
              description: "Change the app's icon.",
              options: AppIconOptions())
     var appIcon
+    
+    @Feature(name: "Tap & Hold Game Previews",
+             description: "Preview games and save states when accessing the tap & hold menu on a game.")
+    var previews
+    
+    @Feature(name: "Controller Skin Customization",
+             description: "Change how controller skins look and behave.",
+             options: ControllerSkinOptions())
+    var skins
     
     private init()
     {

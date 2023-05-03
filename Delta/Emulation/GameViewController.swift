@@ -312,7 +312,7 @@ extension GameViewController
         // Lays out self.gameView, so we can pin self.sustainButtonsContentView to it without resulting in a temporary "cannot satisfy constraints".
         self.view.layoutIfNeeded()
         
-        self.controllerView.translucentControllerSkinOpacity = Settings.translucentControllerSkinOpacity
+        self.controllerView.translucentControllerSkinOpacity = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.opacity : 0.7
         
         self.sustainButtonsContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.sustainButtonsContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -671,7 +671,7 @@ private extension GameViewController
                let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
                controllerSkin.hasTouchScreen(for: traits)
             {
-                if !Settings.isAlwaysShowControllerSkinEnabled
+                if !(UserInterfaceFeatures.shared.skins.alwaysShow && UserInterfaceFeatures.shared.skins.isEnabled)
                 {
                     Settings.localControllerPlayerIndex = nil
                 }
@@ -684,7 +684,7 @@ private extension GameViewController
             }
             else
             {
-                if !Settings.isAlwaysShowControllerSkinEnabled
+                if !(UserInterfaceFeatures.shared.skins.alwaysShow && UserInterfaceFeatures.shared.skins.isEnabled)
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil
@@ -1798,7 +1798,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, .isAltRepresentationsEnabled, .isAlwaysShowControllerSkinEnabled, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey, .skinDebugDevice:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, .isAltRepresentationsEnabled, UserInterfaceFeatures.shared.skins.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey, .skinDebugDevice:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -1812,8 +1812,8 @@ private extension GameViewController
                 self.updateControllerSkin()
             }
             
-        case .translucentControllerSkinOpacity:
-            self.controllerView.translucentControllerSkinOpacity = Settings.translucentControllerSkinOpacity
+        case UserInterfaceFeatures.shared.skins.settingsKey, UserInterfaceFeatures.shared.skins.$opacity.settingsKey:
+            self.controllerView.translucentControllerSkinOpacity = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.opacity : 0.7
             
         case TouchFeedbackFeatures.shared.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
