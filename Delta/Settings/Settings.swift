@@ -30,7 +30,6 @@ extension Settings.Name
     static let isAltRepresentationsAvailable: Settings.Name = "isAltRepresentationsAvailable"
     static let isAltRepresentationsEnabled: Settings.Name = "isAltRepresentationsEnabled"
     static let isSkinDebugModeEnabled: Settings.Name = "isSkinDebugModeEnabled"
-    static let skinDebugDevice: Settings.Name = "skinDebugDevice"
 }
 
 extension Settings
@@ -39,14 +38,6 @@ extension Settings
     {
         case recent
         case manual
-    }
-    
-    enum SkinDebugDevice: String
-    {
-        case standard
-        case edgeToEdge
-        case ipad
-        case splitView
     }
     
     typealias Name = SettingsName
@@ -59,15 +50,34 @@ struct Settings
 {
     static func registerDefaults()
     {
-        let defaults = [#keyPath(UserDefaults.lastUpdateShown): 1,
-                        #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
-                        #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
-                        #keyPath(UserDefaults.isAltJITEnabled): false,
-                        #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
-                        #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
-                        #keyPath(UserDefaults.isSkinDebugModeEnabled): false,
-                        #keyPath(UserDefaults.skinDebugDevice): SkinDebugDevice.edgeToEdge.rawValue,
-                        Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier] as [String : Any]
+        let defaults = [
+            #keyPath(UserDefaults.lastUpdateShown): 1,
+            #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
+            #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
+            #keyPath(UserDefaults.isAltJITEnabled): false,
+            #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
+            #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
+            #keyPath(UserDefaults.isSkinDebugModeEnabled): false,
+            Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
+            GameplayFeatures.shared.autoLoad.settingsKey.rawValue: true,
+            GameplayFeatures.shared.cheats.settingsKey.rawValue: true,
+            GameplayFeatures.shared.fastForward.settingsKey.rawValue: true,
+            GameplayFeatures.shared.gameAudio.settingsKey.rawValue: true,
+            GameplayFeatures.shared.screenshots.settingsKey.rawValue: true,
+            GameplayFeatures.shared.rewind.settingsKey.rawValue: false,
+            UserInterfaceFeatures.shared.appIcon.settingsKey.rawValue: true,
+            UserInterfaceFeatures.shared.theme.settingsKey.rawValue: true,
+            UserInterfaceFeatures.shared.skins.settingsKey.rawValue: true,
+            UserInterfaceFeatures.shared.artwork.settingsKey.rawValue: false,
+            UserInterfaceFeatures.shared.statusBar.settingsKey.rawValue: false,
+            UserInterfaceFeatures.shared.previews.settingsKey.rawValue: false,
+            UserInterfaceFeatures.shared.toasts.settingsKey.rawValue: true,
+            TouchFeedbackFeatures.shared.touchAudio.settingsKey.rawValue: false,
+            TouchFeedbackFeatures.shared.touchOverlay.settingsKey.rawValue: true,
+            TouchFeedbackFeatures.shared.touchVibration.settingsKey.rawValue: true,
+            AdvancedFeatures.shared.skinDebug.settingsKey.rawValue: false,
+            AdvancedFeatures.shared.powerUser.settingsKey.rawValue: false
+        ] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
     }
 }
@@ -205,17 +215,6 @@ extension Settings
         get {
             let isSkinDebugModeEnabled = UserDefaults.standard.isSkinDebugModeEnabled
             return isSkinDebugModeEnabled
-        }
-    }
-    
-    static var skinDebugDevice: SkinDebugDevice {
-        set {
-            UserDefaults.standard.skinDebugDevice = newValue.rawValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.skinDebugDevice])
-        }
-        get {
-            let device = SkinDebugDevice(rawValue: UserDefaults.standard.skinDebugDevice) ?? .edgeToEdge
-            return device
         }
     }
     
@@ -418,5 +417,4 @@ private extension UserDefaults
     @NSManaged var isAltRepresentationsAvailable: Bool
     
     @NSManaged var isSkinDebugModeEnabled: Bool
-    @NSManaged var skinDebugDevice: String
 }

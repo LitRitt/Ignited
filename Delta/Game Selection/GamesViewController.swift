@@ -489,7 +489,7 @@ private extension GamesViewController
     {
         let alertController = UIAlertController(title: NSLocalizedString("Change Album Artwork Size", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         alertController.addAction(UIAlertAction(title: "Small", style: .default, handler: { (action) in

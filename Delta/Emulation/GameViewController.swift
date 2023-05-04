@@ -799,9 +799,9 @@ private extension GameViewController
         
         var traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
         
-        if Settings.isSkinDebugModeEnabled || AdvancedFeatures.shared.skinDebug.isEnabled
+        if (Settings.isSkinDebugModeEnabled || AdvancedFeatures.shared.skinDebug.isEnabled) && AdvancedFeatures.shared.skinDebug.device != nil
         {
-            switch Settings.skinDebugDevice
+            switch AdvancedFeatures.shared.skinDebug.device
             {
             case .edgeToEdge:
                 traits.device = .iphone
@@ -818,6 +818,8 @@ private extension GameViewController
             case .splitView:
                 traits.device = .ipad
                 traits.displayType = .splitView
+                
+            default: break
             }
             
             self.controllerView.overrideControllerSkinTraits = traits
@@ -1509,7 +1511,7 @@ extension GameViewController
     {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         if GameplayFeatures.shared.fastForward.slowmo {
@@ -1623,39 +1625,47 @@ extension GameViewController
         
         let alertController = UIAlertController(title: NSLocalizedString("Choose Skin Debug Device", comment: ""), message: NSLocalizedString("This allows you to test your skins on devices that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        alertController.addAction(UIAlertAction(title: "iPhone - Standard", style: .default, handler: { (action) in
-            Settings.skinDebugDevice = .standard
+        alertController.addAction(UIAlertAction(title: SkinDebugDevice.standard.description, style: .default, handler: { (action) in
+            AdvancedFeatures.shared.skinDebug.device = .standard
             self.resumeEmulation()
             if UserInterfaceFeatures.shared.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Debugging as Standard iPhone", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.standard.description)", comment: ""))
             }
         }))
-        alertController.addAction(UIAlertAction(title: "iPhone - Edge to Edge", style: .default, handler: { (action) in
-            Settings.skinDebugDevice = .edgeToEdge
+        alertController.addAction(UIAlertAction(title: SkinDebugDevice.edgeToEdge.description, style: .default, handler: { (action) in
+            AdvancedFeatures.shared.skinDebug.device = .edgeToEdge
             self.resumeEmulation()
             if UserInterfaceFeatures.shared.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Debugging as Edge to Edge iPhone", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.edgeToEdge.description)", comment: ""))
             }
         }))
-        alertController.addAction(UIAlertAction(title: "iPad - Standard", style: .default, handler: { (action) in
-            Settings.skinDebugDevice = .ipad
+        alertController.addAction(UIAlertAction(title: SkinDebugDevice.ipad.description, style: .default, handler: { (action) in
+            AdvancedFeatures.shared.skinDebug.device = .ipad
             self.resumeEmulation()
             if UserInterfaceFeatures.shared.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Debugging as Standard iPad", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.ipad.description)", comment: ""))
             }
         }))
-        alertController.addAction(UIAlertAction(title: "iPad - Split View", style: .default, handler: { (action) in
-            Settings.skinDebugDevice = .splitView
+        alertController.addAction(UIAlertAction(title: SkinDebugDevice.splitView.description, style: .default, handler: { (action) in
+            AdvancedFeatures.shared.skinDebug.device = .splitView
             self.resumeEmulation()
             if UserInterfaceFeatures.shared.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Debugging as SplitView iPad", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.splitView.description)", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: SkinDebugDevice.nilDescription, style: .default, handler: { (action) in
+            AdvancedFeatures.shared.skinDebug.device = nil
+            self.resumeEmulation()
+            if UserInterfaceFeatures.shared.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Device Override Disabled", comment: ""))
             }
         }))
         alertController.addAction(.cancel)
@@ -1798,7 +1808,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, .isAltRepresentationsEnabled, UserInterfaceFeatures.shared.skins.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey, .skinDebugDevice:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, .isAltRepresentationsEnabled, UserInterfaceFeatures.shared.skins.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:

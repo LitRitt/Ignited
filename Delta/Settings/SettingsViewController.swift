@@ -15,7 +15,7 @@ import Roxas
 
 private extension SettingsViewController
 {
-    enum Section: Int
+    enum Section: Int, CaseIterable
     {
         case patreon
         case syncing
@@ -199,11 +199,6 @@ private extension SettingsViewController
 
 private extension SettingsViewController
 {
-    @IBAction func toggleAltRepresentationsEnabled(_ sender: UISwitch)
-    {
-        Settings.isAltRepresentationsEnabled = sender.isOn
-    }
-    
     func openWebsite(site: String)
     {
         let safariURL = URL(string: site)!
@@ -271,7 +266,7 @@ private extension SettingsViewController
     {
         let alertController = UIAlertController(title: NSLocalizedString("⚠️ Clear States? ⚠️", comment: ""), message: NSLocalizedString("This will delete all auto save states from every game. The auto-load save states feature relies on these auto save states to resume your game where you left off. Deleting them can be useful to reduce the size of your Sync backup.", comment: ""), preferredStyle: .alert)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
@@ -351,10 +346,6 @@ private extension SettingsViewController
             {
                 UIApplication.shared.setAlternateIconName(nil)
             }
-        }
-        else
-        {
-            UIApplication.shared.setAlternateIconName(nil)
         }
     }
 }
@@ -542,8 +533,7 @@ extension SettingsViewController
             tableView.deselectRow(at: indexPath, animated: true)
             
         case .credits:
-            let row = CreditsRow(rawValue: indexPath.row)!
-            switch row
+            switch CreditsRow.allCases[indexPath.row]
             {
             case .developer: self.openHomePage()
             case .contributors: self.showContributors()
