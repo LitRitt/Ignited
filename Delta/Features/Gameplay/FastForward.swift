@@ -20,7 +20,7 @@ struct FastForwardOptions
             }
             HStack {
                 Text("50%")
-                Slider(value: value, in: 0.5...4.0, step: 0.1)
+                Slider(value: value, in: 0.5...4.0, step: 0.05)
                 Text("400%")
             }
         }.displayInline()
