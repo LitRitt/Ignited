@@ -27,9 +27,6 @@ extension Settings.Name
     static let preferredControllerSkin: Settings.Name = "preferredControllerSkin"
     static let syncingService: Settings.Name = "syncingService"
     static let isAltJITEnabled: Settings.Name = "isAltJITEnabled"
-    static let isAltRepresentationsAvailable: Settings.Name = "isAltRepresentationsAvailable"
-    static let isAltRepresentationsEnabled: Settings.Name = "isAltRepresentationsEnabled"
-    static let isSkinDebugModeEnabled: Settings.Name = "isSkinDebugModeEnabled"
 }
 
 extension Settings
@@ -55,9 +52,6 @@ struct Settings
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             #keyPath(UserDefaults.isAltJITEnabled): false,
-            #keyPath(UserDefaults.isUseAltRepresentationsEnabled): false,
-            #keyPath(UserDefaults.isAltRepresentationsAvailable): false,
-            #keyPath(UserDefaults.isSkinDebugModeEnabled): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
             GameplayFeatures.shared.autoLoad.settingsKey.rawValue: true,
             GameplayFeatures.shared.cheats.settingsKey.rawValue: true,
@@ -185,39 +179,6 @@ extension Settings
         }
     }
     
-    static var isAltRepresentationsEnabled: Bool {
-        set {
-            UserDefaults.standard.isUseAltRepresentationsEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsEnabled])
-        }
-        get {
-            let isUseAltRepresentationsEnabled = UserDefaults.standard.isUseAltRepresentationsEnabled
-            return isUseAltRepresentationsEnabled
-        }
-    }
-    
-    static var isAltRepresentationsAvailable: Bool {
-        set {
-            UserDefaults.standard.isAltRepresentationsAvailable = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltRepresentationsAvailable])
-        }
-        get {
-            let isAltRepresentationsAvailable = UserDefaults.standard.isAltRepresentationsAvailable
-            return isAltRepresentationsAvailable
-        }
-    }
-    
-    static var isSkinDebugModeEnabled: Bool {
-        set {
-            UserDefaults.standard.isSkinDebugModeEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isSkinDebugModeEnabled])
-        }
-        get {
-            let isSkinDebugModeEnabled = UserDefaults.standard.isSkinDebugModeEnabled
-            return isSkinDebugModeEnabled
-        }
-    }
-    
     static func preferredCore(for gameType: GameType) -> DeltaCoreProtocol?
     {
         let key = self.preferredCoreSettingsKey(for: gameType)
@@ -299,7 +260,7 @@ extension Settings
         case .landscape: preferredControllerSkin = game.preferredLandscapeSkin
         }
         
-        let alt = Settings.isAltRepresentationsEnabled
+        let alt = AdvancedFeatures.shared.skinDebug.useAlt
         if let controllerSkin = preferredControllerSkin, let _ = controllerSkin.supportedTraits(for: traits, alt: alt)
         {
             // Check if there are supported traits, which includes fallback traits for X <-> non-X devices.
@@ -412,9 +373,4 @@ private extension UserDefaults
     @NSManaged var sortSaveStatesByOldestFirst: Bool
     
     @NSManaged var isAltJITEnabled: Bool
-    
-    @NSManaged var isUseAltRepresentationsEnabled: Bool
-    @NSManaged var isAltRepresentationsAvailable: Bool
-    
-    @NSManaged var isSkinDebugModeEnabled: Bool
 }

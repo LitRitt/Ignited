@@ -215,12 +215,12 @@ private extension PauseViewController
         
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""), image: #imageLiteral(resourceName: "SustainButtons"), action: { _ in })
         
-        if Settings.isAltRepresentationsAvailable
+        if AdvancedFeatures.shared.skinDebug.hasAlt
         {
             self.altSkinItem = MenuItem(text: NSLocalizedString("Alternate Skin", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
         }
         
-        if AdvancedFeatures.shared.skinDebug.isEnabled || Settings.isSkinDebugModeEnabled
+        if AdvancedFeatures.shared.skinDebug.isEnabled || AdvancedFeatures.shared.skinDebug.skinEnabled
         {
             self.debugModeItem = MenuItem(text: NSLocalizedString("Debug Mode", comment: ""), image: #imageLiteral(resourceName: "Debug"), action: { _ in })
             self.debugDeviceItem = MenuItem(text: NSLocalizedString("Debug Device", comment: ""), image: #imageLiteral(resourceName: "DebugDevice"), action: { _ in })

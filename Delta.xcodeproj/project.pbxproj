@@ -42,12 +42,14 @@
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtwork.swift */; };
 		AC27348229FE992800B4CB2E /* UserInterfaceFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */; };
+		AC4241212A0514F800084B09 /* AlternateSkins.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4241202A0514F800084B09 /* AlternateSkins.swift */; };
 		AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */; };
 		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
 		AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F6029B2C0F4005B27DD /* UpdatesView.swift */; };
 		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
 		AC53406229E32B70009EDF08 /* 8bit.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406129E32B70009EDF08 /* 8bit.caf */; };
 		AC53406429E33098009EDF08 /* snap.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406329E33097009EDF08 /* snap.caf */; };
+		AC5E21A52A05E4350065A3DB /* FavoriteGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5E21A42A05E4350065A3DB /* FavoriteGames.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
 		AC84B56C29FEF5460090F274 /* GameplayFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84B56B29FEF5460090F274 /* GameplayFeatures.swift */; };
@@ -288,12 +290,14 @@
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtwork.swift; sourceTree = "<group>"; };
 		AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeaturesView.swift; sourceTree = "<group>"; };
+		AC4241202A0514F800084B09 /* AlternateSkins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateSkins.swift; sourceTree = "<group>"; };
 		AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+BuildNumber.swift"; sourceTree = "<group>"; };
 		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		AC503F6029B2C0F4005B27DD /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
 		AC53406129E32B70009EDF08 /* 8bit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 8bit.caf; sourceTree = "<group>"; };
 		AC53406329E33097009EDF08 /* snap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = snap.caf; sourceTree = "<group>"; };
+		AC5E21A42A05E4350065A3DB /* FavoriteGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGames.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
 		AC84B56B29FEF5460090F274 /* GameplayFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayFeatures.swift; sourceTree = "<group>"; };
 		AC84B56D29FEF8A70090F274 /* GameplayFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayFeaturesView.swift; sourceTree = "<group>"; };
@@ -557,6 +561,7 @@
 				AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */,
 				AC1EAE662A0061910072C858 /* PowerUser.swift */,
 				AC1EAE6A2A006CC30072C858 /* SkinDebug.swift */,
+				AC4241202A0514F800084B09 /* AlternateSkins.swift */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -571,6 +576,7 @@
 				ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */,
 				ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */,
 				ACCD9DBA2A01E48B00B235C4 /* ControllerSkins.swift */,
+				AC5E21A42A05E4350065A3DB /* FavoriteGames.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -1596,6 +1602,7 @@
 				AC1EAE652A005F6C0072C858 /* AdvancedFeatures.swift in Sources */,
 				AC84B57429FF1BDA0090F274 /* FastForward.swift in Sources */,
 				BFFA4C091E8A24D600D87934 /* GameTableViewCell.swift in Sources */,
+				AC4241212A0514F800084B09 /* AlternateSkins.swift in Sources */,
 				BFFC46231D5984A000AF2CC6 /* LaunchViewController.swift in Sources */,
 				D5864970297734280081477E /* CheatMetadata.swift in Sources */,
 				AC84B57029FF102A0090F274 /* GameAudio.swift in Sources */,
@@ -1651,6 +1658,7 @@
 				BF713C0822499ED4004A1A2B /* PreviousHarmony.xcdatamodeld in Sources */,
 				BF59427D1E09BC830051894B /* ControllerSkin.swift in Sources */,
 				BFAB9F7D219A43380080EC7D /* SyncManager.swift in Sources */,
+				AC5E21A52A05E4350065A3DB /* FavoriteGames.swift in Sources */,
 				ACB3CB8E29FDD3E9002B53DE /* TouchFeedbackFeatures.swift in Sources */,
 				BFCEA67E1D56FF640061A534 /* UIViewControllerContextTransitioning+Conveniences.swift in Sources */,
 				BF1173501DA32CF600047DF8 /* ControllersSettingsViewController.swift in Sources */,

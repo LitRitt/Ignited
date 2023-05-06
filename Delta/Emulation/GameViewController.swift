@@ -456,7 +456,7 @@ extension GameViewController
                 self.performFastForwardAction(activate: item.isSelected)
             }
             
-            pauseViewController.altSkinItem?.isSelected = Settings.isAltRepresentationsEnabled
+            pauseViewController.altSkinItem?.isSelected = AdvancedFeatures.shared.skinDebug.useAlt
             pauseViewController.altSkinItem?.action = { [unowned self] item in
                 self.performAltRepresentationsAction()
             }
@@ -762,7 +762,7 @@ private extension GameViewController
         
         self.controllerView.touchOverlayColor = TouchFeedbackFeatures.shared.touchOverlay.themed ? UIColor.themeColor : UIColor.white
         
-        self.controllerView.isAltRepresentationsEnabled = Settings.isAltRepresentationsEnabled
+        self.controllerView.isAltRepresentationsEnabled = AdvancedFeatures.shared.skinDebug.useAlt
         self.controllerView.isDebugModeEnabled = AdvancedFeatures.shared.skinDebug.isOn
         
         self.controllerView.updateControllerSkin()
@@ -799,7 +799,7 @@ private extension GameViewController
         
         var traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
         
-        if (Settings.isSkinDebugModeEnabled || AdvancedFeatures.shared.skinDebug.isEnabled) && AdvancedFeatures.shared.skinDebug.device != nil
+        if (AdvancedFeatures.shared.skinDebug.skinEnabled || AdvancedFeatures.shared.skinDebug.isEnabled) && AdvancedFeatures.shared.skinDebug.device != nil
         {
             switch AdvancedFeatures.shared.skinDebug.device
             {
@@ -850,8 +850,8 @@ private extension GameViewController
             self.controllerView.controllerSkin = touchControllerSkin
         }
         
-        Settings.isSkinDebugModeEnabled = self.controllerView.controllerSkin?.isDebugModeEnabled ?? false
-        Settings.isAltRepresentationsAvailable = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
+        AdvancedFeatures.shared.skinDebug.skinEnabled = self.controllerView.controllerSkin?.isDebugModeEnabled ?? false
+        AdvancedFeatures.shared.skinDebug.hasAlt = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
         
         self.view.setNeedsLayout()
     }
@@ -1566,9 +1566,9 @@ extension GameViewController
     
     func performAltRepresentationsAction()
     {
-        let enabled = !Settings.isAltRepresentationsEnabled
-        Settings.isAltRepresentationsEnabled = enabled
+        let enabled = !AdvancedFeatures.shared.skinDebug.useAlt
         self.controllerView.isAltRepresentationsEnabled = enabled
+        AdvancedFeatures.shared.skinDebug.useAlt = enabled
         
         if let pauseView = self.pauseViewController
         {
@@ -1808,7 +1808,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, .isAltRepresentationsEnabled, UserInterfaceFeatures.shared.skins.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, UserInterfaceFeatures.shared.skins.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
