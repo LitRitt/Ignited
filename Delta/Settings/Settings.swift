@@ -62,7 +62,7 @@ struct Settings
             UserInterfaceFeatures.shared.appIcon.settingsKey.rawValue: true,
             UserInterfaceFeatures.shared.theme.settingsKey.rawValue: true,
             UserInterfaceFeatures.shared.skins.settingsKey.rawValue: true,
-            UserInterfaceFeatures.shared.artwork.settingsKey.rawValue: false,
+            UserInterfaceFeatures.shared.artwork.settingsKey.rawValue: true,
             UserInterfaceFeatures.shared.statusBar.settingsKey.rawValue: false,
             UserInterfaceFeatures.shared.previews.settingsKey.rawValue: false,
             UserInterfaceFeatures.shared.toasts.settingsKey.rawValue: true,

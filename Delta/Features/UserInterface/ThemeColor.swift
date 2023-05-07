@@ -58,5 +58,5 @@ struct ThemeColorOptions
         ColorPicker("Custom Color", selection: value, supportsOpacity: false)
             .displayInline()
     })
-    var customColor: Color = Color.white
+    var customColor: Color = Color(red: 253/255, green: 110/255, blue: 0/255)
 }

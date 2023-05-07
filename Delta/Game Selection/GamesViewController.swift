@@ -487,19 +487,43 @@ private extension GamesViewController
 {
     @IBAction func changeArtworkSize()
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Album Artwork Size", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: NSLocalizedString("Change Artwork Size", comment: ""), message: nil, preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
         alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        alertController.addAction(UIAlertAction(title: "Small", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: ArtworkSize.small.rawValue, style: .default, handler: { (action) in
             UserInterfaceFeatures.shared.artwork.size = .small
         }))
-        alertController.addAction(UIAlertAction(title: "Medium", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: ArtworkSize.medium.rawValue, style: .default, handler: { (action) in
             UserInterfaceFeatures.shared.artwork.size = .medium
         }))
-        alertController.addAction(UIAlertAction(title: "Large", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: ArtworkSize.large.rawValue, style: .default, handler: { (action) in
             UserInterfaceFeatures.shared.artwork.size = .large
+        }))
+        alertController.addAction(.cancel)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func changeSortOrder()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Change Sort Order", comment: ""), message: nil, preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: SortOrder.alphabeticalAZ.rawValue, style: .default, handler: { (action) in
+            UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalAZ
+        }))
+        alertController.addAction(UIAlertAction(title: SortOrder.alphabeticalZA.rawValue, style: .default, handler: { (action) in
+            UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalZA
+        }))
+        alertController.addAction(UIAlertAction(title: SortOrder.mostRecent.rawValue, style: .default, handler: { (action) in
+            UserInterfaceFeatures.shared.artwork.sortOrder = .mostRecent
+        }))
+        alertController.addAction(UIAlertAction(title: SortOrder.leastRecent.rawValue, style: .default, handler: { (action) in
+            UserInterfaceFeatures.shared.artwork.sortOrder = .leastRecent
         }))
         alertController.addAction(.cancel)
         

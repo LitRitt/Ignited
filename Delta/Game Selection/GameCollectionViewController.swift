@@ -50,7 +50,6 @@ class GameCollectionViewController: UICollectionViewController
                 {
                     self.configure(cell as! GridCollectionViewGameCell, for: indexPath)
                 }
-                
             }
         }
     }
@@ -383,7 +382,23 @@ private extension GameCollectionViewController
             fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Game.gameCollection), gameCollection)
         }
         
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Game.name), ascending: true)]
+        let favoritesSort = NSSortDescriptor(key: #keyPath(Game.isFavorite), ascending: false)
+        let alphabeticalAZSort = NSSortDescriptor(key: #keyPath(Game.name), ascending: true)
+        let alphabeticalZASort = NSSortDescriptor(key: #keyPath(Game.name), ascending: false)
+        let mostRecentSort = NSSortDescriptor(key: #keyPath(Game.playedDate), ascending: false)
+        let leastRecentSort = NSSortDescriptor(key: #keyPath(Game.playedDate), ascending: true)
+        
+        switch UserInterfaceFeatures.shared.artwork.sortOrder
+        {
+        case .alphabeticalAZ:
+            fetchRequest.sortDescriptors = [favoritesSort, alphabeticalAZSort]
+        case .alphabeticalZA:
+            fetchRequest.sortDescriptors = [favoritesSort, alphabeticalZASort]
+        case .mostRecent:
+            fetchRequest.sortDescriptors = [favoritesSort, mostRecentSort]
+        case .leastRecent:
+            fetchRequest.sortDescriptors = [favoritesSort, leastRecentSort]
+        }
         fetchRequest.returnsObjectsAsFaults = false
         
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -424,9 +439,22 @@ private extension GameCollectionViewController
         }
         else
         {
-            cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 3)
-            cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
+            if UserInterfaceFeatures.shared.artwork.isEnabled,
+               UserInterfaceFeatures.shared.artwork.favoriteHighlight,
+               game.isFavorite
+            {
+                cell.layer.shadowColor = UserInterfaceFeatures.shared.artwork.favoriteColor.cgColor
+                cell.layer.shadowOpacity = 1.0
+                cell.layer.shadowRadius = 8.0
+                cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+                cell.imageView.layer.borderColor = UserInterfaceFeatures.shared.artwork.favoriteColor.cgColor
+            }
+            else
+            {
+                cell.layer.shadowColor = UIColor.black.cgColor
+                cell.layer.shadowOffset = CGSize(width: 0, height: 3)
+                cell.imageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
+            }
         }
         
         switch game.gameCollection?.system
@@ -454,7 +482,14 @@ private extension GameCollectionViewController
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
         cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         
-        cell.textLabel.text = game.name
+        if game.isFavorite
+        {
+            cell.textLabel.text = "⭐️ " + game.name
+        }
+        else
+        {
+            cell.textLabel.text = game.name
+        }
         cell.textLabel.textColor = UIColor.ignitedLightGray
     }
     
@@ -698,14 +733,28 @@ private extension GameCollectionViewController
             self.delete(game)
         })
         
+        let favoriteAction: Action
+        if UserInterfaceFeatures.shared.artwork.favoriteGames[game.type.rawValue]!.contains(game.identifier)
+        {
+            favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star.slash"), action: { [unowned self] action in
+                self.removeFavoriteGame(for: game)
+            })
+        }
+        else
+        {
+            favoriteAction = Action(title: NSLocalizedString("Add Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star"), action: { [unowned self] action in
+                self.addFavoriteGame(for: game)
+            })
+        }
+        
         switch game.type
         {
         case GameType.unknown:
-            return [cancelAction, renameAction, changeArtworkAction, shareAction, deleteAction]
+            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, shareAction, deleteAction]
         case .ds where game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier:
-            return [cancelAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction]
+            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction]
         default:
-            return [cancelAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, deleteAction]
+            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, deleteAction]
         }
     }
     
@@ -1043,6 +1092,71 @@ private extension GameCollectionViewController
         self.performSegue(withIdentifier: "preferredControllerSkins", sender: game)
     }
     
+    func addFavoriteGame(for game: Game)
+    {
+        guard var favorites = UserInterfaceFeatures.shared.artwork.favoriteGames[game.type.rawValue] else { return }
+        
+        favorites.append(game.identifier)
+        self.removeShadowForGame(for: game)
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            do
+            {
+                let game = context.object(with: game.objectID) as! Game
+                game.isFavorite = true
+                
+                try context.save()
+                
+                UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            }
+            catch
+            {
+                print("Error adding favorite game.", error)
+            }
+        }
+    }
+    
+    func removeFavoriteGame(for game: Game)
+    {
+        guard var favorites = UserInterfaceFeatures.shared.artwork.favoriteGames[game.type.rawValue],
+              let index = favorites.firstIndex(of: game.identifier) else { return }
+        
+        favorites.remove(at: index)
+        self.removeShadowForGame(for: game)
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            do
+            {
+                let game = context.object(with: game.objectID) as! Game
+                game.isFavorite = false
+                
+                try context.save()
+                
+                UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            }
+            catch
+            {
+                print("Error removing favorite game.", error)
+            }
+        }
+    }
+    
+    func removeShadowForGame(for game: Game)
+    {
+        for cell in self.collectionView?.visibleCells ?? []
+        {
+            if let indexPath = self.collectionView?.indexPath(for: cell)
+            {
+                let gameCell = self.dataSource.item(at: indexPath) as! Game
+                
+                if gameCell.identifier == game.identifier
+                {
+                    cell.layer.shadowOpacity = 0
+                }
+            }
+        }
+    }
+    
     @objc func textFieldTextDidChange(_ textField: UITextField)
     {
         let text = textField.text ?? ""
@@ -1068,7 +1182,11 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey:
+        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteGames.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteColor.settingsKey:
+            self.update()
+            
+        case UserInterfaceFeatures.shared.artwork.$sortOrder.settingsKey:
+            self.updateDataSource()
             self.update()
             
         default: break

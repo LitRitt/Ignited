@@ -25,6 +25,8 @@ public class _Game: NSManagedObject
     @NSManaged public var playedDate: Date?
 
     @NSManaged public var type: GameType
+    
+    @NSManaged public var isFavorite: Bool
 
     // MARK: - Relationships
 

@@ -6,6 +6,7 @@
 //  Copyright © 2023 Lit Development. All rights reserved.
 //
 
+import UIKit
 import SwiftUI
 
 import Features
@@ -28,8 +29,55 @@ extension ArtworkSize: LocalizedOptionValue
     }
 }
 
+enum SortOrder: String, CaseIterable, CustomStringConvertible
+{
+    case alphabeticalAZ = "Alphabetical A-Z"
+    case alphabeticalZA = "Alphabetical Z-A"
+    case mostRecent = "Most Recently Played"
+    case leastRecent = "Least Recently Played"
+    
+    var description: String {
+        return self.rawValue
+    }
+}
+
+extension SortOrder: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        Text(self.description)
+    }
+}
+
 struct GameArtworkOptions
 {
+    @Option(name: "Sort Order",
+            description: "Choose how games should be sorted.",
+            values: SortOrder.allCases)
+    var sortOrder: SortOrder = .alphabeticalAZ
+    
+    @Option(name: "Highlight Favorite Games",
+            description: "Give your favorite games a distinct glow.")
+    var favoriteHighlight: Bool = true
+    
+    @Option(name: "Favorite Highlight Color",
+            description: "Select a custom color to use to highlight your favorite games.",
+            detailView: { value in
+        ColorPicker("Favorite Highlight Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var favoriteColor: Color = Color(red: 255/255, green: 234/255, blue: 0/255)
+    
+    @Option
+    var favoriteGames: [String: [String]] = [
+        System.ds.gameType.rawValue: [],
+        System.gba.gameType.rawValue: [],
+        System.gbc.gameType.rawValue: [],
+        System.nes.gameType.rawValue: [],
+        System.snes.gameType.rawValue: [],
+        System.n64.gameType.rawValue: [],
+        System.genesis.gameType.rawValue: []
+    ]
+    
     @Option(name: "Artwork Size",
             description: "Change the size of game artwork.",
             values: ArtworkSize.allCases)

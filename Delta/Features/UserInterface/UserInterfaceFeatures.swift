@@ -46,11 +46,6 @@ struct UserInterfaceFeatures: FeatureContainer
              options: ControllerSkinOptions())
     var skins
     
-    @Feature(name: "Favorite Games",
-             description: "Choose your favorite games to be shown.",
-             options: ControllerSkinOptions())
-    var favoriteGames
-    
     private init()
     {
         self.prepareFeatures()

@@ -36,22 +36,29 @@
                     </view>
                     <navigationItem key="navigationItem" title="Games" id="pFk-as-3k4">
                         <leftBarButtonItems>
-                            <barButtonItem image="gearshape" catalog="system" id="2gg-lC-FhX">
+                            <barButtonItem image="gear" catalog="system" id="2gg-lC-FhX">
                                 <connections>
                                     <segue destination="xMK-Cs-fAS" kind="presentation" identifier="showSettings" id="uN5-PN-7FK"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="square.grid.2x2" catalog="system" id="7uc-GQ-gIK" userLabel="Artwork Size Button">
+                            <barButtonItem systemItem="add" id="FeA-O5-xd2">
+                                <connections>
+                                    <action selector="importFiles" destination="jeE-WD-wXO" id="A1s-kE-NkM"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="aspectratio" catalog="system" id="7uc-GQ-gIK" userLabel="Artwork Size Button">
                                 <connections>
                                     <action selector="changeArtworkSize" destination="jeE-WD-wXO" id="Tqi-kx-5Yg"/>
                                 </connections>
                             </barButtonItem>
-                        </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FeA-O5-xd2">
-                            <connections>
-                                <action selector="importFiles" destination="jeE-WD-wXO" id="A1s-kE-NkM"/>
-                            </connections>
-                        </barButtonItem>
+                            <barButtonItem image="text.line.first.and.arrowtriangle.forward" catalog="system" id="cSu-hz-cFh" userLabel="Sort Order Button">
+                                <connections>
+                                    <action selector="changeSortOrder" destination="jeE-WD-wXO" id="UCA-yJ-gUk"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="importButton" destination="FeA-O5-xd2" id="A44-3S-Okz"/>
@@ -308,7 +315,8 @@
         <segue reference="Tey-6Z-UHp"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="gearshape" catalog="system" width="128" height="123"/>
-        <image name="square.grid.2x2" catalog="system" width="128" height="114"/>
+        <image name="aspectratio" catalog="system" width="128" height="93"/>
+        <image name="gear" catalog="system" width="128" height="122"/>
+        <image name="text.line.first.and.arrowtriangle.forward" catalog="system" width="128" height="97"/>
     </resources>
 </document>
