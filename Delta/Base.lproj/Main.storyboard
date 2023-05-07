@@ -61,7 +61,9 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="artworkSizeButton" destination="7uc-GQ-gIK" id="FAe-6f-UPE"/>
                         <outlet property="importButton" destination="FeA-O5-xd2" id="A44-3S-Okz"/>
+                        <outlet property="sortButton" destination="cSu-hz-cFh" id="cA3-oM-vHo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYx-xE-nis" userLabel="First Responder" sceneMemberID="firstResponder"/>

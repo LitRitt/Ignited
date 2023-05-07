@@ -55,6 +55,38 @@ struct GameArtworkOptions
             values: SortOrder.allCases)
     var sortOrder: SortOrder = .alphabeticalAZ
     
+    @Option(name: "Artwork Size",
+            description: "Change the size of game artwork.",
+            values: ArtworkSize.allCases)
+    var size: ArtworkSize = .medium
+    
+    @Option(name: "Theme Background Color",
+            description: "Enable to use theme color for the artwork background color. Disable to use the color selected below.")
+    var bgThemed: Bool = true
+    
+    @Option(name: "Background Color",
+            description: "Select a custom color to use for the artwork background.",
+            detailView: { value in
+        ColorPicker("Background Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var bgColor: Color = Color(red: 253/255, green: 110/255, blue: 0/255)
+    
+    @Option(name: "Background Opacity", description: "Adjust the opacity of the artwork background.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Background Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...1.0, step: 0.05)
+                Text("100%")
+            }
+        }.displayInline()
+    })
+    var bgOpacity: Double = 0.7
+    
     @Option(name: "Highlight Favorite Games",
             description: "Give your favorite games a distinct glow.")
     var favoriteHighlight: Bool = true
@@ -67,6 +99,36 @@ struct GameArtworkOptions
     })
     var favoriteColor: Color = Color(red: 255/255, green: 234/255, blue: 0/255)
     
+    @Option(name: "Animation Speed", description: "Adjust the animation speed of animated artwork.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Animation Speed: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("50%")
+                Slider(value: value, in: 0.5...2.0, step: 0.05)
+                Text("200%")
+            }
+        }.displayInline()
+    })
+    var animationSpeed: Double = 1.0
+    
+    @Option(name: "Animation Delay", description: "Adjust the pause between animations for animated artwork.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Animation Pause: \(value.wrappedValue, specifier: "%.f") Frames")
+                Spacer()
+            }
+            HStack {
+                Text("0")
+                Slider(value: value, in: 0...50, step: 1)
+                Text("50")
+            }
+        }.displayInline()
+    })
+    var animationPause: Double = 20
+    
     @Option
     var favoriteGames: [String: [String]] = [
         System.ds.gameType.rawValue: [],
@@ -77,11 +139,6 @@ struct GameArtworkOptions
         System.n64.gameType.rawValue: [],
         System.genesis.gameType.rawValue: []
     ]
-    
-    @Option(name: "Artwork Size",
-            description: "Change the size of game artwork.",
-            values: ArtworkSize.allCases)
-    var size: ArtworkSize = .medium
     
     @Option(name: "Corner Radius", description: "How round the corners should be.", detailView: { value in
         VStack {

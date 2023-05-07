@@ -370,6 +370,41 @@ private extension GameCollectionViewController
             cell.imageView.image = image
             
             self.updateImage(cell: cell, image: image)
+            
+            let game = self.dataSource.item(at: indexPath) as! Game
+            if let artworkURL = game.artworkURL,
+               artworkURL.pathExtension.lowercased() == "gif"
+            {
+                guard let gifData = try? Data(contentsOf: artworkURL),
+                      let source =  CGImageSourceCreateWithData(gifData as CFData, nil) else { return }
+                
+                var images = [UIImage]()
+                let imageCount = CGImageSourceGetCount(source)
+                for i in 0 ..< imageCount
+                {
+                    if let image = CGImageSourceCreateImageAtIndex(source, i, nil)
+                    {
+                        if i == 0
+                        {
+                            let pauseFrames = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationPause : 20
+                            for j in 0 ..< Int(floor(pauseFrames)) // replicate first image to create a delay between animations
+                            {
+                                images.append(UIImage(cgImage: image))
+                            }
+                        }
+                        else
+                        {
+                            images.append(UIImage(cgImage: image))
+                        }
+                    }
+                }
+                
+                let animationSpeed = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationSpeed : 1.0
+                
+                cell.imageView.animationImages = images
+                cell.imageView.animationDuration = Double(images.count) * 0.05 / animationSpeed
+                cell.imageView.startAnimating()
+            }
         }
     }
     
@@ -409,19 +444,27 @@ private extension GameCollectionViewController
     {
         let game = self.dataSource.item(at: indexPath) as! Game
         
-        cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
         cell.imageView.tintColor = UIColor.white
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
         if UserInterfaceFeatures.shared.artwork.isEnabled
         {
+            if UserInterfaceFeatures.shared.artwork.bgThemed
+            {
+                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity)
+            }
+            else
+            {
+                cell.imageView.backgroundColor = UIColor(cgColor: UserInterfaceFeatures.shared.artwork.bgColor.cgColor!).withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity)
+            }
             cell.imageView.layer.cornerRadius = UserInterfaceFeatures.shared.artwork.cornerRadius
             cell.imageView.layer.borderWidth = UserInterfaceFeatures.shared.artwork.borderWidth
             cell.layer.shadowOpacity = Float(UserInterfaceFeatures.shared.artwork.shadowOpacity)
         }
         else
         {
+            cell.imageView.backgroundColor = UIColor.themeColor
             cell.imageView.layer.cornerRadius = 15
             cell.imageView.layer.borderWidth = 1.2
             cell.layer.shadowOpacity = 0.5
@@ -857,11 +900,17 @@ private extension GameCollectionViewController
                 {
                     let imageData = try Data(contentsOf: url)
                     
-                    if
-                        let image = UIImage(data: imageData),
-                        let resizedImage = image.resizing(toFit: CGSize(width: 300, height: 300)),
-                        let rotatedImage = resizedImage.rotatedToIntrinsicOrientation(), // in case image was imported directly from Files
-                        let resizedData = rotatedImage.pngData()
+                    if url.pathExtension.lowercased() == "gif" || ImageFormat.get(from: imageData) == .gif
+                    {
+                        let destinationURL = DatabaseManager.artworkGifURL(for: game)
+                        try imageData.write(to: destinationURL, options: .atomic)
+                        
+                        imageURL = destinationURL
+                    }
+                    else if let image = UIImage(data: imageData),
+                            let resizedImage = image.resizing(toFit: CGSize(width: 300, height: 300)),
+                            let rotatedImage = resizedImage.rotatedToIntrinsicOrientation(), // in case image was imported directly from Files
+                            let resizedData = rotatedImage.pngData()
                     {
                         let destinationURL = DatabaseManager.artworkURL(for: game)
                         try resizedData.write(to: destinationURL, options: .atomic)
@@ -1182,7 +1231,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteGames.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteColor.settingsKey:
+        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteGames.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgThemed.settingsKey, UserInterfaceFeatures.shared.artwork.$bgOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$animationPause.settingsKey, UserInterfaceFeatures.shared.artwork.$animationSpeed.settingsKey:
             self.update()
             
         case UserInterfaceFeatures.shared.artwork.$sortOrder.settingsKey:

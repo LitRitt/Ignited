@@ -683,6 +683,14 @@ extension DatabaseManager
         let artworkURL = gameURL.deletingPathExtension().appendingPathExtension("png")
         return artworkURL
     }
+    
+    class func artworkGifURL(for game: Game) -> URL
+    {
+        let gameURL = game.fileURL
+        
+        let artworkURL = gameURL.deletingPathExtension().appendingPathExtension("gif")
+        return artworkURL
+    }
 }
 
 //MARK: - Notifications -

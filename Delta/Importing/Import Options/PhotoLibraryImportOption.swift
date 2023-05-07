@@ -42,13 +42,36 @@ extension PhotoLibraryImportOption: UIImagePickerControllerDelegate, UINavigatio
 {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
-        guard let image = info[.originalImage] as? UIImage, let rotatedImage = image.rotatedToIntrinsicOrientation(), let data = rotatedImage.pngData() else {
-            self.completionHandler?([])
-            return
+        let url = info[.imageURL] as! URL
+        var data: Data? = nil
+        
+        if url.pathExtension.lowercased() == "gif"
+        {
+            do
+            {
+                data = try Data(contentsOf: url)
+            }
+            catch
+            {
+                print(error.localizedDescription)
+            }
+        }
+        else
+        {
+            guard let image = info[.originalImage] as? UIImage, let rotatedImage = image.rotatedToIntrinsicOrientation() else {
+                self.completionHandler?([])
+                return
+            }
+            data = rotatedImage.pngData()
         }
         
         do
         {
+            guard let data = data else {
+                self.completionHandler?([])
+                return
+            }
+            
             let temporaryURL = FileManager.default.uniqueTemporaryURL()
             try data.write(to: temporaryURL, options: .atomic)
             

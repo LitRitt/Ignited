@@ -77,6 +77,8 @@ class GamesViewController: UIViewController
     private var syncingProgressObservation: NSKeyValueObservation?
     
     @IBOutlet private var importButton: UIBarButtonItem!
+    @IBOutlet private var sortButton: UIBarButtonItem!
+    @IBOutlet private var artworkSizeButton: UIBarButtonItem!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("initWithNibName: not implemented")
@@ -156,9 +158,20 @@ extension GamesViewController
         let importActions = self.importController.makeActions().menuActions
         let importMenu = UIMenu(title: NSLocalizedString("Import From…", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: importActions)
         self.importButton.menu = importMenu
-
         self.importButton.action = nil
         self.importButton.target = nil
+        
+        let sortActions = self.makeSortActions()
+        let sortMenu = UIMenu(title: NSLocalizedString("Change Sort Order", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: sortActions)
+        self.sortButton.menu = sortMenu
+        self.sortButton.action = nil
+        self.sortButton.target = nil
+        
+        let artworkSizeActions = self.makeArtworkSizeActions()
+        let artworkSizeMenu = UIMenu(title: NSLocalizedString("Change Artwork Size", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: artworkSizeActions)
+        self.artworkSizeButton.menu = artworkSizeMenu
+        self.artworkSizeButton.action = nil
+        self.artworkSizeButton.target = nil
         
         self.prepareSearchController()
         
@@ -481,53 +494,41 @@ extension GamesViewController: ImportControllerDelegate
         }
     }
 }
-
-/// Artwork Size
+//MARK: - Menu Actions -
+/// Menu Actions
 private extension GamesViewController
 {
-    @IBAction func changeArtworkSize()
+    func makeArtworkSizeActions() -> [UIAction]
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Artwork Size", comment: ""), message: nil, preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        alertController.addAction(UIAlertAction(title: ArtworkSize.small.rawValue, style: .default, handler: { (action) in
-            UserInterfaceFeatures.shared.artwork.size = .small
-        }))
-        alertController.addAction(UIAlertAction(title: ArtworkSize.medium.rawValue, style: .default, handler: { (action) in
-            UserInterfaceFeatures.shared.artwork.size = .medium
-        }))
-        alertController.addAction(UIAlertAction(title: ArtworkSize.large.rawValue, style: .default, handler: { (action) in
-            UserInterfaceFeatures.shared.artwork.size = .large
-        }))
-        alertController.addAction(.cancel)
-        
-        self.present(alertController, animated: true, completion: nil)
+        return [
+            UIAction(Action(title: ArtworkSize.small.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"), action: { action in
+                UserInterfaceFeatures.shared.artwork.size = .small
+            }))!,
+            UIAction(Action(title: ArtworkSize.medium.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.2x2"), action: { action in
+                UserInterfaceFeatures.shared.artwork.size = .medium
+            }))!,
+            UIAction(Action(title: ArtworkSize.large.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape"), action: { action in
+                UserInterfaceFeatures.shared.artwork.size = .large
+            }))!
+        ]
     }
     
-    @IBAction func changeSortOrder()
+    func makeSortActions() -> [UIAction]
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Change Sort Order", comment: ""), message: nil, preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        alertController.addAction(UIAlertAction(title: SortOrder.alphabeticalAZ.rawValue, style: .default, handler: { (action) in
-            UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalAZ
-        }))
-        alertController.addAction(UIAlertAction(title: SortOrder.alphabeticalZA.rawValue, style: .default, handler: { (action) in
-            UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalZA
-        }))
-        alertController.addAction(UIAlertAction(title: SortOrder.mostRecent.rawValue, style: .default, handler: { (action) in
-            UserInterfaceFeatures.shared.artwork.sortOrder = .mostRecent
-        }))
-        alertController.addAction(UIAlertAction(title: SortOrder.leastRecent.rawValue, style: .default, handler: { (action) in
-            UserInterfaceFeatures.shared.artwork.sortOrder = .leastRecent
-        }))
-        alertController.addAction(.cancel)
-        
-        self.present(alertController, animated: true, completion: nil)
+        return [
+            UIAction(Action(title: SortOrder.alphabeticalAZ.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
+                UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalAZ
+            }))!,
+            UIAction(Action(title: SortOrder.alphabeticalZA.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
+                UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalZA
+            }))!,
+            UIAction(Action(title: SortOrder.mostRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
+                UserInterfaceFeatures.shared.artwork.sortOrder = .mostRecent
+            }))!,
+            UIAction(Action(title: SortOrder.leastRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
+                UserInterfaceFeatures.shared.artwork.sortOrder = .leastRecent
+            }))!
+        ]
     }
 }
 
