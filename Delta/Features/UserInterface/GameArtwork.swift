@@ -87,6 +87,10 @@ struct GameArtworkOptions
     })
     var bgOpacity: Double = 0.7
     
+    @Option(name: "Favorite Games First",
+            description: "Sort favorited games to the top of the games list.")
+    var favoriteSort: Bool = true
+    
     @Option(name: "Highlight Favorite Games",
             description: "Give your favorite games a distinct glow.")
     var favoriteHighlight: Bool = true

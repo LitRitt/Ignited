@@ -161,15 +161,11 @@ extension GamesViewController
         self.importButton.action = nil
         self.importButton.target = nil
         
-        let sortActions = self.makeSortActions()
-        let sortMenu = UIMenu(title: NSLocalizedString("Change Sort Order", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: sortActions)
-        self.sortButton.menu = sortMenu
+        self.sortButton.menu = self.makeSortMenu()
         self.sortButton.action = nil
         self.sortButton.target = nil
         
-        let artworkSizeActions = self.makeArtworkSizeActions()
-        let artworkSizeMenu = UIMenu(title: NSLocalizedString("Change Artwork Size", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: artworkSizeActions)
-        self.artworkSizeButton.menu = artworkSizeMenu
+        self.artworkSizeButton.menu = self.makeArtworkSizeMenu()
         self.artworkSizeButton.action = nil
         self.artworkSizeButton.target = nil
         
@@ -498,9 +494,9 @@ extension GamesViewController: ImportControllerDelegate
 /// Menu Actions
 private extension GamesViewController
 {
-    func makeArtworkSizeActions() -> [UIAction]
+    func makeArtworkSizeMenu() -> UIMenu
     {
-        return [
+        let artworkSizeActions: [UIAction] = [
             UIAction(Action(title: ArtworkSize.small.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"), action: { action in
                 UserInterfaceFeatures.shared.artwork.size = .small
             }))!,
@@ -511,11 +507,13 @@ private extension GamesViewController
                 UserInterfaceFeatures.shared.artwork.size = .large
             }))!
         ]
+        
+        return UIMenu(title: NSLocalizedString("Change Artwork Size", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: artworkSizeActions)
     }
     
-    func makeSortActions() -> [UIAction]
+    func makeSortMenu() -> UIMenu
     {
-        return [
+        var sortActions: [UIAction] = [
             UIAction(Action(title: SortOrder.alphabeticalAZ.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
                 UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalAZ
             }))!,
@@ -529,6 +527,23 @@ private extension GamesViewController
                 UserInterfaceFeatures.shared.artwork.sortOrder = .leastRecent
             }))!
         ]
+        
+        if UserInterfaceFeatures.shared.artwork.favoriteSort
+        {
+            sortActions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
+                UserInterfaceFeatures.shared.artwork.favoriteSort = false
+                self.sortButton.menu = self.makeSortMenu()
+            }))!, at: 0)
+        }
+        else
+        {
+            sortActions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
+                UserInterfaceFeatures.shared.artwork.favoriteSort = true
+                self.sortButton.menu = self.makeSortMenu()
+            }))!, at: 0)
+        }
+        
+        return UIMenu(title: NSLocalizedString("Change Sort Order", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: sortActions)
     }
 }
 

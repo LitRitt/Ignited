@@ -11,6 +11,12 @@ public class _Game: NSManagedObject
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Game> {
         return NSFetchRequest<Game>(entityName: "Game")
     }
+    
+    public override func awakeFromInsert() {
+        super.awakeFromInsert()
+        
+        setPrimitiveValue(false, forKey: #keyPath(Game.isFavorite))
+    }
 
     // MARK: - Properties
 

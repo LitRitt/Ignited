@@ -371,7 +371,7 @@ private extension GameCollectionViewController
             
             self.updateImage(cell: cell, image: image)
             
-            let game = self.dataSource.item(at: indexPath) as! Game
+            let game = self.dataSource.item(at: indexPath)
             if let artworkURL = game.artworkURL,
                artworkURL.pathExtension.lowercased() == "gif"
             {
@@ -416,24 +416,25 @@ private extension GameCollectionViewController
         {
             fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Game.gameCollection), gameCollection)
         }
-        
-        let favoritesSort = NSSortDescriptor(key: #keyPath(Game.isFavorite), ascending: false)
-        let alphabeticalAZSort = NSSortDescriptor(key: #keyPath(Game.name), ascending: true)
-        let alphabeticalZASort = NSSortDescriptor(key: #keyPath(Game.name), ascending: false)
-        let mostRecentSort = NSSortDescriptor(key: #keyPath(Game.playedDate), ascending: false)
-        let leastRecentSort = NSSortDescriptor(key: #keyPath(Game.playedDate), ascending: true)
+        var sortDescriptors = [NSSortDescriptor(keyPath: \Game.isFavorite, ascending: false)]
+        if UserInterfaceFeatures.shared.artwork.isEnabled && !UserInterfaceFeatures.shared.artwork.favoriteSort
+        {
+            sortDescriptors = []
+        }
         
         switch UserInterfaceFeatures.shared.artwork.sortOrder
         {
         case .alphabeticalAZ:
-            fetchRequest.sortDescriptors = [favoritesSort, alphabeticalAZSort]
+            sortDescriptors.append(NSSortDescriptor(keyPath: \Game.name, ascending: true))
         case .alphabeticalZA:
-            fetchRequest.sortDescriptors = [favoritesSort, alphabeticalZASort]
+            sortDescriptors.append(NSSortDescriptor(keyPath: \Game.name, ascending: false))
         case .mostRecent:
-            fetchRequest.sortDescriptors = [favoritesSort, mostRecentSort]
+            sortDescriptors.append(NSSortDescriptor(keyPath: \Game.playedDate, ascending: false))
         case .leastRecent:
-            fetchRequest.sortDescriptors = [favoritesSort, leastRecentSort]
+            sortDescriptors.append(NSSortDescriptor(keyPath: \Game.playedDate, ascending: true))
         }
+        
+        fetchRequest.sortDescriptors = sortDescriptors
         fetchRequest.returnsObjectsAsFaults = false
         
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -527,7 +528,7 @@ private extension GameCollectionViewController
         
         if game.isFavorite
         {
-            cell.textLabel.text = "⭐️ " + game.name
+            cell.textLabel.text = "☆ " + game.name
         }
         else
         {
@@ -1149,19 +1150,12 @@ private extension GameCollectionViewController
         self.removeShadowForGame(for: game)
         
         DatabaseManager.shared.performBackgroundTask { (context) in
-            do
-            {
-                let game = context.object(with: game.objectID) as! Game
-                game.isFavorite = true
-                
-                try context.save()
-                
-                UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
-            }
-            catch
-            {
-                print("Error adding favorite game.", error)
-            }
+            let game = context.object(with: game.objectID) as! Game
+            game.isFavorite = true
+            
+            context.saveWithErrorLogging()
+            
+            UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
@@ -1174,19 +1168,12 @@ private extension GameCollectionViewController
         self.removeShadowForGame(for: game)
         
         DatabaseManager.shared.performBackgroundTask { (context) in
-            do
-            {
-                let game = context.object(with: game.objectID) as! Game
-                game.isFavorite = false
-                
-                try context.save()
-                
-                UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
-            }
-            catch
-            {
-                print("Error removing favorite game.", error)
-            }
+            let game = context.object(with: game.objectID) as! Game
+            game.isFavorite = false
+            
+            context.saveWithErrorLogging()
+            
+            UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
@@ -1196,7 +1183,7 @@ private extension GameCollectionViewController
         {
             if let indexPath = self.collectionView?.indexPath(for: cell)
             {
-                let gameCell = self.dataSource.item(at: indexPath) as! Game
+                let gameCell = self.dataSource.item(at: indexPath)
                 
                 if gameCell.identifier == game.identifier
                 {
@@ -1234,7 +1221,7 @@ private extension GameCollectionViewController
         case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteGames.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgThemed.settingsKey, UserInterfaceFeatures.shared.artwork.$bgOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$animationPause.settingsKey, UserInterfaceFeatures.shared.artwork.$animationSpeed.settingsKey:
             self.update()
             
-        case UserInterfaceFeatures.shared.artwork.$sortOrder.settingsKey:
+        case UserInterfaceFeatures.shared.artwork.$sortOrder.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteSort.settingsKey:
             self.updateDataSource()
             self.update()
             
