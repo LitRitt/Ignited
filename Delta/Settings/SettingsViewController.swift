@@ -20,10 +20,10 @@ private extension SettingsViewController
         case patreon
         case syncing
         case features
+        case cores
         case controllers
         case controllerSkins
         case shortcuts
-        case cores
         case skinDownloads
         case resourceLinks
         case credits
@@ -76,6 +76,12 @@ private extension SettingsViewController
     {
         case patreonLink
         case patrons
+    }
+    
+    enum CoresRow: Int, CaseIterable
+    {
+        case ds
+        case gbc
     }
 }
 
@@ -254,6 +260,12 @@ private extension SettingsViewController
     func showAdvancedFeatures()
     {
         let hostingController = AdvancedFeaturesView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showGBCDeltaCoreFeatures()
+    {
+        let hostingController = GBCDeltaCoreFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -509,7 +521,14 @@ extension SettingsViewController
             case .saveConverter: self.openWebsite(site: "https://www.save-editor.com/tools/wse_ds_save_converter.html")
             }
             
-        case .cores: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
+        case .cores:
+            switch CoresRow.allCases[indexPath.row]
+            {
+            case .ds:
+                self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
+            case .gbc:
+                self.showGBCDeltaCoreFeatures()
+            }
             
         case .patreon:
             switch PatreonRow.allCases[indexPath.row]

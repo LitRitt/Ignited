@@ -19,7 +19,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem, self.debugDeviceItem].compactMap { $0 }
+        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.paletteItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem, self.debugDeviceItem].compactMap { $0 }
     }
     
     /// Pause Items
@@ -32,6 +32,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
     var rewindItem: MenuItem?
+    var paletteItem: MenuItem?
     var altSkinItem: MenuItem?
     var debugModeItem: MenuItem?
     var debugDeviceItem: MenuItem?
@@ -165,6 +166,7 @@ private extension PauseViewController
         self.screenshotItem = nil
         self.statusBarItem = nil
         self.cheatCodesItem = nil
+        self.paletteItem = nil
         self.sustainButtonsItem = nil
         self.fastForwardItem = nil
         self.debugModeItem = nil
@@ -211,6 +213,11 @@ private extension PauseViewController
             self.cheatCodesItem = MenuItem(text: NSLocalizedString("Cheat Codes", comment: ""), image: #imageLiteral(resourceName: "CheatCodes"), action: { [unowned self] _ in
                 self.performSegue(withIdentifier: "cheats", sender: self)
             })
+        }
+        
+        if GBCFeatures.shared.palette.isEnabled
+        {
+            self.paletteItem = MenuItem(text: NSLocalizedString("Color Palette", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
         }
         
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""), image: #imageLiteral(resourceName: "SustainButtons"), action: { _ in })

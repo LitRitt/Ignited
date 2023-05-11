@@ -70,7 +70,8 @@ struct Settings
             TouchFeedbackFeatures.shared.touchOverlay.settingsKey.rawValue: true,
             TouchFeedbackFeatures.shared.touchVibration.settingsKey.rawValue: true,
             AdvancedFeatures.shared.skinDebug.settingsKey.rawValue: false,
-            AdvancedFeatures.shared.powerUser.settingsKey.rawValue: false
+            AdvancedFeatures.shared.powerUser.settingsKey.rawValue: false,
+            GBCFeatures.shared.palette.settingsKey.rawValue: true
         ] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
     }

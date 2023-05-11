@@ -453,11 +453,11 @@ private extension GameCollectionViewController
         {
             if UserInterfaceFeatures.shared.artwork.bgThemed
             {
-                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity)
+                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
             }
             else
             {
-                cell.imageView.backgroundColor = UIColor(cgColor: UserInterfaceFeatures.shared.artwork.bgColor.cgColor!).withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity)
+                cell.imageView.backgroundColor = UIColor(cgColor: UserInterfaceFeatures.shared.artwork.bgColor.cgColor!).withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
             }
             cell.imageView.layer.cornerRadius = UserInterfaceFeatures.shared.artwork.cornerRadius
             cell.imageView.layer.borderWidth = UserInterfaceFeatures.shared.artwork.borderWidth
@@ -465,7 +465,7 @@ private extension GameCollectionViewController
         }
         else
         {
-            cell.imageView.backgroundColor = UIColor.themeColor
+            cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
             cell.imageView.layer.cornerRadius = 15
             cell.imageView.layer.borderWidth = 1.2
             cell.layer.shadowOpacity = 0.5
@@ -491,7 +491,7 @@ private extension GameCollectionViewController
                 cell.layer.shadowOpacity = 1.0
                 cell.layer.shadowRadius = 8.0
                 cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-                cell.imageView.layer.borderColor = UserInterfaceFeatures.shared.artwork.favoriteColor.cgColor
+                cell.imageView.layer.borderColor = UIColor(cgColor: UserInterfaceFeatures.shared.artwork.favoriteColor.cgColor!).lighter(componentDelta: 0.1).cgColor
             }
             else
             {
@@ -520,20 +520,21 @@ private extension GameCollectionViewController
         }
         else
         {
-            cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+            switch UserInterfaceFeatures.shared.artwork.size
+            {
+            case .small:
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(11)
+            case .medium:
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(12)
+            case .large:
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(13)
+            }
         }
         
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
         cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         
-        if game.isFavorite
-        {
-            cell.textLabel.text = "☆ " + game.name
-        }
-        else
-        {
-            cell.textLabel.text = game.name
-        }
+        cell.textLabel.text = game.isFavorite ? "☆ " + game.name : game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
     }
     

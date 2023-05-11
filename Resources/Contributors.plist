@@ -21,6 +21,35 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Hayssam Keilany</string>
+		<key>link</key>
+		<string>https://github.com/icelaglace</string>
+		<key>linkName</key>
+		<string>github.com/icelaglace</string>
+		<key>contributions</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Gameboy DMG and Pocket color palettes</string>
+				<key>link</key>
+				<string>https://github.com/icelaglace/GameBoyPalettes</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Better NES palette</string>
+				<key>link</key>
+				<string>https://github.com/icelaglace/NESDeltaCore/commit/28766b419a3b939619318990fb030e3bddad671c</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>N64 joystick fix and Mempak fix</string>
+				<key>link</key>
+				<string>https://github.com/icelaglace/N64DeltaCore/commit/61accb34a8e0bd23d92b91f64ee4bfe9fa94452f</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Noah Keck</string>
 		<key>link</key>
 		<string>https://github.com/noah978</string>

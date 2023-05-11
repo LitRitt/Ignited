@@ -85,6 +85,9 @@
 		ACCD9DB72A01AF9F00B235C4 /* Color+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */; };
 		ACCD9DB92A01BA5500B235C4 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */; };
 		ACCD9DBB2A01E48B00B235C4 /* ControllerSkins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DBA2A01E48B00B235C4 /* ControllerSkins.swift */; };
+		ACD5F9FD2A0ADF45005CDCF1 /* GBCFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5F9FC2A0ADF45005CDCF1 /* GBCFeaturesView.swift */; };
+		ACD5FA032A0C4C84005CDCF1 /* GBCFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */; };
+		ACD5FA052A0C4D58005CDCF1 /* GameboyPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GameboyPalette.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
 		ACD727D729EE10740028B8A8 /* Patrons.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACD727D629EE10740028B8A8 /* Patrons.plist */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
@@ -332,6 +335,9 @@
 		ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+RawRepresentable.swift"; sourceTree = "<group>"; };
 		ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
 		ACCD9DBA2A01E48B00B235C4 /* ControllerSkins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerSkins.swift; sourceTree = "<group>"; };
+		ACD5F9FC2A0ADF45005CDCF1 /* GBCFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCFeaturesView.swift; sourceTree = "<group>"; };
+		ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCFeatures.swift; sourceTree = "<group>"; };
+		ACD5FA042A0C4D58005CDCF1 /* GameboyPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboyPalette.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
 		ACD727D629EE10740028B8A8 /* Patrons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Patrons.plist; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
@@ -666,6 +672,7 @@
 		AC8C213729FDAF1B0044748D /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				ACD5F9FB2A0ADF2A005CDCF1 /* CoreFeatures */,
 				AC1EAE6E2A0154380072C858 /* FeatureSectionView.swift */,
 				ACB3CB8F29FDD3FD002B53DE /* TouchFeedbackFeaturesView.swift */,
 				AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */,
@@ -678,6 +685,7 @@
 		ACB3CB8529FDCEAD002B53DE /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				ACD5FA012A0C4C28005CDCF1 /* GBC */,
 				AC1EAE632A005F590072C858 /* Advanced */,
 				AC84B56A29FEF5130090F274 /* Gameplay */,
 				AC27347C29FE930800B4CB2E /* UserInterface */,
@@ -695,6 +703,23 @@
 				ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlay.swift */,
 			);
 			path = TouchFeedback;
+			sourceTree = "<group>";
+		};
+		ACD5F9FB2A0ADF2A005CDCF1 /* CoreFeatures */ = {
+			isa = PBXGroup;
+			children = (
+				ACD5F9FC2A0ADF45005CDCF1 /* GBCFeaturesView.swift */,
+			);
+			path = CoreFeatures;
+			sourceTree = "<group>";
+		};
+		ACD5FA012A0C4C28005CDCF1 /* GBC */ = {
+			isa = PBXGroup;
+			children = (
+				ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */,
+				ACD5FA042A0C4D58005CDCF1 /* GameboyPalette.swift */,
+			);
+			path = GBC;
 			sourceTree = "<group>";
 		};
 		ACD727D129EE0B200028B8A8 /* Patrons */ = {
@@ -1580,12 +1605,14 @@
 				BFDD04F11D5E2C27002D450E /* GameCollectionViewController.swift in Sources */,
 				BFE4269E1D9C68E600DC913F /* SaveStatesStoryboardSegue.swift in Sources */,
 				AC1EAE6F2A0154380072C858 /* FeatureSectionView.swift in Sources */,
+				ACD5FA052A0C4D58005CDCF1 /* GameboyPalette.swift in Sources */,
 				BFFA71DD1AAC406100EE9DD1 /* AppDelegate.swift in Sources */,
 				BF525EE81FF5F370004AA849 /* DeepLinkController.swift in Sources */,
 				BF59426B1E09BBD00051894B /* GridCollectionViewLayout.swift in Sources */,
 				BF6424851F5CBDC900D6AB44 /* UIView+ParentViewController.swift in Sources */,
 				BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */,
 				D53415A5298C782A00FD67B1 /* ContributorsView.swift in Sources */,
+				ACD5F9FD2A0ADF45005CDCF1 /* GBCFeaturesView.swift in Sources */,
 				BF5942891E09BC8B0051894B /* _GameCollection.swift in Sources */,
 				AC185A8529FEA24C002DE52F /* StatusBar.swift in Sources */,
 				BF34FA111CF1899D006624C7 /* CheatTextView.swift in Sources */,
@@ -1622,6 +1649,7 @@
 				BF2B98E61C97E32F00F6D57D /* SaveStatesCollectionHeaderView.swift in Sources */,
 				BFC9B7391CEFCD34008629BB /* CheatsViewController.swift in Sources */,
 				D5864978297756CE0081477E /* CheatBaseView.swift in Sources */,
+				ACD5FA032A0C4C84005CDCF1 /* GBCFeatures.swift in Sources */,
 				BF353FFF1C5DA3C500C1184C /* PausePresentationController.swift in Sources */,
 				ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */,
 				BFFC464C1D5998D600AF2CC6 /* CheatTableViewCell.swift in Sources */,

@@ -12,6 +12,7 @@ import Photos
 
 import DeltaCore
 import GBADeltaCore
+import GBCDeltaCore
 import MelonDSDeltaCore
 import Systems
 
@@ -456,6 +457,10 @@ extension GameViewController
                 self.performFastForwardAction(activate: item.isSelected)
             }
             
+            pauseViewController.paletteItem?.action = { [unowned self] item in
+                self.performPaletteAction()
+            }
+            
             pauseViewController.altSkinItem?.isSelected = AdvancedFeatures.shared.skinDebug.useAlt
             pauseViewController.altSkinItem?.action = { [unowned self] item in
                 self.performAltRepresentationsAction()
@@ -491,6 +496,12 @@ extension GameViewController
             if self.emulatorCore?.deltaCore.supportedRates.upperBound == 1
             {
                 pauseViewController.fastForwardItem = nil
+            }
+            
+            if let game = self.game,
+               game.type != .gbc
+            {
+                pauseViewController.paletteItem = nil
             }
             
             switch self.game?.type
@@ -769,6 +780,8 @@ private extension GameViewController
         self.updateControllerSkin()
         
         self.updateButtonAudioFeedbackSound()
+        
+        self.updateGameboyPalette()
     }
     
     func updateButtonAudioFeedbackSound()
@@ -854,6 +867,32 @@ private extension GameViewController
         AdvancedFeatures.shared.skinDebug.hasAlt = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
         
         self.view.setNeedsLayout()
+    }
+    
+    func updateGameboyPalette()
+    {
+        if let bridge = self.emulatorCore?.deltaCore.emulatorBridge as? GBCEmulatorBridge
+        {
+            if GBCFeatures.shared.palette.isEnabled
+            {
+                switch GBCFeatures.shared.palette.color
+                {
+                case .dmg: bridge.palette = .dmg
+                case .pocket: bridge.palette = .pocket
+                case .light: bridge.palette = .light
+                case .dmgLibretro: bridge.palette = .dmgLibretro
+                case .pocketLibretro: bridge.palette = .pocketLibretro
+                case .lightLibretro: bridge.palette = .lightLibretro
+                default: bridge.palette = .none
+                }
+            }
+            else
+            {
+                bridge.palette = .none
+            }
+            
+            bridge.updatePalette()
+        }
     }
 }
 
@@ -1671,6 +1710,43 @@ extension GameViewController
         alertController.addAction(.cancel)
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    func performPaletteAction()
+    {
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Choose Color Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        for palette in GameboyPalette.allCases
+        {
+            alertController.addAction(UIAlertAction(title: palette.description, style: .default, handler: { (action) in
+                GBCFeatures.shared.palette.color = palette
+                self.resumeEmulation()
+                if UserInterfaceFeatures.shared.toasts.palette
+                {
+                    self.presentToastView(text: NSLocalizedString("Changed Palette to \(palette.description)", comment: ""))
+                }
+            }))
+        }
+        
+        alertController.addAction(UIAlertAction(title: GameboyPalette.nilDescription, style: .default, handler: { (action) in
+            GBCFeatures.shared.palette.color = nil
+            self.resumeEmulation()
+            if UserInterfaceFeatures.shared.toasts.palette
+            {
+                self.presentToastView(text: NSLocalizedString("Removed Palette", comment: ""))
+            }
+        }))
+        
+        alertController.addAction(.cancel)
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
 //MARK: - Toast Notifications -
@@ -1843,6 +1919,9 @@ private extension GameViewController
             
         case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey, UserInterfaceFeatures.shared.statusBar.$useToggle.settingsKey:
             self.updateStatusBar()
+            
+        case GBCFeatures.shared.palette.$color.settingsKey, GBCFeatures.shared.palette.settingsKey:
+            self.updateGameboyPalette()
             
         default: break
         }
