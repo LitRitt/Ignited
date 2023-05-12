@@ -873,25 +873,33 @@ private extension GameViewController
     {
         if let bridge = self.emulatorCore?.deltaCore.emulatorBridge as? GBCEmulatorBridge
         {
-            if GBCFeatures.shared.palette.isEnabled
+            if GBCFeatures.shared.palettes.isEnabled
             {
-                switch GBCFeatures.shared.palette.color
-                {
-                case .dmg: bridge.palette = .dmg
-                case .pocket: bridge.palette = .pocket
-                case .light: bridge.palette = .light
-                case .dmgLibretro: bridge.palette = .dmgLibretro
-                case .pocketLibretro: bridge.palette = .pocketLibretro
-                case .lightLibretro: bridge.palette = .lightLibretro
-                default: bridge.palette = .none
-                }
+                setSinglePalette(palette: GBCFeatures.shared.palettes.palette.colors)
             }
             else
             {
-                bridge.palette = .none
+                setSinglePalette(palette: GameboyPalette.nilColors)
             }
             
             bridge.updatePalette()
+            
+            
+            func setSinglePalette(palette: [UInt32])
+            {
+                bridge.palette0color0 = palette[0]
+                bridge.palette0color1 = palette[1]
+                bridge.palette0color2 = palette[2]
+                bridge.palette0color3 = palette[3]
+                bridge.palette1color0 = palette[0]
+                bridge.palette1color1 = palette[1]
+                bridge.palette1color2 = palette[2]
+                bridge.palette1color3 = palette[3]
+                bridge.palette2color0 = palette[0]
+                bridge.palette2color1 = palette[1]
+                bridge.palette2color2 = palette[2]
+                bridge.palette2color3 = palette[3]
+            }
         }
     }
 }
@@ -1726,7 +1734,7 @@ extension GameViewController
         for palette in GameboyPalette.allCases
         {
             alertController.addAction(UIAlertAction(title: palette.description, style: .default, handler: { (action) in
-                GBCFeatures.shared.palette.color = palette
+                GBCFeatures.shared.palettes.palette = palette
                 self.resumeEmulation()
                 if UserInterfaceFeatures.shared.toasts.palette
                 {
@@ -1734,15 +1742,6 @@ extension GameViewController
                 }
             }))
         }
-        
-        alertController.addAction(UIAlertAction(title: GameboyPalette.nilDescription, style: .default, handler: { (action) in
-            GBCFeatures.shared.palette.color = nil
-            self.resumeEmulation()
-            if UserInterfaceFeatures.shared.toasts.palette
-            {
-                self.presentToastView(text: NSLocalizedString("Removed Palette", comment: ""))
-            }
-        }))
         
         alertController.addAction(.cancel)
         self.present(alertController, animated: true, completion: nil)
@@ -1920,7 +1919,7 @@ private extension GameViewController
         case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey, UserInterfaceFeatures.shared.statusBar.$useToggle.settingsKey:
             self.updateStatusBar()
             
-        case GBCFeatures.shared.palette.$color.settingsKey, GBCFeatures.shared.palette.settingsKey:
+        case GBCFeatures.shared.palettes.$palette.settingsKey, GBCFeatures.shared.palettes.settingsKey:
             self.updateGameboyPalette()
             
         default: break

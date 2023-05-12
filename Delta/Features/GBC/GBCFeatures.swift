@@ -15,7 +15,7 @@ struct GBCFeatures: FeatureContainer
     @Feature(name: "Game Boy Palettes",
              description: "Enable to change the color palette used for GB games.",
              options: GameboyPaletteOptions())
-    var palette
+    var palettes
     
     private init()
     {

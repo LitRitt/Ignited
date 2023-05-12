@@ -215,7 +215,7 @@ private extension PauseViewController
             })
         }
         
-        if GBCFeatures.shared.palette.isEnabled
+        if GBCFeatures.shared.palettes.isEnabled
         {
             self.paletteItem = MenuItem(text: NSLocalizedString("Color Palette", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
         }
