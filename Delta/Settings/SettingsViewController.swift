@@ -19,8 +19,8 @@ private extension SettingsViewController
     {
         case patreon
         case syncing
-        case features
         case cores
+        case features
         case controllers
         case controllerSkins
         case shortcuts

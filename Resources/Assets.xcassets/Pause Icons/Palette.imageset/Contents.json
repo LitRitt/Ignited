@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "holdButtonM.png",
+      "filename" : "palette.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "holdButtonM@2x.png",
+      "filename" : "palette@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "holdButtonM@3x.png",
+      "filename" : "palette@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

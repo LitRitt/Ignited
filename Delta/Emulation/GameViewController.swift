@@ -875,7 +875,16 @@ private extension GameViewController
         {
             if GBCFeatures.shared.palettes.isEnabled
             {
-                setSinglePalette(palette: GBCFeatures.shared.palettes.palette.colors)
+                if GBCFeatures.shared.palettes.multiPalette
+                {
+                    setMultiPalette(palette1: GBCFeatures.shared.palettes.palette.colors,
+                                    palette2: GBCFeatures.shared.palettes.spritePalette1.colors,
+                                    palette3: GBCFeatures.shared.palettes.spritePalette2.colors)
+                }
+                else
+                {
+                    setSinglePalette(palette: GBCFeatures.shared.palettes.palette.colors)
+                }
             }
             else
             {
@@ -899,6 +908,22 @@ private extension GameViewController
                 bridge.palette2color1 = palette[1]
                 bridge.palette2color2 = palette[2]
                 bridge.palette2color3 = palette[3]
+            }
+            
+            func setMultiPalette(palette1: [UInt32], palette2: [UInt32], palette3: [UInt32])
+            {
+                bridge.palette0color0 = palette1[0]
+                bridge.palette0color1 = palette1[1]
+                bridge.palette0color2 = palette1[2]
+                bridge.palette0color3 = palette1[3]
+                bridge.palette1color0 = palette2[0]
+                bridge.palette1color1 = palette2[1]
+                bridge.palette1color2 = palette2[2]
+                bridge.palette1color3 = palette2[3]
+                bridge.palette2color0 = palette3[0]
+                bridge.palette2color1 = palette3[1]
+                bridge.palette2color2 = palette3[2]
+                bridge.palette2color3 = palette3[3]
             }
         }
     }
@@ -1726,25 +1751,106 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        let alertController = UIAlertController(title: NSLocalizedString("Choose Color Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        for palette in GameboyPalette.allCases
+        if GBCFeatures.shared.palettes.multiPalette
         {
-            alertController.addAction(UIAlertAction(title: palette.description, style: .default, handler: { (action) in
-                GBCFeatures.shared.palettes.palette = palette
-                self.resumeEmulation()
-                if UserInterfaceFeatures.shared.toasts.palette
+            let alertController = UIAlertController(title: NSLocalizedString("Change Which Palette?", comment: ""), message: nil, preferredStyle: .actionSheet)
+            alertController.popoverPresentationController?.sourceView = self.view
+            alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+            alertController.popoverPresentationController?.permittedArrowDirections = []
+            
+            alertController.addAction(UIAlertAction(title: "Main Palette", style: .default, handler: { (action) in
+                let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Main Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
+                paletteAlertController.popoverPresentationController?.sourceView = self.view
+                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                
+                for palette in GameboyPalette.allCases
                 {
-                    self.presentToastView(text: NSLocalizedString("Changed Palette to \(palette.description)", comment: ""))
+                    let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
+                        GBCFeatures.shared.palettes.palette = palette
+                        self.resumeEmulation()
+                        if UserInterfaceFeatures.shared.toasts.palette
+                        {
+                            self.presentToastView(text: NSLocalizedString("Changed Main Palette to \(palette.description)", comment: ""))
+                        }
+                    }))
                 }
+                
+                paletteAlertController.addAction(.cancel)
+                self.present(paletteAlertController, animated: true, completion: nil)
             }))
+            alertController.addAction(UIAlertAction(title: "Sprite Palette 1", style: .default, handler: { (action) in
+                let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Sprite Palette 1", comment: ""), message: nil, preferredStyle: .actionSheet)
+                paletteAlertController.popoverPresentationController?.sourceView = self.view
+                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                
+                for palette in GameboyPalette.allCases
+                {
+                    let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
+                        GBCFeatures.shared.palettes.spritePalette1 = palette
+                        self.resumeEmulation()
+                        if UserInterfaceFeatures.shared.toasts.palette
+                        {
+                            self.presentToastView(text: NSLocalizedString("Changed Sprite Palette 1 to \(palette.description)", comment: ""))
+                        }
+                    }))
+                }
+                
+                paletteAlertController.addAction(.cancel)
+                self.present(paletteAlertController, animated: true, completion: nil)
+            }))
+            alertController.addAction(UIAlertAction(title: "Sprite Palette 2", style: .default, handler: { (action) in
+                let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Sprite Palette 2", comment: ""), message: nil, preferredStyle: .actionSheet)
+                paletteAlertController.popoverPresentationController?.sourceView = self.view
+                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                
+                for palette in GameboyPalette.allCases
+                {
+                    let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
+                        GBCFeatures.shared.palettes.spritePalette2 = palette
+                        self.resumeEmulation()
+                        if UserInterfaceFeatures.shared.toasts.palette
+                        {
+                            self.presentToastView(text: NSLocalizedString("Changed Sprite Palette 2 to \(palette.description)", comment: ""))
+                        }
+                    }))
+                }
+                
+                paletteAlertController.addAction(.cancel)
+                self.present(paletteAlertController, animated: true, completion: nil)
+            }))
+            
+            alertController.addAction(.cancel)
+            self.present(alertController, animated: true, completion: nil)
         }
-        
-        alertController.addAction(.cancel)
-        self.present(alertController, animated: true, completion: nil)
+        else
+        {
+            let alertController = UIAlertController(title: NSLocalizedString("Choose Color Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
+            alertController.popoverPresentationController?.sourceView = self.view
+            alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+            alertController.popoverPresentationController?.permittedArrowDirections = []
+            
+            for palette in GameboyPalette.allCases
+            {
+                let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                alertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
+                    GBCFeatures.shared.palettes.palette = palette
+                    self.resumeEmulation()
+                    if UserInterfaceFeatures.shared.toasts.palette
+                    {
+                        self.presentToastView(text: NSLocalizedString("Changed Palette to \(palette.description)", comment: ""))
+                    }
+                }))
+            }
+            
+            alertController.addAction(.cancel)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
 
@@ -1919,7 +2025,7 @@ private extension GameViewController
         case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey, UserInterfaceFeatures.shared.statusBar.$useToggle.settingsKey:
             self.updateStatusBar()
             
-        case GBCFeatures.shared.palettes.$palette.settingsKey, GBCFeatures.shared.palettes.settingsKey:
+        case GBCFeatures.shared.palettes.$palette.settingsKey, GBCFeatures.shared.palettes.settingsKey, GBCFeatures.shared.palettes.$spritePalette1.settingsKey, GBCFeatures.shared.palettes.$spritePalette2.settingsKey, GBCFeatures.shared.palettes.$multiPalette.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color4.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color4.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color4.settingsKey:
             self.updateGameboyPalette()
             
         default: break

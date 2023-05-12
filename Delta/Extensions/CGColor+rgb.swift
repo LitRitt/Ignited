@@ -1,5 +1,5 @@
 //
-//  CGColor+rgb.swift
+//  CGColor+RGB.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 5/12/23.
@@ -8,14 +8,34 @@
 
 import SwiftUI
 
-extension CGColor {
-
-    func rgb() -> UInt32 {
-        guard let components = components else { return 0 }
+extension CGColor
+{
+//    func rgb() -> UInt32
+//    {
+//        guard let convertedColor = self.converted(to: CGColorSpace(name: CGColorSpace.sRGB)!, intent: .defaultIntent, options: nil),
+//              let components = self.components else { return 0 }
+//        
+//        print(components)
+//        
+//        let red = UInt32(components[0] * 255)
+//        let green = UInt32(components[1] * 255)
+//        let blue = UInt32(components[2] * 255)
+//        
+//        let rgb: UInt32 = (red << 16) + (green << 8) + blue
+//        
+//        return rgb
+//    }
+    
+    func rgb() -> UInt32
+    {
+        guard let colorSpace = CGColorSpace(name: CGColorSpace.displayP3),
+              let cgColor = self.converted(to: colorSpace, intent: .defaultIntent, options: nil),
+              let rgba = cgColor.components,
+                  rgba.count == 4 else { return 0 }
         
-        let red = UInt32(components[0] * 255)
-        let green = UInt32(components[1] * 255)
-        let blue = UInt32(components[2] * 255)
+        let red = UInt32(rgba[0] * 255)
+        let green = UInt32(rgba[1] * 255)
+        let blue = UInt32(rgba[2] * 255)
         
         let rgb: UInt32 = (red << 16) + (green << 8) + blue
         
