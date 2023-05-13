@@ -4,6 +4,59 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.4</string>
+		<key>date</key>
+		<string>5/13/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.4</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Settings page has been completely revamped and reorganized - Many existing features received improvements as they were moved</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Game Boy color palettes - Several built in palettes and 3 user customizable palettes - Both the main and sprite palettes can be changed, allowing for unique palettes never before possible</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Custom Theme Color - Choose your own color to use for the app accent color</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Favorite Games - Games can be favorited, with options to highlight and sort them to the top of the games list</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Game Sorting - You can now sort games A-Z, Z-A, most recently played, and least recently played</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Animated Game Artwork - Support for short animated GIFs as your game artwork, with options for animation pause and speed</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Burnt a bunch of bugs - My commits were awful and I don&apos;t remember, but I definitely fixed stuff</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.3.0</string>
 		<key>date</key>
 		<string>4/28/2023</string>
