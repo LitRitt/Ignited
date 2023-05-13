@@ -194,20 +194,25 @@ struct ChangeCell: View
                 switch self.type
                 {
                 case "feature":
-                    Text("Feature").bold()
+                    Rectangle()
                         .foregroundColor(.green)
-                        .font(.system(size: 17))
+                        .frame(minWidth: nil, idealWidth: 15, maxWidth: 15, minHeight: 20, idealHeight: 25, maxHeight: .infinity, alignment: .leading)
+                        .cornerRadius(5)
                 case "update":
-                    Text("Update").bold()
+                    Rectangle()
                         .foregroundColor(.yellow)
-                        .font(.system(size: 17))
+                        .frame(minWidth: nil, idealWidth: 15, maxWidth: 15, minHeight: 20, idealHeight: 25, maxHeight: .infinity, alignment: .leading)
+                        .cornerRadius(5)
                 case "bugfix":
-                    Text("BugFix").bold()
+                    Rectangle()
                         .foregroundColor(.red)
-                        .font(.system(size: 17))
+                        .frame(minWidth: nil, idealWidth: 15, maxWidth: 15, minHeight: 20, idealHeight: 25, maxHeight: .infinity, alignment: .leading)
+                        .cornerRadius(5)
                 default:
-                    Text("Change").bold()
-                        .font(.system(size: 17))
+                    Rectangle()
+                        .foregroundColor(.gray)
+                        .frame(minWidth: nil, idealWidth: 15, maxWidth: 15, minHeight: 20, idealHeight: 25, maxHeight: .infinity, alignment: .leading)
+                        .cornerRadius(5)
                 }
                 
                 self.description
