@@ -380,14 +380,18 @@ private extension GameCollectionViewController
                 
                 var images = [UIImage]()
                 let imageCount = CGImageSourceGetCount(source)
-                for i in 0 ..< imageCount
+                
+                // trim gif's frames to 50 to reduce memory usage
+                for i in 0 ..< min(imageCount, 50)
                 {
                     if let image = CGImageSourceCreateImageAtIndex(source, i, nil)
                     {
                         if i == 0
                         {
                             let pauseFrames = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationPause : 20
-                            for j in 0 ..< Int(floor(pauseFrames)) // replicate first image to create a delay between animations
+                            
+                            // replicate first image to create a delay between animations
+                            for j in 0 ..< Int(floor(pauseFrames))
                             {
                                 images.append(UIImage(cgImage: image))
                             }
