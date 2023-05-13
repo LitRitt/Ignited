@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Rewind.png",
+      "filename" : "rewind.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Rewind@2x.png",
+      "filename" : "rewind@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Rewind@3x.png",
+      "filename" : "rewind@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

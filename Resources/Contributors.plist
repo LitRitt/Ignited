@@ -50,6 +50,21 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Mattia D&apos;Oronzo</string>
+		<key>link</key>
+		<string>https://discord.com/users/433280815275704331</string>
+		<key>linkName</key>
+		<string>@Mattia#4056</string>
+		<key>contributions</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Pause Menu Icons</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Noah Keck</string>
 		<key>link</key>
 		<string>https://github.com/noah978</string>
@@ -85,70 +100,6 @@
 				<string>Local Multiplayer</string>
 				<key>link</key>
 				<string>https://github.com/lonkelle/Deltroid/pull/9</string>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Joelle Stickney</string>
-		<key>link</key>
-		<string>https://github.com/lonkelle</string>
-		<key>linkName</key>
-		<string>github.com/lonkelle</string>
-		<key>contributions</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Deltroid</string>
-				<key>link</key>
-				<string>https://github.com/lonkelle/Deltroid</string>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Eric Lewis</string>
-		<key>link</key>
-		<string>https://github.com/ericlewis</string>
-		<key>linkName</key>
-		<string>github.com/ericlewis</string>
-		<key>contributions</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Dark Mode</string>
-				<key>link</key>
-				<string>https://github.com/rileytestut/Delta/pull/82</string>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Caroline Moore</string>
-		<key>link</key>
-		<string>https://twitter.com/1carolinemoore</string>
-		<key>linkName</key>
-		<string>@1carolinemoore</string>
-		<key>contributions</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Legacy Skins</string>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Grant Gliner</string>
-		<key>link</key>
-		<string>https://twitter.com/GrantGliner</string>
-		<key>linkName</key>
-		<string>@GrantGliner</string>
-		<key>contributions</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Pause Menu Icons</string>
 			</dict>
 		</array>
 	</dict>
