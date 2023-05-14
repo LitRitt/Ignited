@@ -223,6 +223,8 @@ extension GameCollectionViewController
             {
                 //TODO: Update this to work with multiple processes by retrieving emulatorBridge directly from emulatorCore.
                 
+                //TODO: DSi is only being enabled for the home screen. Check if there are games that benefit from running in DSi mode and add them to this check.
+                
                 if game.identifier == Game.melonDSDSiBIOSIdentifier
                 {
                     emulatorBridge.systemType = .dsi
