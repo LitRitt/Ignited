@@ -1790,7 +1790,7 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (GBCFeatures.shared.palettes.spritePalette1.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
                         GBCFeatures.shared.palettes.spritePalette1 = palette
                         self.resumeEmulation()
@@ -1812,7 +1812,7 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (GBCFeatures.shared.palettes.spritePalette2.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
                         GBCFeatures.shared.palettes.spritePalette2 = palette
                         self.resumeEmulation()
