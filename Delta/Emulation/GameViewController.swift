@@ -1740,7 +1740,9 @@ extension GameViewController
                 self.presentToastView(text: NSLocalizedString("Device Override Disabled", comment: ""))
             }
         }))
-        alertController.addAction(.cancel)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            self.resumeEmulation()
+        }))
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -1821,11 +1823,17 @@ extension GameViewController
                     }))
                 }
                 
-                paletteAlertController.addAction(.cancel)
+                paletteAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                    self.resumeEmulation()
+                }))
                 self.present(paletteAlertController, animated: true, completion: nil)
             }))
             
-            alertController.addAction(.cancel)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                self.resumeEmulation()
+            }))
+            //TODO: Make some custom views to show instead of UIAlertControllers
+//            self.present(UserInterfaceFeaturesView.makeViewController(), animated: true, completion: nil)
             self.present(alertController, animated: true, completion: nil)
         }
         else
@@ -1848,7 +1856,9 @@ extension GameViewController
                 }))
             }
             
-            alertController.addAction(.cancel)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                self.resumeEmulation()
+            }))
             self.present(alertController, animated: true, completion: nil)
         }
     }
