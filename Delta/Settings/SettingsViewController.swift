@@ -329,6 +329,45 @@ private extension SettingsViewController
         }
     }
     
+    func resetAllArtwork()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("⚠️ Reset Artwork? ⚠️", comment: ""), message: NSLocalizedString("This will reset the artwork for every game to the one provided by the games database used by Ignited. Do not proceed if you do not have backup of your custom artworks.", comment: ""), preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+            
+            let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+            gameFetchRequest.returnsObjectsAsFaults = false
+            
+            DatabaseManager.shared.performBackgroundTask { (context) in
+                do
+                {
+                    let games = try gameFetchRequest.execute()
+                    
+                    for game in games
+                    {
+                        DatabaseManager.shared.resetArtwork(for: game)
+                    }
+                }
+                catch
+                {
+                    print("Failed to fetch games.")
+                }
+            }
+        }))
+        
+        alertController.addAction(.cancel)
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow
+        {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
     func updateAppIcon()
     {
         if UserInterfaceFeatures.shared.appIcon.isEnabled
@@ -359,6 +398,10 @@ private extension SettingsViewController
                 UIApplication.shared.setAlternateIconName(nil)
             }
         }
+        else
+        {
+            UIApplication.shared.setAlternateIconName(nil)
+        }
     }
 }
 
@@ -388,6 +431,16 @@ private extension SettingsViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     AdvancedFeatures.shared.powerUser.clearAutoSaves = false
                     self.clearAutoSaveStates()
+                }
+            }
+            
+        case AdvancedFeatures.shared.powerUser.$resetArtwork.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    AdvancedFeatures.shared.powerUser.resetArtwork = false
+                    self.resetAllArtwork()
                 }
             }
             

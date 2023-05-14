@@ -599,6 +599,21 @@ extension DatabaseManager
             completion(outputURLs, errors)
         }
     }
+    
+    func resetArtwork(for game: Game)
+    {
+        self.performBackgroundTask { (context) in
+            
+            let game = context.object(with: game.objectID) as! Game
+            
+            let databaseMetadata = self.gamesDatabase?.metadata(for: game)
+            guard let artworkURL = databaseMetadata?.artworkURL else { return }
+            
+            game.artworkURL = artworkURL
+            
+            context.saveWithErrorLogging()
+        }
+    }
 }
 
 //MARK: - File URLs -

@@ -796,14 +796,18 @@ private extension GameCollectionViewController
             })
         }
         
+        let resetArtworkAction = Action(title: NSLocalizedString("Reset Artwork", comment: ""), style: .destructive, image: UIImage(symbolNameIfAvailable: "arrow.counterclockwise"), action: { [unowned self] action in
+            DatabaseManager.shared.resetArtwork(for: game)
+        })
+        
         switch game.type
         {
         case GameType.unknown:
-            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, shareAction, deleteAction]
+            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, shareAction, resetArtworkAction, deleteAction]
         case .ds where game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier:
-            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction]
+            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction, resetArtworkAction]
         default:
-            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, deleteAction]
+            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         }
     }
     
