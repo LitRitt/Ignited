@@ -110,10 +110,9 @@ class SettingsViewController: UITableViewController
     {
         super.viewDidLoad()
         
-        if let version = Bundle.main.versionNumber,
-            let build = Bundle.main.buildNumber
+        if let version = Bundle.main.versionNumber
         {
-            self.versionLabel.text = NSLocalizedString(String(format: "Ignited v%@ build %d", version, build), comment: "Ignited Version")
+            self.versionLabel.text = NSLocalizedString(String(format: "Ignited v%@", version), comment: "Ignited Version")
         }
         else
         {
