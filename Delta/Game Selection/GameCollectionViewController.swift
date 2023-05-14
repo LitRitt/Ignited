@@ -571,7 +571,7 @@ private extension GameCollectionViewController
     }
     
     //MARK: - Emulation
-    func launchGame(at indexPath: IndexPath, clearScreen: Bool, ignoreAlreadyRunningError: Bool = false)
+    func launchGame(at indexPath: IndexPath, clearScreen: Bool, ignoreAlreadyRunningError: Bool = false, ignoreAutoLoadStateSetting: Bool = false)
     {
         func launchGame(ignoringErrors ignoredErrors: [Error])
         {
@@ -588,7 +588,7 @@ private extension GameCollectionViewController
                 
                 let cell = self.collectionView.cellForItem(at: indexPath)
                 
-                if GameplayFeatures.shared.autoLoad.isEnabled
+                if GameplayFeatures.shared.autoLoad.isEnabled && !ignoreAutoLoadStateSetting
                 {
                     let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
                     fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -1326,7 +1326,7 @@ extension GameCollectionViewController: UIViewControllerPreviewingDelegate
         
         _performingPreviewTransition = true
         
-        self.launchGame(at: indexPath, clearScreen: true, ignoreAlreadyRunningError: true)
+        self.launchGame(at: indexPath, clearScreen: true, ignoreAlreadyRunningError: true, ignoreAutoLoadStateSetting: true)
         
         if gameViewController.isLivePreview
         {
