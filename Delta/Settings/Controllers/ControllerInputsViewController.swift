@@ -264,12 +264,16 @@ private extension ControllerInputsViewController
                 text = NSLocalizedString("Restart", comment: "")
                 
             case .screenshot:
-                image = #imageLiteral(resourceName: "Restart")
+                image = #imageLiteral(resourceName: "Screenshot")
                 text = NSLocalizedString("Screenshot", comment: "")
                 
             case .statusBar:
-                image = #imageLiteral(resourceName: "Restart")
+                image = #imageLiteral(resourceName: "StatusBar")
                 text = NSLocalizedString("Status Bar", comment: "")
+                
+            case .quickSettings:
+                image = #imageLiteral(resourceName: "Debug")
+                text = NSLocalizedString("Quick Settings", comment: "")
                 
             case .fastForward: continue
             }

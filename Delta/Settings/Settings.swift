@@ -59,6 +59,7 @@ struct Settings
             GameplayFeatures.shared.gameAudio.settingsKey.rawValue: true,
             GameplayFeatures.shared.screenshots.settingsKey.rawValue: true,
             GameplayFeatures.shared.rewind.settingsKey.rawValue: false,
+            GameplayFeatures.shared.quickSettings.settingsKey.rawValue: true,
             UserInterfaceFeatures.shared.appIcon.settingsKey.rawValue: true,
             UserInterfaceFeatures.shared.theme.settingsKey.rawValue: true,
             UserInterfaceFeatures.shared.skins.settingsKey.rawValue: true,

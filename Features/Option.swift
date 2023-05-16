@@ -34,7 +34,7 @@ public class Option<Value: OptionValue, DetailView: View>: _AnyOption
     
     private let defaultValue: Value
     
-    private var valueBinding: Binding<Value> {
+    public var valueBinding: Binding<Value> {
         Binding(get: {
             self.wrappedValue
         }, set: { newValue in

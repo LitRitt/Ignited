@@ -161,6 +161,7 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     private var _isLoadingSaveState = false
+    private var _isQuickMenuOpen = false
         
     // Sustain Buttons
     private var isSelectingSustainedButtons = false
@@ -218,6 +219,7 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .externalGameControllerDidDisconnect, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnterBackground(with:)), name: UIApplication.didEnterBackgroundNotification, object: UIApplication.shared)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didBecomeActiveApp(with:)), name: UIScene.didActivateNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.settingsDidChange(with:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deepLinkControllerLaunchGame(with:)), name: .deepLinkControllerLaunchGame, object: nil)
@@ -262,6 +264,7 @@ class GameViewController: DeltaCore.GameViewController
             case .quickLoad: self.performQuickLoadAction()
             case .screenshot: self.performScreenshotAction()
             case .statusBar: self.performStatusBarAction()
+            case .quickSettings: self.performQuickMenuAction()
             case .fastForward: self.performFastForwardAction(activate: true)
             case .toggleFastForward:
                 let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
@@ -293,6 +296,7 @@ class GameViewController: DeltaCore.GameViewController
             case .quickLoad: break
             case .screenshot: break
             case .statusBar: break
+            case .quickSettings: break
             case .fastForward: self.performFastForwardAction(activate: false)
             case .toggleFastForward: break
             case .toggleAltRepresentations: break
@@ -459,6 +463,10 @@ extension GameViewController
             
             pauseViewController.paletteItem?.action = { [unowned self] item in
                 self.performPaletteAction()
+            }
+            
+            pauseViewController.quickSettingsItem?.action = { [unowned self] item in
+                self.performQuickMenuAction()
             }
             
             pauseViewController.altSkinItem?.isSelected = AdvancedFeatures.shared.skinDebug.useAlt
@@ -926,6 +934,11 @@ private extension GameViewController
                 bridge.palette2color3 = palette3[3]
             }
         }
+    }
+    
+    func updateEmulationSpeed()
+    {
+        self.emulatorCore?.rate = GameplayFeatures.shared.quickSettings.fastForwardSpeed
     }
 }
 
@@ -1614,9 +1627,13 @@ extension GameViewController
                 self.setFastForwardSpeed(speed: 16.0)
             }))
         }
+        alertController.addAction(UIAlertAction(title: "Custom: " + String(format: "%.f", GameplayFeatures.shared.fastForward.speed * 100) + "%", style: .default, handler: { (action) in
+            self.setFastForwardSpeed(speed: 4.0)
+        }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             self.setFastForwardSpeed()
         }))
+        
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -1633,6 +1650,40 @@ extension GameViewController
                 self.presentToastView(text: text)
             }
         }
+        self.resumeEmulation()
+    }
+    
+    func performQuickMenuAction()
+    {
+        guard GameplayFeatures.shared.quickSettings.isEnabled else { return }
+        
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        guard #available(iOS 15.0, *) else {
+            self.presentToastView(text: "Quick Menu Requires iOS 15")
+            return
+        }
+        
+        if let speed = self.emulatorCore?.rate
+        {
+            let quickSettingsView = QuickSettingsView.makeViewController(speed: speed)
+            if let sheet = quickSettingsView.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.largestUndimmedDetentIdentifier = nil
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                sheet.prefersEdgeAttachedInCompactHeight = true
+                sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
+                sheet.prefersGrabberVisible = true
+            }
+            
+            self.present(quickSettingsView, animated: true, completion: nil)
+        }
+        
+        self._isQuickMenuOpen = true
+        
         self.resumeEmulation()
     }
     
@@ -1832,8 +1883,6 @@ extension GameViewController
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 self.resumeEmulation()
             }))
-            //TODO: Make some custom views to show instead of UIAlertControllers
-//            self.present(UserInterfaceFeaturesView.makeViewController(), animated: true, completion: nil)
             self.present(alertController, animated: true, completion: nil)
         }
         else
@@ -1904,6 +1953,7 @@ extension GameViewController: GameViewControllerDelegate
         {
             self.pauseEmulation()
             self.controllerView.resignFirstResponder()
+            self._isQuickMenuOpen = false
             
             self.performSegue(withIdentifier: "pause", sender: gameController)
         }
@@ -1981,6 +2031,22 @@ private extension GameViewController
         self.updateAutoSaveState()
     }
     
+    @objc func didBecomeActiveApp(with notification: Notification)
+    {
+        guard let scene = notification.object as? UIWindowScene, scene == self.view.window?.windowScene else { return }
+                        
+        if #available(iOS 15.0, *),
+           let presentedViewController = self.sheetPresentationController,
+           self._isQuickMenuOpen
+        {
+            presentedViewController.presentedViewController.dismiss(animated: true)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.resumeEmulation()
+        }
+    }
+    
     @objc func managedObjectContextDidChange(with notification: Notification)
     {
         guard let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? Set<NSManagedObject> else { return }
@@ -2037,6 +2103,33 @@ private extension GameViewController
             
         case GBCFeatures.shared.palettes.$palette.settingsKey, GBCFeatures.shared.palettes.settingsKey, GBCFeatures.shared.palettes.$spritePalette1.settingsKey, GBCFeatures.shared.palettes.$spritePalette2.settingsKey, GBCFeatures.shared.palettes.$multiPalette.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color4.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color4.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color4.settingsKey:
             self.updateGameboyPalette()
+            
+        case GameplayFeatures.shared.quickSettings.$fastForwardSpeed.settingsKey:
+            self.updateEmulationSpeed()
+            
+        case GameplayFeatures.shared.quickSettings.$performQuickSave.settingsKey:
+            if #available(iOS 15.0, *),
+               let presentedViewController = self.sheetPresentationController
+            {
+                presentedViewController.presentedViewController.dismiss(animated: true)
+            }
+            self.performQuickSaveAction()
+            
+        case GameplayFeatures.shared.quickSettings.$performQuickLoad.settingsKey:
+            if #available(iOS 15.0, *),
+               let presentedViewController = self.sheetPresentationController
+            {
+                presentedViewController.presentedViewController.dismiss(animated: true)
+            }
+            self.performQuickLoadAction()
+            
+        case GameplayFeatures.shared.quickSettings.$performScreenshot.settingsKey:
+            if #available(iOS 15.0, *),
+               let presentedViewController = self.sheetPresentationController
+            {
+                presentedViewController.presentedViewController.dismiss(animated: true)
+            }
+            self.performScreenshotAction()
             
         default: break
         }

@@ -40,6 +40,11 @@ struct GameplayFeatures: FeatureContainer
              description: "Modify games using cheat codes. Supports Action Replay, Code Breaker, Game Genie, and GameShark codes on select systems.")
     var cheats
     
+    @Feature(name: "Quick Settings Menu",
+             description: "Access common gameplay settings quickly from the pause menu or a controller/skin button.",
+             options: QuickSettingsOptions())
+    var quickSettings
+    
     private init()
     {
         self.prepareFeatures()
