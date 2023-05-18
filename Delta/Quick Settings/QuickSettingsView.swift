@@ -24,11 +24,15 @@ struct QuickSettingsView: View
         VStack {
             HStack {
                 Text("Quick Settings").font(.largeTitle)
-                    .padding(.top, 30)
-                    .padding(.leading, 30)
                     .foregroundColor(.accentColor)
                 Spacer()
+                Button("Pause") {
+                    performPause()
+                }.buttonStyle(.bordered)
             }
+                .padding(.top, 30)
+                .padding(.leading, 30)
+                .padding(.trailing, 30)
             Form {
                 if GameplayFeatures.shared.quickSettings.quickActionsEnabled
                 {
@@ -284,6 +288,11 @@ struct QuickSettingsView: View
     func performScreenshot()
     {
         GameplayFeatures.shared.quickSettings.performScreenshot = true
+    }
+    
+    func performPause()
+    {
+        GameplayFeatures.shared.quickSettings.performPause = true
     }
 }
 

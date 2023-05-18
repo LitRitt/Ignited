@@ -354,6 +354,8 @@ extension GameViewController
         self.sustainButtonsContentView.bottomAnchor.constraint(equalTo: self.gameView.bottomAnchor).isActive = true
         
         self.updateControllers()
+        
+        self.updateShader()
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -790,6 +792,27 @@ private extension GameViewController
         self.updateButtonAudioFeedbackSound()
         
         self.updateGameboyPalette()
+        
+        self.updateShader()
+    }
+    
+    func updateShader()
+    {
+        guard let gameViews = self.emulatorCore?.gameViews else { return }
+        
+        switch self.game?.type
+        {
+        case .gbc?:
+            gameViews.last?.shader = GBCFeatures.shared.shader.isEnabled ? GBCFilter() : nil
+            gameViews.last?.imageScale = GBCFeatures.shared.shader.isEnabled ? 5 : 1
+            
+        case .gba?:
+            gameViews.last?.shader = GBCFeatures.shared.shader.isEnabled ? GBAFilter() : nil
+            gameViews.last?.imageScale = GBCFeatures.shared.shader.isEnabled ? 5 : 1
+            
+        default:
+            gameViews.last?.imageScale = GBCFeatures.shared.shader.isEnabled ? 5 : 1
+        }
     }
     
     func updateButtonAudioFeedbackSound()

@@ -17,6 +17,10 @@ struct GBCFeatures: FeatureContainer
              options: GameboyPaletteOptions())
     var palettes
     
+    @Feature(name: "Shader",
+             description: "Simulate a retro display by applying a pixel shader.")
+    var shader
+    
     private init()
     {
         self.prepareFeatures()
