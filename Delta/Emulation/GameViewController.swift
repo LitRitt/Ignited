@@ -1710,6 +1710,21 @@ extension GameViewController
         self.resumeEmulation()
     }
     
+    func performPauseAction()
+    {
+        if #available(iOS 15.0, *),
+           let presentedViewController = self.sheetPresentationController
+        {
+            presentedViewController.presentedViewController.dismiss(animated: true)
+        }
+        
+        self.pauseEmulation()
+        self.controllerView.resignFirstResponder()
+        self._isQuickMenuOpen = false
+        
+        self.performSegue(withIdentifier: "pause", sender: self.controllerView)
+    }
+    
     func performAltRepresentationsAction()
     {
         let enabled = !AdvancedFeatures.shared.skinDebug.useAlt
@@ -2153,6 +2168,9 @@ private extension GameViewController
                 presentedViewController.presentedViewController.dismiss(animated: true)
             }
             self.performScreenshotAction()
+            
+        case GameplayFeatures.shared.quickSettings.$performPause.settingsKey:
+            self.performPauseAction()
             
         default: break
         }
