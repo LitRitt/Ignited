@@ -10,15 +10,33 @@ import SwiftUI
 
 import Features
 
+private enum Systems: String, CaseIterable
+{
+    case gba = "com.rileytestut.delta.game.gba"
+    case gbc = "com.rileytestut.delta.game.gbc"
+    case ds = "com.rileytestut.delta.game.ds"
+    case nes = "com.rileytestut.delta.game.nes"
+    case snes = "com.rileytestut.delta.game.snes"
+    case n64 = "com.rileytestut.delta.game.n64"
+    case genesis = "com.rileytestut.delta.game.genesis"
+}
+
 @available(iOS 15.0, *)
 struct QuickSettingsView: View
 {
+    private var system: String
+    private let systemsWithPalettes = [Systems.gbc.rawValue]
+    private let systemsWithShaders = [Systems.gba.rawValue, Systems.gbc.rawValue]
+    
     @State private var fastForwardSpeed: Double
     @State private var gameAudioVolume: Double = GameplayFeatures.shared.gameAudio.volume
     
     @State private var gameboyPalette: GameboyPalette = GBCFeatures.shared.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = GBCFeatures.shared.palettes.spritePalette1
     @State private var gameboySpritePalette2: GameboyPalette = GBCFeatures.shared.palettes.spritePalette2
+    
+    @State private var shaderEnabledGBC: Bool = GBCFeatures.shared.gridOverlayGBC.isEnabled
+    @State private var shaderEnabledGBA: Bool = GBAFeatures.shared.gridOverlayGBA.isEnabled
     
     var body: some View {
         VStack {
@@ -171,7 +189,9 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if GameplayFeatures.shared.quickSettings.colorPalettesEnabled && GBCFeatures.shared.palettes.isEnabled
+                if GameplayFeatures.shared.quickSettings.colorPalettesEnabled,
+                   GBCFeatures.shared.palettes.isEnabled,
+                   systemsWithPalettes.contains(system)
                 {
                     Section() {
                         HStack {
@@ -243,21 +263,46 @@ struct QuickSettingsView: View
                     }
                 }
                 
+                if GameplayFeatures.shared.quickSettings.shadersEnabled,
+                   systemsWithShaders.contains(system)
+                {
+                    Section() {
+                        if system == Systems.gba.rawValue
+                        {
+                            Toggle("Grid Overlay", isOn: $shaderEnabledGBA)
+                                .onChange(of: shaderEnabledGBA) { value in
+                                    GBAFeatures.shared.gridOverlayGBA.isEnabled = value
+                            }
+                        }
+                        if system == Systems.gbc.rawValue
+                        {
+                            Toggle("Grid Overlay", isOn: $shaderEnabledGBC)
+                                .onChange(of: shaderEnabledGBC) { value in
+                                    GBCFeatures.shared.gridOverlayGBC.isEnabled = value
+                            }
+                        }
+                    } header: {
+                        Text("Shaders")
+                    }.listStyle(.insetGrouped)
+                        .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                }
+                
                 Section() {
                     VStack {
                         Toggle("Quick Actions", isOn: GameplayFeatures.shared.quickSettings.$quickActionsEnabled.valueBinding)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         Toggle("Fast Forward", isOn: GameplayFeatures.shared.quickSettings.$fastForwardEnabled.valueBinding)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         Toggle("Expanded Fast Forward", isOn: GameplayFeatures.shared.quickSettings.$expandedFastForwardEnabled.valueBinding)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         Toggle("Game Audio", isOn: GameplayFeatures.shared.quickSettings.$gameAudioEnabled.valueBinding)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         Toggle("Expanded Game Audio", isOn: GameplayFeatures.shared.quickSettings.$expandedGameAudioEnabled.valueBinding)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                        Toggle("Color Palettes", isOn: GameplayFeatures.shared.quickSettings.$colorPalettesEnabled.valueBinding)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                    }
+                        if systemsWithPalettes.contains(system)
+                        {
+                            Toggle("Color Palettes", isOn: GameplayFeatures.shared.quickSettings.$colorPalettesEnabled.valueBinding)
+                        }
+                        if systemsWithShaders.contains(system)
+                        {
+                            Toggle("Shaders", isOn: GameplayFeatures.shared.quickSettings.$shadersEnabled.valueBinding)
+                        }
+                    }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 } header: {
                     Text("Enabled Sections")
                 }.listStyle(.insetGrouped)
@@ -299,9 +344,9 @@ struct QuickSettingsView: View
 @available(iOS 15.0, *)
 extension QuickSettingsView
 {
-    static func makeViewController(speed speed: Double) -> UIHostingController<some View>
+    static func makeViewController(system system: String, speed speed: Double) -> UIHostingController<some View>
     {
-        let view = QuickSettingsView(fastForwardSpeed: speed)
+        let view = QuickSettingsView(system: system, fastForwardSpeed: speed)
         
         let hostingController = UIHostingController(rootView: view)
         

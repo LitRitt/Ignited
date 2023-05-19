@@ -17,9 +17,9 @@ struct GBCFeatures: FeatureContainer
              options: GameboyPaletteOptions())
     var palettes
     
-    @Feature(name: "Shader",
-             description: "Simulate a retro display by applying a pixel shader.")
-    var shader
+    @Feature(name: "Grid Overlay",
+             description: "Simulate a retro display by adding a grid overlay.")
+    var gridOverlayGBC
     
     private init()
     {

@@ -50,4 +50,8 @@ struct QuickSettingsOptions
     @Option(name: "Color Palettes",
             description: "Enable to show color palette options in the quick settings.")
     var colorPalettesEnabled: Bool = true
+    
+    @Option(name: "Shaders",
+            description: "Enable to show shader options in the quick settings.")
+    var shadersEnabled: Bool = true
 }

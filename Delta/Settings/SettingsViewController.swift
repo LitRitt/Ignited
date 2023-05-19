@@ -81,6 +81,7 @@ private extension SettingsViewController
     enum CoresRow: Int, CaseIterable
     {
         case ds
+        case gba
         case gbc
     }
 }
@@ -262,9 +263,15 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    func showGBCDeltaCoreFeatures()
+    func showGBAFeatures()
     {
-        let hostingController = GBCDeltaCoreFeaturesView.makeViewController()
+        let hostingController = GBAFeaturesView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showGBCFeatures()
+    {
+        let hostingController = GBCFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -578,8 +585,10 @@ extension SettingsViewController
             {
             case .ds:
                 self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
+            case .gba:
+                self.showGBAFeatures()
             case .gbc:
-                self.showGBCDeltaCoreFeatures()
+                self.showGBCFeatures()
             }
             
         case .patreon:

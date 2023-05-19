@@ -354,8 +354,6 @@ extension GameViewController
         self.sustainButtonsContentView.bottomAnchor.constraint(equalTo: self.gameView.bottomAnchor).isActive = true
         
         self.updateControllers()
-        
-        self.updateShader()
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -790,9 +788,7 @@ private extension GameViewController
         self.updateControllerSkin()
         
         self.updateButtonAudioFeedbackSound()
-        
         self.updateGameboyPalette()
-        
         self.updateShader()
     }
     
@@ -800,18 +796,21 @@ private extension GameViewController
     {
         guard let gameViews = self.emulatorCore?.gameViews else { return }
         
+        let topScreen = gameViews.last
+        
         switch self.game?.type
         {
-        case .gbc?:
-            gameViews.last?.shader = GBCFeatures.shared.shader.isEnabled ? GBCFilter() : nil
-            gameViews.last?.imageScale = GBCFeatures.shared.shader.isEnabled ? 5 : 1
-            
         case .gba?:
-            gameViews.last?.shader = GBCFeatures.shared.shader.isEnabled ? GBAFilter() : nil
-            gameViews.last?.imageScale = GBCFeatures.shared.shader.isEnabled ? 5 : 1
+            topScreen?.shader = GBAFeatures.shared.gridOverlayGBA.isEnabled ? GBAGridFilter() : nil
+            topScreen?.imageScale = GBAFeatures.shared.gridOverlayGBA.isEnabled ? 5 : 1
+            
+        case .gbc?:
+            topScreen?.shader = GBCFeatures.shared.gridOverlayGBC.isEnabled ? GBCGridFilter() : nil
+            topScreen?.imageScale = GBCFeatures.shared.gridOverlayGBC.isEnabled ? 5 : 1
             
         default:
-            gameViews.last?.imageScale = GBCFeatures.shared.shader.isEnabled ? 5 : 1
+            topScreen?.shader = nil
+            topScreen?.imageScale = 1
         }
     }
     
@@ -1690,9 +1689,10 @@ extension GameViewController
             return
         }
         
-        if let speed = self.emulatorCore?.rate
+        if let speed = self.emulatorCore?.rate,
+           let system = self.game?.type.rawValue
         {
-            let quickSettingsView = QuickSettingsView.makeViewController(speed: speed)
+            let quickSettingsView = QuickSettingsView.makeViewController(system: system, speed: speed)
             if let sheet = quickSettingsView.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
                 sheet.largestUndimmedDetentIdentifier = nil
@@ -1710,14 +1710,18 @@ extension GameViewController
         self.resumeEmulation()
     }
     
-    func performPauseAction()
+    func dismissQuickMenu()
     {
         if #available(iOS 15.0, *),
            let presentedViewController = self.sheetPresentationController
         {
             presentedViewController.presentedViewController.dismiss(animated: true)
         }
-        
+    }
+    
+    func performPauseAction()
+    {
+        self.dismissQuickMenu()
         self.pauseEmulation()
         self.controllerView.resignFirstResponder()
         self._isQuickMenuOpen = false
@@ -2146,31 +2150,22 @@ private extension GameViewController
             self.updateEmulationSpeed()
             
         case GameplayFeatures.shared.quickSettings.$performQuickSave.settingsKey:
-            if #available(iOS 15.0, *),
-               let presentedViewController = self.sheetPresentationController
-            {
-                presentedViewController.presentedViewController.dismiss(animated: true)
-            }
+            self.dismissQuickMenu()
             self.performQuickSaveAction()
             
         case GameplayFeatures.shared.quickSettings.$performQuickLoad.settingsKey:
-            if #available(iOS 15.0, *),
-               let presentedViewController = self.sheetPresentationController
-            {
-                presentedViewController.presentedViewController.dismiss(animated: true)
-            }
+            self.dismissQuickMenu()
             self.performQuickLoadAction()
             
         case GameplayFeatures.shared.quickSettings.$performScreenshot.settingsKey:
-            if #available(iOS 15.0, *),
-               let presentedViewController = self.sheetPresentationController
-            {
-                presentedViewController.presentedViewController.dismiss(animated: true)
-            }
+            self.dismissQuickMenu()
             self.performScreenshotAction()
             
         case GameplayFeatures.shared.quickSettings.$performPause.settingsKey:
             self.performPauseAction()
+            
+        case GBAFeatures.shared.gridOverlayGBA.settingsKey, GBCFeatures.shared.gridOverlayGBC.settingsKey:
+            self.updateShader()
             
         default: break
         }

@@ -1,8 +1,8 @@
 //
-//  GBCDeltaCoreFeaturesView.swift
+//  GBAFeaturesView.swift
 //  Delta
 //
-//  Created by Chris Rittenhouse on 5/9/23.
+//  Created by Chris Rittenhouse on 5/19/23.
 //  Copyright © 2023 Lit Development. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import Combine
 
 import Features
 
-extension GBCFeaturesView
+extension GBAFeaturesView
 {
     private class ViewModel: ObservableObject
     {
@@ -21,14 +21,14 @@ extension GBCFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = GBCFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = GBAFeatures.shared.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }
     }
 }
 
-struct GBCFeaturesView: View
+struct GBAFeaturesView: View
 {
     @StateObject
     private var viewModel: ViewModel = ViewModel()
@@ -36,7 +36,7 @@ struct GBCFeaturesView: View
     var body: some View {
         Form {
             Section(content: {}, footer: {
-                Text("These features affect your gameplay when playing GBC games.")
+                Text("These features affect your gameplay when playing GBA games.")
                     .font(.subheadline)
             })
             
@@ -56,14 +56,14 @@ struct GBCFeaturesView: View
     }
 }
 
-extension GBCFeaturesView
+extension GBAFeaturesView
 {
     static func makeViewController() -> UIHostingController<some View>
     {
-        let featuresView = GBCFeaturesView()
+        let featuresView = GBAFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("GBC Features", comment: "")
+        hostingController.title = NSLocalizedString("GBA Features", comment: "")
         return hostingController
     }
 }
