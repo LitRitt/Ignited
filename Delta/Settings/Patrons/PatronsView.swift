@@ -9,13 +9,11 @@
 import SwiftUI
 import SafariServices
 
-struct Patron: Identifiable, Decodable
+private extension NavigationLink where Label == EmptyView, Destination == EmptyView
 {
-    var name: String
-    
-    var id: String {
-        // Use names as identifiers for now.
-        return self.name
+    // Copied from https://stackoverflow.com/a/66891173
+    static var empty: NavigationLink {
+        self.init(destination: EmptyView(), label: { EmptyView() })
     }
 }
 
@@ -28,6 +26,9 @@ extension PatronsView
         
         @Published
         var error: Error?
+        
+        @Published
+        var webViewURL: URL?
         
         weak var hostingController: UIViewController?
         
@@ -53,9 +54,9 @@ extension PatronsView
     static func makeViewController() -> UIHostingController<some View>
     {
         let viewModel = ViewModel()
-        let patronsView = PatronsView(viewModel: viewModel)
+        let contributorsView = PatronsView(viewModel: viewModel)
         
-        let hostingController = UIHostingController(rootView: patronsView)
+        let hostingController = UIHostingController(rootView: contributorsView)
         hostingController.title = NSLocalizedString("Patrons", comment: "")
         
         viewModel.hostingController = hostingController
@@ -75,14 +76,16 @@ struct PatronsView: View
     var body: some View {
         List {
             Section(content: {}, footer: {
-                Text("These patrons have shown overwhelming support for Ignited. Their contributions help make the development of this app possible. You are all certified Lit ❤️‍🔥")
+                Text("These individuals have become patrons of the highest tier. Their monetary contributions help make the continued development of this app possible. ❤️‍🔥")
                     .font(.subheadline)
             })
             
             ForEach(viewModel.patrons ?? []) { patron in
                 Section {
-                    // First row = patron
-                    PatronCell(name: Text(patron.name).bold())
+                    // First row = contributor
+                    PatronCell(name: Text(patron.name).bold(), url: patron.url, linkName: patron.linkName) { webViewURL in
+                        viewModel.webViewURL = webViewURL
+                    }
                 }
             }
         }
@@ -97,6 +100,10 @@ struct PatronsView: View
         .onReceive(viewModel.$error) { error in
             guard error != nil else { return }
             showErrorAlert = true
+        }
+        .onReceive(viewModel.$webViewURL) { webViewURL in
+            guard let webViewURL else { return }
+            openURL(webViewURL)
         }
         .onAppear {
             viewModel.loadPatrons()
@@ -118,17 +125,67 @@ struct PatronsView: View
 struct PatronCell: View
 {
     var name: Text
+    var url: URL?
+    var linkName: String?
+    
+    var action: (URL) -> Void
+    
     var body: some View {
         
-        HStack {
-            self.name
-                .font(.system(size: 17)) // Match Settings screen
+        let body = Button {
+            guard let url else { return }
             
-            Spacer()
+            Task { @MainActor in
+                // Dispatch Task to avoid "Publishing changes from within view updates is not allowed, this will cause undefined behavior." runtime error on iOS 16.
+                self.action(url)
+            }
             
-            Text("🔥")
+        } label: {
+            HStack {
+                Text("🔥")
+                
+                self.name
+                    .font(.system(size: 17)) // Match Settings screen
+                
+                Spacer()
+                
+                if let linkName
+                {
+                    Text(linkName)
+                        .font(.system(size: 17)) // Match Settings screen
+                        .foregroundColor(.gray)
+                }
+                
+                if url != nil
+                {
+                    NavigationLink.empty
+                        .fixedSize()
+                }
+            }
         }
         .accentColor(.primary)
-        .buttonStyle(.plain)
+        
+        if url != nil
+        {
+            body
+        }
+        else
+        {
+            // No URL to open, so disable cell highlighting.
+            body.buttonStyle(.plain)
+        }
     }
 }
+
+private extension PatronsView
+{
+    func openURL(_ url: URL)
+    {
+        guard let hostingController = viewModel.hostingController else { return }
+        
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.preferredControlTintColor = UIColor.themeColor
+        hostingController.present(safariViewController, animated: true)
+    }
+}
+

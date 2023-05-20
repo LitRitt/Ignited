@@ -44,6 +44,7 @@
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtwork.swift */; };
 		AC27348229FE992800B4CB2E /* UserInterfaceFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */; };
+		AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D0A842A19702C00EEEB39 /* Patron.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */; };
 		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
@@ -298,6 +299,7 @@
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtwork.swift; sourceTree = "<group>"; };
 		AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeaturesView.swift; sourceTree = "<group>"; };
+		AC2D0A842A19702C00EEEB39 /* Patron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+BuildNumber.swift"; sourceTree = "<group>"; };
 		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
@@ -743,6 +745,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */,
+				AC2D0A842A19702C00EEEB39 /* Patron.swift */,
 			);
 			path = Patrons;
 			sourceTree = "<group>";
@@ -1590,6 +1593,7 @@
 				AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */,
 				BFA0D1271D3AE1F600565894 /* GameViewController.swift in Sources */,
 				BF59428A1E09BC8B0051894B /* _SaveState.swift in Sources */,
+				AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */,
 				ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudio.swift in Sources */,
 				BFC1F2CC22F9515F00606A45 /* CopyDeepLinkActivity.swift in Sources */,
 				AC503F5F29B2BD25005B27DD /* Update.swift in Sources */,
