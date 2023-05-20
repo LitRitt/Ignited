@@ -35,7 +35,7 @@ struct QuickSettingsView: View
     @State private var gameboySpritePalette1: GameboyPalette = GBCFeatures.shared.palettes.spritePalette1
     @State private var gameboySpritePalette2: GameboyPalette = GBCFeatures.shared.palettes.spritePalette2
     
-    @State private var shaderEnabledGBC: Bool = GBCFeatures.shared.gridOverlayGBC.isEnabled
+    @State private var shaderEnabledGBC: Bool = GBCFeatures.shared.GBCShader.isEnabled
     @State private var shaderEnabledGBA: Bool = GBAFeatures.shared.gridOverlayGBA.isEnabled
     
     var body: some View {
@@ -278,7 +278,7 @@ struct QuickSettingsView: View
                         {
                             Toggle("Grid Overlay", isOn: $shaderEnabledGBC)
                                 .onChange(of: shaderEnabledGBC) { value in
-                                    GBCFeatures.shared.gridOverlayGBC.isEnabled = value
+                                    GBCFeatures.shared.GBCShader.isEnabled = value
                             }
                         }
                     } header: {

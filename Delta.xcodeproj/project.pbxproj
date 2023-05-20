@@ -88,6 +88,7 @@
 		ACB3CB9329FDD601002B53DE /* TouchFeedbackVibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9229FDD601002B53DE /* TouchFeedbackVibration.swift */; };
 		ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudio.swift */; };
 		ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlay.swift */; };
+		ACC5A53F2A18588D0094FDE9 /* GBCShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC5A53E2A18588D0094FDE9 /* GBCShader.swift */; };
 		ACCD9DB52A01A54200B235C4 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */; };
 		ACCD9DB72A01AF9F00B235C4 /* Color+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */; };
 		ACCD9DB92A01BA5500B235C4 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */; };
@@ -345,6 +346,7 @@
 		ACB3CB9229FDD601002B53DE /* TouchFeedbackVibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackVibration.swift; sourceTree = "<group>"; };
 		ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackAudio.swift; sourceTree = "<group>"; };
 		ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackOverlay.swift; sourceTree = "<group>"; };
+		ACC5A53E2A18588D0094FDE9 /* GBCShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCShader.swift; sourceTree = "<group>"; };
 		ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
 		ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+RawRepresentable.swift"; sourceTree = "<group>"; };
 		ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
@@ -759,6 +761,7 @@
 			children = (
 				ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */,
 				ACD5FA042A0C4D58005CDCF1 /* GameboyPalette.swift */,
+				ACC5A53E2A18588D0094FDE9 /* GBCShader.swift */,
 			);
 			path = GBC;
 			sourceTree = "<group>";
@@ -1597,6 +1600,7 @@
 				BFB3645823245A6000CD0EB1 /* LicensesViewController.swift in Sources */,
 				BFC6F7B81F435BC500221B96 /* Input+Display.swift in Sources */,
 				BF59426A1E09BBD00051894B /* GridCollectionViewCell.swift in Sources */,
+				ACC5A53F2A18588D0094FDE9 /* GBCShader.swift in Sources */,
 				BF6BF3181EB82111008E83CD /* iTunesImportOption.swift in Sources */,
 				BF647A6A22FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift in Sources */,
 				BFF6452E1F7CC5060056533E /* GameControllerInputMappingTransformer.swift in Sources */,

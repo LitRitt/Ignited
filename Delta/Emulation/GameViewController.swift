@@ -796,21 +796,23 @@ private extension GameViewController
     {
         guard let gameViews = self.emulatorCore?.gameViews else { return }
         
-        let topScreen = gameViews.last
-        
-        switch self.game?.type
+        for gameView in gameViews
         {
-        case .gba?:
-            topScreen?.shader = GBAFeatures.shared.gridOverlayGBA.isEnabled ? GBAGridFilter() : nil
-            topScreen?.imageScale = GBAFeatures.shared.gridOverlayGBA.isEnabled ? 5 : 1
-            
-        case .gbc?:
-            topScreen?.shader = GBCFeatures.shared.gridOverlayGBC.isEnabled ? GBCGridFilter() : nil
-            topScreen?.imageScale = GBCFeatures.shared.gridOverlayGBC.isEnabled ? 5 : 1
-            
-        default:
-            topScreen?.shader = nil
-            topScreen?.imageScale = 1
+            switch self.game?.type
+            {
+            case .gba?:
+                gameView.shader = GBAFeatures.shared.gridOverlayGBA.isEnabled ? GBAGridFilter() : nil
+                gameView.imageScale = GBAFeatures.shared.gridOverlayGBA.isEnabled ? 3 : 1
+                
+            case .gbc?:
+                gameView.shader = GBCFeatures.shared.GBCShader.isEnabled ? GBCFeatures.shared.GBCShader.type?.shader : nil
+                gameView.imageScale = GBCFeatures.shared.GBCShader.isEnabled ? GBCFeatures.shared.GBCShader.scale : 1
+                
+            default:
+                break
+//                gameView.shader = nil
+//                gameView.imageScale = 1
+            }
         }
     }
     
@@ -2164,7 +2166,7 @@ private extension GameViewController
         case GameplayFeatures.shared.quickSettings.$performPause.settingsKey:
             self.performPauseAction()
             
-        case GBAFeatures.shared.gridOverlayGBA.settingsKey, GBCFeatures.shared.gridOverlayGBC.settingsKey:
+        case GBAFeatures.shared.gridOverlayGBA.settingsKey, GBCFeatures.shared.GBCShader.settingsKey:
             self.updateShader()
             
         default: break
