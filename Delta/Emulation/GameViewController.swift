@@ -789,31 +789,6 @@ private extension GameViewController
         
         self.updateButtonAudioFeedbackSound()
         self.updateGameboyPalette()
-        self.updateShader()
-    }
-    
-    func updateShader()
-    {
-        guard let gameViews = self.emulatorCore?.gameViews else { return }
-        
-        for gameView in gameViews
-        {
-            switch self.game?.type
-            {
-            case .gba?:
-                gameView.shader = GBAFeatures.shared.gridOverlayGBA.isEnabled ? GBAGridFilter() : nil
-                gameView.imageScale = GBAFeatures.shared.gridOverlayGBA.isEnabled ? 3 : 1
-                
-            case .gbc?:
-                gameView.shader = GBCFeatures.shared.GBCShader.isEnabled ? GBCFeatures.shared.GBCShader.type?.shader : nil
-                gameView.imageScale = GBCFeatures.shared.GBCShader.isEnabled ? GBCFeatures.shared.GBCShader.scale : 1
-                
-            default:
-                break
-//                gameView.shader = nil
-//                gameView.imageScale = 1
-            }
-        }
     }
     
     func updateButtonAudioFeedbackSound()
@@ -2165,9 +2140,6 @@ private extension GameViewController
             
         case GameplayFeatures.shared.quickSettings.$performPause.settingsKey:
             self.performPauseAction()
-            
-        case GBAFeatures.shared.gridOverlayGBA.settingsKey, GBCFeatures.shared.GBCShader.settingsKey:
-            self.updateShader()
             
         default: break
         }

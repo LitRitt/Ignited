@@ -26,7 +26,6 @@ struct QuickSettingsView: View
 {
     private var system: String
     private let systemsWithPalettes = [Systems.gbc.rawValue]
-    private let systemsWithShaders = [Systems.gba.rawValue, Systems.gbc.rawValue]
     
     @State private var fastForwardSpeed: Double
     @State private var gameAudioVolume: Double = GameplayFeatures.shared.gameAudio.volume
@@ -34,9 +33,6 @@ struct QuickSettingsView: View
     @State private var gameboyPalette: GameboyPalette = GBCFeatures.shared.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = GBCFeatures.shared.palettes.spritePalette1
     @State private var gameboySpritePalette2: GameboyPalette = GBCFeatures.shared.palettes.spritePalette2
-    
-    @State private var shaderEnabledGBC: Bool = GBCFeatures.shared.GBCShader.isEnabled
-    @State private var shaderEnabledGBA: Bool = GBAFeatures.shared.gridOverlayGBA.isEnabled
     
     var body: some View {
         VStack {
@@ -263,30 +259,6 @@ struct QuickSettingsView: View
                     }
                 }
                 
-                if GameplayFeatures.shared.quickSettings.shadersEnabled,
-                   systemsWithShaders.contains(system)
-                {
-                    Section() {
-                        if system == Systems.gba.rawValue
-                        {
-                            Toggle("Grid Overlay", isOn: $shaderEnabledGBA)
-                                .onChange(of: shaderEnabledGBA) { value in
-                                    GBAFeatures.shared.gridOverlayGBA.isEnabled = value
-                            }
-                        }
-                        if system == Systems.gbc.rawValue
-                        {
-                            Toggle("Grid Overlay", isOn: $shaderEnabledGBC)
-                                .onChange(of: shaderEnabledGBC) { value in
-                                    GBCFeatures.shared.GBCShader.isEnabled = value
-                            }
-                        }
-                    } header: {
-                        Text("Shaders")
-                    }.listStyle(.insetGrouped)
-                        .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                }
-                
                 Section() {
                     VStack {
                         Toggle("Quick Actions", isOn: GameplayFeatures.shared.quickSettings.$quickActionsEnabled.valueBinding)
@@ -297,10 +269,6 @@ struct QuickSettingsView: View
                         if systemsWithPalettes.contains(system)
                         {
                             Toggle("Color Palettes", isOn: GameplayFeatures.shared.quickSettings.$colorPalettesEnabled.valueBinding)
-                        }
-                        if systemsWithShaders.contains(system)
-                        {
-                            Toggle("Shaders", isOn: GameplayFeatures.shared.quickSettings.$shadersEnabled.valueBinding)
                         }
                     }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 } header: {

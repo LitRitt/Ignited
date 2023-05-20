@@ -46,8 +46,6 @@
 		AC27348229FE992800B4CB2E /* UserInterfaceFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */; };
-		AC4C760E2A17B2AC0097540E /* GBAFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C760D2A17B2AC0097540E /* GBAFeatures.swift */; };
-		AC4C76102A17B5740097540E /* GBAFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C760F2A17B5740097540E /* GBAFeaturesView.swift */; };
 		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
 		AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F6029B2C0F4005B27DD /* UpdatesView.swift */; };
 		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
@@ -79,7 +77,6 @@
 		AC8C213529FDAE400044748D /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C20FD29FDAAB90044748D /* OptionPickerView.swift */; };
 		AC8C213629FDAE400044748D /* OptionToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C20FF29FDAACB0044748D /* OptionToggleView.swift */; };
 		AC8E5BCA29CCF77700F32D19 /* UIColor+Adjust.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */; };
-		ACA8B8B52A14486400EA4A6C /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8B8B42A14486400EA4A6C /* Shaders.swift */; };
 		ACAAE2FA2A0E337F004E0B3A /* CGColor+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */; };
 		ACB3CB8A29FDCF2A002B53DE /* GameScreenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8929FDCF2A002B53DE /* GameScreenshot.swift */; };
 		ACB3CB8C29FDCF4D002B53DE /* ToastNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8B29FDCF4D002B53DE /* ToastNotifications.swift */; };
@@ -88,7 +85,6 @@
 		ACB3CB9329FDD601002B53DE /* TouchFeedbackVibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9229FDD601002B53DE /* TouchFeedbackVibration.swift */; };
 		ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudio.swift */; };
 		ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlay.swift */; };
-		ACC5A53F2A18588D0094FDE9 /* GBCShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC5A53E2A18588D0094FDE9 /* GBCShader.swift */; };
 		ACCD9DB52A01A54200B235C4 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */; };
 		ACCD9DB72A01AF9F00B235C4 /* Color+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */; };
 		ACCD9DB92A01BA5500B235C4 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */; };
@@ -304,8 +300,6 @@
 		AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeaturesView.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+BuildNumber.swift"; sourceTree = "<group>"; };
-		AC4C760D2A17B2AC0097540E /* GBAFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBAFeatures.swift; sourceTree = "<group>"; };
-		AC4C760F2A17B5740097540E /* GBAFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBAFeaturesView.swift; sourceTree = "<group>"; };
 		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		AC503F6029B2C0F4005B27DD /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
@@ -337,7 +331,6 @@
 		AC8C211929FDACB30044748D /* EnvironmentValues+FeatureOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+FeatureOption.swift"; sourceTree = "<group>"; };
 		AC8C211F29FDAD970044748D /* libFeatures.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFeatures.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8E5BC929CCF77700F32D19 /* UIColor+Adjust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Adjust.swift"; sourceTree = "<group>"; };
-		ACA8B8B42A14486400EA4A6C /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+RGB.swift"; sourceTree = "<group>"; };
 		ACB3CB8929FDCF2A002B53DE /* GameScreenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenshot.swift; sourceTree = "<group>"; };
 		ACB3CB8B29FDCF4D002B53DE /* ToastNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotifications.swift; sourceTree = "<group>"; };
@@ -346,7 +339,6 @@
 		ACB3CB9229FDD601002B53DE /* TouchFeedbackVibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackVibration.swift; sourceTree = "<group>"; };
 		ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackAudio.swift; sourceTree = "<group>"; };
 		ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackOverlay.swift; sourceTree = "<group>"; };
-		ACC5A53E2A18588D0094FDE9 /* GBCShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCShader.swift; sourceTree = "<group>"; };
 		ACCD9DB42A01A54200B235C4 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
 		ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+RawRepresentable.swift"; sourceTree = "<group>"; };
 		ACCD9DB82A01BA5500B235C4 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
@@ -607,14 +599,6 @@
 			path = UserInterface;
 			sourceTree = "<group>";
 		};
-		AC4C760C2A17B29F0097540E /* GBA */ = {
-			isa = PBXGroup;
-			children = (
-				AC4C760D2A17B2AC0097540E /* GBAFeatures.swift */,
-			);
-			path = GBA;
-			sourceTree = "<group>";
-		};
 		AC503F5D29B2B863005B27DD /* Updates */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,18 +699,9 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		ACA8B8B12A1432AB00EA4A6C /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				ACA8B8B42A14486400EA4A6C /* Shaders.swift */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
 		ACB3CB8529FDCEAD002B53DE /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				AC4C760C2A17B29F0097540E /* GBA */,
 				ACD5FA012A0C4C28005CDCF1 /* GBC */,
 				AC1EAE632A005F590072C858 /* Advanced */,
 				AC84B56A29FEF5130090F274 /* Gameplay */,
@@ -751,7 +726,6 @@
 			isa = PBXGroup;
 			children = (
 				ACD5F9FC2A0ADF45005CDCF1 /* GBCFeaturesView.swift */,
-				AC4C760F2A17B5740097540E /* GBAFeaturesView.swift */,
 			);
 			path = CoreFeatures;
 			sourceTree = "<group>";
@@ -761,7 +735,6 @@
 			children = (
 				ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */,
 				ACD5FA042A0C4D58005CDCF1 /* GameboyPalette.swift */,
-				ACC5A53E2A18588D0094FDE9 /* GBCShader.swift */,
 			);
 			path = GBC;
 			sourceTree = "<group>";
@@ -1246,7 +1219,6 @@
 				BF7AE7FA1C2E851F00B1B5BC /* Pause Menu */,
 				AC2059E62A112CA30098266B /* Quick Settings */,
 				BFAA1FEB1B8AA4E800495943 /* Settings */,
-				ACA8B8B12A1432AB00EA4A6C /* Shaders */,
 				BFFA71DA1AAC406100EE9DD1 /* Supporting Files */,
 				BFAB9F7B219A43270080EC7D /* Syncing */,
 				BF930FFB1EB6D6EC00E8DBA0 /* Systems */,
@@ -1600,14 +1572,12 @@
 				BFB3645823245A6000CD0EB1 /* LicensesViewController.swift in Sources */,
 				BFC6F7B81F435BC500221B96 /* Input+Display.swift in Sources */,
 				BF59426A1E09BBD00051894B /* GridCollectionViewCell.swift in Sources */,
-				ACC5A53F2A18588D0094FDE9 /* GBCShader.swift in Sources */,
 				BF6BF3181EB82111008E83CD /* iTunesImportOption.swift in Sources */,
 				BF647A6A22FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift in Sources */,
 				BFF6452E1F7CC5060056533E /* GameControllerInputMappingTransformer.swift in Sources */,
 				BF59427C1E09BC830051894B /* Cheat.swift in Sources */,
 				BFBAB2E31EB685A2004E0B0E /* DeltaCoreProtocol+Delta.swift in Sources */,
 				AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */,
-				AC4C760E2A17B2AC0097540E /* GBAFeatures.swift in Sources */,
 				BF3540081C5DAFAD00C1184C /* PauseTransitionCoordinator.swift in Sources */,
 				BF525EEA1FF6CD12004AA849 /* DeepLink.swift in Sources */,
 				BF8A334621A4926F00A42FD4 /* GameSyncStatusViewController.swift in Sources */,
@@ -1642,7 +1612,6 @@
 				BF31878B1D489AAA00BD020D /* CheatValidator.swift in Sources */,
 				AC1EAE672A0061910072C858 /* PowerUser.swift in Sources */,
 				BFFC46201D59823500AF2CC6 /* InitialGamesStoryboardSegue.swift in Sources */,
-				AC4C76102A17B5740097540E /* GBAFeaturesView.swift in Sources */,
 				BF15AF841F54B43B009B6AAB /* ActionInput.swift in Sources */,
 				AC1EAE6B2A006CC30072C858 /* SkinDebug.swift in Sources */,
 				BF4828841F9027B600028B97 /* Delta.xcdatamodeld in Sources */,
@@ -1733,7 +1702,6 @@
 				BF13A7561D5D29B0000BB055 /* PreviewGameViewController.swift in Sources */,
 				BF6866171DCAC8B900BF2D06 /* ControllerSkin+Configuring.swift in Sources */,
 				BFFBD3D9224A0756002EFC79 /* URL+ExtendedAttributes.swift in Sources */,
-				ACA8B8B52A14486400EA4A6C /* Shaders.swift in Sources */,
 				BF713C0822499ED4004A1A2B /* PreviousHarmony.xcdatamodeld in Sources */,
 				BF59427D1E09BC830051894B /* ControllerSkin.swift in Sources */,
 				ACAAE2FA2A0E337F004E0B3A /* CGColor+RGB.swift in Sources */,

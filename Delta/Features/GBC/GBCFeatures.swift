@@ -17,11 +17,6 @@ struct GBCFeatures: FeatureContainer
              options: GameboyPaletteOptions())
     var palettes
     
-    @Feature(name: "Shaders",
-             description: "Apply effects and overlays to your game screen.",
-             options: GBCShaderOptions())
-    var GBCShader
-    
     private init()
     {
         self.prepareFeatures()
