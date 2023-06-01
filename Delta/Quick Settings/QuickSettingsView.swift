@@ -34,6 +34,13 @@ struct QuickSettingsView: View
     @State private var gameboySpritePalette1: GameboyPalette = GBCFeatures.shared.palettes.spritePalette1
     @State private var gameboySpritePalette2: GameboyPalette = GBCFeatures.shared.palettes.spritePalette2
     
+    @State private var quickActionsEnabled: Bool = GameplayFeatures.shared.quickSettings.quickActionsEnabled
+    @State private var fastForwardEnabled: Bool = GameplayFeatures.shared.quickSettings.fastForwardEnabled
+    @State private var expandedFastForwardEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled
+    @State private var gameAudioEnabled: Bool = GameplayFeatures.shared.quickSettings.gameAudioEnabled
+    @State private var expandedGameAudioEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled
+    @State private var colorPalettesEnabled: Bool = GameplayFeatures.shared.quickSettings.colorPalettesEnabled
+    
     var body: some View {
         VStack {
             HStack {
@@ -41,20 +48,20 @@ struct QuickSettingsView: View
                     .foregroundColor(.accentColor)
                 Spacer()
                 Button("Pause") {
-                    performPause()
+                    self.performPause()
                 }.buttonStyle(.bordered)
             }
                 .padding(.top, 30)
                 .padding(.leading, 30)
                 .padding(.trailing, 30)
             Form {
-                if GameplayFeatures.shared.quickSettings.quickActionsEnabled
+                if self.quickActionsEnabled
                 {
                     Section() {
                             HStack {
                                 VStack {
                                     Button {
-                                        performScreenshot()
+                                        self.performScreenshot()
                                     } label: {
                                         Image("Screenshot")
                                     }
@@ -64,7 +71,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 VStack {
                                     Button {
-                                        performQuickSave()
+                                        self.performQuickSave()
                                     } label: {
                                         Image("SaveSaveState")
                                     }
@@ -74,7 +81,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 VStack {
                                     Button {
-                                        performQuickLoad()
+                                        self.performQuickLoad()
                                     } label: {
                                         Image("LoadSaveState")
                                     }
@@ -87,65 +94,65 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if GameplayFeatures.shared.quickSettings.fastForwardEnabled && GameplayFeatures.shared.fastForward.isEnabled
+                if self.fastForwardEnabled && GameplayFeatures.shared.fastForward.isEnabled
                 {
                     Section() {
                         VStack {
                             HStack {
-                                Text("Game Speed: \(fastForwardSpeed * 100, specifier: "%.f")%")
+                                Text("Game Speed: \(self.fastForwardSpeed * 100, specifier: "%.f")%")
                                 Spacer()
                                 Button("Reset") {
-                                    fastForwardSpeed = 1.0
-                                    updateFastForwardSpeed()
+                                    self.fastForwardSpeed = 1.0
+                                    self.updateFastForwardSpeed()
                                 }
                             }
-                            Slider(value: $fastForwardSpeed, in: 0.1...8.0, step: 0.1)
-                                .onChange(of: fastForwardSpeed) { value in
+                            Slider(value: self.$fastForwardSpeed, in: 0.1...8.0, step: 0.1)
+                                .onChange(of: self.fastForwardSpeed) { value in
                                     GameplayFeatures.shared.quickSettings.fastForwardSpeed = value
                                 }
                             
-                            if GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled
+                            if self.expandedFastForwardEnabled
                             {
                                 HStack {
                                     Button("50%") {
-                                        fastForwardSpeed = 0.5
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 0.5
+                                        self.updateFastForwardSpeed()
                                     }
                                     Spacer()
                                     Button("125%") {
-                                        fastForwardSpeed = 1.25
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 1.25
+                                        self.updateFastForwardSpeed()
                                     }
                                     Spacer()
                                     Button("150%") {
-                                        fastForwardSpeed = 1.5
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 1.5
+                                        self.updateFastForwardSpeed()
                                     }
                                     Spacer()
                                     Button("200%") {
-                                        fastForwardSpeed = 2.0
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 2.0
+                                        self.updateFastForwardSpeed()
                                     }
                                 }.padding(.top, 10)
                                 HStack {
                                     Button("300%") {
-                                        fastForwardSpeed = 3.0
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 3.0
+                                        self.updateFastForwardSpeed()
                                     }
                                     Spacer()
                                     Button("400%") {
-                                        fastForwardSpeed = 4.0
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 4.0
+                                        self.updateFastForwardSpeed()
                                     }
                                     Spacer()
                                     Button("800%") {
-                                        fastForwardSpeed = 8.0
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 8.0
+                                        self.updateFastForwardSpeed()
                                     }
                                     Spacer()
                                     Button("1600%") {
-                                        fastForwardSpeed = 16.0
-                                        updateFastForwardSpeed()
+                                        self.fastForwardSpeed = 16.0
+                                        self.updateFastForwardSpeed()
                                     }
                                 }.padding(.top, 10)
                             }
@@ -155,24 +162,24 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if GameplayFeatures.shared.quickSettings.gameAudioEnabled && GameplayFeatures.shared.gameAudio.isEnabled
+                if self.gameAudioEnabled && GameplayFeatures.shared.gameAudio.isEnabled
                 {
                     Section() {
                         VStack {
                             HStack {
-                                Text("Game Volume: \(gameAudioVolume * 100, specifier: "%.f")%")
+                                Text("Game Volume: \(self.gameAudioVolume * 100, specifier: "%.f")%")
                                 Spacer()
                                 Button("Reset") {
-                                    gameAudioVolume = 1.0
-                                    updateGameAudioVolume()
+                                    self.gameAudioVolume = 1.0
+                                    self.updateGameAudioVolume()
                                 }.buttonStyle(.borderless)
                             }
-                            Slider(value: $gameAudioVolume, in: 0.0...1.0, step: 0.05)
-                                .onChange(of: gameAudioVolume) { value in
+                            Slider(value: self.$gameAudioVolume, in: 0.0...1.0, step: 0.05)
+                                .onChange(of: self.gameAudioVolume) { value in
                                     GameplayFeatures.shared.gameAudio.volume = value
                                 }
                             
-                            if GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled
+                            if self.expandedGameAudioEnabled
                             {
                                 Toggle("Respect Silent Mode", isOn: GameplayFeatures.shared.gameAudio.$respectSilent.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
@@ -185,9 +192,9 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if GameplayFeatures.shared.quickSettings.colorPalettesEnabled,
+                if self.colorPalettesEnabled,
                    GBCFeatures.shared.palettes.isEnabled,
-                   systemsWithPalettes.contains(system)
+                   self.systemsWithPalettes.contains(system)
                 {
                     Section() {
                         HStack {
@@ -198,12 +205,12 @@ struct QuickSettingsView: View
                                 Rectangle().foregroundColor(Color(fromRGB: gameboyPalette.colors[3]))
                             }.frame(width: 40, height: 30).cornerRadius(5)
                             Spacer()
-                            Picker("", selection: $gameboyPalette) {
+                            Picker("", selection: self.$gameboyPalette) {
                                 ForEach(GameboyPalette.allCases, id: \.self) { value in
                                     value.localizedDescription
                                 }
                             }
-                                .onChange(of: gameboyPalette) { value in
+                            .onChange(of: self.gameboyPalette) { value in
                                     GBCFeatures.shared.palettes.palette = value
                                 }
                         }
@@ -216,18 +223,18 @@ struct QuickSettingsView: View
                         Section() {
                             HStack {
                                 Group {
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette1.colors[0]))
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette1.colors[1]))
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette1.colors[2]))
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette1.colors[3]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette1.colors[0]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette1.colors[1]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette1.colors[2]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette1.colors[3]))
                                 }.frame(width: 40, height: 30).cornerRadius(5)
                                 Spacer()
-                                Picker("", selection: $gameboySpritePalette1) {
+                                Picker("", selection: self.$gameboySpritePalette1) {
                                     ForEach(GameboyPalette.allCases, id: \.self) { value in
                                         value.localizedDescription
                                     }
                                 }
-                                    .onChange(of: gameboySpritePalette1) { value in
+                                .onChange(of: self.gameboySpritePalette1) { value in
                                         GBCFeatures.shared.palettes.spritePalette1 = value
                                     }
                             }
@@ -238,18 +245,18 @@ struct QuickSettingsView: View
                         Section() {
                             HStack {
                                 Group {
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette2.colors[0]))
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette2.colors[1]))
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette2.colors[2]))
-                                    Rectangle().foregroundColor(Color(fromRGB: gameboySpritePalette2.colors[3]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette2.colors[0]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette2.colors[1]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette2.colors[2]))
+                                    Rectangle().foregroundColor(Color(fromRGB: self.gameboySpritePalette2.colors[3]))
                                 }.frame(width: 40, height: 30).cornerRadius(5)
                                 Spacer()
-                                Picker("", selection: $gameboySpritePalette2) {
+                                Picker("", selection: self.$gameboySpritePalette2) {
                                     ForEach(GameboyPalette.allCases, id: \.self) { value in
                                         value.localizedDescription
                                     }
                                 }
-                                    .onChange(of: gameboySpritePalette2) { value in
+                                .onChange(of: self.gameboySpritePalette2) { value in
                                     GBCFeatures.shared.palettes.spritePalette2 = value
                                 }
                             }
@@ -261,14 +268,37 @@ struct QuickSettingsView: View
                 
                 Section() {
                     VStack {
-                        Toggle("Quick Actions", isOn: GameplayFeatures.shared.quickSettings.$quickActionsEnabled.valueBinding)
-                        Toggle("Fast Forward", isOn: GameplayFeatures.shared.quickSettings.$fastForwardEnabled.valueBinding)
-                        Toggle("Expanded Fast Forward", isOn: GameplayFeatures.shared.quickSettings.$expandedFastForwardEnabled.valueBinding)
-                        Toggle("Game Audio", isOn: GameplayFeatures.shared.quickSettings.$gameAudioEnabled.valueBinding)
-                        Toggle("Expanded Game Audio", isOn: GameplayFeatures.shared.quickSettings.$expandedGameAudioEnabled.valueBinding)
-                        if systemsWithPalettes.contains(system)
+                        Toggle("Quick Actions", isOn: self.$quickActionsEnabled)
+                            .onChange(of: self.quickActionsEnabled) { value in
+                                GameplayFeatures.shared.quickSettings.quickActionsEnabled = value
+                            }
+                        if GameplayFeatures.shared.fastForward.isEnabled {
+                            Toggle("Fast Forward", isOn: self.$fastForwardEnabled)
+                                .onChange(of: self.fastForwardEnabled) { value in
+                                    GameplayFeatures.shared.quickSettings.fastForwardEnabled = value
+                                }
+                            Toggle("Expanded Fast Forward", isOn: self.$expandedFastForwardEnabled)
+                                .onChange(of: self.expandedFastForwardEnabled) { value in
+                                    GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = value
+                                }
+                        }
+                        if GameplayFeatures.shared.gameAudio.isEnabled {
+                            Toggle("Game Audio", isOn: self.$gameAudioEnabled)
+                                .onChange(of: self.gameAudioEnabled) { value in
+                                    GameplayFeatures.shared.quickSettings.gameAudioEnabled = value
+                                }
+                            Toggle("Expanded Game Audio", isOn: self.$expandedGameAudioEnabled)
+                                .onChange(of: self.expandedGameAudioEnabled) { value in
+                                    GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = value
+                                }
+                        }
+                        if self.systemsWithPalettes.contains(system),
+                           GBCFeatures.shared.palettes.isEnabled
                         {
-                            Toggle("Color Palettes", isOn: GameplayFeatures.shared.quickSettings.$colorPalettesEnabled.valueBinding)
+                            Toggle("Color Palettes", isOn: self.$colorPalettesEnabled)
+                                .onChange(of: self.colorPalettesEnabled) { value in
+                                    GameplayFeatures.shared.quickSettings.colorPalettesEnabled = value
+                                }
                         }
                     }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 } header: {
@@ -280,12 +310,12 @@ struct QuickSettingsView: View
     
     func updateGameAudioVolume()
     {
-        GameplayFeatures.shared.gameAudio.volume = gameAudioVolume
+        GameplayFeatures.shared.gameAudio.volume = self.gameAudioVolume
     }
     
     func updateFastForwardSpeed()
     {
-        GameplayFeatures.shared.quickSettings.fastForwardSpeed = fastForwardSpeed
+        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
     }
     
     func performQuickSave()
