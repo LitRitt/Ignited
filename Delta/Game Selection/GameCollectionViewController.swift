@@ -529,11 +529,11 @@ private extension GameCollectionViewController
             switch UserInterfaceFeatures.shared.artwork.size
             {
             case .small:
-                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(11)
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(10)
             case .medium:
                 cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(12)
             case .large:
-                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(13)
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(14)
             }
         }
         
