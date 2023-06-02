@@ -45,7 +45,7 @@ struct QuickSettingsView: View
         VStack {
             HStack {
                 Button("Main Menu") {
-                    self.performQuit()
+                    self.performMainMenu()
                 }.font(.system(size: 18, weight: .bold, design: .default))
                     .foregroundColor(.red)
                 Spacer()
@@ -340,9 +340,9 @@ struct QuickSettingsView: View
         GameplayFeatures.shared.quickSettings.performPause = true
     }
     
-    func performQuit()
+    func performMainMenu()
     {
-        GameplayFeatures.shared.quickSettings.performQuit = true
+        GameplayFeatures.shared.quickSettings.performMainMenu = true
     }
 }
 
