@@ -542,6 +542,7 @@ private extension GameCollectionViewController
         
         cell.textLabel.text = game.isFavorite ? "☆ " + game.name : game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
+        cell.textLabel.numberOfLines = 3
     }
     
     func updateImage(cell: GridCollectionViewGameCell, image: UIImage)
