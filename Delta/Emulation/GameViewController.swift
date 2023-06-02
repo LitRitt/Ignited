@@ -1706,6 +1706,20 @@ extension GameViewController
         self.performSegue(withIdentifier: "pause", sender: self.controllerView)
     }
     
+    func performQuitAction()
+    {
+        self.dismissQuickMenu()
+        self.pauseEmulation()
+        self.controllerView.resignFirstResponder()
+        self._isQuickMenuOpen = false
+        
+        DispatchQueue.main.async {
+            self.transitionCoordinator?.animate(alongsideTransition: nil, completion: { (context) in
+                self.performSegue(withIdentifier: "showGamesViewController", sender: nil)
+            })
+        }
+    }
+    
     func performAltRepresentationsAction()
     {
         let enabled = !AdvancedFeatures.shared.skinDebug.useAlt
@@ -2140,6 +2154,9 @@ private extension GameViewController
             
         case GameplayFeatures.shared.quickSettings.$performPause.settingsKey:
             self.performPauseAction()
+            
+        case GameplayFeatures.shared.quickSettings.$performQuit.settingsKey:
+            self.performQuitAction()
             
         default: break
         }

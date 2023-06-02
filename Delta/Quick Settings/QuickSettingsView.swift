@@ -44,16 +44,18 @@ struct QuickSettingsView: View
     var body: some View {
         VStack {
             HStack {
-                Text("Quick Settings").font(.largeTitle)
-                    .foregroundColor(.accentColor)
+                Button("Main Menu") {
+                    self.performQuit()
+                }.font(.system(size: 18, weight: .bold, design: .default))
+                    .foregroundColor(.red)
                 Spacer()
-                Button("Pause") {
+                Button("Pause Menu") {
                     self.performPause()
-                }.buttonStyle(.bordered)
-            }
-                .padding(.top, 30)
-                .padding(.leading, 30)
-                .padding(.trailing, 30)
+                }.font(.system(size: 18, weight: .bold, design: .default))
+            }.buttonStyle(.bordered)
+                .padding(.top, 16)
+                .padding(.leading, 16)
+                .padding(.trailing, 16)
             Form {
                 if self.quickActionsEnabled
                 {
@@ -336,6 +338,11 @@ struct QuickSettingsView: View
     func performPause()
     {
         GameplayFeatures.shared.quickSettings.performPause = true
+    }
+    
+    func performQuit()
+    {
+        GameplayFeatures.shared.quickSettings.performQuit = true
     }
 }
 

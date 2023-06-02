@@ -28,6 +28,9 @@ struct QuickSettingsOptions
     @Option
     var performPause: Bool = false
     
+    @Option
+    var performQuit: Bool = false
+    
     @Option(name: "Game Audio",
             description: "Enable to show game audio options in the quick settings.")
     var gameAudioEnabled: Bool = true
