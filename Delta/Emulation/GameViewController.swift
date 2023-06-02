@@ -248,9 +248,15 @@ class GameViewController: DeltaCore.GameViewController
         {
             guard let pausingGameController = self.pausingGameController, gameController == pausingGameController else { return }
             
-            if input != StandardGameControllerInput.menu
+            if input != StandardGameControllerInput.menu,
+               input.stringValue != "quickSettings"
             {
                 self.inputsToSustain[AnyInput(input)] = value
+            }
+            
+            if input.stringValue == "quickSettings"
+            {
+                self.performQuickMenuAction()
             }
         }
         else if let emulatorCore = self.emulatorCore, emulatorCore.state == .running
@@ -343,7 +349,7 @@ extension GameViewController
         self.sustainButtonsBackgroundView.textLabel.numberOfLines = 1
         self.sustainButtonsBackgroundView.textLabel.minimumScaleFactor = 0.5
         self.sustainButtonsBackgroundView.textLabel.adjustsFontSizeToFitWidth = true
-        self.sustainButtonsBackgroundView.detailTextLabel.text = NSLocalizedString("Press the Menu button when finished.", comment: "")
+        self.sustainButtonsBackgroundView.detailTextLabel.text = NSLocalizedString("Press the Menu button or Quick Settings button when finished.", comment: "")
         self.sustainButtonsBackgroundView.alpha = 0.0
         vibrancyView.contentView.addSubview(self.sustainButtonsBackgroundView)
         
@@ -1654,37 +1660,53 @@ extension GameViewController
     
     func performQuickMenuAction()
     {
-        guard GameplayFeatures.shared.quickSettings.isEnabled else { return }
-        
-        if let pauseView = self.pauseViewController
+        if self.isSelectingSustainedButtons
         {
-            pauseView.dismiss()
+            self.hideSustainButtonView()
+            
+            if self.presentedViewController == nil
+            {
+                self.pauseEmulation()
+                self.controllerView.resignFirstResponder()
+                self._isQuickMenuOpen = false
+                
+                self.performSegue(withIdentifier: "pause", sender: self.controllerView)
+            }
         }
-        
-        guard #available(iOS 15.0, *) else {
-            self.presentToastView(text: "Quick Menu Requires iOS 15")
-            return
-        }
-        
-        if let speed = self.emulatorCore?.rate,
-           let system = self.game?.type.rawValue
+        else
         {
-            let quickSettingsView = QuickSettingsView.makeViewController(system: system, speed: speed)
-            if let sheet = quickSettingsView.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
-                sheet.largestUndimmedDetentIdentifier = nil
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
-                sheet.prefersEdgeAttachedInCompactHeight = true
-                sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
-                sheet.prefersGrabberVisible = true
+            guard GameplayFeatures.shared.quickSettings.isEnabled else { return }
+            
+            if let pauseView = self.pauseViewController
+            {
+                pauseView.dismiss()
             }
             
-            self.present(quickSettingsView, animated: true, completion: nil)
+            guard #available(iOS 15.0, *) else {
+                self.presentToastView(text: "Quick Menu Requires iOS 15")
+                return
+            }
+            
+            if let speed = self.emulatorCore?.rate,
+               let system = self.game?.type.rawValue
+            {
+                let quickSettingsView = QuickSettingsView.makeViewController(system: system, speed: speed)
+                if let sheet = quickSettingsView.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                    sheet.largestUndimmedDetentIdentifier = nil
+                    sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                    sheet.prefersEdgeAttachedInCompactHeight = true
+                    sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
+                    sheet.prefersGrabberVisible = true
+                }
+                
+                self.present(quickSettingsView, animated: true, completion: nil)
+            }
+            
+            self._isQuickMenuOpen = true
+            
+            self.resumeEmulation()
         }
-        
-        self._isQuickMenuOpen = true
-        
-        self.resumeEmulation()
     }
     
     func dismissQuickMenu()
