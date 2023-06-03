@@ -498,13 +498,13 @@ private extension GamesViewController
     {
         let artworkSizeActions: [UIAction] = [
             UIAction(Action(title: ArtworkSize.small.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"), action: { action in
-                UserInterfaceFeatures.shared.artwork.size = .small
+                GamesCollectionFeatures.shared.artwork.size = .small
             }))!,
             UIAction(Action(title: ArtworkSize.medium.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.2x2"), action: { action in
-                UserInterfaceFeatures.shared.artwork.size = .medium
+                GamesCollectionFeatures.shared.artwork.size = .medium
             }))!,
             UIAction(Action(title: ArtworkSize.large.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape"), action: { action in
-                UserInterfaceFeatures.shared.artwork.size = .large
+                GamesCollectionFeatures.shared.artwork.size = .large
             }))!
         ]
         
@@ -515,30 +515,30 @@ private extension GamesViewController
     {
         var sortActions: [UIAction] = [
             UIAction(Action(title: SortOrder.alphabeticalAZ.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
-                UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalAZ
+                GamesCollectionFeatures.shared.artwork.sortOrder = .alphabeticalAZ
             }))!,
             UIAction(Action(title: SortOrder.alphabeticalZA.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
-                UserInterfaceFeatures.shared.artwork.sortOrder = .alphabeticalZA
+                GamesCollectionFeatures.shared.artwork.sortOrder = .alphabeticalZA
             }))!,
             UIAction(Action(title: SortOrder.mostRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
-                UserInterfaceFeatures.shared.artwork.sortOrder = .mostRecent
+                GamesCollectionFeatures.shared.artwork.sortOrder = .mostRecent
             }))!,
             UIAction(Action(title: SortOrder.leastRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
-                UserInterfaceFeatures.shared.artwork.sortOrder = .leastRecent
+                GamesCollectionFeatures.shared.artwork.sortOrder = .leastRecent
             }))!
         ]
         
-        if UserInterfaceFeatures.shared.artwork.favoriteSort
+        if GamesCollectionFeatures.shared.favorites.favoriteSort
         {
             sortActions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
-                UserInterfaceFeatures.shared.artwork.favoriteSort = false
+                GamesCollectionFeatures.shared.favorites.favoriteSort = false
                 self.sortButton.menu = self.makeSortMenu()
             }))!, at: 0)
         }
         else
         {
             sortActions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
-                UserInterfaceFeatures.shared.artwork.favoriteSort = true
+                GamesCollectionFeatures.shared.favorites.favoriteSort = true
                 self.sortButton.menu = self.makeSortMenu()
             }))!, at: 0)
         }

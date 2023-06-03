@@ -59,7 +59,7 @@ class GameCollectionViewController: UICollectionViewController
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
             
             var minimumSpacing: CGFloat
-            switch UserInterfaceFeatures.shared.artwork.size
+            switch GamesCollectionFeatures.shared.artwork.size
             {
             case .small:
                 minimumSpacing = 12
@@ -83,7 +83,7 @@ class GameCollectionViewController: UICollectionViewController
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
             
             var itemsPerRow: CGFloat
-            switch UserInterfaceFeatures.shared.artwork.size
+            switch GamesCollectionFeatures.shared.artwork.size
             {
             case .small:
                 itemsPerRow = 4.0
@@ -386,12 +386,12 @@ private extension GameCollectionViewController
             fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Game.gameCollection), gameCollection)
         }
         var sortDescriptors = [NSSortDescriptor(keyPath: \Game.isFavorite, ascending: false)]
-        if UserInterfaceFeatures.shared.artwork.isEnabled && !UserInterfaceFeatures.shared.artwork.favoriteSort
+        if GamesCollectionFeatures.shared.favorites.isEnabled && !GamesCollectionFeatures.shared.favorites.favoriteSort
         {
             sortDescriptors = []
         }
         
-        switch UserInterfaceFeatures.shared.artwork.sortOrder
+        switch GamesCollectionFeatures.shared.artwork.sortOrder
         {
         case .alphabeticalAZ:
             sortDescriptors.append(NSSortDescriptor(keyPath: \Game.name, ascending: true))
@@ -418,19 +418,19 @@ private extension GameCollectionViewController
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
-        if UserInterfaceFeatures.shared.artwork.isEnabled
+        if GamesCollectionFeatures.shared.artwork.isEnabled
         {
-            if UserInterfaceFeatures.shared.artwork.bgThemed
+            if GamesCollectionFeatures.shared.artwork.bgThemed
             {
-                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
+                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(GamesCollectionFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
             }
             else
             {
-                cell.imageView.backgroundColor = UIColor(cgColor: UserInterfaceFeatures.shared.artwork.bgColor.cgColor!).withAlphaComponent(UserInterfaceFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
+                cell.imageView.backgroundColor = UIColor(cgColor: GamesCollectionFeatures.shared.artwork.bgColor.cgColor!).withAlphaComponent(GamesCollectionFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
             }
-            cell.imageView.layer.cornerRadius = UserInterfaceFeatures.shared.artwork.cornerRadius
-            cell.imageView.layer.borderWidth = UserInterfaceFeatures.shared.artwork.borderWidth
-            cell.layer.shadowOpacity = Float(UserInterfaceFeatures.shared.artwork.shadowOpacity)
+            cell.imageView.layer.cornerRadius = GamesCollectionFeatures.shared.artwork.cornerRadius
+            cell.imageView.layer.borderWidth = GamesCollectionFeatures.shared.artwork.borderWidth
+            cell.layer.shadowOpacity = Float(GamesCollectionFeatures.shared.artwork.shadowOpacity)
         }
         else
         {
@@ -452,15 +452,15 @@ private extension GameCollectionViewController
         }
         else
         {
-            if UserInterfaceFeatures.shared.artwork.isEnabled,
-               UserInterfaceFeatures.shared.artwork.favoriteHighlight,
+            if GamesCollectionFeatures.shared.favorites.isEnabled,
+               GamesCollectionFeatures.shared.favorites.favoriteHighlight,
                game.isFavorite
             {
-                cell.layer.shadowColor = UserInterfaceFeatures.shared.artwork.favoriteColor.cgColor
+                cell.layer.shadowColor = GamesCollectionFeatures.shared.favorites.favoriteColor.cgColor
                 cell.layer.shadowOpacity = 1.0
                 cell.layer.shadowRadius = 8.0
                 cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-                cell.imageView.layer.borderColor = UIColor(cgColor: UserInterfaceFeatures.shared.artwork.favoriteColor.cgColor!).lighter(componentDelta: 0.1).cgColor
+                cell.imageView.layer.borderColor = UIColor(cgColor: GamesCollectionFeatures.shared.favorites.favoriteColor.cgColor!).lighter(componentDelta: 0.1).cgColor
             }
             else
             {
@@ -489,9 +489,9 @@ private extension GameCollectionViewController
         }
         else
         {
-            let fontSize = UserInterfaceFeatures.shared.artwork.titleSize
+            let fontSize = GamesCollectionFeatures.shared.artwork.titleSize
             
-            switch UserInterfaceFeatures.shared.artwork.size
+            switch GamesCollectionFeatures.shared.artwork.size
             {
             case .small:
                 cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(10 * fontSize)
@@ -507,7 +507,7 @@ private extension GameCollectionViewController
         
         cell.textLabel.text = game.isFavorite ? "☆ " + game.name : game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
-        cell.textLabel.numberOfLines = Int(floor(UserInterfaceFeatures.shared.artwork.titleMaxLines))
+        cell.textLabel.numberOfLines = Int(floor(GamesCollectionFeatures.shared.artwork.titleMaxLines))
     }
     
     func updateCellAspectRatio(_ cell: GridCollectionViewGameCell, with image: UIImage)
@@ -549,15 +549,16 @@ private extension GameCollectionViewController
             
             var images = [UIImage]()
             let imageCount = CGImageSourceGetCount(source)
+            let maxFrames = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationMaxLength : 50
             
-            // trim gif's frames to 30 to reduce memory usage
-            for i in 0 ..< min(imageCount, 30)
+            // trim gif's frames to 50 to reduce memory usage
+            for i in 0 ..< min(imageCount, Int(floor(maxFrames)))
             {
                 if let image = CGImageSourceCreateImageAtIndex(source, i, nil)
                 {
                     if i == 0
                     {
-                        let pauseFrames = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationPause : 0
+                        let pauseFrames = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationPause : 0
                         
                         // replicate first image to create a delay between animations
                         for j in 0 ..< Int(floor(pauseFrames))
@@ -572,7 +573,7 @@ private extension GameCollectionViewController
                 }
             }
             
-            let animationSpeed = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationSpeed : 1.0
+            let animationSpeed = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationSpeed : 1.0
             
             cell.imageView.animationImages = images
             cell.imageView.animationDuration = Double(images.count) * 0.1 / animationSpeed
@@ -793,7 +794,7 @@ private extension GameCollectionViewController
         })
         
         let favoriteAction: Action
-        if UserInterfaceFeatures.shared.artwork.favoriteGames[game.type.rawValue]!.contains(game.identifier)
+        if GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue]!.contains(game.identifier)
         {
             favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star.slash"), action: { [unowned self] action in
                 self.removeFavoriteGame(for: game)
@@ -1163,7 +1164,7 @@ private extension GameCollectionViewController
     
     func addFavoriteGame(for game: Game)
     {
-        guard var favorites = UserInterfaceFeatures.shared.artwork.favoriteGames[game.type.rawValue] else { return }
+        guard var favorites = GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue] else { return }
         
         favorites.append(game.identifier)
         self.removeShadowForGame(for: game)
@@ -1174,13 +1175,13 @@ private extension GameCollectionViewController
             
             context.saveWithErrorLogging()
             
-            UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            GamesCollectionFeatures.shared.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
     func removeFavoriteGame(for game: Game)
     {
-        guard var favorites = UserInterfaceFeatures.shared.artwork.favoriteGames[game.type.rawValue],
+        guard var favorites = GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue],
               let index = favorites.firstIndex(of: game.identifier) else { return }
         
         favorites.remove(at: index)
@@ -1192,7 +1193,7 @@ private extension GameCollectionViewController
             
             context.saveWithErrorLogging()
             
-            UserInterfaceFeatures.shared.artwork.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            GamesCollectionFeatures.shared.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
@@ -1237,10 +1238,10 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteGames.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgThemed.settingsKey, UserInterfaceFeatures.shared.artwork.$bgOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$animationPause.settingsKey, UserInterfaceFeatures.shared.artwork.$animationSpeed.settingsKey, UserInterfaceFeatures.shared.artwork.$titleSize.settingsKey, UserInterfaceFeatures.shared.artwork.$titleMaxLines.settingsKey:
+        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, GamesCollectionFeatures.shared.artwork.$size.settingsKey, GamesCollectionFeatures.shared.artwork.settingsKey, GamesCollectionFeatures.shared.artwork.$cornerRadius.settingsKey, GamesCollectionFeatures.shared.artwork.$borderWidth.settingsKey, GamesCollectionFeatures.shared.artwork.$shadowOpacity.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteGames.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteColor.settingsKey, GamesCollectionFeatures.shared.artwork.$bgColor.settingsKey, GamesCollectionFeatures.shared.artwork.$bgThemed.settingsKey, GamesCollectionFeatures.shared.artwork.$bgOpacity.settingsKey, GamesCollectionFeatures.shared.animation.$animationPause.settingsKey, GamesCollectionFeatures.shared.animation.$animationSpeed.settingsKey, GamesCollectionFeatures.shared.artwork.$titleSize.settingsKey, GamesCollectionFeatures.shared.artwork.$titleMaxLines.settingsKey:
             self.update()
             
-        case UserInterfaceFeatures.shared.artwork.$sortOrder.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteSort.settingsKey:
+        case GamesCollectionFeatures.shared.artwork.$sortOrder.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteSort.settingsKey:
             self.updateDataSource()
             self.update()
             

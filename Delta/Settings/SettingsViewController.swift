@@ -40,6 +40,7 @@ private extension SettingsViewController
     enum FeaturesRow: Int, CaseIterable
     {
         case gameplay
+        case gamesCollection
         case userInterface
         case touchFeedback
         case advanced
@@ -241,6 +242,12 @@ private extension SettingsViewController
     func showGameplayFeatures()
     {
         let hostingController = GameplayFeaturesView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showGamesCollectionFeatures()
+    {
+        let hostingController = GamesCollectionFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -561,6 +568,7 @@ extension SettingsViewController
             switch FeaturesRow.allCases[indexPath.row]
             {
             case .gameplay: self.showGameplayFeatures()
+            case .gamesCollection: self.showGamesCollectionFeatures()
             case .userInterface: self.showUserInterfaceFeatures()
             case .touchFeedback: self.showTouchFeedbackFeatures()
             case .advanced: self.showAdvancedFeatures()
