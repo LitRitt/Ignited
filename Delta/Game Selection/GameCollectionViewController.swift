@@ -371,7 +371,7 @@ private extension GameCollectionViewController
             let cell = cell as! GridCollectionViewGameCell
             cell.imageView.image = image
             
-            self.updateImage(cell: cell, image: image)
+            self.updateCellAspectRatio(cell: cell, image: image)
             
             let game = self.dataSource.item(at: indexPath)
             if let artworkURL = game.artworkURL,
@@ -547,7 +547,7 @@ private extension GameCollectionViewController
         cell.textLabel.numberOfLines = Int(floor(UserInterfaceFeatures.shared.artwork.titleMaxLines))
     }
     
-    func updateImage(cell: GridCollectionViewGameCell, image: UIImage)
+    func updateCellAspectRatio(cell: GridCollectionViewGameCell, image: UIImage)
     {
         let bounds = CGRect(x: 0, y: 0, width: self.itemWidth, height: self.itemWidth)
         let aspectRatio = image.size.width / image.size.height
