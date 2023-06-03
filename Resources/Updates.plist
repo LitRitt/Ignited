@@ -4,6 +4,41 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.4.2</string>
+		<key>date</key>
+		<string>6/3/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.4.2</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Quick Settings - Quick access to game options and actions: screenshot, save, load, volume, game speed, palettes - Accessible from a controller/skin button as well as the pause menu</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>New options for game title size and max lines, available in User Interface Features -&gt; Game Artwork Customization</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes crash on iPad when resolving sync merge conflicts</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes accidentally deleting Games directory during sync in rare circumstances</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.4.1</string>
 		<key>date</key>
 		<string>5/14/2023</string>
