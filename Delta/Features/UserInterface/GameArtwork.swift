@@ -126,12 +126,12 @@ struct GameArtworkOptions
             }
             HStack {
                 Text("0")
-                Slider(value: value, in: 0...50, step: 1)
-                Text("50")
+                Slider(value: value, in: 0...20, step: 1)
+                Text("20")
             }
         }.displayInline()
     })
-    var animationPause: Double = 10
+    var animationPause: Double = 0
     
     @Option
     var favoriteGames: [String: [String]] = [

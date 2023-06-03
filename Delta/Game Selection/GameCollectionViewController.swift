@@ -557,7 +557,7 @@ private extension GameCollectionViewController
                 {
                     if i == 0
                     {
-                        let pauseFrames = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationPause : 10
+                        let pauseFrames = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationPause : 0
                         
                         // replicate first image to create a delay between animations
                         for j in 0 ..< Int(floor(pauseFrames))
