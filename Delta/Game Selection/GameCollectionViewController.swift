@@ -395,12 +395,12 @@ private extension GameCollectionViewController
                             // replicate first image to create a delay between animations
                             for j in 0 ..< Int(floor(pauseFrames))
                             {
-                                images.append(UIImage(cgImage: image))
+                                images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
                             }
                         }
                         else
                         {
-                            images.append(UIImage(cgImage: image))
+                            images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
                         }
                     }
                 }
