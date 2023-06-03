@@ -144,6 +144,36 @@ struct GameArtworkOptions
         System.genesis.gameType.rawValue: []
     ]
     
+    @Option(name: "Title Size", description: "The size of the game's title.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Title Size: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("70%")
+                Slider(value: value, in: 0.7...1.3, step: 0.05)
+                Text("130%")
+            }
+        }.displayInline()
+    })
+    var titleSize: Double = 1.0
+    
+    @Option(name: "Title Max Lines", description: "How many lines the title can occupy.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Title Max Lines: \(value.wrappedValue, specifier: "%.f")")
+                Spacer()
+            }
+            HStack {
+                Text("1")
+                Slider(value: value, in: 1...4, step: 1)
+                Text("4")
+            }
+        }.displayInline()
+    })
+    var titleMaxLines: Double = 3
+    
     @Option(name: "Corner Radius", description: "How round the corners should be.", detailView: { value in
         VStack {
             HStack {

@@ -526,14 +526,16 @@ private extension GameCollectionViewController
         }
         else
         {
+            let fontSize = UserInterfaceFeatures.shared.artwork.titleSize
+            
             switch UserInterfaceFeatures.shared.artwork.size
             {
             case .small:
-                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(10)
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(10 * fontSize)
             case .medium:
-                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(12)
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(12 * fontSize)
             case .large:
-                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(14)
+                cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(14 * fontSize)
             }
         }
         
@@ -542,7 +544,7 @@ private extension GameCollectionViewController
         
         cell.textLabel.text = game.isFavorite ? "☆ " + game.name : game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
-        cell.textLabel.numberOfLines = 3
+        cell.textLabel.numberOfLines = Int(floor(UserInterfaceFeatures.shared.artwork.titleMaxLines))
     }
     
     func updateImage(cell: GridCollectionViewGameCell, image: UIImage)
@@ -1230,7 +1232,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteGames.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgThemed.settingsKey, UserInterfaceFeatures.shared.artwork.$bgOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$animationPause.settingsKey, UserInterfaceFeatures.shared.artwork.$animationSpeed.settingsKey:
+        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.artwork.$size.settingsKey, UserInterfaceFeatures.shared.artwork.settingsKey, UserInterfaceFeatures.shared.artwork.$cornerRadius.settingsKey, UserInterfaceFeatures.shared.artwork.$borderWidth.settingsKey, UserInterfaceFeatures.shared.artwork.$shadowOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteGames.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgColor.settingsKey, UserInterfaceFeatures.shared.artwork.$bgThemed.settingsKey, UserInterfaceFeatures.shared.artwork.$bgOpacity.settingsKey, UserInterfaceFeatures.shared.artwork.$animationPause.settingsKey, UserInterfaceFeatures.shared.artwork.$animationSpeed.settingsKey, UserInterfaceFeatures.shared.artwork.$titleSize.settingsKey, UserInterfaceFeatures.shared.artwork.$titleMaxLines.settingsKey:
             self.update()
             
         case UserInterfaceFeatures.shared.artwork.$sortOrder.settingsKey, UserInterfaceFeatures.shared.artwork.$favoriteSort.settingsKey:
