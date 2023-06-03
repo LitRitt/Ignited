@@ -371,46 +371,9 @@ private extension GameCollectionViewController
             let cell = cell as! GridCollectionViewGameCell
             cell.imageView.image = image
             
-            self.updateCellAspectRatio(cell: cell, image: image)
+            self.updateCellAspectRatio(cell, with: image)
             
-            let game = self.dataSource.item(at: indexPath)
-            if let artworkURL = game.artworkURL,
-               artworkURL.pathExtension.lowercased() == "gif"
-            {
-                guard let gifData = try? Data(contentsOf: artworkURL),
-                      let source =  CGImageSourceCreateWithData(gifData as CFData, nil) else { return }
-                
-                var images = [UIImage]()
-                let imageCount = CGImageSourceGetCount(source)
-                
-                // trim gif's frames to 50 to reduce memory usage
-                for i in 0 ..< min(imageCount, 50)
-                {
-                    if let image = CGImageSourceCreateImageAtIndex(source, i, nil)
-                    {
-                        if i == 0
-                        {
-                            let pauseFrames = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationPause : 20
-                            
-                            // replicate first image to create a delay between animations
-                            for j in 0 ..< Int(floor(pauseFrames))
-                            {
-                                images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
-                            }
-                        }
-                        else
-                        {
-                            images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
-                        }
-                    }
-                }
-                
-                let animationSpeed = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationSpeed : 1.0
-                
-                cell.imageView.animationImages = images
-                cell.imageView.animationDuration = Double(images.count) * 0.05 / animationSpeed
-                cell.imageView.startAnimating()
-            }
+            self.beginAnimatingArtwork(cell, at: indexPath)
         }
     }
     
@@ -547,7 +510,7 @@ private extension GameCollectionViewController
         cell.textLabel.numberOfLines = Int(floor(UserInterfaceFeatures.shared.artwork.titleMaxLines))
     }
     
-    func updateCellAspectRatio(cell: GridCollectionViewGameCell, image: UIImage)
+    func updateCellAspectRatio(_ cell: GridCollectionViewGameCell, with image: UIImage)
     {
         let bounds = CGRect(x: 0, y: 0, width: self.itemWidth, height: self.itemWidth)
         let aspectRatio = image.size.width / image.size.height
@@ -573,6 +536,48 @@ private extension GameCollectionViewController
         
         cell.aspectRatio = aspectRatio
         cell.imageSize = CGSize(width: adjustedBounds.width, height: adjustedBounds.height)
+    }
+    
+    func beginAnimatingArtwork(_ cell: GridCollectionViewGameCell, at indexPath: IndexPath)
+    {
+        let game = self.dataSource.item(at: indexPath)
+        if let artworkURL = game.artworkURL,
+           artworkURL.pathExtension.lowercased() == "gif"
+        {
+            guard let gifData = try? Data(contentsOf: artworkURL),
+                  let source =  CGImageSourceCreateWithData(gifData as CFData, nil) else { return }
+            
+            var images = [UIImage]()
+            let imageCount = CGImageSourceGetCount(source)
+            
+            // trim gif's frames to 30 to reduce memory usage
+            for i in 0 ..< min(imageCount, 30)
+            {
+                if let image = CGImageSourceCreateImageAtIndex(source, i, nil)
+                {
+                    if i == 0
+                    {
+                        let pauseFrames = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationPause : 10
+                        
+                        // replicate first image to create a delay between animations
+                        for j in 0 ..< Int(floor(pauseFrames))
+                        {
+                            images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
+                        }
+                    }
+                    else
+                    {
+                        images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
+                    }
+                }
+            }
+            
+            let animationSpeed = UserInterfaceFeatures.shared.artwork.isEnabled ? UserInterfaceFeatures.shared.artwork.animationSpeed : 1.0
+            
+            cell.imageView.animationImages = images
+            cell.imageView.animationDuration = Double(images.count) * 0.1 / animationSpeed
+            cell.imageView.startAnimating()
+        }
     }
     
     //MARK: - Emulation

@@ -131,7 +131,7 @@ struct GameArtworkOptions
             }
         }.displayInline()
     })
-    var animationPause: Double = 20
+    var animationPause: Double = 10
     
     @Option
     var favoriteGames: [String: [String]] = [
