@@ -148,6 +148,7 @@ extension GameCollectionViewController
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.settingsDidChange(_:)), name: .settingsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.resumeCurrentGame), name: .resumePlaying, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.unwindFromSettingsAndUpdate), name: .unwindFromSettings, object: nil)
         
         self.update()
     }
@@ -579,6 +580,12 @@ private extension GameCollectionViewController
             cell.imageView.animationDuration = Double(images.count) * 0.1 / animationSpeed
             cell.imageView.startAnimating()
         }
+    }
+    
+    @objc func unwindFromSettingsAndUpdate()
+    {
+        self.updateDataSource()
+        self.update()
     }
     
     //MARK: - Emulation
@@ -1238,9 +1245,6 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, GamesCollectionFeatures.shared.artwork.$size.settingsKey, GamesCollectionFeatures.shared.artwork.settingsKey, GamesCollectionFeatures.shared.artwork.$cornerRadius.settingsKey, GamesCollectionFeatures.shared.artwork.$borderWidth.settingsKey, GamesCollectionFeatures.shared.artwork.$shadowOpacity.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteGames.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteColor.settingsKey, GamesCollectionFeatures.shared.artwork.$bgColor.settingsKey, GamesCollectionFeatures.shared.artwork.$bgThemed.settingsKey, GamesCollectionFeatures.shared.artwork.$bgOpacity.settingsKey, GamesCollectionFeatures.shared.animation.$animationPause.settingsKey, GamesCollectionFeatures.shared.animation.$animationSpeed.settingsKey, GamesCollectionFeatures.shared.artwork.$titleSize.settingsKey, GamesCollectionFeatures.shared.artwork.$titleMaxLines.settingsKey:
-            self.update()
-            
         case GamesCollectionFeatures.shared.artwork.$sortOrder.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteSort.settingsKey:
             self.updateDataSource()
             self.update()

@@ -224,7 +224,7 @@ extension GamesViewController
     
     @IBAction private func unwindFromSettingsViewController(_ segue: UIStoryboardSegue)
     {
-        self.sync()
+        self.unwindFromSettingsAndSync()
     }
 }
 
@@ -317,6 +317,15 @@ private extension GamesViewController
             
             Settings.lastUpdateShown = buildNumber
         }
+    }
+    
+    func unwindFromSettingsAndSync()
+    {
+        NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
+        
+        self.sortButton.menu = self.makeSortMenu()
+        
+        self.sync()
     }
 }
 
@@ -528,19 +537,22 @@ private extension GamesViewController
             }))!
         ]
         
-        if GamesCollectionFeatures.shared.favorites.favoriteSort
+        if GamesCollectionFeatures.shared.favorites.isEnabled
         {
-            sortActions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
-                GamesCollectionFeatures.shared.favorites.favoriteSort = false
-                self.sortButton.menu = self.makeSortMenu()
-            }))!, at: 0)
-        }
-        else
-        {
-            sortActions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
-                GamesCollectionFeatures.shared.favorites.favoriteSort = true
-                self.sortButton.menu = self.makeSortMenu()
-            }))!, at: 0)
+            if GamesCollectionFeatures.shared.favorites.favoriteSort
+            {
+                sortActions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
+                    GamesCollectionFeatures.shared.favorites.favoriteSort = false
+                    self.sortButton.menu = self.makeSortMenu()
+                }))!, at: 0)
+            }
+            else
+            {
+                sortActions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
+                    GamesCollectionFeatures.shared.favorites.favoriteSort = true
+                    self.sortButton.menu = self.makeSortMenu()
+                }))!, at: 0)
+            }
         }
         
         return UIMenu(title: NSLocalizedString("Change Sort Order", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: sortActions)
@@ -760,7 +772,7 @@ extension GamesViewController: UIAdaptivePresentationControllerDelegate
 {
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController)
     {
-        self.sync()
+        self.unwindFromSettingsAndSync()
     }
 }
 
@@ -769,4 +781,5 @@ extension GamesViewController: UIAdaptivePresentationControllerDelegate
 public extension Notification.Name
 {
     static let resumePlaying = Notification.Name("resumeCurrentGameNotification")
+    static let unwindFromSettings = Notification.Name("unwindFromSettingsNotification")
 }
