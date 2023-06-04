@@ -13,10 +13,18 @@ import Features
 struct TouchFeedbackOverlayOptions
 {
     @Option(name: "Theme Color",
-            description: "Enabled: Theme colored overlays. Disabled: White overlays.")
+            description: "Enable to use the app theme color for overlays. Disable to use the color specified below for overlays.")
     var themed: Bool = true
     
-    @Option(name: "Opacity", description: "The opacity of the overlays.", detailView: { value in
+    @Option(name: "Custom Color",
+            description: "Select a custom color to use for the overlays.",
+            detailView: { value in
+        ColorPicker("Custom Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var overlayColor: Color = Color(red: 255/255, green: 255/255, blue: 255/255)
+    
+    @Option(name: "Opacity", description: "Adjust the opacity of the overlays.", detailView: { value in
         VStack {
             HStack {
                 Text("Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
@@ -31,7 +39,7 @@ struct TouchFeedbackOverlayOptions
     })
     var opacity: Double = 0.70
     
-    @Option(name: "Size", description: "The size of the overlays.", detailView: { value in
+    @Option(name: "Size", description: "Adjust the size of the overlays.", detailView: { value in
         VStack {
             HStack {
                 Text("Size: \(value.wrappedValue * 100, specifier: "%.f")%")
