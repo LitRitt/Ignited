@@ -619,6 +619,14 @@
 			path = GamesCollection;
 			sourceTree = "<group>";
 		};
+		AC3CE7FD2A2C2E74008A8C43 /* CoreFeatures */ = {
+			isa = PBXGroup;
+			children = (
+				ACD5FA012A0C4C28005CDCF1 /* GBC */,
+			);
+			path = CoreFeatures;
+			sourceTree = "<group>";
+		};
 		AC503F5D29B2B863005B27DD /* Updates */ = {
 			isa = PBXGroup;
 			children = (
@@ -723,12 +731,12 @@
 		ACB3CB8529FDCEAD002B53DE /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				AC3CE7F42A2BA7DC008A8C43 /* GamesCollection */,
-				ACD5FA012A0C4C28005CDCF1 /* GBC */,
-				AC1EAE632A005F590072C858 /* Advanced */,
+				AC3CE7FD2A2C2E74008A8C43 /* CoreFeatures */,
 				AC84B56A29FEF5130090F274 /* Gameplay */,
+				AC3CE7F42A2BA7DC008A8C43 /* GamesCollection */,
 				AC27347C29FE930800B4CB2E /* UserInterface */,
 				ACB3CB9129FDD5D5002B53DE /* TouchFeedback */,
+				AC1EAE632A005F590072C858 /* Advanced */,
 			);
 			path = Features;
 			sourceTree = "<group>";
