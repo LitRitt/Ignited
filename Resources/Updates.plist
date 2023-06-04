@@ -21,7 +21,7 @@
 				<key>type</key>
 				<string>update</string>
 				<key>description</key>
-				<string>Creates a new feature section called Games Collection - Moves settings previously found in Game Artwork Customization into seperate sections within the Games Collection feature set</string>
+				<string>Creates a new feature section called Games Collection - Moves settings previously found in Game Artwork Customization into separate sections within the Games Collection feature set</string>
 			</dict>
 			<dict>
 				<key>type</key>
