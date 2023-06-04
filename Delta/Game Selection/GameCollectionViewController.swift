@@ -387,7 +387,7 @@ private extension GameCollectionViewController
             fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Game.gameCollection), gameCollection)
         }
         var sortDescriptors = [NSSortDescriptor(keyPath: \Game.isFavorite, ascending: false)]
-        if GamesCollectionFeatures.shared.favorites.isEnabled && !GamesCollectionFeatures.shared.favorites.favoriteSort
+        if (GamesCollectionFeatures.shared.favorites.isEnabled && !GamesCollectionFeatures.shared.favorites.favoriteSort) || !GamesCollectionFeatures.shared.favorites.isEnabled
         {
             sortDescriptors = []
         }
@@ -506,7 +506,7 @@ private extension GameCollectionViewController
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
         cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         
-        cell.textLabel.text = game.isFavorite ? "☆ " + game.name : game.name
+        cell.textLabel.text = (game.isFavorite && GamesCollectionFeatures.shared.favorites.isEnabled) ? "☆ " + game.name : game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
         cell.textLabel.numberOfLines = Int(floor(GamesCollectionFeatures.shared.artwork.titleMaxLines))
     }
@@ -800,33 +800,43 @@ private extension GameCollectionViewController
             self.delete(game)
         })
         
-        let favoriteAction: Action
-        if GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue]!.contains(game.identifier)
-        {
-            favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star.slash"), action: { [unowned self] action in
-                self.removeFavoriteGame(for: game)
-            })
-        }
-        else
-        {
-            favoriteAction = Action(title: NSLocalizedString("Add Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star"), action: { [unowned self] action in
-                self.addFavoriteGame(for: game)
-            })
-        }
-        
         let resetArtworkAction = Action(title: NSLocalizedString("Reset Artwork", comment: ""), style: .destructive, image: UIImage(symbolNameIfAvailable: "arrow.counterclockwise"), action: { [unowned self] action in
             DatabaseManager.shared.resetArtwork(for: game)
         })
         
+        var actions: [Action] = []
+        
         switch game.type
         {
         case GameType.unknown:
-            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, shareAction, resetArtworkAction, deleteAction]
+            actions = [cancelAction, renameAction, changeArtworkAction, shareAction, resetArtworkAction, deleteAction]
         case .ds where game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier:
-            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction, resetArtworkAction]
+            actions = [cancelAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction, resetArtworkAction]
         default:
-            return [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
+            actions = [cancelAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         }
+        
+        if GamesCollectionFeatures.shared.favorites.isEnabled
+        {
+            let favoriteAction: Action
+            
+            if GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue]!.contains(game.identifier)
+            {
+                favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star.slash"), action: { [unowned self] action in
+                    self.removeFavoriteGame(for: game)
+                })
+            }
+            else
+            {
+                favoriteAction = Action(title: NSLocalizedString("Add Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star"), action: { [unowned self] action in
+                    self.addFavoriteGame(for: game)
+                })
+            }
+            
+            actions.insert(favoriteAction, at: 1)
+        }
+        
+        return actions
     }
     
     func delete(_ game: Game)
