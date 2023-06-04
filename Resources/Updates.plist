@@ -4,6 +4,47 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.4.3</string>
+		<key>date</key>
+		<string>6/4/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.4.3</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Adds an option for custom touch overlay color</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Creates a new feature section called Games Collection - Moves settings previously found in Game Artwork Customization into seperate sections within the Games Collection feature set</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Makes Favorites features respect whether the feature is actually enabled</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes lag when changing settings with animated artwork in the background</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes animated artwork losing transparency when downsampling</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.4.2</string>
 		<key>date</key>
 		<string>6/3/2023</string>
