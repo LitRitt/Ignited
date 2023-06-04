@@ -545,31 +545,43 @@ private extension GameCollectionViewController
         if let artworkURL = game.artworkURL,
            artworkURL.pathExtension.lowercased() == "gif"
         {
+            let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+            
             guard let gifData = try? Data(contentsOf: artworkURL),
-                  let source =  CGImageSourceCreateWithData(gifData as CFData, nil) else { return }
+                  let source =  CGImageSourceCreateWithData(gifData as CFData, imageSourceOptions) else { return }
             
             var images = [UIImage]()
+            
             let imageCount = CGImageSourceGetCount(source)
             let maxFrames = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationMaxLength : 50
+            guard let scale = self.view.window?.screen.scale else { return }
+            let maxDimension = 100 * scale
+            
+            let downsampleOptions = [
+                kCGImageSourceCreateThumbnailFromImageAlways: true,
+                kCGImageSourceShouldCacheImmediately: true,
+                kCGImageSourceCreateThumbnailWithTransform: true,
+                kCGImageSourceThumbnailMaxPixelSize: maxDimension
+            ] as CFDictionary
             
             // trim gif's frames to 50 to reduce memory usage
             for i in 0 ..< min(imageCount, Int(floor(maxFrames)))
             {
-                if let image = CGImageSourceCreateImageAtIndex(source, i, nil)
+                if let downsampledImage = CGImageSourceCreateThumbnailAtIndex(source, i, downsampleOptions)
                 {
                     if i == 0
                     {
                         let pauseFrames = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationPause : 0
                         
                         // replicate first image to create a delay between animations
-                        for j in 0 ..< Int(floor(pauseFrames))
+                        for _ in 0 ..< Int(floor(pauseFrames))
                         {
-                            images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
+                            images.append(UIImage(cgImage: downsampledImage))
                         }
                     }
                     else
                     {
-                        images.append(UIImage(cgImage: image).resizing(toFit: CGSize(width: 300, height: 300))!)
+                        images.append(UIImage(cgImage: downsampledImage))
                     }
                 }
             }
