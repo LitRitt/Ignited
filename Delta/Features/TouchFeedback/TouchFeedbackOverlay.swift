@@ -37,7 +37,7 @@ struct TouchFeedbackOverlayOptions
             }
         }.displayInline()
     })
-    var opacity: Double = 0.70
+    var opacity: Double = 0.7
     
     @Option(name: "Size", description: "Adjust the size of the overlays.", detailView: { value in
         VStack {
@@ -52,5 +52,16 @@ struct TouchFeedbackOverlayOptions
             }
         }.displayInline()
     })
-    var size: Double = 1.00
+    var size: Double = 1.0
+    
+    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
+        Toggle(isOn: value) {
+            Text("Restore Defaults")
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(.red)
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .displayInline()
+    })
+    var resetTouchOverlay: Bool = false
 }

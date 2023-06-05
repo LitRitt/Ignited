@@ -34,4 +34,15 @@ struct GameAudioOptions
     @Option(name: "Play Over Other Media",
             description: "Enable to play game audio over other media, such as voice chat or videos.")
     var playOver: Bool = true
+    
+    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
+        Toggle(isOn: value) {
+            Text("Restore Defaults")
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(.red)
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .displayInline()
+    })
+    var resetGameAudio: Bool = false
 }

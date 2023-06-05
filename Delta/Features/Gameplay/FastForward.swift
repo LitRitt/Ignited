@@ -38,4 +38,15 @@ struct FastForwardOptions
     @Option(name: "Show Unsafe Speeds",
             description: "Enable to show speed choices that are above those determined to be safe.")
     var unsafe: Bool = true
+    
+    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
+        Toggle(isOn: value) {
+            Text("Restore Defaults")
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(.red)
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .displayInline()
+    })
+    var resetFastForward: Bool = false
 }

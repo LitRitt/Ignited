@@ -57,4 +57,15 @@ struct AnimatedArtworkOptions
         }.displayInline()
     })
     var animationMaxLength: Double = 30
+    
+    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
+        Toggle(isOn: value) {
+            Text("Restore Defaults")
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(.red)
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .displayInline()
+    })
+    var resetAnimatedArtwork: Bool = false
 }

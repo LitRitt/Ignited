@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import SwiftUI
 
 import DeltaCore
 
@@ -15,6 +16,32 @@ import Roxas
 
 private extension SettingsViewController
 {
+    enum Feature: Int, CaseIterable
+    {
+        // Gameplay
+        case gameScreenshot
+        case gameAudio
+        case saveStateRewind
+        case fastForward
+        case quickSettings
+        // Games Collestion
+        case artworkCustomization
+        case animatedArtwork
+        case favoriteGames
+        // User Interface
+        case toastNotifications
+        case statusBar
+        case themeColor
+        case appIcon
+        case controllerSkins
+        // Touch Feedback
+        case touchVibration
+        case touchAudio
+        case touchOverlay
+        // Advanced
+        case skinDebug
+    }
+    
     enum Section: Int, CaseIterable
     {
         case patreon
@@ -328,11 +355,6 @@ private extension SettingsViewController
         alertController.addAction(.cancel)
         
         self.present(alertController, animated: true, completion: nil)
-        
-        if let indexPath = self.tableView.indexPathForSelectedRow
-        {
-            self.tableView.deselectRow(at: indexPath, animated: true)
-        }
     }
     
     func resetAllArtwork()
@@ -367,11 +389,6 @@ private extension SettingsViewController
         alertController.addAction(.cancel)
         
         self.present(alertController, animated: true, completion: nil)
-        
-        if let indexPath = self.tableView.indexPathForSelectedRow
-        {
-            self.tableView.deselectRow(at: indexPath, animated: true)
-        }
     }
     
     func updateAppIcon()
@@ -408,6 +425,163 @@ private extension SettingsViewController
         {
             UIApplication.shared.setAlternateIconName(nil)
         }
+    }
+    
+    func resetFeature(_ feature: Feature)
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Restore Defaults?", comment: ""), message: nil, preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        let resetAction: UIAlertAction
+        
+        switch feature
+        {
+        case .artworkCustomization:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GamesCollectionFeatures.shared.artwork.sortOrder = .alphabeticalAZ
+                GamesCollectionFeatures.shared.artwork.size = .medium
+                GamesCollectionFeatures.shared.artwork.bgThemed = true
+                GamesCollectionFeatures.shared.artwork.bgColor = Color(red: 253/255, green: 110/255, blue: 0/255)
+                GamesCollectionFeatures.shared.artwork.bgOpacity = 0.7
+                GamesCollectionFeatures.shared.artwork.titleSize = 1.0
+                GamesCollectionFeatures.shared.artwork.titleMaxLines = 3
+                GamesCollectionFeatures.shared.artwork.cornerRadius = 15
+                GamesCollectionFeatures.shared.artwork.borderWidth = 1.2
+                GamesCollectionFeatures.shared.artwork.shadowOpacity = 0.5
+            })
+            
+        case .animatedArtwork:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GamesCollectionFeatures.shared.animation.animationSpeed = 1.0
+                GamesCollectionFeatures.shared.animation.animationPause = 0
+                GamesCollectionFeatures.shared.animation.animationMaxLength = 30
+            })
+            
+        case .favoriteGames:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GamesCollectionFeatures.shared.favorites.favoriteSort = true
+                GamesCollectionFeatures.shared.favorites.favoriteHighlight = true
+                GamesCollectionFeatures.shared.favorites.favoriteColor = Color(red: 255/255, green: 234/255, blue: 0/255)
+            })
+            
+        case .gameScreenshot:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GameplayFeatures.shared.screenshots.saveToFiles = true
+                GameplayFeatures.shared.screenshots.saveToPhotos = false
+                GameplayFeatures.shared.screenshots.size = nil
+            })
+            
+        case .gameAudio:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GameplayFeatures.shared.gameAudio.volume = 1.0
+                GameplayFeatures.shared.gameAudio.respectSilent = true
+                GameplayFeatures.shared.gameAudio.playOver = true
+            })
+            
+        case .saveStateRewind:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GameplayFeatures.shared.rewind.interval = 15
+            })
+            
+        case .fastForward:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GameplayFeatures.shared.fastForward.speed = 3.0
+                GameplayFeatures.shared.fastForward.prompt = true
+                GameplayFeatures.shared.fastForward.slowmo = true
+                GameplayFeatures.shared.fastForward.unsafe = true
+            })
+            
+        case .quickSettings:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                GameplayFeatures.shared.quickSettings.quickActionsEnabled = true
+                GameplayFeatures.shared.quickSettings.gameAudioEnabled = true
+                GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = false
+                GameplayFeatures.shared.quickSettings.fastForwardEnabled = true
+                GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = false
+                GameplayFeatures.shared.quickSettings.colorPalettesEnabled = true
+            })
+            
+        case .toastNotifications:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                UserInterfaceFeatures.shared.toasts.duration = 1.5
+                UserInterfaceFeatures.shared.toasts.restart = true
+                UserInterfaceFeatures.shared.toasts.gameSave = true
+                UserInterfaceFeatures.shared.toasts.stateSave = true
+                UserInterfaceFeatures.shared.toasts.stateLoad = true
+                UserInterfaceFeatures.shared.toasts.fastForward = true
+                UserInterfaceFeatures.shared.toasts.statusBar = true
+                UserInterfaceFeatures.shared.toasts.screenshot = true
+                UserInterfaceFeatures.shared.toasts.palette = true
+                UserInterfaceFeatures.shared.toasts.altSkin = true
+                UserInterfaceFeatures.shared.toasts.debug = true
+            })
+            
+        case .statusBar:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                UserInterfaceFeatures.shared.statusBar.isOn = false
+                UserInterfaceFeatures.shared.statusBar.useToggle = false
+                UserInterfaceFeatures.shared.statusBar.style = .light
+            })
+            
+        case .themeColor:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                UserInterfaceFeatures.shared.theme.accentColor = .orange
+                UserInterfaceFeatures.shared.theme.useCustom = false
+                UserInterfaceFeatures.shared.theme.customColor = Color(red: 253/255, green: 110/255, blue: 0/255)
+            })
+            
+        case .appIcon:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                UserInterfaceFeatures.shared.appIcon.useTheme = true
+            })
+            
+        case .controllerSkins:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                UserInterfaceFeatures.shared.skins.opacity = 0.7
+                UserInterfaceFeatures.shared.skins.alwaysShow = false
+            })
+            
+        case .touchVibration:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                TouchFeedbackFeatures.shared.touchVibration.strength = 1.0
+                TouchFeedbackFeatures.shared.touchVibration.buttonsEnabled = true
+                TouchFeedbackFeatures.shared.touchVibration.sticksEnabled = true
+                TouchFeedbackFeatures.shared.touchVibration.releaseEnabled = true
+            })
+            
+        case .touchAudio:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                TouchFeedbackFeatures.shared.touchAudio.sound = nil
+            })
+            
+        case .touchOverlay:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                TouchFeedbackFeatures.shared.touchOverlay.themed = true
+                TouchFeedbackFeatures.shared.touchOverlay.overlayColor = Color(red: 255/255, green: 255/255, blue: 255/255)
+                TouchFeedbackFeatures.shared.touchOverlay.opacity = 0.7
+                TouchFeedbackFeatures.shared.touchOverlay.size = 1.0
+            })
+            
+        case .skinDebug:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                AdvancedFeatures.shared.skinDebug.isOn = false
+                AdvancedFeatures.shared.skinDebug.skinEnabled = false
+                AdvancedFeatures.shared.skinDebug.device = nil
+                AdvancedFeatures.shared.skinDebug.useAlt = false
+                AdvancedFeatures.shared.skinDebug.hasAlt = false
+            })
+            
+        default:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+            })
+        }
+        
+        alertController.addAction(resetAction)
+        alertController.addAction(.cancel)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -457,6 +631,189 @@ private extension SettingsViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     AdvancedFeatures.shared.powerUser.resetBuildCounter = false
                     self.resetBuildCounter()
+                }
+            }
+            
+        case GamesCollectionFeatures.shared.artwork.$resetArtworkCustomization.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GamesCollectionFeatures.shared.artwork.resetArtworkCustomization = false
+                    self.resetFeature(.artworkCustomization)
+                }
+            }
+            
+        case GamesCollectionFeatures.shared.animation.$resetAnimatedArtwork.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GamesCollectionFeatures.shared.animation.resetAnimatedArtwork = false
+                    self.resetFeature(.animatedArtwork)
+                }
+            }
+            
+        case GamesCollectionFeatures.shared.favorites.$resetFavoriteGames.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GamesCollectionFeatures.shared.favorites.resetFavoriteGames = false
+                    self.resetFeature(.favoriteGames)
+                }
+            }
+            
+        case GameplayFeatures.shared.screenshots.$resetGameScreenshots.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GameplayFeatures.shared.screenshots.resetGameScreenshots = false
+                    self.resetFeature(.gameScreenshot)
+                }
+            }
+            
+        case GameplayFeatures.shared.gameAudio.$resetGameAudio.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GameplayFeatures.shared.gameAudio.resetGameAudio = false
+                    self.resetFeature(.gameAudio)
+                }
+            }
+            
+        case GameplayFeatures.shared.rewind.$resetSaveStateRewind.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GameplayFeatures.shared.rewind.resetSaveStateRewind = false
+                    self.resetFeature(.saveStateRewind)
+                }
+            }
+            
+        case GameplayFeatures.shared.fastForward.$resetFastForward.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GameplayFeatures.shared.fastForward.resetFastForward = false
+                    self.resetFeature(.fastForward)
+                }
+            }
+            
+        case GameplayFeatures.shared.quickSettings.$resetQuickSettings.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GameplayFeatures.shared.quickSettings.resetQuickSettings = false
+                    self.resetFeature(.quickSettings)
+                }
+            }
+            
+        case UserInterfaceFeatures.shared.toasts.$resetToastNotifications.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    UserInterfaceFeatures.shared.toasts.resetToastNotifications = false
+                    self.resetFeature(.toastNotifications)
+                }
+            }
+            
+        case UserInterfaceFeatures.shared.statusBar.$resetStatusBar.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    UserInterfaceFeatures.shared.statusBar.resetStatusBar = false
+                    self.resetFeature(.statusBar)
+                }
+            }
+            
+        case UserInterfaceFeatures.shared.theme.$resetThemeColor.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    UserInterfaceFeatures.shared.theme.resetThemeColor = false
+                    self.resetFeature(.themeColor)
+                }
+            }
+            
+        case UserInterfaceFeatures.shared.appIcon.$resetAppIcon.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    UserInterfaceFeatures.shared.appIcon.resetAppIcon = false
+                    self.resetFeature(.appIcon)
+                }
+            }
+            
+        case UserInterfaceFeatures.shared.skins.$resetControllerSkins.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    UserInterfaceFeatures.shared.skins.resetControllerSkins = false
+                    self.resetFeature(.controllerSkins)
+                }
+            }
+            
+        case TouchFeedbackFeatures.shared.touchVibration.$resetTouchVibration.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    TouchFeedbackFeatures.shared.touchVibration.resetTouchVibration = false
+                    self.resetFeature(.touchVibration)
+                }
+            }
+            
+        case TouchFeedbackFeatures.shared.touchAudio.$resetTouchAudio.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    TouchFeedbackFeatures.shared.touchAudio.resetTouchAudio = false
+                    self.resetFeature(.touchAudio)
+                }
+            }
+            
+        case TouchFeedbackFeatures.shared.touchOverlay.$resetTouchOverlay.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    TouchFeedbackFeatures.shared.touchOverlay.resetTouchOverlay = false
+                    self.resetFeature(.touchOverlay)
+                }
+            }
+            
+        case AdvancedFeatures.shared.skinDebug.$resetSkinDebug.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    AdvancedFeatures.shared.skinDebug.resetSkinDebug = false
+                    self.resetFeature(.skinDebug)
+                }
+            }
+            
+        case AdvancedFeatures.shared.powerUser.$resetAllSettings.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    AdvancedFeatures.shared.powerUser.resetAllSettings = false
+                    for feature in Feature.allCases
+                    {
+                        self.resetFeature(feature)
+                    }
                 }
             }
             

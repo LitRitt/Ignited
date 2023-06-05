@@ -30,4 +30,15 @@ struct ControllerSkinOptions
     @Option(name: "Show With Controller",
             description: "Always show the controller skin, even if there's a physical controller connected.")
     var alwaysShow: Bool = false
+    
+    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
+        Toggle(isOn: value) {
+            Text("Restore Defaults")
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(.red)
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .displayInline()
+    })
+    var resetControllerSkins: Bool = false
 }

@@ -53,4 +53,15 @@ struct QuickSettingsOptions
     @Option(name: "Color Palettes",
             description: "Enable to show color palette options in the quick settings.")
     var colorPalettesEnabled: Bool = true
+    
+    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
+        Toggle(isOn: value) {
+            Text("Restore Defaults")
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(.red)
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .displayInline()
+    })
+    var resetQuickSettings: Bool = false
 }
