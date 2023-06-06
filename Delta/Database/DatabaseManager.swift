@@ -154,7 +154,7 @@ extension DatabaseManager
                 bios.type = .ds
                 bios.filename = filename
                 
-                if let artwork = UIImage(named: "DS Home Screen"), let artworkData = artwork.pngData()
+                if let artwork = UIImage(named: "Home"), let artworkData = artwork.pngData()
                 {
                     do
                     {
@@ -606,10 +606,32 @@ extension DatabaseManager
             
             let game = context.object(with: game.objectID) as! Game
             
-            let databaseMetadata = self.gamesDatabase?.metadata(for: game)
-            guard let artworkURL = databaseMetadata?.artworkURL else { return }
-            
-            game.artworkURL = artworkURL
+            if game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier
+            {
+                if let artwork = UIImage(named: "Home"), let artworkData = artwork.pngData()
+                {
+                    do
+                    {
+                        let artworkURL = DatabaseManager.artworkURL(for: game)
+                        try artworkData.write(to: artworkURL, options: .atomic)
+                        game.artworkURL = artworkURL
+                    }
+                    catch
+                    {
+                        print("Failed to copy default DS home screen artwork.", error)
+                    }
+                }
+            }
+            else
+            {
+                let databaseMetadata = self.gamesDatabase?.metadata(for: game)
+                guard let artworkURL = databaseMetadata?.artworkURL else {
+                    print("Database Artwork not found for \(game.name)")
+                    return
+                }
+                
+                game.artworkURL = artworkURL
+            }
             
             context.saveWithErrorLogging()
         }
