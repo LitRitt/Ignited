@@ -29,6 +29,21 @@ struct FavoriteGamesOptions
     })
     var favoriteColor: Color = Color(red: 255/255, green: 234/255, blue: 0/255)
     
+    @Option(name: "Favorite Highlight Intensity", description: "Change how intense the glow effect is on favorited games.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Favorite Highlight Intensity: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...1.0, step: 0.05)
+                Text("100%")
+            }
+        }.displayInline()
+    })
+    var highlightIntensity: Double = 1.0
+    
     @Option
     var favoriteGames: [String: [String]] = [
         System.ds.gameType.rawValue: [],

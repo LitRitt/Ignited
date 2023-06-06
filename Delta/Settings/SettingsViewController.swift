@@ -453,6 +453,7 @@ private extension SettingsViewController
             GamesCollectionFeatures.shared.favorites.favoriteSort = true
             GamesCollectionFeatures.shared.favorites.favoriteHighlight = true
             GamesCollectionFeatures.shared.favorites.favoriteColor = Color(red: 255/255, green: 234/255, blue: 0/255)
+            GamesCollectionFeatures.shared.favorites.highlightIntensity = 1.0
         }
         
         let resetGameScreenshot = {

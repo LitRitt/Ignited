@@ -458,8 +458,8 @@ private extension GameCollectionViewController
                game.isFavorite
             {
                 cell.layer.shadowColor = GamesCollectionFeatures.shared.favorites.favoriteColor.cgColor
-                cell.layer.shadowOpacity = 1.0
-                cell.layer.shadowRadius = 8.0
+                cell.layer.shadowOpacity = Float(0.5 + (0.5 * GamesCollectionFeatures.shared.favorites.highlightIntensity))
+                cell.layer.shadowRadius = CGFloat(2.0 + (6.0 * GamesCollectionFeatures.shared.favorites.highlightIntensity))
                 cell.layer.shadowOffset = CGSize(width: 0, height: 0)
                 cell.imageView.layer.borderColor = UIColor(cgColor: GamesCollectionFeatures.shared.favorites.favoriteColor.cgColor!).lighter(componentDelta: 0.1).cgColor
             }
