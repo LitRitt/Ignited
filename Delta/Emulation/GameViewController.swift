@@ -1060,7 +1060,8 @@ extension GameViewController: SaveStatesViewControllerDelegate
     
     private func clearRewindSaveStates(afterDate: Date? = nil)
     {
-        guard let game = self.game as? Game else { return }
+        guard let game = self.game as? Game,
+              GameplayFeatures.shared.rewind.keepStates == false else { return }
         
         let fetchRequest = SaveState.fetchRequest(for: game, type: .rewind)
         fetchRequest.includesPropertyValues = false

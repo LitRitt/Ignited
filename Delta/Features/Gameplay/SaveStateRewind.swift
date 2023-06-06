@@ -27,6 +27,10 @@ struct SaveStateRewindOptions
     })
     var interval: Double = 15
     
+    @Option(name: "Keep Save States",
+            description: "Enable to keep save states even after quitting a game. This let's you use rewind as a secondary auto-save method. Disable to use rewind purely as a convenience feature. States will be deleted when quitting a game.")
+    var keepStates: Bool = true
+    
     @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
         Toggle(isOn: value) {
             Text("Restore Defaults")
