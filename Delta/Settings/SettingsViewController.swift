@@ -470,6 +470,7 @@ private extension SettingsViewController
         
         let resetSaveStateRewind = {
             GameplayFeatures.shared.rewind.interval = 15
+            GameplayFeatures.shared.rewind.maxStates = 30
             GameplayFeatures.shared.rewind.keepStates = true
         }
         

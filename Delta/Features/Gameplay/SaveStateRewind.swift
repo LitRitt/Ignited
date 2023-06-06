@@ -27,6 +27,21 @@ struct SaveStateRewindOptions
     })
     var interval: Double = 15
     
+    @Option(name: "Maximum States", description: "The maximum number of states to save before the oldest state gets deleted. Increasing this will allow you to rewind further back in time, at the cost of larger device storage usage.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Maximum States: \(value.wrappedValue, specifier: "%.f")")
+                Spacer()
+            }
+            HStack {
+                Text("10")
+                Slider(value: value, in: 10...50, step: 1)
+                Text("50")
+            }
+        }.displayInline()
+    })
+    var maxStates: Double = 30
+    
     @Option(name: "Keep Save States",
             description: "Enable to keep save states even after quitting a game. This let's you use rewind as a secondary auto-save method. Disable to use rewind purely as a convenience feature. States will be deleted when quitting a game.")
     var keepStates: Bool = true

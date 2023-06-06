@@ -2369,7 +2369,6 @@ private extension GameViewController
         // disable on GBC. saving state without pausing emulation crashes gambette
         guard self.game?.type != .gbc else { return }
         
-        // first; cap number of rewind states to 30. do this by deleting oldest state if >= 30 exist
         let fetchRequest: NSFetchRequest<SaveState> = SaveState.fetchRequest()
         fetchRequest.returnsObjectsAsFaults = false
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
@@ -2385,14 +2384,15 @@ private extension GameViewController
         
         do
         {
-            let rewindStateCount = try DatabaseManager.shared.viewContext.count(for: fetchRequest)
-            if rewindStateCount >= 30
+            let rewindStateCount = try DatabaseManager.shared.viewContext.count(for: fetchRequest) + 1 // + 1 to account for state to be saved after deleting
+            let rewindStatesOverLimit = rewindStateCount - Int(floor(GameplayFeatures.shared.rewind.maxStates))
+            if rewindStatesOverLimit > 0
             {
-                fetchRequest.fetchLimit = 1
-                if let oldestRewindSaveState = try DatabaseManager.shared.viewContext.fetch(fetchRequest).first
+                fetchRequest.fetchLimit = rewindStatesOverLimit
+                for rewindStateToDelete in try DatabaseManager.shared.viewContext.fetch(fetchRequest)
                 {
                     DatabaseManager.shared.performBackgroundTask { (context) in
-                        let temporarySaveState = context.object(with: oldestRewindSaveState.objectID)
+                        let temporarySaveState = context.object(with: rewindStateToDelete.objectID)
                         context.delete(temporarySaveState)
                         context.saveWithErrorLogging()
                     }
@@ -2404,7 +2404,6 @@ private extension GameViewController
             print(error)
         }
         
-        // second; save new state
         let backgroundContext = DatabaseManager.shared.newBackgroundContext()
         backgroundContext.perform {
             
