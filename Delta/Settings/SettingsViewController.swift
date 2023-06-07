@@ -419,7 +419,12 @@ private extension SettingsViewController
             }
             else
             {
-                UIApplication.shared.setAlternateIconName(nil)
+                switch UserInterfaceFeatures.shared.appIcon.alternateIcon
+                {
+                case .neon: UIApplication.shared.setAlternateIconName("IconNeon")
+                case .pride: UIApplication.shared.setAlternateIconName("IconPride")
+                case .none: UIApplication.shared.setAlternateIconName(nil)
+                }
             }
         }
         else
@@ -518,6 +523,7 @@ private extension SettingsViewController
         
         let resetAppIcon = {
             UserInterfaceFeatures.shared.appIcon.useTheme = true
+            UserInterfaceFeatures.shared.appIcon.alternateIcon = .none
         }
         
         let resetControllerSkins = {
@@ -913,7 +919,7 @@ private extension SettingsViewController
                 }
             }
             
-        case UserInterfaceFeatures.shared.appIcon.settingsKey, UserInterfaceFeatures.shared.appIcon.$useTheme.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey:
+        case UserInterfaceFeatures.shared.appIcon.settingsKey, UserInterfaceFeatures.shared.appIcon.$useTheme.settingsKey, UserInterfaceFeatures.shared.appIcon.$alternateIcon.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey:
             self.updateAppIcon()
             
         default: break

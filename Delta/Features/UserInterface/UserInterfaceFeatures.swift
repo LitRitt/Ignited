@@ -27,7 +27,7 @@ struct UserInterfaceFeatures: FeatureContainer
              options: ThemeColorOptions())
     var theme
     
-    @Feature(name: "Alternate App Icon",
+    @Feature(name: "App Icon",
              description: "Change the app's icon.",
              options: AppIconOptions())
     var appIcon
