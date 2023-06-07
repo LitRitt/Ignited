@@ -394,42 +394,44 @@ private extension SettingsViewController
     
     func updateAppIcon()
     {
+        let currentIcon = UIApplication.shared.alternateIconName
+        
         if UserInterfaceFeatures.shared.appIcon.isEnabled
         {
             if UserInterfaceFeatures.shared.appIcon.useTheme
             {
                 guard UserInterfaceFeatures.shared.theme.isEnabled else
                 {
-                    UIApplication.shared.setAlternateIconName(nil)
+                    if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
                     return
                 }
                 
                 switch UserInterfaceFeatures.shared.theme.accentColor
                 {
-                case .pink: UIApplication.shared.setAlternateIconName("IconPink")
-                case .red: UIApplication.shared.setAlternateIconName("IconRed")
-                case .orange: UIApplication.shared.setAlternateIconName(nil)
-                case .yellow: UIApplication.shared.setAlternateIconName("IconYellow")
-                case .green: UIApplication.shared.setAlternateIconName("IconGreen")
-                case .mint: UIApplication.shared.setAlternateIconName("IconMint")
-                case .teal: UIApplication.shared.setAlternateIconName("IconTeal")
-                case .blue: UIApplication.shared.setAlternateIconName("IconBlue")
-                case .purple: UIApplication.shared.setAlternateIconName("IconPurple")
+                case .pink: if currentIcon != "IconPink" { UIApplication.shared.setAlternateIconName("IconPink") }
+                case .red: if currentIcon != "IconRed" { UIApplication.shared.setAlternateIconName("IconRed") }
+                case .orange: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+                case .yellow: if currentIcon != "IconYellow" { UIApplication.shared.setAlternateIconName("IconYellow") }
+                case .green: if currentIcon != "IconGreen" { UIApplication.shared.setAlternateIconName("IconGreen") }
+                case .mint: if currentIcon != "IconMint" { UIApplication.shared.setAlternateIconName("IconMint") }
+                case .teal: if currentIcon != "IconTeal" { UIApplication.shared.setAlternateIconName("IconTeal") }
+                case .blue: if currentIcon != "IconBlue" { UIApplication.shared.setAlternateIconName("IconBlue") }
+                case .purple: if currentIcon != "IconPurple" { UIApplication.shared.setAlternateIconName("IconPurple") }
                 }
             }
             else
             {
                 switch UserInterfaceFeatures.shared.appIcon.alternateIcon
                 {
-                case .neon: UIApplication.shared.setAlternateIconName("IconNeon")
-                case .pride: UIApplication.shared.setAlternateIconName("IconPride")
-                case .none: UIApplication.shared.setAlternateIconName(nil)
+                case .neon: if currentIcon != "IconNeon" { UIApplication.shared.setAlternateIconName("IconNeon") }
+                case .pride: if currentIcon != "IconPride" { UIApplication.shared.setAlternateIconName("IconPride") }
+                case .none: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
                 }
             }
         }
         else
         {
-            UIApplication.shared.setAlternateIconName(nil)
+            if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
         }
     }
     
@@ -919,7 +921,11 @@ private extension SettingsViewController
                 }
             }
             
-        case UserInterfaceFeatures.shared.appIcon.settingsKey, UserInterfaceFeatures.shared.appIcon.$useTheme.settingsKey, UserInterfaceFeatures.shared.appIcon.$alternateIcon.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey:
+        case UserInterfaceFeatures.shared.appIcon.settingsKey, UserInterfaceFeatures.shared.appIcon.$useTheme.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey:
+            self.updateAppIcon()
+            
+        case UserInterfaceFeatures.shared.appIcon.$alternateIcon.settingsKey:
+            UserInterfaceFeatures.shared.appIcon.useTheme = false
             self.updateAppIcon()
             
         default: break
