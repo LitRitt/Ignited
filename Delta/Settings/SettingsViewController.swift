@@ -425,6 +425,7 @@ private extension SettingsViewController
                 {
                 case .neon: if currentIcon != "IconNeon" { UIApplication.shared.setAlternateIconName("IconNeon") }
                 case .pride: if currentIcon != "IconPride" { UIApplication.shared.setAlternateIconName("IconPride") }
+                case .simple: if currentIcon != "IconEpicpal" { UIApplication.shared.setAlternateIconName("IconEpicpal") }
                 case .none: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
                 }
             }

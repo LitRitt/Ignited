@@ -15,6 +15,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case none = "Default"
     case neon = "Neon"
     case pride = "Pride"
+    case simple = "Simple"
     
     var description: String {
         return self.rawValue
@@ -28,6 +29,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         switch self
         {
         case .none, .neon, .pride: return "LitRitt"
+        case .simple: return "epicpal"
         }
     }
     
@@ -37,6 +39,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .none: return "AppIcon"
         case .neon: return "IconNeon"
         case .pride: return "IconPride"
+        case .simple: return "IconEpicpal"
         }
     }
 }
