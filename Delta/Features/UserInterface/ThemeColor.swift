@@ -10,7 +10,7 @@ import SwiftUI
 
 import Features
 
-enum ThemeColor: String, CaseIterable, CustomStringConvertible
+enum ThemeColor: String, CaseIterable, CustomStringConvertible, Identifiable
 {
     case pink = "Pink"
     case red = "Red"
@@ -24,6 +24,25 @@ enum ThemeColor: String, CaseIterable, CustomStringConvertible
     
     var description: String {
         return self.rawValue
+    }
+    
+    var id: String {
+        return self.rawValue
+    }
+    
+    var assetName: String {
+        switch self
+        {
+        case .pink: return "IconPink"
+        case .red: return "IconRed"
+        case .orange: return "AppIcon"
+        case .yellow: return "IconYellow"
+        case .green: return "IconGreen"
+        case .mint: return "IconMint"
+        case .teal: return "IconTeal"
+        case .blue: return "IconBlue"
+        case .purple: return "IconPurple"
+        }
     }
 }
 

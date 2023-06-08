@@ -406,31 +406,22 @@ private extension SettingsViewController
                     return
                 }
                 
-                switch UserInterfaceFeatures.shared.theme.accentColor
+                let themeIcon = UserInterfaceFeatures.shared.theme.accentColor
+                
+                switch themeIcon
                 {
-                case .pink: if currentIcon != "IconPink" { UIApplication.shared.setAlternateIconName("IconPink") }
-                case .red: if currentIcon != "IconRed" { UIApplication.shared.setAlternateIconName("IconRed") }
                 case .orange: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
-                case .yellow: if currentIcon != "IconYellow" { UIApplication.shared.setAlternateIconName("IconYellow") }
-                case .green: if currentIcon != "IconGreen" { UIApplication.shared.setAlternateIconName("IconGreen") }
-                case .mint: if currentIcon != "IconMint" { UIApplication.shared.setAlternateIconName("IconMint") }
-                case .teal: if currentIcon != "IconTeal" { UIApplication.shared.setAlternateIconName("IconTeal") }
-                case .blue: if currentIcon != "IconBlue" { UIApplication.shared.setAlternateIconName("IconBlue") }
-                case .purple: if currentIcon != "IconPurple" { UIApplication.shared.setAlternateIconName("IconPurple") }
+                default: if currentIcon != themeIcon.assetName { UIApplication.shared.setAlternateIconName(themeIcon.assetName) }
                 }
             }
             else
             {
-                switch UserInterfaceFeatures.shared.appIcon.alternateIcon
+                let altIcon = UserInterfaceFeatures.shared.appIcon.alternateIcon
+                
+                switch altIcon
                 {
-                case .neon: if currentIcon != "IconNeon" { UIApplication.shared.setAlternateIconName("IconNeon") }
-                case .beta: if currentIcon != "IconBeta" { UIApplication.shared.setAlternateIconName("IconBeta") }
-                case .pride: if currentIcon != "IconPride" { UIApplication.shared.setAlternateIconName("IconPride") }
-                case .simple: if currentIcon != "IconEpicpal" { UIApplication.shared.setAlternateIconName("IconEpicpal") }
-                case .gummy: if currentIcon != "IconGummy" { UIApplication.shared.setAlternateIconName("IconGummy") }
-                case .flourish: if currentIcon != "IconFlourish" { UIApplication.shared.setAlternateIconName("IconFlourish") }
-                case .ablaze: if currentIcon != "IconAblaze" { UIApplication.shared.setAlternateIconName("IconAblaze") }
                 case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+                default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
                 }
             }
         }
