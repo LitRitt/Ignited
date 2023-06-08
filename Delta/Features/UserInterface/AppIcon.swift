@@ -82,7 +82,7 @@ struct AppIconOptions
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                     Spacer()
-                    Image(uiImage: UIImage(named: "\(icon.assetName)60x60") ?? UIImage())
+                    Image(uiImage: Bundle.appIcon(for: icon) ?? UIImage())
                         .cornerRadius(13)
                 }
                 .contentShape(Rectangle())
