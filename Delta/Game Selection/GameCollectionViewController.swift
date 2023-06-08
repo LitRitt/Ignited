@@ -1267,6 +1267,9 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
+        case GamesCollectionFeatures.shared.artwork.$size.settingsKey:
+            self.update()
+            
         case GamesCollectionFeatures.shared.artwork.$sortOrder.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteSort.settingsKey:
             self.updateDataSource()
             self.update()
