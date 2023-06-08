@@ -4,6 +4,53 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.4.4</string>
+		<key>date</key>
+		<string>6/7/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.4.4</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds several new alternate app icons and an interface to change between them</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds an option within every feature to reset all options to their default values, and a power user option to reset all options at once</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds an option to change the intensity of the favorite games highlight glow</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Makes the reset artwork feature work with the DS home screen icons</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Makes rewind deleting its states on rewinding or quitting the game a toggleable option - Allows the rewind feature to be used as a persistent secondary auto-save method</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes artwork size setting not applying until swiping to a new page</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.4.3</string>
 		<key>date</key>
 		<string>6/4/2023</string>
