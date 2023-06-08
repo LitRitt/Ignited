@@ -17,6 +17,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case neon = "Neon"
     case pride = "Pride"
     case simple = "Simple"
+    case glass = "Glass"
     case gummy = "Gummy Worm"
     case flourish = "Flourish"
     case ablaze = "Ablaze"
@@ -33,7 +34,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         switch self
         {
         case .normal, .beta, .neon, .pride: return "LitRitt"
-        case .simple: return "epicpal"
+        case .simple, .glass: return "epicpal"
         case .gummy, .flourish: return "Mattia"
         case .ablaze: return "Salty"
         }
@@ -46,7 +47,8 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .beta: return "IconBeta"
         case .neon: return "IconNeon"
         case .pride: return "IconPride"
-        case .simple: return "IconEpicpal"
+        case .simple: return "IconSimple"
+        case .glass: return "IconGlass"
         case .gummy: return "IconGummy"
         case .flourish: return "IconFlourish"
         case .ablaze: return "IconAblaze"
