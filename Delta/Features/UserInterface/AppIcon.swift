@@ -12,10 +12,14 @@ import Features
 
 enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
-    case none = "Default"
+    case normal = "Default"
+    case beta = "Beta"
     case neon = "Neon"
     case pride = "Pride"
     case simple = "Simple"
+    case gummy = "Gummy Worm"
+    case flourish = "Flourish"
+    case ablaze = "Ablaze"
     
     var description: String {
         return self.rawValue
@@ -28,18 +32,24 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: String {
         switch self
         {
-        case .none, .neon, .pride: return "LitRitt"
+        case .normal, .beta, .neon, .pride: return "LitRitt"
         case .simple: return "epicpal"
+        case .gummy, .flourish: return "Mattia"
+        case .ablaze: return "Salty"
         }
     }
     
     var assetName: String {
         switch self
         {
-        case .none: return "AppIcon"
+        case .normal: return "AppIcon"
+        case .beta: return "IconBeta"
         case .neon: return "IconNeon"
         case .pride: return "IconPride"
         case .simple: return "IconEpicpal"
+        case .gummy: return "IconGummy"
+        case .flourish: return "IconFlourish"
+        case .ablaze: return "IconAblaze"
         }
     }
 }
@@ -82,7 +92,7 @@ struct AppIconOptions
             }
         }.displayInline()
     })
-    var alternateIcon: AppIcon = .none
+    var alternateIcon: AppIcon = .normal
     
     @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
         Toggle(isOn: value) {

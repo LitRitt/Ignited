@@ -424,9 +424,13 @@ private extension SettingsViewController
                 switch UserInterfaceFeatures.shared.appIcon.alternateIcon
                 {
                 case .neon: if currentIcon != "IconNeon" { UIApplication.shared.setAlternateIconName("IconNeon") }
+                case .beta: if currentIcon != "IconBeta" { UIApplication.shared.setAlternateIconName("IconBeta") }
                 case .pride: if currentIcon != "IconPride" { UIApplication.shared.setAlternateIconName("IconPride") }
                 case .simple: if currentIcon != "IconEpicpal" { UIApplication.shared.setAlternateIconName("IconEpicpal") }
-                case .none: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+                case .gummy: if currentIcon != "IconGummy" { UIApplication.shared.setAlternateIconName("IconGummy") }
+                case .flourish: if currentIcon != "IconFlourish" { UIApplication.shared.setAlternateIconName("IconFlourish") }
+                case .ablaze: if currentIcon != "IconAblaze" { UIApplication.shared.setAlternateIconName("IconAblaze") }
+                case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
                 }
             }
         }
@@ -526,7 +530,7 @@ private extension SettingsViewController
         
         let resetAppIcon = {
             UserInterfaceFeatures.shared.appIcon.useTheme = true
-            UserInterfaceFeatures.shared.appIcon.alternateIcon = .none
+            UserInterfaceFeatures.shared.appIcon.alternateIcon = .normal
         }
         
         let resetControllerSkins = {

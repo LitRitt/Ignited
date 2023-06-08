@@ -57,6 +57,7 @@
 		AC53406229E32B70009EDF08 /* 8bit.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406129E32B70009EDF08 /* 8bit.caf */; };
 		AC53406429E33098009EDF08 /* snap.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406329E33097009EDF08 /* snap.caf */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
+		AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
 		AC7D55702A07F7A900B66BF1 /* ImageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */; };
 		AC84B56C29FEF5460090F274 /* GameplayFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84B56B29FEF5460090F274 /* GameplayFeatures.swift */; };
@@ -316,6 +317,7 @@
 		AC53406129E32B70009EDF08 /* 8bit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 8bit.caf; sourceTree = "<group>"; };
 		AC53406329E33097009EDF08 /* snap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = snap.caf; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
+		AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIconImage.swift"; sourceTree = "<group>"; };
 		AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
 		AC84B56B29FEF5460090F274 /* GameplayFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayFeatures.swift; sourceTree = "<group>"; };
 		AC84B56D29FEF8A70090F274 /* GameplayFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayFeaturesView.swift; sourceTree = "<group>"; };
@@ -809,6 +811,7 @@
 				AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */,
 				ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */,
 				AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */,
+				AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1750,6 +1753,7 @@
 				BF99A5971DC2F9C400468E9E /* ControllerSkinTableViewCell.swift in Sources */,
 				ACB3CB8C29FDCF4D002B53DE /* ToastNotifications.swift in Sources */,
 				ACB3CB9329FDD601002B53DE /* TouchFeedbackVibration.swift in Sources */,
+				AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */,
 				BFE9908024451E15006409A7 /* MelonDSCoreSettingsViewController.swift in Sources */,
 				BF5942861E09BC8B0051894B /* _Cheat.swift in Sources */,
 				BF5E7F441B9A650B00AE44F8 /* SettingsViewController.swift in Sources */,
