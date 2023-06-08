@@ -337,6 +337,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>deltaskin</string>
+					<string>ignitedskin</string>
 				</array>
 			</dict>
 		</dict>

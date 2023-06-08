@@ -234,7 +234,7 @@ extension ControllerSkinsViewController: ImportControllerDelegate
             return
         }        
         
-        let controllerSkinURLs = urls.filter { $0.pathExtension.lowercased() == "deltaskin" }
+        let controllerSkinURLs = urls.filter { $0.pathExtension.lowercased() == "ignitedskin" || $0.pathExtension.lowercased() == "deltaskin" }
         DatabaseManager.shared.importControllerSkins(at: Set(controllerSkinURLs)) { (controllerSkins, errors) in
             if errors.count > 0
             {

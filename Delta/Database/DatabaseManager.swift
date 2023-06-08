@@ -450,7 +450,7 @@ extension DatabaseManager
                 }
                 
                 let controllerSkin = ControllerSkin(context: context)
-                controllerSkin.filename = deltaControllerSkin.identifier + ".deltaskin"
+                controllerSkin.filename = deltaControllerSkin.identifier + url.lastPathComponent
                 
                 controllerSkin.configure(with: deltaControllerSkin)
                                 

@@ -159,7 +159,7 @@ extension AppDelegate
             {
                 return self.importGame(at: url)
             }
-            else if url.pathExtension.lowercased() == "deltaskin"
+            else if url.pathExtension.lowercased() == "ignitedskin" || url.pathExtension.lowercased() == "deltaskin"
             {
                 return self.importControllerSkin(at: url)
             }
