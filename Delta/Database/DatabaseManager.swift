@@ -450,22 +450,13 @@ extension DatabaseManager
                 }
                 
                 let controllerSkin = ControllerSkin(context: context)
-                controllerSkin.filename = deltaControllerSkin.identifier + url.lastPathComponent
+                controllerSkin.filename = deltaControllerSkin.identifier + "." + url.pathExtension
                 
                 controllerSkin.configure(with: deltaControllerSkin)
                                 
                 do
                 {
-                    if FileManager.default.fileExists(atPath: controllerSkin.fileURL.path)
-                    {
-                        // Normally we'd replace item instead of delete + move, but it's crashing as of iOS 10
-                        // FileManager.default.replaceItemAt(controllerSkin.fileURL, withItemAt: url)
-                        
-                        // Controller skin exists, but we replace it with the new skin
-                        try FileManager.default.removeItem(at: controllerSkin.fileURL)
-                    }
-                    
-                    try FileManager.default.moveItem(at: url, to: controllerSkin.fileURL)
+                    try FileManager.default.replaceItemAt(controllerSkin.fileURL, withItemAt: url)
                     
                     identifiers.insert(controllerSkin.identifier)
                 }
