@@ -24,7 +24,7 @@
   "resource_bundles": {
     "NESDeltaCore": [
       "NESDeltaCore/**/*.deltamapping",
-      "NESDeltaCore/**/*.deltaskin",
+      "NESDeltaCore/**/*.ignitedskin",
       "NestopiaJS/NstDatabase.xml"
     ]
   },

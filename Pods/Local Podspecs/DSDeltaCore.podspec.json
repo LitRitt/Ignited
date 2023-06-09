@@ -32,7 +32,7 @@
   "resource_bundles": {
     "DSDeltaCore": [
       "DSDeltaCore/**/*.deltamapping",
-      "DSDeltaCore/**/*.deltaskin"
+      "DSDeltaCore/**/*.ignitedskin"
     ]
   },
   "dependencies": {

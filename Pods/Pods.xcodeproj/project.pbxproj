@@ -570,7 +570,7 @@
 		4E56CEEE32E8E668414B0D27E783B822 /* ClipPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB2FB6A449519AD09E7964F0CC67DF25 /* ClipPolygon.cpp */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		4E6DFC2B8F2BB0E8DB800DE1821158F2 /* inputSDL.h in Headers */ = {isa = PBXBuildFile; fileRef = CB2DE433AA67D7DB3319203E042598EF /* inputSDL.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4E6EA48E4D8DB2E255543A2178AAB58B /* RDP.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CADBEC9CAC37776B653B1E88F411732 /* RDP.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		4E9CB344E6B2A78B62E4638C9674DAD8 /* Standard.deltaskin in Resources */ = {isa = PBXBuildFile; fileRef = 9D83B27394F827A375C8041D26B9F167 /* Standard.deltaskin */; };
+		4E9CB344E6B2A78B62E4638C9674DAD8 /* Standard.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = 9D83B27394F827A375C8041D26B9F167 /* Standard.ignitedskin */; };
 		4EC0C4512E530E2AB2313C514BADE005 /* initstate.h in Headers */ = {isa = PBXBuildFile; fileRef = D9190E21FA9BDC3ECAC991D745F8B829 /* initstate.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4EC43DE6673880AEF7A584CC22C8EBE1 /* NstBoardAxRom.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A5CD02BC2D035183432B50AEFA8BF924 /* NstBoardAxRom.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		4ECBC04326D5C7B84F69D70891DB1C74 /* ARM_InstrInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D13A0F4BF74BE8B97BFDAD60B81DF937 /* ARM_InstrInfo.cpp */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -602,7 +602,7 @@
 		530E72432126D9EEE597FC8AD2645259 /* RectangleShape.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A9530F5FC4C0B09A188288409FCF835D /* RectangleShape.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		5336D03C6035295B51D47B08E20CD275 /* wglext.h in Headers */ = {isa = PBXBuildFile; fileRef = F200008BAD2C8D2B9909C34A25F2F23F /* wglext.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		5336E6D34E157FD1B46ED14451960ACE /* SMCalloutView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B23526A375A47D4DB7E41CEF2AD61087 /* SMCalloutView-dummy.m */; };
-		53578D3E7D989A069C7E70E94BDF6485 /* Standard.deltaskin in Resources */ = {isa = PBXBuildFile; fileRef = 0648DF1F7281B9D745ECF96C143F2C8F /* Standard.deltaskin */; };
+		53578D3E7D989A069C7E70E94BDF6485 /* Standard.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = 0648DF1F7281B9D745ECF96C143F2C8F /* Standard.ignitedskin */; };
 		5368D26EC79E290BBA16B14EEDDCB528 /* NstBoardBmcT262.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5D28A45F8D7AE36212541B62DB751AAE /* NstBoardBmcT262.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		53D0677CB11698F8EB842C2883CB7FE4 /* NstBoardBtlSuperBros11.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7549BE8B0E3632F3EC1847B5A711B082 /* NstBoardBtlSuperBros11.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		547722282B92D897DCF72B1C5E077EE4 /* TextureFilters_2xsai.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E53123303D13A89EFB690F2B9415065 /* TextureFilters_2xsai.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -696,7 +696,7 @@
 		6044490996CB50B0E68AFB19757BF808 /* ThreadLocal.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7EF57BB6B247BD777342B282E9659451 /* ThreadLocal.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		609CDB47F8CBF483B892C0D2CE392B1C /* NstBoardBandaiDatach.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4B62BC74F2B87C4D4C3F58016F21513B /* NstBoardBandaiDatach.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		60B2E7267C1CA2C4FC63A11AA9A822A1 /* glsl_ShaderStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5202545B4329D002ACDA953CB13AC144 /* glsl_ShaderStorage.cpp */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		60E958C77493633B264BE262E7041817 /* Standard.deltaskin in Resources */ = {isa = PBXBuildFile; fileRef = B51E4F3FBCD2986D04F61F4EC3DB5BCB /* Standard.deltaskin */; };
+		60E958C77493633B264BE262E7041817 /* Standard.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = B51E4F3FBCD2986D04F61F4EC3DB5BCB /* Standard.ignitedskin */; };
 		60F654639519C76D65ED595183934348 /* NstBoardSuperGameLionKing.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56739173EC3B35597BDA8BAC4DD593D0 /* NstBoardSuperGameLionKing.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		60F8542DD785E5C1B433CD62D774A40E /* NstBoardBmcSuper40in1.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DC15718FEE1F270A54AA643D5215F826 /* NstBoardBmcSuper40in1.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		613B16943E12EE293AB8EBA44F780880 /* GoogleToolboxForMac-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A9D7E3EC589A75AD2405C76234F641 /* GoogleToolboxForMac-dummy.m */; };
@@ -819,7 +819,7 @@
 		704BB47BBF92080A6C5A5EDAD262DC41 /* skipsched.h in Headers */ = {isa = PBXBuildFile; fileRef = 517D5D662F01BA988D74732FFD13B952 /* skipsched.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		709ACF2A4D11DEEE18D669127E851053 /* NstBoardKasing.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 96C44FDF7092320E7DBABE66348B2032 /* NstBoardKasing.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		70E2424B47CC1C31BCE1BF871051FDCB /* PropertyGroup+Harmony.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716AC385E3C379704598782E95836B4C /* PropertyGroup+Harmony.swift */; };
-		70FAB32D4D69DF18D47D3AF17352EE97 /* Standard.deltaskin in Resources */ = {isa = PBXBuildFile; fileRef = 3B46B04A3CCDD5165D5EF0121C30CE78 /* Standard.deltaskin */; };
+		70FAB32D4D69DF18D47D3AF17352EE97 /* Standard.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = 3B46B04A3CCDD5165D5EF0121C30CE78 /* Standard.ignitedskin */; };
 		710323166D93351F1690FF199288F64A /* inputgetter.h in Headers */ = {isa = PBXBuildFile; fileRef = C81C97C396CFD4B3B38A6BA482FBBC01 /* inputgetter.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		71078B9476051266967867BC1EB8087E /* opengl_GraphicsDrawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E00E0C2DB0657397A9AD74AF384F0E0 /* opengl_GraphicsDrawer.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		715C4EBBD125D47E00905D62FF7F54BE /* FetchRemoteRecordsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2761CCCCF2A0BEFF0304C3D4DB75EC /* FetchRemoteRecordsOperation.swift */; };
@@ -1065,7 +1065,7 @@
 		92EAC7D4455F64E130D1449E451991C3 /* dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = B16A40EA546C216777D9E352BC96AE3F /* dictionary.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		92F1C08BDC32C014FB6EB1E1B69664AF /* MelonDSEmulatorBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 05891BAE30F46A352A061FDD712EE3AC /* MelonDSEmulatorBridge.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		9307E097520497002BC3B34C7C00AA81 /* SoundStream.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BCB267858136BF15E2EA99DF8C2D1EA0 /* SoundStream.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
-		934782B5A76E96EBE561BC133DF638DC /* Standard.deltaskin in Resources */ = {isa = PBXBuildFile; fileRef = B40D570EAF3AC5F1FF34F6CFEB52975B /* Standard.deltaskin */; };
+		934782B5A76E96EBE561BC133DF638DC /* Standard.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = B40D570EAF3AC5F1FF34F6CFEB52975B /* Standard.ignitedskin */; };
 		93B394E89E851CE07AA3430A4C7231CA /* Thread+RealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE4F753611AEF693986993C3D54DDB4 /* Thread+RealTime.swift */; };
 		93EBFCAB609AFE30FF415F07EFF0BA8D /* NstBoardBmcPowerjoy84in1.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 89AFC42C5AF3615A0E49911F50BF50CA /* NstBoardBmcPowerjoy84in1.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		941FCD99198C9AB55D0885FF6C9205FB /* NSFileManager+URLs.m in Sources */ = {isa = PBXBuildFile; fileRef = B3EBA4C7AF2961430F113BBF0D749FD2 /* NSFileManager+URLs.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -1422,7 +1422,7 @@
 		C6086B76E89CBF4AE00B17B8BDE3CABA /* FileProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC547021A6C25CAC75D4CBEA991AF3F2 /* FileProperties.swift */; };
 		C633DDF872EEA2E81CE49A3F2E3AE670 /* NstBoardBmcCh001.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2F48A72A8BB6DCFEF98DC46F35F8A72C /* NstBoardBmcCh001.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		C63A207C224FCF87459DE10A1996F1F0 /* fttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 02EBA4437D0FA1CF697188CF0D82DF4F /* fttypes.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		C63AE036E8EF4315BC11E94AE4E9FEE8 /* Standard.deltaskin in Resources */ = {isa = PBXBuildFile; fileRef = 05E7291F492456F36AE41FD68A486294 /* Standard.deltaskin */; };
+		C63AE036E8EF4315BC11E94AE4E9FEE8 /* Standard.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = 05E7291F492456F36AE41FD68A486294 /* Standard.ignitedskin */; };
 		C640481E728038309D7FE61AB1392E3A /* NstAssert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8BE76479C9EF902888E8C6D3DBFBCB99 /* NstAssert.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		C6567183535DE7F5AE7786F52243A039 /* clock_backend.h in Headers */ = {isa = PBXBuildFile; fileRef = A901EB72C85D33069EB23CA37C3FD795 /* clock_backend.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C65CDD6C31CFBEB6457173185429F69B /* ARMInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C8D322419292F2F744F642CA3045571 /* ARMInterpreter.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -1469,7 +1469,7 @@
 		CC2230A8951A1A422A3C7776B181E7D4 /* GTLRBatchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A136EA4F05EDD2CD92B3C8B2884AAFDD /* GTLRBatchResult.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		CC5620B7128836088908B7C94BF62E43 /* TexrectDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 231187F01BD89BC85A528AEFA81C0E96 /* TexrectDrawer.cpp */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		CC65A3B65CABE8361BC74A86E66FD936 /* ftmac.h in Headers */ = {isa = PBXBuildFile; fileRef = A4179245A527FB2B003066A494ACEC85 /* ftmac.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		CC6F43044520D745BC4704927BB6FAC7 /* Standard.deltaskin in Resources */ = {isa = PBXBuildFile; fileRef = 4350D1FEB43D008EF6E9B2A8AF3F8D46 /* Standard.deltaskin */; };
+		CC6F43044520D745BC4704927BB6FAC7 /* Standard.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = 4350D1FEB43D008EF6E9B2A8AF3F8D46 /* Standard.ignitedskin */; };
 		CC7BC7F5FC3568FB1F83261F89F5F44C /* N64DeltaCore.h in Headers */ = {isa = PBXBuildFile; fileRef = BE0EB98BA91DB978CF8D6C9BD55A2979 /* N64DeltaCore.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		CC9404FF52C98B58CA547593FC9351DB /* NstApiMachine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1E386BD0BB0ECC459FA522E26E6F0D42 /* NstApiMachine.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		CC9CF52B502B38F4CD7BB227E11DF536 /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C48CBBB6A97428E4D4CBC314A140585 /* Archive.swift */; };
@@ -2194,12 +2194,12 @@
 		05891BAE30F46A352A061FDD712EE3AC /* MelonDSEmulatorBridge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MelonDSEmulatorBridge.h; sourceTree = "<group>"; };
 		059E076DC22B421E03349A4BC56852DD /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
 		05D90FC573A940BC6669EC489A1DB016 /* ft2build.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ft2build.h; sourceTree = "<group>"; };
-		05E7291F492456F36AE41FD68A486294 /* Standard.deltaskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.deltaskin; sourceTree = "<group>"; };
+		05E7291F492456F36AE41FD68A486294 /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		05E756BE049BECB36FD17276742F19FD /* GameProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameProtocol.swift; sourceTree = "<group>"; };
 		05EFB60F8ABE052EE4B3C48B77C63D6B /* GTLRDuration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLRDuration.h; path = Source/Objects/GTLRDuration.h; sourceTree = "<group>"; };
 		05F3C29A1F7007590F21D1381BF87758 /* pngwio.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pngwio.c; sourceTree = "<group>"; };
 		063A16999A8C4EC5F4A86EE181EE41A9 /* NstBoardBmc15in1.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBmc15in1.hpp; sourceTree = "<group>"; };
-		0648DF1F7281B9D745ECF96C143F2C8F /* Standard.deltaskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.deltaskin; sourceTree = "<group>"; };
+		0648DF1F7281B9D745ECF96C143F2C8F /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		065CAF08131A87E3F659ED22E2D036F9 /* resource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = resource.h; sourceTree = "<group>"; };
 		0680D0EC0F7556C47C63C604ADEFD565 /* GameController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		06850EEF7309E2768118A0945B11FCA5 /* WindowStyle.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = WindowStyle.hpp; sourceTree = "<group>"; };
@@ -2611,7 +2611,7 @@
 		3A6BEE1354AB3BB2C198E3B84CE0FD32 /* NstBoardKayPandaPrince.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardKayPandaPrince.hpp; sourceTree = "<group>"; };
 		3AAF5A370221319ED336FD38BFB973A3 /* lua-engine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "lua-engine.h"; sourceTree = "<group>"; };
 		3B3BC53887BCBE3F02841C302D9EFCB4 /* ZIPFoundation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ZIPFoundation-dummy.m"; sourceTree = "<group>"; };
-		3B46B04A3CCDD5165D5EF0121C30CE78 /* Standard.deltaskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.deltaskin; sourceTree = "<group>"; };
+		3B46B04A3CCDD5165D5EF0121C30CE78 /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		3B54726597AE9AF0483DF076A1CB773B /* BatchRecordOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BatchRecordOperation.swift; sourceTree = "<group>"; };
 		3B7AC8DBD44374B318026ED02323950B /* fpu.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = fpu.h; sourceTree = "<group>"; };
 		3C07C9B57A5D082C07FD91A96267A69C /* F3DAM.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = F3DAM.cpp; sourceTree = "<group>"; };
@@ -2669,7 +2669,7 @@
 		42D809A7248EAA3C75D32A0875CD3E2B /* NstPins.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstPins.hpp; sourceTree = "<group>"; };
 		43025ED25FA3BA9FEA4A363425FDBD71 /* display.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = display.h; sourceTree = "<group>"; };
 		431AAF0AECA2A0A322351F393EC0FA8A /* String.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = String.hpp; sourceTree = "<group>"; };
-		4350D1FEB43D008EF6E9B2A8AF3F8D46 /* Standard.deltaskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.deltaskin; sourceTree = "<group>"; };
+		4350D1FEB43D008EF6E9B2A8AF3F8D46 /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		4361C606A9E2C67D96A18D5590A9AEB0 /* SoundSDL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SoundSDL.h; sourceTree = "<group>"; };
 		43742E54E76C8CD0C13816B1DE0B217C /* conffile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = conffile.h; sourceTree = "<group>"; };
 		43949B838135A4C9AF88A573B762A429 /* DBChunkInputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DBChunkInputStream.h; path = Source/SwiftyDropbox/Shared/Handwritten/DBChunkInputStream.h; sourceTree = "<group>"; };
@@ -3372,7 +3372,7 @@
 		9D2A88F941018214B1FCA8BC763A0D81 /* Glsl.inl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Glsl.inl; sourceTree = "<group>"; };
 		9D5333899F4FCD47BE18D2CFB9431CA3 /* GBADeltaCore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GBADeltaCore.h; sourceTree = "<group>"; };
 		9D617918958B004C494A5E18D1F77DE5 /* MMU.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MMU.h; sourceTree = "<group>"; };
-		9D83B27394F827A375C8041D26B9F167 /* Standard.deltaskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.deltaskin; sourceTree = "<group>"; };
+		9D83B27394F827A375C8041D26B9F167 /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DB6343B945C10C877D2EB07FB7DDDE7 /* svpscmap.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = svpscmap.h; sourceTree = "<group>"; };
 		9DDA821A26BD45721808E06A0C0E747D /* osal_files_ios.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; path = osal_files_ios.mm; sourceTree = "<group>"; };
@@ -3562,7 +3562,7 @@
 		B380DE90CB179CA5CD21009426F6A5F0 /* pngdebug.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pngdebug.h; sourceTree = "<group>"; };
 		B3EBA4C7AF2961430F113BBF0D749FD2 /* NSFileManager+URLs.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+URLs.m"; path = "Roxas/NSFileManager+URLs.m"; sourceTree = "<group>"; };
 		B406D46EC012C6003DF8D4CCFB546BC7 /* Standard.deltamapping */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.bplist; name = Standard.deltamapping; path = GBCDeltaCore/Standard.deltamapping; sourceTree = "<group>"; };
-		B40D570EAF3AC5F1FF34F6CFEB52975B /* Standard.deltaskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.deltaskin; sourceTree = "<group>"; };
+		B40D570EAF3AC5F1FF34F6CFEB52975B /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		B42015FFD3313AC17C168139F10E0C87 /* DSDeltaCore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DSDeltaCore-umbrella.h"; sourceTree = "<group>"; };
 		B42134C901D85FF595600E8BEF31D70B /* Export.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = Export.hpp; sourceTree = "<group>"; };
 		B43910F41F6960C33EF3CA1B15E6985B /* CP15.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = CP15.cpp; sourceTree = "<group>"; };
@@ -3579,7 +3579,7 @@
 		B51099C9B2743A734E370EE4A01EE5C9 /* RSTDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTDefines.h; path = Roxas/RSTDefines.h; sourceTree = "<group>"; };
 		B5157071CB840BAEBFDA6265F58179FD /* c4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = c4.h; sourceTree = "<group>"; };
 		B51C90EB839FE2D4424278D4BCD5721D /* preproc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = preproc.h; sourceTree = "<group>"; };
-		B51E4F3FBCD2986D04F61F4EC3DB5BCB /* Standard.deltaskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.deltaskin; sourceTree = "<group>"; };
+		B51E4F3FBCD2986D04F61F4EC3DB5BCB /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		B543A9FEA2EBDEBF7CB3910E38E9A2FA /* ftincrem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ftincrem.h; sourceTree = "<group>"; };
 		B57490C68F306064A30510F0C2DDA0E9 /* N64EmulatorBridge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = N64EmulatorBridge.h; sourceTree = "<group>"; };
 		B58EFCC5EF56D718978F57E079A87EA4 /* NstBoardSunsoft1.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardSunsoft1.hpp; sourceTree = "<group>"; };
@@ -4434,7 +4434,7 @@
 		0987F7F2E4E50214BC3F95D7D7381782 /* Controller Skin */ = {
 			isa = PBXGroup;
 			children = (
-				B51E4F3FBCD2986D04F61F4EC3DB5BCB /* Standard.deltaskin */,
+				B51E4F3FBCD2986D04F61F4EC3DB5BCB /* Standard.ignitedskin */,
 			);
 			path = "Controller Skin";
 			sourceTree = "<group>";
@@ -5842,7 +5842,7 @@
 		5CDB0FBC17BBC1955283BB3B77B8EA81 /* Controller Skin */ = {
 			isa = PBXGroup;
 			children = (
-				0648DF1F7281B9D745ECF96C143F2C8F /* Standard.deltaskin */,
+				0648DF1F7281B9D745ECF96C143F2C8F /* Standard.ignitedskin */,
 			);
 			path = "Controller Skin";
 			sourceTree = "<group>";
@@ -7685,7 +7685,7 @@
 		C29378A6014758D257FA9C19CFAE5A85 /* Controller Skin */ = {
 			isa = PBXGroup;
 			children = (
-				3B46B04A3CCDD5165D5EF0121C30CE78 /* Standard.deltaskin */,
+				3B46B04A3CCDD5165D5EF0121C30CE78 /* Standard.ignitedskin */,
 			);
 			name = "Controller Skin";
 			path = "MelonDSDeltaCore/Controller Skin";
@@ -7919,7 +7919,7 @@
 		C89BD9E5069CF671A2A8909C5C6C1A6B /* Controller Skin */ = {
 			isa = PBXGroup;
 			children = (
-				B40D570EAF3AC5F1FF34F6CFEB52975B /* Standard.deltaskin */,
+				B40D570EAF3AC5F1FF34F6CFEB52975B /* Standard.ignitedskin */,
 			);
 			name = "Controller Skin";
 			path = "SNESDeltaCore/Controller Skin";
@@ -8064,7 +8064,7 @@
 		D334BCBFBE459A07592783C9964678E0 /* Controller Skin */ = {
 			isa = PBXGroup;
 			children = (
-				05E7291F492456F36AE41FD68A486294 /* Standard.deltaskin */,
+				05E7291F492456F36AE41FD68A486294 /* Standard.ignitedskin */,
 			);
 			name = "Controller Skin";
 			path = "DSDeltaCore/Controller Skin";
@@ -8415,7 +8415,7 @@
 		F0F426707917B1507A92C47EC82299E4 /* Controller Skin */ = {
 			isa = PBXGroup;
 			children = (
-				9D83B27394F827A375C8041D26B9F167 /* Standard.deltaskin */,
+				9D83B27394F827A375C8041D26B9F167 /* Standard.ignitedskin */,
 			);
 			name = "Controller Skin";
 			path = "GBCDeltaCore/Controller Skin";
@@ -8424,7 +8424,7 @@
 		F0FF439D0001EB7A68B862239B385C2C /* Controller Skin */ = {
 			isa = PBXGroup;
 			children = (
-				4350D1FEB43D008EF6E9B2A8AF3F8D46 /* Standard.deltaskin */,
+				4350D1FEB43D008EF6E9B2A8AF3F8D46 /* Standard.ignitedskin */,
 			);
 			path = "Controller Skin";
 			sourceTree = "<group>";
@@ -10563,7 +10563,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1B0B44C669FC89BB9B0605DCACF5BA7 /* Standard.deltamapping in Resources */,
-				C63AE036E8EF4315BC11E94AE4E9FEE8 /* Standard.deltaskin in Resources */,
+				C63AE036E8EF4315BC11E94AE4E9FEE8 /* Standard.ignitedskin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10572,7 +10572,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CBC8B4C98ACF627FA090A7F43106607 /* Standard.deltamapping in Resources */,
-				60E958C77493633B264BE262E7041817 /* Standard.deltaskin in Resources */,
+				60E958C77493633B264BE262E7041817 /* Standard.ignitedskin in Resources */,
 				25A56AE425DE026B7866820144EEB210 /* vba-over.ini in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10583,7 +10583,7 @@
 			files = (
 				3275C29735705C7563D266F047EAC4A6 /* NstDatabase.xml in Resources */,
 				8E3F5FEE14F3111EEFFCFCF99557A4CA /* Standard.deltamapping in Resources */,
-				CC6F43044520D745BC4704927BB6FAC7 /* Standard.deltaskin in Resources */,
+				CC6F43044520D745BC4704927BB6FAC7 /* Standard.ignitedskin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10592,7 +10592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A55D634DBF021D1D3CE755052F3918E /* Standard.deltamapping in Resources */,
-				4E9CB344E6B2A78B62E4638C9674DAD8 /* Standard.deltaskin in Resources */,
+				4E9CB344E6B2A78B62E4638C9674DAD8 /* Standard.ignitedskin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10613,7 +10613,7 @@
 				FDBB1A6796683E960EC8974DC252D14D /* GLideN64.custom.ini in Resources */,
 				B5724A9B9054A6E82020990726E5D368 /* mupen64plus.ini in Resources */,
 				2A6364D845C5E5EE2D8FA6F545B1B9E4 /* Standard.deltamapping in Resources */,
-				53578D3E7D989A069C7E70E94BDF6485 /* Standard.deltaskin in Resources */,
+				53578D3E7D989A069C7E70E94BDF6485 /* Standard.ignitedskin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10622,7 +10622,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20EB6B39BBAE80A64D599AFBA7245D2F /* Standard.deltamapping in Resources */,
-				934782B5A76E96EBE561BC133DF638DC /* Standard.deltaskin in Resources */,
+				934782B5A76E96EBE561BC133DF638DC /* Standard.ignitedskin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10631,7 +10631,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C29D0EBD4893BA871D029A38898A3BBE /* Standard.deltamapping in Resources */,
-				70FAB32D4D69DF18D47D3AF17352EE97 /* Standard.deltaskin in Resources */,
+				70FAB32D4D69DF18D47D3AF17352EE97 /* Standard.ignitedskin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

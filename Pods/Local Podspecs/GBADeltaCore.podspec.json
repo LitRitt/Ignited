@@ -33,7 +33,7 @@
   "resource_bundles": {
     "GBADeltaCore": [
       "GBADeltaCore/**/*.deltamapping",
-      "GBADeltaCore/**/*.deltaskin",
+      "GBADeltaCore/**/*.ignitedskin",
       "visualboyadvance-m/src/vba-over.ini"
     ]
   },

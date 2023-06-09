@@ -41,7 +41,7 @@
   "resource_bundles": {
     "Mupen64Plus": [
       "N64DeltaCore/**/*.deltamapping",
-      "N64DeltaCore/**/*.deltaskin",
+      "N64DeltaCore/**/*.ignitedskin",
       "Mupen64Plus/**/*.ini"
     ]
   },

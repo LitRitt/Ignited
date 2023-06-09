@@ -27,7 +27,7 @@
   "resource_bundles": {
     "SNESDeltaCore": [
       "SNESDeltaCore/**/*.deltamapping",
-      "SNESDeltaCore/**/*.deltaskin"
+      "SNESDeltaCore/**/*.ignitedskin"
     ]
   },
   "dependencies": {
