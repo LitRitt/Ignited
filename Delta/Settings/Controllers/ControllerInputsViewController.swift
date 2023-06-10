@@ -276,7 +276,7 @@ private extension ControllerInputsViewController
                 text = NSLocalizedString("Status Bar", comment: "")
                 
             case .quickSettings:
-                image = #imageLiteral(resourceName: "Debug")
+                image = #imageLiteral(resourceName: "QuickSettings")
                 text = NSLocalizedString("Quick Settings", comment: "")
                 
             default: continue
