@@ -109,8 +109,9 @@ private extension SettingsViewController
     
     enum CoresRow: Int, CaseIterable
     {
-        case ds
         case gbc
+        case n64
+        case ds
     }
 }
 
@@ -294,6 +295,12 @@ private extension SettingsViewController
     func showAdvancedFeatures()
     {
         let hostingController = AdvancedFeaturesView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showN64Features()
+    {
+        let hostingController = N64FeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -1045,10 +1052,12 @@ extension SettingsViewController
         case .cores:
             switch CoresRow.allCases[indexPath.row]
             {
-            case .ds:
-                self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
             case .gbc:
                 self.showGBCFeatures()
+            case .n64:
+                self.showN64Features()
+            case .ds:
+                self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
             }
             
         case .patreon:
@@ -1085,6 +1094,28 @@ extension SettingsViewController
         default: break
         }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+        {
+        primary:
+            switch Section(rawValue: indexPath.section)!
+            {
+            case .cores:
+                let row = CoresRow(rawValue: indexPath.row)!
+                switch row
+                {
+                case .n64:
+                    guard !AdvancedFeatures.shared.devMode.isEnabled else { break }
+                    return 0.0
+                    
+                default: break
+                }
+                
+            default: break
+            }
+            
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {

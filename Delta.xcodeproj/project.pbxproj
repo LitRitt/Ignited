@@ -56,6 +56,9 @@
 		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
 		AC53406229E32B70009EDF08 /* 8bit.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406129E32B70009EDF08 /* 8bit.caf */; };
 		AC53406429E33098009EDF08 /* snap.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC53406329E33097009EDF08 /* snap.caf */; };
+		AC56DDED2A35F1EA007C8372 /* N64FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */; };
+		AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEF2A35F38D007C8372 /* N64Features.swift */; };
+		AC56DDF22A35F3F2007C8372 /* N64GraphicsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
@@ -316,6 +319,9 @@
 		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
 		AC53406129E32B70009EDF08 /* 8bit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 8bit.caf; sourceTree = "<group>"; };
 		AC53406329E33097009EDF08 /* snap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = snap.caf; sourceTree = "<group>"; };
+		AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64FeaturesView.swift; sourceTree = "<group>"; };
+		AC56DDEF2A35F38D007C8372 /* N64Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64Features.swift; sourceTree = "<group>"; };
+		AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64GraphicsOptions.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
 		AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIconImage.swift"; sourceTree = "<group>"; };
 		AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
@@ -621,12 +627,13 @@
 			path = GamesCollection;
 			sourceTree = "<group>";
 		};
-		AC3CE7FD2A2C2E74008A8C43 /* CoreFeatures */ = {
+		AC3CE7FD2A2C2E74008A8C43 /* Cores */ = {
 			isa = PBXGroup;
 			children = (
+				AC56DDEE2A35F327007C8372 /* N64 */,
 				ACD5FA012A0C4C28005CDCF1 /* GBC */,
 			);
-			path = CoreFeatures;
+			path = Cores;
 			sourceTree = "<group>";
 		};
 		AC503F5D29B2B863005B27DD /* Updates */ = {
@@ -645,6 +652,15 @@
 				AC53406129E32B70009EDF08 /* 8bit.caf */,
 			);
 			path = "Button Sounds";
+			sourceTree = "<group>";
+		};
+		AC56DDEE2A35F327007C8372 /* N64 */ = {
+			isa = PBXGroup;
+			children = (
+				AC56DDEF2A35F38D007C8372 /* N64Features.swift */,
+				AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */,
+			);
+			path = N64;
 			sourceTree = "<group>";
 		};
 		AC84B56A29FEF5130090F274 /* Gameplay */ = {
@@ -733,7 +749,7 @@
 		ACB3CB8529FDCEAD002B53DE /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				AC3CE7FD2A2C2E74008A8C43 /* CoreFeatures */,
+				AC3CE7FD2A2C2E74008A8C43 /* Cores */,
 				AC84B56A29FEF5130090F274 /* Gameplay */,
 				AC3CE7F42A2BA7DC008A8C43 /* GamesCollection */,
 				AC27347C29FE930800B4CB2E /* UserInterface */,
@@ -758,6 +774,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD5F9FC2A0ADF45005CDCF1 /* GBCFeaturesView.swift */,
+				AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */,
 			);
 			path = CoreFeatures;
 			sourceTree = "<group>";
@@ -1618,6 +1635,7 @@
 				BF59427E1E09BC830051894B /* Game.swift in Sources */,
 				D5011C48281B6E8B00A0760B /* CharacterSet+Filename.swift in Sources */,
 				BFE593CC21F3F8C2003412A6 /* _GameSave.swift in Sources */,
+				AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */,
 				ACCD9DB72A01AF9F00B235C4 /* Color+RawRepresentable.swift in Sources */,
 				BF63A1A321A4AAAE00EE8F61 /* RecordSyncStatusViewController.swift in Sources */,
 				BFAA1FED1B8AA4FA00495943 /* Settings.swift in Sources */,
@@ -1693,6 +1711,7 @@
 				BF34FA071CF0F510006624C7 /* EditCheatViewController.swift in Sources */,
 				BF1F45A421AF274D00EF9895 /* SyncResultViewController.swift in Sources */,
 				AC3CE7F82A2BB485008A8C43 /* AnimatedArtwork.swift in Sources */,
+				AC56DDED2A35F1EA007C8372 /* N64FeaturesView.swift in Sources */,
 				AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */,
 				AC3CE7FA2A2BB496008A8C43 /* FavoriteGames.swift in Sources */,
 				AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */,
@@ -1742,6 +1761,7 @@
 				BFFBD3D9224A0756002EFC79 /* URL+ExtendedAttributes.swift in Sources */,
 				BF713C0822499ED4004A1A2B /* PreviousHarmony.xcdatamodeld in Sources */,
 				BF59427D1E09BC830051894B /* ControllerSkin.swift in Sources */,
+				AC56DDF22A35F3F2007C8372 /* N64GraphicsOptions.swift in Sources */,
 				ACAAE2FA2A0E337F004E0B3A /* CGColor+RGB.swift in Sources */,
 				BFAB9F7D219A43380080EC7D /* SyncManager.swift in Sources */,
 				AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */,

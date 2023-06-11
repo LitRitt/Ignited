@@ -22,6 +22,10 @@ struct AdvancedFeatures: FeatureContainer
              options: PowerUserOptions())
     var powerUser
     
+    @Feature(name: "Developer Mode",
+             description: "Enable to view unfinished features and settings.")
+    var devMode
+    
     private init()
     {
         self.prepareFeatures()
