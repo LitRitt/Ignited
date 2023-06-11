@@ -13,6 +13,7 @@ import Photos
 import DeltaCore
 import GBADeltaCore
 import GBCDeltaCore
+import N64DeltaCore
 import MelonDSDeltaCore
 import Systems
 
@@ -985,7 +986,10 @@ private extension GameViewController
                 }
                 
                 // update auto save state to prevent overwriting newer game saves when loading latest auto save
-                self.updateAutoSaveState()
+                if game.type != .n64 // N64 saves game when saving state, causing loop
+                {
+                    self.updateAutoSaveState()
+                }
             }
             catch CocoaError.fileNoSuchFile
             {
