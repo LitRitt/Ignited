@@ -33,11 +33,11 @@ jobs:
           -scheme Delta \
           -sdk iphoneos \
           archive -archivePath ./archive \
-          # CODE_SIGNING_REQUIRED=NO \
-          # AD_HOC_CODE_SIGNING_ALLOWED=YES \
-          # CODE_SIGNING_ALLOWED=NO \
-          # DEVELOPMENT_TEAM=XYZ0123456 \
-          # ORG_IDENTIFIER=com.litritt \
+          CODE_SIGNING_REQUIRED=NO \
+          AD_HOC_CODE_SIGNING_ALLOWED=YES \
+          CODE_SIGNING_ALLOWED=NO \
+          DEVELOPMENT_TEAM=AQKFQ7V9C4 \
+          ORG_IDENTIFIER=com.litritt \
           | xcpretty && exit ${PIPESTATUS[0]}
       - name: Fakesign app
         run: |
