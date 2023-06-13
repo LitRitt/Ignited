@@ -99,6 +99,7 @@ class GamesViewController: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.syncingDidFinish(_:)), name: SyncCoordinator.didFinishSyncingNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.settingsDidChange(_:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.emulationDidQuit(_:)), name: EmulatorCore.emulationDidQuitNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.graphicsRenderingAPIDidChange(_:)), name: .graphicsRenderingAPIDidChange, object: nil)
     }
 }
 
@@ -636,6 +637,7 @@ private extension GamesViewController
             }
             
             self.theme = .opaque
+            self.showResumeButton = false
         }
     }
 }
@@ -674,6 +676,15 @@ private extension GamesViewController
             guard let result = notification.userInfo?[SyncCoordinator.syncResultKey] as? SyncResult else { return }
             self.showSyncFinishedToastView(result: result)
         }
+    }
+    
+    @objc func graphicsRenderingAPIDidChange(_ notification: Notification)
+    {
+        if let emulatorCore = self.activeEmulatorCore
+        {
+            emulatorCore.stop()
+        }
+        self.quitEmulation()
     }
     
     @objc func emulationDidQuit(_ notification: Notification)
@@ -782,4 +793,5 @@ public extension Notification.Name
 {
     static let resumePlaying = Notification.Name("resumeCurrentGameNotification")
     static let unwindFromSettings = Notification.Name("unwindFromSettingsNotification")
+    static let graphicsRenderingAPIDidChange = Notification.Name("graphicsRenderingAPIDidChangeNotification")
 }

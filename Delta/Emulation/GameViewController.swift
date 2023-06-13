@@ -116,6 +116,7 @@ class GameViewController: DeltaCore.GameViewController
             }
             
             self.updateControllers()
+            self.updateGraphics()
             self.updateAudio()
             
             self.presentedGyroAlert = false
@@ -1309,6 +1310,24 @@ private extension GameViewController
     }
 }
 
+//MARK: - Graphics -
+/// Graphics
+private extension GameViewController
+{
+    func updateGraphics()
+    {
+        self.emulatorCore?.videoManager.renderingAPI = N64Features.shared.n64graphics.isEnabled ? N64Features.shared.n64graphics.graphicsAPI.api : EAGLRenderingAPI.openGLES2
+    }
+    
+    func changeGraphicsAPI()
+    {
+        NotificationCenter.default.post(name: .graphicsRenderingAPIDidChange, object: nil, userInfo: [:])
+        
+        self.emulatorCore?.gameViews.forEach { $0.inputImage = nil }
+        self.game = nil
+    }
+}
+
 //MARK: - Audio -
 /// Audio
 private extension GameViewController
@@ -2156,6 +2175,9 @@ private extension GameViewController
             
         case GameplayFeatures.shared.gameAudio.$respectSilent.settingsKey, GameplayFeatures.shared.gameAudio.$playOver.settingsKey, GameplayFeatures.shared.gameAudio.$volume.settingsKey:
             self.updateAudio()
+            
+        case N64Features.shared.n64graphics.$graphicsAPI.settingsKey:
+            self.changeGraphicsAPI()
             
         case TouchFeedbackFeatures.shared.touchAudio.$sound.settingsKey:
             self.updateControllers()

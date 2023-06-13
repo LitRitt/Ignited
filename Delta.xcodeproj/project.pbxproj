@@ -735,7 +735,7 @@
 		AC8C213729FDAF1B0044748D /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				ACD5F9FB2A0ADF2A005CDCF1 /* CoreFeatures */,
+				ACD5F9FB2A0ADF2A005CDCF1 /* Cores */,
 				AC1EAE6E2A0154380072C858 /* FeatureSectionView.swift */,
 				AC84B56D29FEF8A70090F274 /* GameplayFeaturesView.swift */,
 				AC3CE7FB2A2BFCEF008A8C43 /* GamesCollectionFeaturesView.swift */,
@@ -770,13 +770,13 @@
 			path = TouchFeedback;
 			sourceTree = "<group>";
 		};
-		ACD5F9FB2A0ADF2A005CDCF1 /* CoreFeatures */ = {
+		ACD5F9FB2A0ADF2A005CDCF1 /* Cores */ = {
 			isa = PBXGroup;
 			children = (
 				ACD5F9FC2A0ADF45005CDCF1 /* GBCFeaturesView.swift */,
 				AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */,
 			);
-			path = CoreFeatures;
+			path = Cores;
 			sourceTree = "<group>";
 		};
 		ACD5FA012A0C4C28005CDCF1 /* GBC */ = {
