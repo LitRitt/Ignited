@@ -232,6 +232,8 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.emulationDidQuit(with:)), name: EmulatorCore.emulationDidQuitNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnableJIT(with:)), name: ServerManager.didEnableJITNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateBlurBackground), name: .unwindFromSettings, object: nil)
     }
     
     deinit
@@ -885,10 +887,11 @@ private extension GameViewController
         self.view.setNeedsLayout()
     }
     
-    func updateBlurBackground()
+    @objc func updateBlurBackground()
     {
         self.blurScreenEnabled = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.blurBackground : false
-        self.blurScreenRadius = UserInterfaceFeatures.shared.skins.blurRadius
+        self.blurScreenStrength = UserInterfaceFeatures.shared.skins.blurStrength
+        self.blurScreenKeepAspect = UserInterfaceFeatures.shared.skins.blurAspect
     }
     
     func updateGameboyPalette()
@@ -2167,9 +2170,6 @@ private extension GameViewController
             
         case UserInterfaceFeatures.shared.skins.settingsKey, UserInterfaceFeatures.shared.skins.$opacity.settingsKey:
             self.controllerView.translucentControllerSkinOpacity = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.opacity : 0.7
-            
-        case UserInterfaceFeatures.shared.skins.$blurBackground.settingsKey, UserInterfaceFeatures.shared.skins.$blurRadius.settingsKey:
-            self.updateBlurBackground()
             
         case TouchFeedbackFeatures.shared.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
