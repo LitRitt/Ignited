@@ -4,6 +4,53 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.4.5</string>
+		<key>date</key>
+		<string>6/16/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.4.5</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Blurred game backgrounds for skins - Options to enable/disable, change blur strength, and adjust the brightness</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Option to change the N64 graphics rendering API between OpenGL ES 2 and OpenGL ES 3</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Adds support for skins with .ignitedskin extension to differentiate between legacy Delta skins and new Ignited skins</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Adds more mappable inputs for controllers</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes overlapping buttons when mapping controller inputs</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes crashes on N64 when opening menu and saving state</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.4.4</string>
 		<key>date</key>
 		<string>6/7/2023</string>
