@@ -18,6 +18,10 @@ private extension SettingsViewController
 {
     enum Feature: Int, CaseIterable
     {
+        // GBC
+        case gameboyPalettes
+        // N64
+        case n64Graphics
         // Gameplay
         case gameScreenshot
         case gameAudio
@@ -440,6 +444,29 @@ private extension SettingsViewController
     
     func resetFeature(_ feature: Feature)
     {
+        let resetGameboyPalettes = {
+            GBCFeatures.shared.palettes.multiPalette = false
+            GBCFeatures.shared.palettes.palette = .studio
+            GBCFeatures.shared.palettes.spritePalette1 = .studio
+            GBCFeatures.shared.palettes.spritePalette2 = .studio
+            GBCFeatures.shared.palettes.customPalette1Color1 = Color(fromRGB: GameboyPalette.studio.colors[0])
+            GBCFeatures.shared.palettes.customPalette1Color2 = Color(fromRGB: GameboyPalette.studio.colors[1])
+            GBCFeatures.shared.palettes.customPalette1Color3 = Color(fromRGB: GameboyPalette.studio.colors[2])
+            GBCFeatures.shared.palettes.customPalette1Color4 = Color(fromRGB: GameboyPalette.studio.colors[3])
+            GBCFeatures.shared.palettes.customPalette2Color1 = Color(fromRGB: GameboyPalette.minty.colors[0])
+            GBCFeatures.shared.palettes.customPalette2Color2 = Color(fromRGB: GameboyPalette.minty.colors[1])
+            GBCFeatures.shared.palettes.customPalette2Color3 = Color(fromRGB: GameboyPalette.minty.colors[2])
+            GBCFeatures.shared.palettes.customPalette2Color4 = Color(fromRGB: GameboyPalette.minty.colors[3])
+            GBCFeatures.shared.palettes.customPalette3Color1 = Color(fromRGB: GameboyPalette.spacehaze.colors[0])
+            GBCFeatures.shared.palettes.customPalette3Color2 = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
+            GBCFeatures.shared.palettes.customPalette3Color3 = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
+            GBCFeatures.shared.palettes.customPalette3Color4 = Color(fromRGB: GameboyPalette.spacehaze.colors[3])
+        }
+        
+        let resetN64Graphics = {
+            N64Features.shared.n64graphics.graphicsAPI = .openGLES2
+        }
+        
         let resetArtworkCustomization = {
             GamesCollectionFeatures.shared.artwork.sortOrder = .alphabeticalAZ
             GamesCollectionFeatures.shared.artwork.size = .medium
@@ -534,6 +561,9 @@ private extension SettingsViewController
         let resetControllerSkins = {
             UserInterfaceFeatures.shared.skins.opacity = 0.7
             UserInterfaceFeatures.shared.skins.alwaysShow = false
+            UserInterfaceFeatures.shared.skins.blurBackground = true
+            UserInterfaceFeatures.shared.skins.blurStrength = 1.0
+            UserInterfaceFeatures.shared.skins.blurAspect = true
         }
         
         let resetTouchVibration = {
@@ -577,6 +607,16 @@ private extension SettingsViewController
         
         switch feature
         {
+        case .gameboyPalettes:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                resetGameboyPalettes()
+            })
+            
+        case .n64Graphics:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                resetN64Graphics()
+            })
+            
         case .artworkCustomization:
             resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
                 resetArtworkCustomization()
@@ -664,6 +704,8 @@ private extension SettingsViewController
             
         case .allFeatures:
             resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                resetGameboyPalettes()
+                resetN64Graphics()
                 resetArtworkCustomization()
                 resetAnimatedArtwork()
                 resetFavoriteGames()
@@ -741,6 +783,26 @@ private extension SettingsViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     AdvancedFeatures.shared.powerUser.resetBuildCounter = false
                     self.resetBuildCounter()
+                }
+            }
+            
+        case GBCFeatures.shared.palettes.$resetGameboyPalettes.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    GBCFeatures.shared.palettes.resetGameboyPalettes = false
+                    self.resetFeature(.gameboyPalettes)
+                }
+            }
+            
+        case N64Features.shared.n64graphics.$resetN64Graphics.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    N64Features.shared.n64graphics.resetN64Graphics = false
+                    self.resetFeature(.n64Graphics)
                 }
             }
             

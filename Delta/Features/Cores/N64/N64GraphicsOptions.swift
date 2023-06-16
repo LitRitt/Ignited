@@ -41,4 +41,15 @@ struct N64GraphicsOptions
             description: "Changing the graphics API will affect how graphics are rendered. OpenGL ES 2 is the default, and all games should run when using it. OpenGL ES 3 can solve graphical issues like white or black boxes in the HUD of some games, but may cause other games to crash. If unsure, use OpenGL ES 2.\n\nIf you were already playing a game before changing this settings, you must restart the app before playing again, or the app will crash when loading the game.",
             values: GraphicsAPI.allCases)
     var graphicsAPI: GraphicsAPI = .openGLES2
+    
+    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
+        Toggle(isOn: value) {
+            Text("Restore Defaults")
+                .font(.system(size: 17, weight: .bold, design: .default))
+                .foregroundColor(.red)
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .displayInline()
+    })
+    var resetN64Graphics: Bool = false
 }
