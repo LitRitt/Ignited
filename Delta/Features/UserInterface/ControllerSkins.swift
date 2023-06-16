@@ -52,7 +52,22 @@ struct ControllerSkinOptions
             }
         }.displayInline()
     })
-    var blurStrength: Double = 1.0
+    var blurStrength: Double = 1
+    
+    @Option(name: "Blur Brightness", description: "Change the brightness of the blurred background image. Negative values darken the image, positive values brighten the image.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Blur Brightness: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("-50%")
+                Slider(value: value, in: -0.5...0.5, step: 0.05)
+                Text("50%")
+            }
+        }.displayInline()
+    })
+    var blurBrightness: Double = 0
     
     @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
         Toggle(isOn: value) {

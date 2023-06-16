@@ -562,8 +562,9 @@ private extension SettingsViewController
             UserInterfaceFeatures.shared.skins.opacity = 0.7
             UserInterfaceFeatures.shared.skins.alwaysShow = false
             UserInterfaceFeatures.shared.skins.blurBackground = true
-            UserInterfaceFeatures.shared.skins.blurStrength = 1.0
             UserInterfaceFeatures.shared.skins.blurAspect = true
+            UserInterfaceFeatures.shared.skins.blurStrength = 1.0
+            UserInterfaceFeatures.shared.skins.blurBrightness = 0.0
         }
         
         let resetTouchVibration = {

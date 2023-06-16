@@ -889,9 +889,11 @@ private extension GameViewController
     
     @objc func updateBlurBackground()
     {
-        self.blurScreenEnabled = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.blurBackground : false
-        self.blurScreenStrength = UserInterfaceFeatures.shared.skins.blurStrength
         self.blurScreenKeepAspect = UserInterfaceFeatures.shared.skins.blurAspect
+        self.blurScreenStrength = UserInterfaceFeatures.shared.skins.blurStrength
+        self.blurScreenBrightness = UserInterfaceFeatures.shared.skins.blurBrightness
+        self.blurScreenEnabled = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.blurBackground : false // set this last as it's the property that triggers updateGameViews()
+        
     }
     
     func updateGameboyPalette()
