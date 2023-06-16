@@ -31,6 +31,25 @@ struct ControllerSkinOptions
             description: "Always show the controller skin, even if there's a physical controller connected.")
     var alwaysShow: Bool = false
     
+    @Option(name: "Blurred Background",
+            description: "Display a blurred version of the game screen as the background instead of having a black background.")
+    var blurBackground: Bool = true
+    
+    @Option(name: "Blur Radius", description: "Change the radius of the blurred background. Higher value means more blurring", detailView: { value in
+        VStack {
+            HStack {
+                Text("Blur Radius: \(value.wrappedValue, specifier: "%.f")px")
+                Spacer()
+            }
+            HStack {
+                Text("1px")
+                Slider(value: value, in: 1...20, step: 1)
+                Text("20px")
+            }
+        }.displayInline()
+    })
+    var blurRadius: Double = 5
+    
     @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
         Toggle(isOn: value) {
             Text("Restore Defaults")

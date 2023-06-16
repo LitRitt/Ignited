@@ -797,6 +797,7 @@ private extension GameViewController
         
         self.updateButtonAudioFeedbackSound()
         self.updateGameboyPalette()
+        self.updateBlurBackground()
     }
     
     func updateButtonAudioFeedbackSound()
@@ -882,6 +883,12 @@ private extension GameViewController
         AdvancedFeatures.shared.skinDebug.hasAlt = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
         
         self.view.setNeedsLayout()
+    }
+    
+    func updateBlurBackground()
+    {
+        self.blurScreenEnabled = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.blurBackground : false
+        self.blurScreenRadius = UserInterfaceFeatures.shared.skins.blurRadius
     }
     
     func updateGameboyPalette()
@@ -2160,6 +2167,9 @@ private extension GameViewController
             
         case UserInterfaceFeatures.shared.skins.settingsKey, UserInterfaceFeatures.shared.skins.$opacity.settingsKey:
             self.controllerView.translucentControllerSkinOpacity = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.opacity : 0.7
+            
+        case UserInterfaceFeatures.shared.skins.$blurBackground.settingsKey, UserInterfaceFeatures.shared.skins.$blurRadius.settingsKey:
+            self.updateBlurBackground()
             
         case TouchFeedbackFeatures.shared.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
