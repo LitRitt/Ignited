@@ -39,6 +39,10 @@ struct ControllerSkinOptions
             description: "When scaling the blurred image to fit the background, maintain the aspect ratio instead of stretching the image only to the edges.")
     var blurAspect: Bool = true
     
+    @Option(name: "Override Skin Setting",
+            description: "If a skin has set a preference to use a background blur or not, you can enable this option to override the skin's setting and always use the setting provided above.")
+    var blurOverride: Bool = false
+    
     @Option(name: "Blur Strength", description: "Change the strength of the blur applied to the background.", detailView: { value in
         VStack {
             HStack {

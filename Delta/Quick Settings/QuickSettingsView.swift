@@ -28,7 +28,11 @@ struct QuickSettingsView: View
     private let systemsWithPalettes = [Systems.gbc.rawValue]
     
     @State private var fastForwardSpeed: Double
+    
     @State private var gameAudioVolume: Double = GameplayFeatures.shared.gameAudio.volume
+    
+    @State private var backgroundBlurStrength: Double = UserInterfaceFeatures.shared.skins.blurStrength
+    @State private var backgroundBlurBrightness: Double = UserInterfaceFeatures.shared.skins.blurBrightness
     
     @State private var gameboyPalette: GameboyPalette = GBCFeatures.shared.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = GBCFeatures.shared.palettes.spritePalette1
@@ -39,6 +43,8 @@ struct QuickSettingsView: View
     @State private var expandedFastForwardEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled
     @State private var gameAudioEnabled: Bool = GameplayFeatures.shared.quickSettings.gameAudioEnabled
     @State private var expandedGameAudioEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled
+    @State private var backgroundBlurEnabled: Bool = GameplayFeatures.shared.quickSettings.backgroundBlurEnabled
+    @State private var expandedBackgroundBlurEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedBackgroundBlurEnabled
     @State private var colorPalettesEnabled: Bool = GameplayFeatures.shared.quickSettings.colorPalettesEnabled
     
     var body: some View {
@@ -66,6 +72,7 @@ struct QuickSettingsView: View
                                         self.performScreenshot()
                                     } label: {
                                         Image("Screenshot")
+                                            .frame(width: 40, height: 40)
                                     }
                                     Text("Screenshot")
                                         .font(.caption)
@@ -76,6 +83,7 @@ struct QuickSettingsView: View
                                         self.performQuickSave()
                                     } label: {
                                         Image("SaveSaveState")
+                                            .frame(width: 40, height: 40)
                                     }
                                     Text("Quick Save")
                                         .font(.caption)
@@ -86,6 +94,7 @@ struct QuickSettingsView: View
                                         self.performQuickLoad()
                                     } label: {
                                         Image("LoadSaveState")
+                                            .frame(width: 40, height: 40)
                                     }
                                     Text("Quick Load")
                                         .font(.caption)
@@ -194,6 +203,46 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
+                if self.backgroundBlurEnabled && UserInterfaceFeatures.shared.skins.isEnabled
+                {
+                    Section() {
+                        VStack {
+                            HStack {
+                                Text("Blur Strength: \(self.backgroundBlurStrength * 100, specifier: "%.f")%")
+                                Spacer()
+                                Button("Reset") {
+                                    self.backgroundBlurStrength = 1.0
+                                    self.updateBackgroundBlurStrength()
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
+                                .onChange(of: self.backgroundBlurStrength) { value in
+                                    UserInterfaceFeatures.shared.skins.blurStrength = value
+                                }
+                            HStack {
+                                Text("Blur Brightness: \(self.backgroundBlurBrightness * 100, specifier: "%.f")%")
+                                Spacer()
+                                Button("Reset") {
+                                    self.backgroundBlurBrightness = 0
+                                    self.updateBackgroundBlurBrightness()
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$backgroundBlurBrightness, in: -0.5...0.5, step: 0.05)
+                                .onChange(of: self.backgroundBlurBrightness) { value in
+                                    UserInterfaceFeatures.shared.skins.blurBrightness = value
+                                }
+                            if self.expandedBackgroundBlurEnabled {
+                                Toggle("Override Skin Setting", isOn: UserInterfaceFeatures.shared.skins.$blurOverride.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                Toggle("Maintain Aspect Ratio", isOn: UserInterfaceFeatures.shared.skins.$blurAspect.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            }
+                        }
+                    } header: {
+                        Text("Background Blur")
+                    }.listStyle(.insetGrouped)
+                }
+                
                 if self.colorPalettesEnabled,
                    GBCFeatures.shared.palettes.isEnabled,
                    self.systemsWithPalettes.contains(system)
@@ -279,20 +328,36 @@ struct QuickSettingsView: View
                                 .onChange(of: self.fastForwardEnabled) { value in
                                     GameplayFeatures.shared.quickSettings.fastForwardEnabled = value
                                 }
-                            Toggle("Expanded Fast Forward", isOn: self.$expandedFastForwardEnabled)
-                                .onChange(of: self.expandedFastForwardEnabled) { value in
-                                    GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = value
-                                }
+                            if self.fastForwardEnabled {
+                                Toggle("Expanded Fast Forward", isOn: self.$expandedFastForwardEnabled)
+                                    .onChange(of: self.expandedFastForwardEnabled) { value in
+                                        GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = value
+                                    }
+                            }
                         }
                         if GameplayFeatures.shared.gameAudio.isEnabled {
                             Toggle("Game Audio", isOn: self.$gameAudioEnabled)
                                 .onChange(of: self.gameAudioEnabled) { value in
                                     GameplayFeatures.shared.quickSettings.gameAudioEnabled = value
                                 }
-                            Toggle("Expanded Game Audio", isOn: self.$expandedGameAudioEnabled)
-                                .onChange(of: self.expandedGameAudioEnabled) { value in
-                                    GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = value
+                            if self.gameAudioEnabled {
+                                Toggle("Expanded Game Audio", isOn: self.$expandedGameAudioEnabled)
+                                    .onChange(of: self.expandedGameAudioEnabled) { value in
+                                        GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = value
+                                    }
+                            }
+                        }
+                        if UserInterfaceFeatures.shared.skins.isEnabled {
+                            Toggle("Background Blur", isOn: self.$backgroundBlurEnabled)
+                                .onChange(of: self.backgroundBlurEnabled) { value in
+                                    GameplayFeatures.shared.quickSettings.backgroundBlurEnabled = value
                                 }
+                            if self.backgroundBlurEnabled {
+                                Toggle("Expanded Background Blur", isOn: self.$expandedBackgroundBlurEnabled)
+                                    .onChange(of: self.expandedBackgroundBlurEnabled) { value in
+                                        GameplayFeatures.shared.quickSettings.expandedBackgroundBlurEnabled = value
+                                    }
+                            }
                         }
                         if self.systemsWithPalettes.contains(system),
                            GBCFeatures.shared.palettes.isEnabled
@@ -307,6 +372,8 @@ struct QuickSettingsView: View
                     Text("Enabled Sections")
                 }.listStyle(.insetGrouped)
             }
+        }.onDisappear() {
+            NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         }
     }
     
@@ -318,6 +385,16 @@ struct QuickSettingsView: View
     func updateFastForwardSpeed()
     {
         GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
+    }
+    
+    func updateBackgroundBlurStrength()
+    {
+        UserInterfaceFeatures.shared.skins.blurStrength = self.backgroundBlurStrength
+    }
+    
+    func updateBackgroundBlurBrightness()
+    {
+        UserInterfaceFeatures.shared.skins.blurBrightness = self.backgroundBlurBrightness
     }
     
     func performQuickSave()
