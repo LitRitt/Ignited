@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "saveState.png",
+      "filename" : "backgroundBlur.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "saveState@2x.png",
+      "filename" : "backgroundBlur@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "saveState@3x.png",
+      "filename" : "backgroundBlur@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

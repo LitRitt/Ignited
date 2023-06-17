@@ -59,6 +59,10 @@ struct ToastNotificationOptions
             description: "Show toasts when changing color palettes.")
     var palette: Bool = true
     
+    @Option(name: "Background Blur Toggled",
+            description: "Show toasts when toggleing the background blur.")
+    var backgroundBlur: Bool = true
+    
     @Option(name: "Alternate Skin Toggled",
             description: "Show toasts when toggling the controller alternate skin.")
     var altSkin: Bool = true

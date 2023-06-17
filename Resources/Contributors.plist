@@ -50,21 +50,6 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Mattia D&apos;Oronzo</string>
-		<key>link</key>
-		<string>https://discord.com/users/433280815275704331</string>
-		<key>linkName</key>
-		<string>@Mattia#4056</string>
-		<key>contributions</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Pause Menu Icons</string>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>name</key>
 		<string>Noah Keck</string>
 		<key>link</key>
 		<string>https://github.com/noah978</string>

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "LoadSaveState.png",
+      "filename" : "loadState.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "LoadSaveState@2x.png",
+      "filename" : "loadState@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "LoadSaveState@3x.png",
+      "filename" : "loadState@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

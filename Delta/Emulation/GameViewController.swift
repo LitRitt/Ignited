@@ -479,6 +479,11 @@ extension GameViewController
                 self.performQuickSettingsAction()
             }
             
+            pauseViewController.blurBackgroudItem?.isSelected = UserInterfaceFeatures.shared.skins.blurBackground
+            pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
+                self.performBlurBackgroundAction()
+            }
+            
             pauseViewController.altSkinItem?.isSelected = AdvancedFeatures.shared.skinDebug.useAlt
             pauseViewController.altSkinItem?.action = { [unowned self] item in
                 self.performAltRepresentationsAction()
@@ -1775,6 +1780,32 @@ extension GameViewController
             self.transitionCoordinator?.animate(alongsideTransition: nil, completion: { (context) in
                 self.performSegue(withIdentifier: "showGamesViewController", sender: nil)
             })
+        }
+    }
+    
+    func performBlurBackgroundAction()
+    {
+        let enabled = !UserInterfaceFeatures.shared.skins.blurBackground
+        self.blurScreenEnabled = enabled
+        UserInterfaceFeatures.shared.skins.blurBackground = enabled
+        
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        if UserInterfaceFeatures.shared.toasts.backgroundBlur
+        {
+            let text: String
+            if enabled
+            {
+                text = NSLocalizedString("Background Blur Enabled", comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Background Blur Disabled", comment: "")
+            }
+            self.presentToastView(text: text)
         }
     }
     

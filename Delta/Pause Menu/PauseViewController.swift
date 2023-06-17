@@ -19,7 +19,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.paletteItem, self.quickSettingsItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem, self.debugDeviceItem].compactMap { $0 }
+        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.paletteItem, self.quickSettingsItem, self.blurBackgroudItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem, self.debugDeviceItem].compactMap { $0 }
     }
     
     /// Pause Items
@@ -34,6 +34,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var rewindItem: MenuItem?
     var paletteItem: MenuItem?
     var quickSettingsItem: MenuItem?
+    var blurBackgroudItem: MenuItem?
     var altSkinItem: MenuItem?
     var debugModeItem: MenuItem?
     var debugDeviceItem: MenuItem?
@@ -169,6 +170,7 @@ private extension PauseViewController
         self.cheatCodesItem = nil
         self.paletteItem = nil
         self.quickSettingsItem = nil
+        self.blurBackgroudItem = nil
         self.sustainButtonsItem = nil
         self.fastForwardItem = nil
         self.debugModeItem = nil
@@ -225,6 +227,11 @@ private extension PauseViewController
         if GameplayFeatures.shared.quickSettings.isEnabled
         {
             self.quickSettingsItem = MenuItem(text: NSLocalizedString("Quick Settings", comment: ""), image: #imageLiteral(resourceName: "QuickSettings"), action: { _ in })
+        }
+        
+        if UserInterfaceFeatures.shared.skins.isEnabled
+        {
+            self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""), image: #imageLiteral(resourceName: "BackgroundBlur"), action: { _ in })
         }
         
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""), image: #imageLiteral(resourceName: "SustainButtons"), action: { _ in })
