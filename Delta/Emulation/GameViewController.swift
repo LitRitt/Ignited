@@ -15,6 +15,7 @@ import GBADeltaCore
 import GBCDeltaCore
 import N64DeltaCore
 import MelonDSDeltaCore
+import GPGXDeltaCore
 import Systems
 
 import struct DSDeltaCore.DS
@@ -536,6 +537,8 @@ extension GameViewController
             case .genesis?:
                 // GPGX core does not support cheats yet.
                 pauseViewController.cheatCodesItem = nil
+                // GPGX core does not support background blur yet.
+                pauseViewController.blurBackgroudItem = nil
                 
             case .gbc?:
                 // Rewind is disabled on GBC. Crashes gambette
@@ -895,9 +898,20 @@ private extension GameViewController
     @objc func updateBlurBackground()
     {
         self.blurScreenKeepAspect = UserInterfaceFeatures.shared.skins.blurAspect
+        self.blurScreenOverride = UserInterfaceFeatures.shared.skins.blurOverride
         self.blurScreenStrength = UserInterfaceFeatures.shared.skins.blurStrength
         self.blurScreenBrightness = UserInterfaceFeatures.shared.skins.blurBrightness
-        self.blurScreenEnabled = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.blurBackground : false // set this last as it's the property that triggers updateGameViews()
+        
+        // Set enabled last as it's the property that triggers updateGameViews()
+        if let game = self.game,
+           game.type == .genesis
+        {
+            self.blurScreenEnabled = false //TODO: Fix background blur on genesis
+        }
+        else
+        {
+            self.blurScreenEnabled = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.blurBackground : false
+        }
         
     }
     
