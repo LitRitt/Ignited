@@ -547,6 +547,12 @@ extension GameViewController
             default: break
             }
             
+            if !UserInterfaceFeatures.shared.skins.blurOverride,
+               self.controllerView.backgroundBlur != nil
+            {
+                pauseViewController.blurBackgroudItem = nil
+            }
+            
             let url = self.game?.fileURL
             let fileName = url!.path.components(separatedBy: "/").last
             
