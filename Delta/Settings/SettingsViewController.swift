@@ -80,6 +80,7 @@ private extension SettingsViewController
     
     enum SkinDownloadsRow: Int, CaseIterable
     {
+        case classicSkins
         case litDesign
         case skinGenerator
         case deltaSkins
@@ -1089,6 +1090,7 @@ extension SettingsViewController
         case .skinDownloads:
             switch SkinDownloadsRow.allCases[indexPath.row]
             {
+            case .classicSkins: self.openWebsite(site: "https://litritt.com/ignited/classic-skins")
             case .litDesign: self.openWebsite(site: "https://design.litritt.com")
             case .skinGenerator: self.openWebsite(site: "https://generator.skins4delta.com")
             case .deltaSkins: self.openWebsite(site: "https://delta-skins.github.io")
