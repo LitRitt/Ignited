@@ -4,6 +4,53 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.4.7</string>
+		<key>date</key>
+		<string>6/19/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.4.7</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Classic skins have been added to the Skin Downloads section in settings for users who want to use the old Delta skins</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated NES default skin with new design</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Default skins with new design have been updated to utilize the new backgroundBlur key</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Allows skin preview images to be in either pdf or png format</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated logic for when the background blur pause menu button should show</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes an issue with the default GBA E2E landscape skin image</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.4.6</string>
 		<key>date</key>
 		<string>6/17/2023</string>
