@@ -1486,76 +1486,94 @@ extension GameViewController
     
     func performScreenshotAction()
     {
-        guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
-
-        let imageScale = GameplayFeatures.shared.screenshots.size?.rawValue ?? 1.0
-        let imageSize = CGSize(width: snapshot.size.width * imageScale, height: snapshot.size.height * imageScale)
-        
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = 1
-        let renderer = UIGraphicsImageRenderer(size: imageSize, format: format)
-
-        let scaledSnapshot = renderer.image { (context) in
-            context.cgContext.interpolationQuality = .none
-            snapshot.draw(in: CGRect(origin: .zero, size: imageSize))
-        }
-
-        if GameplayFeatures.shared.screenshots.saveToPhotos
-        {
-            PHPhotoLibrary.runIfAuthorized
-            {
-                PHPhotoLibrary.saveUIImage(image: scaledSnapshot)
-            }
-        }
-        
-        if GameplayFeatures.shared.screenshots.saveToFiles
-        {
-            guard let data = scaledSnapshot.pngData() else { return }
-            
-            let screenshotsDirectory = FileManager.default.documentsDirectory.appendingPathComponent("Screenshots")
-            
-            do
-            {
-                try FileManager.default.createDirectory(at: screenshotsDirectory, withIntermediateDirectories: true, attributes: nil)
-            }
-            catch
-            {
-                print(error)
-            }
-            
-            let date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-            
-            let fileName: URL
-            if let game = self.game as? Game
-            {
-                let filename = game.name + "_" + dateFormatter.string(from: date) + ".png"
-                fileName = screenshotsDirectory.appendingPathComponent(filename)
-            }
-            else
-            {
-                fileName = screenshotsDirectory.appendingPathComponent(dateFormatter.string(from: date) + ".png")
-            }
-            
-            do
-            {
-                try data.write(to: fileName)
-            }
-            catch
-            {
-                print(error)
-            }
-        }
-        
         if let pauseView = self.pauseViewController
         {
             pauseView.dismiss()
         }
         
-        if UserInterfaceFeatures.shared.toasts.screenshot
+        if GameplayFeatures.shared.screenshots.playCountdown
         {
-            self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
+            self.presentToastView(text: "3", duration: 1)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1)
+            {
+                self.presentToastView(text: "2", duration: 1)
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2)
+            {
+                self.presentToastView(text: "1", duration: 1)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + (GameplayFeatures.shared.screenshots.playCountdown ? 3 : 0))
+        {
+            guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
+
+            let imageScale = GameplayFeatures.shared.screenshots.size?.rawValue ?? 1.0
+            let imageSize = CGSize(width: snapshot.size.width * imageScale, height: snapshot.size.height * imageScale)
+            
+            let format = UIGraphicsImageRendererFormat()
+            format.scale = 1
+            let renderer = UIGraphicsImageRenderer(size: imageSize, format: format)
+
+            let scaledSnapshot = renderer.image { (context) in
+                context.cgContext.interpolationQuality = .none
+                snapshot.draw(in: CGRect(origin: .zero, size: imageSize))
+            }
+            
+            if GameplayFeatures.shared.screenshots.saveToPhotos
+            {
+                PHPhotoLibrary.runIfAuthorized
+                {
+                    PHPhotoLibrary.saveUIImage(image: scaledSnapshot)
+                }
+            }
+            
+            if GameplayFeatures.shared.screenshots.saveToFiles
+            {
+                guard let data = scaledSnapshot.pngData() else { return }
+                
+                let screenshotsDirectory = FileManager.default.documentsDirectory.appendingPathComponent("Screenshots")
+                
+                do
+                {
+                    try FileManager.default.createDirectory(at: screenshotsDirectory, withIntermediateDirectories: true, attributes: nil)
+                }
+                catch
+                {
+                    print(error)
+                }
+                
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+                
+                let fileName: URL
+                if let game = self.game as? Game
+                {
+                    let filename = game.name + "_" + dateFormatter.string(from: date) + ".png"
+                    fileName = screenshotsDirectory.appendingPathComponent(filename)
+                }
+                else
+                {
+                    fileName = screenshotsDirectory.appendingPathComponent(dateFormatter.string(from: date) + ".png")
+                }
+                
+                do
+                {
+                    try data.write(to: fileName)
+                }
+                catch
+                {
+                    print(error)
+                }
+            }
+            
+            if UserInterfaceFeatures.shared.toasts.screenshot
+            {
+                self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
+            }
         }
     }
     
@@ -2059,14 +2077,14 @@ extension GameViewController
 /// Toast Notifications
 extension GameViewController
 {
-    func presentToastView(text: String)
+    func presentToastView(text: String, duration: Double? = nil)
     {
         guard UserInterfaceFeatures.shared.toasts.isEnabled else { return }
         
         let toastView = RSTToastView(text: text, detailText: nil)
         toastView.edgeOffset.vertical = 8
         DispatchQueue.main.async {
-            self.show(toastView, duration: UserInterfaceFeatures.shared.toasts.duration)
+            self.show(toastView, duration: duration ?? UserInterfaceFeatures.shared.toasts.duration)
         }
     }
 }
