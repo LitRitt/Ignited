@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 import ObjectiveC
 
 import DeltaCore
@@ -148,18 +149,38 @@ class ImportController: NSObject
     
     private func presentDocumentBrowser()
     {
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ImportController.cancel))
+        let supportedTypes = self.documentTypes.compactMap { UTType($0) }
+
+        let presentedViewController: UIViewController
+
+        if #available(iOS 17, *)
+        {
+            // Prior to iOS 17, UIDocumentPickerViewController was too buggy to reliably use with iCloud Drive.
+            
+            let documentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
+            documentPickerViewController.delegate = self
+            documentPickerViewController.overrideUserInterfaceStyle = .dark
+            documentPickerViewController.allowsMultipleSelection = true
+            
+            presentedViewController = documentPickerViewController
+        }
+        else
+        {
+            let documentBrowserViewController = UIDocumentBrowserViewController(forOpening: supportedTypes)
+            documentBrowserViewController.delegate = self
+            documentBrowserViewController.modalPresentationStyle = .fullScreen
+            documentBrowserViewController.browserUserInterfaceStyle = .dark
+            documentBrowserViewController.allowsPickingMultipleItems = true
+            documentBrowserViewController.allowsDocumentCreation = false
+            
+            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ImportController.cancel))
+            documentBrowserViewController.additionalTrailingNavigationBarButtonItems = [cancelButton]
+            
+            presentedViewController = documentBrowserViewController
+        }
         
-        let documentBrowserViewController = UIDocumentBrowserViewController(forOpeningFilesWithContentTypes: Array(self.documentTypes))
-        documentBrowserViewController.delegate = self
-        documentBrowserViewController.modalPresentationStyle = .fullScreen
-        documentBrowserViewController.browserUserInterfaceStyle = .dark
-        documentBrowserViewController.allowsPickingMultipleItems = true
-        documentBrowserViewController.allowsDocumentCreation = false
-        documentBrowserViewController.additionalTrailingNavigationBarButtonItems = [cancelButton]
-        
-        self.presentedViewController = documentBrowserViewController
-        self.presentingViewController?.present(documentBrowserViewController, animated: true, completion: nil)
+        self.presentedViewController = presentedViewController
+        self.presentingViewController?.present(presentedViewController, animated: true, completion: nil)
     }
 }
 
@@ -196,9 +217,22 @@ extension ImportController
     }
 }
 
+extension ImportController: UIDocumentPickerDelegate
+{
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt documentURLs: [URL])
+    {
+        self.finish(with: Set(documentURLs), errors: [])
+    }
+
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController)
+    {
+        self.cancel()
+    }
+}
+
 extension ImportController: UIDocumentBrowserViewControllerDelegate
 {
-    func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentURLs documentURLs: [URL])
+    func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentsAt documentURLs: [URL])
     {
         var coordinatedURLs = Set<URL>()
         var errors = [Error]()
