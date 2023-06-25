@@ -525,6 +525,8 @@ private extension SettingsViewController
             GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = false
             GameplayFeatures.shared.quickSettings.fastForwardEnabled = true
             GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = false
+            GameplayFeatures.shared.quickSettings.backgroundBlurEnabled = true
+            GameplayFeatures.shared.quickSettings.expandedBackgroundBlurEnabled = false
             GameplayFeatures.shared.quickSettings.colorPalettesEnabled = true
         }
         
@@ -564,6 +566,7 @@ private extension SettingsViewController
             UserInterfaceFeatures.shared.skins.alwaysShow = false
             UserInterfaceFeatures.shared.skins.blurBackground = true
             UserInterfaceFeatures.shared.skins.blurAspect = true
+            UserInterfaceFeatures.shared.skins.blurOverride = false
             UserInterfaceFeatures.shared.skins.blurStrength = 1.0
             UserInterfaceFeatures.shared.skins.blurBrightness = 0.0
         }
