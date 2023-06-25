@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "sustainButton.png",
+      "filename" : "rotationLock.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "sustainButton@2x.png",
+      "filename" : "rotationLock@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "sustainButton@3x.png",
+      "filename" : "rotationLock@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

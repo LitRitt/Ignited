@@ -216,7 +216,7 @@ private extension PauseViewController
         
         if GameplayFeatures.shared.rotationLock.isEnabled
         {
-            self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""), image: #imageLiteral(resourceName: "Restart"), action: { _ in })
+            self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""), image: #imageLiteral(resourceName: "RotationLock"), action: { _ in })
         }
         
         if GameplayFeatures.shared.cheats.isEnabled {
