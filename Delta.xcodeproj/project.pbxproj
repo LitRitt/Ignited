@@ -636,6 +636,14 @@
 			path = Cores;
 			sourceTree = "<group>";
 		};
+		AC48D1F42A44AA3500492DF3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		AC503F5D29B2B863005B27DD /* Updates */ = {
 			isa = PBXGroup;
 			children = (
@@ -825,7 +833,6 @@
 				AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */,
 				ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */,
 				ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */,
-				AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */,
 				ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */,
 				AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */,
 				AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */,
@@ -912,6 +919,7 @@
 				BF5942671E09BBB70051894B /* Collection View */,
 				BF71CF881FE90471001F1613 /* Table View */,
 				BF5942601E09BBA80051894B /* Loading */,
+				AC48D1F42A44AA3500492DF3 /* Helpers */,
 			);
 			path = Components;
 			sourceTree = "<group>";

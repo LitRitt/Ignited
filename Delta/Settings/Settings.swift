@@ -55,6 +55,7 @@ struct Settings
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
             GameplayFeatures.shared.autoLoad.settingsKey.rawValue: true,
             GameplayFeatures.shared.cheats.settingsKey.rawValue: true,
+            GameplayFeatures.shared.rotationLock.settingsKey.rawValue: true,
             GameplayFeatures.shared.fastForward.settingsKey.rawValue: true,
             GameplayFeatures.shared.gameAudio.settingsKey.rawValue: true,
             GameplayFeatures.shared.screenshots.settingsKey.rawValue: true,

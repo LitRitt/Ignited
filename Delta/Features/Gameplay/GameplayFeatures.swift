@@ -40,6 +40,10 @@ struct GameplayFeatures: FeatureContainer
              description: "Modify games using cheat codes. Supports Action Replay, Code Breaker, Game Genie, and GameShark codes on select systems.")
     var cheats
     
+    @Feature(name: "Rotation Lock",
+             description: "Make rotation lock available in the pause menu. Lets you lock your game in either portrait or landscape orientation.")
+    var rotationLock
+    
     @Feature(name: "Quick Settings Menu",
              description: "Access common gameplay settings quickly from the pause menu or a controller/skin button.",
              options: QuickSettingsOptions())

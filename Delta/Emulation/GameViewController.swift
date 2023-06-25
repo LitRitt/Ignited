@@ -181,11 +181,32 @@ class GameViewController: DeltaCore.GameViewController
     private var isGyroActive = false
     private var presentedGyroAlert = false
     
+    private var lockedOrientation: UIInterfaceOrientationMask? = nil
+    
     private var presentedJITAlert = false
     
-    // TODO: Code for preferred game orientation goes here
     override var shouldAutorotate: Bool {
-        return !self.isGyroActive
+        if #available(iOS 16, *)
+        {
+            return false
+        }
+        else
+        {
+            return !(self.isGyroActive || (self.lockedOrientation != nil))
+        }
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if GameplayFeatures.shared.rotationLock.isEnabled || self.isGyroActive,
+           let orientation = self.lockedOrientation,
+           #available(iOS 16, *)
+        {
+            return orientation
+        }
+        else
+        {
+            return .all
+        }
     }
     
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
@@ -470,6 +491,11 @@ extension GameViewController
             pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
             pauseViewController.fastForwardItem?.action = { [unowned self] item in
                 self.performFastForwardAction(activate: item.isSelected)
+            }
+            
+            pauseViewController.rotationLockItem?.isSelected = self.lockedOrientation != nil
+            pauseViewController.rotationLockItem?.action = { [unowned self] item in
+                self.performRotationLockAction()
             }
             
             pauseViewController.paletteItem?.action = { [unowned self] item in
@@ -1484,6 +1510,56 @@ extension GameViewController
         }
     }
     
+    func performRotationLockAction()
+    {
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let text: String
+        
+        if self.lockedOrientation != nil
+        {
+            self.unlockOrientation()
+            text = NSLocalizedString("Rotation Lock Disabled", comment: "")
+        }
+        else
+        {
+            self.lockOrientation()
+            text = NSLocalizedString("Rotation Lock Enabled", comment: "")
+        }
+        
+        if UserInterfaceFeatures.shared.toasts.rotationLock
+        {
+            self.presentToastView(text: text)
+        }
+        
+        if #available(iOS 16, *)
+        {
+            self.setNeedsUpdateOfSupportedInterfaceOrientations()
+        }
+    }
+    
+    func lockOrientation()
+    {
+        guard self.lockedOrientation == nil else { return }
+        
+        switch UIDevice.current.orientation
+        {
+        case .portrait: self.lockedOrientation = .portrait
+        case .landscapeLeft: self.lockedOrientation = .landscapeRight
+        case .landscapeRight: self.lockedOrientation = .landscapeLeft
+        case .portraitUpsideDown: self.lockedOrientation = .portraitUpsideDown
+        default: self.lockedOrientation = .portrait
+        }
+    }
+    
+    func unlockOrientation()
+    {
+        self.lockedOrientation = nil
+    }
+    
     func performScreenshotAction()
     {
         if let pauseView = self.pauseViewController
@@ -2345,6 +2421,15 @@ private extension GameViewController
     @objc func didActivateGyro(with notification: Notification)
     {
         self.isGyroActive = true
+        self.lockOrientation()
+        
+        if #available(iOS 16, *)
+        {
+            // Needs called on main thread
+            DispatchQueue.main.async{
+                self.setNeedsUpdateOfSupportedInterfaceOrientations()
+            }
+        }
         
         guard !self.presentedGyroAlert else { return }
         
@@ -2373,6 +2458,15 @@ private extension GameViewController
     @objc func didDeactivateGyro(with notification: Notification)
     {
         self.isGyroActive = false
+        self.unlockOrientation()
+        
+        if #available(iOS 16, *)
+        {
+            // Needs called on main thread
+            DispatchQueue.main.async{
+                self.setNeedsUpdateOfSupportedInterfaceOrientations()
+            }
+        }
     }
     
     @objc func didEnableJIT(with notification: Notification)

@@ -51,6 +51,10 @@ struct ToastNotificationOptions
             description: "Show toasts when toggling showing the status bar.")
     var statusBar: Bool = true
     
+    @Option(name: "Rotation Lock Toggled",
+            description: "Show toasts when toggling rotation lock.")
+    var rotationLock: Bool = true
+    
     @Option(name: "Screenshot Captured",
             description: "Show toasts when capturing a game screenshot.")
     var screenshot: Bool = true

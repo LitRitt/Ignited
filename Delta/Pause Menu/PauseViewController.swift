@@ -19,7 +19,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.paletteItem, self.quickSettingsItem, self.blurBackgroudItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem, self.debugDeviceItem].compactMap { $0 }
+        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.rotationLockItem, self.paletteItem, self.quickSettingsItem, self.blurBackgroudItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem, self.debugDeviceItem].compactMap { $0 }
     }
     
     /// Pause Items
@@ -32,6 +32,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
     var rewindItem: MenuItem?
+    var rotationLockItem: MenuItem?
     var paletteItem: MenuItem?
     var quickSettingsItem: MenuItem?
     var blurBackgroudItem: MenuItem?
@@ -211,6 +212,11 @@ private extension PauseViewController
         if GameplayFeatures.shared.fastForward.isEnabled
         {
             self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""), image: #imageLiteral(resourceName: "FastForward"), action: { _ in })
+        }
+        
+        if GameplayFeatures.shared.rotationLock.isEnabled
+        {
+            self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""), image: #imageLiteral(resourceName: "Restart"), action: { _ in })
         }
         
         if GameplayFeatures.shared.cheats.isEnabled {
