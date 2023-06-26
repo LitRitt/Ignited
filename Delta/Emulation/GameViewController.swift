@@ -181,6 +181,7 @@ class GameViewController: DeltaCore.GameViewController
     private var isGyroActive = false
     private var presentedGyroAlert = false
     
+    private var isOrientationLocked = false
     private var lockedOrientation: UIInterfaceOrientationMask? = nil
     
     private var presentedJITAlert = false
@@ -192,7 +193,7 @@ class GameViewController: DeltaCore.GameViewController
         }
         else
         {
-            return !(self.isGyroActive || (self.lockedOrientation != nil))
+            return !(self.isGyroActive || self.isOrientationLocked)
         }
     }
     
@@ -493,7 +494,7 @@ extension GameViewController
                 self.performFastForwardAction(activate: item.isSelected)
             }
             
-            pauseViewController.rotationLockItem?.isSelected = self.lockedOrientation != nil
+            pauseViewController.rotationLockItem?.isSelected = self.isOrientationLocked
             pauseViewController.rotationLockItem?.action = { [unowned self] item in
                 self.performRotationLockAction()
             }
@@ -1519,13 +1520,15 @@ extension GameViewController
         
         let text: String
         
-        if self.lockedOrientation != nil
+        if self.isOrientationLocked
         {
+            self.isOrientationLocked = false
             self.unlockOrientation()
             text = NSLocalizedString("Rotation Lock Disabled", comment: "")
         }
         else
         {
+            self.isOrientationLocked = true
             self.lockOrientation()
             text = NSLocalizedString("Rotation Lock Enabled", comment: "")
         }
@@ -1557,6 +1560,8 @@ extension GameViewController
     
     func unlockOrientation()
     {
+        guard !self.isOrientationLocked else { return }
+        
         self.lockedOrientation = nil
     }
     
