@@ -4,6 +4,53 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.4.8</string>
+		<key>date</key>
+		<string>6/25/2023</string>
+		<key>link</key>
+		<string>https://github.com/Lit-Development/Delta-Ignited/releases/tag/v1.4.8</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Rotation Lock - Adds a pause menu button to lock device rotation during gameplay</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds an option to play a 3 second countdown between initiating and capturing a game screenshot</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Default skins with blurred backgrounds have been adjusted to look seamless on all device sizes</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>New icon for hold buttons pause menu button</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Speed up importing compressed games in ZIP format by skipping checksum verification</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes game screenshots being saved to Photos as JPEG instead of PNG</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.4.7</string>
 		<key>date</key>
 		<string>6/19/2023</string>
