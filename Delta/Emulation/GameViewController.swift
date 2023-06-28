@@ -829,8 +829,9 @@ private extension GameViewController
         self.controllerView.isButtonTouchOverlayEnabled = TouchFeedbackFeatures.shared.touchOverlay.isEnabled
         self.controllerView.touchOverlayOpacity = TouchFeedbackFeatures.shared.touchOverlay.opacity
         self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.touchOverlay.size
-        
         self.controllerView.touchOverlayColor = TouchFeedbackFeatures.shared.touchOverlay.themed ? UIColor.themeColor : UIColor(TouchFeedbackFeatures.shared.touchOverlay.overlayColor)
+        
+        self.backgroundColor = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? UIColor(ControllerSkinFeatures.shared.skinCustomization.backgroundColor) : .black
         
         self.controllerView.isAltRepresentationsEnabled = AdvancedFeatures.shared.skinDebug.useAlt
         self.controllerView.isDebugModeEnabled = AdvancedFeatures.shared.skinDebug.isOn
@@ -2328,6 +2329,9 @@ private extension GameViewController
             
         case ControllerSkinFeatures.shared.skinCustomization.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$opacity.settingsKey:
             self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
+            
+        case ControllerSkinFeatures.shared.skinCustomization.$backgroundColor.settingsKey:
+            self.backgroundColor = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? UIColor(ControllerSkinFeatures.shared.skinCustomization.backgroundColor) : .black
             
         case TouchFeedbackFeatures.shared.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
