@@ -235,7 +235,7 @@ private extension PauseViewController
             self.quickSettingsItem = MenuItem(text: NSLocalizedString("Quick Settings", comment: ""), image: #imageLiteral(resourceName: "QuickSettings"), action: { _ in })
         }
         
-        if UserInterfaceFeatures.shared.skins.isEnabled
+        if ControllerSkinFeatures.shared.backgroundBlur.isEnabled
         {
             self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""), image: #imageLiteral(resourceName: "BackgroundBlur"), action: { _ in })
         }

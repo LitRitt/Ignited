@@ -28,6 +28,9 @@ private extension SettingsViewController
         case saveStateRewind
         case fastForward
         case quickSettings
+        // Controller Skins
+        case skinCustomization
+        case backgroundBlur
         // Games Collestion
         case artworkCustomization
         case animatedArtwork
@@ -37,7 +40,6 @@ private extension SettingsViewController
         case statusBar
         case themeColor
         case appIcon
-        case controllerSkins
         // Touch Feedback
         case touchVibration
         case touchAudio
@@ -72,6 +74,7 @@ private extension SettingsViewController
     enum FeaturesRow: Int, CaseIterable
     {
         case gameplay
+        case controllerSkins
         case gamesCollection
         case userInterface
         case touchFeedback
@@ -276,6 +279,12 @@ private extension SettingsViewController
     func showGameplayFeatures()
     {
         let hostingController = GameplayFeaturesView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showControllerSkinFeatures()
+    {
+        let hostingController = ControllerSkinFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -561,14 +570,18 @@ private extension SettingsViewController
             UserInterfaceFeatures.shared.appIcon.alternateIcon = .normal
         }
         
-        let resetControllerSkins = {
-            UserInterfaceFeatures.shared.skins.opacity = 0.7
-            UserInterfaceFeatures.shared.skins.alwaysShow = false
-            UserInterfaceFeatures.shared.skins.blurBackground = true
-            UserInterfaceFeatures.shared.skins.blurAspect = true
-            UserInterfaceFeatures.shared.skins.blurOverride = false
-            UserInterfaceFeatures.shared.skins.blurStrength = 1.0
-            UserInterfaceFeatures.shared.skins.blurBrightness = 0.0
+        let resetSkinCustomization = {
+            ControllerSkinFeatures.shared.skinCustomization.opacity = 0.7
+            ControllerSkinFeatures.shared.skinCustomization.alwaysShow = false
+            ControllerSkinFeatures.shared.skinCustomization.backgroundColor = Color(red: 0/255, green: 0/255, blue: 0/255)
+        }
+        
+        let resetBackgroundBlur = {
+            ControllerSkinFeatures.shared.backgroundBlur.blurBackground = true
+            ControllerSkinFeatures.shared.backgroundBlur.blurAspect = true
+            ControllerSkinFeatures.shared.backgroundBlur.blurOverride = false
+            ControllerSkinFeatures.shared.backgroundBlur.blurStrength = 1.0
+            ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = 0.0
         }
         
         let resetTouchVibration = {
@@ -682,9 +695,14 @@ private extension SettingsViewController
                 resetAppIcon()
             })
             
-        case .controllerSkins:
+        case .skinCustomization:
             resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
-                resetControllerSkins()
+                resetSkinCustomization()
+            })
+            
+        case .backgroundBlur:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                resetBackgroundBlur()
             })
             
         case .touchVibration:
@@ -723,7 +741,8 @@ private extension SettingsViewController
                 resetStatusBar()
                 resetThemeColor()
                 resetAppIcon()
-                resetControllerSkins()
+                resetSkinCustomization()
+                resetBackgroundBlur()
                 resetTouchVibration()
                 resetTouchAudio()
                 resetTouchOverlay()
@@ -931,13 +950,23 @@ private extension SettingsViewController
                 }
             }
             
-        case UserInterfaceFeatures.shared.skins.$resetControllerSkins.settingsKey:
+        case ControllerSkinFeatures.shared.skinCustomization.$resetSkinCustomization.settingsKey:
             guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
             if value
             {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    UserInterfaceFeatures.shared.skins.resetControllerSkins = false
-                    self.resetFeature(.controllerSkins)
+                    ControllerSkinFeatures.shared.skinCustomization.resetSkinCustomization = false
+                    self.resetFeature(.skinCustomization)
+                }
+            }
+            
+        case ControllerSkinFeatures.shared.backgroundBlur.$resetBackgroundBlur.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    ControllerSkinFeatures.shared.backgroundBlur.resetBackgroundBlur = false
+                    self.resetFeature(.backgroundBlur)
                 }
             }
             
@@ -1104,6 +1133,7 @@ extension SettingsViewController
             switch FeaturesRow.allCases[indexPath.row]
             {
             case .gameplay: self.showGameplayFeatures()
+            case .controllerSkins: self.showControllerSkinFeatures()
             case .gamesCollection: self.showGamesCollectionFeatures()
             case .userInterface: self.showUserInterfaceFeatures()
             case .touchFeedback: self.showTouchFeedbackFeatures()

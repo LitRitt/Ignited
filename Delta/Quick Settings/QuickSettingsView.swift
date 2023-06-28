@@ -31,8 +31,8 @@ struct QuickSettingsView: View
     
     @State private var gameAudioVolume: Double = GameplayFeatures.shared.gameAudio.volume
     
-    @State private var backgroundBlurStrength: Double = UserInterfaceFeatures.shared.skins.blurStrength
-    @State private var backgroundBlurBrightness: Double = UserInterfaceFeatures.shared.skins.blurBrightness
+    @State private var backgroundBlurStrength: Double = ControllerSkinFeatures.shared.backgroundBlur.blurStrength
+    @State private var backgroundBlurBrightness: Double = ControllerSkinFeatures.shared.backgroundBlur.blurBrightness
     
     @State private var gameboyPalette: GameboyPalette = GBCFeatures.shared.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = GBCFeatures.shared.palettes.spritePalette1
@@ -203,7 +203,7 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if self.backgroundBlurEnabled && UserInterfaceFeatures.shared.skins.isEnabled
+                if self.backgroundBlurEnabled && ControllerSkinFeatures.shared.backgroundBlur.isEnabled
                 {
                     Section() {
                         VStack {
@@ -217,7 +217,7 @@ struct QuickSettingsView: View
                             }
                             Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
                                 .onChange(of: self.backgroundBlurStrength) { value in
-                                    UserInterfaceFeatures.shared.skins.blurStrength = value
+                                    ControllerSkinFeatures.shared.backgroundBlur.blurStrength = value
                                 }
                             HStack {
                                 Text("Blur Brightness: \(self.backgroundBlurBrightness * 100, specifier: "%.f")%")
@@ -229,12 +229,12 @@ struct QuickSettingsView: View
                             }
                             Slider(value: self.$backgroundBlurBrightness, in: -0.5...0.5, step: 0.05)
                                 .onChange(of: self.backgroundBlurBrightness) { value in
-                                    UserInterfaceFeatures.shared.skins.blurBrightness = value
+                                    ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = value
                                 }
                             if self.expandedBackgroundBlurEnabled {
-                                Toggle("Override Skin Setting", isOn: UserInterfaceFeatures.shared.skins.$blurOverride.valueBinding)
+                                Toggle("Override Skin Setting", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurOverride.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Maintain Aspect Ratio", isOn: UserInterfaceFeatures.shared.skins.$blurAspect.valueBinding)
+                                Toggle("Maintain Aspect Ratio", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurAspect.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }
@@ -347,7 +347,7 @@ struct QuickSettingsView: View
                                     }
                             }
                         }
-                        if UserInterfaceFeatures.shared.skins.isEnabled {
+                        if ControllerSkinFeatures.shared.backgroundBlur.isEnabled {
                             Toggle("Background Blur", isOn: self.$backgroundBlurEnabled)
                                 .onChange(of: self.backgroundBlurEnabled) { value in
                                     GameplayFeatures.shared.quickSettings.backgroundBlurEnabled = value
@@ -389,12 +389,12 @@ struct QuickSettingsView: View
     
     func updateBackgroundBlurStrength()
     {
-        UserInterfaceFeatures.shared.skins.blurStrength = self.backgroundBlurStrength
+        ControllerSkinFeatures.shared.backgroundBlur.blurStrength = self.backgroundBlurStrength
     }
     
     func updateBackgroundBlurBrightness()
     {
-        UserInterfaceFeatures.shared.skins.blurBrightness = self.backgroundBlurBrightness
+        ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = self.backgroundBlurBrightness
     }
     
     func performQuickSave()

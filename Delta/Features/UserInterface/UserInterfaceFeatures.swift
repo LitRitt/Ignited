@@ -36,11 +36,6 @@ struct UserInterfaceFeatures: FeatureContainer
              description: "Preview games and save states when accessing the tap & hold menu on a game.")
     var previews
     
-    @Feature(name: "Controller Skin Customization",
-             description: "Change how controller skins look and behave.",
-             options: ControllerSkinOptions())
-    var skins
-    
     private init()
     {
         self.prepareFeatures()

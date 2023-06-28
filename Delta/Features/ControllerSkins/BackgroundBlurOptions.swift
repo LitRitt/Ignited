@@ -1,8 +1,8 @@
 //
-//  ControllerSkins.swift
+//  BackgroundBlurOptions.swift
 //  Delta
 //
-//  Created by Chris Rittenhouse on 5/2/23.
+//  Created by Chris Rittenhouse on 6/28/23.
 //  Copyright © 2023 Lit Development. All rights reserved.
 //
 
@@ -10,29 +10,10 @@ import SwiftUI
 
 import Features
 
-struct ControllerSkinOptions
+struct BackgroundBlurOptions
 {
-    @Option(name: "Opacity", description: "Change the opacity of supported controller skins.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.05)
-                Text("100%")
-            }
-        }.displayInline()
-    })
-    var opacity: Double = 0.7
-    
-    @Option(name: "Show With Controller",
-            description: "Always show the controller skin, even if there's a physical controller connected.")
-    var alwaysShow: Bool = false
-    
-    @Option(name: "Blurred Background",
-            description: "Display a blurred version of the game screen as the background instead of having a black background.")
+   @Option(name: "Enabled",
+            description: "Display a blurred version of the game screen as the controller skin background.")
     var blurBackground: Bool = true
     
     @Option(name: "Maintain Aspect Ratio",
@@ -82,5 +63,5 @@ struct ControllerSkinOptions
         .toggleStyle(SwitchToggleStyle(tint: .red))
         .displayInline()
     })
-    var resetControllerSkins: Bool = false
+    var resetBackgroundBlur: Bool = false
 }

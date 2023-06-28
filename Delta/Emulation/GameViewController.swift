@@ -350,7 +350,7 @@ extension GameViewController
         // Lays out self.gameView, so we can pin self.sustainButtonsContentView to it without resulting in a temporary "cannot satisfy constraints".
         self.view.layoutIfNeeded()
         
-        self.controllerView.translucentControllerSkinOpacity = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.opacity : 0.7
+        self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
         
         self.sustainButtonsContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.sustainButtonsContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -507,7 +507,7 @@ extension GameViewController
                 self.performQuickSettingsAction()
             }
             
-            pauseViewController.blurBackgroudItem?.isSelected = UserInterfaceFeatures.shared.skins.blurBackground
+            pauseViewController.blurBackgroudItem?.isSelected = ControllerSkinFeatures.shared.backgroundBlur.blurBackground
             pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
                 self.performBlurBackgroundAction()
             }
@@ -574,7 +574,7 @@ extension GameViewController
             default: break
             }
             
-            if !UserInterfaceFeatures.shared.skins.blurOverride,
+            if !ControllerSkinFeatures.shared.backgroundBlur.blurOverride,
                self.controllerView.backgroundBlur != nil
             {
                 pauseViewController.blurBackgroudItem = nil
@@ -741,7 +741,7 @@ private extension GameViewController
                let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
                controllerSkin.hasTouchScreen(for: traits)
             {
-                if !(UserInterfaceFeatures.shared.skins.alwaysShow && UserInterfaceFeatures.shared.skins.isEnabled)
+                if !(ControllerSkinFeatures.shared.skinCustomization.alwaysShow && ControllerSkinFeatures.shared.skinCustomization.isEnabled)
                 {
                     Settings.localControllerPlayerIndex = nil
                 }
@@ -754,7 +754,7 @@ private extension GameViewController
             }
             else
             {
-                if !(UserInterfaceFeatures.shared.skins.alwaysShow && UserInterfaceFeatures.shared.skins.isEnabled)
+                if !(ControllerSkinFeatures.shared.skinCustomization.alwaysShow && ControllerSkinFeatures.shared.skinCustomization.isEnabled)
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil
@@ -930,10 +930,10 @@ private extension GameViewController
     
     @objc func updateBlurBackground()
     {
-        self.blurScreenKeepAspect = UserInterfaceFeatures.shared.skins.blurAspect
-        self.blurScreenOverride = UserInterfaceFeatures.shared.skins.blurOverride
-        self.blurScreenStrength = UserInterfaceFeatures.shared.skins.blurStrength
-        self.blurScreenBrightness = UserInterfaceFeatures.shared.skins.blurBrightness
+        self.blurScreenKeepAspect = ControllerSkinFeatures.shared.backgroundBlur.blurAspect
+        self.blurScreenOverride = ControllerSkinFeatures.shared.backgroundBlur.blurOverride
+        self.blurScreenStrength = ControllerSkinFeatures.shared.backgroundBlur.blurStrength
+        self.blurScreenBrightness = ControllerSkinFeatures.shared.backgroundBlur.blurBrightness
         
         // Set enabled last as it's the property that triggers updateGameViews()
         if let game = self.game,
@@ -943,7 +943,7 @@ private extension GameViewController
         }
         else
         {
-            self.blurScreenEnabled = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.blurBackground : false
+            self.blurScreenEnabled = ControllerSkinFeatures.shared.backgroundBlur.isEnabled ? ControllerSkinFeatures.shared.backgroundBlur.blurBackground : false
         }
         
     }
@@ -1910,9 +1910,9 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
-        let enabled = !UserInterfaceFeatures.shared.skins.blurBackground
+        let enabled = !ControllerSkinFeatures.shared.backgroundBlur.blurBackground
         self.blurScreenEnabled = enabled
-        UserInterfaceFeatures.shared.skins.blurBackground = enabled
+        ControllerSkinFeatures.shared.backgroundBlur.blurBackground = enabled
         
         if let pauseView = self.pauseViewController
         {
@@ -2312,7 +2312,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, UserInterfaceFeatures.shared.skins.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -2326,8 +2326,8 @@ private extension GameViewController
                 self.updateControllerSkin()
             }
             
-        case UserInterfaceFeatures.shared.skins.settingsKey, UserInterfaceFeatures.shared.skins.$opacity.settingsKey:
-            self.controllerView.translucentControllerSkinOpacity = UserInterfaceFeatures.shared.skins.isEnabled ? UserInterfaceFeatures.shared.skins.opacity : 0.7
+        case ControllerSkinFeatures.shared.skinCustomization.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$opacity.settingsKey:
+            self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
             
         case TouchFeedbackFeatures.shared.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
