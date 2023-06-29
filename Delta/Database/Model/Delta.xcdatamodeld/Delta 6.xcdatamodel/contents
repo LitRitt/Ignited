@@ -119,6 +119,7 @@
     <entity name="GameSave" representedClassName="GameSave" syncable="YES">
         <attribute name="identifier" attributeType="String" syncable="YES"/>
         <attribute name="modifiedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="sha1" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="gameSave" inverseEntity="Game" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
