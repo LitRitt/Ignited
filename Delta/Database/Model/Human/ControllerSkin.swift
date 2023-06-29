@@ -127,4 +127,8 @@ extension ControllerSkin: Syncable
     public var syncableLocalizedName: String? {
         return self.name
     }
+    
+    public func resolveConflict(_ record: AnyRecord) -> ConflictResolution {
+        return .newest
+    }
 }
