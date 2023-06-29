@@ -3,12 +3,12 @@
   "version": "0.1",
   "summary": "Super Nintendo Entertainment System plug-in for Delta emulator.",
   "description": "iOS framework that wraps Snes9x to allow playing SNES games with Delta emulator.",
-  "homepage": "https://github.com/Lit-Development/SNESDeltaCore",
+  "homepage": "https://github.com/LitRitt/SNESDeltaCore",
   "platforms": {
     "ios": "12.0"
   },
   "source": {
-    "git": "https://github.com/Lit-Development/SNESDeltaCore.git"
+    "git": "https://github.com/LitRitt/SNESDeltaCore.git"
   },
   "authors": {
     "Chris Rittenhouse": "dev@litritt.com"

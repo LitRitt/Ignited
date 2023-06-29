@@ -1430,7 +1430,7 @@
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1420;
-				ORGANIZATIONNAME = "Lit Development";
+				ORGANIZATIONNAME = "LitRitt";
 				TargetAttributes = {
 					AC8C211E29FDAD970044748D = {
 						CreatedOnToolsVersion = 14.3;

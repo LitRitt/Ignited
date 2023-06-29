@@ -3,7 +3,7 @@
 //  Ignited
 //
 //  Created by Chris Rittenhouse on 4/17/23.
-//  Copyright © 2023 Lit Development. All rights reserved.
+//  Copyright © 2023 LitRitt. All rights reserved.
 //
 
 import SwiftUI

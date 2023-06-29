@@ -3,12 +3,12 @@
   "version": "0.1",
   "summary": "Game Boy Advance plug-in for Delta emulator.",
   "description": "iOS framework that wraps VBA-M to allow playing Game Boy Advance games with Delta emulator.",
-  "homepage": "https://github.com/Lit-Development/GBADeltaCore",
+  "homepage": "https://github.com/LitRitt/GBADeltaCore",
   "platforms": {
     "ios": "12.0"
   },
   "source": {
-    "git": "https://github.com/Lit-Development/GBADeltaCore.git"
+    "git": "https://github.com/LitRitt/GBADeltaCore.git"
   },
   "authors": {
     "Chris Rittenhouse": "dev@litritt.com"

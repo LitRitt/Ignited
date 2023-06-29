@@ -1736,7 +1736,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lw6-5a-pvQ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <edgeInsets key="layoutMargins" top="8" left="30" bottom="8" right="30"/>
-                                <string key="text">Ignited and Lit Development are in no way affiliated with Nintendo Co., Ltd.
+                                <string key="text">Ignited and LitRitt are in no way affiliated with Nintendo Co., Ltd.
 
 Ignited uses these emulator cores licensed under the GNU Public License version 3:
 

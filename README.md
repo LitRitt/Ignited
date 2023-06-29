@@ -7,8 +7,8 @@
 Ignited is a multi-core emulator front-end for iOS devices. It provides a beautiful user interface and rich features that other emulators lack. An experience that feels right at home on your premium devices. Join the [Discord](https://discord.gg/qEtKFJt5dR) to follow along with development, suggest new features, and chat. Become a [Patron](https://patreon.com/litritt) to support development and unlock benefits, such as being able to install Ignited straight from this page without having to sideload it.
 
 <p align="center">
-  <img src="https://github.com/Lit-Development/Assets/blob/main/apps/delta-ignited/device-previews.png?raw=true" width=100%><br/>
-  <em>Mario and Metroid and properties of Nintendo Co., Ltd. and are not associated with Ignited or Lit Development.</em>
+  <img src="https://github.com/LitRitt/Assets/blob/main/apps/delta-ignited/device-previews.png?raw=true" width=100%><br/>
+  <em>Mario and Metroid and properties of Nintendo Co., Ltd. and are not associated with Ignited or LitRitt.</em>
 </p>
 
 ## Supported Systems
@@ -95,33 +95,33 @@ Patrons can install Ignited OTA directly from my site, without needing to sidelo
 
 Once you've installed Ignited with AltStore, **you'll need to refresh it at least once every 7 days to prevent it from expiring** and requiring a re-installation. AltStore will periodically attempt to refresh your apps in the background when on the same WiFi as AltServer, but you can also manually refresh apps by pressing "Refresh All" in AltStore. AltStore will also let you know whenever a new update is released, allowing you to update Ignited directly within AltStore.
 
-Alternatively, you are welcome to download the compiled `.ipa`'s from [Releases](https://github.com/Lit-Development/Ignited/releases) and sideload them using whatever sideloading method you prefer, but you will not receive automatic updates and will have to manually update Ignited by re-sideloading each new version.
+Alternatively, you are welcome to download the compiled `.ipa`'s from [Releases](https://github.com/LitRitt/Ignited/releases) and sideload them using whatever sideloading method you prefer, but you will not receive automatic updates and will have to manually update Ignited by re-sideloading each new version.
 
 ## Project Overview
 
 Ignited was designed from the beginning to be modular, and for that reason each "Delta Core" has its own GitHub repo and is added as a submodule to the main Ignited project. Additionally, Ignited uses two forks of Riley Testut's private frameworks to share common functionality between apps: Roxas and Harmony.
 
-[**Ignited**](https://github.com/Lit-Development/Ignited)  
+[**Ignited**](https://github.com/LitRitt/Ignited)  
 Ignited is just a regular, sandboxed iOS application. The Ignited app repo (aka this one) contains all the code specific to the Ignited app itself, such as storyboards, app-specific view controllers, database logic, etc.
 
-[**DeltaCore**](https://github.com/Lit-Development/DeltaCore)  
+[**DeltaCore**](https://github.com/LitRitt/DeltaCore)  
 DeltaCore serves as the “middle-man” between the high-level app code and the specific emulation cores. By working with this framework, you have access to all the core Ignited features, such as emulation, controller skins, save states, cheat codes, etc. Other potential emulator apps will use this framework extensively.
 
-[**Roxas**](https://github.com/Lit-Development/Roxas)    
+[**Roxas**](https://github.com/LitRitt/Roxas)    
 Roxas is my own framework used across my projects, developed to simplify a variety of common tasks used in iOS development.
 
-[**Harmony**](https://github.com/rileyLit-Developmenttestut/Harmony)   
+[**Harmony**](https://github.com/LitRitt/Harmony)   
 Harmony is my personal syncing framework designed to sync Core Data databases. Harmony listens for changes to an app's persistent store, then syncs any changes with a remote file service (such as Google Drive or Dropbox).
 
 **Delta Cores**  
 Each system in Ignited is implemented as its own "Delta Core", which serves as a standard emulation API Ignited can understand regardless of the underlying core. For the most part, you don't interact directly with specific Delta Cores, but rather indirectly through `DeltaCore`.
-- [NESDeltaCore](https://github.com/Lit-Development/NESDeltaCore)
-- [SNESDeltaCore](https://github.com/Lit-Development/SNESDeltaCore)
-- [N64DeltaCore](https://github.com/Lit-Development/N64DeltaCore)
-- [GBCDeltaCore](https://github.com/Lit-Development/GBCDeltaCore)
-- [GBADeltaCore](https://github.com/Lit-Development/GBADeltaCore)
-- [MelonDSDeltaCore](https://github.com/Lit-Development/MelonDSDeltaCore)
-- [GPGXDeltaCore](https://github.com/Lit-Development/GPGXDeltaCore)
+- [NESDeltaCore](https://github.com/LitRitt/NESDeltaCore)
+- [SNESDeltaCore](https://github.com/LitRitt/SNESDeltaCore)
+- [N64DeltaCore](https://github.com/LitRitt/N64DeltaCore)
+- [GBCDeltaCore](https://github.com/LitRitt/GBCDeltaCore)
+- [GBADeltaCore](https://github.com/LitRitt/GBADeltaCore)
+- [MelonDSDeltaCore](https://github.com/LitRitt/MelonDSDeltaCore)
+- [GPGXDeltaCore](https://github.com/LitRitt/GPGXDeltaCore)
 
 ## Project Requirements
 - Xcode 12
@@ -134,7 +134,7 @@ Each system in Ignited is implemented as its own "Delta Core", which serves as a
 
 1. Clone this repository by running the following command in Terminal*  
 ```bash
-$ git clone https://github.com/Lit-Development/Ignited.git
+$ git clone https://github.com/LitRitt/Ignited.git
 ```  
 
 1. Update Git submodules

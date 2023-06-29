@@ -1,36 +1,36 @@
 [submodule "Cores/DeltaCore"]
 	path = Cores/DeltaCore
-	url = https://github.com/Lit-Development/DeltaCore.git
+	url = https://github.com/LitRitt/DeltaCore.git
 [submodule "Cores/SNESDeltaCore"]
 	path = Cores/SNESDeltaCore
-	url = https://github.com/Lit-Development/SNESDeltaCore.git
+	url = https://github.com/LitRitt/SNESDeltaCore.git
 [submodule "External/Roxas"]
 	path = External/Roxas
-	url = https://github.com/Lit-Development/Roxas.git
+	url = https://github.com/LitRitt/Roxas.git
 [submodule "Cores/GBADeltaCore"]
 	path = Cores/GBADeltaCore
-	url = https://github.com/Lit-Development/GBADeltaCore.git
+	url = https://github.com/LitRitt/GBADeltaCore.git
 [submodule "Cores/GBCDeltaCore"]
 	path = Cores/GBCDeltaCore
-	url = https://github.com/Lit-Development/GBCDeltaCore.git
+	url = https://github.com/LitRitt/GBCDeltaCore.git
 [submodule "External/Harmony"]
 	path = External/Harmony
-	url = https://github.com/Lit-Development/Harmony.git
+	url = https://github.com/LitRitt/Harmony.git
 [submodule "Cores/NESDeltaCore"]
 	path = Cores/NESDeltaCore
-	url = https://github.com/Lit-Development/NESDeltaCore.git
+	url = https://github.com/LitRitt/NESDeltaCore.git
 [submodule "Cores/N64DeltaCore"]
 	path = Cores/N64DeltaCore
-	url = https://github.com/Lit-Development/N64DeltaCore.git
+	url = https://github.com/LitRitt/N64DeltaCore.git
 [submodule "Cores/DSDeltaCore"]
 	path = Cores/DSDeltaCore
-	url = https://github.com/Lit-Development/DSDeltaCore.git
+	url = https://github.com/LitRitt/DSDeltaCore.git
 [submodule "Cores/MelonDSDeltaCore"]
 	path = Cores/MelonDSDeltaCore
-	url = https://github.com/Lit-Development/MelonDSDeltaCore.git
+	url = https://github.com/LitRitt/MelonDSDeltaCore.git
 [submodule "Cores/GPGXDeltaCore"]
 	path = Cores/GPGXDeltaCore
-	url = https://github.com/Lit-Development/GPGXDeltaCore.git
+	url = https://github.com/LitRitt/GPGXDeltaCore.git
 [submodule "External/CheatBase"]
 	path = External/CheatBase
 	url = https://github.com/rileytestut/CheatBase.git

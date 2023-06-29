@@ -3,12 +3,12 @@
   "version": "0.1",
   "summary": "Nintendo Entertainment System plug-in for Delta emulator.",
   "description": "iOS framework that wraps Nestopia to allow playing NES games with Delta emulator.",
-  "homepage": "https://github.com/Lit-Development/NESDeltaCore",
+  "homepage": "https://github.com/LitRitt/NESDeltaCore",
   "platforms": {
     "ios": "12.0"
   },
   "source": {
-    "git": "https://github.com/Lit-Development/NESDeltaCore.git"
+    "git": "https://github.com/LitRitt/NESDeltaCore.git"
   },
   "authors": {
     "Chris Rittenhouse": "dev@litritt.com"
