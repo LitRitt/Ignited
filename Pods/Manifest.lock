@@ -6,13 +6,10 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
-  - Crashlytics (3.8.6):
-    - Fabric (~> 1.6.3)
   - DeltaCore (0.1):
     - ZIPFoundation
   - DSDeltaCore (0.1):
     - DeltaCore
-  - Fabric (1.6.13)
   - GBADeltaCore (0.1):
     - DeltaCore
   - GBCDeltaCore (0.1):
@@ -72,10 +69,8 @@ PODS:
   - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
-  - Crashlytics (~> 3.8.0)
   - DeltaCore (from `Cores/DeltaCore`)
   - DSDeltaCore (from `Cores/DSDeltaCore`)
-  - Fabric (~> 1.6.0)
   - GBADeltaCore (from `Cores/GBADeltaCore`)
   - GBCDeltaCore (from `Cores/GBCDeltaCore`)
   - Harmony (from `External/Harmony`)
@@ -92,8 +87,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AppAuth
-    - Crashlytics
-    - Fabric
     - GoogleAPIClientForREST
     - GoogleSignIn
     - GTMAppAuth
@@ -129,10 +122,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
-  Crashlytics: e156f27e43abaa331f9b7afed091bda37e1052cc
   DeltaCore: 329e85231fce470483ad584ef951365218f36749
   DSDeltaCore: 9ba93bc99754a7aa037128e5540d11e9fd01f4c4
-  Fabric: be0459577cee96fe21f68de24588be2dd71482b8
   GBADeltaCore: 7f49475784f9f685e2fd6b52e64f96072740e97a
   GBCDeltaCore: 87eef56e16c01e0b0838ef0e1bbe3940ccbe7bfe
   GoogleAPIClientForREST: 0f19a8280dfe6471f76016645d26eb5dae305101
@@ -151,6 +142,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: 378b4425a2e8d0cb24c7b0f2e3af72bfbaaf1e73
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: eaef72cd8d4dab3655e9ef00ea90b6b6344fa479
+PODFILE CHECKSUM: 2520edbdaf33cd871838c76aaa76ddc068b6cd81
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
