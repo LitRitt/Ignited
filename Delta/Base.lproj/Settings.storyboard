@@ -1980,7 +1980,6 @@ Licensed under Apache 2 license.</string>
                                                     <color key="onTintColor" systemColor="tintColor"/>
                                                     <connections>
                                                         <action selector="toggleAltJITEnabled:" destination="OwL-4c-EEA" eventType="valueChanged" id="lfe-xg-J5o"/>
-                                                        <action selector="togglePreviewsEnabled:" destination="eHi-aO-uGS" eventType="primaryActionTriggered" id="BKJ-dV-k7X"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
