@@ -31,6 +31,9 @@ struct QuickSettingsView: View
     
     @State private var gameAudioVolume: Double = GameplayFeatures.shared.gameAudio.volume
     
+    @State private var controllerSkinOpacity: Double = ControllerSkinFeatures.shared.skinCustomization.opacity
+    @State private var controllerSkinBackgroundColor: Color = ControllerSkinFeatures.shared.skinCustomization.backgroundColor
+    
     @State private var backgroundBlurStrength: Double = ControllerSkinFeatures.shared.backgroundBlur.blurStrength
     @State private var backgroundBlurBrightness: Double = ControllerSkinFeatures.shared.backgroundBlur.blurBrightness
     
@@ -43,6 +46,8 @@ struct QuickSettingsView: View
     @State private var expandedFastForwardEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled
     @State private var gameAudioEnabled: Bool = GameplayFeatures.shared.quickSettings.gameAudioEnabled
     @State private var expandedGameAudioEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled
+    @State private var controllerSkinEnabled: Bool = GameplayFeatures.shared.quickSettings.controllerSkinEnabled
+    @State private var expandedControllerSkinEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedControllerSkinEnabled
     @State private var backgroundBlurEnabled: Bool = GameplayFeatures.shared.quickSettings.backgroundBlurEnabled
     @State private var expandedBackgroundBlurEnabled: Bool = GameplayFeatures.shared.quickSettings.expandedBackgroundBlurEnabled
     @State private var colorPalettesEnabled: Bool = GameplayFeatures.shared.quickSettings.colorPalettesEnabled
@@ -114,7 +119,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.fastForwardSpeed = 1.0
-                                    self.updateFastForwardSpeed()
+                                    GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                 }
                             }
                             Slider(value: self.$fastForwardSpeed, in: 0.1...8.0, step: 0.1)
@@ -127,43 +132,43 @@ struct QuickSettingsView: View
                                 HStack {
                                     Button("50%") {
                                         self.fastForwardSpeed = 0.5
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                     Spacer()
                                     Button("125%") {
                                         self.fastForwardSpeed = 1.25
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                     Spacer()
                                     Button("150%") {
                                         self.fastForwardSpeed = 1.5
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                     Spacer()
                                     Button("200%") {
                                         self.fastForwardSpeed = 2.0
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                 }.padding(.top, 10)
                                 HStack {
                                     Button("300%") {
                                         self.fastForwardSpeed = 3.0
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                     Spacer()
                                     Button("400%") {
                                         self.fastForwardSpeed = 4.0
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                     Spacer()
                                     Button("800%") {
                                         self.fastForwardSpeed = 8.0
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                     Spacer()
                                     Button("1600%") {
                                         self.fastForwardSpeed = 16.0
-                                        self.updateFastForwardSpeed()
+                                        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                 }.padding(.top, 10)
                             }
@@ -182,7 +187,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.gameAudioVolume = 1.0
-                                    self.updateGameAudioVolume()
+                                    GameplayFeatures.shared.gameAudio.volume = self.gameAudioVolume
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$gameAudioVolume, in: 0.0...1.0, step: 0.05)
@@ -203,6 +208,40 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
+                if self.controllerSkinEnabled && ControllerSkinFeatures.shared.skinCustomization.isEnabled
+                {
+                    Section() {
+                        VStack {
+                            HStack {
+                                Text("Controller Skin Opacity: \(self.controllerSkinOpacity * 100, specifier: "%.f")%")
+                                Spacer()
+                                Button("Reset") {
+                                    self.controllerSkinOpacity = 1.0
+                                    ControllerSkinFeatures.shared.skinCustomization.opacity = self.controllerSkinOpacity
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$controllerSkinOpacity, in: 0.0...1.0, step: 0.05)
+                                .onChange(of: self.controllerSkinOpacity) { value in
+                                    ControllerSkinFeatures.shared.skinCustomization.opacity = value
+                                }
+                            
+                            if self.expandedControllerSkinEnabled
+                            {
+                                ColorPicker("Background Color", selection: self.$controllerSkinBackgroundColor, supportsOpacity: false)
+                                    .onChange(of: self.controllerSkinBackgroundColor) { value in
+                                        ControllerSkinFeatures.shared.skinCustomization.backgroundColor = value
+                                    }
+                                Toggle("Match Theme Color", isOn: ControllerSkinFeatures.shared.skinCustomization.$matchTheme.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                Toggle("Show With Controller", isOn: ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            }
+                        }
+                    } header: {
+                        Text("Controller Skin")
+                    }.listStyle(.insetGrouped)
+                }
+                
                 if self.backgroundBlurEnabled && ControllerSkinFeatures.shared.backgroundBlur.isEnabled
                 {
                     Section() {
@@ -212,7 +251,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.backgroundBlurStrength = 1.0
-                                    self.updateBackgroundBlurStrength()
+                                    ControllerSkinFeatures.shared.backgroundBlur.blurStrength = self.backgroundBlurStrength
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
@@ -224,7 +263,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.backgroundBlurBrightness = 0
-                                    self.updateBackgroundBlurBrightness()
+                                    ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = self.backgroundBlurBrightness
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$backgroundBlurBrightness, in: -0.5...0.5, step: 0.05)
@@ -232,6 +271,8 @@ struct QuickSettingsView: View
                                     ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = value
                                 }
                             if self.expandedBackgroundBlurEnabled {
+                                Toggle("Blur Enabled", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurBackground.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Override Skin Setting", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurOverride.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Maintain Aspect Ratio", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurAspect.valueBinding)
@@ -347,6 +388,18 @@ struct QuickSettingsView: View
                                     }
                             }
                         }
+                        if ControllerSkinFeatures.shared.skinCustomization.isEnabled {
+                            Toggle("Controller Skin", isOn: self.$controllerSkinEnabled)
+                                .onChange(of: self.controllerSkinEnabled) { value in
+                                    GameplayFeatures.shared.quickSettings.controllerSkinEnabled = value
+                                }
+                            if self.controllerSkinEnabled {
+                                Toggle("Expanded Controller Skin", isOn: self.$expandedControllerSkinEnabled)
+                                    .onChange(of: self.expandedControllerSkinEnabled) { value in
+                                        GameplayFeatures.shared.quickSettings.expandedControllerSkinEnabled = value
+                                    }
+                            }
+                        }
                         if ControllerSkinFeatures.shared.backgroundBlur.isEnabled {
                             Toggle("Background Blur", isOn: self.$backgroundBlurEnabled)
                                 .onChange(of: self.backgroundBlurEnabled) { value in
@@ -375,26 +428,6 @@ struct QuickSettingsView: View
         }.onDisappear() {
             NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         }
-    }
-    
-    func updateGameAudioVolume()
-    {
-        GameplayFeatures.shared.gameAudio.volume = self.gameAudioVolume
-    }
-    
-    func updateFastForwardSpeed()
-    {
-        GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
-    }
-    
-    func updateBackgroundBlurStrength()
-    {
-        ControllerSkinFeatures.shared.backgroundBlur.blurStrength = self.backgroundBlurStrength
-    }
-    
-    func updateBackgroundBlurBrightness()
-    {
-        ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = self.backgroundBlurBrightness
     }
     
     func performQuickSave()

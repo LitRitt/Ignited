@@ -831,8 +831,6 @@ private extension GameViewController
         self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.touchOverlay.size
         self.controllerView.touchOverlayColor = TouchFeedbackFeatures.shared.touchOverlay.themed ? UIColor.themeColor : UIColor(TouchFeedbackFeatures.shared.touchOverlay.overlayColor)
         
-        self.backgroundColor = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? UIColor(ControllerSkinFeatures.shared.skinCustomization.backgroundColor) : .black
-        
         self.controllerView.isAltRepresentationsEnabled = AdvancedFeatures.shared.skinDebug.useAlt
         self.controllerView.isDebugModeEnabled = AdvancedFeatures.shared.skinDebug.isOn
         
@@ -842,6 +840,7 @@ private extension GameViewController
         self.updateButtonAudioFeedbackSound()
         self.updateGameboyPalette()
         self.updateBlurBackground()
+        self.updateControllerSkinCustomization()
     }
     
     func updateButtonAudioFeedbackSound()
@@ -1011,6 +1010,20 @@ private extension GameViewController
     func updateEmulationSpeed()
     {
         self.emulatorCore?.rate = GameplayFeatures.shared.quickSettings.fastForwardSpeed
+    }
+    
+    func updateControllerSkinCustomization()
+    {
+        self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
+        
+        if ControllerSkinFeatures.shared.skinCustomization.isEnabled
+        {
+            self.backgroundColor = ControllerSkinFeatures.shared.skinCustomization.matchTheme ? UIColor.themeColor : UIColor(ControllerSkinFeatures.shared.skinCustomization.backgroundColor)
+        }
+        else
+        {
+            self.backgroundColor = .black
+        }
     }
 }
 
@@ -2328,11 +2341,8 @@ private extension GameViewController
                 self.updateControllerSkin()
             }
             
-        case ControllerSkinFeatures.shared.skinCustomization.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$opacity.settingsKey:
-            self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
-            
-        case ControllerSkinFeatures.shared.skinCustomization.$backgroundColor.settingsKey:
-            self.backgroundColor = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? UIColor(ControllerSkinFeatures.shared.skinCustomization.backgroundColor) : .black
+        case ControllerSkinFeatures.shared.skinCustomization.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$opacity.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$backgroundColor.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$matchTheme.settingsKey:
+            self.updateControllerSkinCustomization()
             
         case TouchFeedbackFeatures.shared.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength

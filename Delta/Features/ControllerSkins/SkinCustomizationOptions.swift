@@ -31,6 +31,10 @@ struct SkinCustomizationOptions
             description: "Always show the controller skin, even if there's a physical controller connected.")
     var alwaysShow: Bool = false
     
+    @Option(name: "Match Theme Color",
+            description: "Enable to use the theme color as the controller skin background color. Disable to use the color chosen below.")
+    var matchTheme: Bool = false
+    
     @Option(name: "Background Color",
             description: "Select a color to use as the controller skin background.",
             detailView: { value in

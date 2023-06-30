@@ -573,6 +573,7 @@ private extension SettingsViewController
         let resetSkinCustomization = {
             ControllerSkinFeatures.shared.skinCustomization.opacity = 0.7
             ControllerSkinFeatures.shared.skinCustomization.alwaysShow = false
+            ControllerSkinFeatures.shared.skinCustomization.matchTheme = false
             ControllerSkinFeatures.shared.skinCustomization.backgroundColor = Color(red: 0/255, green: 0/255, blue: 0/255)
         }
         
