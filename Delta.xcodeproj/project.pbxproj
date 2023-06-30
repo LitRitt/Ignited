@@ -51,6 +51,7 @@
 		AC3CE7F82A2BB485008A8C43 /* AnimatedArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F72A2BB485008A8C43 /* AnimatedArtwork.swift */; };
 		AC3CE7FA2A2BB496008A8C43 /* FavoriteGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F92A2BB496008A8C43 /* FavoriteGames.swift */; };
 		AC3CE7FC2A2BFCEF008A8C43 /* GamesCollectionFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7FB2A2BFCEF008A8C43 /* GamesCollectionFeaturesView.swift */; };
+		AC432A362A4F6DB1001E1A06 /* AirPlaySkins.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC432A352A4F6DB1001E1A06 /* AirPlaySkins.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */; };
 		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
@@ -319,6 +320,7 @@
 		AC3CE7F72A2BB485008A8C43 /* AnimatedArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedArtwork.swift; sourceTree = "<group>"; };
 		AC3CE7F92A2BB496008A8C43 /* FavoriteGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGames.swift; sourceTree = "<group>"; };
 		AC3CE7FB2A2BFCEF008A8C43 /* GamesCollectionFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesCollectionFeaturesView.swift; sourceTree = "<group>"; };
+		AC432A352A4F6DB1001E1A06 /* AirPlaySkins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlaySkins.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+BuildNumber.swift"; sourceTree = "<group>"; };
 		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
@@ -718,6 +720,7 @@
 				AC89DC982A4CACFC000DBD0C /* ControllerSkinFeatures.swift */,
 				ACCD9DBA2A01E48B00B235C4 /* SkinCustomizationOptions.swift */,
 				AC89DC9A2A4CADD6000DBD0C /* BackgroundBlurOptions.swift */,
+				AC432A352A4F6DB1001E1A06 /* AirPlaySkins.swift */,
 			);
 			path = ControllerSkins;
 			sourceTree = "<group>";
@@ -1754,6 +1757,7 @@
 				BF3D6C53220286750083E05A /* Delta3ToDelta4.xcmappingmodel in Sources */,
 				BF5942881E09BC8B0051894B /* _Game.swift in Sources */,
 				AC89DC992A4CACFC000DBD0C /* ControllerSkinFeatures.swift in Sources */,
+				AC432A362A4F6DB1001E1A06 /* AirPlaySkins.swift in Sources */,
 				BF56450D220239B800A8EA26 /* GameControllerInputMappingMigrationPolicy.swift in Sources */,
 				BF95E2771E4977BF0030E7AD /* GameMetadata.swift in Sources */,
 				BFFC461F1D59823500AF2CC6 /* GamesStoryboardSegue.swift in Sources */,
