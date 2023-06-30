@@ -100,6 +100,11 @@ extension ControllerSkin: ControllerSkinProtocol
         return self.controllerSkin?.aspectRatio(for: traits, alt: alt)
     }
     
+    public func contentSize(for traits: DeltaCore.ControllerSkin.Traits, alt: Bool) -> CGSize?
+    {
+        return self.controllerSkin?.contentSize(for: traits, alt: alt)
+    }
+    
     public func previewSize(for traits: DeltaCore.ControllerSkin.Traits, alt: Bool) -> CGSize?
     {
         return self.controllerSkin?.previewSize(for: traits, alt: alt)
