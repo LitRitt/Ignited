@@ -33,6 +33,8 @@
 
 /* Begin PBXBuildFile section */
 		1FA4ABA79AB72914FE414A61 /* libPods-Delta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC866E433B3BA9AE18ABA1EC /* libPods-Delta.a */; };
+		AC14384B2A4F670F0099977F /* DSAirPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384A2A4F670F0099977F /* DSAirPlay.swift */; };
+		AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384C2A4F67430099977F /* DSFeatures.swift */; };
 		AC185A8529FEA24C002DE52F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC185A8429FEA24C002DE52F /* StatusBar.swift */; };
 		AC1EAE652A005F6C0072C858 /* AdvancedFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */; };
 		AC1EAE672A0061910072C858 /* PowerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE662A0061910072C858 /* PowerUser.swift */; };
@@ -299,6 +301,8 @@
 		22506DA00971C4300AF90A35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19FF50F55441BC2B2248241 /* Pods-Delta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Delta/Pods-Delta.release.xcconfig"; sourceTree = "<group>"; };
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
+		AC14384A2A4F670F0099977F /* DSAirPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSAirPlay.swift; sourceTree = "<group>"; };
+		AC14384C2A4F67430099977F /* DSFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSFeatures.swift; sourceTree = "<group>"; };
 		AC185A8429FEA24C002DE52F /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedFeatures.swift; sourceTree = "<group>"; };
 		AC1EAE662A0061910072C858 /* PowerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerUser.swift; sourceTree = "<group>"; };
@@ -591,6 +595,15 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
+		AC1438492A4F66D40099977F /* DS */ = {
+			isa = PBXGroup;
+			children = (
+				AC14384A2A4F670F0099977F /* DSAirPlay.swift */,
+				AC14384C2A4F67430099977F /* DSFeatures.swift */,
+			);
+			path = DS;
+			sourceTree = "<group>";
+		};
 		AC1EAE632A005F590072C858 /* Advanced */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,6 +648,7 @@
 		AC3CE7FD2A2C2E74008A8C43 /* Cores */ = {
 			isa = PBXGroup;
 			children = (
+				AC1438492A4F66D40099977F /* DS */,
 				AC56DDEE2A35F327007C8372 /* N64 */,
 				ACD5FA012A0C4C28005CDCF1 /* GBC */,
 			);
@@ -1751,6 +1765,7 @@
 				ACD5FA032A0C4C84005CDCF1 /* GBCFeatures.swift in Sources */,
 				BF353FFF1C5DA3C500C1184C /* PausePresentationController.swift in Sources */,
 				ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */,
+				AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */,
 				BFFC464C1D5998D600AF2CC6 /* CheatTableViewCell.swift in Sources */,
 				BF5942941E09BD1A0051894B /* NSManagedObject+Conveniences.swift in Sources */,
 				BF1F45BF21AF676F00EF9895 /* Box.swift in Sources */,
@@ -1778,6 +1793,7 @@
 				BF59426F1E09BC5D0051894B /* DatabaseManager.swift in Sources */,
 				BF4828861F9028F500028B97 /* System.swift in Sources */,
 				BF13A7561D5D29B0000BB055 /* PreviewGameViewController.swift in Sources */,
+				AC14384B2A4F670F0099977F /* DSAirPlay.swift in Sources */,
 				BF6866171DCAC8B900BF2D06 /* ControllerSkin+Configuring.swift in Sources */,
 				BF713C0822499ED4004A1A2B /* PreviousHarmony.xcdatamodeld in Sources */,
 				BF59427D1E09BC830051894B /* ControllerSkin.swift in Sources */,

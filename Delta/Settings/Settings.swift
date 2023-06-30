@@ -45,6 +45,8 @@ extension Settings
 
 struct Settings
 {
+    static let dsFeatures = DSFeatures.shared
+    
     static func registerDefaults()
     {
         let defaults = [

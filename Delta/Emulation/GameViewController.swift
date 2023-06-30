@@ -913,6 +913,12 @@ private extension GameViewController
         {
             var touchControllerSkin = TouchControllerSkin(controllerSkin: controllerSkin)
             
+            if UIApplication.shared.isExternalDisplayConnected
+            {
+                // Only show touch screen if external display is connected.
+                touchControllerSkin.screenPredicate = { $0.isTouchScreen }
+            }
+            
             if self.view.bounds.width > self.view.bounds.height
             {
                 touchControllerSkin.screenLayoutAxis = .horizontal
@@ -2238,8 +2244,10 @@ private extension GameViewController
         // We need to receive gameViewController(_:didUpdateGameViews) callback.
         scene.gameViewController.delegate = self
 
-        self.updateGameViews()
-        self.updateExternalDisplay()
+        self.updateControllerSkin()
+
+        // Implicitly called from updateControllerSkin()
+        // self.updateExternalDisplay()
     }
 
     func updateExternalDisplay()
@@ -2251,7 +2259,37 @@ private extension GameViewController
             scene.game = self.game
         }
 
-        self.updateExternalDisplayGameViews()
+        var controllerSkin: ControllerSkinProtocol?
+
+        if let game = self.game, let traits = scene.gameViewController.controllerView.controllerSkinTraits
+        {
+            if let standardSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type), standardSkin.supports(traits)
+            {
+                if standardSkin.hasTouchScreen(for: traits)
+                {
+                    // Only use TouchControllerSkin for standard controller skins with touch screens.
+                             
+                    var touchControllerSkin = DeltaCore.TouchControllerSkin(controllerSkin: standardSkin)
+                    touchControllerSkin.screenLayoutAxis = Settings.dsFeatures.dsAirPlay.layoutAxis
+
+                    if Settings.dsFeatures.dsAirPlay.topScreenOnly
+                    {
+                        touchControllerSkin.screenPredicate = { !$0.isTouchScreen }
+                    }
+
+                    controllerSkin = touchControllerSkin
+                }
+                else
+                {
+                    controllerSkin = standardSkin
+                }
+            }
+        }
+
+        scene.gameViewController.controllerView.controllerSkin = controllerSkin
+
+        // Implicitly called when assigning controllerSkin.
+        // self.updateExternalDisplayGameViews()
     }
 
     func updateExternalDisplayGameViews()
@@ -2273,7 +2311,7 @@ private extension GameViewController
             self.emulatorCore?.remove(gameView)
         }
 
-        self.updateGameViews()
+        self.updateControllerSkin() // Reset TouchControllerSkin + GameViews
     }
 }
 
@@ -2496,6 +2534,10 @@ private extension GameViewController
             
         case GameplayFeatures.shared.quickSettings.$performMainMenu.settingsKey:
             self.performMainMenuAction()
+            
+        case Settings.dsFeatures.dsAirPlay.$topScreenOnly.settingsKey: fallthrough
+        case Settings.dsFeatures.dsAirPlay.$layoutAxis.settingsKey:
+            self.updateExternalDisplay()
             
         default: break
         }
