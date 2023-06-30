@@ -2448,7 +2448,7 @@
 		1C93814A460F193B01396D775E59686F /* FileRequests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileRequests.swift; path = Source/SwiftyDropbox/Shared/Generated/FileRequests.swift; sourceTree = "<group>"; };
 		1C9E2FAC3B0BCD4CAF1070323704128C /* F5Indi_Naboo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = F5Indi_Naboo.h; sourceTree = "<group>"; };
 		1CAC7BD1A9DBB436A379B63568AB915F /* ARMInterpreter_Branch.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = ARMInterpreter_Branch.cpp; sourceTree = "<group>"; };
-		1CBA76EDD27FA2D20B1EA0F0BF7F082C /* SwiftyDropbox */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SwiftyDropbox; path = libSwiftyDropbox.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CBA76EDD27FA2D20B1EA0F0BF7F082C /* libSwiftyDropbox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftyDropbox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CBCD15F20F318500823C4E873BB6568 /* RSTNibView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTNibView.h; path = Roxas/RSTNibView.h; sourceTree = "<group>"; };
 		1CC580A3B23B3ACA8B4E95578D5B1426 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+WebCache.h"; path = "SDWebImage/UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		1D28337CD2487A0BB2C9A58E121AD619 /* UdpSocket.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = UdpSocket.hpp; sourceTree = "<group>"; };
@@ -2713,7 +2713,7 @@
 		3FA021BAB62CBBF723A1A87AFCB9B0EA /* NstBoardBmcMarioParty7in1.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBmcMarioParty7in1.hpp; sourceTree = "<group>"; };
 		3FAD1B63265F0B9C30F70FA871EB0F98 /* ServiceOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ServiceOperation.swift; sourceTree = "<group>"; };
 		3FC5C25A1E62C26E9D6FAD2F32C223B9 /* N64DeltaCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = N64DeltaCore.debug.xcconfig; sourceTree = "<group>"; };
-		3FD1B4C1246D643E9476438C28048FA8 /* AppAuth */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = AppAuth; path = libAppAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FD1B4C1246D643E9476438C28048FA8 /* libAppAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAppAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FEBDBB7A80505C7D0B1ED77851CAD57 /* Archive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Archive.swift; path = Sources/ZIPFoundation/Archive.swift; sourceTree = "<group>"; };
 		401AF149315D628F51F0F24FE1B4920A /* expr.cpp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = expr.cpp.h; sourceTree = "<group>"; };
 		40213D3D75D201873BA18D63DB8E12E5 /* OIDTokenRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDTokenRequest.m; path = Source/AppAuthCore/OIDTokenRequest.m; sourceTree = "<group>"; };
@@ -2751,7 +2751,7 @@
 		43DB8C4B29085E6FE14954933B1854B8 /* ZlutTexture.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = ZlutTexture.cpp; sourceTree = "<group>"; };
 		43E8E60E56CB19A317F1DD05A4167EEE /* BPMDetect.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BPMDetect.h; sourceTree = "<group>"; };
 		43E9A99CB2F0F566B1EC79D4A6B08A4E /* DebugDump.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = DebugDump.cpp; sourceTree = "<group>"; };
-		4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = Roxas; path = libRoxas.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4405793D5AF1EFD9D2BDA30AA0D2E514 /* libRoxas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRoxas.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		440F728629AA81492F2374B22D158C8D /* Standard.deltamapping */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.bplist; name = Standard.deltamapping; path = DSDeltaCore/Standard.deltamapping; sourceTree = "<group>"; };
 		443636AEB2461813DE19CAAEDB8822E0 /* Result+Dropbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Result+Dropbox.swift"; sourceTree = "<group>"; };
 		4436DC447F9619DD9F67EABAAF038CD3 /* GTLRDuration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLRDuration.m; path = Source/Objects/GTLRDuration.m; sourceTree = "<group>"; };
@@ -2790,7 +2790,7 @@
 		487C7DB0A7257F16983BEF8324BEF561 /* NESDeltaCore-NESDeltaCore */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "NESDeltaCore-NESDeltaCore"; path = NESDeltaCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		48907C43DF6930F8003108EB5C6F7BA3 /* transferpak.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = transferpak.h; sourceTree = "<group>"; };
 		4898E73F069A8D1192DE3114754EC447 /* path.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = path.h; sourceTree = "<group>"; };
-		48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = ZIPFoundation; path = libZIPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZIPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B37C8C22C518C72C0677EACF6B53BB /* NESDeltaCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NESDeltaCore.release.xcconfig; sourceTree = "<group>"; };
 		48E31B5D12439A18AEAC61E2CAD17100 /* SQLite.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SQLite.h; path = Sources/SQLite/SQLite.h; sourceTree = "<group>"; };
 		48E3315E7F70EED2C80DA34DF0D097BE /* SDL_opengles2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SDL_opengles2.h; sourceTree = "<group>"; };
@@ -2879,7 +2879,7 @@
 		538BECA09BF84EBE9DC16158EAFD9155 /* KeyedContainers+ManagedValues.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "KeyedContainers+ManagedValues.swift"; sourceTree = "<group>"; };
 		538F365E94CEC13764BF9209E73CA629 /* callbacks.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = callbacks.h; sourceTree = "<group>"; };
 		539E45C97BD611AE9D428625F336FB19 /* glsl_CombinerProgramImpl.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = glsl_CombinerProgramImpl.cpp; sourceTree = "<group>"; };
-		53A730F4F4248E7E3F38F8409A2DE97C /* SMCalloutView */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SMCalloutView; path = libSMCalloutView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		53A730F4F4248E7E3F38F8409A2DE97C /* libSMCalloutView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSMCalloutView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D2A4DA49C20418137EF65E0F9A5665 /* Combiner.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = Combiner.cpp; sourceTree = "<group>"; };
 		53D5CF409D168FA18D40984A454645CB /* pif.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pif.h; sourceTree = "<group>"; };
 		53E70D960C0611443A19CD7A1BDD1E9A /* Color.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
@@ -2951,7 +2951,7 @@
 		5D5AB3E63C0BFFC9BC0F3867C18DD5A0 /* NstBoardBmcSuperHiK300in1.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBmcSuperHiK300in1.hpp; sourceTree = "<group>"; };
 		5D6B56947558FEC359A8FAD9606E9D30 /* SaveStateProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SaveStateProtocol.swift; sourceTree = "<group>"; };
 		5D77FFE1795D8F5D3B1ECC1F477F9831 /* RSTNavigationController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTNavigationController.h; path = Roxas/RSTNavigationController.h; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = Alamofire; path = libAlamofire.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* libAlamofire.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAlamofire.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D877B8846666B99FE70DE7336946A59 /* PACKED.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PACKED.h; sourceTree = "<group>"; };
 		5DA7BCFC9344385E53F2B5E834573B31 /* NstBoardSuperGamePocahontas2.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardSuperGamePocahontas2.hpp; sourceTree = "<group>"; };
 		5E53123303D13A89EFB690F2B9415065 /* TextureFilters_2xsai.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = TextureFilters_2xsai.h; sourceTree = "<group>"; };
@@ -3086,7 +3086,7 @@
 		6F9B0CA903658EB64764843AB640E8F4 /* ARMJIT_LoadStore.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = ARMJIT_LoadStore.cpp; sourceTree = "<group>"; };
 		6FA4BA7F6A5656E0A2EB653423B78908 /* RSTSeparatorView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTSeparatorView.h; path = Roxas/RSTSeparatorView.h; sourceTree = "<group>"; };
 		6FC77100447CAFFFFB6F4AF0B2D187DE /* m64p_vidext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = m64p_vidext.h; sourceTree = "<group>"; };
-		6FD122EA0AB9AB2A8FFA5F676C795DF0 /* GTMAppAuth */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GTMAppAuth; path = libGTMAppAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FD122EA0AB9AB2A8FFA5F676C795DF0 /* libGTMAppAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGTMAppAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7003747C317E358B598ECB582505C2B9 /* ftcalc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ftcalc.h; sourceTree = "<group>"; };
 		700BA0A030FC6AE568E41A84775CF466 /* UICollectionViewCell+CellContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UICollectionViewCell+CellContent.m"; path = "Roxas/UICollectionViewCell+CellContent.m"; sourceTree = "<group>"; };
 		705A45A31ACA377978617FA5B0556C36 /* xxhash.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
@@ -3623,7 +3623,7 @@
 		B00F6B23D0B981B123F788DAC719B99F /* S2DEX.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = S2DEX.h; sourceTree = "<group>"; };
 		B07414167222C856E21B5FC7AAF6B460 /* iniparser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = iniparser.h; sourceTree = "<group>"; };
 		B0765CD98C1CE1F2F85791B602FF2798 /* DeltaCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DeltaCore.release.xcconfig; sourceTree = "<group>"; };
-		B0B214D775196BA7CA8E17E53048A493 /* SDWebImage */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SDWebImage; path = libSDWebImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSDWebImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B408436ECD4E39C149235FDFEBD2E7 /* bootrom_hle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = bootrom_hle.h; sourceTree = "<group>"; };
 		B0F1D9E539EEFAF751D9F3EA1ED557D0 /* alist.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = alist.c; sourceTree = "<group>"; };
 		B102C2F1B868A97AB8401952FD12E5D8 /* OIDClientMetadataParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDClientMetadataParameters.h; path = Source/AppAuthCore/OIDClientMetadataParameters.h; sourceTree = "<group>"; };
@@ -3753,7 +3753,7 @@
 		C12184A008E6E70912A403A00B2444CD /* UICollectionViewCell+Nibs.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UICollectionViewCell+Nibs.m"; path = "Roxas/UICollectionViewCell+Nibs.m"; sourceTree = "<group>"; };
 		C16D5BBBB45CF1D60FC6565D2CDFF1D2 /* ImmediatePanGestureRecognizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImmediatePanGestureRecognizer.swift; sourceTree = "<group>"; };
 		C17CEBD75ABA37A3551B4046F53C7B98 /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
-		C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GTMSessionFetcher; path = libGTMSessionFetcher.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1998E0D8085221AD87F89B614C10E52 /* libGTMSessionFetcher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGTMSessionFetcher.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C34BC62D8AE93049CDE7C85B326781 /* filters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = filters.h; sourceTree = "<group>"; };
 		C1E5AA6870CC28BC8E70CADC5B21CF0A /* NstBoardAcclaimMcAcc.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardAcclaimMcAcc.hpp; sourceTree = "<group>"; };
 		C22261743FC02934DB3B9E84F128F39D /* re2.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = re2.c; sourceTree = "<group>"; };
@@ -3934,7 +3934,7 @@
 		DB6A6F1D48DA9F66C39348179E114085 /* OIDURLSessionProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDURLSessionProvider.m; path = Source/AppAuthCore/OIDURLSessionProvider.m; sourceTree = "<group>"; };
 		DBAA9525835670C7BBF3F2892056D7AB /* GoogleAPIClientForREST-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleAPIClientForREST-prefix.pch"; sourceTree = "<group>"; };
 		DBAD4BC508BBD2D2F2B465DE8AC80A4F /* debugger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = debugger.h; sourceTree = "<group>"; };
-		DBC0113CF73BE24525E670D024A85BE7 /* Harmony */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = Harmony; path = libHarmony.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBC0113CF73BE24525E670D024A85BE7 /* libHarmony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHarmony.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1F1562FB4035D9C7758E467FC2B3 /* scmrev.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = scmrev.h; sourceTree = "<group>"; };
 		DBE5AAAEAFCFBBAABEDE5B784FC05231 /* pngusr.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pngusr.h; sourceTree = "<group>"; };
 		DBEBC13C2601FDB2E7F4D976B174D79A /* TouchControllerSkin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TouchControllerSkin.swift; sourceTree = "<group>"; };
@@ -4157,7 +4157,7 @@
 		F597EF6F3EFC780B48CBD503A27748B9 /* Vector2.inl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Vector2.inl; sourceTree = "<group>"; };
 		F5B730FDD71B3F180AF4FF2879E85E0B /* PluginAPI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PluginAPI.h; sourceTree = "<group>"; };
 		F5DBEFEA68B991BD01BA0CF549877402 /* NstBoardBmcCtc65.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardBmcCtc65.hpp; sourceTree = "<group>"; };
-		F5FA45A44C42CC2CA3A324A3E914CE19 /* SQLite.swift */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SQLite.swift; path = libSQLite.swift.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FA45A44C42CC2CA3A324A3E914CE19 /* libSQLite.swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSQLite.swift.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61DE044858B67B90D6336505827DB42 /* Textures.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Textures.h; sourceTree = "<group>"; };
 		F61EAC2ED0D1C52D33AAF703B7E82775 /* NstImageDatabase.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstImageDatabase.hpp; sourceTree = "<group>"; };
 		F648589D7F71D454423402C87BE80886 /* pngerror.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pngerror.c; sourceTree = "<group>"; };
@@ -4208,7 +4208,7 @@
 		FD34A13CC25429000B2C00EA6D1109C1 /* OGLRender_3_2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OGLRender_3_2.h; sourceTree = "<group>"; };
 		FD3FE35BB5ADC5C277235F5BC08B9FF5 /* NstBoardTxcTw.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardTxcTw.hpp; sourceTree = "<group>"; };
 		FD4C92660B79698510464254D3D020F9 /* NstBoardSxRom.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardSxRom.hpp; sourceTree = "<group>"; };
-		FD519882861480B93B563B477CE1FA29 /* GoogleAPIClientForREST */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = GoogleAPIClientForREST; path = libGoogleAPIClientForREST.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD519882861480B93B563B477CE1FA29 /* libGoogleAPIClientForREST.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGoogleAPIClientForREST.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB9DB5CC40E722B72B7FA48711BD074 /* Standard.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Standard.ignitedskin; sourceTree = "<group>"; };
 		FDE03E8868705921E4D7F341382087D9 /* NLS.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = NLS.h; sourceTree = "<group>"; };
 		FDF38DBE3660F88AC26EFF892042AB32 /* UIImageView+HighlightedWebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+HighlightedWebCache.m"; path = "SDWebImage/UIImageView+HighlightedWebCache.m"; sourceTree = "<group>"; };
@@ -5392,8 +5392,8 @@
 		3C364514BB6EFAFB2820EC532621D034 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */,
-				3FD1B4C1246D643E9476438C28048FA8 /* AppAuth */,
+				5D797E9A5C5782CE845840781FA1CC81 /* libAlamofire.a */,
+				3FD1B4C1246D643E9476438C28048FA8 /* libAppAuth.a */,
 				F93477FBF1E4488E506F9BB79AF57D38 /* DeltaCore */,
 				54ECA01A22C32DC89AB39DF9BFFD5FB6 /* DeltaCore-DeltaCore */,
 				8DF503EB5BF2CD824792BFD2BBC0992F /* DSDeltaCore */,
@@ -5402,10 +5402,10 @@
 				30131336E11D11700AC99D314BDC275C /* GBADeltaCore-GBADeltaCore */,
 				D4C010E8572FAE8B51DFDBF2300ECF30 /* GBCDeltaCore */,
 				1F23DBC67505E77BE77552D6D84A3DAA /* GBCDeltaCore-GBCDeltaCore */,
-				FD519882861480B93B563B477CE1FA29 /* GoogleAPIClientForREST */,
-				6FD122EA0AB9AB2A8FFA5F676C795DF0 /* GTMAppAuth */,
-				C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */,
-				DBC0113CF73BE24525E670D024A85BE7 /* Harmony */,
+				FD519882861480B93B563B477CE1FA29 /* libGoogleAPIClientForREST.a */,
+				6FD122EA0AB9AB2A8FFA5F676C795DF0 /* libGTMAppAuth.a */,
+				C1998E0D8085221AD87F89B614C10E52 /* libGTMSessionFetcher.a */,
+				DBC0113CF73BE24525E670D024A85BE7 /* libHarmony.a */,
 				4C22C82316853ABB688358B93486CF8E /* MelonDSDeltaCore */,
 				ECD0868BC2D1CFC2A22DDD56F79CF4B1 /* MelonDSDeltaCore-melonDS */,
 				C8D6AC695498645EEE4A66FCEF97D848 /* N64DeltaCore */,
@@ -5413,14 +5413,14 @@
 				1E5356E04E92615CFF0666E5987CE594 /* NESDeltaCore */,
 				487C7DB0A7257F16983BEF8324BEF561 /* NESDeltaCore-NESDeltaCore */,
 				9CA80A61ABF26FA89F4E22A30284B0DD /* Pods-Delta */,
-				4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */,
-				B0B214D775196BA7CA8E17E53048A493 /* SDWebImage */,
-				53A730F4F4248E7E3F38F8409A2DE97C /* SMCalloutView */,
+				4405793D5AF1EFD9D2BDA30AA0D2E514 /* libRoxas.a */,
+				B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */,
+				53A730F4F4248E7E3F38F8409A2DE97C /* libSMCalloutView.a */,
 				FA400832D3E46B39D5EC83D09A7572FC /* SNESDeltaCore */,
 				7D751206A951D9727B38F71A2BB990AA /* SNESDeltaCore-SNESDeltaCore */,
-				F5FA45A44C42CC2CA3A324A3E914CE19 /* SQLite.swift */,
-				1CBA76EDD27FA2D20B1EA0F0BF7F082C /* SwiftyDropbox */,
-				48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */,
+				F5FA45A44C42CC2CA3A324A3E914CE19 /* libSQLite.swift.a */,
+				1CBA76EDD27FA2D20B1EA0F0BF7F082C /* libSwiftyDropbox.a */,
+				48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10303,7 +10303,7 @@
 			);
 			name = SDWebImage;
 			productName = SDWebImage;
-			productReference = B0B214D775196BA7CA8E17E53048A493 /* SDWebImage */;
+			productReference = B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		38A7AA32705A9662332E76FA75B50858 /* MelonDSDeltaCore */ = {
@@ -10341,7 +10341,7 @@
 			);
 			name = SQLite.swift;
 			productName = SQLite.swift;
-			productReference = F5FA45A44C42CC2CA3A324A3E914CE19 /* SQLite.swift */;
+			productReference = F5FA45A44C42CC2CA3A324A3E914CE19 /* libSQLite.swift.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		530F469AED058B94728C278CCA514500 /* DeltaCore */ = {
@@ -10413,7 +10413,7 @@
 			);
 			name = AppAuth;
 			productName = AppAuth;
-			productReference = 3FD1B4C1246D643E9476438C28048FA8 /* AppAuth */;
+			productReference = 3FD1B4C1246D643E9476438C28048FA8 /* libAppAuth.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		5CB4163F0A6D4BDE0A490758A78BA43D /* Harmony */ = {
@@ -10435,7 +10435,7 @@
 			);
 			name = Harmony;
 			productName = Harmony;
-			productReference = DBC0113CF73BE24525E670D024A85BE7 /* Harmony */;
+			productReference = DBC0113CF73BE24525E670D024A85BE7 /* libHarmony.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		6538136F848A07F507372CCFB40CEB88 /* SNESDeltaCore-SNESDeltaCore */ = {
@@ -10508,7 +10508,7 @@
 			);
 			name = GTMAppAuth;
 			productName = GTMAppAuth;
-			productReference = 6FD122EA0AB9AB2A8FFA5F676C795DF0 /* GTMAppAuth */;
+			productReference = 6FD122EA0AB9AB2A8FFA5F676C795DF0 /* libGTMAppAuth.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		890229DC8DCC9C43917568A0C4502FCA /* GBADeltaCore-GBADeltaCore */ = {
@@ -10543,7 +10543,7 @@
 			);
 			name = ZIPFoundation;
 			productName = ZIPFoundation;
-			productReference = 48A4A6EDC08C8AC933D0DCD507E9D173 /* ZIPFoundation */;
+			productReference = 48A4A6EDC08C8AC933D0DCD507E9D173 /* libZIPFoundation.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		B5D1BA64AC676FF46408FCDE19A05767 /* Roxas */ = {
@@ -10560,7 +10560,7 @@
 			);
 			name = Roxas;
 			productName = Roxas;
-			productReference = 4405793D5AF1EFD9D2BDA30AA0D2E514 /* Roxas */;
+			productReference = 4405793D5AF1EFD9D2BDA30AA0D2E514 /* libRoxas.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D20492B6476142DCA0C455340876BB98 /* SMCalloutView */ = {
@@ -10577,7 +10577,7 @@
 			);
 			name = SMCalloutView;
 			productName = SMCalloutView;
-			productReference = 53A730F4F4248E7E3F38F8409A2DE97C /* SMCalloutView */;
+			productReference = 53A730F4F4248E7E3F38F8409A2DE97C /* libSMCalloutView.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D676E21115185671D7258A56944ABE98 /* GTMSessionFetcher */ = {
@@ -10594,7 +10594,7 @@
 			);
 			name = GTMSessionFetcher;
 			productName = GTMSessionFetcher;
-			productReference = C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */;
+			productReference = C1998E0D8085221AD87F89B614C10E52 /* libGTMSessionFetcher.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D7958E869B6C0073DB3025514393D7A3 /* GoogleAPIClientForREST */ = {
@@ -10612,7 +10612,7 @@
 			);
 			name = GoogleAPIClientForREST;
 			productName = GoogleAPIClientForREST;
-			productReference = FD519882861480B93B563B477CE1FA29 /* GoogleAPIClientForREST */;
+			productReference = FD519882861480B93B563B477CE1FA29 /* libGoogleAPIClientForREST.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		DB59C68809324297BEDAF0CC3F931B27 /* GBCDeltaCore */ = {
@@ -10687,7 +10687,7 @@
 			);
 			name = Alamofire;
 			productName = Alamofire;
-			productReference = 5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */;
+			productReference = 5D797E9A5C5782CE845840781FA1CC81 /* libAlamofire.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		FF39B7A1D9F00620D9F56635ABBB2C03 /* SwiftyDropbox */ = {
@@ -10706,7 +10706,7 @@
 			);
 			name = SwiftyDropbox;
 			productName = SwiftyDropbox;
-			productReference = 1CBA76EDD27FA2D20B1EA0F0BF7F082C /* SwiftyDropbox */;
+			productReference = 1CBA76EDD27FA2D20B1EA0F0BF7F082C /* libSwiftyDropbox.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -12324,7 +12324,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SMCalloutView/SMCalloutView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SMCalloutView/SMCalloutView.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12390,7 +12390,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SDWebImage/SDWebImage.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12457,7 +12457,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleAPIClientForREST/GoogleAPIClientForREST-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GoogleAPIClientForREST/GoogleAPIClientForREST.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12668,7 +12668,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/ZIPFoundation/ZIPFoundation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/ZIPFoundation/ZIPFoundation.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12692,7 +12692,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyDropbox/SwiftyDropbox-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SwiftyDropbox/SwiftyDropbox.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12765,7 +12765,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleAPIClientForREST/GoogleAPIClientForREST-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GoogleAPIClientForREST/GoogleAPIClientForREST.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12806,7 +12806,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Alamofire/Alamofire.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12832,7 +12832,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Roxas/Roxas-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Roxas/Roxas.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12855,7 +12855,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12873,7 +12873,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyDropbox/SwiftyDropbox-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SwiftyDropbox/SwiftyDropbox.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12914,7 +12914,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/AppAuth/AppAuth-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/AppAuth/AppAuth.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -12985,7 +12985,7 @@
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GTMAppAuth/GTMAppAuth.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13026,7 +13026,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SMCalloutView/SMCalloutView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SMCalloutView/SMCalloutView.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13172,7 +13172,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SDWebImage/SDWebImage.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13245,7 +13245,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GTMSessionFetcher/GTMSessionFetcher.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13271,7 +13271,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Roxas/Roxas-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Roxas/Roxas.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13296,7 +13296,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Harmony/Harmony-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Harmony/Harmony.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13321,7 +13321,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SQLite/SQLite.swift.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13430,7 +13430,7 @@
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GTMAppAuth/GTMAppAuth.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13497,7 +13497,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Harmony/Harmony-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Harmony/Harmony.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13536,7 +13536,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13580,7 +13580,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/Alamofire/Alamofire.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13621,7 +13621,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/ZIPFoundation/ZIPFoundation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/ZIPFoundation/ZIPFoundation.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13646,7 +13646,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/GTMSessionFetcher/GTMSessionFetcher.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13687,7 +13687,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/SQLite/SQLite.swift.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -13712,7 +13712,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/AppAuth/AppAuth-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MODULEMAP_FILE = Headers/Public/AppAuth/AppAuth.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
