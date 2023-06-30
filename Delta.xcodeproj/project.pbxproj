@@ -59,6 +59,7 @@
 		AC56DDED2A35F1EA007C8372 /* N64FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */; };
 		AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEF2A35F38D007C8372 /* N64Features.swift */; };
 		AC56DDF22A35F3F2007C8372 /* N64GraphicsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */; };
+		AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
@@ -324,6 +325,7 @@
 		AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64FeaturesView.swift; sourceTree = "<group>"; };
 		AC56DDEF2A35F38D007C8372 /* N64Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64Features.swift; sourceTree = "<group>"; };
 		AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64GraphicsOptions.swift; sourceTree = "<group>"; };
+		AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
 		AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIconImage.swift"; sourceTree = "<group>"; };
 		AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
@@ -672,6 +674,15 @@
 				AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */,
 			);
 			path = N64;
+			sourceTree = "<group>";
+		};
+		AC5B25212A4F4E2800591511 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				D5A98CE1284EF14B00E023E5 /* SceneDelegate.swift */,
+				AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		AC84B56A29FEF5130090F274 /* Gameplay */ = {
@@ -1278,9 +1289,9 @@
 			isa = PBXGroup;
 			children = (
 				BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */,
-				D5A98CE1284EF14B00E023E5 /* SceneDelegate.swift */,
 				BFFA71E01AAC406100EE9DD1 /* Main.storyboard */,
 				BFFC46211D59848000AF2CC6 /* Launch */,
+				AC5B25212A4F4E2800591511 /* Scenes */,
 				BFFB709D1AF99ACA00DE56FE /* Emulation */,
 				BF46894D1AAC469800A2586D /* Game Selection */,
 				BF7AE7FA1C2E851F00B1B5BC /* Pause Menu */,
@@ -1690,6 +1701,7 @@
 				ACD5FA052A0C4D58005CDCF1 /* GameboyPalette.swift in Sources */,
 				BFFA71DD1AAC406100EE9DD1 /* AppDelegate.swift in Sources */,
 				BF525EE81FF5F370004AA849 /* DeepLinkController.swift in Sources */,
+				AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */,
 				BF59426B1E09BBD00051894B /* GridCollectionViewLayout.swift in Sources */,
 				BF6424851F5CBDC900D6AB44 /* UIView+ParentViewController.swift in Sources */,
 				BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */,

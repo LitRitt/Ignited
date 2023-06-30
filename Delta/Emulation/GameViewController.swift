@@ -256,6 +256,9 @@ class GameViewController: DeltaCore.GameViewController
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnableJIT(with:)), name: ServerManager.didEnableJITNotification, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.sceneWillConnect(with:)), name: UIScene.willConnectNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.sceneDidDisconnect(with:)), name: UIScene.didDisconnectNotification, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateBlurBackground), name: .unwindFromSettings, object: nil)
     }
     
@@ -925,7 +928,44 @@ private extension GameViewController
         AdvancedFeatures.shared.skinDebug.skinEnabled = self.controllerView.controllerSkin?.isDebugModeEnabled ?? false
         AdvancedFeatures.shared.skinDebug.hasAlt = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
         
+        self.updateExternalDisplay()
+        
         self.view.setNeedsLayout()
+    }
+    
+    func updateGameViews()
+    {
+        if UIApplication.shared.isExternalDisplayConnected
+        {
+            // AirPlaying, hide all (non-touch) screens.
+                 
+            if let traits = self.controllerView.controllerSkinTraits, let screens = self.controllerView.controllerSkin?.screens(for: traits, alt: AdvancedFeatures.shared.skinDebug.useAlt)
+            {
+                for (screen, gameView) in zip(screens, self.gameViews)
+                {
+                    gameView.isEnabled = screen.isTouchScreen
+                    gameView.isHidden = !screen.isTouchScreen
+                }
+            }
+            else
+            {
+                // Either self.controllerView.controllerSkin is `nil`, or it doesn't support these traits.
+                // Most likely this system only has 1 screen, so just hide self.gameView.
+                     
+                self.gameView.isEnabled = false
+                self.gameView.isHidden = true
+            }
+        }
+        else
+        {
+            // Not AirPlaying, show all screens.
+                 
+            for gameView in self.gameViews
+            {
+                gameView.isEnabled = true
+                gameView.isHidden = false
+            }
+        }
     }
     
     @objc func updateBlurBackground()
@@ -2191,12 +2231,60 @@ extension GameViewController
     }
 }
 
+private extension GameViewController
+{
+    func connectExternalDisplay(for scene: ExternalDisplayScene)
+    {
+        // We need to receive gameViewController(_:didUpdateGameViews) callback.
+        scene.gameViewController.delegate = self
+
+        self.updateGameViews()
+        self.updateExternalDisplay()
+    }
+
+    func updateExternalDisplay()
+    {
+        guard let scene = UIApplication.shared.externalDisplayScene else { return }
+
+        if scene.game?.fileURL != self.game?.fileURL
+        {
+            scene.game = self.game
+        }
+
+        self.updateExternalDisplayGameViews()
+    }
+
+    func updateExternalDisplayGameViews()
+    {
+        guard let scene = UIApplication.shared.externalDisplayScene, let emulatorCore = self.emulatorCore else { return }
+
+        for gameView in scene.gameViewController.gameViews
+        {
+            emulatorCore.add(gameView)
+        }
+    }
+
+    func disconnectExternalDisplay(for scene: ExternalDisplayScene)
+    {
+        scene.gameViewController.delegate = nil
+
+        for gameView in scene.gameViewController.gameViews
+        {
+            self.emulatorCore?.remove(gameView)
+        }
+
+        self.updateGameViews()
+    }
+}
+
 //MARK: - GameViewControllerDelegate -
 /// GameViewControllerDelegate
 extension GameViewController: GameViewControllerDelegate
 {
     func gameViewController(_ gameViewController: DeltaCore.GameViewController, handleMenuInputFrom gameController: GameController)
     {
+        guard gameViewController == self else { return }
+        
         if let pausingGameController = self.pausingGameController
         {
             guard pausingGameController == gameController else { return }
@@ -2223,6 +2311,8 @@ extension GameViewController: GameViewControllerDelegate
     
     func gameViewControllerShouldResumeEmulation(_ gameViewController: DeltaCore.GameViewController) -> Bool
     {
+        guard gameViewController == self else { return false }
+        
         var result = false
         
         rst_dispatch_sync_on_main_thread {
@@ -2230,6 +2320,20 @@ extension GameViewController: GameViewControllerDelegate
         }
         
         return result
+    }
+    
+    func gameViewController(_ gameViewController: DeltaCore.GameViewController, didUpdateGameViews gameViews: [GameView])
+    {
+        // gameViewController could be `self` or ExternalDisplayScene.gameViewController.
+             
+        if gameViewController == self
+        {
+            self.updateGameViews()
+        }
+        else
+        {
+            self.updateExternalDisplayGameViews()
+        }
     }
 }
 
@@ -2561,6 +2665,18 @@ private extension GameViewController
                 token?.invalidate()
             }
         }
+    }
+    
+    @objc func sceneWillConnect(with notification: Notification)
+    {
+        guard let scene = notification.object as? ExternalDisplayScene else { return }
+        self.connectExternalDisplay(for: scene)
+    }
+
+    @objc func sceneDidDisconnect(with notification: Notification)
+    {
+        guard let scene = notification.object as? ExternalDisplayScene else { return }
+        self.disconnectExternalDisplay(for: scene)
     }
 }
 
