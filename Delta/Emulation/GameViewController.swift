@@ -583,6 +583,11 @@ extension GameViewController
                 pauseViewController.blurBackgroudItem = nil
             }
             
+            if self.isExternalDisplayConnected
+            {
+                pauseViewController.blurBackgroudItem = nil
+            }
+            
             let url = self.game?.fileURL
             let fileName = url!.path.components(separatedBy: "/").last
             
@@ -2245,6 +2250,8 @@ private extension GameViewController
         scene.gameViewController.delegate = self
 
         self.updateControllerSkin()
+        
+        self.isExternalDisplayConnected = true
 
         // Implicitly called from updateControllerSkin()
         // self.updateExternalDisplay()
@@ -2319,6 +2326,8 @@ private extension GameViewController
         }
 
         self.updateControllerSkin() // Reset TouchControllerSkin + GameViews
+        
+        self.isExternalDisplayConnected = false
     }
 }
 
