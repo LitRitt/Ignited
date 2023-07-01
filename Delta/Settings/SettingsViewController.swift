@@ -500,12 +500,13 @@ private extension SettingsViewController
             GamesCollectionFeatures.shared.favorites.favoriteSort = true
             GamesCollectionFeatures.shared.favorites.favoriteHighlight = true
             GamesCollectionFeatures.shared.favorites.favoriteColor = Color(red: 255/255, green: 234/255, blue: 0/255)
-            GamesCollectionFeatures.shared.favorites.highlightIntensity = 1.0
+            GamesCollectionFeatures.shared.favorites.highlightIntensity = 0.7
         }
         
         let resetGameScreenshot = {
             GameplayFeatures.shared.screenshots.saveToFiles = true
             GameplayFeatures.shared.screenshots.saveToPhotos = false
+            GameplayFeatures.shared.screenshots.playCountdown = false
             GameplayFeatures.shared.screenshots.size = nil
         }
         
@@ -523,19 +524,22 @@ private extension SettingsViewController
         
         let resetFastForward = {
             GameplayFeatures.shared.fastForward.speed = 3.0
-            GameplayFeatures.shared.fastForward.prompt = true
-            GameplayFeatures.shared.fastForward.slowmo = true
-            GameplayFeatures.shared.fastForward.unsafe = true
+            GameplayFeatures.shared.fastForward.toggle = true
+            GameplayFeatures.shared.fastForward.prompt = false
+            GameplayFeatures.shared.fastForward.slowmo = false
+            GameplayFeatures.shared.fastForward.unsafe = false
         }
         
         let resetQuickSettings = {
             GameplayFeatures.shared.quickSettings.quickActionsEnabled = true
             GameplayFeatures.shared.quickSettings.gameAudioEnabled = true
-            GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = false
+            GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = true
             GameplayFeatures.shared.quickSettings.fastForwardEnabled = true
-            GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = false
+            GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = true
+            GameplayFeatures.shared.quickSettings.controllerSkinEnabled = true
+            GameplayFeatures.shared.quickSettings.expandedControllerSkinEnabled = true
             GameplayFeatures.shared.quickSettings.backgroundBlurEnabled = true
-            GameplayFeatures.shared.quickSettings.expandedBackgroundBlurEnabled = false
+            GameplayFeatures.shared.quickSettings.expandedBackgroundBlurEnabled = true
             GameplayFeatures.shared.quickSettings.colorPalettesEnabled = true
         }
         
@@ -548,6 +552,8 @@ private extension SettingsViewController
             UserInterfaceFeatures.shared.toasts.fastForward = true
             UserInterfaceFeatures.shared.toasts.statusBar = true
             UserInterfaceFeatures.shared.toasts.screenshot = true
+            UserInterfaceFeatures.shared.toasts.rotationLock = true
+            UserInterfaceFeatures.shared.toasts.backgroundBlur = true
             UserInterfaceFeatures.shared.toasts.palette = true
             UserInterfaceFeatures.shared.toasts.altSkin = true
             UserInterfaceFeatures.shared.toasts.debug = true

@@ -27,17 +27,21 @@ struct FastForwardOptions
     })
     var speed: Double = 3.0
     
+    @Option(name: "Toggle Fast Forward",
+            description: "When enabled, fast forward buttons will act as a toggle. When disabled, fast forward buttons only activate when held down.")
+    var toggle: Bool = true
+    
     @Option(name: "Choose Speed Each Activation",
             description: "Enable to choose a speed each time you activate fast forward, instead of using the set speed above.")
-    var prompt: Bool = true
+    var prompt: Bool = false
     
     @Option(name: "Show Slowmo Speeds",
             description: "Enable to show speed choices that slow down gameplay instead of speeding it up.")
-    var slowmo: Bool = true
+    var slowmo: Bool = false
     
     @Option(name: "Show Unsafe Speeds",
             description: "Enable to show speed choices that are above those determined to be safe.")
-    var unsafe: Bool = true
+    var unsafe: Bool = false
     
     @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
         Toggle(isOn: value) {

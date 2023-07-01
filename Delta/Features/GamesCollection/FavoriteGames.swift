@@ -42,7 +42,7 @@ struct FavoriteGamesOptions
             }
         }.displayInline()
     })
-    var highlightIntensity: Double = 1.0
+    var highlightIntensity: Double = 0.7
     
     @Option
     var favoriteGames: [String: [String]] = [

@@ -301,10 +301,16 @@ class GameViewController: DeltaCore.GameViewController
             case .screenshot: self.performScreenshotAction()
             case .statusBar: self.performStatusBarAction()
             case .quickSettings: self.performQuickSettingsAction()
-            case .fastForward: self.performFastForwardAction(activate: true)
-            case .toggleFastForward:
-                let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
-                self.performFastForwardAction(activate: !isFastForwarding)
+            case .toggleFastForward, .fastForward:
+                if GameplayFeatures.shared.fastForward.toggle
+                {
+                    let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
+                    self.performFastForwardAction(activate: !isFastForwarding)
+                }
+                else
+                {
+                    self.performFastForwardAction(activate: true)
+                }
             case .toggleAltRepresentations: self.performAltRepresentationsAction()
             }
         }
@@ -333,8 +339,11 @@ class GameViewController: DeltaCore.GameViewController
             case .screenshot: break
             case .statusBar: break
             case .quickSettings: break
-            case .fastForward: self.performFastForwardAction(activate: false)
-            case .toggleFastForward: break
+            case .fastForward, .toggleFastForward:
+                if !GameplayFeatures.shared.fastForward.toggle
+                {
+                    self.performFastForwardAction(activate: false)
+                }
             case .toggleAltRepresentations: break
             }
         }
@@ -1790,7 +1799,8 @@ extension GameViewController
         
         if activate
         {
-            if GameplayFeatures.shared.fastForward.prompt
+            if GameplayFeatures.shared.fastForward.prompt,
+               GameplayFeatures.shared.fastForward.toggle
             {
                 if let pauseView = self.pauseViewController
                 {
@@ -1810,7 +1820,8 @@ extension GameViewController
                     emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
                 }
                 
-                if UserInterfaceFeatures.shared.toasts.fastForward
+                if UserInterfaceFeatures.shared.toasts.fastForward,
+                   GameplayFeatures.shared.fastForward.toggle
                 {
                     text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
                     self.presentToastView(text: text)
@@ -1821,7 +1832,8 @@ extension GameViewController
         {
             emulatorCore.rate = emulatorCore.deltaCore.supportedRates.lowerBound
             
-            if UserInterfaceFeatures.shared.toasts.fastForward
+            if UserInterfaceFeatures.shared.toasts.fastForward,
+               GameplayFeatures.shared.fastForward.toggle
             {
                 text = NSLocalizedString("Fast Forward Disabled", comment: "")
                 self.presentToastView(text: text)

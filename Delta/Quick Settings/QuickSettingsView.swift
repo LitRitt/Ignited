@@ -171,6 +171,8 @@ struct QuickSettingsView: View
                                         GameplayFeatures.shared.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                 }.padding(.top, 10)
+                                Toggle("Toggle Fast Forward", isOn: GameplayFeatures.shared.fastForward.$toggle.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }.buttonStyle(.borderless)
                     } header: {
