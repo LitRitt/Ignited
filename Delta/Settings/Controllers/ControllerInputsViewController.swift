@@ -31,7 +31,7 @@ class ControllerInputsViewController: UIViewController
     private lazy var managedObjectContext: NSManagedObjectContext = DatabaseManager.shared.newBackgroundContext()
     private var inputMappings = [System: GameControllerInputMapping]()
     
-    private let supportedActionInputs: [ActionInput] = [.quickSave, .quickLoad, .quickSettings, .restart, .toggleFastForward, .fastForward, .screenshot, .toggleAltRepresentations]
+    private let supportedActionInputs: [ActionInput] = [.quickSave, .quickLoad, .quickSettings, .fastForward]
     
     private var gameViewController: DeltaCore.GameViewController!
     private var actionsMenuViewController: GridMenuViewController!
@@ -105,6 +105,7 @@ class ControllerInputsViewController: UIViewController
             }
             
             self.gameViewController.controllerView.overrideControllerSkinTraits = traits
+            self.gameViewController.blurScreenOverride = true
             
             _didLayoutSubviews = true
         }
@@ -251,29 +252,9 @@ private extension ControllerInputsViewController
                 image = #imageLiteral(resourceName: "LoadSaveState")
                 text = NSLocalizedString("Quick Load", comment: "")
                 
-            case .toggleFastForward:
-                image = #imageLiteral(resourceName: "FastForward")
-                text = NSLocalizedString("Toggle Fast Forward", comment: "")
-                
             case .fastForward:
                 image = #imageLiteral(resourceName: "FastForward")
-                text = NSLocalizedString("Hold Fast Forward", comment: "")
-                
-            case .toggleAltRepresentations:
-                image = #imageLiteral(resourceName: "AltSkin")
-                text = NSLocalizedString("Alternate Skin", comment: "")
-                
-            case .restart:
-                image = #imageLiteral(resourceName: "Restart")
-                text = NSLocalizedString("Restart", comment: "")
-                
-            case .screenshot:
-                image = #imageLiteral(resourceName: "Screenshot")
-                text = NSLocalizedString("Screenshot", comment: "")
-                
-            case .statusBar:
-                image = #imageLiteral(resourceName: "StatusBar")
-                text = NSLocalizedString("Status Bar", comment: "")
+                text = NSLocalizedString("Fast Forward", comment: "")
                 
             case .quickSettings:
                 image = #imageLiteral(resourceName: "QuickSettings")
