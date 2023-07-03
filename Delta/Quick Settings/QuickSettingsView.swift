@@ -275,6 +275,8 @@ struct QuickSettingsView: View
                             if self.expandedBackgroundBlurEnabled {
                                 Toggle("Blur Enabled", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurBackground.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                Toggle("Show During AirPlay", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurAirPlay.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Override Skin Setting", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurOverride.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Maintain Aspect Ratio", isOn: ControllerSkinFeatures.shared.backgroundBlur.$blurAspect.valueBinding)
