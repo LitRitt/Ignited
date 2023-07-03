@@ -8,7 +8,7 @@ Ignited is a multi-core emulator front-end for iOS devices. It provides a beauti
 
 <p align="center">
   <img src="https://f005.backblazeb2.com/file/lit-apps/assets/ignited/device-previews.png" width=100%><br/>
-  <em>Mario and Metroid and properties of Nintendo Co., Ltd. and are not associated with Ignited or LitRitt.</em>
+  <em>Mario and Metroid are properties of Nintendo Co., Ltd. and are not associated with Ignited or LitRitt.</em>
 </p>
 
 ## Supported Systems
