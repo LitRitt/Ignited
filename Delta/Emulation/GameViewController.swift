@@ -592,7 +592,7 @@ extension GameViewController
                 pauseViewController.blurBackgroudItem = nil
             }
             
-            if self.isExternalDisplayConnected
+            if !ControllerSkinFeatures.shared.backgroundBlur.blurAirPlay
             {
                 pauseViewController.blurBackgroudItem = nil
             }
@@ -957,14 +957,18 @@ private extension GameViewController
     {
         if UIApplication.shared.isExternalDisplayConnected
         {
-            // AirPlaying, hide all (non-touch) screens.
+            // AirPlaying, hide all screens except touchscreens and blur screens.
                  
-            if let traits = self.controllerView.controllerSkinTraits, let screens = self.controllerView.controllerSkin?.screens(for: traits, alt: AdvancedFeatures.shared.skinDebug.useAlt)
+            if let traits = self.controllerView.controllerSkinTraits, let screens = self.screens(for: traits)
             {
                 for (screen, gameView) in zip(screens, self.gameViews)
                 {
-                    gameView.isEnabled = screen.isTouchScreen
-                    gameView.isHidden = !screen.isTouchScreen
+                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && ControllerSkinFeatures.shared.backgroundBlur.blurAirPlay
+                    
+                    let enabled = screen.isTouchScreen || enableBlurScreen
+                    
+                    gameView.isEnabled = enabled
+                    gameView.isHidden = !enabled
                 }
             }
             else
@@ -2260,10 +2264,8 @@ private extension GameViewController
     {
         // We need to receive gameViewController(_:didUpdateGameViews) callback.
         scene.gameViewController.delegate = self
-
-        self.updateControllerSkin()
         
-        self.isExternalDisplayConnected = true
+        self.updateControllerSkin()
 
         // Implicitly called from updateControllerSkin()
         // self.updateExternalDisplay()
@@ -2331,15 +2333,13 @@ private extension GameViewController
     func disconnectExternalDisplay(for scene: ExternalDisplayScene)
     {
         scene.gameViewController.delegate = nil
-
+        
         for gameView in scene.gameViewController.gameViews
         {
             self.emulatorCore?.remove(gameView)
         }
 
         self.updateControllerSkin() // Reset TouchControllerSkin + GameViews
-        
-        self.isExternalDisplayConnected = false
     }
 }
 

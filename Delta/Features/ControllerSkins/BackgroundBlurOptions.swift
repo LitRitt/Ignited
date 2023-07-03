@@ -12,10 +12,14 @@ import Features
 
 struct BackgroundBlurOptions
 {
-   @Option(name: "Enabled",
-            description: "Display a blurred version of the game screen as the controller skin background.")
-    var blurBackground: Bool = true
-    
+    @Option(name: "Enabled",
+             description: "Display a blurred version of the game screen as the controller skin background.")
+     var blurBackground: Bool = true
+     
+    @Option(name: "Show During AirPlay",
+             description: "Display the blurred background during AirPlay.")
+     var blurAirPlay: Bool = false
+     
     @Option(name: "Maintain Aspect Ratio",
             description: "When scaling the blurred image to fit the background, maintain the aspect ratio instead of stretching the image only to the edges.")
     var blurAspect: Bool = true
