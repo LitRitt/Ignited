@@ -279,11 +279,10 @@ private extension ControllerInputsViewController
     
     func prepareCallouts()
     {
-        let alt = AdvancedFeatures.shared.skinDebug.useAlt
         guard
             let controllerView = self.gameViewController.controllerView,
             let traits = controllerView.controllerSkinTraits,
-            let items = controllerView.controllerSkin?.items(for: traits, alt: alt),
+            let items = controllerView.controllerSkin?.items(for: traits, alt: false),
             let controllerViewInputMapping = controllerView.defaultInputMapping,
             let inputMapping = self.inputMappings[self.system]
         else { return }
@@ -495,12 +494,10 @@ private extension ControllerInputsViewController
     {
         guard let input = self.calloutViews.first(where: { $0.value == calloutView })?.key else { return nil }
         
-        let alt = AdvancedFeatures.shared.skinDebug.useAlt
-        
         guard
             let controllerView = self.gameViewController.controllerView,
             let traits = controllerView.controllerSkinTraits,
-            let items = controllerView.controllerSkin?.items(for: traits, alt: alt)
+            let items = controllerView.controllerSkin?.items(for: traits, alt: false)
         else { return nil }
         
         if let item = items.first(where: { $0.inputs.allInputs.contains(where: { $0.stringValue == input.stringValue })})
