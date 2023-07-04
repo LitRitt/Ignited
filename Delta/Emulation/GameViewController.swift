@@ -176,6 +176,10 @@ class GameViewController: DeltaCore.GameViewController
     private var sustainButtonsBackgroundView: RSTPlaceholderView!
     private var inputsToSustain = [AnyInput: Double]()
     
+    private var airPlayContentView: UIView!
+    private var airPlayBlurView: UIVisualEffectView!
+    private var airPlayBackgroundView: RSTPlaceholderView!
+    
     private var rewindTimer: Timer?
     
     private var isGyroActive = false
@@ -364,25 +368,52 @@ extension GameViewController
         
         self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
         
+        self.airPlayContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
+        self.airPlayContentView.translatesAutoresizingMaskIntoConstraints = false
+        self.airPlayContentView.isHidden = true
+        self.view.insertSubview(self.airPlayContentView, aboveSubview: self.gameView)
+        
         self.sustainButtonsContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.sustainButtonsContentView.translatesAutoresizingMaskIntoConstraints = false
         self.sustainButtonsContentView.isHidden = true
-        self.view.insertSubview(self.sustainButtonsContentView, aboveSubview: self.gameView)
+        self.view.insertSubview(self.sustainButtonsContentView, aboveSubview: self.airPlayContentView)
         
         let blurEffect = UIBlurEffect(style: .dark)
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        
+        self.airPlayBlurView = UIVisualEffectView(effect: blurEffect)
+        self.airPlayBlurView.frame = CGRect(x: 0, y: 0, width: self.airPlayContentView.bounds.width, height: self.airPlayContentView.bounds.height)
+        self.airPlayBlurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.airPlayContentView.addSubview(self.airPlayBlurView)
         
         self.sustainButtonsBlurView = UIVisualEffectView(effect: blurEffect)
         self.sustainButtonsBlurView.frame = CGRect(x: 0, y: 0, width: self.sustainButtonsContentView.bounds.width, height: self.sustainButtonsContentView.bounds.height)
         self.sustainButtonsBlurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.sustainButtonsContentView.addSubview(self.sustainButtonsBlurView)
         
-        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
-        vibrancyView.frame = CGRect(x: 0, y: 0, width: self.sustainButtonsBlurView.contentView.bounds.width, height: self.sustainButtonsBlurView.contentView.bounds.height)
-        vibrancyView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.sustainButtonsBlurView.contentView.addSubview(vibrancyView)
+        let airPlayVibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        airPlayVibrancyView.frame = CGRect(x: 0, y: 0, width: self.airPlayBlurView.contentView.bounds.width, height: self.airPlayBlurView.contentView.bounds.height)
+        airPlayVibrancyView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.airPlayBlurView.contentView.addSubview(airPlayVibrancyView)
         
-        self.sustainButtonsBackgroundView = RSTPlaceholderView(frame: CGRect(x: 0, y: 0, width: vibrancyView.contentView.bounds.width, height: vibrancyView.contentView.bounds.height))
+        let sustainButtonsVibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        sustainButtonsVibrancyView.frame = CGRect(x: 0, y: 0, width: self.sustainButtonsBlurView.contentView.bounds.width, height: self.sustainButtonsBlurView.contentView.bounds.height)
+        sustainButtonsVibrancyView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.sustainButtonsBlurView.contentView.addSubview(sustainButtonsVibrancyView)
+        
+        self.airPlayBackgroundView = RSTPlaceholderView(frame: CGRect(x: 0, y: 0, width: airPlayVibrancyView.contentView.bounds.width, height: airPlayVibrancyView.contentView.bounds.height))
+        self.airPlayBackgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.airPlayBackgroundView.imageView.image = UIImage(named: "AirPlay")
+        self.airPlayBackgroundView.imageView.isHidden = false
+        self.airPlayBackgroundView.textLabel.text = NSLocalizedString("AirPlaying", comment: "")
+        self.airPlayBackgroundView.textLabel.numberOfLines = 1
+        self.airPlayBackgroundView.textLabel.minimumScaleFactor = 0.5
+        self.airPlayBackgroundView.textLabel.adjustsFontSizeToFitWidth = true
+        self.airPlayBackgroundView.detailTextLabel.text = NSLocalizedString("", comment: "")
+        self.airPlayBackgroundView.alpha = 0.0
+        airPlayVibrancyView.contentView.addSubview(self.airPlayBackgroundView)
+        
+        self.sustainButtonsBackgroundView = RSTPlaceholderView(frame: CGRect(x: 0, y: 0, width: sustainButtonsVibrancyView.contentView.bounds.width, height: sustainButtonsVibrancyView.contentView.bounds.height))
         self.sustainButtonsBackgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.sustainButtonsBackgroundView.textLabel.text = NSLocalizedString("Select Buttons to Hold Down", comment: "")
         self.sustainButtonsBackgroundView.textLabel.numberOfLines = 1
@@ -390,9 +421,14 @@ extension GameViewController
         self.sustainButtonsBackgroundView.textLabel.adjustsFontSizeToFitWidth = true
         self.sustainButtonsBackgroundView.detailTextLabel.text = NSLocalizedString("Press the Menu button or Quick Settings button when finished.", comment: "")
         self.sustainButtonsBackgroundView.alpha = 0.0
-        vibrancyView.contentView.addSubview(self.sustainButtonsBackgroundView)
+        sustainButtonsVibrancyView.contentView.addSubview(self.sustainButtonsBackgroundView)
         
         // Auto Layout
+        self.airPlayContentView.leadingAnchor.constraint(equalTo: self.gameView.leadingAnchor).isActive = true
+        self.airPlayContentView.trailingAnchor.constraint(equalTo: self.gameView.trailingAnchor).isActive = true
+        self.airPlayContentView.topAnchor.constraint(equalTo: self.gameView.topAnchor).isActive = true
+        self.airPlayContentView.bottomAnchor.constraint(equalTo: self.gameView.bottomAnchor).isActive = true
+        
         self.sustainButtonsContentView.leadingAnchor.constraint(equalTo: self.gameView.leadingAnchor).isActive = true
         self.sustainButtonsContentView.trailingAnchor.constraint(equalTo: self.gameView.trailingAnchor).isActive = true
         self.sustainButtonsContentView.topAnchor.constraint(equalTo: self.gameView.topAnchor).isActive = true
@@ -1483,6 +1519,45 @@ private extension GameViewController
     }
 }
 
+//MARK: - AirPlay Icon -
+private extension GameViewController
+{
+    func showAirPlayView()
+    {
+        guard !self.isSelectingSustainedButtons else { return }
+        
+        self.reverseScreenOrder = true
+        
+        let blurEffect = self.airPlayBlurView.effect
+        self.airPlayBlurView.effect = nil
+        
+        self.airPlayContentView.isHidden = false
+        
+        UIView.animate(withDuration: 0.4) {
+            self.airPlayBlurView.effect = blurEffect
+            self.airPlayBackgroundView.alpha = 1.0
+        }
+    }
+    
+    func hideAirPlayView()
+    {
+        let blurEffect = self.airPlayBlurView.effect
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            self.airPlayBlurView.effect = nil
+            self.airPlayBackgroundView.alpha = 0.0
+        }) { (finished) in
+            self.airPlayContentView.isHidden = true
+            self.airPlayBlurView.effect = blurEffect
+        }
+        
+        if !self.isSelectingSustainedButtons
+        {
+            self.reverseScreenOrder = false
+        }
+    }
+}
+
 //MARK: - Sustain Buttons -
 private extension GameViewController
 {
@@ -1491,6 +1566,19 @@ private extension GameViewController
         guard let gameController = self.pausingGameController else { return }
         
         self.reverseScreenOrder = true
+        
+        if UIApplication.shared.isExternalDisplayConnected
+        {
+            let blurEffect = self.airPlayBlurView.effect
+            
+            UIView.animate(withDuration: 0.4, animations: {
+                self.airPlayBlurView.effect = nil
+                self.airPlayBackgroundView.alpha = 0.0
+            }) { (finished) in
+                self.airPlayContentView.isHidden = true
+                self.airPlayBlurView.effect = blurEffect
+            }
+        }
         
         self.isSelectingSustainedButtons = true
         
@@ -1514,7 +1602,18 @@ private extension GameViewController
     {
         guard let gameController = self.pausingGameController else { return }
         
-        self.reverseScreenOrder = false
+        if UIApplication.shared.isExternalDisplayConnected
+        {
+            let blurEffect = self.airPlayBlurView.effect
+            self.airPlayBlurView.effect = nil
+            
+            self.airPlayContentView.isHidden = false
+            
+            UIView.animate(withDuration: 0.4) {
+                self.airPlayBlurView.effect = blurEffect
+                self.airPlayBackgroundView.alpha = 1.0
+            }
+        }
         
         self.isSelectingSustainedButtons = false
         
@@ -1530,6 +1629,10 @@ private extension GameViewController
         let blurEffect = self.sustainButtonsBlurView.effect
         
         UIView.animate(withDuration: 0.4, animations: {
+            if UIApplication.shared.isExternalDisplayConnected
+            {
+                self.airPlayBackgroundView.alpha = 1.0
+            }
             self.sustainButtonsBlurView.effect = nil
             self.sustainButtonsBackgroundView.alpha = 0.0
         }) { (finished) in
@@ -1538,6 +1641,11 @@ private extension GameViewController
         }
         
         self.inputsToSustain = [:]
+        
+        if !UIApplication.shared.isExternalDisplayConnected
+        {
+            self.reverseScreenOrder = false
+        }
     }
 }
 
@@ -1914,8 +2022,6 @@ extension GameViewController
     {
         if self.isSelectingSustainedButtons
         {
-            self.hideSustainButtonView()
-            
             if self.presentedViewController == nil
             {
                 self.pauseEmulation()
@@ -1924,6 +2030,8 @@ extension GameViewController
                 
                 self.performSegue(withIdentifier: "pause", sender: self.controllerView)
             }
+            
+            self.hideSustainButtonView()
         }
         else
         {
@@ -2279,6 +2387,8 @@ private extension GameViewController
         scene.gameViewController.delegate = self
         
         self.updateControllerSkin()
+        
+        self.showAirPlayView()
 
         // Implicitly called from updateControllerSkin()
         // self.updateExternalDisplay()
@@ -2353,6 +2463,8 @@ private extension GameViewController
         }
 
         self.updateControllerSkin() // Reset TouchControllerSkin + GameViews
+        
+        self.hideAirPlayView()
     }
 }
 
@@ -2369,11 +2481,6 @@ extension GameViewController: GameViewControllerDelegate
             guard pausingGameController == gameController else { return }
         }
         
-        if self.isSelectingSustainedButtons
-        {
-            self.hideSustainButtonView()
-        }
-        
         if let pauseViewController = self.pauseViewController, !self.isSelectingSustainedButtons
         {
             pauseViewController.dismiss()
@@ -2385,6 +2492,11 @@ extension GameViewController: GameViewControllerDelegate
             self._isQuickSettingsOpen = false
             
             self.performSegue(withIdentifier: "pause", sender: gameController)
+        }
+        
+        if self.isSelectingSustainedButtons
+        {
+            self.hideSustainButtonView()
         }
     }
     
