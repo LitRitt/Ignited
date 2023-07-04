@@ -1490,6 +1490,8 @@ private extension GameViewController
     {
         guard let gameController = self.pausingGameController else { return }
         
+        self.reverseScreenOrder = true
+        
         self.isSelectingSustainedButtons = true
         
         let sustainInputsMapping = SustainInputsMapping(gameController: gameController)
@@ -1511,6 +1513,8 @@ private extension GameViewController
     func hideSustainButtonView()
     {
         guard let gameController = self.pausingGameController else { return }
+        
+        self.reverseScreenOrder = false
         
         self.isSelectingSustainedButtons = false
         
