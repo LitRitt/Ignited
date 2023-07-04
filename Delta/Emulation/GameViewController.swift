@@ -1929,35 +1929,44 @@ extension GameViewController
         {
             guard GameplayFeatures.shared.quickSettings.isEnabled else { return }
             
-            if let pauseView = self.pauseViewController
+            if self._isQuickSettingsOpen
             {
-                pauseView.dismiss()
+                self._isQuickSettingsOpen = false
+                
+                self.dismissQuickSettings()
             }
-            
-            guard #available(iOS 15.0, *) else {
-                self.presentToastView(text: "Quick Menu Requires iOS 15")
-                return
-            }
-            
-            if let speed = self.emulatorCore?.rate,
-               let system = self.game?.type.rawValue
+            else
             {
-                let quickSettingsView = QuickSettingsView.makeViewController(system: system, speed: speed)
-                if let sheet = quickSettingsView.sheetPresentationController {
-                    sheet.detents = [.medium(), .large()]
-                    sheet.largestUndimmedDetentIdentifier = nil
-                    sheet.prefersScrollingExpandsWhenScrolledToEdge = true
-                    sheet.prefersEdgeAttachedInCompactHeight = true
-                    sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
-                    sheet.prefersGrabberVisible = true
+                if let pauseView = self.pauseViewController
+                {
+                    pauseView.dismiss()
                 }
                 
-                self.present(quickSettingsView, animated: true, completion: nil)
+                guard #available(iOS 15.0, *) else {
+                    self.presentToastView(text: "Quick Menu Requires iOS 15")
+                    return
+                }
+                
+                if let speed = self.emulatorCore?.rate,
+                   let system = self.game?.type.rawValue
+                {
+                    let quickSettingsView = QuickSettingsView.makeViewController(system: system, speed: speed)
+                    if let sheet = quickSettingsView.sheetPresentationController {
+                        sheet.detents = [.medium(), .large()]
+                        sheet.largestUndimmedDetentIdentifier = nil
+                        sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                        sheet.prefersEdgeAttachedInCompactHeight = true
+                        sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
+                        sheet.prefersGrabberVisible = true
+                    }
+                    
+                    self.present(quickSettingsView, animated: true, completion: nil)
+                }
+                
+                self._isQuickSettingsOpen = true
+                
+                self.resumeEmulation()
             }
-            
-            self._isQuickSettingsOpen = true
-            
-            self.resumeEmulation()
         }
     }
     
