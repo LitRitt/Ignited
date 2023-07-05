@@ -810,7 +810,7 @@ private extension GameViewController
                 if !(ControllerSkinFeatures.shared.skinCustomization.alwaysShow && ControllerSkinFeatures.shared.skinCustomization.isEnabled)
                 {
                     self.controllerView.isHidden = true
-                    self.controllerView.playerIndex = nil
+                    self.controllerView.playerIndex = nil // TODO: Does this need changed to 0?
                     Settings.localControllerPlayerIndex = nil
                 }
                 else
@@ -985,6 +985,8 @@ private extension GameViewController
         AdvancedFeatures.shared.skinDebug.hasAlt = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
         
         self.updateExternalDisplay()
+        
+        self.updateAirPlayView()
         
         self.view.setNeedsLayout()
     }
@@ -1522,11 +1524,34 @@ private extension GameViewController
 //MARK: - AirPlay Icon -
 private extension GameViewController
 {
+    func updateAirPlayView()
+    {
+        guard UIApplication.shared.isExternalDisplayConnected,
+              !self.isSelectingSustainedButtons
+        else {
+            self.hideAirPlayView()
+            return
+        }
+        
+        guard Settings.localControllerPlayerIndex != nil
+        else {
+            if self.game?.type == .ds
+            {
+                self.hideAirPlayView()
+            }
+            else
+            {
+                self.showAirPlayView()
+            }
+            return
+        }
+        
+        self.showAirPlayView()
+    }
+    
     func showAirPlayView()
     {
-        guard !self.isSelectingSustainedButtons else { return }
-        
-        self.reverseScreenOrder = true
+        self.blurScreenInFront = true
         
         let blurEffect = self.airPlayBlurView.effect
         self.airPlayBlurView.effect = nil
@@ -1553,7 +1578,7 @@ private extension GameViewController
         
         if !self.isSelectingSustainedButtons
         {
-            self.reverseScreenOrder = false
+            self.blurScreenInFront = false
         }
     }
 }
@@ -1565,20 +1590,7 @@ private extension GameViewController
     {
         guard let gameController = self.pausingGameController else { return }
         
-        self.reverseScreenOrder = true
-        
-        if UIApplication.shared.isExternalDisplayConnected
-        {
-            let blurEffect = self.airPlayBlurView.effect
-            
-            UIView.animate(withDuration: 0.4, animations: {
-                self.airPlayBlurView.effect = nil
-                self.airPlayBackgroundView.alpha = 0.0
-            }) { (finished) in
-                self.airPlayContentView.isHidden = true
-                self.airPlayBlurView.effect = blurEffect
-            }
-        }
+        self.blurScreenInFront = true
         
         self.isSelectingSustainedButtons = true
         
@@ -1596,24 +1608,13 @@ private extension GameViewController
         } completion: { _ in
             self.controllerView.becomeFirstResponder()
         }
+        
+        self.updateAirPlayView()
     }
     
     func hideSustainButtonView()
     {
         guard let gameController = self.pausingGameController else { return }
-        
-        if UIApplication.shared.isExternalDisplayConnected
-        {
-            let blurEffect = self.airPlayBlurView.effect
-            self.airPlayBlurView.effect = nil
-            
-            self.airPlayContentView.isHidden = false
-            
-            UIView.animate(withDuration: 0.4) {
-                self.airPlayBlurView.effect = blurEffect
-                self.airPlayBackgroundView.alpha = 1.0
-            }
-        }
         
         self.isSelectingSustainedButtons = false
         
@@ -1644,8 +1645,10 @@ private extension GameViewController
         
         if !UIApplication.shared.isExternalDisplayConnected
         {
-            self.reverseScreenOrder = false
+            self.blurScreenInFront = false
         }
+        
+        self.updateAirPlayView()
     }
 }
 
@@ -2388,7 +2391,7 @@ private extension GameViewController
         
         self.updateControllerSkin()
         
-        self.showAirPlayView()
+        self.updateAirPlayView()
 
         // Implicitly called from updateControllerSkin()
         // self.updateExternalDisplay()
@@ -2464,7 +2467,7 @@ private extension GameViewController
 
         self.updateControllerSkin() // Reset TouchControllerSkin + GameViews
         
-        self.hideAirPlayView()
+        self.updateAirPlayView()
     }
 }
 
