@@ -585,7 +585,7 @@ private extension SettingsViewController
         
         let resetBackgroundBlur = {
             ControllerSkinFeatures.shared.backgroundBlur.blurBackground = true
-            ControllerSkinFeatures.shared.backgroundBlur.blurAirPlay = false
+            ControllerSkinFeatures.shared.backgroundBlur.blurAirPlay = true
             ControllerSkinFeatures.shared.backgroundBlur.blurAspect = true
             ControllerSkinFeatures.shared.backgroundBlur.blurOverride = false
             ControllerSkinFeatures.shared.backgroundBlur.blurStrength = 1.0

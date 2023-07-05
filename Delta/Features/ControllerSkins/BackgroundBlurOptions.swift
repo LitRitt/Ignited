@@ -18,7 +18,7 @@ struct BackgroundBlurOptions
      
     @Option(name: "Show During AirPlay",
              description: "Display the blurred background during AirPlay.")
-     var blurAirPlay: Bool = false
+     var blurAirPlay: Bool = true
      
     @Option(name: "Maintain Aspect Ratio",
             description: "When scaling the blurred image to fit the background, maintain the aspect ratio instead of stretching the image only to the edges.")
