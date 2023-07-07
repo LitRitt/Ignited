@@ -66,6 +66,7 @@ struct Settings
             ControllerSkinFeatures.shared.skinCustomization.settingsKey.rawValue: true,
             ControllerSkinFeatures.shared.backgroundBlur.settingsKey.rawValue: true,
             ControllerSkinFeatures.shared.airPlaySkins.settingsKey.rawValue: true,
+            ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey.rawValue: false,
             GamesCollectionFeatures.shared.artwork.settingsKey.rawValue: true,
             GamesCollectionFeatures.shared.animation.settingsKey.rawValue: true,
             GamesCollectionFeatures.shared.favorites.settingsKey.rawValue: true,

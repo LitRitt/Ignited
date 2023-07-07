@@ -263,7 +263,7 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.sceneWillConnect(with:)), name: UIScene.willConnectNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.sceneDidDisconnect(with:)), name: UIScene.didDisconnectNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateBlurBackground), name: .unwindFromSettings, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.unwindFromQuickSettings), name: .unwindFromSettings, object: nil)
     }
     
     deinit
@@ -993,7 +993,8 @@ private extension GameViewController
     
     func updateGameViews()
     {
-        if UIApplication.shared.isExternalDisplayConnected
+        if UIApplication.shared.isExternalDisplayConnected,
+           !ControllerSkinFeatures.shared.airPlayKeepScreen.isEnabled
         {
             // AirPlaying, hide all screens except touchscreens and blur screens.
                  
@@ -1030,7 +1031,14 @@ private extension GameViewController
         }
     }
     
-    @objc func updateBlurBackground()
+    @objc func unwindFromQuickSettings()
+    {
+        self._isQuickSettingsOpen = false
+        
+        self.updateBlurBackground()
+    }
+    
+    func updateBlurBackground()
     {
         self.blurScreenKeepAspect = ControllerSkinFeatures.shared.backgroundBlur.blurAspect
         self.blurScreenOverride = ControllerSkinFeatures.shared.backgroundBlur.blurOverride
@@ -1527,7 +1535,8 @@ private extension GameViewController
     func updateAirPlayView()
     {
         guard UIApplication.shared.isExternalDisplayConnected,
-              !self.isSelectingSustainedButtons
+              !self.isSelectingSustainedButtons,
+              !ControllerSkinFeatures.shared.airPlayKeepScreen.isEnabled
         else {
             self.hideAirPlayView()
             return
@@ -1645,7 +1654,9 @@ private extension GameViewController
         
         if !UIApplication.shared.isExternalDisplayConnected
         {
-            self.blurScreenInFront = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.blurScreenInFront = false
+            }
         }
         
         self.updateAirPlayView()
@@ -2625,7 +2636,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:

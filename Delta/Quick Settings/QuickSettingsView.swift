@@ -33,6 +33,7 @@ struct QuickSettingsView: View
     
     @State private var controllerSkinOpacity: Double = ControllerSkinFeatures.shared.skinCustomization.opacity
     @State private var controllerSkinBackgroundColor: Color = ControllerSkinFeatures.shared.skinCustomization.backgroundColor
+    @State private var controllerSkinAirPlayKeepScreen: Bool = ControllerSkinFeatures.shared.airPlayKeepScreen.isEnabled
     
     @State private var backgroundBlurStrength: Double = ControllerSkinFeatures.shared.backgroundBlur.blurStrength
     @State private var backgroundBlurBrightness: Double = ControllerSkinFeatures.shared.backgroundBlur.blurBrightness
@@ -235,7 +236,12 @@ struct QuickSettingsView: View
                                     }
                                 Toggle("Match Theme Color", isOn: ControllerSkinFeatures.shared.skinCustomization.$matchTheme.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Show With Controller", isOn: ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.valueBinding)
+                                Toggle("Show Screen During AirPlay", isOn: self.$controllerSkinAirPlayKeepScreen)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                    .onChange(of: self.controllerSkinAirPlayKeepScreen) { value in
+                                        ControllerSkinFeatures.shared.airPlayKeepScreen.isEnabled = value
+                                    }
+                                Toggle("Show Skin With Controller", isOn: ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }

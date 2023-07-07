@@ -27,6 +27,10 @@ struct ControllerSkinFeatures: FeatureContainer
              options: AirPlaySkinsOptions())
     var airPlaySkins
     
+    @Feature(name: "Show Screen During AirPlay",
+             description: "Enable to show the main game screen on both the external display, as well as on the controller skin.")
+    var airPlayKeepScreen
+    
     private init()
     {
         self.prepareFeatures()
