@@ -13,7 +13,7 @@ import Features
 enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
     case normal = "Default"
-    case flame = "Flame"
+    case cartridge = "Cartridge"
     case beta = "Beta"
     case neon = "Neon"
     case pride = "Pride"
@@ -32,7 +32,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: String {
         switch self
         {
-        case .normal, .flame, .beta, .neon, .pride: return "LitRitt"
+        case .normal, .cartridge, .beta, .neon, .pride: return "LitRitt"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
         }
@@ -42,7 +42,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         switch self
         {
         case .normal: return "AppIcon"
-        case .flame: return "IconFlame"
+        case .cartridge: return "IconCartridge"
         case .beta: return "IconBeta"
         case .neon: return "IconNeon"
         case .pride: return "IconPride"
