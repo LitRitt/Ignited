@@ -1,23 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "Placeholder.png",
       "idiom" : "universal",
-      "filename" : "DeltaPlaceholder.png",
       "scale" : "1x"
     },
     {
+      "filename" : "Placeholder@2x.png",
       "idiom" : "universal",
-      "filename" : "DeltaPlaceholder@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "Placeholder@3x.png",
       "idiom" : "universal",
-      "filename" : "DeltaPlaceholder@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

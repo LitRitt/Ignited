@@ -258,7 +258,7 @@ private extension SaveStatesViewController
         let saveState = self.dataSource.item(at: indexPath)
         
         cell.imageView.backgroundColor = UIColor.white
-        cell.imageView.image = UIImage(named: "DeltaPlaceholder")
+        cell.imageView.image = UIImage(named: "Placeholder")
         cell.textLabel.textColor = UIColor.gray
         
         switch self.theme
