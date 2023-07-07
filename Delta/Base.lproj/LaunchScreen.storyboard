@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dkK-ii-Bx4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dkK-ii-Bx4">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,10 +19,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Delta" translatesAutoresizingMaskIntoConstraints="NO" id="plh-tL-LY0">
-                                <rect key="frame" x="94" y="204.5" width="187.5" height="258"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Flame" translatesAutoresizingMaskIntoConstraints="NO" id="plh-tL-LY0" userLabel="Flame">
+                                <rect key="frame" x="94" y="203.5" width="187.5" height="260"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="plh-tL-LY0" secondAttribute="height" multiplier="700:965" id="8qM-L2-ASa"/>
+                                    <constraint firstAttribute="width" secondItem="plh-tL-LY0" secondAttribute="height" multiplier="620:860" id="8qM-L2-ASa"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -43,6 +43,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Delta" width="700" height="965"/>
+        <image name="Flame" width="620" height="860"/>
     </resources>
 </document>
