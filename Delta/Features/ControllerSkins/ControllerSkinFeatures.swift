@@ -17,6 +17,11 @@ struct ControllerSkinFeatures: FeatureContainer
              options: SkinCustomizationOptions())
     var skinCustomization
     
+    @Feature(name: "Controller Options",
+             description: "Change how the app responds to controller inputs.",
+             options: ControllerOptions())
+    var controller
+    
     @Feature(name: "Background Blur",
              description: "Use a live blurred game screen as the background of skins.",
              options: BackgroundBlurOptions())

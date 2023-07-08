@@ -28,9 +28,10 @@ private extension SettingsViewController
         case saveStateRewind
         case fastForward
         case quickSettings
-        // Controller Skins
+        // Controllers and Skins
         case skinCustomization
         case backgroundBlur
+        case controller
         // Games Collestion
         case artworkCustomization
         case animatedArtwork
@@ -592,6 +593,10 @@ private extension SettingsViewController
             ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = 0.0
         }
         
+        let resetController = {
+            ControllerSkinFeatures.shared.controller.triggerDeadzone = 0.15
+        }
+        
         let resetTouchVibration = {
             TouchFeedbackFeatures.shared.touchVibration.strength = 1.0
             TouchFeedbackFeatures.shared.touchVibration.buttonsEnabled = true
@@ -713,6 +718,11 @@ private extension SettingsViewController
                 resetBackgroundBlur()
             })
             
+        case .controller:
+            resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+                resetController()
+            })
+            
         case .touchVibration:
             resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
                 resetTouchVibration()
@@ -751,6 +761,7 @@ private extension SettingsViewController
                 resetAppIcon()
                 resetSkinCustomization()
                 resetBackgroundBlur()
+                resetController()
                 resetTouchVibration()
                 resetTouchAudio()
                 resetTouchOverlay()
@@ -975,6 +986,16 @@ private extension SettingsViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     ControllerSkinFeatures.shared.backgroundBlur.resetBackgroundBlur = false
                     self.resetFeature(.backgroundBlur)
+                }
+            }
+            
+        case ControllerSkinFeatures.shared.controller.$resetController.settingsKey:
+            guard let value = notification.userInfo?[Settings.NotificationUserInfoKey.value] as? Bool else { break }
+            if value
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    ControllerSkinFeatures.shared.controller.resetController = false
+                    self.resetFeature(.controller)
                 }
             }
             

@@ -33,6 +33,8 @@ private class LocalDeviceController: NSObject, GameController
         get { return Settings.localControllerPlayerIndex }
     }
     
+    var triggerDeadzone: Float = 0
+    
     let inputType: GameControllerInputType = .standard
     
     var defaultInputMapping: GameControllerInputMappingProtocol?

@@ -894,6 +894,15 @@ private extension GameViewController
         self.updateGameboyPalette()
         self.updateBlurBackground()
         self.updateControllerSkinCustomization()
+        self.updateControllerTriggerDeadzone()
+    }
+    
+    func updateControllerTriggerDeadzone()
+    {
+        for gameController in ExternalGameControllerManager.shared.connectedControllers
+        {
+            gameController.triggerDeadzone = ControllerSkinFeatures.shared.controller.isEnabled ? Float(ControllerSkinFeatures.shared.controller.triggerDeadzone) : 0.15
+        }
     }
     
     func updateButtonAudioFeedbackSound()
@@ -2636,7 +2645,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey, ControllerSkinFeatures.shared.controller.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -2649,6 +2658,9 @@ private extension GameViewController
             {
                 self.updateControllerSkin()
             }
+            
+        case ControllerSkinFeatures.shared.controller.$triggerDeadzone.settingsKey:
+            self.updateControllerTriggerDeadzone()
             
         case ControllerSkinFeatures.shared.skinCustomization.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$opacity.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$backgroundColor.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$matchTheme.settingsKey:
             self.updateControllerSkinCustomization()
