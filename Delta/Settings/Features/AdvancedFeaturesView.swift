@@ -63,7 +63,7 @@ extension AdvancedFeaturesView
         let featuresView = AdvancedFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Advanced Features", comment: "")
+        hostingController.title = NSLocalizedString("Advanced", comment: "")
         return hostingController
     }
 }

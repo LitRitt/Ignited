@@ -63,7 +63,7 @@ extension TouchFeedbackFeaturesView
         let featuresView = TouchFeedbackFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Touch Feedback Features", comment: "")
+        hostingController.title = NSLocalizedString("Touch Feedback", comment: "")
         return hostingController
     }
 }

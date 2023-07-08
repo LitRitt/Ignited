@@ -63,7 +63,7 @@ extension GamesCollectionFeaturesView
         let featuresView = GamesCollectionFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Games Collection Features", comment: "")
+        hostingController.title = NSLocalizedString("Games Collection", comment: "")
         return hostingController
     }
 }

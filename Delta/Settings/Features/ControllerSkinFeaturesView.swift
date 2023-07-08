@@ -63,7 +63,7 @@ extension ControllerSkinFeaturesView
         let featuresView = ControllerSkinFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Controller Skin Features", comment: "")
+        hostingController.title = NSLocalizedString("Controllers and Skins", comment: "")
         return hostingController
     }
 }

@@ -63,7 +63,7 @@ extension UserInterfaceFeaturesView
         let featuresView = UserInterfaceFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("User Interface Features", comment: "")
+        hostingController.title = NSLocalizedString("User Interface", comment: "")
         return hostingController
     }
 }

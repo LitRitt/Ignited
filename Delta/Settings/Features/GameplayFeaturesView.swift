@@ -63,7 +63,7 @@ extension GameplayFeaturesView
         let featuresView = GameplayFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Gameplay Features", comment: "")
+        hostingController.title = NSLocalizedString("Gameplay", comment: "")
         return hostingController
     }
 }
