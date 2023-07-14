@@ -2734,7 +2734,29 @@ private extension GameViewController
         let previousGame = self.game
         self.game = game
         
-        if let pausedSaveState = self.pausedSaveState, game == (previousGame as? Game)
+        if GameplayFeatures.shared.autoLoad.isEnabled
+        {
+            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+
+            do
+            {
+                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                if let autoLoadSaveState = saveStates?.last
+                {
+                    let temporaryURL = FileManager.default.uniqueTemporaryURL()
+                    try FileManager.default.copyItem(at: autoLoadSaveState.fileURL, to: temporaryURL)
+                    
+                    _deepLinkResumingSaveState = DeltaCore.SaveState(fileURL: temporaryURL, gameType: game.type)
+                }
+            }
+            catch
+            {
+                print(error)
+            }
+        }
+        else if let pausedSaveState = self.pausedSaveState, game == (previousGame as? Game)
         {
             // Launching current game via deep link, so we store a copy of the paused save state to resume when emulator core is started.
             
