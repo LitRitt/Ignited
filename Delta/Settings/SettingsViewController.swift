@@ -611,7 +611,8 @@ private extension SettingsViewController
         let resetTouchOverlay = {
             TouchFeedbackFeatures.shared.touchOverlay.themed = true
             TouchFeedbackFeatures.shared.touchOverlay.overlayColor = Color(red: 255/255, green: 255/255, blue: 255/255)
-            TouchFeedbackFeatures.shared.touchOverlay.opacity = 0.7
+            TouchFeedbackFeatures.shared.touchOverlay.style = ButtonOverlayStyle.bubble
+            TouchFeedbackFeatures.shared.touchOverlay.opacity = 1.0
             TouchFeedbackFeatures.shared.touchOverlay.size = 1.0
         }
         

@@ -9,6 +9,14 @@
 import SwiftUI
 
 import Features
+import DeltaCore
+
+extension ButtonOverlayStyle: LocalizedOptionValue
+{
+    public var localizedDescription: Text {
+        Text(self.description)
+    }
+}
 
 struct TouchFeedbackOverlayOptions
 {
@@ -24,6 +32,9 @@ struct TouchFeedbackOverlayOptions
     })
     var overlayColor: Color = Color(red: 255/255, green: 255/255, blue: 255/255)
     
+    @Option(name: "Style", description: "Choose the style to use for overlays.", values: ButtonOverlayStyle.allCases)
+    var style: ButtonOverlayStyle = .bubble
+    
     @Option(name: "Opacity", description: "Adjust the opacity of the overlays.", detailView: { value in
         VStack {
             HStack {
@@ -37,7 +48,7 @@ struct TouchFeedbackOverlayOptions
             }
         }.displayInline()
     })
-    var opacity: Double = 0.7
+    var opacity: Double = 1.0
     
     @Option(name: "Size", description: "Adjust the size of the overlays.", detailView: { value in
         VStack {

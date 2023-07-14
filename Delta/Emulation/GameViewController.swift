@@ -883,6 +883,7 @@ private extension GameViewController
         self.controllerView.touchOverlayOpacity = TouchFeedbackFeatures.shared.touchOverlay.opacity
         self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.touchOverlay.size
         self.controllerView.touchOverlayColor = TouchFeedbackFeatures.shared.touchOverlay.themed ? UIColor.themeColor : UIColor(TouchFeedbackFeatures.shared.touchOverlay.overlayColor)
+        self.controllerView.touchOverlayStyle = TouchFeedbackFeatures.shared.touchOverlay.style
         
         self.controllerView.isAltRepresentationsEnabled = AdvancedFeatures.shared.skinDebug.useAlt
         self.controllerView.isDebugModeEnabled = AdvancedFeatures.shared.skinDebug.isOn
@@ -2676,6 +2677,9 @@ private extension GameViewController
             
         case TouchFeedbackFeatures.shared.touchOverlay.$size.settingsKey:
             self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.touchOverlay.size
+            
+        case TouchFeedbackFeatures.shared.touchOverlay.$style.settingsKey:
+            self.controllerView.touchOverlayStyle = TouchFeedbackFeatures.shared.touchOverlay.style
             
         case GameplayFeatures.shared.gameAudio.$respectSilent.settingsKey, GameplayFeatures.shared.gameAudio.$playOver.settingsKey, GameplayFeatures.shared.gameAudio.$volume.settingsKey:
             self.updateAudio()
