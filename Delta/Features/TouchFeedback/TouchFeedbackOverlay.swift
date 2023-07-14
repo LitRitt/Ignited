@@ -31,8 +31,8 @@ struct TouchFeedbackOverlayOptions
                 Spacer()
             }
             HStack {
-                Text("15%")
-                Slider(value: value, in: 0.15...1.00, step: 0.05)
+                Text("25%")
+                Slider(value: value, in: 0.25...1.00, step: 0.05)
                 Text("100%")
             }
         }.displayInline()
@@ -46,9 +46,9 @@ struct TouchFeedbackOverlayOptions
                 Spacer()
             }
             HStack {
-                Text("50%")
-                Slider(value: value, in: 0.50...2.00, step: 0.05)
-                Text("200%")
+                Text("70%")
+                Slider(value: value, in: 0.70...1.30, step: 0.05)
+                Text("130%")
             }
         }.displayInline()
     })
