@@ -6,7 +6,7 @@
 	url = https://github.com/LitRitt/SNESDeltaCore.git
 [submodule "External/Roxas"]
 	path = External/Roxas
-	url = https://github.com/rileytestut/Roxas.git
+	url = https://github.com/LitRitt/Roxas.git
 [submodule "Cores/GBADeltaCore"]
 	path = Cores/GBADeltaCore
 	url = https://github.com/LitRitt/GBADeltaCore.git
@@ -15,7 +15,7 @@
 	url = https://github.com/LitRitt/GBCDeltaCore.git
 [submodule "External/Harmony"]
 	path = External/Harmony
-	url = https://github.com/rileytestut/Harmony.git
+	url = https://github.com/LitRitt/Harmony.git
 [submodule "Cores/NESDeltaCore"]
 	path = Cores/NESDeltaCore
 	url = https://github.com/LitRitt/NESDeltaCore.git
