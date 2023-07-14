@@ -4,6 +4,77 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.5</string>
+		<key>date</key>
+		<string>7/13/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.5</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>AirPlay - Proper support for streaming games to an external screen</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Trigger Deadzone - Adjustable deadzone for trigger inputs on controllers</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Skin Background Color - Change the background color of controller skins from black to any other color</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Fast Forward inputs can now be manually switched between toggle and hold by users</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Improved default button mappings for various Switch controllers</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated app icon and other assets to match modified design</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Various syncing improvements in Harmony</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Make Quick Settings dismissible with controller input</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes DS save states made with JIT enabled not loading when JIT is not enabled</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes crash when loading save states on iOS 17</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.4.8</string>
 		<key>date</key>
 		<string>6/25/2023</string>
