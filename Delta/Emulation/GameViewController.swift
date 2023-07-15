@@ -182,6 +182,9 @@ class GameViewController: DeltaCore.GameViewController
     
     private var rewindTimer: Timer?
     
+    private var buttonSoundFile: AVAudioFile?
+    private var buttonSoundID: SystemSoundID = 444
+    
     private var isGyroActive = false
     private var presentedGyroAlert = false
     
@@ -877,8 +880,6 @@ private extension GameViewController
         self.controllerView.isClickyHapticEnabled = TouchFeedbackFeatures.shared.touchVibration.releaseEnabled && vibrationEnabled
         self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
         
-        self.controllerView.isButtonAudioFeedbackEnabled = TouchFeedbackFeatures.shared.touchAudio.isEnabled
-        
         self.controllerView.isButtonTouchOverlayEnabled = TouchFeedbackFeatures.shared.touchOverlay.isEnabled
         self.controllerView.touchOverlayOpacity = TouchFeedbackFeatures.shared.touchOverlay.opacity
         self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.touchOverlay.size
@@ -915,12 +916,31 @@ private extension GameViewController
         case .snap: buttonSoundURL = Bundle.main.url(forResource: "snap", withExtension: "caf")!
         case .bit8: buttonSoundURL = Bundle.main.url(forResource: "8bit", withExtension: "caf")!
         }
-        self.controllerView.buttonPressedSoundURL = buttonSoundURL
+        
+        AudioServicesCreateSystemSoundID(buttonSoundURL as CFURL, &self.buttonSoundID)
+        
+        do
+        {
+            try self.buttonSoundFile = AVAudioFile(forReading: buttonSoundURL)
+        }
+        catch
+        {
+            print(error)
+        }
+        
+        self.controllerView.buttonPressedHandler = { [weak self] () in
+            if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
+               let core = self?.emulatorCore,
+               let buttonSoundFile = self?.buttonSoundFile
+            {
+                core.audioManager.playButtonSound(buttonSoundFile)
+            }
+        }
     }
     
     func playButtonAudioFeedbackSound()
     {
-        AudioServicesPlaySystemSound(self.controllerView.buttonPressedSoundID)
+        AudioServicesPlaySystemSound(self.buttonSoundID)
     }
     
     func updateStatusBar()
