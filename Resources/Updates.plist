@@ -4,6 +4,41 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.5.1</string>
+		<key>date</key>
+		<string>7/16/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.5.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Different button overlay styles to choose from</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated button sounds to play through the audio engine instead of as system sounds</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Button sounds can be played at either their own volume, or the same volume of game audio</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes launching a game via deep link not respecting the auto load save state setting</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.5</string>
 		<key>date</key>
 		<string>7/13/2023</string>
