@@ -606,6 +606,8 @@ private extension SettingsViewController
         
         let resetTouchAudio = {
             TouchFeedbackFeatures.shared.touchAudio.sound = .tock
+            TouchFeedbackFeatures.shared.touchAudio.useGameVolume = true
+            TouchFeedbackFeatures.shared.touchAudio.buttonVolume = 1.0
         }
         
         let resetTouchOverlay = {

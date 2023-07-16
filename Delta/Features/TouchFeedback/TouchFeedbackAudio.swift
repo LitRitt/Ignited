@@ -57,6 +57,24 @@ struct TouchFeedbackAudioOptions
     @Option(name: "Sound", description: "Choose the sound to play.", values: TouchFeedbackSound.allCases)
     var sound: TouchFeedbackSound = .tock
     
+    @Option(name: "Use Game Volume", description: "When enabled, sounds will play at the same volume as gameplay. When disabled, sounds will play at the volume specified below.")
+    var useGameVolume: Bool = true
+    
+    @Option(name: "Volume", description: "Change how loud the button sounds should be.", detailView: { value in
+        VStack {
+            HStack {
+                Text("Volume: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...1.0, step: 0.05)
+                Text("100%")
+            }
+        }.displayInline()
+    })
+    var buttonVolume: Double = 1.0
+    
     @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
         Toggle(isOn: value) {
             Text("Restore Defaults")

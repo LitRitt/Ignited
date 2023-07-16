@@ -183,7 +183,7 @@ class GameViewController: DeltaCore.GameViewController
     private var rewindTimer: Timer?
     
     private var buttonSoundFile: AVAudioFile?
-    private var buttonSoundID: SystemSoundID = 444
+    private var buttonSoundPlayer: AVAudioPlayer?
     
     private var isGyroActive = false
     private var presentedGyroAlert = false
@@ -909,38 +909,58 @@ private extension GameViewController
     
     func updateButtonAudioFeedbackSound()
     {
-        let buttonSoundURL: URL
-        switch TouchFeedbackFeatures.shared.touchAudio.sound
-        {
-        case .none: buttonSoundURL = URL(fileURLWithPath: "/System/Library/Audio/UISounds/Tock.caf")
-        case .snap: buttonSoundURL = Bundle.main.url(forResource: "snap", withExtension: "caf")!
-        case .bit8: buttonSoundURL = Bundle.main.url(forResource: "8bit", withExtension: "caf")!
-        }
+        let sound = TouchFeedbackFeatures.shared.touchAudio.sound
         
-        AudioServicesCreateSystemSoundID(buttonSoundURL as CFURL, &self.buttonSoundID)
+        guard let buttonSoundURL = Bundle.main.url(forResource: sound.fileName, withExtension: sound.fileExtension) else
+        {
+            fatalError("Audio file not found")
+        }
         
         do
         {
             try self.buttonSoundFile = AVAudioFile(forReading: buttonSoundURL)
+            try self.buttonSoundPlayer = AVAudioPlayer(contentsOf: buttonSoundURL)
+            
+            self.buttonSoundPlayer?.volume = Float(TouchFeedbackFeatures.shared.touchAudio.buttonVolume)
         }
         catch
         {
             print(error)
         }
         
-        self.controllerView.buttonPressedHandler = { [weak self] () in
-            if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
-               let core = self?.emulatorCore,
-               let buttonSoundFile = self?.buttonSoundFile
-            {
-                core.audioManager.playButtonSound(buttonSoundFile)
+        if TouchFeedbackFeatures.shared.touchAudio.useGameVolume
+        {
+            self.controllerView.buttonPressedHandler = { [weak self] () in
+                if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
+                   let core = self?.emulatorCore,
+                   let buttonSoundFile = self?.buttonSoundFile
+                {
+                    core.audioManager.playButtonSound(buttonSoundFile)
+                }
             }
         }
+        else
+        {
+            self.controllerView.buttonPressedHandler = { [weak self] () in
+                if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
+                   let core = self?.emulatorCore,
+                   let buttonSoundPlayer = self?.buttonSoundPlayer
+                {
+                    buttonSoundPlayer.play()
+                }
+            }
+        }
+                
     }
     
     func playButtonAudioFeedbackSound()
     {
-        AudioServicesPlaySystemSound(self.buttonSoundID)
+        if let buttonSoundPlayer = self.buttonSoundPlayer
+        {
+            buttonSoundPlayer.volume = 1.0
+            buttonSoundPlayer.play()
+            buttonSoundPlayer.volume = Float(TouchFeedbackFeatures.shared.touchAudio.buttonVolume)
+        }
     }
     
     func updateStatusBar()
@@ -2666,7 +2686,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey, ControllerSkinFeatures.shared.controller.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey, TouchFeedbackFeatures.shared.touchAudio.settingsKey:
+        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey, ControllerSkinFeatures.shared.controller.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -2708,8 +2728,11 @@ private extension GameViewController
             self.changeGraphicsAPI()
             
         case TouchFeedbackFeatures.shared.touchAudio.$sound.settingsKey:
-            self.updateControllers()
+            self.updateButtonAudioFeedbackSound()
             self.playButtonAudioFeedbackSound()
+            
+        case TouchFeedbackFeatures.shared.touchAudio.settingsKey, TouchFeedbackFeatures.shared.touchAudio.$useGameVolume.settingsKey, TouchFeedbackFeatures.shared.touchAudio.$buttonVolume.settingsKey:
+            self.updateButtonAudioFeedbackSound()
             
         case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey, UserInterfaceFeatures.shared.statusBar.$useToggle.settingsKey:
             self.updateStatusBar()
