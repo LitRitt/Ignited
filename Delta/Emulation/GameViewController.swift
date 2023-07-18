@@ -193,6 +193,15 @@ class GameViewController: DeltaCore.GameViewController
     
     private var presentedJITAlert = false
     
+    public var deepLinkSaveState: SaveState? {
+        didSet {
+            if let deepLinkSaveState = self.deepLinkSaveState
+            {
+                self.load(deepLinkSaveState)
+            }
+        }
+    }
+    
     override var shouldAutorotate: Bool {
         if #available(iOS 16, *)
         {

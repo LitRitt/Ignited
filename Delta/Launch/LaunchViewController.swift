@@ -128,6 +128,26 @@ extension LaunchViewController
                 showGameViewController()
             }) { (finished) in
                 self.gameViewController.startEmulation()
+                
+                if GameplayFeatures.shared.autoLoad.isEnabled
+                {
+                    let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+                    fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+                    fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+
+                    do
+                    {
+                        let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                        if let autoLoadSaveState = saveStates?.last
+                        {
+                            self.gameViewController.deepLinkSaveState = autoLoadSaveState
+                        }
+                    }
+                    catch
+                    {
+                        print(error)
+                    }
+                }
             }
         }
         else
