@@ -169,10 +169,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>Delta</string>
+			<string>Ignited</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>delta</string>
+				<string>ignited</string>
 			</array>
 		</dict>
 	</array>
@@ -196,7 +196,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Ignited uses your microphone to emulate the Nintendo DS microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Press &quot;OK&quot; to allow Ignited to use images from your Photo Library as game artwork.</string>
+	<string>Press "OK" to allow Ignited to use images from your Photo Library as game artwork.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -217,16 +217,16 @@
 				</dict>
 			</array>
 			<key>UIWindowSceneSessionRoleExternalDisplay</key>
- 			<array>
- 				<dict>
- 					<key>UISceneClassName</key>
- 					<string>$(PRODUCT_MODULE_NAME).ExternalDisplayScene</string>
- 					<key>UISceneConfigurationName</key>
- 					<string>External Display</string>
- 					<key>UISceneDelegateClassName</key>
- 					<string>$(PRODUCT_MODULE_NAME).ExternalDisplaySceneDelegate</string>
- 				</dict>
- 			</array>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).ExternalDisplayScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>External Display</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).ExternalDisplaySceneDelegate</string>
+				</dict>
+			</array>
 		</dict>
 	</dict>
 	<key>UIBackgroundModes</key>

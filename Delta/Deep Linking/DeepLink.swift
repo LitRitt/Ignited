@@ -15,7 +15,7 @@ extension URL
         switch action
         {
         case .launchGame(let identifier):
-            let deepLinkURL = URL(string: "delta://\(action.type.rawValue)/\(identifier)")!
+            let deepLinkURL = URL(string: "ignited://\(action.type.rawValue)/\(identifier)")!
             self = deepLinkURL
         }
     }

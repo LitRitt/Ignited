@@ -147,7 +147,7 @@ private extension SceneDelegate
                 {
                     _ = DropboxService.shared.handleDropboxURL(url)
                 }
-                else if url.scheme?.lowercased() == "delta"
+                else if url.scheme?.lowercased() == "ignited"
                 {
                     _ = self.deepLinkController.handle(deepLink)
                 }
