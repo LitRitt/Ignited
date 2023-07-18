@@ -22,7 +22,7 @@ extension Input
         case .game: break
         case .controller(.standard): break
         case .controller(.mfi):
-            let input = MFiGameController.Input(input: self)!
+            guard let input = MFiGameController.Input(input: self) else { break }
             switch input
             {
             case .leftThumbstickUp: return 750
@@ -37,7 +37,7 @@ extension Input
             }
         
         case .controller(.keyboard):
-            let input = KeyboardGameController.Input(input: self)!
+            guard let input = KeyboardGameController.Input(input: self) else { break }
             
             if input == .escape
             {
@@ -69,7 +69,7 @@ extension Input
         {
         case .game: break
         case .controller(.standard):
-            let input = StandardGameControllerInput(input: self)!
+            guard let input = StandardGameControllerInput(input: self) else { return NSLocalizedString("Error", comment: "") }
             switch input
             {
             case .menu: return NSLocalizedString("Menu", comment: "")
@@ -100,7 +100,7 @@ extension Input
             }
             
         case .controller(.mfi):
-            let input = MFiGameController.Input(input: self)!
+            guard let input = MFiGameController.Input(input: self) else { return NSLocalizedString("Error", comment: "") }
             switch input
             {
             case .menu: return NSLocalizedString("Menu", comment: "")
@@ -131,7 +131,7 @@ extension Input
             }
             
         case .controller(.keyboard):
-            let input = KeyboardGameController.Input(input: self)!
+            guard let input = KeyboardGameController.Input(input: self) else { return NSLocalizedString("Error", comment: "") }
             switch input
             {
             case .up: return NSLocalizedString("↑", comment: "")
