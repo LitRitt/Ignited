@@ -12,7 +12,7 @@ import Features
 
 struct ControllerOptions
 {
-    @Option(name: "Trigger Deadzone", description: "Change how often the game state should be saved.", detailView: { value in
+    @Option(name: "Trigger Deadzone", description: "Change how far triggers need to be pressed before activating an input.", detailView: { value in
         VStack {
             HStack {
                 Text("Trigger Deadzone: \(value.wrappedValue * 100, specifier: "%.f")%")
