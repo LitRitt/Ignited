@@ -4,6 +4,47 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.5.2</string>
+		<key>date</key>
+		<string>7/19/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.5.2</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Adds new &quot;Classic&quot; icon by Kongolabongo</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Changes deep link scheme from delta:// to ignited://</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes a crash when remapping controller inputs</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes deep links not loading auto save states in some scenarios</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes wrong description for controller deadzone option</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.5.1</string>
 		<key>date</key>
 		<string>7/16/2023</string>
