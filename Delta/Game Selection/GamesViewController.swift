@@ -793,5 +793,6 @@ public extension Notification.Name
 {
     static let resumePlaying = Notification.Name("resumeCurrentGameNotification")
     static let unwindFromSettings = Notification.Name("unwindFromSettingsNotification")
+    static let dismissSettings = Notification.Name("dismissSettingsNotification")
     static let graphicsRenderingAPIDidChange = Notification.Name("graphicsRenderingAPIDidChangeNotification")
 }

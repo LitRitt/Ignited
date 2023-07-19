@@ -193,11 +193,18 @@ class GameViewController: DeltaCore.GameViewController
     
     private var presentedJITAlert = false
     
+    private var overrideToastNotification = false
+    
     public var deepLinkSaveState: SaveState? {
         didSet {
             if let deepLinkSaveState = self.deepLinkSaveState
             {
+                self._isLoadingSaveState = true
+                self.overrideToastNotification = true
+                
                 self.load(deepLinkSaveState)
+                
+                self.deepLinkSaveState = nil
             }
         }
     }
@@ -1456,7 +1463,8 @@ extension GameViewController: SaveStatesViewControllerDelegate
                 try self.emulatorCore?.load(saveState)
             }
             
-            if UserInterfaceFeatures.shared.toasts.stateLoad
+            if UserInterfaceFeatures.shared.toasts.stateLoad,
+               !self.overrideToastNotification
             {
                 let text: String
                 if let state = saveState as? SaveState
@@ -1474,6 +1482,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
                     text = NSLocalizedString("Loaded State", comment: "")
                     self.presentToastView(text: text)
                 }
+                self.overrideToastNotification = false
             }
         }
         catch EmulatorCore.SaveStateError.doesNotExist
@@ -2839,6 +2848,8 @@ private extension GameViewController
             let pageViewController = navigationController.topViewController?.children.first as? UIPageViewController,
             let gameCollectionViewController = pageViewController.viewControllers?.first as? GameCollectionViewController
         {
+            NotificationCenter.default.post(name: .dismissSettings, object: self)
+            
             let segue = UIStoryboardSegue(identifier: "unwindFromGames", source: gameCollectionViewController, destination: self)
             self.unwindFromGamesViewController(with: segue)
         }

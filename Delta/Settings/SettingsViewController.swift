@@ -143,6 +143,7 @@ class SettingsViewController: UITableViewController
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.settingsDidChange(with:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.externalGameControllerDidConnect(_:)), name: .externalGameControllerDidConnect, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.externalGameControllerDidDisconnect(_:)), name: .externalGameControllerDidDisconnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.shouldDismissViewController(_:)), name: .dismissSettings, object: nil)
     }
     
     override func viewDidLoad()
@@ -1071,6 +1072,11 @@ private extension SettingsViewController
     @objc func externalGameControllerDidDisconnect(_ notification: Notification)
     {
         self.tableView.reloadSections(IndexSet(integer: Section.controllers.rawValue), with: .none)
+    }
+    
+    @objc func shouldDismissViewController(_ notification: Notification)
+    {
+        self.dismiss(animated: true)
     }
 }
 
