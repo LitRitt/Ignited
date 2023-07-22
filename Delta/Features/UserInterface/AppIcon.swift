@@ -17,6 +17,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case beta = "Beta"
     case neon = "Neon"
     case pride = "Pride"
+    case steel = "Steel"
     case classic = "Classic"
     case simple = "Simple"
     case glass = "Glass"
@@ -33,7 +34,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: String {
         switch self
         {
-        case .normal, .cartridge, .beta, .neon, .pride: return "LitRitt"
+        case .normal, .cartridge, .beta, .neon, .pride, .steel: return "LitRitt"
         case .classic: return "Kongolabongo"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
@@ -48,6 +49,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .beta: return "IconBeta"
         case .neon: return "IconNeon"
         case .pride: return "IconPride"
+        case .steel: return "IconSteel"
         case .classic: return "IconClassic"
         case .simple: return "IconSimple"
         case .glass: return "IconGlass"
