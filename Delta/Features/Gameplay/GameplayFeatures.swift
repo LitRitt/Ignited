@@ -12,7 +12,7 @@ struct GameplayFeatures: FeatureContainer
 {
     static let shared = GameplayFeatures()
     
-    @Feature(name: "Game Audio Customization",
+    @Feature(name: "Game Audio",
              description: "Change how and when audio is played.",
              options: GameAudioOptions())
     var gameAudio

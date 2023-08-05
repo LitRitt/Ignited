@@ -38,7 +38,7 @@ extension GraphicsAPI: LocalizedOptionValue
 struct N64GraphicsOptions
 {
     @Option(name: "Graphics API",
-            description: "Changing the graphics API will affect how graphics are rendered. OpenGL ES 2 is the default, and all games should run when using it. OpenGL ES 3 can solve graphical issues like white or black boxes in the HUD of some games, but may cause other games to crash. If unsure, use OpenGL ES 2.\n\n⚠️ If you were already playing a game before changing this settings, you must restart the app before playing again, or the app will crash when loading the game. ⚠️",
+            description: "Changing the graphics API will affect how graphics are rendered. OpenGL ES 2 is the default, and all games should run when using it. OpenGL ES 3 can solve graphical issues like white or black boxes in the HUD of some games, but may cause other games to crash. If unsure, use OpenGL ES 2.\n\n⚠️ If you were already playing a game before changing this settings, you must restart the app before playing again, or the app will crash when loading the game.",
             values: GraphicsAPI.allCases)
     var graphicsAPI: GraphicsAPI = .openGLES2
     

@@ -493,8 +493,6 @@ extension SettingsViewController
                 switch row
                 {
                 case .n64:
-                    // Left this code intact in case I need to hide things in the future
-                    guard !AdvancedFeatures.shared.devMode.isEnabled else { break }
 //                    return 0.0
                     break
                     

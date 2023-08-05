@@ -43,6 +43,9 @@ extension ScreenshotSize: LocalizedOptionValue
 
 struct GameScreenshotOptions
 {
+    @Option(name: "Image Size", description: "Choose the size of screenshots. This only increases the export size, it does not increase the quality.", values: ScreenshotSize.allCases)
+    var size: ScreenshotSize?
+    
     @Option(name: "Save to Files", description: "Save the screenshot to the app's directory in Files.")
     var saveToFiles: Bool = true
     
@@ -51,9 +54,6 @@ struct GameScreenshotOptions
     
     @Option(name: "Countdown", description: "After initiating a screenshot, play a 3 second countdown before capturing the screenshot.")
     var playCountdown: Bool = false
-
-    @Option(name: "Image Size", description: "Choose the size of screenshots. This only increases the export size, it does not increase the quality.", values: ScreenshotSize.allCases)
-    var size: ScreenshotSize?
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

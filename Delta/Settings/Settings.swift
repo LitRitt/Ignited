@@ -76,12 +76,11 @@ struct Settings
             UserInterfaceFeatures.shared.statusBar.settingsKey.rawValue: false,
             UserInterfaceFeatures.shared.previews.settingsKey.rawValue: false,
             UserInterfaceFeatures.shared.toasts.settingsKey.rawValue: true,
-            TouchFeedbackFeatures.shared.touchAudio.settingsKey.rawValue: false,
+            TouchFeedbackFeatures.shared.touchAudio.settingsKey.rawValue: true,
             TouchFeedbackFeatures.shared.touchOverlay.settingsKey.rawValue: true,
             TouchFeedbackFeatures.shared.touchVibration.settingsKey.rawValue: true,
             AdvancedFeatures.shared.skinDebug.settingsKey.rawValue: false,
             AdvancedFeatures.shared.powerUser.settingsKey.rawValue: false,
-            AdvancedFeatures.shared.devMode.settingsKey.rawValue: false,
             GBCFeatures.shared.palettes.settingsKey.rawValue: true,
             N64Features.shared.n64graphics.settingsKey.rawValue: false
         ] as [String : Any]
