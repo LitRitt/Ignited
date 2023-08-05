@@ -44,6 +44,21 @@ enum ThemeColor: String, CaseIterable, CustomStringConvertible, Identifiable
         case .purple: return "IconPurple"
         }
     }
+    
+    var color: Color {
+        switch self
+        {
+        case .pink: return Color(fromRGB: UIColor.systemPink.cgColor.rgb())
+        case .red: return Color(fromRGB: UIColor.systemRed.cgColor.rgb())
+        case .orange: return Color(fromRGB: UIColor.ignitedOrange.cgColor.rgb())
+        case .yellow: return Color(fromRGB: UIColor.systemYellow.cgColor.rgb())
+        case .green: return Color(fromRGB: UIColor.systemGreen.cgColor.rgb())
+        case .mint: return Color(fromRGB: UIColor.ignitedMint.cgColor.rgb())
+        case .teal: return Color(fromRGB: UIColor.systemTeal.cgColor.rgb())
+        case .blue: return Color(fromRGB: UIColor.systemBlue.cgColor.rgb())
+        case .purple: return Color(fromRGB: UIColor.deltaPurple.cgColor.rgb())
+        }
+    }
 }
 
 extension ThemeColor: LocalizedOptionValue
@@ -70,14 +85,27 @@ extension Color: LocalizedOptionValue
 
 struct ThemeColorOptions
 {
-    @Option(name: "Theme Color",
-            description: "Change the accent color of the app.",
+    @Option(name: "Preset Color",
+            description: "Choose a theme color from a preset list. Preset colors include a matching app icon.",
             detailView: { value in
-        Picker("Theme Color", selection: value, content: {
+        List {
             ForEach(ThemeColor.allCases) { color in
-                Text(color.description).tag(color)
+                HStack {
+                    if color == value.wrappedValue
+                    {
+                        Text("✓").foregroundColor(color.color)
+                    }
+                    color.localizedDescription.foregroundColor(color.color)
+                    Spacer()
+                    Image(uiImage: Bundle.appIcon(for: color) ?? UIImage())
+                        .cornerRadius(13)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    value.wrappedValue = color
+                }
             }
-        })
+        }
         .onChange(of: value.wrappedValue) { _ in
             AppIconOptions.updateAppIcon()
         }
@@ -90,7 +118,7 @@ struct ThemeColorOptions
     var useCustom: Bool = false
     
     @Option(name: "Custom Color",
-            description: "Select a custom color to use as the accent color.",
+            description: "Select a custom color to use as the theme color.",
             detailView: { value in
         ColorPicker("Custom Color", selection: value, supportsOpacity: false)
             .displayInline()

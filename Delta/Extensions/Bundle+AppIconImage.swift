@@ -31,4 +31,26 @@ extension Bundle
             return UIImage(named:appIcon)
         }
     }
+    
+    static func appIcon(for themeIcon: ThemeColor = .orange) -> UIImage? {
+        guard let appIcons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any] else { return nil }
+        
+        switch themeIcon
+        {
+        case .orange:
+            guard let primaryAppIcon = appIcons["CFBundlePrimaryIcon"] as? [String: Any],
+                  let appIconFiles = primaryAppIcon["CFBundleIconFiles"] as? [String],
+                  let appIcon = appIconFiles.first else { return nil }
+            
+            return UIImage(named:appIcon)
+            
+        default:
+            guard let alternateAppIcons = appIcons["CFBundleAlternateIcons"] as? [String: Any],
+                  let alternateAppIcon = alternateAppIcons[themeIcon.assetName] as? [String: Any],
+                  let appIconFiles = alternateAppIcon["CFBundleIconFiles"] as? [String],
+                  let appIcon = appIconFiles.first else { return nil }
+            
+            return UIImage(named:appIcon)
+        }
+    }
 }
