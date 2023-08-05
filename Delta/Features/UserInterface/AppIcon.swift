@@ -95,11 +95,20 @@ struct AppIconOptions
                     if icon == value.wrappedValue
                     {
                         Text("✓")
+                            .foregroundColor(.accentColor)
+                        icon.localizedDescription
+                            .foregroundColor(.accentColor)
                     }
-                    icon.localizedDescription
-                    Text("- by \(icon.author)")
-                        .font(.system(size: 15))
-                        .foregroundColor(.gray)
+                    else
+                    {
+                        icon.localizedDescription
+                    }
+                    if icon.author != "LitRitt"
+                    {
+                        Text("- by \(icon.author)")
+                            .font(.system(size: 15))
+                            .foregroundColor(.gray)
+                    }
                     Spacer()
                     Image(uiImage: Bundle.appIcon(for: icon) ?? UIImage())
                         .cornerRadius(13)
