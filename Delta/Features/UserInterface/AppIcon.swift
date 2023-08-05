@@ -65,10 +65,25 @@ extension AppIcon: LocalizedOptionValue
     }
 }
 
+extension AppIcon: Equatable
+{
+    static func == (lhs: AppIcon, rhs: AppIcon) -> Bool
+    {
+        return lhs.description == rhs.description
+    }
+}
+
 struct AppIconOptions
 {
     @Option(name: "Match Theme Color",
-            description: "Enable to use an app icon that matches theme color setting (does not apply to custom theme colors). Disable to use the default app icon, or one of the alternate icons specified below.")
+            description: "Enable to use an app icon that matches theme color setting (does not apply to custom theme colors). Disable to use the default app icon, or one of the alternate icons specified below.",
+            detailView: { value in
+        Toggle("Match Theme Color", isOn: value)
+            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            .onChange(of: value.wrappedValue) { _ in
+                updateAppIcon()
+            }.displayInline()
+    })
     var useTheme: Bool = true
     
     @Option(name: "Alternate App Icon",
@@ -94,18 +109,72 @@ struct AppIconOptions
                     value.wrappedValue = icon
                 }
             }
-        }.displayInline()
+        }
+        .onChange(of: value.wrappedValue) { _ in
+            updateAppIconPreference()
+        }
+        .displayInline()
     })
     var alternateIcon: AppIcon = .normal
     
-    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
-        Toggle(isOn: value) {
-            Text("Restore Defaults")
-                .font(.system(size: 17, weight: .bold, design: .default))
-                .foregroundColor(.red)
+    @Option(name: "Restore Defaults",
+            description: "Reset all options to their default values.",
+            detailView: { _ in
+        Button("Restore Defaults") {
+            PowerUserOptions.resetFeature(.appIcon)
         }
-        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
         .displayInline()
     })
     var resetAppIcon: Bool = false
+}
+
+extension AppIconOptions
+{
+    static func updateAppIconPreference()
+    {
+        UserInterfaceFeatures.shared.appIcon.useTheme = false
+        
+        updateAppIcon()
+    }
+    
+    static func updateAppIcon()
+    {
+        let currentIcon = UIApplication.shared.alternateIconName
+        
+        if UserInterfaceFeatures.shared.appIcon.isEnabled
+        {
+            if UserInterfaceFeatures.shared.appIcon.useTheme
+            {
+                guard UserInterfaceFeatures.shared.theme.isEnabled else
+                {
+                    if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+                    return
+                }
+                
+                let themeIcon = UserInterfaceFeatures.shared.theme.accentColor
+                
+                switch themeIcon
+                {
+                case .orange: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+                default: if currentIcon != themeIcon.assetName { UIApplication.shared.setAlternateIconName(themeIcon.assetName) }
+                }
+            }
+            else
+            {
+                let altIcon = UserInterfaceFeatures.shared.appIcon.alternateIcon
+                
+                switch altIcon
+                {
+                case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+                default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
+                }
+            }
+        }
+        else
+        {
+            if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+        }
+    }
 }

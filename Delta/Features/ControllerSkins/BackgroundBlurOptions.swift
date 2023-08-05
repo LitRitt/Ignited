@@ -58,13 +58,14 @@ struct BackgroundBlurOptions
     })
     var blurBrightness: Double = 0
     
-    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
-        Toggle(isOn: value) {
-            Text("Restore Defaults")
-                .font(.system(size: 17, weight: .bold, design: .default))
-                .foregroundColor(.red)
+    @Option(name: "Restore Defaults",
+            description: "Reset all options to their default values.",
+            detailView: { _ in
+        Button("Restore Defaults") {
+            PowerUserOptions.resetFeature(.backgroundBlur)
         }
-        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
         .displayInline()
     })
     var resetBackgroundBlur: Bool = false

@@ -55,13 +55,14 @@ struct GameScreenshotOptions
     @Option(name: "Image Size", description: "Choose the size of screenshots. This only increases the export size, it does not increase the quality.", values: ScreenshotSize.allCases)
     var size: ScreenshotSize?
     
-    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
-        Toggle(isOn: value) {
-            Text("Restore Defaults")
-                .font(.system(size: 17, weight: .bold, design: .default))
-                .foregroundColor(.red)
+    @Option(name: "Restore Defaults",
+            description: "Reset all options to their default values.",
+            detailView: { _ in
+        Button("Restore Defaults") {
+            PowerUserOptions.resetFeature(.gameScreenshot)
         }
-        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
         .displayInline()
     })
     var resetGameScreenshots: Bool = false

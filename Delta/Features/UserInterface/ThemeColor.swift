@@ -53,6 +53,14 @@ extension ThemeColor: LocalizedOptionValue
     }
 }
 
+extension ThemeColor: Equatable
+{
+    static func == (lhs: ThemeColor, rhs: ThemeColor) -> Bool
+    {
+        return lhs.description == rhs.description
+    }
+}
+
 extension Color: LocalizedOptionValue
 {
     public var localizedDescription: Text {
@@ -64,7 +72,17 @@ struct ThemeColorOptions
 {
     @Option(name: "Theme Color",
             description: "Change the accent color of the app.",
-            values: ThemeColor.allCases)
+            detailView: { value in
+        Picker("Theme Color", selection: value, content: {
+            ForEach(ThemeColor.allCases) { color in
+                Text(color.description).tag(color)
+            }
+        })
+        .onChange(of: value.wrappedValue) { _ in
+            AppIconOptions.updateAppIcon()
+        }
+        .displayInline()
+    })
     var accentColor: ThemeColor = .orange
     
     @Option(name: "Use Custom Color",
@@ -79,13 +97,14 @@ struct ThemeColorOptions
     })
     var customColor: Color = Color(red: 253/255, green: 110/255, blue: 0/255)
     
-    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
-        Toggle(isOn: value) {
-            Text("Restore Defaults")
-                .font(.system(size: 17, weight: .bold, design: .default))
-                .foregroundColor(.red)
+    @Option(name: "Restore Defaults",
+            description: "Reset all options to their default values.",
+            detailView: { _ in
+        Button("Restore Defaults") {
+            PowerUserOptions.resetFeature(.themeColor)
         }
-        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
         .displayInline()
     })
     var resetThemeColor: Bool = false

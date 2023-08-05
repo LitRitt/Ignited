@@ -75,13 +75,14 @@ struct ToastNotificationOptions
             description: "Show toasts when performing debug actions.")
     var debug: Bool = true
     
-    @Option(name: "Restore Defaults", description: "Reset all options to their default values.", detailView: { value in
-        Toggle(isOn: value) {
-            Text("Restore Defaults")
-                .font(.system(size: 17, weight: .bold, design: .default))
-                .foregroundColor(.red)
+    @Option(name: "Restore Defaults",
+            description: "Reset all options to their default values.",
+            detailView: { _ in
+        Button("Restore Defaults") {
+            PowerUserOptions.resetFeature(.toastNotifications)
         }
-        .toggleStyle(SwitchToggleStyle(tint: .red))
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
         .displayInline()
     })
     var resetToastNotifications: Bool = false
