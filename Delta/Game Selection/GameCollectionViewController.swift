@@ -148,6 +148,7 @@ extension GameCollectionViewController
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.settingsDidChange(_:)), name: .settingsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.resumeCurrentGame), name: .resumePlaying, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.startRandomGame), name: .startRandomGame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.unwindFromSettingsAndUpdate), name: .unwindFromSettings, object: nil)
         
         self.update()
@@ -770,6 +771,49 @@ private extension GameCollectionViewController
         }
         
         self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
+    }
+    
+    @objc func startRandomGame()
+    {
+        let gameFetchRequest = Game.rst_fetchRequest() as! NSFetchRequest<Game>
+        
+        if UserInterfaceFeatures.shared.randomGame.useCollection,
+           let gameCollection = self.gameCollection
+        {
+            gameFetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K != %@ AND %K != %@", #keyPath(Game.gameCollection), gameCollection, #keyPath(Game.identifier), Game.melonDSDSiBIOSIdentifier, #keyPath(Game.identifier), Game.melonDSBIOSIdentifier)
+        }
+        
+        var games: [Game] = []
+        
+        do
+        {
+            games = try DatabaseManager.shared.viewContext.fetch(gameFetchRequest)
+        }
+        catch
+        {
+            print(error)
+        }
+        
+        guard let randomGame = games.randomElement() else { return }
+        
+        if GameplayFeatures.shared.autoLoad.isEnabled
+        {
+            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), randomGame, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+            
+            do
+            {
+                let saveStates = try randomGame.managedObjectContext?.fetch(fetchRequest)
+                self.activeSaveState = saveStates?.last
+            }
+            catch
+            {
+                print(error)
+            }
+        }
+        
+        self.performSegue(withIdentifier: "resumeCurrentGame", sender: randomGame)
     }
 }
 

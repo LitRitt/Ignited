@@ -228,6 +228,7 @@ extension PowerUserOptions
         case statusBar
         case themeColor
         case appIcon
+        case randomGame
         // Touch Feedback
         case touchVibration
         case touchAudio
@@ -364,6 +365,9 @@ extension PowerUserOptions
             case .appIcon:
                 UserInterfaceFeatures.shared.appIcon.useTheme = true
                 UserInterfaceFeatures.shared.appIcon.alternateIcon = .normal
+                
+            case .randomGame:
+                UserInterfaceFeatures.shared.randomGame.useCollection = false
                 
             case .touchVibration:
                 TouchFeedbackFeatures.shared.touchVibration.strength = 1.0
