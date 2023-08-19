@@ -782,6 +782,10 @@ private extension GameCollectionViewController
         {
             gameFetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K != %@ AND %K != %@", #keyPath(Game.gameCollection), gameCollection, #keyPath(Game.identifier), Game.melonDSDSiBIOSIdentifier, #keyPath(Game.identifier), Game.melonDSBIOSIdentifier)
         }
+        else
+        {
+            gameFetchRequest.predicate = NSPredicate(format: "%K != %@ AND %K != %@", #keyPath(Game.identifier), Game.melonDSDSiBIOSIdentifier, #keyPath(Game.identifier), Game.melonDSBIOSIdentifier)
+        }
         
         var games: [Game] = []
         
