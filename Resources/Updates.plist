@@ -4,6 +4,41 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.5.3</string>
+		<key>date</key>
+		<string>8/20/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.5.3</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Added Random Game button to load a random game from your collection</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Improved preset theme color selection screen</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated DS default skin to new style</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Updated SNES default skin to new style</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.5.2</string>
 		<key>date</key>
 		<string>7/19/2023</string>
