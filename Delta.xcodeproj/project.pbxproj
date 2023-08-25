@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -116,6 +116,9 @@
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
 		ACD727D729EE10740028B8A8 /* Patrons.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACD727D629EE10740028B8A8 /* Patrons.plist */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
+		B57FE4EF2A98930B00C5E989 /* Codesigning.xcconfig.sample in Resources */ = {isa = PBXBuildFile; fileRef = B57FE4EC2A98930B00C5E989 /* Codesigning.xcconfig.sample */; };
+		B57FE4F02A98930B00C5E989 /* CodeSigning.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */; };
+		B57FE4F12A98930B00C5E989 /* Build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B57FE4EE2A98930B00C5E989 /* Build.xcconfig */; };
 		BF00BEA625B758AA00C8607D /* SystemBIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00BEA525B758AA00C8607D /* SystemBIOS.swift */; };
 		BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */; };
 		BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF04E6FE1DB8625C000F35D3 /* ControllerSkinsViewController.swift */; };
@@ -390,6 +393,10 @@
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
 		ACD727D629EE10740028B8A8 /* Patrons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Patrons.plist; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
+		B57FE4EC2A98930B00C5E989 /* Codesigning.xcconfig.sample */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Codesigning.xcconfig.sample; sourceTree = "<group>"; };
+		B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CodeSigning.xcconfig; sourceTree = "<group>"; };
+		B57FE4EE2A98930B00C5E989 /* Build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Build.xcconfig; sourceTree = "<group>"; };
+		B5AEFA002A98975300D9ADE3 /* Info.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Info.xcconfig; sourceTree = "<group>"; };
 		BF00BEA525B758AA00C8607D /* SystemBIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemBIOS.swift; sourceTree = "<group>"; };
 		BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = openvgdb.sqlite; sourceTree = "<group>"; };
 		BF0418131D01E93400E85BCF /* GBADeltaCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBADeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1299,6 +1306,10 @@
 		BFFA71CE1AAC406100EE9DD1 = {
 			isa = PBXGroup;
 			children = (
+				B5AEFA002A98975300D9ADE3 /* Info.xcconfig */,
+				B57FE4EE2A98930B00C5E989 /* Build.xcconfig */,
+				B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */,
+				B57FE4EC2A98930B00C5E989 /* Codesigning.xcconfig.sample */,
 				AC11456429A444C4005E95A8 /* Packages */,
 				BFFA71D91AAC406100EE9DD1 /* Delta */,
 				AC8C212029FDAD980044748D /* Features */,
@@ -1526,9 +1537,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5D797E9298DCC7300738869 /* cheatbase.zip in Resources */,
+				B57FE4F12A98930B00C5E989 /* Build.xcconfig in Resources */,
 				BFFA71E21AAC406100EE9DD1 /* Main.storyboard in Resources */,
 				BF6BF3211EB82362008E83CD /* GamesDatabase.storyboard in Resources */,
 				BFAB9F88219A4B670080EC7D /* GoogleService-Info.plist in Resources */,
+				B57FE4EF2A98930B00C5E989 /* Codesigning.xcconfig.sample in Resources */,
 				ACD727D729EE10740028B8A8 /* Patrons.plist in Resources */,
 				BF3540001C5DA3C500C1184C /* PausePresentationControllerContentView.xib in Resources */,
 				BF5E7F461B9A652600AE44F8 /* Settings.storyboard in Resources */,
@@ -1540,6 +1553,7 @@
 				D53415A7298C78BC00FD67B1 /* Contributors.plist in Resources */,
 				BF71CF8A1FE904B1001F1613 /* GameTableViewCell.xib in Resources */,
 				BFFC46461D59861000AF2CC6 /* LaunchScreen.storyboard in Resources */,
+				B57FE4F02A98930B00C5E989 /* CodeSigning.xcconfig in Resources */,
 				ACCDD4882A6386020034A6C0 /* beep.mp3 in Resources */,
 				BF1F45AB21AF4B5800EF9895 /* SyncResultsViewController.storyboard in Resources */,
 				BF353FF61C5D837600C1184C /* PauseMenu.storyboard in Resources */,
@@ -2110,7 +2124,7 @@
 		};
 		BFFA71F71AAC406100EE9DD1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C786AF1D2DDB6223BE2063CC /* Pods-Delta.debug.xcconfig */;
+			baseConfigurationReference = B57FE4EE2A98930B00C5E989 /* Build.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2120,18 +2134,20 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 124;
-				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.litritt.ignited;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -2147,7 +2163,7 @@
 		};
 		BFFA71F81AAC406100EE9DD1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A19FF50F55441BC2B2248241 /* Pods-Delta.release.xcconfig */;
+			baseConfigurationReference = B57FE4EE2A98930B00C5E989 /* Build.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2157,18 +2173,20 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 124;
-				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DIMPACTOR";
-				PRODUCT_BUNDLE_IDENTIFIER = com.litritt.ignited;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = YES;

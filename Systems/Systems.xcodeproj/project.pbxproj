@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B5AEF9EA2A9895CB00D9ADE3 /* Build.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Build.xcconfig; sourceTree = "<group>"; };
 		BF08DC0525CDF690007A9CF4 /* Systems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Systems.swift; sourceTree = "<group>"; };
 		BF2EF87525D308DD005EA349 /* GPGXDeltaCore_GPGXDeltaCore.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GPGXDeltaCore_GPGXDeltaCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF2EF87725D30922005EA349 /* DeltaCore_DeltaCore.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DeltaCore_DeltaCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +70,7 @@
 		BF639C2E25CDD88000B53517 = {
 			isa = PBXGroup;
 			children = (
+				B5AEF9EA2A9895CB00D9ADE3 /* Build.xcconfig */,
 				BF639C3A25CDD88000B53517 /* Systems */,
 				BF639C3925CDD88000B53517 /* Products */,
 				BF08DBA325CDDA25007A9CF4 /* Frameworks */,
@@ -311,11 +313,13 @@
 		};
 		BF639C4125CDD88000B53517 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5AEF9EA2A9895CB00D9ADE3 /* Build.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -330,8 +334,9 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.Systems;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -341,11 +346,13 @@
 		};
 		BF639C4225CDD88000B53517 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5AEF9EA2A9895CB00D9ADE3 /* Build.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -357,8 +364,9 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.Systems;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

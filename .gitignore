@@ -4,6 +4,7 @@
 
 # Xcode
 #
+CodeSigning.xcconfig
 
 ## Build generated
 build/

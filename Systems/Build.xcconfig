@@ -1,0 +1,12 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "../Info.xcconfig"
+
+// Codesigning settings defined optionally, see `CodeSigning.xcconfig.example`
+#include? "../CodeSigning.xcconfig"
+
+PRODUCT_NAME = Systems
+//PRODUCT_NAME[configuration=Debug] = Systems Debug
+
+PRODUCT_BUNDLE_IDENTIFIER   = com.rileytestut.Delta.Systems

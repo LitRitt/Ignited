@@ -1,0 +1,7 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+DEVELOPMENT_TEAM = S32Z3HMYVQ
+ORG_IDENTIFIER = com.litritt
+MARKETING_VERSION = 1.5.3
+CURRENT_PROJECT_VERSION = 125
