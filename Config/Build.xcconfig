@@ -2,15 +2,14 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 #include "Pods/Target Support Files/Pods-Delta/Pods-Delta.debug.xcconfig"
-#include "Info.xcconfig"
+#include "CodeSigning.xcconfig"
 
-// Codesigning settings defined optionally, see `CodeSigning.xcconfig.example`
-#include? "CodeSigning.xcconfig"
+MARKETING_VERSION = 1.5.3
+CURRENT_PROJECT_VERSION = 125
 
 ORG_PREFIX = $(ORG_IDENTIFIER)
 
 PRODUCT_NAME = Ignited
-//PRODUCT_NAME[configuration=Debug] = Systems Debug
 
 PRODUCT_BUNDLE_IDENTIFIER   = $(ORG_PREFIX).ignited
 

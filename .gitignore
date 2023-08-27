@@ -2,10 +2,6 @@
 #
 *.DS_Store
 
-# Xcode
-#
-CodeSigning.xcconfig
-
 ## Build generated
 build/
 DerivedData
