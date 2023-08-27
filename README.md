@@ -134,10 +134,10 @@ Each system in Ignited is implemented as its own "Delta Core", which serves as a
 
 1. Clone this repository by running the following command in Terminal*  
 ```bash
-$ git clone -b develop https://github.com/LitRitt/Ignited.git --recursive
+$ git clone https://github.com/LitRitt/Ignited.git --recursive
 ```  
-2. Copy `CodeSigning.xcconfig.sample` over to `CodeSigning.xcconfig` and fill it out with your correct details.
-3. Open `Delta.xcworkspace` in Xcode
+2. Open `Ignited/Config/CodeSigning.xcconfig` and fill it out with your correct details.
+3. Open `Ignited/Delta.xcworkspace` in Xcode
 4. Build + run app! 🎉
 
 ## Licensing
