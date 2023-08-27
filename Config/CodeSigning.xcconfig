@@ -1,0 +1,15 @@
+// Your Team ID.
+// If you have a paid Apple Developer account, you can find your Team ID at
+// https://developer.apple.com/account/#/membership
+DEVELOPMENT_TEAM = AQKFQ7V9C4
+
+// Your Organization Prefix.
+// Change "myuniquename" to your name/username if you don't already have an org ID to use.
+ORG_IDENTIFIER = com.litritt
+
+// Set to YES if you have a valid paid Apple Developer account.
+DEVELOPER_ACCOUNT_PAID = YES
+
+// Name of the iOS development signing certificate, you probably do not need
+// to change this.
+CODE_SIGN_IDENTITY_IOS = Apple Development

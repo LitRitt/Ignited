@@ -1,0 +1,8 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "../Config/CodeSigning.xcconfig"
+
+PRODUCT_NAME = Systems
+
+PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.Systems

@@ -2,9 +2,6 @@
 #
 *.DS_Store
 
-# Xcode
-#
-
 ## Build generated
 build/
 DerivedData

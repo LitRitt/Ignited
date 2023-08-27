@@ -134,22 +134,11 @@ Each system in Ignited is implemented as its own "Delta Core", which serves as a
 
 1. Clone this repository by running the following command in Terminal*  
 ```bash
-$ git clone https://github.com/LitRitt/Ignited.git
+$ git clone https://github.com/LitRitt/Ignited.git --recursive
 ```  
-
-1. Update Git submodules
-```bash
-$ cd Ignited
-$ git submodule update --init --recursive
-```  
-
-1. Open `Systems/Systems.xcworkspace` and select the "Systems" project in the project navigator (a.k.a. the left sidebar).
-2. Select "Systems" under `Targets`, then click the `Signing & Capabilities` tab.
-3. Change `Team` from "Yvette Testut" to your own account.
-4. Close `Systems/Systems.xcworkspace`, then open `Delta.xcworkspace`.
-5. Repeat steps 4 & 5 with the "Delta" target.
-6. Change Delta's `Bundle Identifier` to something unique, such as by appending your GitHub username (ex: `com.litritt.ignited.MyGitHubUsername`).
-7. Build + run app! 🎉
+2. Open `Ignited/Config/CodeSigning.xcconfig` and fill it out with your correct details.
+3. Open `Ignited/Delta.xcworkspace` in Xcode
+4. Build + run app! 🎉
 
 ## Licensing
 Due to the licensing of emulator cores used by Ignited, I have no choice but to distribute Ignited under the **AGPLv3 license**. That being said, I explicitly give permission for anyone to use, modify, and distribute all *my* original code for this project in any form, with or without attribution, without fear of legal consequences (dependencies remain under their original licenses, however).
