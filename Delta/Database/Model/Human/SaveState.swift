@@ -15,10 +15,10 @@ import struct DSDeltaCore.DS
 
 @objc public enum SaveStateType: Int16
 {
-    case general
-    case quick
-    case locked
     case auto
+    case quick
+    case general
+    case locked
     case rewind
 }
 
