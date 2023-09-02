@@ -778,7 +778,7 @@ private extension GameCollectionViewController
         let gameFetchRequest = Game.rst_fetchRequest() as! NSFetchRequest<Game>
         
         if UserInterfaceFeatures.shared.randomGame.useCollection,
-           let gameCollection = self.gameCollection
+           let gameCollection = Settings.previousGameCollection
         {
             gameFetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K != %@ AND %K != %@", #keyPath(Game.gameCollection), gameCollection, #keyPath(Game.identifier), Game.melonDSDSiBIOSIdentifier, #keyPath(Game.identifier), Game.melonDSBIOSIdentifier)
         }
