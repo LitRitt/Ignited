@@ -16,6 +16,7 @@ enum TouchFeedbackSound: String, CaseIterable, CustomStringConvertible
     case snap = "Snap"
     case click = "Click"
     case beep = "Beep"
+    case button1 = "Button 1"
     
     var description: String
     {
@@ -33,6 +34,16 @@ extension TouchFeedbackSound
         case .snap: return "snap"
         case .click: return "click"
         case .beep: return "beep"
+        case .button1: return "button1"
+        }
+    }
+    
+    var hasReleaseSound: Bool
+    {
+        switch self
+        {
+        case .tock, .snap, .click, .beep: return false
+        case .button1: return true
         }
     }
     
@@ -40,7 +51,7 @@ extension TouchFeedbackSound
     {
         switch self
         {
-        case .tock, .snap, .click, .beep: return "mp3"
+        case .tock, .snap, .click, .beep, .button1: return "mp3"
         }
     }
 }
@@ -55,7 +66,10 @@ extension TouchFeedbackSound: LocalizedOptionValue
 struct TouchFeedbackAudioOptions
 {
     @Option(name: "Sound", description: "Choose the sound to play.", values: TouchFeedbackSound.allCases)
-    var sound: TouchFeedbackSound = .tock
+    var sound: TouchFeedbackSound = .button1
+    
+    @Option(name: "Play on Button Release", description: "Play a sound on button release as well as button press. Some sounds have different press and release sounds and some don't.")
+    var playOnRelease: Bool = true
     
     @Option(name: "Use Game Volume", description: "When enabled, sounds will play at the same volume as gameplay. When disabled, sounds will play at the volume specified below.")
     var useGameVolume: Bool = true
