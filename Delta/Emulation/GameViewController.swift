@@ -184,8 +184,6 @@ class GameViewController: DeltaCore.GameViewController
     
     private var buttonSoundFile: AVAudioFile?
     private var buttonSoundPlayer: AVAudioPlayer?
-    private var buttonSoundReleasedFile: AVAudioFile?
-    private var buttonSoundReleasedPlayer: AVAudioPlayer?
     
     private var isGyroActive = false
     private var presentedGyroAlert = false
@@ -939,23 +937,6 @@ private extension GameViewController
             try self.buttonSoundFile = AVAudioFile(forReading: buttonSoundURL)
             try self.buttonSoundPlayer = AVAudioPlayer(contentsOf: buttonSoundURL)
             
-            if TouchFeedbackFeatures.shared.touchAudio.playOnRelease,
-               sound.hasReleaseSound
-            {
-                guard let buttonSoundReleasedURL = Bundle.main.url(forResource: sound.fileName + "-release", withExtension: sound.fileExtension) else
-                {
-                    fatalError("Audio file not found")
-                }
-                
-                try self.buttonSoundReleasedFile = AVAudioFile(forReading: buttonSoundReleasedURL)
-                try self.buttonSoundReleasedPlayer = AVAudioPlayer(contentsOf: buttonSoundReleasedURL)
-            }
-            else
-            {
-                self.buttonSoundReleasedFile = nil
-                self.buttonSoundReleasedPlayer = nil
-            }
-            
             self.buttonSoundPlayer?.volume = Float(TouchFeedbackFeatures.shared.touchAudio.buttonVolume)
         }
         catch
@@ -973,16 +954,6 @@ private extension GameViewController
                     core.audioManager.playButtonSound(buttonSoundFile)
                 }
             }
-            
-            self.controllerView.buttonReleasedHandler = { [weak self] () in
-                if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
-                   TouchFeedbackFeatures.shared.touchAudio.playOnRelease,
-                   let core = self?.emulatorCore,
-                   let buttonSoundReleasedFile = self?.buttonSoundReleasedFile
-                {
-                    core.audioManager.playButtonSound(buttonSoundReleasedFile)
-                }
-            }
         }
         else
         {
@@ -992,16 +963,6 @@ private extension GameViewController
                    let buttonSoundPlayer = self?.buttonSoundPlayer
                 {
                     buttonSoundPlayer.play()
-                }
-            }
-            
-            self.controllerView.buttonReleasedHandler = { [weak self] () in
-                if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
-                   TouchFeedbackFeatures.shared.touchAudio.playOnRelease,
-                   let core = self?.emulatorCore,
-                   let buttonSoundReleasedPlayer = self?.buttonSoundReleasedPlayer
-                {
-                    buttonSoundReleasedPlayer.play()
                 }
             }
         }

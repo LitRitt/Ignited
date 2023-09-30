@@ -63,8 +63,6 @@
 		AC56DDF22A35F3F2007C8372 /* N64GraphicsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */; };
 		AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
-		AC63E59D2AA425D5003FBBB8 /* button1-release.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC63E59B2AA425D5003FBBB8 /* button1-release.mp3 */; };
-		AC63E59E2AA425D5003FBBB8 /* button1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC63E59C2AA425D5003FBBB8 /* button1.mp3 */; };
 		AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */; };
 		AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
@@ -341,8 +339,6 @@
 		AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64GraphicsOptions.swift; sourceTree = "<group>"; };
 		AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
-		AC63E59B2AA425D5003FBBB8 /* button1-release.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "button1-release.mp3"; sourceTree = "<group>"; };
-		AC63E59C2AA425D5003FBBB8 /* button1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = button1.mp3; sourceTree = "<group>"; };
 		AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIconImage.swift"; sourceTree = "<group>"; };
 		AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
 		AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
@@ -696,8 +692,6 @@
 		AC53406029E32139009EDF08 /* Button Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				AC63E59B2AA425D5003FBBB8 /* button1-release.mp3 */,
-				AC63E59C2AA425D5003FBBB8 /* button1.mp3 */,
 				ACCDD48A2A63864E0034A6C0 /* tock.mp3 */,
 				ACCDD4842A6386020034A6C0 /* beep.mp3 */,
 				ACCDD4832A6386020034A6C0 /* click.mp3 */,
@@ -1545,7 +1539,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC63E59D2AA425D5003FBBB8 /* button1-release.mp3 in Resources */,
 				D5D797E9298DCC7300738869 /* cheatbase.zip in Resources */,
 				B57FE4F12A98930B00C5E989 /* Build.xcconfig in Resources */,
 				BFFA71E21AAC406100EE9DD1 /* Main.storyboard in Resources */,
@@ -1557,7 +1550,6 @@
 				BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */,
 				ACCDD4862A6386020034A6C0 /* snap.mp3 in Resources */,
 				AC503F6329B2C709005B27DD /* Updates.plist in Resources */,
-				AC63E59E2AA425D5003FBBB8 /* button1.mp3 in Resources */,
 				ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */,
 				ACCDD4872A6386020034A6C0 /* click.mp3 in Resources */,
 				D53415A7298C78BC00FD67B1 /* Contributors.plist in Resources */,

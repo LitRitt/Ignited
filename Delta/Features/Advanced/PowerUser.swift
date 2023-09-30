@@ -376,7 +376,7 @@ extension PowerUserOptions
                 TouchFeedbackFeatures.shared.touchVibration.releaseEnabled = true
                 
             case .touchAudio:
-                TouchFeedbackFeatures.shared.touchAudio.sound = .button1
+                TouchFeedbackFeatures.shared.touchAudio.sound = .tock
                 TouchFeedbackFeatures.shared.touchAudio.useGameVolume = true
                 TouchFeedbackFeatures.shared.touchAudio.buttonVolume = 1.0
                 
