@@ -2147,6 +2147,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				OTHER_LDFLAGS = (
+                    "-ld64",
+                    "$(inherited)",
+                );
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -2186,6 +2190,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				OTHER_LDFLAGS = (
+                    "-ld64",
+                    "$(inherited)",
+                );
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DIMPACTOR";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
