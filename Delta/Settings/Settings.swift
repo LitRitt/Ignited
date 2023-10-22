@@ -76,7 +76,7 @@ struct Settings
             UserInterfaceFeatures.shared.statusBar.settingsKey.rawValue: false,
             UserInterfaceFeatures.shared.previews.settingsKey.rawValue: false,
             UserInterfaceFeatures.shared.toasts.settingsKey.rawValue: true,
-            TouchFeedbackFeatures.shared.touchAudio.settingsKey.rawValue: true,
+            TouchFeedbackFeatures.shared.touchAudio.settingsKey.rawValue: false,
             TouchFeedbackFeatures.shared.touchOverlay.settingsKey.rawValue: true,
             TouchFeedbackFeatures.shared.touchVibration.settingsKey.rawValue: true,
             AdvancedFeatures.shared.skinDebug.settingsKey.rawValue: false,
