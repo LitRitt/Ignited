@@ -2453,9 +2453,9 @@ extension GameViewController
     {
         guard UserInterfaceFeatures.shared.toasts.isEnabled else { return }
         
-        let toastView = RSTToastView(text: text, detailText: nil)
-        toastView.edgeOffset.vertical = 8
         DispatchQueue.main.async {
+            let toastView = RSTToastView(text: text, detailText: nil)
+            toastView.edgeOffset.vertical = 8
             self.show(toastView, duration: duration ?? UserInterfaceFeatures.shared.toasts.duration)
         }
     }
