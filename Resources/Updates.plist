@@ -4,6 +4,35 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.5.4</string>
+		<key>date</key>
+		<string>10/23/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.5.4</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes wrong game collection being used for random game button</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes a crash when selecting hold buttons</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes a crash when displaying toasts</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.5.3</string>
 		<key>date</key>
 		<string>8/20/2023</string>
