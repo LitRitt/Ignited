@@ -543,7 +543,7 @@
 		BFEF24F21F7DD4FB00454C62 /* SaveStateMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStateMigrationPolicy.swift; sourceTree = "<group>"; };
 		BFF0742B1E9DC17500ACDF4A /* GBCDeltaCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBCDeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA4C081E8A24D600D87934 /* GameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
-		BFFA71D71AAC406100EE9DD1 /* Ignited.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ignited.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFA71D71AAC406100EE9DD1 /* Pre-Ignited.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pre-Ignited.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA71DB1AAC406100EE9DD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFFA71E11AAC406100EE9DD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -1326,7 +1326,7 @@
 		BFFA71D81AAC406100EE9DD1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFFA71D71AAC406100EE9DD1 /* Ignited.app */,
+				BFFA71D71AAC406100EE9DD1 /* Pre-Ignited.app */,
 				AC8C211F29FDAD970044748D /* libFeatures.a */,
 			);
 			name = Products;
@@ -1471,7 +1471,7 @@
 				D524F4A0273DE9A100D500B2 /* AltKit */,
 			);
 			productName = Delta;
-			productReference = BFFA71D71AAC406100EE9DD1 /* Ignited.app */;
+			productReference = BFFA71D71AAC406100EE9DD1 /* Pre-Ignited.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2129,7 +2129,7 @@
 			baseConfigurationReference = B57FE4EE2A98930B00C5E989 /* Build.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = IconCartridge;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_MODULES_AUTOLINK = NO;
@@ -2152,8 +2152,8 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
-				PRODUCT_NAME = "$(PRODUCT_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_DEBUG)";
+				PRODUCT_NAME = "$(PRODUCT_NAME_DEBUG)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -2176,8 +2176,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_MODULES_AUTOLINK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
