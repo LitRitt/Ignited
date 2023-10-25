@@ -1052,8 +1052,6 @@ private extension GameViewController
         
         self.updateExternalDisplay()
         
-        self.updateAirPlayView()
-        
         self.view.setNeedsLayout()
     }
     
