@@ -33,7 +33,7 @@ struct ToastNotificationOptions
     
     @Option(name: "Game Data Saved",
             description: "Show toasts when performing an in game save.")
-    var gameSave: Bool = true
+    var gameSave: Bool = false
     
     @Option(name: "Saved Save State",
             description: "Show toasts when saving a save state.")
@@ -45,11 +45,11 @@ struct ToastNotificationOptions
     
     @Option(name: "Fast Forward Toggled",
             description: "Show toasts when toggling fast forward.")
-    var fastForward: Bool = true
+    var fastForward: Bool = false
     
     @Option(name: "Status Bar Toggled",
             description: "Show toasts when toggling showing the status bar.")
-    var statusBar: Bool = true
+    var statusBar: Bool = false
     
     @Option(name: "Rotation Lock Toggled",
             description: "Show toasts when toggling rotation lock.")
@@ -61,19 +61,19 @@ struct ToastNotificationOptions
     
     @Option(name: "Color Palette Changed",
             description: "Show toasts when changing color palettes.")
-    var palette: Bool = true
+    var palette: Bool = false
     
     @Option(name: "Background Blur Toggled",
             description: "Show toasts when toggleing the background blur.")
-    var backgroundBlur: Bool = true
+    var backgroundBlur: Bool = false
     
     @Option(name: "Alternate Skin Toggled",
             description: "Show toasts when toggling the controller alternate skin.")
-    var altSkin: Bool = true
+    var altSkin: Bool = false
     
     @Option(name: "Debug Mode",
             description: "Show toasts when performing debug actions.")
-    var debug: Bool = true
+    var debug: Bool = false
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
