@@ -58,20 +58,20 @@ extension GameboyPalette
         switch self
         {
         case .custom1: return [
-            UIColor(GBCFeatures.shared.palettes.customPalette1Color1).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette1Color2).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette1Color3).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette1Color4).cgColor.rgb()]
+            UIColor(Settings.gbcFeatures.palettes.customPalette1Color1).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette1Color2).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette1Color3).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette1Color4).cgColor.rgb()]
         case .custom2: return [
-            UIColor(GBCFeatures.shared.palettes.customPalette2Color1).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette2Color2).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette2Color3).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette2Color4).cgColor.rgb()]
+            UIColor(Settings.gbcFeatures.palettes.customPalette2Color1).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette2Color2).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette2Color3).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette2Color4).cgColor.rgb()]
         case .custom3: return [
-            UIColor(GBCFeatures.shared.palettes.customPalette3Color1).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette3Color2).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette3Color3).cgColor.rgb(),
-            UIColor(GBCFeatures.shared.palettes.customPalette3Color4).cgColor.rgb()]
+            UIColor(Settings.gbcFeatures.palettes.customPalette3Color1).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette3Color2).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette3Color3).cgColor.rgb(),
+            UIColor(Settings.gbcFeatures.palettes.customPalette3Color4).cgColor.rgb()]
         case .dmg: return [0x99A342, 0x768736, 0x4F632C, 0x405420]
         case .pocket: return [0xAAB59C, 0x848C72, 0x4E5540, 0x292E25]
         case .light: return [0x4BD4E5, 0x4ABBC8, 0x13A1AA, 0x286F7F]

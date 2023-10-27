@@ -221,7 +221,7 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if GameplayFeatures.shared.rotationLock.isEnabled || self.isGyroActive,
+        if Settings.gameplayFeatures.rotationLock.isEnabled || self.isGyroActive,
            let orientation = self.lockedOrientation,
            #available(iOS 16, *)
         {
@@ -238,11 +238,11 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     override var prefersStatusBarHidden: Bool {
-        return !((UserInterfaceFeatures.shared.statusBar.isOn && UserInterfaceFeatures.shared.statusBar.isEnabled) || (!UserInterfaceFeatures.shared.statusBar.useToggle && UserInterfaceFeatures.shared.statusBar.isEnabled))
+        return !((Settings.userInterfaceFeatures.statusBar.isOn && Settings.userInterfaceFeatures.statusBar.isEnabled) || (!Settings.userInterfaceFeatures.statusBar.useToggle && Settings.userInterfaceFeatures.statusBar.isEnabled))
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle(rawValue: UserInterfaceFeatures.shared.statusBar.style.rawValue) ?? .default
+        return UIStatusBarStyle(rawValue: Settings.userInterfaceFeatures.statusBar.style.rawValue) ?? .default
     }
     
     required init()
@@ -325,7 +325,7 @@ class GameViewController: DeltaCore.GameViewController
             case .statusBar: self.performStatusBarAction()
             case .quickSettings: self.performQuickSettingsAction()
             case .toggleFastForward, .fastForward:
-                if GameplayFeatures.shared.fastForward.toggle
+                if Settings.gameplayFeatures.fastForward.toggle
                 {
                     let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
                     self.performFastForwardAction(activate: !isFastForwarding)
@@ -363,7 +363,7 @@ class GameViewController: DeltaCore.GameViewController
             case .statusBar: break
             case .quickSettings: break
             case .fastForward, .toggleFastForward:
-                if !GameplayFeatures.shared.fastForward.toggle
+                if !Settings.gameplayFeatures.fastForward.toggle
                 {
                     self.performFastForwardAction(activate: false)
                 }
@@ -385,7 +385,7 @@ extension GameViewController
         // Lays out self.gameView, so we can pin self.sustainButtonsContentView to it without resulting in a temporary "cannot satisfy constraints".
         self.view.layoutIfNeeded()
         
-        self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
+        self.controllerView.translucentControllerSkinOpacity = Settings.controllerSkinFeatures.skinCustomization.isEnabled ? Settings.controllerSkinFeatures.skinCustomization.opacity : 0.7
         
         self.airPlayContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.airPlayContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -539,7 +539,7 @@ extension GameViewController
             pauseViewController.pauseText = (self.game as? Game)?.name ?? NSLocalizedString("Ignited", comment: "")
             pauseViewController.emulatorCore = self.emulatorCore
             pauseViewController.saveStatesViewControllerDelegate = self
-            if GameplayFeatures.shared.cheats.isEnabled {
+            if Settings.gameplayFeatures.cheats.isEnabled {
                 pauseViewController.cheatsViewControllerDelegate = self
             }
             
@@ -551,7 +551,7 @@ extension GameViewController
                 self.performScreenshotAction()
             }
             
-            pauseViewController.statusBarItem?.isSelected = UserInterfaceFeatures.shared.statusBar.isOn
+            pauseViewController.statusBarItem?.isSelected = Settings.userInterfaceFeatures.statusBar.isOn
             pauseViewController.statusBarItem?.action = { [unowned self] item in
                 self.performStatusBarAction()
             }
@@ -574,17 +574,17 @@ extension GameViewController
                 self.performQuickSettingsAction()
             }
             
-            pauseViewController.blurBackgroudItem?.isSelected = ControllerSkinFeatures.shared.backgroundBlur.blurBackground
+            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerSkinFeatures.backgroundBlur.blurBackground
             pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
                 self.performBlurBackgroundAction()
             }
             
-            pauseViewController.altSkinItem?.isSelected = AdvancedFeatures.shared.skinDebug.useAlt
+            pauseViewController.altSkinItem?.isSelected = Settings.advancedFeatures.skinDebug.useAlt
             pauseViewController.altSkinItem?.action = { [unowned self] item in
                 self.performAltRepresentationsAction()
             }
             
-            pauseViewController.debugModeItem?.isSelected = AdvancedFeatures.shared.skinDebug.isOn
+            pauseViewController.debugModeItem?.isSelected = Settings.advancedFeatures.skinDebug.isOn
             pauseViewController.debugModeItem?.action = { [unowned self] item in
                 self.performDebugModeAction()
             }
@@ -641,13 +641,13 @@ extension GameViewController
             default: break
             }
             
-            if !ControllerSkinFeatures.shared.backgroundBlur.blurOverride,
+            if !Settings.controllerSkinFeatures.backgroundBlur.blurOverride,
                self.controllerView.backgroundBlur != nil
             {
                 pauseViewController.blurBackgroudItem = nil
             }
             
-            if !ControllerSkinFeatures.shared.backgroundBlur.blurAirPlay
+            if !Settings.controllerSkinFeatures.backgroundBlur.blurAirPlay
             {
                 pauseViewController.blurBackgroudItem = nil
             }
@@ -813,7 +813,7 @@ private extension GameViewController
                let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
                controllerSkin.hasTouchScreen(for: traits)
             {
-                if !(ControllerSkinFeatures.shared.skinCustomization.alwaysShow && ControllerSkinFeatures.shared.skinCustomization.isEnabled)
+                if !(Settings.controllerSkinFeatures.skinCustomization.alwaysShow && Settings.controllerSkinFeatures.skinCustomization.isEnabled)
                 {
                     Settings.localControllerPlayerIndex = nil
                 }
@@ -826,7 +826,7 @@ private extension GameViewController
             }
             else
             {
-                if !(ControllerSkinFeatures.shared.skinCustomization.alwaysShow && ControllerSkinFeatures.shared.skinCustomization.isEnabled)
+                if !(Settings.controllerSkinFeatures.skinCustomization.alwaysShow && Settings.controllerSkinFeatures.skinCustomization.isEnabled)
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil // TODO: Does this need changed to 0?
@@ -890,20 +890,20 @@ private extension GameViewController
             self.shouldResetSustainedInputs = false
         }
         
-        let vibrationEnabled = TouchFeedbackFeatures.shared.touchVibration.isEnabled
-        self.controllerView.isButtonHapticFeedbackEnabled = TouchFeedbackFeatures.shared.touchVibration.buttonsEnabled && vibrationEnabled
-        self.controllerView.isThumbstickHapticFeedbackEnabled = TouchFeedbackFeatures.shared.touchVibration.sticksEnabled && vibrationEnabled
-        self.controllerView.isClickyHapticEnabled = TouchFeedbackFeatures.shared.touchVibration.releaseEnabled && vibrationEnabled
-        self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
+        let vibrationEnabled = Settings.touchFeedbackFeatures.touchVibration.isEnabled
+        self.controllerView.isButtonHapticFeedbackEnabled = Settings.touchFeedbackFeatures.touchVibration.buttonsEnabled && vibrationEnabled
+        self.controllerView.isThumbstickHapticFeedbackEnabled = Settings.touchFeedbackFeatures.touchVibration.sticksEnabled && vibrationEnabled
+        self.controllerView.isClickyHapticEnabled = Settings.touchFeedbackFeatures.touchVibration.releaseEnabled && vibrationEnabled
+        self.controllerView.hapticFeedbackStrength = Settings.touchFeedbackFeatures.touchVibration.strength
         
-        self.controllerView.isButtonTouchOverlayEnabled = TouchFeedbackFeatures.shared.touchOverlay.isEnabled
-        self.controllerView.touchOverlayOpacity = TouchFeedbackFeatures.shared.touchOverlay.opacity
-        self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.touchOverlay.size
-        self.controllerView.touchOverlayColor = TouchFeedbackFeatures.shared.touchOverlay.themed ? UIColor.themeColor : UIColor(TouchFeedbackFeatures.shared.touchOverlay.overlayColor)
-        self.controllerView.touchOverlayStyle = TouchFeedbackFeatures.shared.touchOverlay.style
+        self.controllerView.isButtonTouchOverlayEnabled = Settings.touchFeedbackFeatures.touchOverlay.isEnabled
+        self.controllerView.touchOverlayOpacity = Settings.touchFeedbackFeatures.touchOverlay.opacity
+        self.controllerView.touchOverlaySize = Settings.touchFeedbackFeatures.touchOverlay.size
+        self.controllerView.touchOverlayColor = Settings.touchFeedbackFeatures.touchOverlay.themed ? UIColor.themeColor : UIColor(Settings.touchFeedbackFeatures.touchOverlay.overlayColor)
+        self.controllerView.touchOverlayStyle = Settings.touchFeedbackFeatures.touchOverlay.style
         
-        self.controllerView.isAltRepresentationsEnabled = AdvancedFeatures.shared.skinDebug.useAlt
-        self.controllerView.isDebugModeEnabled = AdvancedFeatures.shared.skinDebug.isOn
+        self.controllerView.isAltRepresentationsEnabled = Settings.advancedFeatures.skinDebug.useAlt
+        self.controllerView.isDebugModeEnabled = Settings.advancedFeatures.skinDebug.isOn
         
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
@@ -919,13 +919,13 @@ private extension GameViewController
     {
         for gameController in ExternalGameControllerManager.shared.connectedControllers
         {
-            gameController.triggerDeadzone = ControllerSkinFeatures.shared.controller.isEnabled ? Float(ControllerSkinFeatures.shared.controller.triggerDeadzone) : 0.15
+            gameController.triggerDeadzone = Settings.controllerSkinFeatures.controller.isEnabled ? Float(Settings.controllerSkinFeatures.controller.triggerDeadzone) : 0.15
         }
     }
     
     func updateButtonAudioFeedbackSound()
     {
-        let sound = TouchFeedbackFeatures.shared.touchAudio.sound
+        let sound = Settings.touchFeedbackFeatures.touchAudio.sound
         
         guard let buttonSoundURL = Bundle.main.url(forResource: sound.fileName, withExtension: sound.fileExtension) else
         {
@@ -937,17 +937,17 @@ private extension GameViewController
             try self.buttonSoundFile = AVAudioFile(forReading: buttonSoundURL)
             try self.buttonSoundPlayer = AVAudioPlayer(contentsOf: buttonSoundURL)
             
-            self.buttonSoundPlayer?.volume = Float(TouchFeedbackFeatures.shared.touchAudio.buttonVolume)
+            self.buttonSoundPlayer?.volume = Float(Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
         }
         catch
         {
             print(error)
         }
         
-        if TouchFeedbackFeatures.shared.touchAudio.useGameVolume
+        if Settings.touchFeedbackFeatures.touchAudio.useGameVolume
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
-                if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
+                if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
                    let core = self?.emulatorCore,
                    let buttonSoundFile = self?.buttonSoundFile
                 {
@@ -958,7 +958,7 @@ private extension GameViewController
         else
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
-                if TouchFeedbackFeatures.shared.touchAudio.isEnabled,
+                if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
                    let core = self?.emulatorCore,
                    let buttonSoundPlayer = self?.buttonSoundPlayer
                 {
@@ -975,7 +975,7 @@ private extension GameViewController
         {
             buttonSoundPlayer.volume = 1.0
             buttonSoundPlayer.play()
-            buttonSoundPlayer.volume = Float(TouchFeedbackFeatures.shared.touchAudio.buttonVolume)
+            buttonSoundPlayer.volume = Float(Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
         }
     }
     
@@ -990,9 +990,9 @@ private extension GameViewController
         
         var traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
         
-        if (AdvancedFeatures.shared.skinDebug.skinEnabled || AdvancedFeatures.shared.skinDebug.isEnabled) && AdvancedFeatures.shared.skinDebug.device != nil
+        if (Settings.advancedFeatures.skinDebug.skinEnabled || Settings.advancedFeatures.skinDebug.isEnabled) && Settings.advancedFeatures.skinDebug.device != nil
         {
-            switch AdvancedFeatures.shared.skinDebug.device
+            switch Settings.advancedFeatures.skinDebug.device
             {
             case .edgeToEdge:
                 traits.device = .iphone
@@ -1047,8 +1047,8 @@ private extension GameViewController
             self.controllerView.controllerSkin = touchControllerSkin
         }
         
-        AdvancedFeatures.shared.skinDebug.skinEnabled = self.controllerView.controllerSkin?.isDebugModeEnabled ?? false
-        AdvancedFeatures.shared.skinDebug.hasAlt = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
+        Settings.advancedFeatures.skinDebug.skinEnabled = self.controllerView.controllerSkin?.isDebugModeEnabled ?? false
+        Settings.advancedFeatures.skinDebug.hasAlt = self.controllerView.controllerSkin?.hasAltRepresentations ?? false
         
         self.updateExternalDisplay()
         
@@ -1058,7 +1058,7 @@ private extension GameViewController
     func updateGameViews()
     {
         if UIApplication.shared.isExternalDisplayConnected,
-           !ControllerSkinFeatures.shared.airPlayKeepScreen.isEnabled
+           !Settings.controllerSkinFeatures.airPlayKeepScreen.isEnabled
         {
             // AirPlaying, hide all screens except touchscreens and blur screens.
                  
@@ -1066,7 +1066,7 @@ private extension GameViewController
             {
                 for (screen, gameView) in zip(screens, self.gameViews)
                 {
-                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && ControllerSkinFeatures.shared.backgroundBlur.blurAirPlay
+                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && Settings.controllerSkinFeatures.backgroundBlur.blurAirPlay
                     
                     let enabled = screen.isTouchScreen || enableBlurScreen
                     
@@ -1104,10 +1104,10 @@ private extension GameViewController
     
     func updateBlurBackground()
     {
-        self.blurScreenKeepAspect = ControllerSkinFeatures.shared.backgroundBlur.blurAspect
-        self.blurScreenOverride = ControllerSkinFeatures.shared.backgroundBlur.blurOverride
-        self.blurScreenStrength = ControllerSkinFeatures.shared.backgroundBlur.blurStrength
-        self.blurScreenBrightness = ControllerSkinFeatures.shared.backgroundBlur.blurBrightness
+        self.blurScreenKeepAspect = Settings.controllerSkinFeatures.backgroundBlur.blurAspect
+        self.blurScreenOverride = Settings.controllerSkinFeatures.backgroundBlur.blurOverride
+        self.blurScreenStrength = Settings.controllerSkinFeatures.backgroundBlur.blurStrength
+        self.blurScreenBrightness = Settings.controllerSkinFeatures.backgroundBlur.blurBrightness
         
         // Set enabled last as it's the property that triggers updateGameViews()
         if let game = self.game,
@@ -1117,7 +1117,7 @@ private extension GameViewController
         }
         else
         {
-            self.blurScreenEnabled = ControllerSkinFeatures.shared.backgroundBlur.isEnabled ? ControllerSkinFeatures.shared.backgroundBlur.blurBackground : false
+            self.blurScreenEnabled = Settings.controllerSkinFeatures.backgroundBlur.isEnabled ? Settings.controllerSkinFeatures.backgroundBlur.blurBackground : false
         }
         
     }
@@ -1126,17 +1126,17 @@ private extension GameViewController
     {
         if let bridge = self.emulatorCore?.deltaCore.emulatorBridge as? GBCEmulatorBridge
         {
-            if GBCFeatures.shared.palettes.isEnabled
+            if Settings.gbcFeatures.palettes.isEnabled
             {
-                if GBCFeatures.shared.palettes.multiPalette
+                if Settings.gbcFeatures.palettes.multiPalette
                 {
-                    setMultiPalette(palette1: GBCFeatures.shared.palettes.palette.colors,
-                                    palette2: GBCFeatures.shared.palettes.spritePalette1.colors,
-                                    palette3: GBCFeatures.shared.palettes.spritePalette2.colors)
+                    setMultiPalette(palette1: Settings.gbcFeatures.palettes.palette.colors,
+                                    palette2: Settings.gbcFeatures.palettes.spritePalette1.colors,
+                                    palette3: Settings.gbcFeatures.palettes.spritePalette2.colors)
                 }
                 else
                 {
-                    setSinglePalette(palette: GBCFeatures.shared.palettes.palette.colors)
+                    setSinglePalette(palette: Settings.gbcFeatures.palettes.palette.colors)
                 }
             }
             else
@@ -1183,16 +1183,16 @@ private extension GameViewController
     
     func updateEmulationSpeed()
     {
-        self.emulatorCore?.rate = GameplayFeatures.shared.quickSettings.fastForwardSpeed
+        self.emulatorCore?.rate = Settings.gameplayFeatures.quickSettings.fastForwardSpeed
     }
     
     func updateControllerSkinCustomization()
     {
-        self.controllerView.translucentControllerSkinOpacity = ControllerSkinFeatures.shared.skinCustomization.isEnabled ? ControllerSkinFeatures.shared.skinCustomization.opacity : 0.7
+        self.controllerView.translucentControllerSkinOpacity = Settings.controllerSkinFeatures.skinCustomization.isEnabled ? Settings.controllerSkinFeatures.skinCustomization.opacity : 0.7
         
-        if ControllerSkinFeatures.shared.skinCustomization.isEnabled
+        if Settings.controllerSkinFeatures.skinCustomization.isEnabled
         {
-            self.backgroundColor = ControllerSkinFeatures.shared.skinCustomization.matchTheme ? UIColor.themeColor : UIColor(ControllerSkinFeatures.shared.skinCustomization.backgroundColor)
+            self.backgroundColor = Settings.controllerSkinFeatures.skinCustomization.matchTheme ? UIColor.themeColor : UIColor(Settings.controllerSkinFeatures.skinCustomization.backgroundColor)
         }
         else
         {
@@ -1233,7 +1233,7 @@ private extension GameViewController
                 }
                 
                 try context.save()
-                if UserInterfaceFeatures.shared.toasts.gameSave
+                if Settings.userInterfaceFeatures.toasts.gameSave
                 {
                     let text = NSLocalizedString("Game Saved", comment: "")
                     self.presentToastView(text: text)
@@ -1319,7 +1319,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
     private func clearRewindSaveStates(afterDate: Date? = nil)
     {
         guard let game = self.game as? Game,
-              GameplayFeatures.shared.rewind.keepStates == false else { return }
+              Settings.gameplayFeatures.rewind.keepStates == false else { return }
         
         let fetchRequest = SaveState.fetchRequest(for: game, type: .rewind)
         fetchRequest.includesPropertyValues = false
@@ -1397,7 +1397,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
         saveState.modifiedDate = Date()
         saveState.coreIdentifier = self.emulatorCore?.deltaCore.identifier
         
-        if UserInterfaceFeatures.shared.toasts.stateSave
+        if Settings.userInterfaceFeatures.toasts.stateSave
         {
             let text: String
             switch saveState.type
@@ -1461,7 +1461,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
                 try self.emulatorCore?.load(saveState)
             }
             
-            if UserInterfaceFeatures.shared.toasts.stateLoad,
+            if Settings.userInterfaceFeatures.toasts.stateLoad,
                !self.overrideToastNotification
             {
                 let text: String
@@ -1542,14 +1542,14 @@ extension GameViewController: CheatsViewControllerDelegate
 {
     func cheatsViewController(_ cheatsViewController: CheatsViewController, activateCheat cheat: Cheat)
     {
-        if GameplayFeatures.shared.cheats.isEnabled {
+        if Settings.gameplayFeatures.cheats.isEnabled {
             self.emulatorCore?.activateCheatWithErrorLogging(cheat)
         }
     }
     
     func cheatsViewController(_ cheatsViewController: CheatsViewController, deactivateCheat cheat: Cheat)
     {
-        if GameplayFeatures.shared.cheats.isEnabled {
+        if Settings.gameplayFeatures.cheats.isEnabled {
             self.emulatorCore?.deactivate(cheat)
         }
     }
@@ -1561,7 +1561,7 @@ private extension GameViewController
 {
     func updateDebug()
     {
-        self.controllerView?.isDebugModeEnabled = AdvancedFeatures.shared.skinDebug.isOn
+        self.controllerView?.isDebugModeEnabled = Settings.advancedFeatures.skinDebug.isOn
     }
 }
 
@@ -1571,7 +1571,7 @@ private extension GameViewController
 {
     func updateGraphics()
     {
-        self.emulatorCore?.videoManager.renderingAPI = N64Features.shared.n64graphics.isEnabled ? N64Features.shared.n64graphics.graphicsAPI.api : EAGLRenderingAPI.openGLES2
+        self.emulatorCore?.videoManager.renderingAPI = Settings.n64Features.n64graphics.isEnabled ? Settings.n64Features.n64graphics.graphicsAPI.api : EAGLRenderingAPI.openGLES2
     }
     
     func changeGraphicsAPI()
@@ -1589,9 +1589,9 @@ private extension GameViewController
 {
     func updateAudio()
     {
-        self.emulatorCore?.audioManager.respectsSilentMode = GameplayFeatures.shared.gameAudio.respectSilent
-        self.emulatorCore?.audioManager.playWithOtherMedia = GameplayFeatures.shared.gameAudio.playOver
-        self.emulatorCore?.audioManager.audioVolume = Float(GameplayFeatures.shared.gameAudio.volume)
+        self.emulatorCore?.audioManager.respectsSilentMode = Settings.gameplayFeatures.gameAudio.respectSilent
+        self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
+        self.emulatorCore?.audioManager.audioVolume = Float(Settings.gameplayFeatures.gameAudio.volume)
     }
 }
 
@@ -1602,7 +1602,7 @@ private extension GameViewController
     {
         guard UIApplication.shared.isExternalDisplayConnected,
               !self.isSelectingSustainedButtons,
-              !ControllerSkinFeatures.shared.airPlayKeepScreen.isEnabled
+              !Settings.controllerSkinFeatures.airPlayKeepScreen.isEnabled
         else {
             self.hideAirPlayView()
             return
@@ -1740,7 +1740,7 @@ extension GameViewController
             self.updateAutoSaveState()
             self.game = self.game
             self.resumeEmulation()
-            if UserInterfaceFeatures.shared.toasts.restart
+            if Settings.userInterfaceFeatures.toasts.restart
             {
                 self.presentToastView(text: NSLocalizedString("Game Restarted", comment: ""))
             }
@@ -1758,7 +1758,7 @@ extension GameViewController
     
     func performStatusBarAction()
     {
-        UserInterfaceFeatures.shared.statusBar.isOn = !UserInterfaceFeatures.shared.statusBar.isOn
+        Settings.userInterfaceFeatures.statusBar.isOn = !Settings.userInterfaceFeatures.statusBar.isOn
         
         if let pauseView = self.pauseViewController
         {
@@ -1767,10 +1767,10 @@ extension GameViewController
         
         self.updateStatusBar()
         
-        if UserInterfaceFeatures.shared.toasts.statusBar
+        if Settings.userInterfaceFeatures.toasts.statusBar
         {
             let text: String
-            if UserInterfaceFeatures.shared.statusBar.isOn
+            if Settings.userInterfaceFeatures.statusBar.isOn
             {
                 text = NSLocalizedString("Status Bar Enabled", comment: "")
             }
@@ -1804,7 +1804,7 @@ extension GameViewController
             text = NSLocalizedString("Rotation Lock Enabled", comment: "")
         }
         
-        if UserInterfaceFeatures.shared.toasts.rotationLock
+        if Settings.userInterfaceFeatures.toasts.rotationLock
         {
             self.presentToastView(text: text)
         }
@@ -1843,7 +1843,7 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        if GameplayFeatures.shared.screenshots.playCountdown
+        if Settings.gameplayFeatures.screenshots.playCountdown
         {
             self.presentToastView(text: "3", duration: 1)
             
@@ -1858,11 +1858,11 @@ extension GameViewController
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + (GameplayFeatures.shared.screenshots.playCountdown ? 3 : 0))
+        DispatchQueue.main.asyncAfter(deadline: .now() + (Settings.gameplayFeatures.screenshots.playCountdown ? 3 : 0))
         {
             guard let snapshot = self.emulatorCore?.videoManager.snapshot() else { return }
 
-            let imageScale = GameplayFeatures.shared.screenshots.size?.rawValue ?? 1.0
+            let imageScale = Settings.gameplayFeatures.screenshots.size?.rawValue ?? 1.0
             let imageSize = CGSize(width: snapshot.size.width * imageScale, height: snapshot.size.height * imageScale)
             
             let screenshotData: Data
@@ -1882,7 +1882,7 @@ extension GameViewController
                 }
             }
             
-            if GameplayFeatures.shared.screenshots.saveToPhotos
+            if Settings.gameplayFeatures.screenshots.saveToPhotos
             {
                 PHPhotoLibrary.runIfAuthorized
                 {
@@ -1890,7 +1890,7 @@ extension GameViewController
                 }
             }
             
-            if GameplayFeatures.shared.screenshots.saveToFiles
+            if Settings.gameplayFeatures.screenshots.saveToFiles
             {
                 let screenshotsDirectory = FileManager.default.documentsDirectory.appendingPathComponent("Screenshots")
                 
@@ -1928,7 +1928,7 @@ extension GameViewController
                 }
             }
             
-            if UserInterfaceFeatures.shared.toasts.screenshot
+            if Settings.userInterfaceFeatures.toasts.screenshot
             {
                 self.presentToastView(text: NSLocalizedString("Screenshot Captured", comment: ""))
             }
@@ -1995,8 +1995,8 @@ extension GameViewController
         
         if activate
         {
-            if GameplayFeatures.shared.fastForward.prompt,
-               GameplayFeatures.shared.fastForward.toggle
+            if Settings.gameplayFeatures.fastForward.prompt,
+               Settings.gameplayFeatures.fastForward.toggle
             {
                 if let pauseView = self.pauseViewController
                 {
@@ -2007,17 +2007,17 @@ extension GameViewController
             }
             else
             {
-                if GameplayFeatures.shared.fastForward.isEnabled
+                if Settings.gameplayFeatures.fastForward.isEnabled
                 {
-                    emulatorCore.rate = GameplayFeatures.shared.fastForward.speed
+                    emulatorCore.rate = Settings.gameplayFeatures.fastForward.speed
                 }
                 else
                 {
                     emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
                 }
                 
-                if UserInterfaceFeatures.shared.toasts.fastForward,
-                   GameplayFeatures.shared.fastForward.toggle
+                if Settings.userInterfaceFeatures.toasts.fastForward,
+                   Settings.gameplayFeatures.fastForward.toggle
                 {
                     text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
                     self.presentToastView(text: text)
@@ -2028,8 +2028,8 @@ extension GameViewController
         {
             emulatorCore.rate = emulatorCore.deltaCore.supportedRates.lowerBound
             
-            if UserInterfaceFeatures.shared.toasts.fastForward,
-               GameplayFeatures.shared.fastForward.toggle
+            if Settings.userInterfaceFeatures.toasts.fastForward,
+               Settings.gameplayFeatures.fastForward.toggle
             {
                 text = NSLocalizedString("Fast Forward Disabled", comment: "")
                 self.presentToastView(text: text)
@@ -2044,7 +2044,7 @@ extension GameViewController
         alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        if GameplayFeatures.shared.fastForward.slowmo {
+        if Settings.gameplayFeatures.fastForward.slowmo {
             alertController.addAction(UIAlertAction(title: "25%", style: .default, handler: { (action) in
                 self.setFastForwardSpeed(speed: 0.25)
             }))
@@ -2064,7 +2064,7 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "400%", style: .default, handler: { (action) in
             self.setFastForwardSpeed(speed: 4.0)
         }))
-        if GameplayFeatures.shared.fastForward.unsafe {
+        if Settings.gameplayFeatures.fastForward.unsafe {
             alertController.addAction(UIAlertAction(title: "800%", style: .default, handler: { (action) in
                 self.setFastForwardSpeed(speed: 8.0)
             }))
@@ -2072,7 +2072,7 @@ extension GameViewController
                 self.setFastForwardSpeed(speed: 16.0)
             }))
         }
-        alertController.addAction(UIAlertAction(title: "Custom: " + String(format: "%.f", GameplayFeatures.shared.fastForward.speed * 100) + "%", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: "Custom: " + String(format: "%.f", Settings.gameplayFeatures.fastForward.speed * 100) + "%", style: .default, handler: { (action) in
             self.setFastForwardSpeed(speed: 4.0)
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
@@ -2089,7 +2089,7 @@ extension GameViewController
             guard let emulatorCore = self.emulatorCore else { return }
             
             emulatorCore.rate = speed
-            if UserInterfaceFeatures.shared.toasts.fastForward
+            if Settings.userInterfaceFeatures.toasts.fastForward
             {
                 let text = NSLocalizedString("Fast Forward Enabled at " + String(format: "%.f", speed * 100) + "%", comment: "")
                 self.presentToastView(text: text)
@@ -2115,7 +2115,7 @@ extension GameViewController
         }
         else
         {
-            guard GameplayFeatures.shared.quickSettings.isEnabled else { return }
+            guard Settings.gameplayFeatures.quickSettings.isEnabled else { return }
             
             if self._isQuickSettingsOpen
             {
@@ -2193,16 +2193,16 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
-        let enabled = !ControllerSkinFeatures.shared.backgroundBlur.blurBackground
+        let enabled = !Settings.controllerSkinFeatures.backgroundBlur.blurBackground
         self.blurScreenEnabled = enabled
-        ControllerSkinFeatures.shared.backgroundBlur.blurBackground = enabled
+        Settings.controllerSkinFeatures.backgroundBlur.blurBackground = enabled
         
         if let pauseView = self.pauseViewController
         {
             pauseView.dismiss()
         }
         
-        if UserInterfaceFeatures.shared.toasts.backgroundBlur
+        if Settings.userInterfaceFeatures.toasts.backgroundBlur
         {
             let text: String
             if enabled
@@ -2219,16 +2219,16 @@ extension GameViewController
     
     func performAltRepresentationsAction()
     {
-        let enabled = !AdvancedFeatures.shared.skinDebug.useAlt
+        let enabled = !Settings.advancedFeatures.skinDebug.useAlt
         self.controllerView.isAltRepresentationsEnabled = enabled
-        AdvancedFeatures.shared.skinDebug.useAlt = enabled
+        Settings.advancedFeatures.skinDebug.useAlt = enabled
         
         if let pauseView = self.pauseViewController
         {
             pauseView.dismiss()
         }
         
-        if UserInterfaceFeatures.shared.toasts.altSkin
+        if Settings.userInterfaceFeatures.toasts.altSkin
         {
             let text: String
             if enabled
@@ -2245,8 +2245,8 @@ extension GameViewController
     
     func performDebugModeAction()
     {
-        let enabled = !AdvancedFeatures.shared.skinDebug.isOn
-        AdvancedFeatures.shared.skinDebug.isOn = enabled
+        let enabled = !Settings.advancedFeatures.skinDebug.isOn
+        Settings.advancedFeatures.skinDebug.isOn = enabled
         self.controllerView.isDebugModeEnabled = enabled
         
         if let pauseView = self.pauseViewController
@@ -2254,7 +2254,7 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        if UserInterfaceFeatures.shared.toasts.debug
+        if Settings.userInterfaceFeatures.toasts.debug
         {
             let text: String
             if enabled
@@ -2282,41 +2282,41 @@ extension GameViewController
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         alertController.addAction(UIAlertAction(title: SkinDebugDevice.standard.description, style: .default, handler: { (action) in
-            AdvancedFeatures.shared.skinDebug.device = .standard
+            Settings.advancedFeatures.skinDebug.device = .standard
             self.resumeEmulation()
-            if UserInterfaceFeatures.shared.toasts.debug
+            if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.standard.description)", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: SkinDebugDevice.edgeToEdge.description, style: .default, handler: { (action) in
-            AdvancedFeatures.shared.skinDebug.device = .edgeToEdge
+            Settings.advancedFeatures.skinDebug.device = .edgeToEdge
             self.resumeEmulation()
-            if UserInterfaceFeatures.shared.toasts.debug
+            if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.edgeToEdge.description)", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: SkinDebugDevice.ipad.description, style: .default, handler: { (action) in
-            AdvancedFeatures.shared.skinDebug.device = .ipad
+            Settings.advancedFeatures.skinDebug.device = .ipad
             self.resumeEmulation()
-            if UserInterfaceFeatures.shared.toasts.debug
+            if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.ipad.description)", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: SkinDebugDevice.splitView.description, style: .default, handler: { (action) in
-            AdvancedFeatures.shared.skinDebug.device = .splitView
+            Settings.advancedFeatures.skinDebug.device = .splitView
             self.resumeEmulation()
-            if UserInterfaceFeatures.shared.toasts.debug
+            if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.splitView.description)", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: SkinDebugDevice.nilDescription, style: .default, handler: { (action) in
-            AdvancedFeatures.shared.skinDebug.device = nil
+            Settings.advancedFeatures.skinDebug.device = nil
             self.resumeEmulation()
-            if UserInterfaceFeatures.shared.toasts.debug
+            if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Device Override Disabled", comment: ""))
             }
@@ -2334,7 +2334,7 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        if GBCFeatures.shared.palettes.multiPalette
+        if Settings.gbcFeatures.palettes.multiPalette
         {
             let alertController = UIAlertController(title: NSLocalizedString("Change Which Palette?", comment: ""), message: nil, preferredStyle: .actionSheet)
             alertController.popoverPresentationController?.sourceView = self.view
@@ -2349,11 +2349,11 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (Settings.gbcFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                        GBCFeatures.shared.palettes.palette = palette
+                        Settings.gbcFeatures.palettes.palette = palette
                         self.resumeEmulation()
-                        if UserInterfaceFeatures.shared.toasts.palette
+                        if Settings.userInterfaceFeatures.toasts.palette
                         {
                             self.presentToastView(text: NSLocalizedString("Changed Main Palette to \(palette.description)", comment: ""))
                         }
@@ -2371,11 +2371,11 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (GBCFeatures.shared.palettes.spritePalette1.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (Settings.gbcFeatures.palettes.spritePalette1.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                        GBCFeatures.shared.palettes.spritePalette1 = palette
+                        Settings.gbcFeatures.palettes.spritePalette1 = palette
                         self.resumeEmulation()
-                        if UserInterfaceFeatures.shared.toasts.palette
+                        if Settings.userInterfaceFeatures.toasts.palette
                         {
                             self.presentToastView(text: NSLocalizedString("Changed Sprite Palette 1 to \(palette.description)", comment: ""))
                         }
@@ -2393,11 +2393,11 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (GBCFeatures.shared.palettes.spritePalette2.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (Settings.gbcFeatures.palettes.spritePalette2.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                        GBCFeatures.shared.palettes.spritePalette2 = palette
+                        Settings.gbcFeatures.palettes.spritePalette2 = palette
                         self.resumeEmulation()
-                        if UserInterfaceFeatures.shared.toasts.palette
+                        if Settings.userInterfaceFeatures.toasts.palette
                         {
                             self.presentToastView(text: NSLocalizedString("Changed Sprite Palette 2 to \(palette.description)", comment: ""))
                         }
@@ -2424,11 +2424,11 @@ extension GameViewController
             
             for palette in GameboyPalette.allCases
             {
-                let text = (GBCFeatures.shared.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                let text = (Settings.gbcFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                 alertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                    GBCFeatures.shared.palettes.palette = palette
+                    Settings.gbcFeatures.palettes.palette = palette
                     self.resumeEmulation()
-                    if UserInterfaceFeatures.shared.toasts.palette
+                    if Settings.userInterfaceFeatures.toasts.palette
                     {
                         self.presentToastView(text: NSLocalizedString("Changed Palette to \(palette.description)", comment: ""))
                     }
@@ -2449,12 +2449,12 @@ extension GameViewController
 {
     func presentToastView(text: String, duration: Double? = nil)
     {
-        guard UserInterfaceFeatures.shared.toasts.isEnabled else { return }
+        guard Settings.userInterfaceFeatures.toasts.isEnabled else { return }
         
         DispatchQueue.main.async {
             let toastView = RSTToastView(text: text, detailText: nil)
             toastView.edgeOffset.vertical = 8
-            self.show(toastView, duration: duration ?? UserInterfaceFeatures.shared.toasts.duration)
+            self.show(toastView, duration: duration ?? Settings.userInterfaceFeatures.toasts.duration)
         }
     }
 }
@@ -2487,8 +2487,8 @@ private extension GameViewController
 
         if let game = self.game, let traits = scene.gameViewController.controllerView.controllerSkinTraits
         {
-            if ControllerSkinFeatures.shared.airPlaySkins.isEnabled,
-               let preferredControllerSkin = ControllerSkinFeatures.shared.airPlaySkins.preferredAirPlayControllerSkin(for: game.type), preferredControllerSkin.supports(traits, alt: AdvancedFeatures.shared.skinDebug.useAlt)
+            if Settings.controllerSkinFeatures.airPlaySkins.isEnabled,
+               let preferredControllerSkin = Settings.controllerSkinFeatures.airPlaySkins.preferredAirPlayControllerSkin(for: game.type), preferredControllerSkin.supports(traits, alt: Settings.advancedFeatures.skinDebug.useAlt)
             {
                 // Use preferredControllerSkin directly.
                 controllerSkin = preferredControllerSkin
@@ -2702,7 +2702,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, TouchFeedbackFeatures.shared.touchVibration.$buttonsEnabled.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$sticksEnabled.settingsKey, AdvancedFeatures.shared.skinDebug.$useAlt.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$alwaysShow.settingsKey, ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey, ControllerSkinFeatures.shared.controller.settingsKey, AdvancedFeatures.shared.skinDebug.$isOn.settingsKey, AdvancedFeatures.shared.skinDebug.$device.settingsKey, TouchFeedbackFeatures.shared.touchVibration.$releaseEnabled.settingsKey, TouchFeedbackFeatures.shared.touchOverlay.settingsKey:
+        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$alwaysShow.settingsKey, Settings.controllerSkinFeatures.airPlayKeepScreen.settingsKey, Settings.controllerSkinFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -2716,73 +2716,73 @@ private extension GameViewController
                 self.updateControllerSkin()
             }
             
-        case ControllerSkinFeatures.shared.controller.$triggerDeadzone.settingsKey:
+        case Settings.controllerSkinFeatures.controller.$triggerDeadzone.settingsKey:
             self.updateControllerTriggerDeadzone()
             
-        case ControllerSkinFeatures.shared.skinCustomization.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$opacity.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$backgroundColor.settingsKey, ControllerSkinFeatures.shared.skinCustomization.$matchTheme.settingsKey:
+        case Settings.controllerSkinFeatures.skinCustomization.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$opacity.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$backgroundColor.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$matchTheme.settingsKey:
             self.updateControllerSkinCustomization()
             
-        case TouchFeedbackFeatures.shared.touchVibration.$strength.settingsKey:
-            self.controllerView.hapticFeedbackStrength = TouchFeedbackFeatures.shared.touchVibration.strength
+        case Settings.touchFeedbackFeatures.touchVibration.$strength.settingsKey:
+            self.controllerView.hapticFeedbackStrength = Settings.touchFeedbackFeatures.touchVibration.strength
             
-        case TouchFeedbackFeatures.shared.touchOverlay.$overlayColor.settingsKey:
-            self.controllerView.touchOverlayColor = TouchFeedbackFeatures.shared.touchOverlay.themed ? UIColor.themeColor : UIColor(TouchFeedbackFeatures.shared.touchOverlay.overlayColor)
+        case Settings.touchFeedbackFeatures.touchOverlay.$overlayColor.settingsKey:
+            self.controllerView.touchOverlayColor = Settings.touchFeedbackFeatures.touchOverlay.themed ? UIColor.themeColor : UIColor(Settings.touchFeedbackFeatures.touchOverlay.overlayColor)
             
-        case TouchFeedbackFeatures.shared.touchOverlay.$opacity.settingsKey:
-            self.controllerView.touchOverlayOpacity = TouchFeedbackFeatures.shared.touchOverlay.opacity
+        case Settings.touchFeedbackFeatures.touchOverlay.$opacity.settingsKey:
+            self.controllerView.touchOverlayOpacity = Settings.touchFeedbackFeatures.touchOverlay.opacity
             
-        case TouchFeedbackFeatures.shared.touchOverlay.$size.settingsKey:
-            self.controllerView.touchOverlaySize = TouchFeedbackFeatures.shared.touchOverlay.size
+        case Settings.touchFeedbackFeatures.touchOverlay.$size.settingsKey:
+            self.controllerView.touchOverlaySize = Settings.touchFeedbackFeatures.touchOverlay.size
             
-        case TouchFeedbackFeatures.shared.touchOverlay.$style.settingsKey:
-            self.controllerView.touchOverlayStyle = TouchFeedbackFeatures.shared.touchOverlay.style
+        case Settings.touchFeedbackFeatures.touchOverlay.$style.settingsKey:
+            self.controllerView.touchOverlayStyle = Settings.touchFeedbackFeatures.touchOverlay.style
             
-        case GameplayFeatures.shared.gameAudio.$respectSilent.settingsKey, GameplayFeatures.shared.gameAudio.$playOver.settingsKey, GameplayFeatures.shared.gameAudio.$volume.settingsKey:
+        case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey:
             self.updateAudio()
             
-        case N64Features.shared.n64graphics.$graphicsAPI.settingsKey:
+        case Settings.n64Features.n64graphics.$graphicsAPI.settingsKey:
             self.changeGraphicsAPI()
             
-        case TouchFeedbackFeatures.shared.touchAudio.$sound.settingsKey:
+        case Settings.touchFeedbackFeatures.touchAudio.$sound.settingsKey:
             self.updateButtonAudioFeedbackSound()
             self.playButtonAudioFeedbackSound()
             
-        case TouchFeedbackFeatures.shared.touchAudio.settingsKey, TouchFeedbackFeatures.shared.touchAudio.$useGameVolume.settingsKey, TouchFeedbackFeatures.shared.touchAudio.$buttonVolume.settingsKey:
+        case Settings.touchFeedbackFeatures.touchAudio.settingsKey, Settings.touchFeedbackFeatures.touchAudio.$useGameVolume.settingsKey, Settings.touchFeedbackFeatures.touchAudio.$buttonVolume.settingsKey:
             self.updateButtonAudioFeedbackSound()
             
-        case UserInterfaceFeatures.shared.statusBar.settingsKey, UserInterfaceFeatures.shared.statusBar.$isOn.settingsKey, UserInterfaceFeatures.shared.statusBar.$useToggle.settingsKey:
+        case Settings.userInterfaceFeatures.statusBar.settingsKey, Settings.userInterfaceFeatures.statusBar.$isOn.settingsKey, Settings.userInterfaceFeatures.statusBar.$useToggle.settingsKey:
             self.updateStatusBar()
             
-        case GBCFeatures.shared.palettes.$palette.settingsKey, GBCFeatures.shared.palettes.settingsKey, GBCFeatures.shared.palettes.$spritePalette1.settingsKey, GBCFeatures.shared.palettes.$spritePalette2.settingsKey, GBCFeatures.shared.palettes.$multiPalette.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette1Color4.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette2Color4.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color1.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color2.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color3.settingsKey, GBCFeatures.shared.palettes.$customPalette3Color4.settingsKey:
+        case Settings.gbcFeatures.palettes.$palette.settingsKey, Settings.gbcFeatures.palettes.settingsKey, Settings.gbcFeatures.palettes.$spritePalette1.settingsKey, Settings.gbcFeatures.palettes.$spritePalette2.settingsKey, Settings.gbcFeatures.palettes.$multiPalette.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color4.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color4.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color4.settingsKey:
             self.updateGameboyPalette()
             
-        case GameplayFeatures.shared.quickSettings.$fastForwardSpeed.settingsKey:
+        case Settings.gameplayFeatures.quickSettings.$fastForwardSpeed.settingsKey:
             self.updateEmulationSpeed()
             
-        case GameplayFeatures.shared.quickSettings.$performQuickSave.settingsKey:
+        case Settings.gameplayFeatures.quickSettings.$performQuickSave.settingsKey:
             self.dismissQuickSettings()
             self.performQuickSaveAction()
             
-        case GameplayFeatures.shared.quickSettings.$performQuickLoad.settingsKey:
+        case Settings.gameplayFeatures.quickSettings.$performQuickLoad.settingsKey:
             self.dismissQuickSettings()
             self.performQuickLoadAction()
             
-        case GameplayFeatures.shared.quickSettings.$performScreenshot.settingsKey:
+        case Settings.gameplayFeatures.quickSettings.$performScreenshot.settingsKey:
             self.dismissQuickSettings()
             self.performScreenshotAction()
             
-        case GameplayFeatures.shared.quickSettings.$performPause.settingsKey:
+        case Settings.gameplayFeatures.quickSettings.$performPause.settingsKey:
             self.performPauseAction()
             
-        case GameplayFeatures.shared.quickSettings.$performMainMenu.settingsKey:
+        case Settings.gameplayFeatures.quickSettings.$performMainMenu.settingsKey:
             self.performMainMenuAction()
             
         case Settings.dsFeatures.dsAirPlay.$topScreenOnly.settingsKey: fallthrough
         case Settings.dsFeatures.dsAirPlay.$layoutAxis.settingsKey:
             self.updateExternalDisplay()
             
-        case ControllerSkinFeatures.shared.airPlaySkins.settingsKey: fallthrough
-        case _ where settingsName.rawValue.hasPrefix(ControllerSkinFeatures.shared.airPlaySkins.settingsKey.rawValue):
+        case Settings.controllerSkinFeatures.airPlaySkins.settingsKey: fallthrough
+        case _ where settingsName.rawValue.hasPrefix(Settings.controllerSkinFeatures.airPlaySkins.settingsKey.rawValue):
             // Update whenever any of the AirPlay skins have changed.
             self.updateExternalDisplay()
             
@@ -2797,7 +2797,7 @@ private extension GameViewController
         let previousGame = self.game
         self.game = game
         
-        if GameplayFeatures.shared.autoLoad.isEnabled
+        if Settings.gameplayFeatures.autoLoad.isEnabled
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
             fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -3006,8 +3006,8 @@ private extension GameViewController
     func activateRewindTimer()
     {
         self.invalidateRewindTimer()
-        guard GameplayFeatures.shared.rewind.isEnabled else { return }
-        let interval = TimeInterval(GameplayFeatures.shared.rewind.interval)
+        guard Settings.gameplayFeatures.rewind.isEnabled else { return }
+        let interval = TimeInterval(Settings.gameplayFeatures.rewind.interval)
         self.rewindTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(rewindPollFunction), userInfo: nil, repeats: true)
     }
     
@@ -3018,7 +3018,7 @@ private extension GameViewController
     
     @objc func rewindPollFunction() {
         
-        guard GameplayFeatures.shared.rewind.isEnabled,
+        guard Settings.gameplayFeatures.rewind.isEnabled,
               self.emulatorCore?.state == .running,
               let game = self.game as? Game else { return }
         
@@ -3041,7 +3041,7 @@ private extension GameViewController
         do
         {
             let rewindStateCount = try DatabaseManager.shared.viewContext.count(for: fetchRequest) + 1 // + 1 to account for state to be saved after deleting
-            let rewindStatesOverLimit = rewindStateCount - Int(floor(GameplayFeatures.shared.rewind.maxStates))
+            let rewindStatesOverLimit = rewindStateCount - Int(floor(Settings.gameplayFeatures.rewind.maxStates))
             if rewindStatesOverLimit > 0
             {
                 fetchRequest.fetchLimit = rewindStatesOverLimit

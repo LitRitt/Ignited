@@ -21,7 +21,7 @@ extension ControllerSkinFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = ControllerSkinFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = Settings.controllerSkinFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }

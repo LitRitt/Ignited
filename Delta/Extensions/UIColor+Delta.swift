@@ -21,17 +21,17 @@ extension UIColor
     
     static var themeColor: UIColor
     {
-        if UserInterfaceFeatures.shared.theme.isEnabled
+        if Settings.userInterfaceFeatures.theme.isEnabled
         {
-            if UserInterfaceFeatures.shared.theme.useCustom
+            if Settings.userInterfaceFeatures.theme.useCustom
             {
-                guard let color = UserInterfaceFeatures.shared.theme.customColor.cgColor else { return .ignitedOrange }
+                guard let color = Settings.userInterfaceFeatures.theme.customColor.cgColor else { return .ignitedOrange }
                 
                 return UIColor(cgColor: color)
             }
             else
             {
-                switch UserInterfaceFeatures.shared.theme.accentColor
+                switch Settings.userInterfaceFeatures.theme.accentColor
                 {
                 case .orange:
                     return ignitedOrange

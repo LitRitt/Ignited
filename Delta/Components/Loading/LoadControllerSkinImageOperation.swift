@@ -65,7 +65,7 @@ class LoadControllerSkinImageOperation: RSTLoadOperation<UIImage, ControllerSkin
     
     override func loadResult(completion: @escaping (UIImage?, Swift.Error?) -> Void)
     {
-        let alt = AdvancedFeatures.shared.skinDebug.useAlt
+        let alt = Settings.advancedFeatures.skinDebug.useAlt
         
         guard let traits = self.controllerSkin.supportedTraits(for: self.traits, alt: alt) else {
             completion(nil, Error.unsupportedTraits)

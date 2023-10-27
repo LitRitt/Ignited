@@ -21,7 +21,7 @@ extension N64FeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = N64Features.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = Settings.n64Features.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }

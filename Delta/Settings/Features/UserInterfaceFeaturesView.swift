@@ -21,7 +21,7 @@ extension UserInterfaceFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = UserInterfaceFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = Settings.userInterfaceFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }

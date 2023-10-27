@@ -768,7 +768,7 @@ extension SaveStatesViewController
         guard let actions = self.actionsForSaveState(saveState) else { return nil }
         
         return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath, previewProvider: { [weak self] in
-            guard let self = self, UserInterfaceFeatures.shared.previews.isEnabled else { return nil }
+            guard let self = self, Settings.userInterfaceFeatures.previews.isEnabled else { return nil }
             
             let previewGameViewController = self.makePreviewGameViewController(for: saveState)
             self._previewTransitionViewController = previewGameViewController

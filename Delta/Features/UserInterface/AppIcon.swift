@@ -143,7 +143,7 @@ extension AppIconOptions
 {
     static func updateAppIconPreference()
     {
-        UserInterfaceFeatures.shared.appIcon.useTheme = false
+        Settings.userInterfaceFeatures.appIcon.useTheme = false
         
         updateAppIcon()
     }
@@ -152,17 +152,17 @@ extension AppIconOptions
     {
         let currentIcon = UIApplication.shared.alternateIconName
         
-        if UserInterfaceFeatures.shared.appIcon.isEnabled
+        if Settings.userInterfaceFeatures.appIcon.isEnabled
         {
-            if UserInterfaceFeatures.shared.appIcon.useTheme
+            if Settings.userInterfaceFeatures.appIcon.useTheme
             {
-                guard UserInterfaceFeatures.shared.theme.isEnabled else
+                guard Settings.userInterfaceFeatures.theme.isEnabled else
                 {
                     if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
                     return
                 }
                 
-                let themeIcon = UserInterfaceFeatures.shared.theme.accentColor
+                let themeIcon = Settings.userInterfaceFeatures.theme.accentColor
                 
                 switch themeIcon
                 {
@@ -172,7 +172,7 @@ extension AppIconOptions
             }
             else
             {
-                let altIcon = UserInterfaceFeatures.shared.appIcon.alternateIcon
+                let altIcon = Settings.userInterfaceFeatures.appIcon.alternateIcon
                 
                 switch altIcon
                 {

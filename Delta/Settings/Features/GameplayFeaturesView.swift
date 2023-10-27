@@ -21,7 +21,7 @@ extension GameplayFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = GameplayFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = Settings.gameplayFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }

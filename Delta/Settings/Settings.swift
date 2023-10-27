@@ -46,6 +46,14 @@ extension Settings
 struct Settings
 {
     static let dsFeatures = DSFeatures.shared
+    static let gbcFeatures = GBCFeatures.shared
+    static let n64Features = N64Features.shared
+    static let gameplayFeatures = GameplayFeatures.shared
+    static let controllerSkinFeatures = ControllerSkinFeatures.shared
+    static let gamesCollectionFeatures = GamesCollectionFeatures.shared
+    static let userInterfaceFeatures = UserInterfaceFeatures.shared
+    static let touchFeedbackFeatures = TouchFeedbackFeatures.shared
+    static let advancedFeatures = AdvancedFeatures.shared
     
     static func registerDefaults()
     {
@@ -55,34 +63,34 @@ struct Settings
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             #keyPath(UserDefaults.isAltJITEnabled): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
-            GameplayFeatures.shared.autoLoad.settingsKey.rawValue: true,
-            GameplayFeatures.shared.cheats.settingsKey.rawValue: true,
-            GameplayFeatures.shared.rotationLock.settingsKey.rawValue: true,
-            GameplayFeatures.shared.fastForward.settingsKey.rawValue: true,
-            GameplayFeatures.shared.gameAudio.settingsKey.rawValue: true,
-            GameplayFeatures.shared.screenshots.settingsKey.rawValue: true,
-            GameplayFeatures.shared.rewind.settingsKey.rawValue: false,
-            GameplayFeatures.shared.quickSettings.settingsKey.rawValue: true,
-            ControllerSkinFeatures.shared.skinCustomization.settingsKey.rawValue: true,
-            ControllerSkinFeatures.shared.backgroundBlur.settingsKey.rawValue: true,
-            ControllerSkinFeatures.shared.airPlaySkins.settingsKey.rawValue: true,
-            ControllerSkinFeatures.shared.airPlayKeepScreen.settingsKey.rawValue: false,
-            ControllerSkinFeatures.shared.controller.settingsKey.rawValue: true,
-            GamesCollectionFeatures.shared.artwork.settingsKey.rawValue: true,
-            GamesCollectionFeatures.shared.animation.settingsKey.rawValue: true,
-            GamesCollectionFeatures.shared.favorites.settingsKey.rawValue: true,
-            UserInterfaceFeatures.shared.appIcon.settingsKey.rawValue: true,
-            UserInterfaceFeatures.shared.theme.settingsKey.rawValue: true,
-            UserInterfaceFeatures.shared.statusBar.settingsKey.rawValue: false,
-            UserInterfaceFeatures.shared.previews.settingsKey.rawValue: false,
-            UserInterfaceFeatures.shared.toasts.settingsKey.rawValue: true,
-            TouchFeedbackFeatures.shared.touchAudio.settingsKey.rawValue: false,
-            TouchFeedbackFeatures.shared.touchOverlay.settingsKey.rawValue: true,
-            TouchFeedbackFeatures.shared.touchVibration.settingsKey.rawValue: true,
-            AdvancedFeatures.shared.skinDebug.settingsKey.rawValue: false,
-            AdvancedFeatures.shared.powerUser.settingsKey.rawValue: false,
-            GBCFeatures.shared.palettes.settingsKey.rawValue: true,
-            N64Features.shared.n64graphics.settingsKey.rawValue: false
+            Settings.gameplayFeatures.autoLoad.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.cheats.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.rotationLock.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.fastForward.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.gameAudio.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.screenshots.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.rewind.settingsKey.rawValue: false,
+            Settings.gameplayFeatures.quickSettings.settingsKey.rawValue: true,
+            Settings.controllerSkinFeatures.skinCustomization.settingsKey.rawValue: true,
+            Settings.controllerSkinFeatures.backgroundBlur.settingsKey.rawValue: true,
+            Settings.controllerSkinFeatures.airPlaySkins.settingsKey.rawValue: false,
+            Settings.controllerSkinFeatures.airPlayKeepScreen.settingsKey.rawValue: false,
+            Settings.controllerSkinFeatures.controller.settingsKey.rawValue: true,
+            Settings.gamesCollectionFeatures.artwork.settingsKey.rawValue: true,
+            Settings.gamesCollectionFeatures.animation.settingsKey.rawValue: true,
+            Settings.gamesCollectionFeatures.favorites.settingsKey.rawValue: true,
+            Settings.userInterfaceFeatures.appIcon.settingsKey.rawValue: true,
+            Settings.userInterfaceFeatures.theme.settingsKey.rawValue: true,
+            Settings.userInterfaceFeatures.statusBar.settingsKey.rawValue: false,
+            Settings.userInterfaceFeatures.previews.settingsKey.rawValue: false,
+            Settings.userInterfaceFeatures.toasts.settingsKey.rawValue: true,
+            Settings.touchFeedbackFeatures.touchAudio.settingsKey.rawValue: false,
+            Settings.touchFeedbackFeatures.touchOverlay.settingsKey.rawValue: true,
+            Settings.touchFeedbackFeatures.touchVibration.settingsKey.rawValue: true,
+            Settings.advancedFeatures.skinDebug.settingsKey.rawValue: false,
+            Settings.advancedFeatures.powerUser.settingsKey.rawValue: false,
+            Settings.gbcFeatures.palettes.settingsKey.rawValue: true,
+            Settings.n64Features.n64graphics.settingsKey.rawValue: false
         ] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
     }
@@ -272,7 +280,7 @@ extension Settings
         case .landscape: preferredControllerSkin = game.preferredLandscapeSkin
         }
         
-        let alt = AdvancedFeatures.shared.skinDebug.useAlt
+        let alt = Settings.advancedFeatures.skinDebug.useAlt
         if let controllerSkin = preferredControllerSkin, let _ = controllerSkin.supportedTraits(for: traits, alt: alt)
         {
             // Check if there are supported traits, which includes fallback traits for X <-> non-X devices.

@@ -191,17 +191,17 @@ private extension PauseViewController
         
         self.restartItem = MenuItem(text: NSLocalizedString("Restart", comment: ""), image: #imageLiteral(resourceName: "Restart"), action: { _ in })
         
-        if GameplayFeatures.shared.screenshots.isEnabled
+        if Settings.gameplayFeatures.screenshots.isEnabled
         {
             self.screenshotItem = MenuItem(text: NSLocalizedString("Screenshot", comment: ""), image: #imageLiteral(resourceName: "Screenshot"), action: { _ in })
         }
         
-        if UserInterfaceFeatures.shared.statusBar.isEnabled && UserInterfaceFeatures.shared.statusBar.useToggle
+        if Settings.userInterfaceFeatures.statusBar.isEnabled && Settings.userInterfaceFeatures.statusBar.useToggle
         {
             self.statusBarItem = MenuItem(text: NSLocalizedString("Status Bar", comment: ""), image: #imageLiteral(resourceName: "StatusBar"), action: { _ in })
         }
         
-        if GameplayFeatures.shared.rewind.isEnabled
+        if Settings.gameplayFeatures.rewind.isEnabled
         {
             self.rewindItem = MenuItem(text: NSLocalizedString("Rewind", comment: ""), image: #imageLiteral(resourceName: "Rewind"), action: { [unowned self] _ in
                 self.saveStatesViewControllerMode = .rewind
@@ -209,45 +209,45 @@ private extension PauseViewController
             })
         }
         
-        if GameplayFeatures.shared.fastForward.isEnabled
+        if Settings.gameplayFeatures.fastForward.isEnabled
         {
             self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""), image: #imageLiteral(resourceName: "FastForward"), action: { _ in })
         }
         
-        if GameplayFeatures.shared.rotationLock.isEnabled
+        if Settings.gameplayFeatures.rotationLock.isEnabled
         {
             self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""), image: #imageLiteral(resourceName: "RotationLock"), action: { _ in })
         }
         
-        if GameplayFeatures.shared.cheats.isEnabled {
+        if Settings.gameplayFeatures.cheats.isEnabled {
             self.cheatCodesItem = MenuItem(text: NSLocalizedString("Cheat Codes", comment: ""), image: #imageLiteral(resourceName: "CheatCodes"), action: { [unowned self] _ in
                 self.performSegue(withIdentifier: "cheats", sender: self)
             })
         }
         
-        if GBCFeatures.shared.palettes.isEnabled
+        if Settings.gbcFeatures.palettes.isEnabled
         {
             self.paletteItem = MenuItem(text: NSLocalizedString("Color Palette", comment: ""), image: #imageLiteral(resourceName: "Palette"), action: { _ in })
         }
         
-        if GameplayFeatures.shared.quickSettings.isEnabled
+        if Settings.gameplayFeatures.quickSettings.isEnabled
         {
             self.quickSettingsItem = MenuItem(text: NSLocalizedString("Quick Settings", comment: ""), image: #imageLiteral(resourceName: "QuickSettings"), action: { _ in })
         }
         
-        if ControllerSkinFeatures.shared.backgroundBlur.isEnabled
+        if Settings.controllerSkinFeatures.backgroundBlur.isEnabled
         {
             self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""), image: #imageLiteral(resourceName: "BackgroundBlur"), action: { _ in })
         }
         
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""), image: #imageLiteral(resourceName: "SustainButtons"), action: { _ in })
         
-        if AdvancedFeatures.shared.skinDebug.hasAlt
+        if Settings.advancedFeatures.skinDebug.hasAlt
         {
             self.altSkinItem = MenuItem(text: NSLocalizedString("Alternate Skin", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
         }
         
-        if AdvancedFeatures.shared.skinDebug.isEnabled || AdvancedFeatures.shared.skinDebug.skinEnabled
+        if Settings.advancedFeatures.skinDebug.isEnabled || Settings.advancedFeatures.skinDebug.skinEnabled
         {
             self.debugModeItem = MenuItem(text: NSLocalizedString("Debug Mode", comment: ""), image: #imageLiteral(resourceName: "Debug"), action: { _ in })
             self.debugDeviceItem = MenuItem(text: NSLocalizedString("Debug Device", comment: ""), image: #imageLiteral(resourceName: "DebugDevice"), action: { _ in })

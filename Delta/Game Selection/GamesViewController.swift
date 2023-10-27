@@ -299,7 +299,7 @@ private extension GamesViewController
     
     func updateToolbar()
     {
-        if UserInterfaceFeatures.shared.randomGame.isEnabled
+        if Settings.userInterfaceFeatures.randomGame.isEnabled
         {
             if self.showResumeButton
             {
@@ -529,13 +529,13 @@ private extension GamesViewController
     {
         let artworkSizeActions: [UIAction] = [
             UIAction(Action(title: ArtworkSize.small.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"), action: { action in
-                GamesCollectionFeatures.shared.artwork.size = .small
+                Settings.gamesCollectionFeatures.artwork.size = .small
             }))!,
             UIAction(Action(title: ArtworkSize.medium.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.2x2"), action: { action in
-                GamesCollectionFeatures.shared.artwork.size = .medium
+                Settings.gamesCollectionFeatures.artwork.size = .medium
             }))!,
             UIAction(Action(title: ArtworkSize.large.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape"), action: { action in
-                GamesCollectionFeatures.shared.artwork.size = .large
+                Settings.gamesCollectionFeatures.artwork.size = .large
             }))!
         ]
         
@@ -546,32 +546,32 @@ private extension GamesViewController
     {
         var sortActions: [UIAction] = [
             UIAction(Action(title: SortOrder.alphabeticalAZ.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
-                GamesCollectionFeatures.shared.artwork.sortOrder = .alphabeticalAZ
+                Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalAZ
             }))!,
             UIAction(Action(title: SortOrder.alphabeticalZA.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
-                GamesCollectionFeatures.shared.artwork.sortOrder = .alphabeticalZA
+                Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalZA
             }))!,
             UIAction(Action(title: SortOrder.mostRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
-                GamesCollectionFeatures.shared.artwork.sortOrder = .mostRecent
+                Settings.gamesCollectionFeatures.artwork.sortOrder = .mostRecent
             }))!,
             UIAction(Action(title: SortOrder.leastRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
-                GamesCollectionFeatures.shared.artwork.sortOrder = .leastRecent
+                Settings.gamesCollectionFeatures.artwork.sortOrder = .leastRecent
             }))!
         ]
         
-        if GamesCollectionFeatures.shared.favorites.isEnabled
+        if Settings.gamesCollectionFeatures.favorites.isEnabled
         {
-            if GamesCollectionFeatures.shared.favorites.favoriteSort
+            if Settings.gamesCollectionFeatures.favorites.favoriteSort
             {
                 sortActions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
-                    GamesCollectionFeatures.shared.favorites.favoriteSort = false
+                    Settings.gamesCollectionFeatures.favorites.favoriteSort = false
                     self.sortButton.menu = self.makeSortMenu()
                 }))!, at: 0)
             }
             else
             {
                 sortActions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
-                    GamesCollectionFeatures.shared.favorites.favoriteSort = true
+                    Settings.gamesCollectionFeatures.favorites.favoriteSort = true
                     self.sortButton.menu = self.makeSortMenu()
                 }))!, at: 0)
             }
@@ -719,10 +719,10 @@ private extension GamesViewController
         
         switch settingsName
         {
-        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey:
+        case Settings.userInterfaceFeatures.theme.$useCustom.settingsKey, Settings.userInterfaceFeatures.theme.$customColor.settingsKey, Settings.userInterfaceFeatures.theme.$accentColor.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
             self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
             
-        case UserInterfaceFeatures.shared.randomGame.settingsKey:
+        case Settings.userInterfaceFeatures.randomGame.settingsKey:
             self.updateToolbar()
             
         default: break

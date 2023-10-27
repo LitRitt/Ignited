@@ -198,7 +198,7 @@ extension ControllerSkinsViewController
     {
         let controllerSkin = self.dataSource.item(at: indexPath)
         
-        let alt = AdvancedFeatures.shared.skinDebug.useAlt
+        let alt = Settings.advancedFeatures.skinDebug.useAlt
         guard let traits = controllerSkin.supportedTraits(for: self.traits, alt: alt) else { return 150 }
         
         var height = 200.0

@@ -21,7 +21,7 @@ extension AdvancedFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = AdvancedFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = Settings.advancedFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }

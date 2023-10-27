@@ -195,7 +195,7 @@ private extension SceneDelegate
         
         switch settingsName
         {
-        case UserInterfaceFeatures.shared.theme.$useCustom.settingsKey, UserInterfaceFeatures.shared.theme.$customColor.settingsKey, UserInterfaceFeatures.shared.theme.$accentColor.settingsKey, UserInterfaceFeatures.shared.theme.settingsKey:
+        case Settings.userInterfaceFeatures.theme.$useCustom.settingsKey, Settings.userInterfaceFeatures.theme.$customColor.settingsKey, Settings.userInterfaceFeatures.theme.$accentColor.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
             self.window?.tintColor = UIColor.themeColor
             self.window?.setNeedsLayout()
         default: break

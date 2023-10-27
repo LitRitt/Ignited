@@ -59,7 +59,7 @@ class GameCollectionViewController: UICollectionViewController
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
             
             var minimumSpacing: CGFloat
-            switch GamesCollectionFeatures.shared.artwork.size
+            switch Settings.gamesCollectionFeatures.artwork.size
             {
             case .small:
                 minimumSpacing = 12
@@ -83,7 +83,7 @@ class GameCollectionViewController: UICollectionViewController
             let layout = self.collectionViewLayout as! GridCollectionViewLayout
             
             var itemsPerRow: CGFloat
-            switch GamesCollectionFeatures.shared.artwork.size
+            switch Settings.gamesCollectionFeatures.artwork.size
             {
             case .small:
                 itemsPerRow = 4.0
@@ -388,12 +388,12 @@ private extension GameCollectionViewController
             fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Game.gameCollection), gameCollection)
         }
         var sortDescriptors = [NSSortDescriptor(keyPath: \Game.isFavorite, ascending: false)]
-        if (GamesCollectionFeatures.shared.favorites.isEnabled && !GamesCollectionFeatures.shared.favorites.favoriteSort) || !GamesCollectionFeatures.shared.favorites.isEnabled
+        if (Settings.gamesCollectionFeatures.favorites.isEnabled && !Settings.gamesCollectionFeatures.favorites.favoriteSort) || !Settings.gamesCollectionFeatures.favorites.isEnabled
         {
             sortDescriptors = []
         }
         
-        switch GamesCollectionFeatures.shared.artwork.sortOrder
+        switch Settings.gamesCollectionFeatures.artwork.sortOrder
         {
         case .alphabeticalAZ:
             sortDescriptors.append(NSSortDescriptor(keyPath: \Game.name, ascending: true))
@@ -420,19 +420,19 @@ private extension GameCollectionViewController
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
-        if GamesCollectionFeatures.shared.artwork.isEnabled
+        if Settings.gamesCollectionFeatures.artwork.isEnabled
         {
-            if GamesCollectionFeatures.shared.artwork.bgThemed
+            if Settings.gamesCollectionFeatures.artwork.bgThemed
             {
-                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(GamesCollectionFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
+                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(Settings.gamesCollectionFeatures.artwork.bgOpacity).darker(componentDelta: 0.1)
             }
             else
             {
-                cell.imageView.backgroundColor = UIColor(cgColor: GamesCollectionFeatures.shared.artwork.bgColor.cgColor!).withAlphaComponent(GamesCollectionFeatures.shared.artwork.bgOpacity).darker(componentDelta: 0.1)
+                cell.imageView.backgroundColor = UIColor(cgColor: Settings.gamesCollectionFeatures.artwork.bgColor.cgColor!).withAlphaComponent(Settings.gamesCollectionFeatures.artwork.bgOpacity).darker(componentDelta: 0.1)
             }
-            cell.imageView.layer.cornerRadius = GamesCollectionFeatures.shared.artwork.cornerRadius
-            cell.imageView.layer.borderWidth = GamesCollectionFeatures.shared.artwork.borderWidth
-            cell.layer.shadowOpacity = Float(GamesCollectionFeatures.shared.artwork.shadowOpacity)
+            cell.imageView.layer.cornerRadius = Settings.gamesCollectionFeatures.artwork.cornerRadius
+            cell.imageView.layer.borderWidth = Settings.gamesCollectionFeatures.artwork.borderWidth
+            cell.layer.shadowOpacity = Float(Settings.gamesCollectionFeatures.artwork.shadowOpacity)
         }
         else
         {
@@ -454,15 +454,15 @@ private extension GameCollectionViewController
         }
         else
         {
-            if GamesCollectionFeatures.shared.favorites.isEnabled,
-               GamesCollectionFeatures.shared.favorites.favoriteHighlight,
+            if Settings.gamesCollectionFeatures.favorites.isEnabled,
+               Settings.gamesCollectionFeatures.favorites.favoriteHighlight,
                game.isFavorite
             {
-                cell.layer.shadowColor = GamesCollectionFeatures.shared.favorites.favoriteColor.cgColor
-                cell.layer.shadowOpacity = Float(0.5 + (0.5 * GamesCollectionFeatures.shared.favorites.highlightIntensity))
-                cell.layer.shadowRadius = CGFloat(2.0 + (6.0 * GamesCollectionFeatures.shared.favorites.highlightIntensity))
+                cell.layer.shadowColor = Settings.gamesCollectionFeatures.favorites.favoriteColor.cgColor
+                cell.layer.shadowOpacity = Float(0.5 + (0.5 * Settings.gamesCollectionFeatures.favorites.highlightIntensity))
+                cell.layer.shadowRadius = CGFloat(2.0 + (6.0 * Settings.gamesCollectionFeatures.favorites.highlightIntensity))
                 cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-                cell.imageView.layer.borderColor = UIColor(cgColor: GamesCollectionFeatures.shared.favorites.favoriteColor.cgColor!).lighter(componentDelta: 0.1).cgColor
+                cell.imageView.layer.borderColor = UIColor(cgColor: Settings.gamesCollectionFeatures.favorites.favoriteColor.cgColor!).lighter(componentDelta: 0.1).cgColor
             }
             else
             {
@@ -491,9 +491,9 @@ private extension GameCollectionViewController
         }
         else
         {
-            let fontSize = GamesCollectionFeatures.shared.artwork.titleSize
+            let fontSize = Settings.gamesCollectionFeatures.artwork.titleSize
             
-            switch GamesCollectionFeatures.shared.artwork.size
+            switch Settings.gamesCollectionFeatures.artwork.size
             {
             case .small:
                 cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(10 * fontSize)
@@ -507,9 +507,9 @@ private extension GameCollectionViewController
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
         cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         
-        cell.textLabel.text = (game.isFavorite && GamesCollectionFeatures.shared.favorites.isEnabled) ? "☆ " + game.name : game.name
+        cell.textLabel.text = (game.isFavorite && Settings.gamesCollectionFeatures.favorites.isEnabled) ? "☆ " + game.name : game.name
         cell.textLabel.textColor = UIColor.ignitedLightGray
-        cell.textLabel.numberOfLines = Int(floor(GamesCollectionFeatures.shared.artwork.titleMaxLines))
+        cell.textLabel.numberOfLines = Int(floor(Settings.gamesCollectionFeatures.artwork.titleMaxLines))
     }
     
     func updateCellAspectRatio(_ cell: GridCollectionViewGameCell, with image: UIImage)
@@ -554,7 +554,7 @@ private extension GameCollectionViewController
             var images = [UIImage]()
             
             let imageCount = CGImageSourceGetCount(source)
-            let maxFrames = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationMaxLength : 50
+            let maxFrames = Settings.gamesCollectionFeatures.animation.isEnabled ? Settings.gamesCollectionFeatures.animation.animationMaxLength : 50
             guard let scale = self.view.window?.screen.scale else { return }
             let maxDimension = 100 * scale
             
@@ -572,7 +572,7 @@ private extension GameCollectionViewController
                 {
                     if i == 0
                     {
-                        let pauseFrames = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationPause : 0
+                        let pauseFrames = Settings.gamesCollectionFeatures.animation.isEnabled ? Settings.gamesCollectionFeatures.animation.animationPause : 0
                         
                         // replicate first image to create a delay between animations
                         for _ in 0 ..< Int(floor(pauseFrames))
@@ -587,7 +587,7 @@ private extension GameCollectionViewController
                 }
             }
             
-            let animationSpeed = GamesCollectionFeatures.shared.animation.isEnabled ? GamesCollectionFeatures.shared.animation.animationSpeed : 1.0
+            let animationSpeed = Settings.gamesCollectionFeatures.animation.isEnabled ? Settings.gamesCollectionFeatures.animation.animationSpeed : 1.0
             
             cell.imageView.animationImages = images
             cell.imageView.animationDuration = Double(images.count) * 0.1 / animationSpeed
@@ -619,7 +619,7 @@ private extension GameCollectionViewController
                 
                 let cell = self.collectionView.cellForItem(at: indexPath)
                 
-                if GameplayFeatures.shared.autoLoad.isEnabled && !ignoreAutoLoadStateSetting
+                if Settings.gameplayFeatures.autoLoad.isEnabled && !ignoreAutoLoadStateSetting
                 {
                     let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
                     fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -777,7 +777,7 @@ private extension GameCollectionViewController
     {
         let gameFetchRequest = Game.rst_fetchRequest() as! NSFetchRequest<Game>
         
-        if UserInterfaceFeatures.shared.randomGame.useCollection,
+        if Settings.userInterfaceFeatures.randomGame.useCollection,
            let gameCollection = Settings.previousGameCollection
         {
             gameFetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K != %@ AND %K != %@", #keyPath(Game.gameCollection), gameCollection, #keyPath(Game.identifier), Game.melonDSDSiBIOSIdentifier, #keyPath(Game.identifier), Game.melonDSBIOSIdentifier)
@@ -800,7 +800,7 @@ private extension GameCollectionViewController
         
         guard let randomGame = games.randomElement() else { return }
         
-        if GameplayFeatures.shared.autoLoad.isEnabled
+        if Settings.gameplayFeatures.autoLoad.isEnabled
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
             fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), randomGame, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -876,11 +876,11 @@ private extension GameCollectionViewController
             actions = [cancelAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         }
         
-        if GamesCollectionFeatures.shared.favorites.isEnabled
+        if Settings.gamesCollectionFeatures.favorites.isEnabled
         {
             let favoriteAction: Action
             
-            if GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue]!.contains(game.identifier)
+            if Settings.gamesCollectionFeatures.favorites.favoriteGames[game.type.rawValue]!.contains(game.identifier)
             {
                 favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "star.slash"), action: { [unowned self] action in
                     self.removeFavoriteGame(for: game)
@@ -1241,7 +1241,7 @@ private extension GameCollectionViewController
     
     func addFavoriteGame(for game: Game)
     {
-        guard var favorites = GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue] else { return }
+        guard var favorites = Settings.gamesCollectionFeatures.favorites.favoriteGames[game.type.rawValue] else { return }
         
         favorites.append(game.identifier)
         self.removeShadowForGame(for: game)
@@ -1252,13 +1252,13 @@ private extension GameCollectionViewController
             
             context.saveWithErrorLogging()
             
-            GamesCollectionFeatures.shared.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            Settings.gamesCollectionFeatures.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
     func removeFavoriteGame(for game: Game)
     {
-        guard var favorites = GamesCollectionFeatures.shared.favorites.favoriteGames[game.type.rawValue],
+        guard var favorites = Settings.gamesCollectionFeatures.favorites.favoriteGames[game.type.rawValue],
               let index = favorites.firstIndex(of: game.identifier) else { return }
         
         favorites.remove(at: index)
@@ -1270,7 +1270,7 @@ private extension GameCollectionViewController
             
             context.saveWithErrorLogging()
             
-            GamesCollectionFeatures.shared.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            Settings.gamesCollectionFeatures.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
@@ -1315,10 +1315,10 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case GamesCollectionFeatures.shared.artwork.$size.settingsKey:
+        case Settings.gamesCollectionFeatures.artwork.$size.settingsKey:
             self.update()
             
-        case GamesCollectionFeatures.shared.artwork.$sortOrder.settingsKey, GamesCollectionFeatures.shared.favorites.$favoriteSort.settingsKey:
+        case Settings.gamesCollectionFeatures.artwork.$sortOrder.settingsKey, Settings.gamesCollectionFeatures.favorites.$favoriteSort.settingsKey:
             self.updateDataSource()
             self.update()
             
@@ -1529,7 +1529,7 @@ extension GameCollectionViewController
             }
                         
             let previewViewController = self.makePreviewGameViewController(for: game)
-            previewViewController.isLivePreview = UserInterfaceFeatures.shared.previews.isEnabled
+            previewViewController.isLivePreview = Settings.userInterfaceFeatures.previews.isEnabled
             
             guard previewViewController.isLivePreview || previewViewController.previewSaveState != nil else { return nil }
             self._previewTransitionViewController = previewViewController

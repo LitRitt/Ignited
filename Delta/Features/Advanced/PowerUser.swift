@@ -242,157 +242,157 @@ extension PowerUserOptions
             switch self
             {
             case .gameboyPalettes:
-                GBCFeatures.shared.palettes.multiPalette = false
-                GBCFeatures.shared.palettes.palette = .studio
-                GBCFeatures.shared.palettes.spritePalette1 = .studio
-                GBCFeatures.shared.palettes.spritePalette2 = .studio
-                GBCFeatures.shared.palettes.customPalette1Color1 = Color(fromRGB: GameboyPalette.studio.colors[0])
-                GBCFeatures.shared.palettes.customPalette1Color2 = Color(fromRGB: GameboyPalette.studio.colors[1])
-                GBCFeatures.shared.palettes.customPalette1Color3 = Color(fromRGB: GameboyPalette.studio.colors[2])
-                GBCFeatures.shared.palettes.customPalette1Color4 = Color(fromRGB: GameboyPalette.studio.colors[3])
-                GBCFeatures.shared.palettes.customPalette2Color1 = Color(fromRGB: GameboyPalette.minty.colors[0])
-                GBCFeatures.shared.palettes.customPalette2Color2 = Color(fromRGB: GameboyPalette.minty.colors[1])
-                GBCFeatures.shared.palettes.customPalette2Color3 = Color(fromRGB: GameboyPalette.minty.colors[2])
-                GBCFeatures.shared.palettes.customPalette2Color4 = Color(fromRGB: GameboyPalette.minty.colors[3])
-                GBCFeatures.shared.palettes.customPalette3Color1 = Color(fromRGB: GameboyPalette.spacehaze.colors[0])
-                GBCFeatures.shared.palettes.customPalette3Color2 = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
-                GBCFeatures.shared.palettes.customPalette3Color3 = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
-                GBCFeatures.shared.palettes.customPalette3Color4 = Color(fromRGB: GameboyPalette.spacehaze.colors[3])
+                Settings.gbcFeatures.palettes.multiPalette = false
+                Settings.gbcFeatures.palettes.palette = .studio
+                Settings.gbcFeatures.palettes.spritePalette1 = .studio
+                Settings.gbcFeatures.palettes.spritePalette2 = .studio
+                Settings.gbcFeatures.palettes.customPalette1Color1 = Color(fromRGB: GameboyPalette.studio.colors[0])
+                Settings.gbcFeatures.palettes.customPalette1Color2 = Color(fromRGB: GameboyPalette.studio.colors[1])
+                Settings.gbcFeatures.palettes.customPalette1Color3 = Color(fromRGB: GameboyPalette.studio.colors[2])
+                Settings.gbcFeatures.palettes.customPalette1Color4 = Color(fromRGB: GameboyPalette.studio.colors[3])
+                Settings.gbcFeatures.palettes.customPalette2Color1 = Color(fromRGB: GameboyPalette.minty.colors[0])
+                Settings.gbcFeatures.palettes.customPalette2Color2 = Color(fromRGB: GameboyPalette.minty.colors[1])
+                Settings.gbcFeatures.palettes.customPalette2Color3 = Color(fromRGB: GameboyPalette.minty.colors[2])
+                Settings.gbcFeatures.palettes.customPalette2Color4 = Color(fromRGB: GameboyPalette.minty.colors[3])
+                Settings.gbcFeatures.palettes.customPalette3Color1 = Color(fromRGB: GameboyPalette.spacehaze.colors[0])
+                Settings.gbcFeatures.palettes.customPalette3Color2 = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
+                Settings.gbcFeatures.palettes.customPalette3Color3 = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
+                Settings.gbcFeatures.palettes.customPalette3Color4 = Color(fromRGB: GameboyPalette.spacehaze.colors[3])
                 
             case .n64Graphics:
-                N64Features.shared.n64graphics.graphicsAPI = .openGLES2
+                Settings.n64Features.n64graphics.graphicsAPI = .openGLES2
                 
             case .gameScreenshot:
-                GameplayFeatures.shared.screenshots.saveToFiles = true
-                GameplayFeatures.shared.screenshots.saveToPhotos = false
-                GameplayFeatures.shared.screenshots.playCountdown = false
-                GameplayFeatures.shared.screenshots.size = nil
+                Settings.gameplayFeatures.screenshots.saveToFiles = true
+                Settings.gameplayFeatures.screenshots.saveToPhotos = false
+                Settings.gameplayFeatures.screenshots.playCountdown = false
+                Settings.gameplayFeatures.screenshots.size = nil
                 
             case .gameAudio:
-                GameplayFeatures.shared.gameAudio.volume = 1.0
-                GameplayFeatures.shared.gameAudio.respectSilent = true
-                GameplayFeatures.shared.gameAudio.playOver = true
+                Settings.gameplayFeatures.gameAudio.volume = 1.0
+                Settings.gameplayFeatures.gameAudio.respectSilent = true
+                Settings.gameplayFeatures.gameAudio.playOver = true
                 
             case .saveStateRewind:
-                GameplayFeatures.shared.rewind.interval = 15
-                GameplayFeatures.shared.rewind.maxStates = 30
-                GameplayFeatures.shared.rewind.keepStates = true
+                Settings.gameplayFeatures.rewind.interval = 15
+                Settings.gameplayFeatures.rewind.maxStates = 30
+                Settings.gameplayFeatures.rewind.keepStates = true
                 
             case .fastForward:
-                GameplayFeatures.shared.fastForward.speed = 3.0
-                GameplayFeatures.shared.fastForward.toggle = true
-                GameplayFeatures.shared.fastForward.prompt = false
-                GameplayFeatures.shared.fastForward.slowmo = false
-                GameplayFeatures.shared.fastForward.unsafe = false
+                Settings.gameplayFeatures.fastForward.speed = 3.0
+                Settings.gameplayFeatures.fastForward.toggle = true
+                Settings.gameplayFeatures.fastForward.prompt = false
+                Settings.gameplayFeatures.fastForward.slowmo = false
+                Settings.gameplayFeatures.fastForward.unsafe = false
                 
             case .quickSettings:
-                GameplayFeatures.shared.quickSettings.quickActionsEnabled = true
-                GameplayFeatures.shared.quickSettings.gameAudioEnabled = true
-                GameplayFeatures.shared.quickSettings.expandedGameAudioEnabled = true
-                GameplayFeatures.shared.quickSettings.fastForwardEnabled = true
-                GameplayFeatures.shared.quickSettings.expandedFastForwardEnabled = true
-                GameplayFeatures.shared.quickSettings.controllerSkinEnabled = true
-                GameplayFeatures.shared.quickSettings.expandedControllerSkinEnabled = true
-                GameplayFeatures.shared.quickSettings.backgroundBlurEnabled = true
-                GameplayFeatures.shared.quickSettings.expandedBackgroundBlurEnabled = true
-                GameplayFeatures.shared.quickSettings.colorPalettesEnabled = true
+                Settings.gameplayFeatures.quickSettings.quickActionsEnabled = true
+                Settings.gameplayFeatures.quickSettings.gameAudioEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = true
+                Settings.gameplayFeatures.quickSettings.fastForwardEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled = true
+                Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled = true
+                Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedBackgroundBlurEnabled = true
+                Settings.gameplayFeatures.quickSettings.colorPalettesEnabled = true
                 
             case .skinCustomization:
-                ControllerSkinFeatures.shared.skinCustomization.opacity = 0.7
-                ControllerSkinFeatures.shared.skinCustomization.alwaysShow = false
-                ControllerSkinFeatures.shared.skinCustomization.matchTheme = false
-                ControllerSkinFeatures.shared.skinCustomization.backgroundColor = Color(red: 0/255, green: 0/255, blue: 0/255)
+                Settings.controllerSkinFeatures.skinCustomization.opacity = 0.7
+                Settings.controllerSkinFeatures.skinCustomization.alwaysShow = false
+                Settings.controllerSkinFeatures.skinCustomization.matchTheme = false
+                Settings.controllerSkinFeatures.skinCustomization.backgroundColor = Color(red: 0/255, green: 0/255, blue: 0/255)
                 
             case .backgroundBlur:
-                ControllerSkinFeatures.shared.backgroundBlur.blurBackground = true
-                ControllerSkinFeatures.shared.backgroundBlur.blurAirPlay = true
-                ControllerSkinFeatures.shared.backgroundBlur.blurAspect = true
-                ControllerSkinFeatures.shared.backgroundBlur.blurOverride = false
-                ControllerSkinFeatures.shared.backgroundBlur.blurStrength = 1.0
-                ControllerSkinFeatures.shared.backgroundBlur.blurBrightness = 0.0
+                Settings.controllerSkinFeatures.backgroundBlur.blurBackground = true
+                Settings.controllerSkinFeatures.backgroundBlur.blurAirPlay = true
+                Settings.controllerSkinFeatures.backgroundBlur.blurAspect = true
+                Settings.controllerSkinFeatures.backgroundBlur.blurOverride = false
+                Settings.controllerSkinFeatures.backgroundBlur.blurStrength = 1.0
+                Settings.controllerSkinFeatures.backgroundBlur.blurBrightness = 0.0
                 
             case .controller:
-                ControllerSkinFeatures.shared.controller.triggerDeadzone = 0.15
+                Settings.controllerSkinFeatures.controller.triggerDeadzone = 0.15
                 
             case .artworkCustomization:
-                GamesCollectionFeatures.shared.artwork.sortOrder = .alphabeticalAZ
-                GamesCollectionFeatures.shared.artwork.size = .medium
-                GamesCollectionFeatures.shared.artwork.bgThemed = true
-                GamesCollectionFeatures.shared.artwork.bgColor = Color(red: 253/255, green: 110/255, blue: 0/255)
-                GamesCollectionFeatures.shared.artwork.bgOpacity = 0.7
-                GamesCollectionFeatures.shared.artwork.titleSize = 1.0
-                GamesCollectionFeatures.shared.artwork.titleMaxLines = 3
-                GamesCollectionFeatures.shared.artwork.cornerRadius = 15
-                GamesCollectionFeatures.shared.artwork.borderWidth = 1.2
-                GamesCollectionFeatures.shared.artwork.shadowOpacity = 0.5
+                Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalAZ
+                Settings.gamesCollectionFeatures.artwork.size = .medium
+                Settings.gamesCollectionFeatures.artwork.bgThemed = true
+                Settings.gamesCollectionFeatures.artwork.bgColor = Color(red: 253/255, green: 110/255, blue: 0/255)
+                Settings.gamesCollectionFeatures.artwork.bgOpacity = 0.7
+                Settings.gamesCollectionFeatures.artwork.titleSize = 1.0
+                Settings.gamesCollectionFeatures.artwork.titleMaxLines = 3
+                Settings.gamesCollectionFeatures.artwork.cornerRadius = 15
+                Settings.gamesCollectionFeatures.artwork.borderWidth = 1.2
+                Settings.gamesCollectionFeatures.artwork.shadowOpacity = 0.5
                 
             case .animatedArtwork:
-                GamesCollectionFeatures.shared.animation.animationSpeed = 1.0
-                GamesCollectionFeatures.shared.animation.animationPause = 0
-                GamesCollectionFeatures.shared.animation.animationMaxLength = 30
+                Settings.gamesCollectionFeatures.animation.animationSpeed = 1.0
+                Settings.gamesCollectionFeatures.animation.animationPause = 0
+                Settings.gamesCollectionFeatures.animation.animationMaxLength = 30
                 
             case .favoriteGames:
-                GamesCollectionFeatures.shared.favorites.favoriteSort = true
-                GamesCollectionFeatures.shared.favorites.favoriteHighlight = true
-                GamesCollectionFeatures.shared.favorites.favoriteColor = Color(red: 255/255, green: 234/255, blue: 0/255)
-                GamesCollectionFeatures.shared.favorites.highlightIntensity = 0.7
+                Settings.gamesCollectionFeatures.favorites.favoriteSort = true
+                Settings.gamesCollectionFeatures.favorites.favoriteHighlight = true
+                Settings.gamesCollectionFeatures.favorites.favoriteColor = Color(red: 255/255, green: 234/255, blue: 0/255)
+                Settings.gamesCollectionFeatures.favorites.highlightIntensity = 0.7
                 
             case .toastNotifications:
-                UserInterfaceFeatures.shared.toasts.duration = 1.5
-                UserInterfaceFeatures.shared.toasts.restart = true
-                UserInterfaceFeatures.shared.toasts.gameSave = true
-                UserInterfaceFeatures.shared.toasts.stateSave = true
-                UserInterfaceFeatures.shared.toasts.stateLoad = true
-                UserInterfaceFeatures.shared.toasts.fastForward = true
-                UserInterfaceFeatures.shared.toasts.statusBar = true
-                UserInterfaceFeatures.shared.toasts.screenshot = true
-                UserInterfaceFeatures.shared.toasts.rotationLock = true
-                UserInterfaceFeatures.shared.toasts.backgroundBlur = true
-                UserInterfaceFeatures.shared.toasts.palette = true
-                UserInterfaceFeatures.shared.toasts.altSkin = true
-                UserInterfaceFeatures.shared.toasts.debug = true
+                Settings.userInterfaceFeatures.toasts.duration = 1.5
+                Settings.userInterfaceFeatures.toasts.restart = true
+                Settings.userInterfaceFeatures.toasts.gameSave = true
+                Settings.userInterfaceFeatures.toasts.stateSave = true
+                Settings.userInterfaceFeatures.toasts.stateLoad = true
+                Settings.userInterfaceFeatures.toasts.fastForward = true
+                Settings.userInterfaceFeatures.toasts.statusBar = true
+                Settings.userInterfaceFeatures.toasts.screenshot = true
+                Settings.userInterfaceFeatures.toasts.rotationLock = true
+                Settings.userInterfaceFeatures.toasts.backgroundBlur = true
+                Settings.userInterfaceFeatures.toasts.palette = true
+                Settings.userInterfaceFeatures.toasts.altSkin = true
+                Settings.userInterfaceFeatures.toasts.debug = true
                 
             case .statusBar:
-                UserInterfaceFeatures.shared.statusBar.isOn = false
-                UserInterfaceFeatures.shared.statusBar.useToggle = false
-                UserInterfaceFeatures.shared.statusBar.style = .light
+                Settings.userInterfaceFeatures.statusBar.isOn = false
+                Settings.userInterfaceFeatures.statusBar.useToggle = false
+                Settings.userInterfaceFeatures.statusBar.style = .light
                 
             case .themeColor:
-                UserInterfaceFeatures.shared.theme.accentColor = .orange
-                UserInterfaceFeatures.shared.theme.useCustom = false
-                UserInterfaceFeatures.shared.theme.customColor = Color(red: 253/255, green: 110/255, blue: 0/255)
+                Settings.userInterfaceFeatures.theme.accentColor = .orange
+                Settings.userInterfaceFeatures.theme.useCustom = false
+                Settings.userInterfaceFeatures.theme.customColor = Color(red: 253/255, green: 110/255, blue: 0/255)
                 
             case .appIcon:
-                UserInterfaceFeatures.shared.appIcon.useTheme = true
-                UserInterfaceFeatures.shared.appIcon.alternateIcon = .normal
+                Settings.userInterfaceFeatures.appIcon.useTheme = true
+                Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
                 
             case .randomGame:
-                UserInterfaceFeatures.shared.randomGame.useCollection = false
+                Settings.userInterfaceFeatures.randomGame.useCollection = false
                 
             case .touchVibration:
-                TouchFeedbackFeatures.shared.touchVibration.strength = 1.0
-                TouchFeedbackFeatures.shared.touchVibration.buttonsEnabled = true
-                TouchFeedbackFeatures.shared.touchVibration.sticksEnabled = true
-                TouchFeedbackFeatures.shared.touchVibration.releaseEnabled = true
+                Settings.touchFeedbackFeatures.touchVibration.strength = 1.0
+                Settings.touchFeedbackFeatures.touchVibration.buttonsEnabled = true
+                Settings.touchFeedbackFeatures.touchVibration.sticksEnabled = true
+                Settings.touchFeedbackFeatures.touchVibration.releaseEnabled = true
                 
             case .touchAudio:
-                TouchFeedbackFeatures.shared.touchAudio.sound = .tock
-                TouchFeedbackFeatures.shared.touchAudio.useGameVolume = true
-                TouchFeedbackFeatures.shared.touchAudio.buttonVolume = 1.0
+                Settings.touchFeedbackFeatures.touchAudio.sound = .tock
+                Settings.touchFeedbackFeatures.touchAudio.useGameVolume = true
+                Settings.touchFeedbackFeatures.touchAudio.buttonVolume = 1.0
                 
             case .touchOverlay:
-                TouchFeedbackFeatures.shared.touchOverlay.themed = true
-                TouchFeedbackFeatures.shared.touchOverlay.overlayColor = Color(red: 255/255, green: 255/255, blue: 255/255)
-                TouchFeedbackFeatures.shared.touchOverlay.style = .bubble
-                TouchFeedbackFeatures.shared.touchOverlay.opacity = 1.0
-                TouchFeedbackFeatures.shared.touchOverlay.size = 1.0
+                Settings.touchFeedbackFeatures.touchOverlay.themed = true
+                Settings.touchFeedbackFeatures.touchOverlay.overlayColor = Color(red: 255/255, green: 255/255, blue: 255/255)
+                Settings.touchFeedbackFeatures.touchOverlay.style = .bubble
+                Settings.touchFeedbackFeatures.touchOverlay.opacity = 1.0
+                Settings.touchFeedbackFeatures.touchOverlay.size = 1.0
                 
             case .skinDebug:
-                AdvancedFeatures.shared.skinDebug.isOn = false
-                AdvancedFeatures.shared.skinDebug.skinEnabled = false
-                AdvancedFeatures.shared.skinDebug.device = nil
-                AdvancedFeatures.shared.skinDebug.useAlt = false
-                AdvancedFeatures.shared.skinDebug.hasAlt = false
+                Settings.advancedFeatures.skinDebug.isOn = false
+                Settings.advancedFeatures.skinDebug.skinEnabled = false
+                Settings.advancedFeatures.skinDebug.device = nil
+                Settings.advancedFeatures.skinDebug.useAlt = false
+                Settings.advancedFeatures.skinDebug.hasAlt = false
                 
             case .allFeatures:
                 break

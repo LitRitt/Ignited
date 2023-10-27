@@ -21,7 +21,7 @@ extension GBCFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = GBCFeatures.shared.allFeatures.sorted { (featureA, featureB) in
+            self.sortedFeatures = Settings.gbcFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
         }

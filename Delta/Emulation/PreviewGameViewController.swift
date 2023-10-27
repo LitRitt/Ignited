@@ -221,7 +221,7 @@ private extension PreviewGameViewController
             }
         }
         
-        if GameplayFeatures.shared.cheats.isEnabled {
+        if Settings.gameplayFeatures.cheats.isEnabled {
             self.emulatorCore?.updateCheats()
         }
         
