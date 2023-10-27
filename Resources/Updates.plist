@@ -4,6 +4,41 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.5.5</string>
+		<key>date</key>
+		<string>10/27/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.5.5</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>update</string>
+				<key>description</key>
+				<string>Changes some toast notifications to be disabled by default</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes a bug with AirPlay display losing transparency after rotating the device</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes a bug with AirPlay not showing the correct DS screens on the external display</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>bugfix</string>
+				<key>description</key>
+				<string>Fixes games losing audio after switching systems</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.5.4</string>
 		<key>date</key>
 		<string>10/23/2023</string>
