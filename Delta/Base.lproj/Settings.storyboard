@@ -1116,7 +1116,7 @@
                         <viewControllerLayoutGuide type="bottom" id="XGZ-ro-kQv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="57g-cn-rbZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1837,7 +1837,7 @@ Licensed under Apache 2 license.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DdV-4s-jQT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2513" y="3400"/>
+            <point key="canvasLocation" x="2512" y="3490"/>
         </scene>
         <!--DS Settings-->
         <scene sceneID="rRC-R2-Ico">
@@ -1944,10 +1944,10 @@ Licensed under Apache 2 license.</string>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Performance" footerTitle="When enabled, Ignited will automatically enable JIT when on the same WiFi network as AltServer." id="MyM-jI-qtY" userLabel="AirPlay">
+                            <tableViewSection headerTitle="AirPlay" id="MyM-jI-qtY" userLabel="AirPlay">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SwitchCell" id="uXJ-qB-E2e" customClass="SwitchTableViewCell">
-                                        <rect key="frame" x="20" y="298.66666221618652" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="291.33333015441895" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uXJ-qB-E2e" id="mkz-9w-FlW">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
@@ -1980,7 +1980,7 @@ Licensed under Apache 2 license.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SwitchCell" id="uN0-Je-yuB" customClass="SwitchTableViewCell">
-                                        <rect key="frame" x="20" y="342.66666221618652" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="335.33333015441895" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uN0-Je-yuB" id="fdP-kk-YTo">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
@@ -2017,7 +2017,7 @@ Licensed under Apache 2 license.</string>
                             <tableViewSection headerTitle="Performance" footerTitle="When enabled, Ignited will automatically enable JIT when on the same WiFi network as AltServer." id="MWh-mF-Yfv" userLabel="Performance">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SwitchCell" id="g2g-Z6-cXW" customClass="SwitchTableViewCell">
-                                        <rect key="frame" x="20" y="477.9999942779541" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="442.66666221618652" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g2g-Z6-cXW" id="NfV-e7-rdL">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
@@ -2054,7 +2054,7 @@ Licensed under Apache 2 license.</string>
                             <tableViewSection headerTitle="DS BIOS Files" footerTitle="Ignited requires these BIOS files in order to play Nintendo DS games. Tap one to import it from Files." id="ObZ-cl-5sV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="Bfp-iA-wWE" detailTextLabel="Xpe-sd-GRy" style="IBUITableViewCellStyleValue1" id="ian-1X-SOi">
-                                        <rect key="frame" x="20" y="613.33332633972168" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="577.9999942779541" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ian-1X-SOi" id="nE9-5Y-G2k">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -2077,7 +2077,7 @@ Licensed under Apache 2 license.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="fgD-y0-55T" detailTextLabel="b8s-cx-IgW" style="IBUITableViewCellStyleValue1" id="dwT-0T-gFD">
-                                        <rect key="frame" x="20" y="657.33332633972168" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="621.9999942779541" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dwT-0T-gFD" id="KEg-18-WYZ">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -2100,7 +2100,7 @@ Licensed under Apache 2 license.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="SIu-zD-qfE" detailTextLabel="CW8-h0-YST" style="IBUITableViewCellStyleValue1" id="Tll-tX-97T">
-                                        <rect key="frame" x="20" y="701.33332633972168" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="665.9999942779541" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tll-tX-97T" id="4ca-AM-jBE">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -2124,10 +2124,47 @@ Licensed under Apache 2 license.</string>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="DSi Support (BETA)" footerTitle="Enable to supply DSi BIOS files and enable the DSi Home Screen." id="s5D-ei-m0I" userLabel="DSi Support">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SwitchCell" id="YUi-MQ-egb" customClass="SwitchTableViewCell">
+                                        <rect key="frame" x="20" y="817.33332443237305" width="335" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YUi-MQ-egb" id="TEr-Xn-3cp">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable DSi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6V-K0-Bh2">
+                                                    <rect key="frame" x="20" y="11.666666666666664" width="238" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FZt-lB-NCr">
+                                                    <rect key="frame" x="266" y="6.6666666666666679" width="51" height="31.000000000000004"/>
+                                                    <color key="onTintColor" systemColor="tintColor"/>
+                                                    <connections>
+                                                        <action selector="toggleDSiSupportEnabled:" destination="OwL-4c-EEA" eventType="valueChanged" id="aoY-ZJ-wpL"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="FZt-lB-NCr" firstAttribute="leading" secondItem="S6V-K0-Bh2" secondAttribute="trailing" constant="8" symbolic="YES" id="P3B-yl-jMQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="FZt-lB-NCr" secondAttribute="trailing" id="sn0-Fv-fwj"/>
+                                                <constraint firstItem="S6V-K0-Bh2" firstAttribute="leading" secondItem="TEr-Xn-3cp" secondAttribute="leadingMargin" id="sqT-GX-XUs"/>
+                                                <constraint firstItem="S6V-K0-Bh2" firstAttribute="centerY" secondItem="TEr-Xn-3cp" secondAttribute="centerY" id="ylC-QE-i5S"/>
+                                                <constraint firstItem="FZt-lB-NCr" firstAttribute="centerY" secondItem="TEr-Xn-3cp" secondAttribute="centerY" id="zxR-Lv-l7U"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="switchView" destination="FZt-lB-NCr" id="7jv-uC-LSv"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="DSi BIOS Files" footerTitle="Ignited requires these BIOS files in order to play Nintendo DSi games. Tap one to import it from Files." id="SAz-hG-O4G">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="QKd-rm-101" detailTextLabel="pJb-OR-TGs" style="IBUITableViewCellStyleValue1" id="jwN-8n-xgM">
-                                        <rect key="frame" x="20" y="852.66665649414062" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="952.66665649414062" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jwN-8n-xgM" id="b29-V1-qt3">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -2150,7 +2187,7 @@ Licensed under Apache 2 license.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="6OX-32-izR" detailTextLabel="2bc-8r-epB" style="IBUITableViewCellStyleValue1" id="3ka-mn-QqR">
-                                        <rect key="frame" x="20" y="896.66665649414062" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="996.66665649414062" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3ka-mn-QqR" id="4ya-QS-s5w">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -2173,7 +2210,7 @@ Licensed under Apache 2 license.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="Czu-qN-Luq" detailTextLabel="eVw-7r-BEf" style="IBUITableViewCellStyleValue1" id="4FF-9a-jq2">
-                                        <rect key="frame" x="20" y="940.66665649414062" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="1040.6666564941406" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4FF-9a-jq2" id="emb-d3-TgY">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -2196,7 +2233,7 @@ Licensed under Apache 2 license.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="VWi-nu-uMv" detailTextLabel="8JD-uT-eoA" style="IBUITableViewCellStyleValue1" id="we3-0h-uKq">
-                                        <rect key="frame" x="20" y="984.66665649414062" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="1084.6666564941406" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="we3-0h-uKq" id="cG1-a2-Nez">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -2223,7 +2260,7 @@ Licensed under Apache 2 license.</string>
                             <tableViewSection headerTitle="" footerTitle="Changing cores may improve performance at the cost of additional features." id="hbM-mL-bIr">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="ChangeCell" textLabel="Jmx-Jw-278" style="IBUITableViewCellStyleDefault" id="p1T-4d-fC3">
-                                        <rect key="frame" x="20" y="1120.3333206176758" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="1220.3333206176758" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p1T-4d-fC3" id="3bs-Bp-nd4">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>

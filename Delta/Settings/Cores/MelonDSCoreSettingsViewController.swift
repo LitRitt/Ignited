@@ -26,6 +26,7 @@ private extension MelonDSCoreSettingsViewController
         case airPlay
         case performance
         case dsBIOS
+        case dsiSupport
         case dsiBIOS
         case changeCore
     }
@@ -157,10 +158,17 @@ private extension MelonDSCoreSettingsViewController
         case .dsBIOS where Settings.preferredCore(for: .ds) == DS.core:
             // Using DeSmuME core, which doesn't require BIOS.
             return true
+            
+        case .dsiSupport where Settings.preferredCore(for: .ds) == DS.core:
+            // Using DeSmuME core, which doesn't require BIOS.
+            return true
         
         case .dsiBIOS where Settings.preferredCore(for: .ds) == DS.core:
-            // Using DeSmuME core, which doesn't require BIOS,
-            // or using public Ignited version, which doesn't support DSi (yet).
+            // Using DeSmuME core, which doesn't require BIOS.
+            return true
+            
+        case .dsiBIOS where !Settings.dsFeatures.dsiSupport.isEnabled:
+            // DSi Support is turned off
             return true
             
         default: return false
@@ -256,6 +264,40 @@ private extension MelonDSCoreSettingsViewController
     @IBAction func toggleAltJITEnabled(_ sender: UISwitch)
     {
         Settings.isAltJITEnabled = sender.isOn
+    }
+    
+    @IBAction func toggleDSiSupportEnabled(_ sender: UISwitch)
+    {
+        Settings.dsFeatures.dsiSupport.isEnabled = sender.isOn
+        
+        if !sender.isOn
+        {
+            let gameFetchRequest = Game.rst_fetchRequest() as! NSFetchRequest<Game>
+            gameFetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Game.identifier), Game.melonDSDSiBIOSIdentifier)
+            
+            do
+            {
+                if let game = try DatabaseManager.shared.viewContext.fetch(gameFetchRequest).first
+                {
+                    DatabaseManager.shared.performBackgroundTask { (context) in
+                        let temporaryGame = context.object(with: game.objectID) as! Game
+                        context.delete(temporaryGame)
+                        
+                        context.saveWithErrorLogging()
+                    }
+                }
+                
+                try FileManager.default.removeItem(atPath: MelonDSEmulatorBridge.shared.dsiNANDURL.path)
+            }
+            catch
+            {
+                print(error)
+            }
+            
+            
+        }
+        
+        self.tableView.reloadData()
     }
     
     @IBAction func toggleTopScreenOnly(_ sender: UISwitch)
@@ -362,6 +404,10 @@ extension MelonDSCoreSettingsViewController
             
             cell.selectionStyle = .default
             
+        case .dsiSupport:
+            let cell = cell as! SwitchTableViewCell
+            cell.switchView.isOn = Settings.dsFeatures.dsiSupport.isEnabled
+            
         case .dsiBIOS:
             let bios = DSiBIOS.allCases[indexPath.row]
             
@@ -423,7 +469,7 @@ extension MelonDSCoreSettingsViewController
         case .changeCore:
             self.changeCore()
             
-        case .airPlay, .performance: break
+        case .airPlay, .performance, .dsiSupport: break
         }
     }
     

@@ -90,7 +90,9 @@ struct Settings
             Settings.advancedFeatures.skinDebug.settingsKey.rawValue: false,
             Settings.advancedFeatures.powerUser.settingsKey.rawValue: false,
             Settings.gbcFeatures.palettes.settingsKey.rawValue: true,
-            Settings.n64Features.n64graphics.settingsKey.rawValue: false
+            Settings.n64Features.n64graphics.settingsKey.rawValue: false,
+            Settings.dsFeatures.dsAirPlay.settingsKey.rawValue: true,
+            Settings.dsFeatures.dsiSupport.settingsKey.rawValue: false
         ] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
     }

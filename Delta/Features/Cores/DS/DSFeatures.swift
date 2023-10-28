@@ -16,6 +16,9 @@ extension Settings
 
         @Feature(name: "DS AirPlay", options: DSAirPlayOptions())
         var dsAirPlay
+        
+        @Feature(name: "DSi Support")
+        var dsiSupport
 
         private init()
         {
