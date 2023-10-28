@@ -245,6 +245,12 @@ class GameViewController: DeltaCore.GameViewController
         return UIStatusBarStyle(rawValue: Settings.userInterfaceFeatures.statusBar.style.rawValue) ?? .default
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        self.updateBlurBackground()
+    }
+    
     required init()
     {
         super.init()
@@ -1107,7 +1113,23 @@ private extension GameViewController
         self.blurScreenKeepAspect = Settings.controllerSkinFeatures.backgroundBlur.blurAspect
         self.blurScreenOverride = Settings.controllerSkinFeatures.backgroundBlur.blurOverride
         self.blurScreenStrength = Settings.controllerSkinFeatures.backgroundBlur.blurStrength
-        self.blurScreenBrightness = Settings.controllerSkinFeatures.backgroundBlur.blurBrightness
+        if Settings.controllerSkinFeatures.backgroundBlur.blurTint
+        {
+            switch UITraitCollection.current.userInterfaceStyle
+            {
+            case .light:
+                self.blurScreenBrightness = Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity
+                
+            case .dark, .unspecified:
+                var intensity = Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity
+                intensity.negate()
+                self.blurScreenBrightness = intensity
+            }
+        }
+        else
+        {
+            self.blurScreenBrightness = Settings.controllerSkinFeatures.backgroundBlur.blurBrightness
+        }
         
         // Set enabled last as it's the property that triggers updateGameViews()
         if let game = self.game,

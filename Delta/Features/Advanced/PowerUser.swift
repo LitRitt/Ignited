@@ -310,6 +310,8 @@ extension PowerUserOptions
                 Settings.controllerSkinFeatures.backgroundBlur.blurOverride = false
                 Settings.controllerSkinFeatures.backgroundBlur.blurStrength = 1.0
                 Settings.controllerSkinFeatures.backgroundBlur.blurBrightness = 0.0
+                Settings.controllerSkinFeatures.backgroundBlur.blurTint = true
+                Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity = 0.10
                 
             case .controller:
                 Settings.controllerSkinFeatures.controller.triggerDeadzone = 0.15
