@@ -263,10 +263,10 @@ extension PowerUserOptions
                 Settings.n64Features.n64graphics.graphicsAPI = .openGLES2
                 
             case .gameScreenshot:
-                Settings.gameplayFeatures.screenshots.saveToFiles = true
-                Settings.gameplayFeatures.screenshots.saveToPhotos = false
+                Settings.gameplayFeatures.screenshots.saveToFiles = false
+                Settings.gameplayFeatures.screenshots.saveToPhotos = true
                 Settings.gameplayFeatures.screenshots.playCountdown = false
-                Settings.gameplayFeatures.screenshots.size = nil
+                Settings.gameplayFeatures.screenshots.size = .x5
                 
             case .gameAudio:
                 Settings.gameplayFeatures.gameAudio.volume = 1.0
