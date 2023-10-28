@@ -342,17 +342,17 @@ extension PowerUserOptions
             case .toastNotifications:
                 Settings.userInterfaceFeatures.toasts.duration = 1.5
                 Settings.userInterfaceFeatures.toasts.restart = true
-                Settings.userInterfaceFeatures.toasts.gameSave = true
+                Settings.userInterfaceFeatures.toasts.gameSave = false
                 Settings.userInterfaceFeatures.toasts.stateSave = true
                 Settings.userInterfaceFeatures.toasts.stateLoad = true
-                Settings.userInterfaceFeatures.toasts.fastForward = true
-                Settings.userInterfaceFeatures.toasts.statusBar = true
+                Settings.userInterfaceFeatures.toasts.fastForward = false
+                Settings.userInterfaceFeatures.toasts.statusBar = false
                 Settings.userInterfaceFeatures.toasts.screenshot = true
                 Settings.userInterfaceFeatures.toasts.rotationLock = true
-                Settings.userInterfaceFeatures.toasts.backgroundBlur = true
-                Settings.userInterfaceFeatures.toasts.palette = true
-                Settings.userInterfaceFeatures.toasts.altSkin = true
-                Settings.userInterfaceFeatures.toasts.debug = true
+                Settings.userInterfaceFeatures.toasts.backgroundBlur = false
+                Settings.userInterfaceFeatures.toasts.palette = false
+                Settings.userInterfaceFeatures.toasts.altSkin = false
+                Settings.userInterfaceFeatures.toasts.debug = false
                 
             case .statusBar:
                 Settings.userInterfaceFeatures.statusBar.isOn = false
