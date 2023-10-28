@@ -288,13 +288,13 @@ extension PowerUserOptions
             case .quickSettings:
                 Settings.gameplayFeatures.quickSettings.quickActionsEnabled = true
                 Settings.gameplayFeatures.quickSettings.gameAudioEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = false
                 Settings.gameplayFeatures.quickSettings.fastForwardEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled = false
                 Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled = false
                 Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedBackgroundBlurEnabled = true
+                Settings.gameplayFeatures.quickSettings.expandedBackgroundBlurEnabled = false
                 Settings.gameplayFeatures.quickSettings.colorPalettesEnabled = true
                 
             case .skinCustomization:

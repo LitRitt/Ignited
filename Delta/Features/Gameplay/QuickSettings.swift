@@ -37,7 +37,7 @@ struct QuickSettingsOptions
     
     @Option(name: "Expanded Game Audio",
             description: "Enable to show more game audio options in the quick settings.")
-    var expandedGameAudioEnabled: Bool = true
+    var expandedGameAudioEnabled: Bool = false
     
     @Option(name: "Fast Forward",
             description: "Enable to show fast forward options in the quick settings.")
@@ -45,7 +45,7 @@ struct QuickSettingsOptions
     
     @Option(name: "Expanded Fast Forward",
             description: "Enable to show more fast forward options in the quick settings.")
-    var expandedFastForwardEnabled: Bool = true
+    var expandedFastForwardEnabled: Bool = false
     
     @Option
     var fastForwardSpeed: Double = 1.0
@@ -56,7 +56,7 @@ struct QuickSettingsOptions
     
     @Option(name: "Expanded Controller Skin",
             description: "Enable to show more controller skin options in the quick settings.")
-    var expandedControllerSkinEnabled: Bool = true
+    var expandedControllerSkinEnabled: Bool = false
     
     @Option(name: "Background Blur",
             description: "Enable to show background blur options in the quick settings.")
@@ -64,7 +64,7 @@ struct QuickSettingsOptions
     
     @Option(name: "Expanded Background Blur",
             description: "Enable to show more background blur options in the quick settings.")
-    var expandedBackgroundBlurEnabled: Bool = true
+    var expandedBackgroundBlurEnabled: Bool = false
     
     @Option(name: "Color Palettes",
             description: "Enable to show color palette options in the quick settings.")
