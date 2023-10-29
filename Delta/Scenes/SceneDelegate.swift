@@ -168,10 +168,19 @@ private extension SceneDelegate
     
     func importControllerSkin(at url: URL)
     {
-        DatabaseManager.shared.importControllerSkins(at: [url]) { (games, errors) in
+        DatabaseManager.shared.importControllerSkins(at: [url]) { (controllerSkins, errors) in
             if errors.count > 0
             {
                 let alertController = UIAlertController.alertController(for: .controllerSkins, with: errors)
+                self.present(alertController)
+            }
+            
+            if controllerSkins.count > 0,
+               let window = self.window
+            {
+                let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+                
+                let alertController = UIAlertController.alertController(controllerSkins: controllerSkins, traits: traits)
                 self.present(alertController)
             }
         }

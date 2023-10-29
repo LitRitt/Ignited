@@ -8,6 +8,7 @@
 
 import UIKit
 
+import DeltaCore
 import Roxas
 
 extension UIAlertController
@@ -78,6 +79,65 @@ extension UIAlertController
                 case .controllerSkins: message = NSLocalizedString("Ignited was unable to import controller skins. Please try again later.", comment: "")
                 }
             }
+        }
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: RSTSystemLocalizedString("OK"), style: .cancel, handler: nil))
+        return alertController
+    }
+    
+    class func alertController(controllerSkins: Set<ControllerSkin>, traits: DeltaCore.ControllerSkin.Traits) -> UIAlertController
+    {
+        let title = NSLocalizedString("Import Successful", comment: "")
+        
+        var message = NSLocalizedString("The following controller skins were imported:", comment: "") + "\n"
+        
+        var traits = traits
+        
+        var traitsPortrait = traits
+        traitsPortrait.orientation = .portrait
+        
+        var traitsLandscape = traits
+        traitsLandscape.orientation = .landscape
+        
+        for controllerSkin in controllerSkins
+        {
+            message += "\n" + controllerSkin.name
+            
+            if controllerSkin.supports(traitsPortrait, alt: false)
+            {
+                message += "\n" + "* Your device is supported *"
+            }
+            else if controllerSkin.supports(traitsLandscape, alt: false)
+            {
+                message += "\n" + "* Your device is supported *"
+            }
+            else
+            {
+                message += "\n" + "* Your device is NOT supported *"
+            }
+            
+            message += "\n" + "Supported traits:"
+            
+            for device in DeltaCore.ControllerSkin.Device.allCases
+            {
+                for displayType in DeltaCore.ControllerSkin.DisplayType.allCases
+                {
+                    for orientation in DeltaCore.ControllerSkin.Orientation.allCases
+                    {
+                        traits.device = device
+                        traits.displayType = displayType
+                        traits.orientation = orientation
+                        
+                        if controllerSkin.supports(traits, alt: false)
+                        {
+                            message += "\n" + traits.description
+                        }
+                    }
+                }
+            }
+            
+            message += "\n"
         }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

@@ -242,9 +242,13 @@ extension ControllerSkinsViewController: ImportControllerDelegate
                 self.present(alertController, animated: true, completion: nil)
             }
             
-            if controllerSkins.count > 0
+            if controllerSkins.count > 0,
+               let window = self.view.window
             {
-                print("Imported Controller Skins:", controllerSkins.map { $0.name })
+                let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+                
+                let alertController = UIAlertController.alertController(controllerSkins: controllerSkins, traits: traits)
+                self.present(alertController, animated: true, completion: nil)
             }
         }
     }
