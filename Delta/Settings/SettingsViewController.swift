@@ -170,8 +170,11 @@ class SettingsViewController: UITableViewController
         case Segue.controllerSkins:
             let preferredControllerSkinsViewController = segue.destination as! PreferredControllerSkinsViewController
             
-            let system = System.registeredSystems[indexPath.row]
-            preferredControllerSkinsViewController.system = system
+            if indexPath.row < System.registeredSystems.count
+            {
+                let system = System.registeredSystems[indexPath.row]
+                preferredControllerSkinsViewController.system = system
+            }
             
         case Segue.dsSettings: break
         }
@@ -340,7 +343,7 @@ extension SettingsViewController
         switch section
         {
         case .controllers: return 4 // Temporarily hide other controller indexes until controller logic is finalized
-        case .controllerSkins: return System.registeredSystems.count
+        case .controllerSkins: return System.registeredSystems.count + 1
         case .syncing: return SyncManager.shared.coordinator?.account == nil ? 1 : super.tableView(tableView, numberOfRowsInSection: sectionIndex)
         default:
             if isSectionHidden(section)
@@ -377,7 +380,14 @@ extension SettingsViewController
             }
             
         case .controllerSkins:
-            cell.textLabel?.text = System.registeredSystems[indexPath.row].localizedName
+            if indexPath.row < System.registeredSystems.count
+            {
+                cell.textLabel?.text = System.registeredSystems[indexPath.row].localizedName
+            }
+            else
+            {
+                cell.textLabel?.text = "All Systems"
+            }
                         
         case .syncing:
             switch SyncingRow.allCases[indexPath.row]

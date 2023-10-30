@@ -21,7 +21,7 @@ extension PreferredControllerSkinsViewController
 
 class PreferredControllerSkinsViewController: UITableViewController
 {
-    var system: System!
+    var system: System?
     
     var game: Game? {
         didSet {
@@ -44,7 +44,14 @@ extension PreferredControllerSkinsViewController
     {
         super.viewDidLoad()
         
-        self.title = self.game?.name ?? self.system.localizedShortName
+        if let system = self.system
+        {
+            self.title = self.game?.name ?? system.localizedShortName
+        }
+        else
+        {
+            self.title = "All Systems"
+        }
         
         if self.navigationController?.viewControllers.first != self
         {
@@ -175,12 +182,12 @@ private extension PreferredControllerSkinsViewController
         
         if portraitControllerSkin == nil
         {
-            portraitControllerSkin = Settings.preferredControllerSkin(for: self.system, traits: portraitTraits)
+            portraitControllerSkin = self.system != nil ? Settings.preferredControllerSkin(for: self.system, traits: portraitTraits) : Settings.preferredControllerSkin(for: System.nes, traits: portraitTraits)
         }
         
         if landscapeControllerSkin == nil
         {
-            landscapeControllerSkin = Settings.preferredControllerSkin(for: self.system, traits: landscapeTraits)
+            landscapeControllerSkin = self.system != nil ? Settings.preferredControllerSkin(for: self.system, traits: landscapeTraits) : Settings.preferredControllerSkin(for: System.nes, traits: landscapeTraits)
         }
         
         if portraitControllerSkin != self.portraitControllerSkin

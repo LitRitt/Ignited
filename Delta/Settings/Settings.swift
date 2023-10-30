@@ -221,9 +221,10 @@ extension Settings
         NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: key, NotificationUserInfoKey.core: core])
     }
     
-    static func preferredControllerSkin(for system: System, traits: DeltaCore.ControllerSkin.Traits) -> ControllerSkin?
+    static func preferredControllerSkin(for system: System?, traits: DeltaCore.ControllerSkin.Traits) -> ControllerSkin?
     {
-        guard let userDefaultsKey = self.preferredControllerSkinKey(for: system, traits: traits) else { return nil }
+        guard let system = system,
+              let userDefaultsKey = self.preferredControllerSkinKey(for: system, traits: traits) else { return nil }
         
         let identifier = UserDefaults.standard.string(forKey: userDefaultsKey)
         
@@ -261,9 +262,10 @@ extension Settings
         return nil
     }
     
-    static func setPreferredControllerSkin(_ controllerSkin: ControllerSkin?, for system: System, traits: DeltaCore.ControllerSkin.Traits)
+    static func setPreferredControllerSkin(_ controllerSkin: ControllerSkin?, for system: System?, traits: DeltaCore.ControllerSkin.Traits)
     {
-        guard let userDefaultKey = self.preferredControllerSkinKey(for: system, traits: traits) else { return }
+        guard let system = system,
+              let userDefaultKey = self.preferredControllerSkinKey(for: system, traits: traits) else { return }
         
         guard UserDefaults.standard.string(forKey: userDefaultKey) != controllerSkin?.identifier else { return }
         
