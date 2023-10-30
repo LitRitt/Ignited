@@ -45,6 +45,10 @@ struct SkinDebugOptions
     @Option
     var skinEnabled: Bool = false
     
+    @Option(name: "Show Unsupported Skins",
+            description: "Enable to show all controller skins, not just the ones that support your device.")
+    var unsupportedSkins: Bool = false
+    
     @Option(name: "Device Override",
             description: "Show a different device's controller skin while debugging. Useful for testing skins on devices you don't have access to.",
             values: SkinDebugDevice.allCases)

@@ -112,23 +112,30 @@ private extension ControllerSkinsViewController
         
         let fetchRequest: NSFetchRequest<ControllerSkin> = ControllerSkin.fetchRequest()
         
-        if traits.device == .iphone && traits.displayType == .edgeToEdge
+        if Settings.advancedFeatures.skinDebug.unsupportedSkins
         {
-            let fallbackConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
-            
-            // Allow selecting skins that only support standard display types as well.
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND ((%K & %d) != 0 OR (%K & %d) != 0)",
-                                                 #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
-                                                 #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue,
-                                                 #keyPath(ControllerSkin.supportedConfigurations), fallbackConfiguration.rawValue)
+            fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(ControllerSkin.gameType), system.gameType.rawValue)
         }
         else
         {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND (%K & %d) != 0",
-                                                 #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
-                                                 #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue)
+            if traits.device == .iphone && traits.displayType == .edgeToEdge
+            {
+                let fallbackConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
+                
+                // Allow selecting skins that only support standard display types as well.
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND ((%K & %d) != 0 OR (%K & %d) != 0)",
+                                                     #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), fallbackConfiguration.rawValue)
+            }
+            else
+            {
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND (%K & %d) != 0",
+                                                     #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue)
+            }
         }
-        
+            
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ControllerSkin.isStandard), ascending: false), NSSortDescriptor(key: #keyPath(ControllerSkin.name), ascending: true)]
         
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: #keyPath(ControllerSkin.name), cacheName: nil)
@@ -190,8 +197,21 @@ extension ControllerSkinsViewController
 {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        guard let window = self.view.window else { return }
+        
         let controllerSkin = self.dataSource.item(at: indexPath)
-        self.delegate?.controllerSkinsViewController(self, didChooseControllerSkin: controllerSkin)
+        let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+        
+        if controllerSkin.supports(traits, alt: false)
+        {
+            self.delegate?.controllerSkinsViewController(self, didChooseControllerSkin: controllerSkin)
+        }
+        else
+        {
+            let alertController = UIAlertController(title: NSLocalizedString("Cannot Select Skin", comment: ""), message: NSLocalizedString("This skin does not support this device.", comment: ""), preferredStyle: .alert)
+            alertController.addAction(.ok)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
@@ -199,7 +219,19 @@ extension ControllerSkinsViewController
         let controllerSkin = self.dataSource.item(at: indexPath)
         
         let alt = Settings.advancedFeatures.skinDebug.useAlt
-        guard let traits = controllerSkin.supportedTraits(for: self.traits, alt: alt) else { return 150 }
+        guard let traits = controllerSkin.supportedTraits(for: self.traits, alt: alt) else
+        {
+            guard Settings.advancedFeatures.skinDebug.unsupportedSkins else { return 150 }
+            
+            var height = 200.0
+            let safeHeight = (self.view.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 30)
+            if let size = controllerSkin.anyPreviewSize(for: self.traits, alt: alt)
+            {
+                let scale = (self.view.bounds.width / size.width)
+                height = size.height * scale
+            }
+            return min(height, safeHeight)
+        }
         
         var height = 200.0
         let safeHeight = (self.view.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 30)

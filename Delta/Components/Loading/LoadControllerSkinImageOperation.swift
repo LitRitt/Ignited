@@ -67,21 +67,37 @@ class LoadControllerSkinImageOperation: RSTLoadOperation<UIImage, ControllerSkin
     {
         let alt = Settings.advancedFeatures.skinDebug.useAlt
         
-        guard let traits = self.controllerSkin.supportedTraits(for: self.traits, alt: alt) else {
-            completion(nil, Error.unsupportedTraits)
-            return
-        }
+        let skinImage: UIImage
         
-        guard let image = self.controllerSkin.image(for: traits, preferredSize: self.size, alt: alt) else {
-            completion(nil, Error.doesNotExist)
-            return
+        if Settings.advancedFeatures.skinDebug.unsupportedSkins
+        {
+            guard let image = self.controllerSkin.anyImage(for: self.traits, preferredSize: self.size, alt: alt) else {
+                completion(nil, Error.doesNotExist)
+                return
+            }
+            
+            skinImage = image
+        }
+        else
+        {
+            guard let traits = self.controllerSkin.supportedTraits(for: self.traits, alt: alt) else {
+                completion(nil, Error.unsupportedTraits)
+                return
+            }
+            
+            guard let image = self.controllerSkin.image(for: traits, preferredSize: self.size, alt: alt) else {
+                completion(nil, Error.doesNotExist)
+                return
+            }
+            
+            skinImage = image
         }
         
         // Force decompression of image
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), true, 1.0)
-        image.draw(at: CGPoint.zero)
+        skinImage.draw(at: CGPoint.zero)
         UIGraphicsEndImageContext()
         
-        completion(image, nil)
+        completion(skinImage, nil)
     }
 }

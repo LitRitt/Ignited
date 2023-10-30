@@ -132,8 +132,9 @@ extension PreferredControllerSkinsViewController
         
         switch section
         {
-        case .portrait: aspectRatio = self.portraitControllerSkin?.previewSize(for: self.makeTraits(orientation: .portrait, in: window), alt: alt)
-        case .landscape: aspectRatio = self.landscapeControllerSkin?.previewSize(for: self.makeTraits(orientation: .landscape, in: window), alt: alt)
+        case .portrait: aspectRatio = Settings.advancedFeatures.skinDebug.unsupportedSkins ? self.portraitControllerSkin?.anyPreviewSize(for: self.makeTraits(orientation: .portrait, in: window), alt: alt) : self.portraitControllerSkin?.previewSize(for: self.makeTraits(orientation: .portrait, in: window), alt: alt)
+            
+        case .landscape: aspectRatio = Settings.advancedFeatures.skinDebug.unsupportedSkins ? self.landscapeControllerSkin?.anyPreviewSize(for: self.makeTraits(orientation: .landscape, in: window), alt: alt) : self.landscapeControllerSkin?.previewSize(for: self.makeTraits(orientation: .landscape, in: window), alt: alt)
         }
         
         guard let unwrappedAspectRatio = aspectRatio else { return super.tableView(tableView, heightForRowAt: indexPath) }
@@ -208,7 +209,7 @@ private extension PreferredControllerSkinsViewController
             if let portraitControllerSkin = self.portraitControllerSkin
             {
                 let skin = context.object(with: portraitControllerSkin.objectID) as! ControllerSkin
-                portraitImage = skin.image(for: portraitTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt)
+                portraitImage = Settings.advancedFeatures.skinDebug.unsupportedSkins ? skin.anyImage(for: portraitTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt) : skin.image(for: portraitTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt)
             }
             else
             {
@@ -218,7 +219,7 @@ private extension PreferredControllerSkinsViewController
             if let landscapeControllerSkin = self.landscapeControllerSkin
             {
                 let skin = context.object(with: landscapeControllerSkin.objectID) as! ControllerSkin
-                landscapeImage = skin.image(for: landscapeTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt)
+                landscapeImage = Settings.advancedFeatures.skinDebug.unsupportedSkins ? skin.anyImage(for: landscapeTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt) : skin.image(for: landscapeTraits, preferredSize: UIScreen.main.previewSkinSize, alt: alt)
             }
             else
             {
@@ -247,13 +248,22 @@ extension PreferredControllerSkinsViewController: ControllerSkinsViewControllerD
 {
     func controllerSkinsViewController(_ controllerSkinsViewController: ControllerSkinsViewController, didChooseControllerSkin controllerSkin: ControllerSkin)
     {
-        if let game = self.game
+        if controllerSkin.supports(controllerSkinsViewController.traits, alt: false)
         {
-            Settings.setPreferredControllerSkin(controllerSkin, for: game, traits: controllerSkinsViewController.traits)
+            if let game = self.game
+            {
+                Settings.setPreferredControllerSkin(controllerSkin, for: game, traits: controllerSkinsViewController.traits)
+            }
+            else
+            {
+                Settings.setPreferredControllerSkin(controllerSkin, for: self.system, traits: controllerSkinsViewController.traits)
+            }
         }
         else
         {
-            Settings.setPreferredControllerSkin(controllerSkin, for: self.system, traits: controllerSkinsViewController.traits)
+            let alertController = UIAlertController(title: NSLocalizedString("Cannot Select Skin", comment: ""), message: NSLocalizedString("This skin does not support this device.", comment: ""), preferredStyle: .alert)
+            alertController.addAction(.ok)
+            self.present(alertController, animated: true, completion: nil)
         }
         
         _ = self.navigationController?.popViewController(animated: true)
