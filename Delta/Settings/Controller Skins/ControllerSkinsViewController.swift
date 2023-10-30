@@ -22,7 +22,7 @@ class ControllerSkinsViewController: UITableViewController
 {
     weak var delegate: ControllerSkinsViewControllerDelegate?
     
-    var system: System! {
+    var system: System? {
         didSet {
             self.updateDataSource()
         }
@@ -106,7 +106,7 @@ private extension ControllerSkinsViewController
     
     func updateDataSource()
     {
-        guard let system = self.system, let traits = self.traits else { return }
+        guard let traits = self.traits else { return }
         
         guard let configuration = ControllerSkinConfigurations(traits: traits) else { return }
         
@@ -114,29 +114,80 @@ private extension ControllerSkinsViewController
         
         if Settings.advancedFeatures.skinDebug.unsupportedSkins
         {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(ControllerSkin.gameType), system.gameType.rawValue)
-        }
-        else
-        {
-            if traits.device == .iphone && traits.displayType == .edgeToEdge
+            let iphoneStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
+            let iphoneEdgeToEdgeConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneEdgeToEdgeLandscape : .iphoneEdgeToEdgePortrait
+            let ipadStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .ipadStandardLandscape : .ipadStandardLandscape
+            let ipadSplitViewConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .ipadSplitViewLandscape : .ipadSplitViewPortrait
+            let tvStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .tvStandardLandscape : .tvStandardPortrait
+            
+            if let system = self.system
             {
-                let fallbackConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
-                
-                // Allow selecting skins that only support standard display types as well.
-                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND ((%K & %d) != 0 OR (%K & %d) != 0)",
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND ((%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0)",
                                                      #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
-                                                     #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue,
-                                                     #keyPath(ControllerSkin.supportedConfigurations), fallbackConfiguration.rawValue)
+                                                     #keyPath(ControllerSkin.supportedConfigurations), iphoneStandardConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), iphoneEdgeToEdgeConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), ipadStandardConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), ipadSplitViewConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), tvStandardConfiguration.rawValue)
             }
             else
             {
-                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND (%K & %d) != 0",
-                                                     #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
-                                                     #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue)
+                fetchRequest.predicate = NSPredicate(format: "(%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0",
+                                                     #keyPath(ControllerSkin.supportedConfigurations), iphoneStandardConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), iphoneEdgeToEdgeConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), ipadStandardConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), ipadSplitViewConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), tvStandardConfiguration.rawValue)
             }
         }
-            
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ControllerSkin.isStandard), ascending: false), NSSortDescriptor(key: #keyPath(ControllerSkin.name), ascending: true)]
+        else
+        {
+            if let system = self.system
+            {
+                if traits.device == .iphone && traits.displayType == .edgeToEdge
+                {
+                    let fallbackConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
+                    
+                    // Allow selecting skins that only support standard display types as well.
+                    fetchRequest.predicate = NSPredicate(format: "%K == %@ AND ((%K & %d) != 0 OR (%K & %d) != 0)",
+                                                         #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
+                                                         #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue,
+                                                         #keyPath(ControllerSkin.supportedConfigurations), fallbackConfiguration.rawValue)
+                }
+                else
+                {
+                    fetchRequest.predicate = NSPredicate(format: "%K == %@ AND (%K & %d) != 0",
+                                                         #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
+                                                         #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue)
+                }
+            }
+            else
+            {
+                if traits.device == .iphone && traits.displayType == .edgeToEdge
+                {
+                    let fallbackConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
+                    
+                    // Allow selecting skins that only support standard display types as well.
+                    fetchRequest.predicate = NSPredicate(format: "(%K & %d) != 0 OR (%K & %d) != 0",
+                                                         #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue,
+                                                         #keyPath(ControllerSkin.supportedConfigurations), fallbackConfiguration.rawValue)
+                }
+                else
+                {
+                    fetchRequest.predicate = NSPredicate(format: "(%K & %d) != 0",
+                                                         #keyPath(ControllerSkin.supportedConfigurations), configuration.rawValue)
+                }
+            }
+        }
+        
+        if let _ = self.system
+        {
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ControllerSkin.isStandard), ascending: false), NSSortDescriptor(key: #keyPath(ControllerSkin.name), ascending: true)]
+        }
+        else
+        {
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ControllerSkin.isStandard), ascending: true), NSSortDescriptor(key: #keyPath(ControllerSkin.gameType), ascending: true), NSSortDescriptor(key: #keyPath(ControllerSkin.name), ascending: true)]
+        }
         
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: #keyPath(ControllerSkin.name), cacheName: nil)
     }

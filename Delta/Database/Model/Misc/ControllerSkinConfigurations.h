@@ -34,8 +34,8 @@ typedef NS_OPTIONS(int16_t, ControllerSkinConfigurations)
     ControllerSkinConfigurationiPadEdgeToEdgeLandscape NS_SWIFT_NAME(ipadEdgeToEdgeLandscape)      = 1 << 9,
 
     /* TV */
-    ControllerSkinConfigurationTVStandardPortrait                                                  = 1 << 10,
-    ControllerSkinConfigurationTVStandardLandscape                                                 = 1 << 11,
+    ControllerSkinConfigurationTVStandardPortrait NS_SWIFT_NAME(tvStandardPortrait)                = 1 << 10,
+    ControllerSkinConfigurationTVStandardLandscape NS_SWIFT_NAME(tvStandardLandscape)              = 1 << 11,
 };
 
 #endif /* ControllerSkinConfigurations_h */
