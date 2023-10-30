@@ -93,7 +93,7 @@ extension UIAlertController
         
         if let games = games
         {
-            message += "💿 " + NSLocalizedString("Games", comment: "")
+            message += "🕹️ " + NSLocalizedString("Games", comment: "")
             
             for game in games
             {
