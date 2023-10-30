@@ -4,6 +4,35 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.6</string>
+		<key>date</key>
+		<string>10/30/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.6</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds an informative popup after successfully importing controller skins and games</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds a setting to show unsupported controller skins</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds an All Systems page to settings for controller skin management</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.5.6</string>
 		<key>date</key>
 		<string>10/28/2023</string>
