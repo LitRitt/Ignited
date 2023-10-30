@@ -81,6 +81,11 @@ extension ControllerSkin: ControllerSkinProtocol
         return self.controllerSkin?.image(for: traits, preferredSize: preferredSize, alt: alt)
     }
     
+    public func anyImage(for traits: DeltaCore.ControllerSkin.Traits, preferredSize: DeltaCore.ControllerSkin.Size, alt: Bool) -> UIImage?
+    {
+        return self.controllerSkin?.anyImage(for: traits, preferredSize: preferredSize, alt: alt)
+    }
+    
     public func thumbstick(for item: DeltaCore.ControllerSkin.Item, traits: DeltaCore.ControllerSkin.Traits, preferredSize: DeltaCore.ControllerSkin.Size, alt: Bool) -> (UIImage, CGSize)?
     {
         return self.controllerSkin?.thumbstick(for: item, traits: traits, preferredSize: preferredSize, alt: alt)
@@ -119,6 +124,11 @@ extension ControllerSkin: ControllerSkinProtocol
     public func previewSize(for traits: DeltaCore.ControllerSkin.Traits, alt: Bool) -> CGSize?
     {
         return self.controllerSkin?.previewSize(for: traits, alt: alt)
+    }
+    
+    public func anyPreviewSize(for traits: DeltaCore.ControllerSkin.Traits, alt: Bool) -> CGSize?
+    {
+        return self.controllerSkin?.anyPreviewSize(for: traits, alt: alt)
     }
 }
 
