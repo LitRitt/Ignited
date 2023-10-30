@@ -44,7 +44,7 @@ struct BackgroundBlurOptions
     
     @Option(name: "Light/Dark Mode Tint",
              description: "Tint the background blur brighter or darker depending on whether your device is in light or dark mode. This will overwrite the Blur Brightness setting.")
-     var blurTint: Bool = true
+    var blurTint: Bool = true
     
     @Option(name: "Tint Intensity", description: "Change the intensity of the light/dark mode tint.", detailView: { value in
         VStack {
@@ -63,7 +63,7 @@ struct BackgroundBlurOptions
      
     @Option(name: "Show During AirPlay",
              description: "Display the blurred background during AirPlay.")
-     var blurAirPlay: Bool = true
+    var blurAirPlay: Bool = true
      
     @Option(name: "Maintain Aspect Ratio",
             description: "When scaling the blurred image to fit the background, maintain the aspect ratio instead of stretching the image only to the edges.")
@@ -75,7 +75,7 @@ struct BackgroundBlurOptions
     
     @Option(name: "Blur Enabled",
              description: "Display a blurred version of the game screen as the controller skin background.")
-     var blurBackground: Bool = true
+    var blurBackground: Bool = true
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
