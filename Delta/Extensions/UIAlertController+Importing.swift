@@ -89,11 +89,11 @@ extension UIAlertController
     class func alertController(games: Set<Game>?, controllerSkins: Set<ControllerSkin>?, traits: DeltaCore.ControllerSkin.Traits?) -> UIAlertController
     {
         let title = NSLocalizedString("Import Successful", comment: "")
-        var message: String = ""
+        var message: String = "\n"
         
         if let games = games
         {
-            message += "🕹️ " + NSLocalizedString("The following games were imported:", comment: "")
+            message += "💿 " + NSLocalizedString("Games", comment: "")
             
             for game in games
             {
@@ -108,17 +108,17 @@ extension UIAlertController
                 }
             }
             
-            if let _ = controllerSkins { message += "\n\n" }
+            if let _ = controllerSkins { message += "\n\n\n" }
         }
         
         if let controllerSkins = controllerSkins,
            let traits = traits
         {
             var supportedSkins: Bool = false
-            var supportedMessage = "🎨 " + NSLocalizedString("The following controller skins were imported:", comment: "")
+            var supportedMessage = "🎨 " + NSLocalizedString("Controller Skins", comment: "")
             
             var unsupportedSkins: Bool = false
-            var unsupportedMessage = "⚠️ " + NSLocalizedString("The following controller skins were imported, but do NOT support this device:", comment: "")
+            var unsupportedMessage = "⚠️ " + NSLocalizedString("Unsupported Skins", comment: "")
             
             let deviceTraits = traits
             var traits = traits
@@ -127,6 +127,7 @@ extension UIAlertController
             {
                 var tempMessage: String = ""
                 var supportedTraits: Bool = false
+                var supportedDevices: Set<DeltaCore.ControllerSkin.Device> = []
                 
                 for device in DeltaCore.ControllerSkin.Device.allCases
                 {
@@ -140,8 +141,11 @@ extension UIAlertController
                             
                             if controllerSkin.supports(traits, alt: false)
                             {
-                                if traits.device == .ipad
+                                supportedDevices.insert(traits.device)
+                                
+                                switch traits.device
                                 {
+                                case .ipad:
                                     if deviceTraits.device == .ipad
                                     {
                                         tempMessage += "\n" + "• "
@@ -150,9 +154,8 @@ extension UIAlertController
                                         
                                         supportedTraits = true
                                     }
-                                }
-                                else if traits.device == .iphone
-                                {
+                                    
+                                case .iphone:
                                     if deviceTraits.device == traits.device,
                                        deviceTraits.displayType == traits.displayType
                                     {
@@ -160,12 +163,12 @@ extension UIAlertController
                                         
                                         supportedTraits = true
                                     }
-                                }
-                                else if traits.device == .tv
-                                {
+                                    
+                                case .tv:
                                     tempMessage += "\n" + "• AirPlay TV"
                                     
                                     supportedTraits = true
+                                    
                                 }
                             }
                         }
@@ -181,6 +184,15 @@ extension UIAlertController
                 else
                 {
                     unsupportedMessage += "\n\n" + "✓ " + controllerSkin.name
+                    for supportedDevice in supportedDevices
+                    {
+                        switch supportedDevice
+                        {
+                        case .ipad: unsupportedMessage += "\n" + "• iPad"
+                        case .iphone: unsupportedMessage += "\n" + "• iPhone"
+                        case .tv: unsupportedMessage += "\n" + "• AirPlay TV"
+                        }
+                    }
                     unsupportedSkins = true
                 }
             }
@@ -189,16 +201,10 @@ extension UIAlertController
             {
                 message += supportedMessage
                 
-                if unsupportedSkins
-                {
-                    message += "\n\n"
-                }
+                if unsupportedSkins { message += "\n\n\n" }
             }
             
-            if unsupportedSkins
-            {
-                message += unsupportedMessage
-            }
+            if unsupportedSkins { message += unsupportedMessage }
         }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
