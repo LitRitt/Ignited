@@ -89,35 +89,15 @@ extension UIAlertController
     class func alertController(controllerSkins: Set<ControllerSkin>, traits: DeltaCore.ControllerSkin.Traits) -> UIAlertController
     {
         let title = NSLocalizedString("Import Successful", comment: "")
+        var message = NSLocalizedString("The following controller skins were imported:", comment: "")
         
-        var message = NSLocalizedString("The following controller skins were imported:", comment: "") + "\n"
-        
+        let deviceTraits = traits
         var traits = traits
-        
-        var traitsPortrait = traits
-        traitsPortrait.orientation = .portrait
-        
-        var traitsLandscape = traits
-        traitsLandscape.orientation = .landscape
         
         for controllerSkin in controllerSkins
         {
-            message += "\n" + controllerSkin.name
-            
-            if controllerSkin.supports(traitsPortrait, alt: false)
-            {
-                message += "\n" + "* Your device is supported *"
-            }
-            else if controllerSkin.supports(traitsLandscape, alt: false)
-            {
-                message += "\n" + "* Your device is supported *"
-            }
-            else
-            {
-                message += "\n" + "* Your device is NOT supported *"
-            }
-            
-            message += "\n" + "Supported traits:"
+            var supported: Bool = false
+            var supportedTraits: String = ""
             
             for device in DeltaCore.ControllerSkin.Device.allCases
             {
@@ -131,13 +111,41 @@ extension UIAlertController
                         
                         if controllerSkin.supports(traits, alt: false)
                         {
-                            message += "\n" + traits.description
+                            if traits.device == .ipad
+                            {
+                                if deviceTraits.device == .ipad
+                                {
+                                    supportedTraits += "\n" + "• "
+                                    if traits.displayType == .splitView { supportedTraits += "SplitView " }
+                                    supportedTraits += (traits.orientation == .portrait ? "Portrait" : "Landscape")
+                                    
+                                    supported = true
+                                }
+                            }
+                            else if traits.device == .iphone
+                            {
+                                if deviceTraits.device == traits.device,
+                                   deviceTraits.displayType == traits.displayType
+                                {
+                                    supportedTraits += "\n" + "• " + (traits.orientation == .portrait ? "Portrait" : "Landscape")
+                                    
+                                    supported = true
+                                }
+                            }
+                            else if traits.device == .tv
+                            {
+                                supportedTraits += "\n" + "• AirPlay TV"
+                                
+                                supported = true
+                            }
                         }
                     }
                 }
             }
             
-            message += "\n"
+            message += "\n\n" + (supported ? "✅ " : "⚠️ ") + controllerSkin.name
+            if !supported { message += "\n" + "Device not supported" }
+            message += supportedTraits
         }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
