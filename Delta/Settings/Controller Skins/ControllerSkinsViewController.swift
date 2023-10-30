@@ -247,7 +247,7 @@ extension ControllerSkinsViewController: ImportControllerDelegate
             {
                 let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
                 
-                let alertController = UIAlertController.alertController(controllerSkins: controllerSkins, traits: traits)
+                let alertController = UIAlertController.alertController(games: nil, controllerSkins: controllerSkins, traits: traits)
                 self.present(alertController, animated: true, completion: nil)
             }
         }

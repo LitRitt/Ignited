@@ -492,6 +492,9 @@ extension GamesViewController: ImportControllerDelegate
             print(error)
         }
         
+        var importedGames: Set<Game>? = nil
+        var importedControllerSkins: Set<ControllerSkin>? = nil
+        
         let gameURLs = urls.filter { $0.pathExtension.lowercased() != "ignitedskin" && $0.pathExtension.lowercased() != "deltaskin" }
         DatabaseManager.shared.importGames(at: Set(gameURLs)) { (games, errors) in
             if errors.count > 0
@@ -502,7 +505,7 @@ extension GamesViewController: ImportControllerDelegate
             
             if games.count > 0
             {
-                print("Imported Games:", games.map { $0.name })
+                importedGames = games
             }
         }
         
@@ -514,12 +517,18 @@ extension GamesViewController: ImportControllerDelegate
                 self.present(alertController, animated: true, completion: nil)
             }
             
-            if controllerSkins.count > 0,
-               let window = self.view.window
+            if controllerSkins.count > 0
+            {
+                importedControllerSkins = controllerSkins
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + max(0.1 + (Double(urls.count) * 0.01), 0.5)) {
+            if let window = self.view.window
             {
                 let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
                 
-                let alertController = UIAlertController.alertController(controllerSkins: controllerSkins, traits: traits)
+                let alertController = UIAlertController.alertController(games: importedGames, controllerSkins: importedControllerSkins, traits: traits)
                 self.present(alertController, animated: true, completion: nil)
             }
         }

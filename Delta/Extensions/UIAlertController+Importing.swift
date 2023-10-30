@@ -86,66 +86,119 @@ extension UIAlertController
         return alertController
     }
     
-    class func alertController(controllerSkins: Set<ControllerSkin>, traits: DeltaCore.ControllerSkin.Traits) -> UIAlertController
+    class func alertController(games: Set<Game>?, controllerSkins: Set<ControllerSkin>?, traits: DeltaCore.ControllerSkin.Traits?) -> UIAlertController
     {
         let title = NSLocalizedString("Import Successful", comment: "")
-        var message = NSLocalizedString("The following controller skins were imported:", comment: "")
+        var message: String = ""
         
-        let deviceTraits = traits
-        var traits = traits
-        
-        for controllerSkin in controllerSkins
+        if let games = games
         {
-            var supported: Bool = false
-            var supportedTraits: String = ""
+            message += "🕹️ " + NSLocalizedString("The following games were imported:", comment: "")
             
-            for device in DeltaCore.ControllerSkin.Device.allCases
+            for game in games
             {
-                for displayType in DeltaCore.ControllerSkin.DisplayType.allCases
+                message += "\n\n"
+                if let gameCollection = game.gameCollection
                 {
-                    for orientation in DeltaCore.ControllerSkin.Orientation.allCases
+                    message += "✓ [" + gameCollection.shortName + "] " + game.name
+                }
+                else
+                {
+                    message += "✓ " + game.name
+                }
+            }
+            
+            if let _ = controllerSkins { message += "\n\n" }
+        }
+        
+        if let controllerSkins = controllerSkins,
+           let traits = traits
+        {
+            var supportedSkins: Bool = false
+            var supportedMessage = "🎨 " + NSLocalizedString("The following controller skins were imported:", comment: "")
+            
+            var unsupportedSkins: Bool = false
+            var unsupportedMessage = "⚠️ " + NSLocalizedString("The following controller skins were imported, but do NOT support this device:", comment: "")
+            
+            let deviceTraits = traits
+            var traits = traits
+            
+            for controllerSkin in controllerSkins
+            {
+                var tempMessage: String = ""
+                var supportedTraits: Bool = false
+                
+                for device in DeltaCore.ControllerSkin.Device.allCases
+                {
+                    for displayType in DeltaCore.ControllerSkin.DisplayType.allCases
                     {
-                        traits.device = device
-                        traits.displayType = displayType
-                        traits.orientation = orientation
-                        
-                        if controllerSkin.supports(traits, alt: false)
+                        for orientation in DeltaCore.ControllerSkin.Orientation.allCases
                         {
-                            if traits.device == .ipad
+                            traits.device = device
+                            traits.displayType = displayType
+                            traits.orientation = orientation
+                            
+                            if controllerSkin.supports(traits, alt: false)
                             {
-                                if deviceTraits.device == .ipad
+                                if traits.device == .ipad
                                 {
-                                    supportedTraits += "\n" + "• "
-                                    if traits.displayType == .splitView { supportedTraits += "SplitView " }
-                                    supportedTraits += (traits.orientation == .portrait ? "Portrait" : "Landscape")
-                                    
-                                    supported = true
+                                    if deviceTraits.device == .ipad
+                                    {
+                                        tempMessage += "\n" + "• "
+                                        if traits.displayType == .splitView { tempMessage += "SplitView " }
+                                        tempMessage += (traits.orientation == .portrait ? "Portrait" : "Landscape")
+                                        
+                                        supportedTraits = true
+                                    }
                                 }
-                            }
-                            else if traits.device == .iphone
-                            {
-                                if deviceTraits.device == traits.device,
-                                   deviceTraits.displayType == traits.displayType
+                                else if traits.device == .iphone
                                 {
-                                    supportedTraits += "\n" + "• " + (traits.orientation == .portrait ? "Portrait" : "Landscape")
-                                    
-                                    supported = true
+                                    if deviceTraits.device == traits.device,
+                                       deviceTraits.displayType == traits.displayType
+                                    {
+                                        tempMessage += "\n" + "• " + (traits.orientation == .portrait ? "Portrait" : "Landscape")
+                                        
+                                        supportedTraits = true
+                                    }
                                 }
-                            }
-                            else if traits.device == .tv
-                            {
-                                supportedTraits += "\n" + "• AirPlay TV"
-                                
-                                supported = true
+                                else if traits.device == .tv
+                                {
+                                    tempMessage += "\n" + "• AirPlay TV"
+                                    
+                                    supportedTraits = true
+                                }
                             }
                         }
                     }
                 }
+                
+                if supportedTraits
+                {
+                    supportedMessage += "\n\n" + "✓ " + controllerSkin.name
+                    supportedMessage += tempMessage
+                    supportedSkins = true
+                }
+                else
+                {
+                    unsupportedMessage += "\n\n" + "✓ " + controllerSkin.name
+                    unsupportedSkins = true
+                }
             }
             
-            message += "\n\n" + (supported ? "✅ " : "⚠️ ") + controllerSkin.name
-            if !supported { message += "\n" + "Device not supported" }
-            message += supportedTraits
+            if supportedSkins
+            {
+                message += supportedMessage
+                
+                if unsupportedSkins
+                {
+                    message += "\n\n"
+                }
+            }
+            
+            if unsupportedSkins
+            {
+                message += unsupportedMessage
+            }
         }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
