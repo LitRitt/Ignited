@@ -114,18 +114,24 @@ private extension ControllerSkinsViewController
         
         if Settings.advancedFeatures.skinDebug.unsupportedSkins
         {
+            let iphoneStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
+            let iphoneEdgeToEdgeConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneEdgeToEdgeLandscape : .iphoneEdgeToEdgePortrait
+            let ipadStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .ipadStandardLandscape : .ipadStandardLandscape
+            let ipadSplitViewConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .ipadSplitViewLandscape : .ipadSplitViewPortrait
+            let tvStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .tvStandardLandscape : .tvStandardPortrait
+            
             if let system = self.system
             {
-                fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(ControllerSkin.gameType), system.gameType.rawValue)
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND ((%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0)",
+                                                     #keyPath(ControllerSkin.gameType), system.gameType.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), iphoneStandardConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), iphoneEdgeToEdgeConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), ipadStandardConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), ipadSplitViewConfiguration.rawValue,
+                                                     #keyPath(ControllerSkin.supportedConfigurations), tvStandardConfiguration.rawValue)
             }
             else
             {
-                let iphoneStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneStandardLandscape : .iphoneStandardPortrait
-                let iphoneEdgeToEdgeConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .iphoneEdgeToEdgeLandscape : .iphoneEdgeToEdgePortrait
-                let ipadStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .ipadStandardLandscape : .ipadStandardLandscape
-                let ipadSplitViewConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .ipadSplitViewLandscape : .ipadSplitViewPortrait
-                let tvStandardConfiguration: ControllerSkinConfigurations = (traits.orientation == .landscape) ? .tvStandardLandscape : .tvStandardPortrait
-                
                 fetchRequest.predicate = NSPredicate(format: "(%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0 OR (%K & %d) != 0",
                                                      #keyPath(ControllerSkin.supportedConfigurations), iphoneStandardConfiguration.rawValue,
                                                      #keyPath(ControllerSkin.supportedConfigurations), iphoneEdgeToEdgeConfiguration.rawValue,
@@ -180,7 +186,7 @@ private extension ControllerSkinsViewController
         }
         else
         {
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ControllerSkin.isStandard), ascending: false), NSSortDescriptor(key: #keyPath(ControllerSkin.gameType), ascending: true), NSSortDescriptor(key: #keyPath(ControllerSkin.name), ascending: true)]
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ControllerSkin.isStandard), ascending: true), NSSortDescriptor(key: #keyPath(ControllerSkin.gameType), ascending: true), NSSortDescriptor(key: #keyPath(ControllerSkin.name), ascending: true)]
         }
         
         self.dataSource.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DatabaseManager.shared.viewContext, sectionNameKeyPath: #keyPath(ControllerSkin.name), cacheName: nil)
