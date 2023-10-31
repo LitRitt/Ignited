@@ -595,10 +595,6 @@ extension GameViewController
                 self.performDebugModeAction()
             }
             
-            pauseViewController.debugDeviceItem?.action = { [unowned self] item in
-                self.performDebugDeviceAction()
-            }
-            
             pauseViewController.sustainButtonsItem?.isSelected = gameController.sustainedInputs.count > 0
             pauseViewController.sustainButtonsItem?.action = { [unowned self, unowned pauseViewController] item in
                 

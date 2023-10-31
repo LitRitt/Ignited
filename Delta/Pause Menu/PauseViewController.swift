@@ -19,7 +19,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.rotationLockItem, self.paletteItem, self.quickSettingsItem, self.blurBackgroudItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem, self.debugDeviceItem].compactMap { $0 }
+        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.rotationLockItem, self.paletteItem, self.quickSettingsItem, self.blurBackgroudItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
     }
     
     /// Pause Items
@@ -38,7 +38,6 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var blurBackgroudItem: MenuItem?
     var altSkinItem: MenuItem?
     var debugModeItem: MenuItem?
-    var debugDeviceItem: MenuItem?
     
     /// PauseInfoProviding
     var pauseText: String?
@@ -175,7 +174,6 @@ private extension PauseViewController
         self.sustainButtonsItem = nil
         self.fastForwardItem = nil
         self.debugModeItem = nil
-        self.debugDeviceItem = nil
         
         guard self.emulatorCore != nil else { return }
         
@@ -250,7 +248,6 @@ private extension PauseViewController
         if Settings.advancedFeatures.skinDebug.isEnabled || Settings.advancedFeatures.skinDebug.skinEnabled
         {
             self.debugModeItem = MenuItem(text: NSLocalizedString("Debug Mode", comment: ""), image: #imageLiteral(resourceName: "Debug"), action: { _ in })
-            self.debugDeviceItem = MenuItem(text: NSLocalizedString("Debug Device", comment: ""), image: #imageLiteral(resourceName: "DebugDevice"), action: { _ in })
         }
     }
     func updateSafeAreaInsets()
