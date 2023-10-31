@@ -64,6 +64,8 @@
 		AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */; };
+		AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */; };
+		AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */; };
 		AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
 		AC7D55702A07F7A900B66BF1 /* ImageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */; };
@@ -340,6 +342,8 @@
 		AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
 		AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIconImage.swift"; sourceTree = "<group>"; };
+		AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceShake.swift"; sourceTree = "<group>"; };
+		AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
 		AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
 		AC84B56B29FEF5460090F274 /* GameplayFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayFeatures.swift; sourceTree = "<group>"; };
@@ -906,6 +910,8 @@
 				AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */,
 				AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */,
 				AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */,
+				AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */,
+				AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1740,6 +1746,8 @@
 				AC1EAE6B2A006CC30072C858 /* SkinDebug.swift in Sources */,
 				BF4828841F9027B600028B97 /* Delta.xcdatamodeld in Sources */,
 				BF5942951E09BD1A0051894B /* NSManagedObjectContext+Conveniences.swift in Sources */,
+				AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */,
+				AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */,
 				BFC3628021ADE2BA00EF2BE6 /* UIAlertController+Error.swift in Sources */,
 				BF353FF91C5D870B00C1184C /* MenuItem.swift in Sources */,
 				D5D797E6298D946200738869 /* Contributor.swift in Sources */,
