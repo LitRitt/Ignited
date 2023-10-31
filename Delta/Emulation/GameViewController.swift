@@ -289,6 +289,8 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.sceneDidDisconnect(with:)), name: UIScene.didDisconnectNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.unwindFromQuickSettings), name: .unwindFromSettings, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deviceDidShake(with:)), name: UIDevice.deviceDidShakeNotification, object: nil)
     }
     
     deinit
@@ -992,27 +994,20 @@ private extension GameViewController
         
         var traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
         
-        if (Settings.advancedFeatures.skinDebug.skinEnabled || Settings.advancedFeatures.skinDebug.isEnabled) && Settings.advancedFeatures.skinDebug.device != nil
+        if (Settings.advancedFeatures.skinDebug.skinEnabled || Settings.advancedFeatures.skinDebug.isEnabled) && Settings.advancedFeatures.skinDebug.traitOverride
         {
             switch Settings.advancedFeatures.skinDebug.device
             {
-            case .edgeToEdge:
-                traits.device = .iphone
-                traits.displayType = .edgeToEdge
-                
-            case .standard:
-                traits.device = .iphone
-                traits.displayType = .standard
-                
-            case .ipad:
-                traits.device = .ipad
-                traits.displayType = .standard
-                
-            case .splitView:
-                traits.device = .ipad
-                traits.displayType = .splitView
-                
-            default: break
+            case .iphone: traits.device = .iphone
+            case .ipad: traits.device = .ipad
+            case .tv: traits.device = .tv
+            }
+            
+            switch Settings.advancedFeatures.skinDebug.displayType
+            {
+            case .standard: traits.displayType = .standard
+            case .edgeToEdge: traits.displayType = .edgeToEdge
+            case .splitView: traits.displayType = .splitView
             }
             
             self.controllerView.overrideControllerSkinTraits = traits
@@ -2294,49 +2289,154 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        let alertController = UIAlertController(title: NSLocalizedString("Choose Skin Debug Device", comment: ""), message: NSLocalizedString("This allows you to test your skins on devices that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: NSLocalizedString("Choose Device Override", comment: ""), message: NSLocalizedString("This allows you to test your skins on devices that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
         alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
-        alertController.addAction(UIAlertAction(title: SkinDebugDevice.standard.description, style: .default, handler: { (action) in
-            Settings.advancedFeatures.skinDebug.device = .standard
+        alertController.addAction(UIAlertAction(title: "iPhone", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = .iphone
             self.resumeEmulation()
             if Settings.userInterfaceFeatures.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.standard.description)", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Device Override set to iPhone", comment: ""))
             }
         }))
-        alertController.addAction(UIAlertAction(title: SkinDebugDevice.edgeToEdge.description, style: .default, handler: { (action) in
-            Settings.advancedFeatures.skinDebug.device = .edgeToEdge
-            self.resumeEmulation()
-            if Settings.userInterfaceFeatures.toasts.debug
-            {
-                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.edgeToEdge.description)", comment: ""))
-            }
-        }))
-        alertController.addAction(UIAlertAction(title: SkinDebugDevice.ipad.description, style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: "iPad", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .ipad
             self.resumeEmulation()
             if Settings.userInterfaceFeatures.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.ipad.description)", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Device Override set to iPad", comment: ""))
             }
         }))
-        alertController.addAction(UIAlertAction(title: SkinDebugDevice.splitView.description, style: .default, handler: { (action) in
-            Settings.advancedFeatures.skinDebug.device = .splitView
+        alertController.addAction(UIAlertAction(title: "AirPlay TV", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = .tv
             self.resumeEmulation()
             if Settings.userInterfaceFeatures.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Debugging as \(SkinDebugDevice.splitView.description)", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Device Override set to AirPlay TV", comment: ""))
             }
         }))
-        alertController.addAction(UIAlertAction(title: SkinDebugDevice.nilDescription, style: .default, handler: { (action) in
-            Settings.advancedFeatures.skinDebug.device = nil
+        alertController.addAction(UIAlertAction(title: "Reset Device", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = Settings.advancedFeatures.skinDebug.defaultDevice
             self.resumeEmulation()
             if Settings.userInterfaceFeatures.toasts.debug
             {
-                self.presentToastView(text: NSLocalizedString("Device Override Disabled", comment: ""))
+                self.presentToastView(text: NSLocalizedString("Device Override has been reset", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            self.resumeEmulation()
+        }))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func performDebugDisplayTypeAction()
+    {
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Choose Display Type Override", comment: ""), message: NSLocalizedString("This allows you to test your skins on display types that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "Standard", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.displayType = .standard
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Display Type Override set to Standard", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "EdgeToEdge", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.displayType = .edgeToEdge
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Display Type Override set to EdgeToEdge", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "SplitView", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.displayType = .splitView
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Display Type Override set to SplitView", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Reset Device", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.displayType = Settings.advancedFeatures.skinDebug.defaultDisplayType
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Display Type Override has been reset", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            self.resumeEmulation()
+        }))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func performPresetTraitsAction()
+    {
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Choose Preset Traits", comment: ""), message: NSLocalizedString("Set your override traits based on existing device and display type combinations.", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "Standard iPhone", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = .iphone
+            Settings.advancedFeatures.skinDebug.displayType = .standard
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Override Traits set to Standard iPhone", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "EdgeToEdge iPhone", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = .iphone
+            Settings.advancedFeatures.skinDebug.displayType = .edgeToEdge
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Override Traits set to EdgeToEdge iPhone", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Standard iPad", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = .ipad
+            Settings.advancedFeatures.skinDebug.displayType = .standard
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Override Traits set to Standard iPad", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "SplitView iPad", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = .ipad
+            Settings.advancedFeatures.skinDebug.displayType = .splitView
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Override Traits set to SplitView iPad", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "AirPlay TV", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = .tv
+            Settings.advancedFeatures.skinDebug.displayType = .standard
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Override Traits set to AirPlay TV", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
@@ -2720,7 +2820,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$alwaysShow.settingsKey, Settings.controllerSkinFeatures.airPlayKeepScreen.settingsKey, Settings.controllerSkinFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
+        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$alwaysShow.settingsKey, Settings.controllerSkinFeatures.airPlayKeepScreen.settingsKey, Settings.controllerSkinFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.advancedFeatures.skinDebug.$displayType.settingsKey, Settings.advancedFeatures.skinDebug.$traitOverride.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -3008,6 +3108,45 @@ private extension GameViewController
     {
         guard let scene = notification.object as? ExternalDisplayScene else { return }
         self.disconnectExternalDisplay(for: scene)
+    }
+    
+    @objc func deviceDidShake(with notification: Notification)
+    {
+        guard Settings.advancedFeatures.skinDebug.isEnabled,
+              Settings.advancedFeatures.skinDebug.traitOverride else { return }
+        
+        self.pauseEmulation()
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Override Traits Menu", comment: ""), message: NSLocalizedString("This popup was activated by shaking your device while using the Override Traits feature. You can use it to change or reset your override traits, or to recover from situations where you can't access the main menu.", comment: ""), preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "Choose Preset Traits", style: .default, handler: { (action) in
+            self.performPresetTraitsAction()
+        }))
+        alertController.addAction(UIAlertAction(title: "Change Device", style: .default, handler: { (action) in
+            self.performDebugDeviceAction()
+        }))
+        alertController.addAction(UIAlertAction(title: "Change Display Type", style: .default, handler: { (action) in
+            self.performDebugDisplayTypeAction()
+        }))
+        alertController.addAction(UIAlertAction(title: "Reset Traits", style: .default, handler: { (action) in
+            Settings.advancedFeatures.skinDebug.device = Settings.advancedFeatures.skinDebug.defaultDevice
+            Settings.advancedFeatures.skinDebug.displayType = Settings.advancedFeatures.skinDebug.defaultDisplayType
+            self.resumeEmulation()
+            if Settings.userInterfaceFeatures.toasts.debug
+            {
+                self.presentToastView(text: NSLocalizedString("Trait Overrides have been reset", comment: ""))
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Open Pause Menu", style: .default, handler: { (action) in
+            self.performPauseAction()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            self.resumeEmulation()
+        }))
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

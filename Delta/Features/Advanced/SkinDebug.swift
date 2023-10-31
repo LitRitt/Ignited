@@ -8,32 +8,38 @@
 
 import SwiftUI
 
+import DeltaCore
 import Features
 
-enum SkinDebugDevice: String, CaseIterable, CustomStringConvertible
+extension DeltaCore.ControllerSkin.Device: LocalizedOptionValue
 {
-    case standard = "Standard iPhone"
-    case edgeToEdge = "EdgeToEdge iPhone"
-    case ipad = "Standard iPad"
-    case splitView = "SplitView iPad"
-    
     var description: String {
-        return self.rawValue
+        switch self
+        {
+        case .iphone: return "iPhone"
+        case .ipad: return "iPad"
+        case .tv: return "AirPlay TV"
+        }
+    }
+    
+    public var localizedDescription: Text {
+        Text(self.description)
     }
 }
 
-extension SkinDebugDevice: LocalizedOptionValue
+extension DeltaCore.ControllerSkin.DisplayType: LocalizedOptionValue
 {
-    var localizedDescription: Text {
+    var description: String {
+        switch self
+        {
+        case .standard: return "Standard"
+        case .edgeToEdge: return "EdgeToEdge"
+        case .splitView: return "SplitView"
+        }
+    }
+    
+    public var localizedDescription: Text {
         Text(self.description)
-    }
-    
-    static var nilDescription: String {
-        return "Don't Override"
-    }
-    
-    static var localizedNilDescription: Text {
-        Text(self.nilDescription)
     }
 }
 
@@ -49,16 +55,27 @@ struct SkinDebugOptions
             description: "Enable to show all controller skins, not just the ones that support your device.")
     var unsupportedSkins: Bool = false
     
-    @Option(name: "Device Override",
-            description: "Show a different device's controller skin while debugging. Useful for testing skins on devices you don't have access to.",
-            values: SkinDebugDevice.allCases)
-    var device: SkinDebugDevice? = nil
+    @Option(name: "Override Traits",
+            description: "Enable to use skins designed for other devices and display types. Useful for skin designers who don't have access to devices to test skins on. Shake device in-game to open a menu to pause and change or reset your device and display type. This takes precedence over the Shake to Open Quick Settings feature.")
+    var traitOverride: Bool = false
+    
+    @Option
+    var device: DeltaCore.ControllerSkin.Device = getCurrentDevice()
+    
+    @Option
+    var defaultDevice: DeltaCore.ControllerSkin.Device = getCurrentDevice()
+    
+    @Option
+    var displayType: DeltaCore.ControllerSkin.DisplayType = getCurrentDisplayType()
+    
+    @Option
+    var defaultDisplayType: DeltaCore.ControllerSkin.DisplayType = getCurrentDisplayType()
     
     @Option(name: "AltSkin Toggle",
             description: "AltSkins (alternate skins) allow you to switch between 2 different versions of a skin. The skins can be swapped using a pause menu button, an optional skin button if provided, or this toggle if necessary. Not all skins support this feature. If you come back to this page while playing a game, you can check below if that skin supports AltSkins.")
     var useAlt: Bool = false
     
-    @Option(name: "AltSkin Supported", description: "See if your current skin supports AltSkins", detailView: { value in
+    @Option(name: "AltSkin Supported", description: "See if your current skin supports AltSkins.", detailView: { value in
         HStack {
             Text("Supports AltSkins")
             Spacer()
@@ -86,4 +103,23 @@ struct SkinDebugOptions
         .displayInline()
     })
     var resetSkinDebug: Bool = false
+}
+
+extension SkinDebugOptions
+{
+    static func getCurrentDevice() -> DeltaCore.ControllerSkin.Device
+    {
+        guard let topViewController = UIApplication.shared.topViewController(),
+              let window = topViewController.view.window else { return .iphone }
+        
+        return DeltaCore.ControllerSkin.Traits.defaults(for: window).device
+    }
+    
+    static func getCurrentDisplayType() -> DeltaCore.ControllerSkin.DisplayType
+    {
+        guard let topViewController = UIApplication.shared.topViewController(),
+              let window = topViewController.view.window else { return .edgeToEdge }
+        
+        return DeltaCore.ControllerSkin.Traits.defaults(for: window).displayType
+    }
 }

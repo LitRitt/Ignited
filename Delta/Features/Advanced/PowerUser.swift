@@ -443,7 +443,9 @@ extension PowerUserOptions
             case .skinDebug:
                 Settings.advancedFeatures.skinDebug.isOn = false
                 Settings.advancedFeatures.skinDebug.skinEnabled = false
-                Settings.advancedFeatures.skinDebug.device = nil
+                Settings.advancedFeatures.skinDebug.traitOverride = false
+                Settings.advancedFeatures.skinDebug.device = Settings.advancedFeatures.skinDebug.defaultDevice
+                Settings.advancedFeatures.skinDebug.displayType = Settings.advancedFeatures.skinDebug.defaultDisplayType
                 Settings.advancedFeatures.skinDebug.useAlt = false
                 Settings.advancedFeatures.skinDebug.hasAlt = false
                 
