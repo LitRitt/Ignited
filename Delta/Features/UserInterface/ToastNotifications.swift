@@ -73,7 +73,7 @@ struct ToastNotificationOptions
     
     @Option(name: "Debug Mode",
             description: "Show toasts when performing debug actions.")
-    var debug: Bool = false
+    var debug: Bool = true
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
