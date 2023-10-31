@@ -3113,7 +3113,13 @@ private extension GameViewController
     @objc func deviceDidShake(with notification: Notification)
     {
         guard Settings.advancedFeatures.skinDebug.isEnabled,
-              Settings.advancedFeatures.skinDebug.traitOverride else { return }
+              Settings.advancedFeatures.skinDebug.traitOverride else
+        {
+            guard Settings.gameplayFeatures.quickSettings.shakeToOpen else { return }
+            
+            self.performQuickSettingsAction()
+            return
+        }
         
         self.pauseEmulation()
         

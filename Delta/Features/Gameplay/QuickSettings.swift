@@ -12,6 +12,10 @@ import Features
 
 struct QuickSettingsOptions
 {
+    @Option(name: "Shake to Open",
+            description: "Enable to open the quick settings menu by shaking your device.")
+    var shakeToOpen: Bool = false
+    
     @Option(name: "Quick Actions",
             description: "Enable to show common actions in the quick settings.")
     var quickActionsEnabled: Bool = true
