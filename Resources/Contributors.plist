@@ -8,7 +8,7 @@
 		<key>link</key>
 		<string>https://github.com/rileytestut</string>
 		<key>linkName</key>
-		<string>github.com/rileytestut</string>
+		<string>GitHub</string>
 		<key>contributions</key>
 		<array>
 			<dict>
@@ -21,11 +21,34 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>nythepegasus</string>
+		<key>link</key>
+		<string>https://github.com/nythepegasus</string>
+		<key>linkName</key>
+		<string>GitHub</string>
+		<key>contributions</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Setup xcconfig for building the project</string>
+				<key>link</key>
+				<string>https://github.com/LitRitt/Ignited/pull/30</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Copy Google Drive Refresh Token feature</string>
+				<key>link</key>
+				<string>https://github.com/LitRitt/Ignited/pull/31</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Hayssam Keilany</string>
 		<key>link</key>
 		<string>https://github.com/icelaglace</string>
 		<key>linkName</key>
-		<string>github.com/icelaglace</string>
+		<string>GitHub</string>
 		<key>contributions</key>
 		<array>
 			<dict>
@@ -54,7 +77,7 @@
 		<key>link</key>
 		<string>https://github.com/noah978</string>
 		<key>linkName</key>
-		<string>github.com/noah978</string>
+		<string>GitHub</string>
 		<key>contributions</key>
 		<array>
 			<dict>
@@ -71,7 +94,7 @@
 		<key>link</key>
 		<string>https://github.com/ianclawson</string>
 		<key>linkName</key>
-		<string>github.com/ianclawson</string>
+		<string>GitHub</string>
 		<key>contributions</key>
 		<array>
 			<dict>
