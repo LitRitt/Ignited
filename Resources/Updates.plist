@@ -4,6 +4,41 @@
 <array>
 	<dict>
 		<key>version</key>
+		<string>1.6.1</string>
+		<key>date</key>
+		<string>10/31/2023</string>
+		<key>link</key>
+		<string>https://github.com/LitRitt/Ignited/releases/tag/v1.6.1</string>
+		<key>changes</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds an option to replace the Quick Settings button on skins with another input</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds an option to open Quick Settings by shaking the device</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds a new menu to change or reset Override Traits, and to access the pause menu - Accessible via shaking the device</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>feature</string>
+				<key>description</key>
+				<string>Adds a Power User feature to copy the Google Drive refresh token - Allows other applications and services to access your Google Drive Ignited Sync backup files</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>version</key>
 		<string>1.6</string>
 		<key>date</key>
 		<string>10/30/2023</string>

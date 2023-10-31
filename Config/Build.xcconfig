@@ -4,8 +4,8 @@
 #include "Pods/Target Support Files/Pods-Delta/Pods-Delta.debug.xcconfig"
 #include "CodeSigning.xcconfig"
 
-MARKETING_VERSION = 1.6
-CURRENT_PROJECT_VERSION = 129
+MARKETING_VERSION = 1.6.1
+CURRENT_PROJECT_VERSION = 130
 
 ORG_PREFIX = $(ORG_IDENTIFIER)
 
