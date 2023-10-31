@@ -331,7 +331,36 @@ class GameViewController: DeltaCore.GameViewController
             case .quickLoad: self.performQuickLoadAction()
             case .screenshot: self.performScreenshotAction()
             case .statusBar: self.performStatusBarAction()
-            case .quickSettings: self.performQuickSettingsAction()
+            case .toggleAltRepresentations: self.performAltRepresentationsAction()
+                
+            case .quickSettings:
+                if let action = Settings.gameplayFeatures.quickSettings.buttonReplacement
+                {
+                    switch action
+                    {
+                    case .fastForward:
+                        if Settings.gameplayFeatures.fastForward.toggle
+                        {
+                            let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
+                            self.performFastForwardAction(activate: !isFastForwarding)
+                        }
+                        else
+                        {
+                            self.performFastForwardAction(activate: true)
+                        }
+                        
+                    case .quickSave: self.performQuickSaveAction()
+                    case .quickLoad: self.performQuickLoadAction()
+                    case .screenshot: self.performScreenshotAction()
+                    case .restart: self.performRestartAction()
+                    default: break
+                    }
+                }
+                else
+                {
+                    self.performQuickSettingsAction()
+                }
+                
             case .toggleFastForward, .fastForward:
                 if Settings.gameplayFeatures.fastForward.toggle
                 {
@@ -342,7 +371,6 @@ class GameViewController: DeltaCore.GameViewController
                 {
                     self.performFastForwardAction(activate: true)
                 }
-            case .toggleAltRepresentations: self.performAltRepresentationsAction()
             }
         }
     }

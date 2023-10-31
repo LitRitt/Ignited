@@ -10,11 +10,42 @@ import SwiftUI
 
 import Features
 
+extension ActionInput: CustomStringConvertible
+{
+    var description: String {
+        switch self
+        {
+        case .fastForward: return "Fast Forward"
+        case .quickSave: return "Quick Save"
+        case .quickLoad: return "Quick Load"
+        case .screenshot: return "Screenshot"
+        case .restart: return "Restart"
+        default: return "Unsupported"
+        }
+    }
+}
+
+extension ActionInput: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        Text(self.description)
+    }
+    
+    static var localizedNilDescription: Text {
+        Text("Don't Replace")
+    }
+}
+
 struct QuickSettingsOptions
 {
     @Option(name: "Shake to Open",
             description: "Enable to open the quick settings menu by shaking your device.")
     var shakeToOpen: Bool = false
+    
+    @Option(name: "Replace Button",
+            description: "Choose an input, like fast forward or screenshot, to use with the quick settings button on skins instead of opening the quick settings menu.",
+            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
+    var buttonReplacement: ActionInput? = nil
     
     @Option(name: "Quick Actions",
             description: "Enable to show common actions in the quick settings.")
