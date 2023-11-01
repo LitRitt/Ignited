@@ -38,11 +38,27 @@ extension ContributorsView
             
             do
             {
-                let fileURL = Bundle.main.url(forResource: "Contributors", withExtension: "plist")!
-                let data = try Data(contentsOf: fileURL)
+                guard let url = try URL(string: "https://f005.backblazeb2.com/file/lit-apps/data/ignited/Contributors.plist") else { return }
                 
-                let contributors = try PropertyListDecoder().decode([Contributor].self, from: data)
-                self.contributors = contributors
+                let request = URLRequest(url: url)
+
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    do
+                    {
+                        if let data = data
+                        {
+                            let contributors = try PropertyListDecoder().decode([Contributor].self, from: data)
+                            DispatchQueue.main.async {
+                                self.contributors = contributors
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        self.error = error
+                    }
+                }
+                .resume()
             }
             catch
             {

@@ -38,11 +38,27 @@ extension UpdatesView
             
             do
             {
-                let fileURL = Bundle.main.url(forResource: "Updates", withExtension: "plist")!
-                let data = try Data(contentsOf: fileURL)
+                guard let url = try URL(string: "https://f005.backblazeb2.com/file/lit-apps/data/ignited/Updates.plist") else { return }
                 
-                let updates = try PropertyListDecoder().decode([Update].self, from: data)
-                self.updates = updates
+                let request = URLRequest(url: url)
+
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    do
+                    {
+                        if let data = data
+                        {
+                            let updates = try PropertyListDecoder().decode([Update].self, from: data)
+                            DispatchQueue.main.async {
+                                self.updates = updates
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        self.error = error
+                    }
+                }
+                .resume()
             }
             catch
             {

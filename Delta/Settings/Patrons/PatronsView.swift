@@ -38,11 +38,28 @@ extension PatronsView
             
             do
             {
-                let fileURL = Bundle.main.url(forResource: "Patrons", withExtension: "plist")!
-                let data = try Data(contentsOf: fileURL)
+                // TODO: Make patrons load dynamically from Patreon directly
+                guard let url = try URL(string: "https://f005.backblazeb2.com/file/lit-apps/data/ignited/Patrons.plist") else { return }
                 
-                let patrons = try PropertyListDecoder().decode([Patron].self, from: data)
-                self.patrons = patrons
+                let request = URLRequest(url: url)
+
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    do
+                    {
+                        if let data = data
+                        {
+                            let patrons = try PropertyListDecoder().decode([Patron].self, from: data)
+                            DispatchQueue.main.async {
+                                self.patrons = patrons
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        self.error = error
+                    }
+                }
+                .resume()
             }
             catch
             {
