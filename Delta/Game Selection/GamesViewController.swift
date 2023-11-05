@@ -399,7 +399,7 @@ private extension GamesViewController
             resetPageViewController = true
         }
         
-        self.navigationController?.setToolbarHidden(sections < 2, animated: animated)
+        self.navigationController?.setToolbarHidden(sections < 1, animated: animated)
         
         if sections > 0
         {
