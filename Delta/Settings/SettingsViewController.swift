@@ -17,7 +17,6 @@ private extension SettingsViewController
 {
     enum Section: Int, CaseIterable
     {
-        case patreon
         case syncing
         case features
         case cores
@@ -26,6 +25,8 @@ private extension SettingsViewController
         case shortcuts
         case skinDownloads
         case resourceLinks
+        case officialLinks
+        case patreon
         case credits
     }
     
@@ -72,6 +73,14 @@ private extension SettingsViewController
     {
         case romPatcher
         case saveConverter
+    }
+    
+    enum OfficialLinksRow: Int, CaseIterable
+    {
+        case github
+        case discord
+        case docs
+        case changelog
     }
     
     enum PatreonRow: Int, CaseIterable
