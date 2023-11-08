@@ -28,7 +28,6 @@ private extension SettingsViewController
         case skinDownloads
         case resourceLinks
         case credits
-        case updates
     }
     
     enum Segue: String
@@ -227,12 +226,6 @@ private extension SettingsViewController
         let safariViewController = SFSafariViewController(url: safariURL)
         safariViewController.preferredControlTintColor = UIColor.themeColor
         self.present(safariViewController, animated: true, completion: nil)
-    }
-    
-    func showUpdates()
-    {
-        let hostingController = UpdatesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
     func showContributors()
@@ -486,8 +479,6 @@ extension SettingsViewController
             case .contributors: self.showContributors()
             case .softwareLicenses: break
             }
-            
-        case .updates: self.showUpdates()
             
         default: break
         }

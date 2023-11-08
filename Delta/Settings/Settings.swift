@@ -58,7 +58,6 @@ struct Settings
     static func registerDefaults()
     {
         let defaults = [
-            #keyPath(UserDefaults.lastUpdateShown): 1,
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             #keyPath(UserDefaults.isAltJITEnabled): false,
@@ -100,12 +99,6 @@ struct Settings
 
 extension Settings
 {
-    /// Update
-    static var lastUpdateShown: Int {
-        set { UserDefaults.standard.lastUpdateShown = newValue }
-        get { return UserDefaults.standard.lastUpdateShown }
-    }
-    
     /// Controllers
     static var localControllerPlayerIndex: Int? = 0 {
         didSet {
@@ -385,8 +378,6 @@ private extension Settings
 
 private extension UserDefaults
 {
-    @NSManaged var lastUpdateShown: Int
-    
     @NSManaged var previousGameCollectionIdentifier: String?
     
     @NSManaged var gameShortcutsMode: String

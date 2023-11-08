@@ -536,7 +536,6 @@ extension GameViewController
             
             gamesViewController.theme = .opaque
             gamesViewController.showResumeButton = false
-            gamesViewController.showUpdates = true
             
         case "showGamesViewController":
             let gamesViewController = (segue.destination as! UINavigationController).topViewController as! GamesViewController

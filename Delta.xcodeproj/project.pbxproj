@@ -55,8 +55,6 @@
 		AC432A362A4F6DB1001E1A06 /* AirPlaySkins.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC432A352A4F6DB1001E1A06 /* AirPlaySkins.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */; };
-		AC503F5F29B2BD25005B27DD /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F5E29B2BD25005B27DD /* Update.swift */; };
-		AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC503F6029B2C0F4005B27DD /* UpdatesView.swift */; };
 		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
 		AC56DDED2A35F1EA007C8372 /* N64FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */; };
 		AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEF2A35F38D007C8372 /* N64Features.swift */; };
@@ -333,8 +331,6 @@
 		AC432A352A4F6DB1001E1A06 /* AirPlaySkins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlaySkins.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+BuildNumber.swift"; sourceTree = "<group>"; };
-		AC503F5E29B2BD25005B27DD /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
-		AC503F6029B2C0F4005B27DD /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
 		AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64FeaturesView.swift; sourceTree = "<group>"; };
 		AC56DDEF2A35F38D007C8372 /* N64Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64Features.swift; sourceTree = "<group>"; };
@@ -682,15 +678,6 @@
 				AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		AC503F5D29B2B863005B27DD /* Updates */ = {
-			isa = PBXGroup;
-			children = (
-				AC503F5E29B2BD25005B27DD /* Update.swift */,
-				AC503F6029B2C0F4005B27DD /* UpdatesView.swift */,
-			);
-			path = Updates;
 			sourceTree = "<group>";
 		};
 		AC53406029E32139009EDF08 /* Button Sounds */ = {
@@ -1232,7 +1219,6 @@
 				BF1DAD5B1D9F574900E752A7 /* Controller Skins */,
 				BF48F74C219A16C100BC2FC1 /* Syncing */,
 				D5D797E4298D944C00738869 /* Contributors */,
-				AC503F5D29B2B863005B27DD /* Updates */,
 				ACD727D129EE0B200028B8A8 /* Patrons */,
 			);
 			path = Settings;
@@ -1720,7 +1706,6 @@
 				AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */,
 				ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudio.swift in Sources */,
 				BFC1F2CC22F9515F00606A45 /* CopyDeepLinkActivity.swift in Sources */,
-				AC503F5F29B2BD25005B27DD /* Update.swift in Sources */,
 				BF5942801E09BC830051894B /* SaveState.swift in Sources */,
 				BF59428E1E09BCFB0051894B /* ImportController.swift in Sources */,
 				ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlay.swift in Sources */,
@@ -1735,7 +1720,6 @@
 				BF1020E31F95B05B00313182 /* DeltaToDelta2.xcmappingmodel in Sources */,
 				AC1EAE692A0063190072C858 /* AdvancedFeaturesView.swift in Sources */,
 				BF6BF3131EB7E47F008E83CD /* ImportOption.swift in Sources */,
-				AC503F6129B2C0F4005B27DD /* UpdatesView.swift in Sources */,
 				BFEE943D23F2180200CDA07D /* Delta4ToDelta5.xcmappingmodel in Sources */,
 				AC7D55702A07F7A900B66BF1 /* ImageFormat.swift in Sources */,
 				BF31878B1D489AAA00BD020D /* CheatValidator.swift in Sources */,

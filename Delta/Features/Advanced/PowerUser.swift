@@ -52,18 +52,6 @@ struct PowerUserOptions
     })
     var resetArtwork: String = ""
     
-    @Option(name: "Reset Build Counter",
-            description: "Resets the internal variable that tracks the last update shown. Causes the updates screen to be shown at next launch.",
-            detailView: { _ in
-        Button("Reset Build Counter") {
-            resetBuildCounter()
-        }
-        .font(.system(size: 17, weight: .bold, design: .default))
-        .foregroundColor(.red)
-        .displayInline()
-    })
-    var resetBuildCounter: String = ""
-    
     @Option(name: "Reset All Feature Settings",
             description: "Resets every single feature setting to their default values. This cannot be undone, please only do so if you are absolutely sure your issue cannot be solved by resetting an individual feature, or want to return to a stock Ignited experience.",
             detailView: { _ in
@@ -79,11 +67,6 @@ struct PowerUserOptions
 
 extension PowerUserOptions
 {
-    static func resetBuildCounter()
-    {
-        Settings.lastUpdateShown = 1
-    }
-    
     static func copyGoogleDriveRefreshToken()
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }

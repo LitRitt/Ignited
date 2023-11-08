@@ -41,12 +41,6 @@ class GamesViewController: UIViewController
         return .lightContent
     }
     
-    public var showUpdates: Bool = false {
-        didSet {
-            if self.showUpdates { self.displayUpdates() }
-        }
-    }
-    
     public var showResumeButton: Bool = false {
         didSet {
             self.updateToolbar()
@@ -320,19 +314,6 @@ private extension GamesViewController
             {
                 self.setToolbarItems([], animated: true)
             }
-        }
-    }
-    
-    func displayUpdates()
-    {
-        guard let buildNumber = Bundle.main.buildNumber else { return }
-        
-        if Settings.lastUpdateShown < buildNumber
-        {
-            let hostingController = UpdatesView.makeViewController()
-            self.navigationController?.pushViewController(hostingController, animated: true)
-            
-            Settings.lastUpdateShown = buildNumber
         }
     }
     
