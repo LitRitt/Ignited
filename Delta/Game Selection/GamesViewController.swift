@@ -570,7 +570,14 @@ private extension GamesViewController
         
         let sortMenu = UIMenu(title: NSLocalizedString("Sort Order", comment: ""), image: UIImage(symbolNameIfAvailable: "arrow.up.and.down.text.horizontal"), children: sortOptions)
         
-        return UIMenu(title: NSLocalizedString("Library Options", comment: ""), image: UIImage(symbolNameIfAvailable: "building.columns"), children: [artworkSizeMenu, sortMenu])
+        let randomButtonOption = UIAction(title: NSLocalizedString("Randomizer", comment: ""), image: UIImage(symbolNameIfAvailable: "dice"), state: Settings.userInterfaceFeatures.randomGame.isEnabled ? .on : .off, handler: { _ in
+            Settings.userInterfaceFeatures.randomGame.isEnabled = !Settings.userInterfaceFeatures.randomGame.isEnabled
+            self.customizationButton.menu = self.makeCustomizationMenu()
+        })
+        
+//        UIAction(title: NSLocalizedString("Sort Order", comment: ""), image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), state: true ? .on : .off, handler: {})
+        
+        return UIMenu(title: NSLocalizedString("Library Options", comment: ""), image: UIImage(symbolNameIfAvailable: "building.columns"), children: [artworkSizeMenu, sortMenu, randomButtonOption])
     }
     
     func makeHelpMenu() -> UIMenu
