@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SafariServices
 import SwiftUI
 
 import DeltaCore
@@ -212,22 +211,6 @@ private extension SettingsViewController
 
 private extension SettingsViewController
 {
-    func openWebsite(site: String)
-    {
-        let safariURL = URL(string: site)!
-        let safariViewController = SFSafariViewController(url: safariURL)
-        safariViewController.preferredControlTintColor = UIColor.themeColor
-        self.present(safariViewController, animated: true, completion: nil)
-    }
-    
-    func openHomePage()
-    {
-        let safariURL = URL(string: "https://litritt.com/")!
-        let safariViewController = SFSafariViewController(url: safariURL)
-        safariViewController.preferredControlTintColor = UIColor.themeColor
-        self.present(safariViewController, animated: true, completion: nil)
-    }
-    
     func showContributors()
     {
         let hostingController = ContributorsView.makeViewController()
@@ -415,11 +398,11 @@ extension SettingsViewController
         case .skinDownloads:
             switch SkinDownloadsRow.allCases[indexPath.row]
             {
-            case .classicSkins: self.openWebsite(site: "https://litritt.com/ignited/classic-skins")
-            case .litDesign: self.openWebsite(site: "https://design.litritt.com")
-            case .skinGenerator: self.openWebsite(site: "https://generator.skins4delta.com")
-            case .deltaSkins: self.openWebsite(site: "https://delta-skins.github.io")
-            case .skins4Delta: self.openWebsite(site: "https://skins4delta.com")
+            case .classicSkins: UIApplication.shared.openWebpage(site: "https://litritt.com/ignited/classic-skins")
+            case .litDesign: UIApplication.shared.openWebpage(site: "https://design.litritt.com")
+            case .skinGenerator: UIApplication.shared.openWebpage(site: "https://generator.skins4delta.com")
+            case .deltaSkins: UIApplication.shared.openWebpage(site: "https://delta-skins.github.io")
+            case .skins4Delta: UIApplication.shared.openWebpage(site: "https://skins4delta.com")
             }
             
         case .features:
@@ -436,8 +419,17 @@ extension SettingsViewController
         case .resourceLinks:
             switch ResourceLinksRow.allCases[indexPath.row]
             {
-            case .romPatcher: self.openWebsite(site: "https://www.marcrobledo.com/RomPatcher.js/")
-            case .saveConverter: self.openWebsite(site: "https://www.save-editor.com/tools/wse_ds_save_converter.html")
+            case .romPatcher: UIApplication.shared.openWebpage(site: "https://www.marcrobledo.com/RomPatcher.js/")
+            case .saveConverter: UIApplication.shared.openWebpage(site: "https://www.save-editor.com/tools/wse_ds_save_converter.html")
+            }
+            
+        case .officialLinks:
+            switch OfficialLinksRow.allCases[indexPath.row]
+            {
+            case .github: UIApplication.shared.openAppOrWebpage(site: "https://github.com/LitRitt/Ignited")
+            case .discord: UIApplication.shared.openAppOrWebpage(site: "https://discord.gg/qEtKFJt5dR")
+            case .docs: UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
+            case .changelog: UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
             }
             
         case .cores:
@@ -454,19 +446,7 @@ extension SettingsViewController
         case .patreon:
             switch PatreonRow.allCases[indexPath.row]
             {
-            case .patreonLink:
-                let patreonURL = URL(string: "https://www.patreon.com/litritt")!
-                
-                UIApplication.shared.open(patreonURL, options: [:]) { (success) in
-                    guard !success else { return }
-                    
-                    let patreonURL = URL(string: "https://www.patreon.com/litritt")!
-                    
-                    let safariViewController = SFSafariViewController(url: patreonURL)
-                    safariViewController.preferredControlTintColor = UIColor.themeColor
-                    self.present(safariViewController, animated: true, completion: nil)
-                }
-                
+            case .patreonLink: UIApplication.shared.openAppOrWebpage(site: "https://www.patreon.com/litritt")
             case .patrons: self.showPatrons()
             }
             
@@ -475,7 +455,7 @@ extension SettingsViewController
         case .credits:
             switch CreditsRow.allCases[indexPath.row]
             {
-            case .developer: self.openHomePage()
+            case .developer: UIApplication.shared.openAppOrWebpage(site: "https://github.com/LitRitt")
             case .contributors: self.showContributors()
             case .softwareLicenses: break
             }
