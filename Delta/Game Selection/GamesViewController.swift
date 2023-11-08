@@ -533,7 +533,7 @@ private extension GamesViewController
             }))!
         ]
         
-        let artworkSizeMenu = UIMenu(title: NSLocalizedString("Artwork Size", comment: ""), children: artworkSizeOptions)
+        let artworkSizeMenu = UIMenu(title: NSLocalizedString("Artwork Size", comment: ""), image: UIImage(symbolNameIfAvailable: "aspectratio"), children: artworkSizeOptions)
         
         var sortOptions: [UIAction] = [
             UIAction(Action(title: SortOrder.alphabeticalAZ.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
@@ -568,9 +568,9 @@ private extension GamesViewController
             }
         }
         
-        let sortMenu = UIMenu(title: NSLocalizedString("Sort Order", comment: ""), children: sortOptions)
+        let sortMenu = UIMenu(title: NSLocalizedString("Sort Order", comment: ""), image: UIImage(symbolNameIfAvailable: "arrow.up.and.down.text.horizontal"), children: sortOptions)
         
-        return UIMenu(title: NSLocalizedString("Library Options", comment: ""), children: [artworkSizeMenu, sortMenu])
+        return UIMenu(title: NSLocalizedString("Library Options", comment: ""), image: UIImage(symbolNameIfAvailable: "building.columns"), children: [artworkSizeMenu, sortMenu])
     }
     
     func makeHelpMenu() -> UIMenu
