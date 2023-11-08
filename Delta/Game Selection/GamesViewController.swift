@@ -72,8 +72,8 @@ class GamesViewController: UIViewController
     private var syncingProgressObservation: NSKeyValueObservation?
     
     @IBOutlet private var importButton: UIBarButtonItem!
-    @IBOutlet private var sortButton: UIBarButtonItem!
-    @IBOutlet private var artworkSizeButton: UIBarButtonItem!
+    @IBOutlet private var helpButton: UIBarButtonItem!
+    @IBOutlet private var customizationButton: UIBarButtonItem!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("initWithNibName: not implemented")
@@ -158,13 +158,13 @@ extension GamesViewController
         self.importButton.action = nil
         self.importButton.target = nil
         
-        self.sortButton.menu = self.makeSortMenu()
-        self.sortButton.action = nil
-        self.sortButton.target = nil
+        self.helpButton.menu = self.makeHelpMenu()
+        self.helpButton.action = nil
+        self.helpButton.target = nil
         
-        self.artworkSizeButton.menu = self.makeArtworkSizeMenu()
-        self.artworkSizeButton.action = nil
-        self.artworkSizeButton.target = nil
+        self.customizationButton.menu = self.makeCustomizationMenu()
+        self.customizationButton.action = nil
+        self.customizationButton.target = nil
         
         self.prepareSearchController()
         
@@ -321,7 +321,7 @@ private extension GamesViewController
     {
         NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         
-        self.sortButton.menu = self.makeSortMenu()
+        self.customizationButton.menu = self.makeCustomizationMenu()
         
         self.sync()
     }
@@ -519,9 +519,9 @@ extension GamesViewController: ImportControllerDelegate
 /// Menu Actions
 private extension GamesViewController
 {
-    func makeArtworkSizeMenu() -> UIMenu
+    func makeCustomizationMenu() -> UIMenu
     {
-        let artworkSizeActions: [UIAction] = [
+        let artworkSizeOptions: [UIAction] = [
             UIAction(Action(title: ArtworkSize.small.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"), action: { action in
                 Settings.gamesCollectionFeatures.artwork.size = .small
             }))!,
@@ -533,12 +533,9 @@ private extension GamesViewController
             }))!
         ]
         
-        return UIMenu(title: NSLocalizedString("Change Artwork Size", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: artworkSizeActions)
-    }
-    
-    func makeSortMenu() -> UIMenu
-    {
-        var sortActions: [UIAction] = [
+        let artworkSizeMenu = UIMenu(title: NSLocalizedString("Artwork Size", comment: ""), children: artworkSizeOptions)
+        
+        var sortOptions: [UIAction] = [
             UIAction(Action(title: SortOrder.alphabeticalAZ.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
                 Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalAZ
             }))!,
@@ -557,21 +554,37 @@ private extension GamesViewController
         {
             if Settings.gamesCollectionFeatures.favorites.favoriteSort
             {
-                sortActions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
+                sortOptions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
                     Settings.gamesCollectionFeatures.favorites.favoriteSort = false
-                    self.sortButton.menu = self.makeSortMenu()
+                    self.customizationButton.menu = self.makeCustomizationMenu()
                 }))!, at: 0)
             }
             else
             {
-                sortActions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
+                sortOptions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
                     Settings.gamesCollectionFeatures.favorites.favoriteSort = true
-                    self.sortButton.menu = self.makeSortMenu()
+                    self.customizationButton.menu = self.makeCustomizationMenu()
                 }))!, at: 0)
             }
         }
         
-        return UIMenu(title: NSLocalizedString("Change Sort Order", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: sortActions)
+        let sortMenu = UIMenu(title: NSLocalizedString("Sort Order", comment: ""), children: sortOptions)
+        
+        return UIMenu(title: NSLocalizedString("Library Options", comment: ""), children: [artworkSizeMenu, sortMenu])
+    }
+    
+    func makeHelpMenu() -> UIMenu
+    {
+        let helpOptions: [UIAction] = [
+            UIAction(Action(title: NSLocalizedString("Documentation", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "doc.richtext"), action: { action in
+                UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
+            }))!,
+            UIAction(Action(title: NSLocalizedString("Release Notes", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "doc.badge.clock"), action: { action in
+                UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
+            }))!
+        ]
+        
+        return UIMenu(title: NSLocalizedString("Help", comment: ""), children: helpOptions)
     }
 }
 

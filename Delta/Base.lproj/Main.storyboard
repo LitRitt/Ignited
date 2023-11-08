@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="SPq-Bk-fQl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="SPq-Bk-fQl">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -36,34 +36,34 @@
                     </view>
                     <navigationItem key="navigationItem" title="Games" id="pFk-as-3k4">
                         <leftBarButtonItems>
-                            <barButtonItem image="gear" catalog="system" id="2gg-lC-FhX">
+                            <barButtonItem image="gear" catalog="system" id="2gg-lC-FhX" userLabel="Settings Button">
                                 <connections>
                                     <segue destination="xMK-Cs-fAS" kind="presentation" identifier="showSettings" id="uN5-PN-7FK"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="questionmark.circle" catalog="system" id="cSu-hz-cFh" userLabel="Help Button">
+                                <connections>
+                                    <action selector="changeSortOrder" destination="jeE-WD-wXO" id="UCA-yJ-gUk"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="FeA-O5-xd2">
                                 <connections>
                                     <action selector="importFiles" destination="jeE-WD-wXO" id="A1s-kE-NkM"/>
                                 </connections>
                             </barButtonItem>
-                        </leftBarButtonItems>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Item" image="aspectratio" catalog="system" id="7uc-GQ-gIK" userLabel="Artwork Size Button">
+                            <barButtonItem title="Item" image="ellipsis.circle" catalog="system" id="7uc-GQ-gIK" userLabel="Customization Button">
                                 <connections>
                                     <action selector="changeArtworkSize" destination="jeE-WD-wXO" id="Tqi-kx-5Yg"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="text.line.first.and.arrowtriangle.forward" catalog="system" id="cSu-hz-cFh" userLabel="Sort Order Button">
-                                <connections>
-                                    <action selector="changeSortOrder" destination="jeE-WD-wXO" id="UCA-yJ-gUk"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="artworkSizeButton" destination="7uc-GQ-gIK" id="FAe-6f-UPE"/>
+                        <outlet property="customizationButton" destination="7uc-GQ-gIK" id="FAe-6f-UPE"/>
+                        <outlet property="helpButton" destination="cSu-hz-cFh" id="cA3-oM-vHo"/>
                         <outlet property="importButton" destination="FeA-O5-xd2" id="A44-3S-Okz"/>
-                        <outlet property="sortButton" destination="cSu-hz-cFh" id="cA3-oM-vHo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYx-xE-nis" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -317,8 +317,8 @@
         <segue reference="Tey-6Z-UHp"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="aspectratio" catalog="system" width="128" height="93"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="gear" catalog="system" width="128" height="122"/>
-        <image name="text.line.first.and.arrowtriangle.forward" catalog="system" width="128" height="97"/>
+        <image name="questionmark.circle" catalog="system" width="128" height="123"/>
     </resources>
 </document>
