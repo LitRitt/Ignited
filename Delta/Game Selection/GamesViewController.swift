@@ -71,8 +71,7 @@ class GamesViewController: UIViewController
     private var syncingProgressObservation: NSKeyValueObservation?
     
     @IBOutlet private var importButton: UIBarButtonItem!
-    @IBOutlet private var helpButton: UIBarButtonItem!
-    @IBOutlet private var customizationButton: UIBarButtonItem!
+    @IBOutlet private var optionsButton: UIBarButtonItem!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("initWithNibName: not implemented")
@@ -156,13 +155,7 @@ extension GamesViewController
         self.importButton.action = nil
         self.importButton.target = nil
         
-        self.helpButton.menu = self.makeHelpMenu()
-        self.helpButton.action = nil
-        self.helpButton.target = nil
-        
-        self.customizationButton.menu = self.makeCustomizationMenu()
-        self.customizationButton.action = nil
-        self.customizationButton.target = nil
+        self.updateOptionsMenu()
         
         self.prepareSearchController()
         
@@ -305,7 +298,7 @@ private extension GamesViewController
     {
         NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         
-        self.customizationButton.menu = self.makeCustomizationMenu()
+        self.optionsButton.menu = self.makeOptionsMenu()
         
         self.sync()
     }
@@ -498,79 +491,163 @@ extension GamesViewController: ImportControllerDelegate
 /// Menu Actions
 private extension GamesViewController
 {
-    func makeCustomizationMenu() -> UIMenu
+    func updateOptionsMenu()
     {
-        let artworkSizeOptions: [UIAction] = [
-            UIAction(Action(title: ArtworkSize.small.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"), action: { action in
-                Settings.gamesCollectionFeatures.artwork.size = .small
-            }))!,
-            UIAction(Action(title: ArtworkSize.medium.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape.split.2x2"), action: { action in
-                Settings.gamesCollectionFeatures.artwork.size = .medium
-            }))!,
-            UIAction(Action(title: ArtworkSize.large.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "squareshape"), action: { action in
-                Settings.gamesCollectionFeatures.artwork.size = .large
-            }))!
-        ]
-        
-        let artworkSizeMenu = UIMenu(title: NSLocalizedString("Artwork Size", comment: ""), image: UIImage(symbolNameIfAvailable: "aspectratio"), children: artworkSizeOptions)
-        
-        var sortOptions: [UIAction] = [
-            UIAction(Action(title: SortOrder.alphabeticalAZ.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
-                Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalAZ
-            }))!,
-            UIAction(Action(title: SortOrder.alphabeticalZA.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
-                Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalZA
-            }))!,
-            UIAction(Action(title: SortOrder.mostRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"), action: { action in
-                Settings.gamesCollectionFeatures.artwork.sortOrder = .mostRecent
-            }))!,
-            UIAction(Action(title: SortOrder.leastRecent.rawValue, style: .default, image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), action: { action in
-                Settings.gamesCollectionFeatures.artwork.sortOrder = .leastRecent
-            }))!
-        ]
-        
-        if Settings.gamesCollectionFeatures.favorites.isEnabled
-        {
-            if Settings.gamesCollectionFeatures.favorites.favoriteSort
-            {
-                sortOptions.insert(UIAction(Action(title: "Disable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "x.circle"), action: { action in
-                    Settings.gamesCollectionFeatures.favorites.favoriteSort = false
-                    self.customizationButton.menu = self.makeCustomizationMenu()
-                }))!, at: 0)
-            }
-            else
-            {
-                sortOptions.insert(UIAction(Action(title: "Enable Favorites First", style: .default, image: UIImage(symbolNameIfAvailable: "checkmark.circle"), action: { action in
-                    Settings.gamesCollectionFeatures.favorites.favoriteSort = true
-                    self.customizationButton.menu = self.makeCustomizationMenu()
-                }))!, at: 0)
-            }
-        }
-        
-        let sortMenu = UIMenu(title: NSLocalizedString("Sort Order", comment: ""), image: UIImage(symbolNameIfAvailable: "arrow.up.and.down.text.horizontal"), children: sortOptions)
-        
-        let randomButtonOption = UIAction(title: NSLocalizedString("Randomizer", comment: ""), image: UIImage(symbolNameIfAvailable: "dice"), state: Settings.userInterfaceFeatures.randomGame.isEnabled ? .on : .off, handler: { _ in
-            Settings.userInterfaceFeatures.randomGame.isEnabled = !Settings.userInterfaceFeatures.randomGame.isEnabled
-            self.customizationButton.menu = self.makeCustomizationMenu()
+        self.optionsButton.menu = self.makeOptionsMenu()
+        self.optionsButton.action = nil
+        self.optionsButton.target = nil
+    }
+    
+    func makeOptionsMenu() -> UIMenu
+    {
+        let autoLoadAction = UIAction(title: NSLocalizedString("Auto Load", comment: ""),
+                                      image: UIImage(symbolNameIfAvailable: "tray.and.arrow.up"),
+                                      state: Settings.gameplayFeatures.autoLoad.isEnabled ? .on : .off,
+                                      handler: { action in
+            Settings.gameplayFeatures.autoLoad.isEnabled = !Settings.gameplayFeatures.autoLoad.isEnabled
+            self.updateOptionsMenu()
         })
         
-//        UIAction(title: NSLocalizedString("Sort Order", comment: ""), image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"), state: true ? .on : .off, handler: {})
+        let gamePreviewsAction = UIAction(title: NSLocalizedString("Game Previews", comment: ""),
+                                          image: UIImage(symbolNameIfAvailable: "contextualmenu.and.cursorarrow"),
+                                          state: Settings.userInterfaceFeatures.previews.isEnabled ? .on : .off,
+                                          handler: { action in
+            Settings.userInterfaceFeatures.previews.isEnabled = !Settings.userInterfaceFeatures.previews.isEnabled
+            self.updateOptionsMenu()
+        })
         
-        return UIMenu(title: NSLocalizedString("Library Options", comment: ""), image: UIImage(symbolNameIfAvailable: "building.columns"), children: [artworkSizeMenu, sortMenu, randomButtonOption])
+        return UIMenu(title: "",
+                      children: [autoLoadAction, gamePreviewsAction, self.makeSubMenu(), self.makeHelpMenu()])
+    }
+    
+    func makeSubMenu() -> UIMenu
+    {
+        return UIMenu(title: "",
+                      options: [.displayInline],
+                      children: [self.makeSortingMenu(), self.makeArtworkSizeMenu(), self.makeRandomGameMenu()])
+    }
+    
+    func makeRandomGameMenu() -> UIMenu
+    {
+        let randomGameOptions: [UIAction] = [
+            UIAction(title: NSLocalizedString("All Games", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "play.square.stack"),
+                     handler: { action in
+                         Settings.userInterfaceFeatures.randomGame.useCollection = false
+                         NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
+            }),
+            UIAction(title: NSLocalizedString("Current Library", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "play.square"),
+                     handler: { action in
+                         Settings.userInterfaceFeatures.randomGame.useCollection = true
+                         NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
+            })
+        ]
+        
+        return UIMenu(title: NSLocalizedString("Random Game", comment: ""),
+                      image: UIImage(symbolNameIfAvailable: "dice"),
+                      children: randomGameOptions)
+    }
+    
+    func makeSortingMenu() -> UIMenu
+    {
+        let favoritesAction = UIAction(title: NSLocalizedString("Favorites First", comment: ""),
+                                       image: UIImage(symbolNameIfAvailable: "star"),
+                                       state: Settings.gamesCollectionFeatures.favorites.favoriteSort ? .on : .off,
+                                       handler: { action in
+                                           Settings.gamesCollectionFeatures.favorites.favoriteSort = !Settings.gamesCollectionFeatures.favorites.favoriteSort
+                                           self.updateOptionsMenu()
+        })
+        
+        let sortOptions: [UIAction] = [
+            UIAction(title: SortOrder.alphabeticalAZ.rawValue,
+                     image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"),
+                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .alphabeticalAZ ? .on : .off,
+                     handler: { action in
+                         Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalAZ
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: SortOrder.alphabeticalZA.rawValue,
+                     image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"),
+                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .alphabeticalZA ? .on : .off,
+                     handler: { action in
+                         Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalZA
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: SortOrder.mostRecent.rawValue,
+                     image: UIImage(symbolNameIfAvailable: "arrow.clockwise"),
+                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .mostRecent ? .on : .off,
+                     handler: { action in
+                         Settings.gamesCollectionFeatures.artwork.sortOrder = .mostRecent
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: SortOrder.leastRecent.rawValue,
+                     image: UIImage(symbolNameIfAvailable: "arrow.counterclockwise"),
+                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .leastRecent ? .on : .off,
+                     handler: { action in
+                         Settings.gamesCollectionFeatures.artwork.sortOrder = .leastRecent
+                         self.updateOptionsMenu()
+            })
+        ]
+        
+        let sortMenu = UIMenu(title: NSLocalizedString("", comment: ""),
+                              options: [.displayInline],
+                              children: sortOptions)
+        
+        return UIMenu(title: NSLocalizedString("Sorting Options", comment: ""),
+                              image: UIImage(symbolNameIfAvailable: "arrow.up.and.down.text.horizontal"),
+                              children: [favoritesAction, sortMenu])
+    }
+    
+    func makeArtworkSizeMenu() -> UIMenu
+    {
+        let artworkSizeOptions: [UIAction] = [
+            UIAction(title: ArtworkSize.small.rawValue,
+                     image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"),
+                     state: Settings.gamesCollectionFeatures.artwork.size == .small ? .on : .off,
+                     handler: { action in
+                         Settings.gamesCollectionFeatures.artwork.size = .small
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: ArtworkSize.medium.rawValue,
+                     image: UIImage(symbolNameIfAvailable: "squareshape.split.2x2"),
+                     state: Settings.gamesCollectionFeatures.artwork.size == .medium ? .on : .off,
+                     handler: { action in
+                         Settings.gamesCollectionFeatures.artwork.size = .medium
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: ArtworkSize.large.rawValue,
+                     image: UIImage(symbolNameIfAvailable: "squareshape"),
+                     state: Settings.gamesCollectionFeatures.artwork.size == .large ? .on : .off,
+                     handler: { action in
+                         Settings.gamesCollectionFeatures.artwork.size = .large
+                         self.updateOptionsMenu()
+            })
+        ]
+        
+        return UIMenu(title: NSLocalizedString("Artwork Size", comment: ""),
+                      image: UIImage(symbolNameIfAvailable: "aspectratio"),
+                      children: artworkSizeOptions)
     }
     
     func makeHelpMenu() -> UIMenu
     {
         let helpOptions: [UIAction] = [
-            UIAction(Action(title: NSLocalizedString("Documentation", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "doc.richtext"), action: { action in
-                UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
-            }))!,
-            UIAction(Action(title: NSLocalizedString("Release Notes", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "doc.badge.clock"), action: { action in
-                UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
-            }))!
+            UIAction(title: NSLocalizedString("Documentation", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "doc.richtext"),
+                     handler: { action in
+                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
+            }),
+            UIAction(title: NSLocalizedString("Release Notes", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "doc.badge.clock"),
+                     handler: { action in
+                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
+            })
         ]
         
-        return UIMenu(title: NSLocalizedString("Help", comment: ""), children: helpOptions)
+        return UIMenu(title: NSLocalizedString("Help", comment: ""),
+                      image: UIImage(symbolNameIfAvailable: "exclamationmark.questionmark"),
+                      children: helpOptions)
     }
 }
 

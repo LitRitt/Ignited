@@ -21,9 +21,11 @@ extension UserInterfaceFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = Settings.userInterfaceFeatures.allFeatures.sorted { (featureA, featureB) in
+            let sortedFeatures = Settings.userInterfaceFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
+            
+            self.sortedFeatures = sortedFeatures.filter { !["Random Game Button", "Game Previews"].contains($0.name) }
         }
     }
 }

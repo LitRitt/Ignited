@@ -21,9 +21,11 @@ extension GameplayFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = Settings.gameplayFeatures.allFeatures.sorted { (featureA, featureB) in
+            let sortedFeatures = Settings.gameplayFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
+            
+            self.sortedFeatures = sortedFeatures.filter { !["Auto-Load Save States"].contains($0.name) }
         }
     }
 }
