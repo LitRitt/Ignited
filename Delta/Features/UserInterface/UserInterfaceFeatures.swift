@@ -32,14 +32,12 @@ struct UserInterfaceFeatures: FeatureContainer
              options: AppIconOptions())
     var appIcon
     
-    @Feature(name: "Random Game Button",
-             description: "Show a button on the toolbar to play a random game",
+    @Feature(name: "Random Game",
              options: RandomGameOptions(),
              hidden: true)
     var randomGame
     
     @Feature(name: "Game Previews",
-             description: "Preview games and save states when accessing the tap & hold menu on a game.",
              hidden: true)
     var previews
     
