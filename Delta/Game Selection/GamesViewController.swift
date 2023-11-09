@@ -523,10 +523,32 @@ private extension GamesViewController
         })
         
         return UIMenu(title: "",
-                      children: [autoLoadAction, gamePreviewsAction, self.makeRandomGameMenu(), self.makeSubMenu(), self.makeHelpMenu()])
+                      children: [autoLoadAction, gamePreviewsAction, self.makeSyncMenu(), self.makeRandomGameMenu(), self.makeLibraryMenu(), self.makeHelpMenu()])
     }
     
-    func makeSubMenu() -> UIMenu
+    func makeSyncMenu() -> UIMenu
+    {
+        let syncOptions: [UIAction] = [
+            UIAction(title: NSLocalizedString("Auto Sync", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "arrow.triangle.2.circlepath"),
+                     state: Settings.gameplayFeatures.autoSync.isEnabled ? .on : .off,
+                     handler: { action in
+                         Settings.gameplayFeatures.autoSync.isEnabled = !Settings.gameplayFeatures.autoSync.isEnabled
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: NSLocalizedString("Sync Now", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "icloud.and.arrow.up"),
+                     handler: { action in
+                         self.sync()
+            })
+        ]
+        
+        return UIMenu(title: NSLocalizedString("Ignited Sync", comment: ""),
+                      image: UIImage(symbolNameIfAvailable: "arrow.triangle.2.circlepath.icloud"),
+                      children: syncOptions)
+    }
+    
+    func makeLibraryMenu() -> UIMenu
     {
         return UIMenu(title: "",
                       options: [.displayInline],
