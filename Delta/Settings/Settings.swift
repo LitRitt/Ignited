@@ -83,6 +83,7 @@ struct Settings
             Settings.userInterfaceFeatures.statusBar.settingsKey.rawValue: false,
             Settings.userInterfaceFeatures.previews.settingsKey.rawValue: false,
             Settings.userInterfaceFeatures.toasts.settingsKey.rawValue: true,
+            Settings.userInterfaceFeatures.randomGame.settingsKey.rawValue: true,
             Settings.touchFeedbackFeatures.touchAudio.settingsKey.rawValue: false,
             Settings.touchFeedbackFeatures.touchOverlay.settingsKey.rawValue: true,
             Settings.touchFeedbackFeatures.touchVibration.settingsKey.rawValue: true,

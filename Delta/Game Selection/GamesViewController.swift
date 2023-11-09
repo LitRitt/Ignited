@@ -51,7 +51,6 @@ class GamesViewController: UIViewController
     private var placeholderView: RSTPlaceholderView!
     private var pageControl: UIPageControl!
     private var resumeButton: UIBarButtonItem!
-    private var randomGameButton: UIBarButtonItem!
     
     private var toolbarFlexibleSpacer : UIBarButtonItem!
     private var toolbarFixedSpacer: UIBarButtonItem!
@@ -125,7 +124,6 @@ extension GamesViewController
         self.pageControl.centerYAnchor.constraint(equalTo: (self.navigationController?.toolbar.centerYAnchor)!, constant: 0).isActive = true
         
         self.resumeButton = UIBarButtonItem(title: "Resume", style: .done, target: self, action: #selector(self.resumeCurrentGame))
-        self.randomGameButton = UIBarButtonItem(title: "Random", style: .done, target: self, action: #selector(self.startRandomGame))
         
         self.toolbarFlexibleSpacer = UIBarButtonItem(systemItem: .flexibleSpace)
         self.toolbarFixedSpacer = UIBarButtonItem(systemItem: .fixedSpace)
@@ -293,27 +291,13 @@ private extension GamesViewController
     
     func updateToolbar()
     {
-        if Settings.userInterfaceFeatures.randomGame.isEnabled
+        if self.showResumeButton
         {
-            if self.showResumeButton
-            {
-                self.setToolbarItems([self.toolbarFixedSpacer, self.randomGameButton, self.toolbarFlexibleSpacer, self.resumeButton, self.toolbarFixedSpacer], animated: true)
-            }
-            else
-            {
-                self.setToolbarItems([self.toolbarFixedSpacer, self.randomGameButton, self.toolbarFlexibleSpacer], animated: true)
-            }
+            self.setToolbarItems([self.toolbarFlexibleSpacer, self.resumeButton, self.toolbarFixedSpacer], animated: true)
         }
         else
         {
-            if self.showResumeButton
-            {
-                self.setToolbarItems([self.toolbarFlexibleSpacer, self.resumeButton, self.toolbarFixedSpacer], animated: true)
-            }
-            else
-            {
-                self.setToolbarItems([], animated: true)
-            }
+            self.setToolbarItems([], animated: true)
         }
     }
     
@@ -426,11 +410,6 @@ private extension GamesViewController
     {
         NotificationCenter.default.post(name: .resumePlaying, object: nil, userInfo: [:])
         self.showResumeButton = false
-    }
-    
-    @objc func startRandomGame()
-    {
-        NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
     }
 }
 
@@ -735,9 +714,6 @@ private extension GamesViewController
         {
         case Settings.userInterfaceFeatures.theme.$useCustom.settingsKey, Settings.userInterfaceFeatures.theme.$customColor.settingsKey, Settings.userInterfaceFeatures.theme.$accentColor.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
             self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
-            
-        case Settings.userInterfaceFeatures.randomGame.settingsKey:
-            self.updateToolbar()
             
         default: break
             
