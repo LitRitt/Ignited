@@ -175,7 +175,10 @@ extension GamesViewController
             self.activeEmulatorCore?.stop()
         }
         
-        self.sync()
+        if Settings.gameplayFeatures.autoSync.isEnabled
+        {
+            self.sync()
+        }
     }
     
     override func didReceiveMemoryWarning()
@@ -300,7 +303,10 @@ private extension GamesViewController
         
         self.optionsButton.menu = self.makeOptionsMenu()
         
-        self.sync()
+        if Settings.gameplayFeatures.autoSync.isEnabled
+        {
+            self.sync()
+        }
     }
 }
 

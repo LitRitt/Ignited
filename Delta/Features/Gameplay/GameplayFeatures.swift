@@ -36,6 +36,10 @@ struct GameplayFeatures: FeatureContainer
              hidden: true)
     var autoLoad
     
+    @Feature(name: "Auto Sync",
+             hidden: true)
+    var autoSync
+    
     @Feature(name: "Cheat Codes",
              description: "Modify games using cheat codes. Supports Action Replay, Code Breaker, Game Genie, and GameShark codes on select systems.")
     var cheats
