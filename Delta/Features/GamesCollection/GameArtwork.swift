@@ -33,8 +33,8 @@ enum SortOrder: String, CaseIterable, CustomStringConvertible
 {
     case alphabeticalAZ = "Alphabetical A-Z"
     case alphabeticalZA = "Alphabetical Z-A"
-    case mostRecent = "Most Recently Played"
-    case leastRecent = "Least Recently Played"
+    case mostRecent = "Most Recent"
+    case leastRecent = "Least Recent"
     
     var description: String {
         return self.rawValue
