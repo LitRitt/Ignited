@@ -25,7 +25,7 @@ extension UserInterfaceFeaturesView
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
             
-            self.sortedFeatures = sortedFeatures.filter { !["Random Game Button", "Game Previews"].contains($0.name) }
+            self.sortedFeatures = sortedFeatures.filter { !$0.hidden }
         }
     }
 }

@@ -25,7 +25,7 @@ extension GameplayFeaturesView
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
             
-            self.sortedFeatures = sortedFeatures.filter { !["Auto-Load Save States"].contains($0.name) }
+            self.sortedFeatures = sortedFeatures.filter { !$0.hidden }
         }
     }
 }

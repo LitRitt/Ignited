@@ -33,7 +33,8 @@ struct GameplayFeatures: FeatureContainer
     var rewind
     
     @Feature(name: "Auto-Load Save States",
-             description: "Load your most recent auto save state when you launch a game. Allows you to seamlessly jump from game to game.")
+             description: "Load your most recent auto save state when you launch a game. Allows you to seamlessly jump from game to game.",
+             hidden: true)
     var autoLoad
     
     @Feature(name: "Cheat Codes",

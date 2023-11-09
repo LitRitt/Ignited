@@ -21,9 +21,11 @@ extension AdvancedFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            self.sortedFeatures = Settings.advancedFeatures.allFeatures.sorted { (featureA, featureB) in
+            let sortedFeatures = Settings.advancedFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
+            
+            self.sortedFeatures = sortedFeatures.filter { !$0.hidden }
         }
     }
 }

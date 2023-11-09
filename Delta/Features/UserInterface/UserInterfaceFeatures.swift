@@ -34,11 +34,13 @@ struct UserInterfaceFeatures: FeatureContainer
     
     @Feature(name: "Random Game Button",
              description: "Show a button on the toolbar to play a random game",
-             options: RandomGameOptions())
+             options: RandomGameOptions(),
+             hidden: true)
     var randomGame
     
     @Feature(name: "Game Previews",
-             description: "Preview games and save states when accessing the tap & hold menu on a game.")
+             description: "Preview games and save states when accessing the tap & hold menu on a game.",
+             hidden: true)
     var previews
     
     private init()
