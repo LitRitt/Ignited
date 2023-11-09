@@ -517,14 +517,14 @@ private extension GamesViewController
         })
         
         return UIMenu(title: "",
-                      children: [autoLoadAction, gamePreviewsAction, self.makeSubMenu(), self.makeHelpMenu()])
+                      children: [autoLoadAction, gamePreviewsAction, self.makeRandomGameMenu(), self.makeSubMenu(), self.makeHelpMenu()])
     }
     
     func makeSubMenu() -> UIMenu
     {
         return UIMenu(title: "",
                       options: [.displayInline],
-                      children: [self.makeSortingMenu(), self.makeArtworkSizeMenu(), self.makeRandomGameMenu()])
+                      children: [self.makeSortingMenu(), self.makeArtworkSizeMenu()])
     }
     
     func makeRandomGameMenu() -> UIMenu
@@ -594,7 +594,7 @@ private extension GamesViewController
                               options: [.displayInline],
                               children: sortOptions)
         
-        return UIMenu(title: NSLocalizedString("Sorting Options", comment: ""),
+        return UIMenu(title: NSLocalizedString("Game Sorting", comment: ""),
                               image: UIImage(symbolNameIfAvailable: "arrow.up.and.down.text.horizontal"),
                               children: [favoritesAction, sortMenu])
     }
