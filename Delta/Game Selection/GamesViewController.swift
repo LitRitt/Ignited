@@ -514,8 +514,14 @@ private extension GamesViewController
             self.updateOptionsMenu()
         })
         
-        return UIMenu(title: "",
-                      children: [self.makeSyncMenu(), self.makeSaveStateMenu(), self.makeRandomGameMenu(), gamePreviewsAction, self.makeLibraryMenu(), self.makeHelpMenu()])
+        var options: [UIMenuElement] = [self.makeSaveStateMenu(), self.makeRandomGameMenu(), gamePreviewsAction, self.makeLibraryMenu(), self.makeHelpMenu()]
+        
+        if let _ = SyncManager.shared.service
+        {
+            options.insert(self.makeSyncMenu(), at: 0)
+        }
+        
+        return UIMenu(title: "", children: options)
     }
     
     func makeSaveStateMenu() -> UIMenu
