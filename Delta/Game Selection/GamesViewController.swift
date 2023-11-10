@@ -784,6 +784,8 @@ private extension GamesViewController
     
     @objc func syncingDidStart(_ notification: Notification)
     {
+        guard Settings.gameplayFeatures.autoSync.isEnabled else { return }
+        
         DispatchQueue.main.async {
             self.showSyncingToastViewIfNeeded()
         }
@@ -791,6 +793,8 @@ private extension GamesViewController
     
     @objc func syncingDidFinish(_ notification: Notification)
     {        
+        guard Settings.gameplayFeatures.autoSync.isEnabled else { return }
+        
         DispatchQueue.main.async {
             guard let result = notification.userInfo?[SyncCoordinator.syncResultKey] as? SyncResult else { return }
             self.showSyncFinishedToastView(result: result)
