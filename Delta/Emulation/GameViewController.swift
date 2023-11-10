@@ -1301,8 +1301,10 @@ private extension GameViewController
 /// Save States
 extension GameViewController: SaveStatesViewControllerDelegate
 {
-    private func updateAutoSaveState()
+    private func updateAutoSaveState(_ ignoringAutoSaveOption: Bool = false)
     {
+        guard Settings.gameplayFeatures.saveStates.autoSave || ignoringAutoSaveOption else { return }
+        
         // Ensures game is non-nil and also a Game subclass
         guard let game = self.game as? Game else { return }
         
@@ -1487,7 +1489,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
             }
         }
         
-        self.updateAutoSaveState()
+        self.updateAutoSaveState(true)
         
         do
         {
@@ -1777,7 +1779,7 @@ extension GameViewController
     {
         let alertController = UIAlertController(title: NSLocalizedString("Restart Game?", comment: ""), message: NSLocalizedString("An autosave will be made for you.", comment: ""), preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Restart", comment: ""), style: .destructive, handler: { (action) in
-            self.updateAutoSaveState()
+            self.updateAutoSaveState(true)
             self.game = self.game
             self.resumeEmulation()
             if Settings.userInterfaceFeatures.toasts.restart
@@ -2942,7 +2944,7 @@ private extension GameViewController
         let previousGame = self.game
         self.game = game
         
-        if Settings.gameplayFeatures.autoLoad.isEnabled
+        if Settings.gameplayFeatures.saveStates.autoLoad
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
             fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)

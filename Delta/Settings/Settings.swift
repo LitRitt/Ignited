@@ -62,7 +62,7 @@ struct Settings
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             #keyPath(UserDefaults.isAltJITEnabled): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
-            Settings.gameplayFeatures.autoLoad.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.saveStates.settingsKey.rawValue: true,
             Settings.gameplayFeatures.autoSync.settingsKey.rawValue: true,
             Settings.gameplayFeatures.cheats.settingsKey.rawValue: true,
             Settings.gameplayFeatures.rotationLock.settingsKey.rawValue: true,

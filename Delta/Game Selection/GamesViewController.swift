@@ -506,14 +506,6 @@ private extension GamesViewController
     
     func makeOptionsMenu() -> UIMenu
     {
-        let autoLoadAction = UIAction(title: NSLocalizedString("Auto Load", comment: ""),
-                                      image: UIImage(symbolNameIfAvailable: "tray.and.arrow.up"),
-                                      state: Settings.gameplayFeatures.autoLoad.isEnabled ? .on : .off,
-                                      handler: { action in
-            Settings.gameplayFeatures.autoLoad.isEnabled = !Settings.gameplayFeatures.autoLoad.isEnabled
-            self.updateOptionsMenu()
-        })
-        
         let gamePreviewsAction = UIAction(title: NSLocalizedString("Game Previews", comment: ""),
                                           image: UIImage(symbolNameIfAvailable: "contextualmenu.and.cursorarrow"),
                                           state: Settings.userInterfaceFeatures.previews.isEnabled ? .on : .off,
@@ -523,7 +515,48 @@ private extension GamesViewController
         })
         
         return UIMenu(title: "",
-                      children: [autoLoadAction, gamePreviewsAction, self.makeSyncMenu(), self.makeRandomGameMenu(), self.makeLibraryMenu(), self.makeHelpMenu()])
+                      children: [self.makeSyncMenu(), self.makeSaveStateMenu(), self.makeRandomGameMenu(), gamePreviewsAction, self.makeLibraryMenu(), self.makeHelpMenu()])
+    }
+    
+    func makeSaveStateMenu() -> UIMenu
+    {
+        let saveStateOptions: [UIAction] = [
+            UIAction(title: NSLocalizedString("Auto Save", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "tray.and.arrow.down"),
+                     state: Settings.gameplayFeatures.saveStates.autoSave ? .on : .off,
+                     handler: { action in
+                         if Settings.gameplayFeatures.saveStates.autoSave
+                         {
+                             Settings.gameplayFeatures.saveStates.autoSave = false
+                             Settings.gameplayFeatures.saveStates.autoLoad = false
+                         }
+                         else
+                         {
+                             Settings.gameplayFeatures.saveStates.autoSave = true
+                         }
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: NSLocalizedString("Auto Load", comment: ""),
+                     image: UIImage(symbolNameIfAvailable: "tray.and.arrow.up"),
+                     state: Settings.gameplayFeatures.saveStates.autoLoad ? .on : .off,
+                     handler: { action in
+                         if Settings.gameplayFeatures.saveStates.autoLoad
+                         {
+                             Settings.gameplayFeatures.saveStates.autoLoad = false
+                         }
+                         else
+                         {
+                             Settings.gameplayFeatures.saveStates.autoLoad = true
+                             Settings.gameplayFeatures.saveStates.autoSave = true
+                             
+                         }
+                         self.updateOptionsMenu()
+            })
+        ]
+        
+        return UIMenu(title: NSLocalizedString("Save States", comment: ""),
+                      image: UIImage(symbolNameIfAvailable: "square.and.arrow.down"),
+                      children: saveStateOptions)
     }
     
     func makeSyncMenu() -> UIMenu
@@ -784,8 +817,6 @@ private extension GamesViewController
     
     @objc func syncingDidStart(_ notification: Notification)
     {
-        guard Settings.gameplayFeatures.autoSync.isEnabled else { return }
-        
         DispatchQueue.main.async {
             self.showSyncingToastViewIfNeeded()
         }
@@ -793,8 +824,6 @@ private extension GamesViewController
     
     @objc func syncingDidFinish(_ notification: Notification)
     {        
-        guard Settings.gameplayFeatures.autoSync.isEnabled else { return }
-        
         DispatchQueue.main.async {
             guard let result = notification.userInfo?[SyncCoordinator.syncResultKey] as? SyncResult else { return }
             self.showSyncFinishedToastView(result: result)

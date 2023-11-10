@@ -619,7 +619,7 @@ private extension GameCollectionViewController
                 
                 let cell = self.collectionView.cellForItem(at: indexPath)
                 
-                if Settings.gameplayFeatures.autoLoad.isEnabled && !ignoreAutoLoadStateSetting
+                if Settings.gameplayFeatures.saveStates.autoLoad && !ignoreAutoLoadStateSetting
                 {
                     let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
                     fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -800,7 +800,7 @@ private extension GameCollectionViewController
         
         guard let randomGame = games.randomElement() else { return }
         
-        if Settings.gameplayFeatures.autoLoad.isEnabled
+        if Settings.gameplayFeatures.saveStates.autoLoad
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
             fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), randomGame, #keyPath(SaveState.type), SaveStateType.auto.rawValue)

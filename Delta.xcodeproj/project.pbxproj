@@ -44,6 +44,7 @@
 		AC1EAE6F2A0154380072C858 /* FeatureSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE6E2A0154380072C858 /* FeatureSectionView.swift */; };
 		AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E72A112DA30098266B /* QuickSettingsView.swift */; };
 		AC2059EA2A117B570098266B /* QuickSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E92A117B570098266B /* QuickSettings.swift */; };
+		AC23D2D62AFDCD2A0056CC3F /* SaveStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2D52AFDCD2A0056CC3F /* SaveStates.swift */; };
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtwork.swift */; };
 		AC27348229FE992800B4CB2E /* UserInterfaceFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */; };
@@ -321,6 +322,7 @@
 		AC1EAE6E2A0154380072C858 /* FeatureSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureSectionView.swift; sourceTree = "<group>"; };
 		AC2059E72A112DA30098266B /* QuickSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsView.swift; sourceTree = "<group>"; };
 		AC2059E92A117B570098266B /* QuickSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettings.swift; sourceTree = "<group>"; };
+		AC23D2D52AFDCD2A0056CC3F /* SaveStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStates.swift; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtwork.swift; sourceTree = "<group>"; };
 		AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeaturesView.swift; sourceTree = "<group>"; };
@@ -720,6 +722,7 @@
 				AC84B57129FF1A780090F274 /* SaveStateRewind.swift */,
 				AC84B57329FF1BDA0090F274 /* FastForward.swift */,
 				AC2059E92A117B570098266B /* QuickSettings.swift */,
+				AC23D2D52AFDCD2A0056CC3F /* SaveStates.swift */,
 			);
 			path = Gameplay;
 			sourceTree = "<group>";
@@ -1755,6 +1758,7 @@
 				ACD5F9FD2A0ADF45005CDCF1 /* GBCFeaturesView.swift in Sources */,
 				BF5942891E09BC8B0051894B /* _GameCollection.swift in Sources */,
 				AC185A8529FEA24C002DE52F /* StatusBar.swift in Sources */,
+				AC23D2D62AFDCD2A0056CC3F /* SaveStates.swift in Sources */,
 				BF34FA111CF1899D006624C7 /* CheatTextView.swift in Sources */,
 				D524F4A5273DEBB400D500B2 /* ServerManager+Delta.swift in Sources */,
 				D5AAF27729884F8600F21ACF /* CheatDevice.swift in Sources */,

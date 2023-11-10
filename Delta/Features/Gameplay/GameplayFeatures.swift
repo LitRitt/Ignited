@@ -32,9 +32,10 @@ struct GameplayFeatures: FeatureContainer
              options: SaveStateRewindOptions())
     var rewind
     
-    @Feature(name: "Auto-Load Save States",
+    @Feature(name: "Save States",
+             options: SaveStatesOptions(),
              hidden: true)
-    var autoLoad
+    var saveStates
     
     @Feature(name: "Auto Sync",
              hidden: true)
