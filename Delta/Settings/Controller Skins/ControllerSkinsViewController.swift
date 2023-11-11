@@ -251,9 +251,25 @@ extension ControllerSkinsViewController
         guard let window = self.view.window else { return }
         
         let controllerSkin = self.dataSource.item(at: indexPath)
-        let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
         
-        if controllerSkin.supports(traits, alt: false)
+        var deviceSupported = false
+        var traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+        
+        for displayType in DeltaCore.ControllerSkin.DisplayType.allCases
+        {
+            for orientation in DeltaCore.ControllerSkin.Orientation.allCases
+            {
+                traits.displayType = displayType
+                traits.orientation = orientation
+                
+                if controllerSkin.supports(traits, alt: false)
+                {
+                    deviceSupported = true
+                }
+            }
+        }
+        
+        if deviceSupported
         {
             self.delegate?.controllerSkinsViewController(self, didChooseControllerSkin: controllerSkin)
         }
