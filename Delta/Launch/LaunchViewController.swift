@@ -96,7 +96,7 @@ extension LaunchViewController
         }
         catch
         {
-            let alertController = UIAlertController(title: NSLocalizedString("Unable to Launch Delta", comment: ""), message: error.localizedDescription, preferredStyle: .alert)
+            let alertController = UIAlertController(title: NSLocalizedString("Unable to Launch Ignited", comment: ""), message: error.localizedDescription, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .default, handler: { (action) in
                 self.handleLaunchConditions()
             }))
