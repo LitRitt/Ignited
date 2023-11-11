@@ -45,6 +45,7 @@
 		AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E72A112DA30098266B /* QuickSettingsView.swift */; };
 		AC2059EA2A117B570098266B /* QuickSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E92A117B570098266B /* QuickSettings.swift */; };
 		AC23D2D62AFDCD2A0056CC3F /* SaveStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2D52AFDCD2A0056CC3F /* SaveStates.swift */; };
+		AC23D2DF2AFE7B030056CC3F /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2DE2AFE7B030056CC3F /* UIImage+Symbols.swift */; };
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtwork.swift */; };
 		AC27348229FE992800B4CB2E /* UserInterfaceFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */; };
@@ -323,6 +324,7 @@
 		AC2059E72A112DA30098266B /* QuickSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsView.swift; sourceTree = "<group>"; };
 		AC2059E92A117B570098266B /* QuickSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettings.swift; sourceTree = "<group>"; };
 		AC23D2D52AFDCD2A0056CC3F /* SaveStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStates.swift; sourceTree = "<group>"; };
+		AC23D2DE2AFE7B030056CC3F /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtwork.swift; sourceTree = "<group>"; };
 		AC27348129FE992800B4CB2E /* UserInterfaceFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeaturesView.swift; sourceTree = "<group>"; };
@@ -905,6 +907,7 @@
 				AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */,
 				AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */,
 				AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */,
+				AC23D2DE2AFE7B030056CC3F /* UIImage+Symbols.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1781,6 +1784,7 @@
 				BF34FA071CF0F510006624C7 /* EditCheatViewController.swift in Sources */,
 				BF1F45A421AF274D00EF9895 /* SyncResultViewController.swift in Sources */,
 				AC3CE7F82A2BB485008A8C43 /* AnimatedArtwork.swift in Sources */,
+				AC23D2DF2AFE7B030056CC3F /* UIImage+Symbols.swift in Sources */,
 				AC56DDED2A35F1EA007C8372 /* N64FeaturesView.swift in Sources */,
 				AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */,
 				AC3CE7FA2A2BB496008A8C43 /* FavoriteGames.swift in Sources */,

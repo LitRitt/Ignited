@@ -79,7 +79,8 @@ struct QuickSettingsView: View
                                     Button {
                                         self.performScreenshot()
                                     } label: {
-                                        Image("Screenshot")
+                                        Image(systemName: "camera.fill")
+                                            .font(.system(size: 30))
                                             .frame(width: 40, height: 40)
                                     }
                                     Text("Screenshot")
@@ -90,7 +91,8 @@ struct QuickSettingsView: View
                                     Button {
                                         self.performQuickSave()
                                     } label: {
-                                        Image("SaveSaveState")
+                                        Image(systemName: "tray.and.arrow.down.fill")
+                                            .font(.system(size: 30))
                                             .frame(width: 40, height: 40)
                                     }
                                     Text("Quick Save")
@@ -101,7 +103,8 @@ struct QuickSettingsView: View
                                     Button {
                                         self.performQuickLoad()
                                     } label: {
-                                        Image("LoadSaveState")
+                                        Image(systemName: "tray.and.arrow.up.fill")
+                                            .font(.system(size: 30))
                                             .frame(width: 40, height: 40)
                                     }
                                     Text("Quick Load")

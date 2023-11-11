@@ -177,31 +177,43 @@ private extension PauseViewController
         
         guard self.emulatorCore != nil else { return }
         
-        self.saveStateItem = MenuItem(text: NSLocalizedString("Save State", comment: ""), image: #imageLiteral(resourceName: "SaveSaveState"), action: { [unowned self] _ in
+        self.saveStateItem = MenuItem(text: NSLocalizedString("Save State", comment: ""),
+                                      image: UIImage.symbolWithTemplate(name: "tray.and.arrow.down.fill"),
+                                      action: { [unowned self] _ in
             self.saveStatesViewControllerMode = .saving
             self.performSegue(withIdentifier: "saveStates", sender: self)
         })
         
-        self.loadStateItem = MenuItem(text: NSLocalizedString("Load State", comment: ""), image: #imageLiteral(resourceName: "LoadSaveState"), action: { [unowned self] _ in
+        self.loadStateItem = MenuItem(text: NSLocalizedString("Load State", comment: ""),
+                                      image: UIImage.symbolWithTemplate(name: "tray.and.arrow.up.fill"),
+                                      action: { [unowned self] _ in
             self.saveStatesViewControllerMode = .loading
             self.performSegue(withIdentifier: "saveStates", sender: self)
         })
         
-        self.restartItem = MenuItem(text: NSLocalizedString("Restart", comment: ""), image: #imageLiteral(resourceName: "Restart"), action: { _ in })
+        self.restartItem = MenuItem(text: NSLocalizedString("Restart", comment: ""),
+                                    image: UIImage.symbolWithTemplate(name: "backward.end.fill"),
+                                    action: { _ in })
         
         if Settings.gameplayFeatures.screenshots.isEnabled
         {
-            self.screenshotItem = MenuItem(text: NSLocalizedString("Screenshot", comment: ""), image: #imageLiteral(resourceName: "Screenshot"), action: { _ in })
+            self.screenshotItem = MenuItem(text: NSLocalizedString("Screenshot", comment: ""),
+                                           image: UIImage.symbolWithTemplate(name: "camera.fill"),
+                                           action: { _ in })
         }
         
         if Settings.userInterfaceFeatures.statusBar.isEnabled && Settings.userInterfaceFeatures.statusBar.useToggle
         {
-            self.statusBarItem = MenuItem(text: NSLocalizedString("Status Bar", comment: ""), image: #imageLiteral(resourceName: "StatusBar"), action: { _ in })
+            self.statusBarItem = MenuItem(text: NSLocalizedString("Status Bar", comment: ""),
+                                          image: UIImage.symbolWithTemplate(name: "clock.fill"),
+                                          action: { _ in })
         }
         
         if Settings.gameplayFeatures.rewind.isEnabled
         {
-            self.rewindItem = MenuItem(text: NSLocalizedString("Rewind", comment: ""), image: #imageLiteral(resourceName: "Rewind"), action: { [unowned self] _ in
+            self.rewindItem = MenuItem(text: NSLocalizedString("Rewind", comment: ""),
+                                       image: UIImage.symbolWithTemplate(name: "backward.frame.fill"),
+                                       action: { [unowned self] _ in
                 self.saveStatesViewControllerMode = .rewind
                 self.performSegue(withIdentifier: "saveStates", sender: self)
             })
@@ -209,45 +221,63 @@ private extension PauseViewController
         
         if Settings.gameplayFeatures.fastForward.isEnabled
         {
-            self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""), image: #imageLiteral(resourceName: "FastForward"), action: { _ in })
+            self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""),
+                                            image: UIImage.symbolWithTemplate(name: "forward.fill"),
+                                            action: { _ in })
         }
         
         if Settings.gameplayFeatures.rotationLock.isEnabled
         {
-            self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""), image: #imageLiteral(resourceName: "RotationLock"), action: { _ in })
+            self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""),
+                                             image: UIImage.symbolWithTemplate(name: "lock.fill"),
+                                             action: { _ in })
         }
         
         if Settings.gameplayFeatures.cheats.isEnabled {
-            self.cheatCodesItem = MenuItem(text: NSLocalizedString("Cheat Codes", comment: ""), image: #imageLiteral(resourceName: "CheatCodes"), action: { [unowned self] _ in
+            self.cheatCodesItem = MenuItem(text: NSLocalizedString("Cheat Codes", comment: ""),
+                                           image: UIImage.symbolWithTemplate(name: "key.fill"),
+                                           action: { [unowned self] _ in
                 self.performSegue(withIdentifier: "cheats", sender: self)
             })
         }
         
         if Settings.gbcFeatures.palettes.isEnabled
         {
-            self.paletteItem = MenuItem(text: NSLocalizedString("Color Palette", comment: ""), image: #imageLiteral(resourceName: "Palette"), action: { _ in })
+            self.paletteItem = MenuItem(text: NSLocalizedString("Color Palette", comment: ""),
+                                        image: UIImage.symbolWithTemplate(name: "swatchpalette.fill"),
+                                        action: { _ in })
         }
         
         if Settings.gameplayFeatures.quickSettings.isEnabled
         {
-            self.quickSettingsItem = MenuItem(text: NSLocalizedString("Quick Settings", comment: ""), image: #imageLiteral(resourceName: "QuickSettings"), action: { _ in })
+            self.quickSettingsItem = MenuItem(text: NSLocalizedString("Quick Settings", comment: ""),
+                                              image: UIImage.symbolWithTemplate(name: "gearshape.fill"),
+                                              action: { _ in })
         }
         
         if Settings.controllerSkinFeatures.backgroundBlur.isEnabled
         {
-            self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""), image: #imageLiteral(resourceName: "BackgroundBlur"), action: { _ in })
+            self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""),
+                                              image: UIImage.symbolWithTemplate(name: "aqi.medium"),
+                                              action: { _ in })
         }
         
-        self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""), image: #imageLiteral(resourceName: "SustainButtons"), action: { _ in })
+        self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""),
+                                           image: UIImage.symbolWithTemplate(name: "button.horizontal.top.press.fill"),
+                                           action: { _ in })
         
         if Settings.advancedFeatures.skinDebug.hasAlt
         {
-            self.altSkinItem = MenuItem(text: NSLocalizedString("Alternate Skin", comment: ""), image: #imageLiteral(resourceName: "AltSkin"), action: { _ in })
+            self.altSkinItem = MenuItem(text: NSLocalizedString("Alternate Skin", comment: ""),
+                                        image: UIImage.symbolWithTemplate(name: "switch.2"),
+                                        action: { _ in })
         }
         
         if Settings.advancedFeatures.skinDebug.isEnabled || Settings.advancedFeatures.skinDebug.skinEnabled
         {
-            self.debugModeItem = MenuItem(text: NSLocalizedString("Debug Mode", comment: ""), image: #imageLiteral(resourceName: "Debug"), action: { _ in })
+            self.debugModeItem = MenuItem(text: NSLocalizedString("Debug Mode", comment: ""),
+                                          image: UIImage.symbolWithTemplate(name: "ant.fill"),
+                                          action: { _ in })
         }
     }
     func updateSafeAreaInsets()
