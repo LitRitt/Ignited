@@ -58,7 +58,6 @@
 		AC432A362A4F6DB1001E1A06 /* AirPlaySkins.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC432A352A4F6DB1001E1A06 /* AirPlaySkins.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */; };
-		AC503F6329B2C709005B27DD /* Updates.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC503F6229B2C709005B27DD /* Updates.plist */; };
 		AC56DDED2A35F1EA007C8372 /* N64FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */; };
 		AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEF2A35F38D007C8372 /* N64Features.swift */; };
 		AC56DDF22A35F3F2007C8372 /* N64GraphicsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */; };
@@ -117,7 +116,7 @@
 		ACD5FA032A0C4C84005CDCF1 /* GBCFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */; };
 		ACD5FA052A0C4D58005CDCF1 /* GameboyPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GameboyPalette.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
-		ACD727D729EE10740028B8A8 /* Patrons.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACD727D629EE10740028B8A8 /* Patrons.plist */; };
+		ACD727D729EE10740028B8A8 /* patrons.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACD727D629EE10740028B8A8 /* patrons.plist */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
 		B57FE4F02A98930B00C5E989 /* CodeSigning.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */; };
 		B57FE4F12A98930B00C5E989 /* Build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B57FE4EE2A98930B00C5E989 /* Build.xcconfig */; };
@@ -257,7 +256,7 @@
 		D524F4A3273DE9C000D500B2 /* ProcessInfo+JIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = D524F4A2273DE9C000D500B2 /* ProcessInfo+JIT.swift */; };
 		D524F4A5273DEBB400D500B2 /* ServerManager+Delta.swift in Sources */ = {isa = PBXBuildFile; fileRef = D524F4A4273DEBB400D500B2 /* ServerManager+Delta.swift */; };
 		D53415A5298C782A00FD67B1 /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53415A4298C782A00FD67B1 /* ContributorsView.swift */; };
-		D53415A7298C78BC00FD67B1 /* Contributors.plist in Resources */ = {isa = PBXBuildFile; fileRef = D53415A6298C78BC00FD67B1 /* Contributors.plist */; };
+		D53415A7298C78BC00FD67B1 /* contributors.plist in Resources */ = {isa = PBXBuildFile; fileRef = D53415A6298C78BC00FD67B1 /* contributors.plist */; };
 		D5864970297734280081477E /* CheatMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586496F297734280081477E /* CheatMetadata.swift */; };
 		D586497229774ABD0081477E /* CheatBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586497129774ABD0081477E /* CheatBase.swift */; };
 		D5864978297756CE0081477E /* CheatBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5864977297756CE0081477E /* CheatBaseView.swift */; };
@@ -337,7 +336,6 @@
 		AC432A352A4F6DB1001E1A06 /* AirPlaySkins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlaySkins.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+BuildNumber.swift"; sourceTree = "<group>"; };
-		AC503F6229B2C709005B27DD /* Updates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Updates.plist; sourceTree = "<group>"; };
 		AC56DDEC2A35F1EA007C8372 /* N64FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64FeaturesView.swift; sourceTree = "<group>"; };
 		AC56DDEF2A35F38D007C8372 /* N64Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64Features.swift; sourceTree = "<group>"; };
 		AC56DDF12A35F3F2007C8372 /* N64GraphicsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64GraphicsOptions.swift; sourceTree = "<group>"; };
@@ -396,7 +394,7 @@
 		ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCFeatures.swift; sourceTree = "<group>"; };
 		ACD5FA042A0C4D58005CDCF1 /* GameboyPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboyPalette.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
-		ACD727D629EE10740028B8A8 /* Patrons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Patrons.plist; sourceTree = "<group>"; };
+		ACD727D629EE10740028B8A8 /* patrons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = patrons.plist; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
 		B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CodeSigning.xcconfig; sourceTree = "<group>"; };
 		B57FE4EE2A98930B00C5E989 /* Build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Build.xcconfig; sourceTree = "<group>"; };
@@ -567,7 +565,7 @@
 		D524F4A2273DE9C000D500B2 /* ProcessInfo+JIT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+JIT.swift"; sourceTree = "<group>"; };
 		D524F4A4273DEBB400D500B2 /* ServerManager+Delta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServerManager+Delta.swift"; sourceTree = "<group>"; };
 		D53415A4298C782A00FD67B1 /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
-		D53415A6298C78BC00FD67B1 /* Contributors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Contributors.plist; sourceTree = "<group>"; };
+		D53415A6298C78BC00FD67B1 /* contributors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contributors.plist; sourceTree = "<group>"; };
 		D586496F297734280081477E /* CheatMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatMetadata.swift; sourceTree = "<group>"; };
 		D586497129774ABD0081477E /* CheatBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatBase.swift; sourceTree = "<group>"; };
 		D5864977297756CE0081477E /* CheatBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatBaseView.swift; sourceTree = "<group>"; };
@@ -1281,9 +1279,8 @@
 				BF6BB2451BB73FE800CCF94A /* Assets.xcassets */,
 				BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */,
 				D5D797E7298DC9E200738869 /* cheatbase.zip */,
-				D53415A6298C78BC00FD67B1 /* Contributors.plist */,
-				AC503F6229B2C709005B27DD /* Updates.plist */,
-				ACD727D629EE10740028B8A8 /* Patrons.plist */,
+				D53415A6298C78BC00FD67B1 /* contributors.plist */,
+				ACD727D629EE10740028B8A8 /* patrons.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1545,15 +1542,14 @@
 				BFFA71E21AAC406100EE9DD1 /* Main.storyboard in Resources */,
 				BF6BF3211EB82362008E83CD /* GamesDatabase.storyboard in Resources */,
 				BFAB9F88219A4B670080EC7D /* GoogleService-Info.plist in Resources */,
-				ACD727D729EE10740028B8A8 /* Patrons.plist in Resources */,
+				ACD727D729EE10740028B8A8 /* patrons.plist in Resources */,
 				BF3540001C5DA3C500C1184C /* PausePresentationControllerContentView.xib in Resources */,
 				BF5E7F461B9A652600AE44F8 /* Settings.storyboard in Resources */,
 				BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */,
 				ACCDD4862A6386020034A6C0 /* snap.mp3 in Resources */,
-				AC503F6329B2C709005B27DD /* Updates.plist in Resources */,
 				ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */,
 				ACCDD4872A6386020034A6C0 /* click.mp3 in Resources */,
-				D53415A7298C78BC00FD67B1 /* Contributors.plist in Resources */,
+				D53415A7298C78BC00FD67B1 /* contributors.plist in Resources */,
 				BF71CF8A1FE904B1001F1613 /* GameTableViewCell.xib in Resources */,
 				BFFC46461D59861000AF2CC6 /* LaunchScreen.storyboard in Resources */,
 				B57FE4F02A98930B00C5E989 /* CodeSigning.xcconfig in Resources */,
