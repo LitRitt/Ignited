@@ -69,6 +69,7 @@ class GamesViewController: UIViewController
         }
     }
     private var syncingProgressObservation: NSKeyValueObservation?
+    private var forceNextSyncingToast: Bool = false
     
     @IBOutlet private var importButton: UIBarButtonItem!
     @IBOutlet private var optionsButton: UIBarButtonItem!
@@ -578,6 +579,7 @@ private extension GamesViewController
             UIAction(title: NSLocalizedString("Sync Now", comment: ""),
                      image: UIImage(symbolNameIfAvailable: "icloud.and.arrow.up"),
                      handler: { action in
+                         self.forceNextSyncingToast = true
                          self.sync()
             })
         ]
@@ -766,11 +768,13 @@ private extension GamesViewController
         toastView.show(in: self.view, duration: 2.0)
         
         self.syncingToastView = nil
+        self.forceNextSyncingToast = false
     }
     
     @objc func hideSyncingToastView()
     {
         self.syncingToastView = nil
+        self.forceNextSyncingToast = false
     }
     
     @objc func presentSyncResultsViewController()
@@ -823,13 +827,17 @@ private extension GamesViewController
     
     @objc func syncingDidStart(_ notification: Notification)
     {
+        guard Settings.gameplayFeatures.autoSync.isEnabled || self.forceNextSyncingToast else { return }
+        
         DispatchQueue.main.async {
             self.showSyncingToastViewIfNeeded()
         }
     }
     
     @objc func syncingDidFinish(_ notification: Notification)
-    {        
+    {      
+        guard Settings.gameplayFeatures.autoSync.isEnabled || self.forceNextSyncingToast else { return }
+        
         DispatchQueue.main.async {
             guard let result = notification.userInfo?[SyncCoordinator.syncResultKey] as? SyncResult else { return }
             self.showSyncFinishedToastView(result: result)
