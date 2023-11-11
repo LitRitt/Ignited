@@ -247,7 +247,7 @@ class GameViewController: DeltaCore.GameViewController
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
+        self.updateControllerSkin() //TODO: See if this fixes ny's issue of disappearring blur background
         self.updateBlurBackground()
     }
     
