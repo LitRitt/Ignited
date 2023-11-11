@@ -136,7 +136,7 @@ private extension AppIconShortcutsViewController
         
         cell.artworkImageView.tintColor = UIColor.white
         cell.artworkImageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
-        cell.artworkImageView.backgroundColor = self.view.tintColor.darker(componentDelta: 0.1)
+        cell.artworkImageView.backgroundColor = self.view.tintColor.dynamicTint(0.1, style: UITraitCollection.current.userInterfaceStyle)
         
         cell.artworkImageViewLeadingConstraint.constant = 15
         cell.artworkImageViewTrailingConstraint.constant = 15

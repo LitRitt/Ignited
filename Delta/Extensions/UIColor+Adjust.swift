@@ -43,11 +43,23 @@ extension UIColor
         return max(0, min(1, toComponent + value))
     }
     
-    func lighter(componentDelta: CGFloat = 0.1) -> UIColor {
+    func lighter(_ componentDelta: CGFloat = 0.1) -> UIColor {
         return makeColor(componentDelta: componentDelta)
     }
 
-    func darker(componentDelta: CGFloat = 0.1) -> UIColor {
-        return makeColor(componentDelta: -1*componentDelta)
+    func darker(_ componentDelta: CGFloat = 0.1) -> UIColor {
+        return makeColor(componentDelta: -1 * componentDelta)
+    }
+    
+    func dynamicTint(_ componentDelta: CGFloat = 0.1, style: UIUserInterfaceStyle = .unspecified, offset: CGFloat = 0) -> UIColor {
+        switch style
+        {
+        case .light:
+            return makeColor(componentDelta: componentDelta + offset)
+        case .dark, .unspecified:
+            return makeColor(componentDelta: -1 * componentDelta + offset)
+        @unknown default:
+            return makeColor(componentDelta: -1 * componentDelta + offset)
+        }
     }
 }

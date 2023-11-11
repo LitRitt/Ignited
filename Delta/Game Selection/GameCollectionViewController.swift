@@ -151,6 +151,10 @@ extension GameCollectionViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.startRandomGame), name: .startRandomGame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.unwindFromSettingsAndUpdate), name: .unwindFromSettings, object: nil)
         
+        if #available(iOS 17, *, *) {
+            registerForTraitChanges([UITraitUserInterfaceStyle.self], action: #selector(update))
+        }
+        
         self.update()
     }
     
@@ -339,7 +343,7 @@ extension GameCollectionViewController
 //MARK: - Private Methods -
 private extension GameCollectionViewController
 {
-    func update()
+    @objc func update()
     {
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
         
@@ -416,6 +420,8 @@ private extension GameCollectionViewController
     {
         let game = self.dataSource.item(at: indexPath) as! Game
         
+        let style = UITraitCollection.current.userInterfaceStyle
+        
         cell.imageView.tintColor = UIColor.white
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
@@ -424,11 +430,11 @@ private extension GameCollectionViewController
         {
             if Settings.gamesCollectionFeatures.artwork.bgThemed
             {
-                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(Settings.gamesCollectionFeatures.artwork.bgOpacity).darker(componentDelta: 0.1)
+                cell.imageView.backgroundColor = UIColor.themeColor.withAlphaComponent(Settings.gamesCollectionFeatures.artwork.bgOpacity).dynamicTint(0.1, style: style)
             }
             else
             {
-                cell.imageView.backgroundColor = UIColor(cgColor: Settings.gamesCollectionFeatures.artwork.bgColor.cgColor!).withAlphaComponent(Settings.gamesCollectionFeatures.artwork.bgOpacity).darker(componentDelta: 0.1)
+                cell.imageView.backgroundColor = UIColor(cgColor: Settings.gamesCollectionFeatures.artwork.bgColor.cgColor!).withAlphaComponent(Settings.gamesCollectionFeatures.artwork.bgOpacity).dynamicTint(0.1, style: style)
             }
             cell.imageView.layer.cornerRadius = Settings.gamesCollectionFeatures.artwork.cornerRadius
             cell.imageView.layer.borderWidth = Settings.gamesCollectionFeatures.artwork.borderWidth
@@ -436,7 +442,7 @@ private extension GameCollectionViewController
         }
         else
         {
-            cell.imageView.backgroundColor = UIColor.themeColor.darker(componentDelta: 0.1)
+            cell.imageView.backgroundColor = UIColor.themeColor.dynamicTint(0.1, style: style)
             cell.imageView.layer.cornerRadius = 15
             cell.imageView.layer.borderWidth = 1.2
             cell.layer.shadowOpacity = 0.5
@@ -450,7 +456,7 @@ private extension GameCollectionViewController
             cell.layer.shadowOpacity = 1.0
             cell.layer.shadowRadius = 8.0
             cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-            cell.imageView.layer.borderColor = UIColor.themeColor.lighter(componentDelta: 0.1).cgColor
+            cell.imageView.layer.borderColor = UIColor.themeColor.dynamicTint(0.1, style: style, offset: 0.2).cgColor
         }
         else
         {
@@ -462,7 +468,7 @@ private extension GameCollectionViewController
                 cell.layer.shadowOpacity = Float(0.5 + (0.5 * Settings.gamesCollectionFeatures.favorites.highlightIntensity))
                 cell.layer.shadowRadius = CGFloat(2.0 + (6.0 * Settings.gamesCollectionFeatures.favorites.highlightIntensity))
                 cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-                cell.imageView.layer.borderColor = UIColor(cgColor: Settings.gamesCollectionFeatures.favorites.favoriteColor.cgColor!).lighter(componentDelta: 0.1).cgColor
+                cell.imageView.layer.borderColor = UIColor(cgColor: Settings.gamesCollectionFeatures.favorites.favoriteColor.cgColor!).dynamicTint(0.1, style: style, offset: 0.2).cgColor
             }
             else
             {
