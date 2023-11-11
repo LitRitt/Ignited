@@ -865,8 +865,8 @@
 		ACD727D129EE0B200028B8A8 /* Patrons */ = {
 			isa = PBXGroup;
 			children = (
-				ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */,
 				AC2D0A842A19702C00EEEB39 /* Patron.swift */,
+				ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */,
 			);
 			path = Patrons;
 			sourceTree = "<group>";

@@ -38,7 +38,7 @@ extension ContributorsView
             
             do
             {
-                guard let url = try URL(string: "https://f005.backblazeb2.com/file/lit-apps/data/ignited/Contributors.plist") else { return }
+                guard let url = try URL(string: "https://raw.githubusercontent.com/LitRitt/Ignited/develop/Resources/contributors.plist") else { return }
                 
                 let request = URLRequest(url: url)
 
