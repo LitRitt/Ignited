@@ -50,14 +50,10 @@ extension SortOrder: LocalizedOptionValue
 
 struct GameArtworkOptions
 {
-    @Option(name: "Sort Order",
-            description: "Choose how games should be sorted.",
-            values: SortOrder.allCases)
+    @Option
     var sortOrder: SortOrder = .alphabeticalAZ
     
-    @Option(name: "Artwork Size",
-            description: "Change the size of game artwork.",
-            values: ArtworkSize.allCases)
+    @Option
     var size: ArtworkSize = .medium
     
     @Option(name: "Theme Background Color",
