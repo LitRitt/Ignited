@@ -355,7 +355,7 @@ extension PowerUserOptions
                 Settings.gamesCollectionFeatures.artwork.size = .medium
                 Settings.gamesCollectionFeatures.artwork.bgThemed = true
                 Settings.gamesCollectionFeatures.artwork.bgColor = Color(red: 253/255, green: 110/255, blue: 0/255)
-                Settings.gamesCollectionFeatures.artwork.bgOpacity = 0.7
+                Settings.gamesCollectionFeatures.artwork.bgOpacity = 1.0
                 Settings.gamesCollectionFeatures.artwork.titleSize = 1.0
                 Settings.gamesCollectionFeatures.artwork.titleMaxLines = 3
                 Settings.gamesCollectionFeatures.artwork.cornerRadius = 15

@@ -85,7 +85,7 @@ struct GameArtworkOptions
             }
         }.displayInline()
     })
-    var bgOpacity: Double = 0.7
+    var bgOpacity: Double = 1.0
     
     @Option(name: "Title Size", description: "The size of the game's title.", detailView: { value in
         VStack {
