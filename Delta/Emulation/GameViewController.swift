@@ -458,7 +458,7 @@ extension GameViewController
         
         self.airPlayBackgroundView = RSTPlaceholderView(frame: CGRect(x: 0, y: 0, width: airPlayVibrancyView.contentView.bounds.width, height: airPlayVibrancyView.contentView.bounds.height))
         self.airPlayBackgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.airPlayBackgroundView.imageView.image = UIImage(named: "AirPlay")
+        self.airPlayBackgroundView.imageView.image = UIImage(systemName: "airplayvideo", withConfiguration: UIImage.SymbolConfiguration(pointSize: 45))
         self.airPlayBackgroundView.imageView.isHidden = false
         self.airPlayBackgroundView.textLabel.text = NSLocalizedString("AirPlaying", comment: "")
         self.airPlayBackgroundView.textLabel.numberOfLines = 1

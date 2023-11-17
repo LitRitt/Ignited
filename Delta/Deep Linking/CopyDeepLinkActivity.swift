@@ -30,7 +30,7 @@ class CopyDeepLinkActivity: UIActivity
     }
     
     override var activityImage: UIImage? {
-        return UIImage(symbolNameIfAvailable: "link") ?? UIImage(named: "Link")
+        return UIImage(systemName: "link")
     }
     
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool
