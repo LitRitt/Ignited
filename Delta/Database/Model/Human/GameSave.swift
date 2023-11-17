@@ -66,4 +66,8 @@ extension GameSave: Syncable
         
         return self.game?.identifier != Game.melonDSBIOSIdentifier && self.game?.identifier != Game.melonDSDSiBIOSIdentifier
     }
+    
+    public func resolveConflict(_ record: AnyRecord) -> ConflictResolution {
+        return self.modifiedDate == record.localModificationDate ? .remote : .newest
+    }
 }

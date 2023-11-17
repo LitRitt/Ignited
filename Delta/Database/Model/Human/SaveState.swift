@@ -162,4 +162,8 @@ extension SaveState: Syncable
             }
         }
     }
+    
+    public func resolveConflict(_ record: AnyRecord) -> ConflictResolution {
+        return self.modifiedDate == record.localModificationDate ? .remote : .newest
+    }
 }

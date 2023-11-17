@@ -55,6 +55,6 @@ extension Cheat: Syncable
     }
     
     public func resolveConflict(_ record: AnyRecord) -> ConflictResolution {
-        return .newest
+        return self.modifiedDate == record.localModificationDate ? .remote : .newest
     }
 }
