@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Dt0-nV-isV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Dt0-nV-isV">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--Pause View Controller-->
         <scene sceneID="Wst-Dv-TjM">
             <objects>
-                <viewController id="Dt0-nV-isV" customClass="PauseViewController" customModule="Delta_Ignited" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Dt0-nV-isV" customClass="PauseViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nE7-eK-lGa"/>
                         <viewControllerLayoutGuide type="bottom" id="gF0-0U-kR7"/>
@@ -41,7 +41,7 @@
                                         <constraint firstItem="rqN-NB-jbb" firstAttribute="leading" secondItem="eyD-0d-RHe" secondAttribute="leading" id="U92-Lx-LsK"/>
                                     </constraints>
                                 </view>
-                                <blurEffect style="dark"/>
+                                <blurEffect style="systemUltraThinMaterial"/>
                             </visualEffectView>
                         </subviews>
                         <constraints>
@@ -67,8 +67,8 @@
             <objects>
                 <navigationController id="sWv-Ky-VGs" sceneMemberID="viewController">
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="Snh-Z0-9kC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Snh-Z0-9kC">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -82,19 +82,19 @@
         <!--Paused-->
         <scene sceneID="1md-hu-g0J">
             <objects>
-                <collectionViewController id="0jA-NY-mvB" customClass="GridMenuViewController" customModule="Delta_Ignited" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="0jA-NY-mvB" customClass="GridMenuViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" dataMode="prototypes" id="scc-uc-vaJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="10" id="yXv-zl-idO" customClass="GridCollectionViewLayout" customModule="Delta_Ignited" customModuleProvider="target">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="10" id="yXv-zl-idO" customClass="GridCollectionViewLayout" customModule="Ignited" customModuleProvider="target">
                             <size key="itemSize" width="60" height="80"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="20" maxX="0.0" maxY="20"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="6XS-Ne-nGZ" customClass="GridCollectionViewCell" customModule="Delta_Ignited" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="6XS-Ne-nGZ" customClass="GridCollectionViewCell" customModule="Ignited" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="60" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -130,19 +130,19 @@
         <!--Save State-->
         <scene sceneID="9Fi-Ti-W8T">
             <objects>
-                <collectionViewController storyboardIdentifier="saveStatesViewController" id="OOk-k7-INg" customClass="SaveStatesViewController" customModule="Delta_Ignited" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="saveStatesViewController" id="OOk-k7-INg" customClass="SaveStatesViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="XgF-OF-CVf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="tvW-q1-PD8" customClass="GridCollectionViewLayout" customModule="Delta_Ignited" customModuleProvider="target">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="tvW-q1-PD8" customClass="GridCollectionViewLayout" customModule="Ignited" customModuleProvider="target">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="50" height="50"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="20" minY="10" maxX="20" maxY="20"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="c3N-1A-ryV" customClass="GridCollectionViewCell" customModule="Delta_Ignited" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="c3N-1A-ryV" customClass="GridCollectionViewCell" customModule="Ignited" customModuleProvider="target">
                                 <rect key="frame" x="20" y="60" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -151,7 +151,7 @@
                                 </view>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Header" id="YeY-W9-CC6" customClass="SaveStatesCollectionHeaderView" customModule="Delta_Ignited" customModuleProvider="target">
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Header" id="YeY-W9-CC6" customClass="SaveStatesCollectionHeaderView" customModule="Ignited" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </collectionReusableView>
@@ -191,13 +191,13 @@
         <!--Cheats-->
         <scene sceneID="vHb-xC-JLG">
             <objects>
-                <tableViewController id="wb8-5o-1jE" customClass="CheatsViewController" customModule="Delta_Ignited" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="wb8-5o-1jE" customClass="CheatsViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="f5S-hV-1yV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="e8g-ZW-5lQ" customClass="CheatTableViewCell" customModule="Delta_Ignited" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="e8g-ZW-5lQ" customClass="CheatTableViewCell" customModule="Ignited" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e8g-ZW-5lQ" id="AHE-Jk-ULE">
@@ -213,7 +213,7 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
                                             <vibrancyEffect>
-                                                <blurEffect style="dark"/>
+                                                <blurEffect style="systemUltraThinMaterial"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4A-9d-DGb">
@@ -223,7 +223,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </view>
                                             <vibrancyEffect>
-                                                <blurEffect style="dark"/>
+                                                <blurEffect style="systemUltraThinMaterial"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
                                     </subviews>
@@ -263,7 +263,7 @@
         <!--Cheat-->
         <scene sceneID="SMZ-Ah-CVb">
             <objects>
-                <tableViewController storyboardIdentifier="editCheatViewController" id="jTR-Oe-YUJ" customClass="EditCheatViewController" customModule="Delta_Ignited" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="editCheatViewController" id="jTR-Oe-YUJ" customClass="EditCheatViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="BV9-ff-x83">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -336,7 +336,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="XXXXXXXX YYYYYYYY" translatesAutoresizingMaskIntoConstraints="NO" id="a17-LB-QXD" customClass="CheatTextView" customModule="Delta_Ignited" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="XXXXXXXX YYYYYYYY" translatesAutoresizingMaskIntoConstraints="NO" id="a17-LB-QXD" customClass="CheatTextView" customModule="Ignited" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
                                                     <color key="textColor" systemColor="labelColor"/>
                                                     <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="26"/>
@@ -358,10 +358,10 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="NxO-eC-sk6"/>
+                                                    <exclude reference="ilf-Gt-J7Y"/>
                                                     <exclude reference="QwM-HU-6cp"/>
                                                     <exclude reference="hex-Ie-1rn"/>
-                                                    <exclude reference="ilf-Gt-J7Y"/>
+                                                    <exclude reference="NxO-eC-sk6"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -401,7 +401,7 @@
     </scenes>
     <resources>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

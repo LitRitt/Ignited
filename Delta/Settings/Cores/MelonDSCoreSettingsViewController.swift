@@ -219,7 +219,6 @@ private extension MelonDSCoreSettingsViewController
         let documentPicker = UIDocumentPickerViewController(documentTypes: supportedTypes, in: .import)
         
         documentPicker.delegate = self
-        documentPicker.overrideUserInterfaceStyle = .dark
         
         self.present(documentPicker, animated: true, completion: nil)
     }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PausePresentationController" customModule="Delta" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PausePresentationController" customModule="Ignited" customModuleProvider="target">
             <connections>
                 <outlet property="pauseIconImageView" destination="cWa-Ht-i5m" id="fBb-zu-cQ6"/>
                 <outlet property="pauseLabel" destination="ZcT-qE-aES" id="kvN-V0-xNs"/>
@@ -22,20 +22,23 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="qFz-hB-77X">
-                    <rect key="frame" x="15" y="270.5" width="375" height="126.5"/>
+                    <rect key="frame" x="15" y="273.5" width="345" height="120"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="500" image="Pause" translatesAutoresizingMaskIntoConstraints="NO" id="cWa-Ht-i5m">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="cWa-Ht-i5m">
+                            <rect key="frame" x="0.0" y="-1.5" width="345" height="75"/>
+                            <color key="tintColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="900" constant="44" id="xki-9P-sHi">
                                     <variation key="heightClass=compact" constant="25"/>
                                 </constraint>
                             </constraints>
+                            <imageReference key="image" image="pause.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="60"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="800" text="Super Mario World" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZcT-qE-aES">
-                            <rect key="frame" x="0.0" y="95" width="375" height="31.5"/>
+                            <rect key="frame" x="0.0" y="86.5" width="345" height="33.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" systemColor="systemBackgroundColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -50,10 +53,13 @@
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qFz-hB-77X" secondAttribute="bottom" priority="999" constant="15" id="wwI-EY-TVj"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <point key="canvasLocation" x="393" y="426"/>
+            <point key="canvasLocation" x="628.79999999999995" y="383.20839580209901"/>
         </view>
     </objects>
     <resources>
-        <image name="Pause" width="64" height="80"/>
+        <image name="pause.fill" catalog="system" width="117" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

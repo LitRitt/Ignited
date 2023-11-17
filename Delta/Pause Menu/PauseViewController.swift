@@ -71,10 +71,6 @@ class PauseViewController: UIViewController, PauseInfoProviding
         return self.pauseNavigationController
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     override func viewDidLayoutSubviews()
     {
         super.viewDidLayoutSubviews()
@@ -105,10 +101,10 @@ extension PauseViewController
             let gridMenuViewController = self.pauseNavigationController.topViewController as! GridMenuViewController
             
             let navigationBarAppearance = self.pauseNavigationController.navigationBar.standardAppearance.copy()
-            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .dark)
-            navigationBarAppearance.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-            navigationBarAppearance.shadowColor = UIColor.white.withAlphaComponent(0.2)
-            navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+            navigationBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.2)
+            
+            navigationBarAppearance.shadowColor = UIColor.label.withAlphaComponent(0.2)
             self.pauseNavigationController.navigationBar.standardAppearance = navigationBarAppearance
             
             let transparentBarAppearance = navigationBarAppearance.copy()

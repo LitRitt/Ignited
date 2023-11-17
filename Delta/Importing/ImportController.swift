@@ -159,7 +159,6 @@ class ImportController: NSObject
             
             let documentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
             documentPickerViewController.delegate = self
-            documentPickerViewController.overrideUserInterfaceStyle = .dark
             documentPickerViewController.allowsMultipleSelection = true
             
             presentedViewController = documentPickerViewController
@@ -169,7 +168,6 @@ class ImportController: NSObject
             let documentBrowserViewController = UIDocumentBrowserViewController(forOpening: supportedTypes)
             documentBrowserViewController.delegate = self
             documentBrowserViewController.modalPresentationStyle = .fullScreen
-            documentBrowserViewController.browserUserInterfaceStyle = .dark
             documentBrowserViewController.allowsPickingMultipleItems = true
             documentBrowserViewController.allowsDocumentCreation = false
             

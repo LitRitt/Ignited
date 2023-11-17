@@ -117,8 +117,8 @@ extension SaveStatesViewController
         
         self.prepareEmulatorCoreSaveState()
         
-        self.navigationController?.navigationBar.barStyle = .blackTranslucent
-        self.navigationController?.toolbar.barStyle = .blackTranslucent
+        self.navigationController?.navigationBar.barStyle = .default
+        self.navigationController?.toolbar.barStyle = .default
         
         self.update()
     }    
@@ -212,7 +212,7 @@ private extension SaveStatesViewController
         switch self.theme
         {
         case .opaque:
-            self.view.backgroundColor = UIColor.ignitedDarkGray
+            self.view.backgroundColor = .systemBackground
             
             self.vibrancyView.effect = nil
             
@@ -222,7 +222,7 @@ private extension SaveStatesViewController
         case .translucent:
             self.view.backgroundColor = nil
             
-            self.vibrancyView.effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .dark))
+            self.vibrancyView.effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial))
             
             self.placeholderView.textLabel.textColor = UIColor.white
             self.placeholderView.detailTextLabel.textColor = UIColor.white

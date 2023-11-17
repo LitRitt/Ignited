@@ -37,10 +37,6 @@ class GamesViewController: UIViewController
         }
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     public var showResumeButton: Bool = false {
         didSet {
             self.updateToolbar()
@@ -117,7 +113,7 @@ extension GamesViewController
         self.pageControl.allowsContinuousInteraction = false
         self.pageControl.numberOfPages = 3
         self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
-        self.pageControl.pageIndicatorTintColor = UIColor.lightGray
+        self.pageControl.pageIndicatorTintColor = UIColor.gray
         self.navigationController?.toolbar.addSubview(self.pageControl)
         
         self.pageControl.centerXAnchor.constraint(equalTo: (self.navigationController?.toolbar.centerXAnchor)!, constant: 0).isActive = true
@@ -130,16 +126,14 @@ extension GamesViewController
         self.toolbarFixedSpacer.width = 8
         
         if let navigationController = self.navigationController
-        {
-            navigationController.overrideUserInterfaceStyle = .dark
-                
+        { 
             let navigationBarAppearance = navigationController.navigationBar.standardAppearance.copy()
-            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .dark)
+            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
             navigationController.navigationBar.standardAppearance = navigationBarAppearance
             navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
             
             let toolbarAppearance = navigationController.toolbar.standardAppearance.copy()
-            toolbarAppearance.backgroundEffect = UIBlurEffect(style: .dark)
+            toolbarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
             navigationController.toolbar.standardAppearance = toolbarAppearance
             
             if #available(iOS 15, *)
@@ -239,7 +233,7 @@ private extension GamesViewController
         {
         case .opaque: searchResultsController.dataSource.placeholderView = placeholderView
         case .translucent:
-            let vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .dark)))
+            let vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial)))
             vibrancyView.contentView.addSubview(placeholderView, pinningEdgesWith: .zero)
             searchResultsController.dataSource.placeholderView = vibrancyView
         }
@@ -261,7 +255,7 @@ private extension GamesViewController
             searchResultsController?.dataSource.predicate = searchValue.predicate
             return nil
         }
-        self.searchController?.searchBar.barStyle = .black
+        self.searchController?.searchBar.barStyle = .default
         
         self.navigationItem.searchController = self.searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
@@ -273,7 +267,7 @@ private extension GamesViewController
     {
         switch self.theme
         {
-        case .opaque: self.view.backgroundColor = UIColor.ignitedDarkGray
+        case .opaque: self.view.backgroundColor = .systemBackground
         case .translucent: self.view.backgroundColor = nil
         }
                 

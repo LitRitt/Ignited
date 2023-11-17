@@ -22,10 +22,6 @@ class LaunchViewController: RSTLaunchViewController
     
     private var didAttemptStartingSyncManager = false
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.gameViewController?.preferredStatusBarStyle ?? .lightContent
-    }
-    
     override var prefersStatusBarHidden: Bool {
         return self.gameViewController?.prefersStatusBarHidden ?? false
     }

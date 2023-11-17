@@ -32,7 +32,7 @@ class GamesPresentationController: UIPresentationController
         containerView.addSubview(self.blurView)
         
         self.animator.addAnimations {
-            self.blurView.effect = UIBlurEffect(style: .dark)
+            self.blurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
         }
     }
     

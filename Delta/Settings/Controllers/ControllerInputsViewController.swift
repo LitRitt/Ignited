@@ -69,12 +69,11 @@ class ControllerInputsViewController: UIViewController
         
         if let navigationController = self.navigationController
         {
-            navigationController.overrideUserInterfaceStyle = .dark
             navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance // Fixes invisible navigation bar on iPad.
         }
         else
         {
-            self.navigationController?.navigationBar.barStyle = .black
+            self.navigationController?.navigationBar.barStyle = .default
         }
         
         NSLayoutConstraint.activate([self.gameViewController.gameView.centerYAnchor.constraint(equalTo: self.actionsMenuViewController.view.centerYAnchor)])

@@ -44,26 +44,22 @@ class GamesDatabaseBrowserViewController: UITableViewController
         self.prepareDataSource()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.ignitedDarkGray
+        self.view.backgroundColor = .systemBackground
         
         self.tableView.register(GameTableViewCell.nib!, forCellReuseIdentifier: RSTCellContentGenericCellIdentifier)
         
         self.tableView.dataSource = self.dataSource
         self.tableView.prefetchDataSource = self.dataSource
         
-        self.tableView.indicatorStyle = .white
-        self.tableView.separatorColor = UIColor.gray
+//        self.tableView.indicatorStyle = .white
+//        self.tableView.separatorColor = UIColor.gray
         
         self.dataSource.searchController.delegate = self
-        self.dataSource.searchController.searchBar.barStyle = .black
+        self.dataSource.searchController.searchBar.barStyle = .default
         
         self.navigationItem.searchController = self.dataSource.searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
@@ -147,19 +143,19 @@ private extension GamesDatabaseBrowserViewController
 {
     func configure(cell: GameTableViewCell, with metadata: GameMetadata, for indexPath: IndexPath)
     {
-        cell.backgroundColor = UIColor.ignitedDarkGray
+        cell.backgroundColor = .systemBackground
         
         cell.nameLabel.text = metadata.name ?? NSLocalizedString("Unknown", comment: "")
         cell.artworkImageView.image = #imageLiteral(resourceName: "NES")
         
         cell.artworkImageView.layer.masksToBounds = true
-        cell.artworkImageView.layer.borderWidth = 1.2
+        cell.artworkImageView.layer.borderWidth = 2
         cell.artworkImageView.layer.cornerRadius = 15
         cell.artworkImageView.contentMode = .scaleToFill
         
         cell.artworkImageView.tintColor = UIColor.white
-        cell.artworkImageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
-        cell.artworkImageView.backgroundColor = self.view.tintColor.dynamicTint(0.1, style: UITraitCollection.current.userInterfaceStyle)
+        cell.artworkImageView.layer.borderColor = UIColor.lightGray.cgColor
+        cell.artworkImageView.backgroundColor = self.view.tintColor
         
         cell.artworkImageViewLeadingConstraint.constant = 15
         cell.artworkImageViewTrailingConstraint.constant = 15

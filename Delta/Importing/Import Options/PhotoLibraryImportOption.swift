@@ -33,7 +33,6 @@ class PhotoLibraryImportOption: NSObject, ImportOption
         imagePickerController.modalPresentationStyle = .fullScreen
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.mediaTypes = [kUTTypeImage as String]
-        imagePickerController.view.backgroundColor = .white
         self.presentingViewController.present(imagePickerController, animated: true, completion: nil)
     }
 }

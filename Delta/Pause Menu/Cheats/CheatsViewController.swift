@@ -44,15 +44,15 @@ extension CheatsViewController
         
         self.title = NSLocalizedString("Cheats", comment: "")
         
-        let vibrancyEffect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .dark))
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial))
         let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
         
         let placeholderView = RSTPlaceholderView(frame: CGRect(x: 0, y: 0, width: vibrancyView.bounds.width, height: vibrancyView.bounds.height))
         placeholderView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         placeholderView.textLabel.text = NSLocalizedString("No Cheats", comment: "")
-        placeholderView.textLabel.textColor = UIColor.white
+        placeholderView.textLabel.textColor = UIColor.label
         placeholderView.detailTextLabel.text = NSLocalizedString("You can add a new cheat by pressing the + button in the top right.", comment: "")
-        placeholderView.detailTextLabel.textColor = UIColor.white
+        placeholderView.detailTextLabel.textColor = UIColor.label
         vibrancyView.contentView.addSubview(placeholderView)
         
         self.dataSource.placeholderView = vibrancyView
@@ -241,7 +241,7 @@ private extension CheatsViewController
         let cheat = self.dataSource.item(at: indexPath)
         cell.textLabel?.text = cheat.name
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: cell.textLabel!.font.pointSize)
-        cell.textLabel?.textColor = UIColor.white
+        cell.textLabel?.textColor = UIColor.label
         cell.accessoryType = cheat.isEnabled ? .checkmark : .none
     }
     

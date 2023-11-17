@@ -238,11 +238,7 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     override var prefersStatusBarHidden: Bool {
-        return !((Settings.userInterfaceFeatures.statusBar.isOn && Settings.userInterfaceFeatures.statusBar.isEnabled) || (!Settings.userInterfaceFeatures.statusBar.useToggle && Settings.userInterfaceFeatures.statusBar.isEnabled))
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle(rawValue: Settings.userInterfaceFeatures.statusBar.style.rawValue) ?? .default
+        return !Settings.userInterfaceFeatures.statusBar.isEnabled
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -433,7 +429,7 @@ extension GameViewController
         self.sustainButtonsContentView.isHidden = true
         self.view.insertSubview(self.sustainButtonsContentView, aboveSubview: self.airPlayContentView)
         
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         
         self.airPlayBlurView = UIVisualEffectView(effect: blurEffect)
