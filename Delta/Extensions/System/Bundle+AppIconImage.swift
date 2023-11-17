@@ -10,7 +10,7 @@ import UIKit
 
 extension Bundle
 {
-    static func appIcon(for altIcon: AppIcon = .normal) -> UIImage? {
+    static func appIcon(_ altIcon: AppIcon = .normal) -> UIImage? {
         guard let appIcons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any] else { return nil }
         
         switch altIcon
@@ -32,7 +32,7 @@ extension Bundle
         }
     }
     
-    static func appIcon(for themeIcon: ThemeColor = .orange) -> UIImage? {
+    static func appIcon(forTheme themeIcon: ThemeColor = .orange) -> UIImage? {
         guard let appIcons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any] else { return nil }
         
         switch themeIcon
