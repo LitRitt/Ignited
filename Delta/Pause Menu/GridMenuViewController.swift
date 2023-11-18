@@ -97,26 +97,25 @@ private extension GridMenuViewController
         
         cell.imageView.image = pauseItem.image
         cell.imageView.contentMode = .center
-        cell.imageView.layer.borderWidth = 2
-        cell.imageView.layer.borderColor = self.view.tintColor.cgColor
         cell.imageView.layer.cornerRadius = 10
+        cell.imageView.layer.borderWidth = 2
+        cell.imageView.layer.borderColor = UIColor.themeColor.cgColor
+        cell.imageView.tintColor = UIColor.themeColor
+        cell.imageView.backgroundColor = UIColor.clear
         
         cell.textLabel.text = pauseItem.text
         cell.textLabel.textColor = self.view.tintColor
         
         if pauseItem.isSelected
         {
-            cell.imageView.tintColor = UIColor.black
-            cell.imageView.backgroundColor = self.view.tintColor
+            cell.isImageViewVibrancyEnabled = false
         }
         else
         {
-            cell.imageView.tintColor = self.view.tintColor
-            cell.imageView.backgroundColor = UIColor.clear
+            cell.isImageViewVibrancyEnabled = true
         }
         
-        cell.isImageViewVibrancyEnabled = self.isVibrancyEnabled
-        cell.isTextLabelVibrancyEnabled = self.isVibrancyEnabled
+        cell.isTextLabelVibrancyEnabled = true
     }
     
     func updateItems()
