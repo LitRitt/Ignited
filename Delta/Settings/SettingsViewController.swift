@@ -40,7 +40,7 @@ private extension SettingsViewController
     enum FeaturesRow: Int, CaseIterable
     {
         case gameplay
-        case controllerSkins
+        case controllers
         case library
         case userInterface
         case touchFeedback
@@ -232,51 +232,9 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    func showGameplayFeatures()
+    func showFeatures(featureGroup: FeatureGroup)
     {
-        let hostingController = GameplayFeaturesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
-    func showControllerFeatures()
-    {
-        let hostingController = ControllerFeaturesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
-    func showLibraryFeatures()
-    {
-        let hostingController = LibraryFeaturesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
-    func showUserInterfaceFeatures()
-    {
-        let hostingController = UserInterfaceFeaturesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
-    func showTouchFeedbackFeatures()
-    {
-        let hostingController = TouchFeedbackFeaturesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
-    func showAdvancedFeatures()
-    {
-        let hostingController = AdvancedFeaturesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
-    func showN64Features()
-    {
-        let hostingController = N64FeaturesView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
-    func showGBCFeatures()
-    {
-        let hostingController = GBCFeaturesView.makeViewController()
+        let hostingController = FeaturesView.makeViewController(featureGroup: featureGroup)
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
 }
@@ -417,12 +375,12 @@ extension SettingsViewController
         case .features:
             switch FeaturesRow.allCases[indexPath.row]
             {
-            case .gameplay: self.showGameplayFeatures()
-            case .controllerSkins: self.showControllerFeatures()
-            case .library: self.showLibraryFeatures()
-            case .userInterface: self.showUserInterfaceFeatures()
-            case .touchFeedback: self.showTouchFeedbackFeatures()
-            case .advanced: self.showAdvancedFeatures()
+            case .gameplay: self.showFeatures(featureGroup: .gameplay)
+            case .controllers: self.showFeatures(featureGroup: .controllers)
+            case .library: self.showFeatures(featureGroup: .library)
+            case .userInterface: self.showFeatures(featureGroup: .userInterface)
+            case .touchFeedback: self.showFeatures(featureGroup: .touchFeedback)
+            case .advanced: self.showFeatures(featureGroup: .advanced)
             }
             
         case .resourceLinks:
@@ -445,9 +403,9 @@ extension SettingsViewController
             switch CoresRow.allCases[indexPath.row]
             {
             case .gbc:
-                self.showGBCFeatures()
+                self.showFeatures(featureGroup: .gbc)
             case .n64:
-                self.showN64Features()
+                self.showFeatures(featureGroup: .n64)
             case .ds:
                 self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
             }
