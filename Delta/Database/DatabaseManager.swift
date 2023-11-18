@@ -122,8 +122,6 @@ extension DatabaseManager
                     return nil
                 }
                 
-                let bios = Game(context: context)
-                
                 let filename: String
                 var artworkURL: URL? = nil
                 
@@ -179,6 +177,7 @@ extension DatabaseManager
                 default: filename = "system.bios"
                 }
                 
+                let bios = Game(context: context)
                 bios.name = name
                 bios.identifier = identifier
                 bios.type = .ds
