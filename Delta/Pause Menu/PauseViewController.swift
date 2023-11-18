@@ -198,7 +198,7 @@ private extension PauseViewController
                                            action: { _ in })
         }
         
-        if Settings.userInterfaceFeatures.statusBar.isEnabled && Settings.userInterfaceFeatures.statusBar.useToggle
+        if Settings.userInterfaceFeatures.statusBar.isEnabled
         {
             self.statusBarItem = MenuItem(text: NSLocalizedString("Status Bar", comment: ""),
                                           image: UIImage.symbolWithTemplate(name: "clock.fill"),

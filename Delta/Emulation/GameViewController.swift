@@ -582,7 +582,7 @@ extension GameViewController
                 self.performScreenshotAction()
             }
             
-            pauseViewController.statusBarItem?.isSelected = Settings.userInterfaceFeatures.statusBar.isOn
+            pauseViewController.statusBarItem?.isSelected = Settings.userInterfaceFeatures.statusBar.isEnabled
             pauseViewController.statusBarItem?.action = { [unowned self] item in
                 self.performStatusBarAction()
             }
@@ -1796,14 +1796,14 @@ extension GameViewController
     
     func performStatusBarAction()
     {
-        Settings.userInterfaceFeatures.statusBar.isOn = !Settings.userInterfaceFeatures.statusBar.isOn
+        Settings.userInterfaceFeatures.statusBar.isEnabled = !Settings.userInterfaceFeatures.statusBar.isEnabled
         
         self.updateStatusBar()
         
         if Settings.userInterfaceFeatures.toasts.statusBar
         {
             let text: String
-            if Settings.userInterfaceFeatures.statusBar.isOn
+            if Settings.userInterfaceFeatures.statusBar.isEnabled
             {
                 text = NSLocalizedString("Status Bar Enabled", comment: "")
             }
