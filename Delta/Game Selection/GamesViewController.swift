@@ -681,12 +681,22 @@ private extension GamesViewController
     
     func makeSortingMenu() -> UIMenu
     {
-        let favoritesAction = UIAction(title: NSLocalizedString("Favorites First", comment: ""),
-                                       image: UIImage(systemName: "star"),
-                                       state: Settings.libraryFeatures.favorites.favoriteSort ? .on : .off,
-                                       handler: { action in
-                                           Settings.libraryFeatures.favorites.favoriteSort = !Settings.libraryFeatures.favorites.favoriteSort
-                                           self.updateOptionsMenu()
+        let favoritesAction = Settings.libraryFeatures.favorites.favoriteSort
+        ?
+        UIAction(title: NSLocalizedString("Favorites First", comment: ""),
+                 image: UIImage(systemName: "star"),
+                 state: .on,
+                 handler: { action in
+            Settings.libraryFeatures.favorites.favoriteSort = false
+            self.updateOptionsMenu()
+        })
+        :
+        UIAction(title: NSLocalizedString("Favorites First", comment: ""),
+                 image: UIImage(systemName: "star.slash"),
+                 state: .off,
+                 handler: { action in
+            Settings.libraryFeatures.favorites.favoriteSort = true
+            self.updateOptionsMenu()
         })
         
         var sortOptions: [UIAction] = []
