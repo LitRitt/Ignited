@@ -31,14 +31,14 @@ struct QuickSettingsView: View
     
     @State private var gameAudioVolume: Double = Settings.gameplayFeatures.gameAudio.volume
     
-    @State private var controllerSkinOpacity: Double = Settings.controllerSkinFeatures.skinCustomization.opacity
-    @State private var controllerSkinBackgroundColor: Color = Settings.controllerSkinFeatures.skinCustomization.backgroundColor
-    @State private var controllerSkinAirPlayKeepScreen: Bool = Settings.controllerSkinFeatures.airPlayKeepScreen.isEnabled
+    @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
+    @State private var controllerSkinBackgroundColor: Color = Settings.controllerFeatures.skin.backgroundColor
+    @State private var controllerSkinAirPlayKeepScreen: Bool = Settings.controllerFeatures.airPlayKeepScreen.isEnabled
     
-    @State private var backgroundBlurStrength: Double = Settings.controllerSkinFeatures.backgroundBlur.blurStrength
-    @State private var backgroundBlurBrightness: Double = Settings.controllerSkinFeatures.backgroundBlur.blurBrightness
-    @State private var backgroundBlurTintIntensity: Double = Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity
-    @State private var backgroundBlurTintEnabled: Bool = Settings.controllerSkinFeatures.backgroundBlur.blurTint
+    @State private var backgroundBlurStrength: Double = Settings.controllerFeatures.backgroundBlur.blurStrength
+    @State private var backgroundBlurBrightness: Double = Settings.controllerFeatures.backgroundBlur.blurBrightness
+    @State private var backgroundBlurTintIntensity: Double = Settings.controllerFeatures.backgroundBlur.blurTintIntensity
+    @State private var backgroundBlurTintEnabled: Bool = Settings.controllerFeatures.backgroundBlur.blurTint
     
     @State private var gameboyPalette: GameboyPalette = Settings.gbcFeatures.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = Settings.gbcFeatures.palettes.spritePalette1
@@ -216,7 +216,7 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if self.controllerSkinEnabled && Settings.controllerSkinFeatures.skinCustomization.isEnabled
+                if self.controllerSkinEnabled && Settings.controllerFeatures.skin.isEnabled
                 {
                     Section() {
                         VStack {
@@ -225,28 +225,28 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.controllerSkinOpacity = 1.0
-                                    Settings.controllerSkinFeatures.skinCustomization.opacity = self.controllerSkinOpacity
+                                    Settings.controllerFeatures.skin.opacity = self.controllerSkinOpacity
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$controllerSkinOpacity, in: 0.0...1.0, step: 0.05)
                                 .onChange(of: self.controllerSkinOpacity) { value in
-                                    Settings.controllerSkinFeatures.skinCustomization.opacity = value
+                                    Settings.controllerFeatures.skin.opacity = value
                                 }
                             
                             if self.expandedControllerSkinEnabled
                             {
                                 ColorPicker("Background Color", selection: self.$controllerSkinBackgroundColor, supportsOpacity: false)
                                     .onChange(of: self.controllerSkinBackgroundColor) { value in
-                                        Settings.controllerSkinFeatures.skinCustomization.backgroundColor = value
+                                        Settings.controllerFeatures.skin.backgroundColor = value
                                     }
-                                Toggle("Match Theme Color", isOn: Settings.controllerSkinFeatures.skinCustomization.$matchTheme.valueBinding)
+                                Toggle("Match Theme Color", isOn: Settings.controllerFeatures.skin.$matchTheme.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Show Screen During AirPlay", isOn: self.$controllerSkinAirPlayKeepScreen)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                     .onChange(of: self.controllerSkinAirPlayKeepScreen) { value in
-                                        Settings.controllerSkinFeatures.airPlayKeepScreen.isEnabled = value
+                                        Settings.controllerFeatures.airPlayKeepScreen.isEnabled = value
                                     }
-                                Toggle("Show Skin With Controller", isOn: Settings.controllerSkinFeatures.skinCustomization.$alwaysShow.valueBinding)
+                                Toggle("Show Skin With Controller", isOn: Settings.controllerFeatures.skin.$alwaysShow.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }
@@ -255,7 +255,7 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if self.backgroundBlurEnabled && Settings.controllerSkinFeatures.backgroundBlur.isEnabled
+                if self.backgroundBlurEnabled && Settings.controllerFeatures.backgroundBlur.isEnabled
                 {
                     Section() {
                         VStack {
@@ -264,12 +264,12 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.backgroundBlurStrength = 1.0
-                                    Settings.controllerSkinFeatures.backgroundBlur.blurStrength = self.backgroundBlurStrength
+                                    Settings.controllerFeatures.backgroundBlur.blurStrength = self.backgroundBlurStrength
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
                                 .onChange(of: self.backgroundBlurStrength) { value in
-                                    Settings.controllerSkinFeatures.backgroundBlur.blurStrength = value
+                                    Settings.controllerFeatures.backgroundBlur.blurStrength = value
                                 }
                             if self.backgroundBlurTintEnabled {
                                 HStack {
@@ -277,12 +277,12 @@ struct QuickSettingsView: View
                                     Spacer()
                                     Button("Reset") {
                                         self.backgroundBlurTintIntensity = 0.1
-                                        Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity = self.backgroundBlurTintIntensity
+                                        Settings.controllerFeatures.backgroundBlur.blurTintIntensity = self.backgroundBlurTintIntensity
                                     }.buttonStyle(.borderless)
                                 }
                                 Slider(value: self.$backgroundBlurTintIntensity, in: 0.05...0.30, step: 0.05)
                                     .onChange(of: self.backgroundBlurTintIntensity) { value in
-                                        Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity = value
+                                        Settings.controllerFeatures.backgroundBlur.blurTintIntensity = value
                                     }
                             } else {
                                 HStack {
@@ -290,27 +290,27 @@ struct QuickSettingsView: View
                                     Spacer()
                                     Button("Reset") {
                                         self.backgroundBlurBrightness = 0
-                                        Settings.controllerSkinFeatures.backgroundBlur.blurBrightness = self.backgroundBlurBrightness
+                                        Settings.controllerFeatures.backgroundBlur.blurBrightness = self.backgroundBlurBrightness
                                     }.buttonStyle(.borderless)
                                 }
                                 Slider(value: self.$backgroundBlurBrightness, in: -0.5...0.5, step: 0.05)
                                     .onChange(of: self.backgroundBlurBrightness) { value in
-                                        Settings.controllerSkinFeatures.backgroundBlur.blurBrightness = value
+                                        Settings.controllerFeatures.backgroundBlur.blurBrightness = value
                                     }
                             }
                             if self.expandedBackgroundBlurEnabled {
                                 Toggle("Light/Dark Mode Tint", isOn: self.$backgroundBlurTintEnabled)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                     .onChange(of: self.backgroundBlurTintEnabled) { value in
-                                        Settings.controllerSkinFeatures.backgroundBlur.blurTint = value
+                                        Settings.controllerFeatures.backgroundBlur.blurTint = value
                                     }
-                                Toggle("Show During AirPlay", isOn: Settings.controllerSkinFeatures.backgroundBlur.$blurAirPlay.valueBinding)
+                                Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$blurAirPlay.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Maintain Aspect Ratio", isOn: Settings.controllerSkinFeatures.backgroundBlur.$blurAspect.valueBinding)
+                                Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$blurAspect.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Override Skin Setting", isOn: Settings.controllerSkinFeatures.backgroundBlur.$blurOverride.valueBinding)
+                                Toggle("Override Skin Setting", isOn: Settings.controllerFeatures.backgroundBlur.$blurOverride.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Blur Enabled", isOn: Settings.controllerSkinFeatures.backgroundBlur.$blurBackground.valueBinding)
+                                Toggle("Blur Enabled", isOn: Settings.controllerFeatures.backgroundBlur.$blurBackground.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }
@@ -423,7 +423,7 @@ struct QuickSettingsView: View
                                     }
                             }
                         }
-                        if Settings.controllerSkinFeatures.skinCustomization.isEnabled {
+                        if Settings.controllerFeatures.skin.isEnabled {
                             Toggle("Controller Skin", isOn: self.$controllerSkinEnabled)
                                 .onChange(of: self.controllerSkinEnabled) { value in
                                     Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = value
@@ -435,7 +435,7 @@ struct QuickSettingsView: View
                                     }
                             }
                         }
-                        if Settings.controllerSkinFeatures.backgroundBlur.isEnabled {
+                        if Settings.controllerFeatures.backgroundBlur.isEnabled {
                             Toggle("Background Blur", isOn: self.$backgroundBlurEnabled)
                                 .onChange(of: self.backgroundBlurEnabled) { value in
                                     Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = value

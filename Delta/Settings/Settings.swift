@@ -49,8 +49,8 @@ struct Settings
     static let gbcFeatures = GBCFeatures.shared
     static let n64Features = N64Features.shared
     static let gameplayFeatures = GameplayFeatures.shared
-    static let controllerSkinFeatures = ControllerSkinFeatures.shared
-    static let gamesCollectionFeatures = GamesCollectionFeatures.shared
+    static let controllerFeatures = ControllerFeatures.shared
+    static let libraryFeatures = LibraryFeatures.shared
     static let userInterfaceFeatures = UserInterfaceFeatures.shared
     static let touchFeedbackFeatures = TouchFeedbackFeatures.shared
     static let advancedFeatures = AdvancedFeatures.shared
@@ -71,14 +71,14 @@ struct Settings
             Settings.gameplayFeatures.screenshots.settingsKey.rawValue: true,
             Settings.gameplayFeatures.rewind.settingsKey.rawValue: false,
             Settings.gameplayFeatures.quickSettings.settingsKey.rawValue: true,
-            Settings.controllerSkinFeatures.skinCustomization.settingsKey.rawValue: true,
-            Settings.controllerSkinFeatures.backgroundBlur.settingsKey.rawValue: true,
-            Settings.controllerSkinFeatures.airPlaySkins.settingsKey.rawValue: false,
-            Settings.controllerSkinFeatures.airPlayKeepScreen.settingsKey.rawValue: false,
-            Settings.controllerSkinFeatures.controller.settingsKey.rawValue: true,
-            Settings.gamesCollectionFeatures.artwork.settingsKey.rawValue: true,
-            Settings.gamesCollectionFeatures.animation.settingsKey.rawValue: true,
-            Settings.gamesCollectionFeatures.favorites.settingsKey.rawValue: true,
+            Settings.controllerFeatures.skin.settingsKey.rawValue: true,
+            Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue: true,
+            Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue: false,
+            Settings.controllerFeatures.airPlayKeepScreen.settingsKey.rawValue: false,
+            Settings.controllerFeatures.controller.settingsKey.rawValue: true,
+            Settings.libraryFeatures.artwork.settingsKey.rawValue: true,
+            Settings.libraryFeatures.animation.settingsKey.rawValue: true,
+            Settings.libraryFeatures.favorites.settingsKey.rawValue: true,
             Settings.userInterfaceFeatures.appIcon.settingsKey.rawValue: true,
             Settings.userInterfaceFeatures.theme.settingsKey.rawValue: true,
             Settings.userInterfaceFeatures.statusBar.settingsKey.rawValue: false,

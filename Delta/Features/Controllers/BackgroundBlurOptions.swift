@@ -59,7 +59,7 @@ struct BackgroundBlurOptions
             }
         }.displayInline()
     })
-    var blurTintIntensity: Double = 0.10
+    var blurTintIntensity: Double = 0.15
      
     @Option(name: "Show During AirPlay",
              description: "Display the blurred background during AirPlay.")

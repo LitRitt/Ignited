@@ -13,12 +13,11 @@ import Features
 
 struct FavoriteGamesOptions
 {
-    @Option(name: "Favorite Games First",
-            description: "Sort favorited games to the top of the games list.")
+    @Option
     var favoriteSort: Bool = true
     
     @Option(name: "Highlight Favorite Games",
-            description: "Give your favorite games a distinct glow.")
+            description: "Give your favorite games a distinct color.")
     var favoriteHighlight: Bool = true
     
     @Option(name: "Favorite Highlight Color",
@@ -27,22 +26,7 @@ struct FavoriteGamesOptions
         ColorPicker("Favorite Highlight Color", selection: value, supportsOpacity: false)
             .displayInline()
     })
-    var favoriteColor: Color = Color(red: 255/255, green: 234/255, blue: 0/255)
-    
-    @Option(name: "Favorite Highlight Intensity", description: "Change how intense the glow effect is on favorited games.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Favorite Highlight Intensity: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.05)
-                Text("100%")
-            }
-        }.displayInline()
-    })
-    var highlightIntensity: Double = 0.7
+    var favoriteColor: Color = .yellow
     
     @Option
     var favoriteGames: [String: [String]] = [

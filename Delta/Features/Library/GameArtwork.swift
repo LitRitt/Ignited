@@ -20,6 +20,15 @@ enum ArtworkSize: String, CaseIterable, CustomStringConvertible
     var description: String {
         return self.rawValue
     }
+    
+    var symbolName: String {
+        switch self
+        {
+        case .small: return "square.grid.4x3.fill"
+        case .medium: return "square.grid.3x3.fill"
+        case .large: return "square.grid.2x2.fill"
+        }
+    }
 }
 
 extension ArtworkSize: LocalizedOptionValue
@@ -39,6 +48,16 @@ enum SortOrder: String, CaseIterable, CustomStringConvertible
     var description: String {
         return self.rawValue
     }
+    
+    var symbolName: String {
+        switch self
+        {
+        case .alphabeticalAZ: return "arrowtriangle.up"
+        case .alphabeticalZA: return "arrowtriangle.down"
+        case .mostRecent: return "arrow.clockwise"
+        case .leastRecent: return "arrow.counterclockwise"
+        }
+    }
 }
 
 extension SortOrder: LocalizedOptionValue
@@ -56,32 +75,11 @@ struct GameArtworkOptions
     @Option
     var size: ArtworkSize = .medium
     
-    @Option(name: "Theme Background Color",
-            description: "Enable to use theme color for the artwork background color. Disable to use the color selected below.")
-    var bgThemed: Bool = true
+    @Option(name: "Theme All Artwork", description: "Apply the theme color to all game artwork, not just the currently running game.")
+    var themeAll: Bool = true
     
-    @Option(name: "Background Color",
-            description: "Select a custom color to use for the artwork background.",
-            detailView: { value in
-        ColorPicker("Background Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
-    var bgColor: Color = Color(red: 253/255, green: 110/255, blue: 0/255)
-    
-    @Option(name: "Background Opacity", description: "Adjust the opacity of the artwork background.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Background Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.05)
-                Text("100%")
-            }
-        }.displayInline()
-    })
-    var bgOpacity: Double = 1.0
+    @Option(name: "Use Game Screenshots", description: "Enable to show the most recent save state's screenshot of the game as its artwork.")
+    var useScreenshots: Bool = true
     
     @Option(name: "Title Size", description: "The size of the game's title.", detailView: { value in
         VStack {
@@ -90,9 +88,9 @@ struct GameArtworkOptions
                 Spacer()
             }
             HStack {
-                Text("70%")
-                Slider(value: value, in: 0.7...1.3, step: 0.05)
-                Text("130%")
+                Text("Hidden")
+                Slider(value: value, in: 0.0...1.5, step: 0.05)
+                Text("150%")
             }
         }.displayInline()
     })
@@ -121,8 +119,8 @@ struct GameArtworkOptions
             }
             HStack {
                 Text("0pt")
-                Slider(value: value, in: 0...20, step: 1)
-                Text("20pt")
+                Slider(value: value, in: 0...30, step: 1)
+                Text("30pt")
             }
         }.displayInline()
     })
@@ -136,12 +134,12 @@ struct GameArtworkOptions
             }
             HStack {
                 Text("0pt")
-                Slider(value: value, in: 0.0...2.0, step: 0.1)
+                Slider(value: value, in: 0.0...5.0, step: 0.5)
                 Text("2pt")
             }
         }.displayInline()
     })
-    var borderWidth: Double = 1.2
+    var borderWidth: Double = 2
     
     @Option(name: "Shadow Opacity", description: "How dark the shadows should be.", detailView: { value in
         VStack {
@@ -151,7 +149,7 @@ struct GameArtworkOptions
             }
             HStack {
                 Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.05)
+                Slider(value: value, in: 0.0...1.0, step: 0.1)
                 Text("100%")
             }
         }.displayInline()

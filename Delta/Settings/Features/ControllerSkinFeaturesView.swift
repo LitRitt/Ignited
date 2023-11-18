@@ -1,5 +1,5 @@
 //
-//  ControllerSkinFeaturesView.swift
+//  ControllerFeaturesView.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 6/28/23.
@@ -11,7 +11,7 @@ import Combine
 
 import Features
 
-extension ControllerSkinFeaturesView
+extension ControllerFeaturesView
 {
     private class ViewModel: ObservableObject
     {
@@ -21,7 +21,7 @@ extension ControllerSkinFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            let sortedFeatures = Settings.controllerSkinFeatures.allFeatures.sorted { (featureA, featureB) in
+            let sortedFeatures = Settings.controllerFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
             
@@ -30,18 +30,13 @@ extension ControllerSkinFeaturesView
     }
 }
 
-struct ControllerSkinFeaturesView: View
+struct ControllerFeaturesView: View
 {
     @StateObject
     private var viewModel: ViewModel = ViewModel()
     
     var body: some View {
         Form {
-            Section(content: {}, footer: {
-                Text("These features change how you interact with your games.")
-                    .font(.subheadline)
-            })
-            
             ForEach(viewModel.sortedFeatures, id: \.key) { feature in
                 section(for: feature)
             }
@@ -58,14 +53,14 @@ struct ControllerSkinFeaturesView: View
     }
 }
 
-extension ControllerSkinFeaturesView
+extension ControllerFeaturesView
 {
     static func makeViewController() -> UIHostingController<some View>
     {
-        let featuresView = ControllerSkinFeaturesView()
+        let featuresView = ControllerFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Controllers and Skins", comment: "")
+        hostingController.title = NSLocalizedString("Controllers", comment: "")
         return hostingController
     }
 }

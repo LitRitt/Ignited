@@ -249,17 +249,16 @@ extension PowerUserOptions
         case saveStateRewind
         case fastForward
         case quickSettings
-        // Controllers and Skins
-        case skinCustomization
+        // Controllers
+        case skin
         case backgroundBlur
         case controller
-        // Games Collection
+        // Library
         case artworkCustomization
         case animatedArtwork
         case favoriteGames
         // User Interface
         case toastNotifications
-        case statusBar
         case themeColor
         case appIcon
         case randomGame
@@ -331,47 +330,45 @@ extension PowerUserOptions
                 Settings.gameplayFeatures.quickSettings.expandedBackgroundBlurEnabled = false
                 Settings.gameplayFeatures.quickSettings.colorPalettesEnabled = true
                 
-            case .skinCustomization:
-                Settings.controllerSkinFeatures.skinCustomization.opacity = 0.7
-                Settings.controllerSkinFeatures.skinCustomization.alwaysShow = false
-                Settings.controllerSkinFeatures.skinCustomization.matchTheme = false
-                Settings.controllerSkinFeatures.skinCustomization.backgroundColor = Color(red: 0/255, green: 0/255, blue: 0/255)
+            case .skin:
+                Settings.controllerFeatures.skin.opacity = 0.7
+                Settings.controllerFeatures.skin.alwaysShow = false
+                Settings.controllerFeatures.skin.matchTheme = false
+                Settings.controllerFeatures.skin.backgroundColor = .black
                 
             case .backgroundBlur:
-                Settings.controllerSkinFeatures.backgroundBlur.blurBackground = true
-                Settings.controllerSkinFeatures.backgroundBlur.blurAirPlay = true
-                Settings.controllerSkinFeatures.backgroundBlur.blurAspect = true
-                Settings.controllerSkinFeatures.backgroundBlur.blurOverride = false
-                Settings.controllerSkinFeatures.backgroundBlur.blurStrength = 1.0
-                Settings.controllerSkinFeatures.backgroundBlur.blurBrightness = 0.0
-                Settings.controllerSkinFeatures.backgroundBlur.blurTint = true
-                Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity = 0.10
+                Settings.controllerFeatures.backgroundBlur.blurBackground = true
+                Settings.controllerFeatures.backgroundBlur.blurAirPlay = true
+                Settings.controllerFeatures.backgroundBlur.blurAspect = true
+                Settings.controllerFeatures.backgroundBlur.blurOverride = false
+                Settings.controllerFeatures.backgroundBlur.blurStrength = 1.0
+                Settings.controllerFeatures.backgroundBlur.blurBrightness = 0.0
+                Settings.controllerFeatures.backgroundBlur.blurTint = true
+                Settings.controllerFeatures.backgroundBlur.blurTintIntensity = 0.15
                 
             case .controller:
-                Settings.controllerSkinFeatures.controller.triggerDeadzone = 0.15
+                Settings.controllerFeatures.controller.triggerDeadzone = 0.15
                 
             case .artworkCustomization:
-                Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalAZ
-                Settings.gamesCollectionFeatures.artwork.size = .medium
-                Settings.gamesCollectionFeatures.artwork.bgThemed = true
-                Settings.gamesCollectionFeatures.artwork.bgColor = Color(red: 253/255, green: 110/255, blue: 0/255)
-                Settings.gamesCollectionFeatures.artwork.bgOpacity = 1.0
-                Settings.gamesCollectionFeatures.artwork.titleSize = 1.0
-                Settings.gamesCollectionFeatures.artwork.titleMaxLines = 3
-                Settings.gamesCollectionFeatures.artwork.cornerRadius = 15
-                Settings.gamesCollectionFeatures.artwork.borderWidth = 1.2
-                Settings.gamesCollectionFeatures.artwork.shadowOpacity = 0.5
+                Settings.libraryFeatures.artwork.sortOrder = .alphabeticalAZ
+                Settings.libraryFeatures.artwork.size = .medium
+                Settings.libraryFeatures.artwork.themeAll = true
+                Settings.libraryFeatures.artwork.useScreenshots = true
+                Settings.libraryFeatures.artwork.titleSize = 1.0
+                Settings.libraryFeatures.artwork.titleMaxLines = 3
+                Settings.libraryFeatures.artwork.cornerRadius = 15
+                Settings.libraryFeatures.artwork.borderWidth = 2
+                Settings.libraryFeatures.artwork.shadowOpacity = 0.5
                 
             case .animatedArtwork:
-                Settings.gamesCollectionFeatures.animation.animationSpeed = 1.0
-                Settings.gamesCollectionFeatures.animation.animationPause = 0
-                Settings.gamesCollectionFeatures.animation.animationMaxLength = 30
+                Settings.libraryFeatures.animation.animationSpeed = 1.0
+                Settings.libraryFeatures.animation.animationPause = 0
+                Settings.libraryFeatures.animation.animationMaxLength = 30
                 
             case .favoriteGames:
-                Settings.gamesCollectionFeatures.favorites.favoriteSort = true
-                Settings.gamesCollectionFeatures.favorites.favoriteHighlight = true
-                Settings.gamesCollectionFeatures.favorites.favoriteColor = Color(red: 255/255, green: 234/255, blue: 0/255)
-                Settings.gamesCollectionFeatures.favorites.highlightIntensity = 0.7
+                Settings.libraryFeatures.favorites.favoriteSort = true
+                Settings.libraryFeatures.favorites.favoriteHighlight = true
+                Settings.libraryFeatures.favorites.favoriteColor = .yellow
                 
             case .toastNotifications:
                 Settings.userInterfaceFeatures.toasts.duration = 1.5
@@ -388,15 +385,10 @@ extension PowerUserOptions
                 Settings.userInterfaceFeatures.toasts.altSkin = false
                 Settings.userInterfaceFeatures.toasts.debug = false
                 
-            case .statusBar:
-                Settings.userInterfaceFeatures.statusBar.isOn = false
-                Settings.userInterfaceFeatures.statusBar.useToggle = false
-                Settings.userInterfaceFeatures.statusBar.style = .light
-                
             case .themeColor:
-                Settings.userInterfaceFeatures.theme.accentColor = .orange
-                Settings.userInterfaceFeatures.theme.useCustom = false
-                Settings.userInterfaceFeatures.theme.customColor = Color(red: 253/255, green: 110/255, blue: 0/255)
+                Settings.userInterfaceFeatures.theme.color = .orange
+                Settings.userInterfaceFeatures.theme.customLightColor = .accentColor
+                Settings.userInterfaceFeatures.theme.customDarkColor = .accentColor
                 
             case .appIcon:
                 Settings.userInterfaceFeatures.appIcon.useTheme = true
@@ -418,8 +410,8 @@ extension PowerUserOptions
                 
             case .touchOverlay:
                 Settings.touchFeedbackFeatures.touchOverlay.themed = true
-                Settings.touchFeedbackFeatures.touchOverlay.overlayColor = Color(red: 255/255, green: 255/255, blue: 255/255)
-                Settings.touchFeedbackFeatures.touchOverlay.style = .bubble
+                Settings.touchFeedbackFeatures.touchOverlay.overlayColor = .white
+                Settings.touchFeedbackFeatures.touchOverlay.style = .glow
                 Settings.touchFeedbackFeatures.touchOverlay.opacity = 1.0
                 Settings.touchFeedbackFeatures.touchOverlay.size = 1.0
                 

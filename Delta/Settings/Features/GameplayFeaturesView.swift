@@ -37,11 +37,6 @@ struct GameplayFeaturesView: View
     
     var body: some View {
         Form {
-            Section(content: {}, footer: {
-                Text("These features change how you interact with your games.")
-                    .font(.subheadline)
-            })
-            
             ForEach(viewModel.sortedFeatures, id: \.key) { feature in
                 section(for: feature)
             }

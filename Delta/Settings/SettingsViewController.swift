@@ -41,7 +41,7 @@ private extension SettingsViewController
     {
         case gameplay
         case controllerSkins
-        case gamesCollection
+        case library
         case userInterface
         case touchFeedback
         case advanced
@@ -238,15 +238,15 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    func showControllerSkinFeatures()
+    func showControllerFeatures()
     {
-        let hostingController = ControllerSkinFeaturesView.makeViewController()
+        let hostingController = ControllerFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    func showGamesCollectionFeatures()
+    func showLibraryFeatures()
     {
-        let hostingController = GamesCollectionFeaturesView.makeViewController()
+        let hostingController = LibraryFeaturesView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -418,8 +418,8 @@ extension SettingsViewController
             switch FeaturesRow.allCases[indexPath.row]
             {
             case .gameplay: self.showGameplayFeatures()
-            case .controllerSkins: self.showControllerSkinFeatures()
-            case .gamesCollection: self.showGamesCollectionFeatures()
+            case .controllerSkins: self.showControllerFeatures()
+            case .library: self.showLibraryFeatures()
             case .userInterface: self.showUserInterfaceFeatures()
             case .touchFeedback: self.showTouchFeedbackFeatures()
             case .advanced: self.showAdvancedFeatures()

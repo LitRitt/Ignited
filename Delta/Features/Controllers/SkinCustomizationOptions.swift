@@ -1,5 +1,5 @@
 //
-//  SkinCustomizationOptions.swift
+//  SkinOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 5/2/23.
@@ -10,7 +10,7 @@ import SwiftUI
 
 import Features
 
-struct SkinCustomizationOptions
+struct SkinOptions
 {
     @Option(name: "Opacity", description: "Change the opacity of supported controller skins.", detailView: { value in
         VStack {
@@ -41,17 +41,17 @@ struct SkinCustomizationOptions
         ColorPicker("Background Color", selection: value, supportsOpacity: false)
             .displayInline()
     })
-    var backgroundColor: Color = Color(red: 0/255, green: 0/255, blue: 0/255)
+    var backgroundColor: Color = .black
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in
         Button("Restore Defaults") {
-            PowerUserOptions.resetFeature(.skinCustomization)
+            PowerUserOptions.resetFeature(.skin)
         }
         .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetSkinCustomization: Bool = false
+    var resetSkins: Bool = false
 }

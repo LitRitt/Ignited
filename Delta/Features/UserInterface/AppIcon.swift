@@ -13,11 +13,8 @@ import Features
 enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
     case normal = "Default"
-    case cartridge = "Cartridge"
-    case beta = "Beta"
     case neon = "Neon"
     case pride = "Pride"
-    case steel = "Steel"
     case classic = "Classic"
     case simple = "Simple"
     case glass = "Glass"
@@ -34,7 +31,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: String {
         switch self
         {
-        case .normal, .cartridge, .beta, .neon, .pride, .steel: return "LitRitt"
+        case .normal, .neon, .pride: return "LitRitt"
         case .classic: return "Kongolabongo"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
@@ -44,12 +41,9 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var assetName: String {
         switch self
         {
-        case .normal: return "AppIcon"
-        case .cartridge: return "IconCartridge"
-        case .beta: return "IconBeta"
+        case .normal: return "IconOrange"
         case .neon: return "IconNeon"
         case .pride: return "IconPride"
-        case .steel: return "IconSteel"
         case .classic: return "IconClassic"
         case .simple: return "IconSimple"
         case .glass: return "IconGlass"
@@ -92,26 +86,25 @@ struct AppIconOptions
         List {
             ForEach(AppIcon.allCases) { icon in
                 HStack {
-                    if icon == value.wrappedValue
-                    {
+                    if icon == value.wrappedValue {
                         Text("✓")
                             .foregroundColor(.accentColor)
                         icon.localizedDescription
                             .foregroundColor(.accentColor)
-                    }
-                    else
-                    {
+                    } else {
                         icon.localizedDescription
                     }
-                    if icon.author != "LitRitt"
-                    {
-                        Text("- by \(icon.author)")
-                            .font(.system(size: 15))
-                            .foregroundColor(.gray)
-                    }
+                    Text("- by \(icon.author)")
+                        .font(.system(size: 15))
+                        .foregroundColor(.gray)
                     Spacer()
-                    Image(uiImage: Bundle.appIcon(for: icon) ?? UIImage())
-                        .cornerRadius(13)
+                    if icon == .normal {
+                        Image(uiImage: Bundle.appIcon(forTheme: Settings.userInterfaceFeatures.theme.color) ?? UIImage())
+                            .cornerRadius(13)
+                    } else {
+                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
+                            .cornerRadius(13)
+                    }
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -143,7 +136,7 @@ extension AppIconOptions
 {
     static func updateAppIconPreference()
     {
-        Settings.userInterfaceFeatures.appIcon.useTheme = false
+        Settings.userInterfaceFeatures.appIcon.useTheme = Settings.userInterfaceFeatures.appIcon.alternateIcon == .normal
         
         updateAppIcon()
     }
@@ -162,7 +155,7 @@ extension AppIconOptions
                     return
                 }
                 
-                let themeIcon = Settings.userInterfaceFeatures.theme.accentColor
+                let themeIcon = Settings.userInterfaceFeatures.theme.color
                 
                 switch themeIcon
                 {

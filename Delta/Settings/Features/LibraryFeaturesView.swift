@@ -1,5 +1,5 @@
 //
-//  GamesCollectionFeaturesView.swift
+//  LibraryFeaturesView.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 6/3/23.
@@ -11,7 +11,7 @@ import Combine
 
 import Features
 
-extension GamesCollectionFeaturesView
+extension LibraryFeaturesView
 {
     private class ViewModel: ObservableObject
     {
@@ -21,7 +21,7 @@ extension GamesCollectionFeaturesView
         init()
         {
             // Sort features alphabetically by name.
-            let sortedFeatures = Settings.gamesCollectionFeatures.allFeatures.sorted { (featureA, featureB) in
+            let sortedFeatures = Settings.libraryFeatures.allFeatures.sorted { (featureA, featureB) in
                 return String(describing: featureA.name) < String(describing: featureB.name)
             }
             
@@ -30,18 +30,13 @@ extension GamesCollectionFeaturesView
     }
 }
 
-struct GamesCollectionFeaturesView: View
+struct LibraryFeaturesView: View
 {
     @StateObject
     private var viewModel: ViewModel = ViewModel()
     
     var body: some View {
         Form {
-            Section(content: {}, footer: {
-                Text("These features change the look and style of you games collection.")
-                    .font(.subheadline)
-            })
-            
             ForEach(viewModel.sortedFeatures, id: \.key) { feature in
                 section(for: feature)
             }
@@ -58,14 +53,14 @@ struct GamesCollectionFeaturesView: View
     }
 }
 
-extension GamesCollectionFeaturesView
+extension LibraryFeaturesView
 {
     static func makeViewController() -> UIHostingController<some View>
     {
-        let featuresView = GamesCollectionFeaturesView()
+        let featuresView = LibraryFeaturesView()
         
         let hostingController = UIHostingController(rootView: featuresView)
-        hostingController.title = NSLocalizedString("Games Collection", comment: "")
+        hostingController.title = NSLocalizedString("Library", comment: "")
         return hostingController
     }
 }

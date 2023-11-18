@@ -37,11 +37,6 @@ struct AdvancedFeaturesView: View
     
     var body: some View {
         Form {
-            Section(content: {}, footer: {
-                Text("These features are for debugging and troubleshooting purposes. Normal users are advised to avoid this area.")
-                    .font(.subheadline)
-            })
-            
             ForEach(viewModel.sortedFeatures, id: \.key) { feature in
                 section(for: feature)
             }

@@ -519,7 +519,7 @@ private extension SaveStatesViewController
         }
         else
         {
-            let previewAction = Action(title: NSLocalizedString("Remove as Preview Save State", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "eye.slash.fill"), action: { [unowned self] action in
+            let previewAction = Action(title: NSLocalizedString("Remove as Preview Save State", comment: ""), style: .default, image: UIImage(systemName: "eye.slash.fill"), action: { [unowned self] action in
                 self.updatePreviewSaveState(nil)
             })
             actions.append(previewAction)

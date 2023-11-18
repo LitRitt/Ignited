@@ -79,7 +79,7 @@ class ImportController: NSObject
             return action
         }
         
-        let filesAction = Action(title: NSLocalizedString("Files", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "doc")) { action in
+        let filesAction = Action(title: NSLocalizedString("Files", comment: ""), style: .default, image: UIImage(systemName: "doc")) { action in
             self.presentDocumentBrowser()
         }
         actions.append(filesAction)

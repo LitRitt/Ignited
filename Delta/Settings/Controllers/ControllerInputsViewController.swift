@@ -219,7 +219,7 @@ private extension ControllerInputsViewController
         self.navigationItem.popoverMenuController = popoverMenuController
         
         let items = System.allCases.map { [unowned self, weak popoverMenuController, weak listMenuViewController] system -> MenuItem in
-            let item = MenuItem(text: system.localizedShortName, image: #imageLiteral(resourceName: "CheatCodes")) { [weak popoverMenuController, weak listMenuViewController] item in
+            let item = MenuItem(text: system.localizedShortName, image: UIImage.symbolWithTemplate(name: "key.fill")) { [weak popoverMenuController, weak listMenuViewController] item in
                 listMenuViewController?.items.forEach { $0.isSelected = ($0 == item) }
                 popoverMenuController?.isActive = false
                 
@@ -244,19 +244,19 @@ private extension ControllerInputsViewController
             switch input
             {
             case .quickSave:
-                image = #imageLiteral(resourceName: "SaveSaveState")
+                image = UIImage.symbolWithTemplate(name: "tray.and.arrow.down.fill")
                 text = NSLocalizedString("Quick Save", comment: "")
                 
             case .quickLoad:
-                image = #imageLiteral(resourceName: "LoadSaveState")
+                image = UIImage.symbolWithTemplate(name: "tray.and.arrow.up.fill")
                 text = NSLocalizedString("Quick Load", comment: "")
                 
             case .fastForward:
-                image = #imageLiteral(resourceName: "FastForward")
+                image = UIImage.symbolWithTemplate(name: "forward.fill")
                 text = NSLocalizedString("Fast Forward", comment: "")
                 
             case .quickSettings:
-                image = #imageLiteral(resourceName: "QuickSettings")
+                image = UIImage.symbolWithTemplate(name: "gearshape.fill")
                 text = NSLocalizedString("Quick Settings", comment: "")
                 
             default: continue

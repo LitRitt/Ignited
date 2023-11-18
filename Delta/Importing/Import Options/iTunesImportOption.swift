@@ -13,7 +13,7 @@ import DeltaCore
 struct iTunesImportOption: ImportOption
 {
     let title = NSLocalizedString("iTunes", comment: "")
-    let image: UIImage? = UIImage(symbolNameIfAvailable: "music.note")
+    let image: UIImage? = UIImage(systemName: "music.note")
     
     private let presentingViewController: UIViewController
     

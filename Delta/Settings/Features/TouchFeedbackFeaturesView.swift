@@ -37,11 +37,6 @@ struct TouchFeedbackFeaturesView: View
     
     var body: some View {
         Form {
-            Section(content: {}, footer: {
-                Text("These features change how you receive feedback when you press an input.")
-                    .font(.subheadline)
-            })
-            
             ForEach(viewModel.sortedFeatures, id: \.key) { feature in
                 section(for: feature)
             }

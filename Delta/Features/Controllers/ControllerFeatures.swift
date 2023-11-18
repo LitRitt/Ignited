@@ -1,5 +1,5 @@
 //
-//  ControllerSkinFeatures.swift
+//  ControllerFeatures.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 6/28/23.
@@ -8,14 +8,14 @@
 
 import Features
 
-struct ControllerSkinFeatures: FeatureContainer
+struct ControllerFeatures: FeatureContainer
 {
-    static let shared = ControllerSkinFeatures()
+    static let shared = ControllerFeatures()
     
-    @Feature(name: "Skin Customization",
+    @Feature(name: "Skin Options",
              description: "Change the look of controller skins.",
-             options: SkinCustomizationOptions())
-    var skinCustomization
+             options: SkinOptions())
+    var skin
     
     @Feature(name: "Controller Options",
              description: "Change how the app responds to controller inputs.",

@@ -37,11 +37,6 @@ struct UserInterfaceFeaturesView: View
     
     var body: some View {
         Form {
-            Section(content: {}, footer: {
-                Text("These features affect the way the user interface looks and functions.")
-                    .font(.subheadline)
-            })
-            
             ForEach(viewModel.sortedFeatures, id: \.key) { feature in
                 section(for: feature)
             }

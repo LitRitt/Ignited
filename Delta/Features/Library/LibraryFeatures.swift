@@ -1,5 +1,5 @@
 //
-//  GamesCollectionFeatures.swift
+//  LibraryFeatures.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 6/3/23.
@@ -8,17 +8,17 @@
 
 import Features
 
-struct GamesCollectionFeatures: FeatureContainer
+struct LibraryFeatures: FeatureContainer
 {
-    static let shared = GamesCollectionFeatures()
+    static let shared = LibraryFeatures()
     
-    @Feature(name: "Artwork Customization",
+    @Feature(name: "Artwork Options",
              description: "Change the style of the game artwork.",
              options: GameArtworkOptions())
     var artwork
     
     @Feature(name: "Animated Artwork",
-             description: "Bring your games collection to life.",
+             description: "Bring your Library to life.",
              options: AnimatedArtworkOptions())
     var animation
     

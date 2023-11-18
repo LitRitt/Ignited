@@ -30,7 +30,7 @@ struct TouchFeedbackOverlayOptions
         ColorPicker("Custom Color", selection: value, supportsOpacity: false)
             .displayInline()
     })
-    var overlayColor: Color = Color(red: 255/255, green: 255/255, blue: 255/255)
+    var overlayColor: Color = .white
     
     @Option(name: "Style", description: "Choose the style to use for overlays.", values: ButtonOverlayStyle.allCases)
     var style: ButtonOverlayStyle = .bubble

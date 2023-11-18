@@ -251,7 +251,7 @@ private extension PauseViewController
                                               action: { _ in })
         }
         
-        if Settings.controllerSkinFeatures.backgroundBlur.isEnabled
+        if Settings.controllerFeatures.backgroundBlur.isEnabled
         {
             self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""),
                                               image: UIImage.symbolWithTemplate(name: "aqi.medium"),

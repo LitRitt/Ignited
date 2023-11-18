@@ -417,7 +417,7 @@ extension GameViewController
         // Lays out self.gameView, so we can pin self.sustainButtonsContentView to it without resulting in a temporary "cannot satisfy constraints".
         self.view.layoutIfNeeded()
         
-        self.controllerView.translucentControllerSkinOpacity = Settings.controllerSkinFeatures.skinCustomization.isEnabled ? Settings.controllerSkinFeatures.skinCustomization.opacity : 0.7
+        self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.isEnabled ? Settings.controllerFeatures.skin.opacity : 0.7
         
         self.airPlayContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.airPlayContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -605,7 +605,7 @@ extension GameViewController
                 self.performQuickSettingsAction()
             }
             
-            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerSkinFeatures.backgroundBlur.blurBackground
+            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.blurBackground
             pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
                 self.performBlurBackgroundAction()
             }
@@ -668,13 +668,13 @@ extension GameViewController
             default: break
             }
             
-            if !Settings.controllerSkinFeatures.backgroundBlur.blurOverride,
+            if !Settings.controllerFeatures.backgroundBlur.blurOverride,
                self.controllerView.backgroundBlur != nil
             {
                 pauseViewController.blurBackgroudItem = nil
             }
             
-            if !Settings.controllerSkinFeatures.backgroundBlur.blurAirPlay
+            if !Settings.controllerFeatures.backgroundBlur.blurAirPlay
             {
                 pauseViewController.blurBackgroudItem = nil
             }
@@ -840,7 +840,7 @@ private extension GameViewController
                let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
                controllerSkin.hasTouchScreen(for: traits)
             {
-                if !(Settings.controllerSkinFeatures.skinCustomization.alwaysShow && Settings.controllerSkinFeatures.skinCustomization.isEnabled)
+                if !(Settings.controllerFeatures.skin.alwaysShow && Settings.controllerFeatures.skin.isEnabled)
                 {
                     Settings.localControllerPlayerIndex = nil
                 }
@@ -853,7 +853,7 @@ private extension GameViewController
             }
             else
             {
-                if !(Settings.controllerSkinFeatures.skinCustomization.alwaysShow && Settings.controllerSkinFeatures.skinCustomization.isEnabled)
+                if !(Settings.controllerFeatures.skin.alwaysShow && Settings.controllerFeatures.skin.isEnabled)
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil // TODO: Does this need changed to 0?
@@ -946,7 +946,7 @@ private extension GameViewController
     {
         for gameController in ExternalGameControllerManager.shared.connectedControllers
         {
-            gameController.triggerDeadzone = Settings.controllerSkinFeatures.controller.isEnabled ? Float(Settings.controllerSkinFeatures.controller.triggerDeadzone) : 0.15
+            gameController.triggerDeadzone = Settings.controllerFeatures.controller.isEnabled ? Float(Settings.controllerFeatures.controller.triggerDeadzone) : 0.15
         }
     }
     
@@ -1078,7 +1078,7 @@ private extension GameViewController
     func updateGameViews()
     {
         if UIApplication.shared.isExternalDisplayConnected,
-           !Settings.controllerSkinFeatures.airPlayKeepScreen.isEnabled
+           !Settings.controllerFeatures.airPlayKeepScreen.isEnabled
         {
             // AirPlaying, hide all screens except touchscreens and blur screens.
                  
@@ -1086,7 +1086,7 @@ private extension GameViewController
             {
                 for (screen, gameView) in zip(screens, self.gameViews)
                 {
-                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && Settings.controllerSkinFeatures.backgroundBlur.blurAirPlay
+                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && Settings.controllerFeatures.backgroundBlur.blurAirPlay
                     
                     let enabled = screen.isTouchScreen || enableBlurScreen
                     
@@ -1124,25 +1124,25 @@ private extension GameViewController
     
     func updateBlurBackground()
     {
-        self.blurScreenKeepAspect = Settings.controllerSkinFeatures.backgroundBlur.blurAspect
-        self.blurScreenOverride = Settings.controllerSkinFeatures.backgroundBlur.blurOverride
-        self.blurScreenStrength = Settings.controllerSkinFeatures.backgroundBlur.blurStrength
-        if Settings.controllerSkinFeatures.backgroundBlur.blurTint
+        self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.blurAspect
+        self.blurScreenOverride = Settings.controllerFeatures.backgroundBlur.blurOverride
+        self.blurScreenStrength = Settings.controllerFeatures.backgroundBlur.blurStrength
+        if Settings.controllerFeatures.backgroundBlur.blurTint
         {
-            switch UITraitCollection.current.userInterfaceStyle
+            switch traitCollection.userInterfaceStyle
             {
             case .light:
-                self.blurScreenBrightness = Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity
+                self.blurScreenBrightness = Settings.controllerFeatures.backgroundBlur.blurTintIntensity
                 
             case .dark, .unspecified:
-                var intensity = Settings.controllerSkinFeatures.backgroundBlur.blurTintIntensity
+                var intensity = Settings.controllerFeatures.backgroundBlur.blurTintIntensity
                 intensity.negate()
                 self.blurScreenBrightness = intensity
             }
         }
         else
         {
-            self.blurScreenBrightness = Settings.controllerSkinFeatures.backgroundBlur.blurBrightness
+            self.blurScreenBrightness = Settings.controllerFeatures.backgroundBlur.blurBrightness
         }
         
         // Set enabled last as it's the property that triggers updateGameViews()
@@ -1153,7 +1153,7 @@ private extension GameViewController
         }
         else
         {
-            self.blurScreenEnabled = Settings.controllerSkinFeatures.backgroundBlur.isEnabled ? Settings.controllerSkinFeatures.backgroundBlur.blurBackground : false
+            self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled ? Settings.controllerFeatures.backgroundBlur.blurBackground : false
         }
         
     }
@@ -1224,11 +1224,11 @@ private extension GameViewController
     
     func updateControllerSkinCustomization()
     {
-        self.controllerView.translucentControllerSkinOpacity = Settings.controllerSkinFeatures.skinCustomization.isEnabled ? Settings.controllerSkinFeatures.skinCustomization.opacity : 0.7
+        self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.isEnabled ? Settings.controllerFeatures.skin.opacity : 0.7
         
-        if Settings.controllerSkinFeatures.skinCustomization.isEnabled
+        if Settings.controllerFeatures.skin.isEnabled
         {
-            self.backgroundColor = Settings.controllerSkinFeatures.skinCustomization.matchTheme ? UIColor.themeColor : UIColor(Settings.controllerSkinFeatures.skinCustomization.backgroundColor)
+            self.backgroundColor = Settings.controllerFeatures.skin.matchTheme ? UIColor.themeColor : UIColor(Settings.controllerFeatures.skin.backgroundColor)
         }
         else
         {
@@ -1640,7 +1640,7 @@ private extension GameViewController
     {
         guard UIApplication.shared.isExternalDisplayConnected,
               !self.isSelectingSustainedButtons,
-              !Settings.controllerSkinFeatures.airPlayKeepScreen.isEnabled
+              !Settings.controllerFeatures.airPlayKeepScreen.isEnabled
         else {
             self.hideAirPlayView()
             return
@@ -1798,11 +1798,6 @@ extension GameViewController
     {
         Settings.userInterfaceFeatures.statusBar.isOn = !Settings.userInterfaceFeatures.statusBar.isOn
         
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
-        
         self.updateStatusBar()
         
         if Settings.userInterfaceFeatures.toasts.statusBar
@@ -1822,11 +1817,6 @@ extension GameViewController
     
     func performRotationLockAction()
     {
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
-        
         let text: String
         
         if self.isOrientationLocked
@@ -2231,14 +2221,9 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
-        let enabled = !Settings.controllerSkinFeatures.backgroundBlur.blurBackground
+        let enabled = !Settings.controllerFeatures.backgroundBlur.blurBackground
         self.blurScreenEnabled = enabled
-        Settings.controllerSkinFeatures.backgroundBlur.blurBackground = enabled
-        
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
+        Settings.controllerFeatures.backgroundBlur.blurBackground = enabled
         
         if Settings.userInterfaceFeatures.toasts.backgroundBlur
         {
@@ -2261,11 +2246,6 @@ extension GameViewController
         self.controllerView.isAltRepresentationsEnabled = enabled
         Settings.advancedFeatures.skinDebug.useAlt = enabled
         
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
-        
         if Settings.userInterfaceFeatures.toasts.altSkin
         {
             let text: String
@@ -2286,11 +2266,6 @@ extension GameViewController
         let enabled = !Settings.advancedFeatures.skinDebug.isOn
         Settings.advancedFeatures.skinDebug.isOn = enabled
         self.controllerView.isDebugModeEnabled = enabled
-        
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
         
         if Settings.userInterfaceFeatures.toasts.debug
         {
@@ -2630,8 +2605,8 @@ private extension GameViewController
 
         if let game = self.game, let traits = scene.gameViewController.controllerView.controllerSkinTraits
         {
-            if Settings.controllerSkinFeatures.airPlaySkins.isEnabled,
-               let preferredControllerSkin = Settings.controllerSkinFeatures.airPlaySkins.preferredAirPlayControllerSkin(for: game.type), preferredControllerSkin.supports(traits, alt: Settings.advancedFeatures.skinDebug.useAlt)
+            if Settings.controllerFeatures.airPlaySkins.isEnabled,
+               let preferredControllerSkin = Settings.controllerFeatures.airPlaySkins.preferredAirPlayControllerSkin(for: game.type), preferredControllerSkin.supports(traits, alt: Settings.advancedFeatures.skinDebug.useAlt)
             {
                 // Use preferredControllerSkin directly.
                 controllerSkin = preferredControllerSkin
@@ -2845,7 +2820,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$alwaysShow.settingsKey, Settings.controllerSkinFeatures.airPlayKeepScreen.settingsKey, Settings.controllerSkinFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.advancedFeatures.skinDebug.$displayType.settingsKey, Settings.advancedFeatures.skinDebug.$traitOverride.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
+        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerFeatures.skin.$alwaysShow.settingsKey, Settings.controllerFeatures.airPlayKeepScreen.settingsKey, Settings.controllerFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.advancedFeatures.skinDebug.$displayType.settingsKey, Settings.advancedFeatures.skinDebug.$traitOverride.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -2859,10 +2834,10 @@ private extension GameViewController
                 self.updateControllerSkin()
             }
             
-        case Settings.controllerSkinFeatures.controller.$triggerDeadzone.settingsKey:
+        case Settings.controllerFeatures.controller.$triggerDeadzone.settingsKey:
             self.updateControllerTriggerDeadzone()
             
-        case Settings.controllerSkinFeatures.skinCustomization.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$opacity.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$backgroundColor.settingsKey, Settings.controllerSkinFeatures.skinCustomization.$matchTheme.settingsKey:
+        case Settings.controllerFeatures.skin.settingsKey, Settings.controllerFeatures.skin.$opacity.settingsKey, Settings.controllerFeatures.skin.$backgroundColor.settingsKey, Settings.controllerFeatures.skin.$matchTheme.settingsKey:
             self.updateControllerSkinCustomization()
             
         case Settings.touchFeedbackFeatures.touchVibration.$strength.settingsKey:
@@ -2893,7 +2868,7 @@ private extension GameViewController
         case Settings.touchFeedbackFeatures.touchAudio.settingsKey, Settings.touchFeedbackFeatures.touchAudio.$useGameVolume.settingsKey, Settings.touchFeedbackFeatures.touchAudio.$buttonVolume.settingsKey:
             self.updateButtonAudioFeedbackSound()
             
-        case Settings.userInterfaceFeatures.statusBar.settingsKey, Settings.userInterfaceFeatures.statusBar.$isOn.settingsKey, Settings.userInterfaceFeatures.statusBar.$useToggle.settingsKey:
+        case Settings.userInterfaceFeatures.statusBar.settingsKey:
             self.updateStatusBar()
             
         case Settings.gbcFeatures.palettes.$palette.settingsKey, Settings.gbcFeatures.palettes.settingsKey, Settings.gbcFeatures.palettes.$spritePalette1.settingsKey, Settings.gbcFeatures.palettes.$spritePalette2.settingsKey, Settings.gbcFeatures.palettes.$multiPalette.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color4.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color4.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color4.settingsKey:
@@ -2924,8 +2899,8 @@ private extension GameViewController
         case Settings.dsFeatures.dsAirPlay.$layoutAxis.settingsKey:
             self.updateExternalDisplay()
             
-        case Settings.controllerSkinFeatures.airPlaySkins.settingsKey: fallthrough
-        case _ where settingsName.rawValue.hasPrefix(Settings.controllerSkinFeatures.airPlaySkins.settingsKey.rawValue):
+        case Settings.controllerFeatures.airPlaySkins.settingsKey: fallthrough
+        case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue):
             // Update whenever any of the AirPlay skins have changed.
             self.updateExternalDisplay()
             
