@@ -127,7 +127,7 @@ struct GameArtworkOptions
             }
         }.displayInline()
     })
-    var cornerRadius: Double = 15
+    var cornerRadius: Double = 16
     
     @Option(name: "Border Width", description: "How thick the border should be.", detailView: { value in
         VStack {

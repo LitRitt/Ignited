@@ -357,7 +357,7 @@ extension PowerUserOptions
                 Settings.libraryFeatures.artwork.showNewGames = true
                 Settings.libraryFeatures.artwork.titleSize = 1.0
                 Settings.libraryFeatures.artwork.titleMaxLines = 3
-                Settings.libraryFeatures.artwork.cornerRadius = 15
+                Settings.libraryFeatures.artwork.cornerRadius = 16
                 Settings.libraryFeatures.artwork.borderWidth = 2
                 Settings.libraryFeatures.artwork.shadowOpacity = 0.5
                 
