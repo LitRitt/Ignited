@@ -354,6 +354,7 @@ extension PowerUserOptions
                 Settings.libraryFeatures.artwork.size = .medium
                 Settings.libraryFeatures.artwork.themeAll = true
                 Settings.libraryFeatures.artwork.useScreenshots = true
+                Settings.libraryFeatures.artwork.showNewGames = true
                 Settings.libraryFeatures.artwork.titleSize = 1.0
                 Settings.libraryFeatures.artwork.titleMaxLines = 3
                 Settings.libraryFeatures.artwork.cornerRadius = 15

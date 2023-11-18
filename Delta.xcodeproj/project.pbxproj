@@ -43,7 +43,7 @@
 		AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E72A112DA30098266B /* QuickSettingsView.swift */; };
 		AC2059EA2A117B570098266B /* QuickSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E92A117B570098266B /* QuickSettings.swift */; };
 		AC23D2D62AFDCD2A0056CC3F /* SaveStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2D52AFDCD2A0056CC3F /* SaveStates.swift */; };
-		AC23D2DF2AFE7B030056CC3F /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2DE2AFE7B030056CC3F /* UIImage+Symbols.swift */; };
+		AC23D2DF2AFE7B030056CC3F /* UIImage+Ignited.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2DE2AFE7B030056CC3F /* UIImage+Ignited.swift */; };
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtwork.swift */; };
 		AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D0A842A19702C00EEEB39 /* Patron.swift */; };
@@ -312,7 +312,7 @@
 		AC2059E72A112DA30098266B /* QuickSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsView.swift; sourceTree = "<group>"; };
 		AC2059E92A117B570098266B /* QuickSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettings.swift; sourceTree = "<group>"; };
 		AC23D2D52AFDCD2A0056CC3F /* SaveStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStates.swift; sourceTree = "<group>"; };
-		AC23D2DE2AFE7B030056CC3F /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
+		AC23D2DE2AFE7B030056CC3F /* UIImage+Ignited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ignited.swift"; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtwork.swift; sourceTree = "<group>"; };
 		AC2D0A842A19702C00EEEB39 /* Patron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
@@ -667,7 +667,7 @@
 			isa = PBXGroup;
 			children = (
 				BF797A2C1C2D339F00F1A000 /* UILabel+FontSize.swift */,
-				AC23D2DE2AFE7B030056CC3F /* UIImage+Symbols.swift */,
+				AC23D2DE2AFE7B030056CC3F /* UIImage+Ignited.swift */,
 				BF7AE8091C2E8C7600B1B5BC /* UIColor+Theme.swift */,
 				AC8E5BC929CCF77700F32D19 /* UIColor+AdjustHSBA.swift */,
 				ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */,
@@ -1765,7 +1765,7 @@
 				BF34FA071CF0F510006624C7 /* EditCheatViewController.swift in Sources */,
 				BF1F45A421AF274D00EF9895 /* SyncResultViewController.swift in Sources */,
 				AC3CE7F82A2BB485008A8C43 /* AnimatedArtwork.swift in Sources */,
-				AC23D2DF2AFE7B030056CC3F /* UIImage+Symbols.swift in Sources */,
+				AC23D2DF2AFE7B030056CC3F /* UIImage+Ignited.swift in Sources */,
 				AC27348029FE950E00B4CB2E /* GameArtwork.swift in Sources */,
 				AC3CE7FA2A2BB496008A8C43 /* FavoriteGames.swift in Sources */,
 				AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */,

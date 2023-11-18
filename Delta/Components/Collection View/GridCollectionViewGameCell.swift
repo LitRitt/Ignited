@@ -17,6 +17,7 @@ class GridCollectionViewGameCell: UICollectionViewCell
     
     var isPaused: Bool = false
     var isFavorite: Bool = false
+    var neverPlayed: Bool = false
     
     var imageSize: CGSize = CGSize(width: 100, height: 100) {
         didSet {

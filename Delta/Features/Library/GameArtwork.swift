@@ -78,6 +78,9 @@ struct GameArtworkOptions
     @Option(name: "Theme All Artwork", description: "Apply the theme color to all game artwork, not just the currently running game.")
     var themeAll: Bool = true
     
+    @Option(name: "Show New Games", description: "Enable to show an icon on your games when they've never been played.")
+    var showNewGames: Bool = true
+    
     @Option(name: "Use Game Screenshots", description: "Enable to show the most recent save state's screenshot of the game as its artwork.")
     var useScreenshots: Bool = true
     
