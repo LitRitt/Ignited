@@ -39,6 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         self.window?.tintColor = UIColor.themeColor
+        self.window?.overrideUserInterfaceStyle = Settings.userInterfaceFeatures.theme.style.userInterfaceStyle
         
         NotificationCenter.default.addObserver(self, selector: #selector(SceneDelegate.settingsDidChange(with:)), name: .settingsDidChange, object: nil)
         
@@ -210,8 +211,9 @@ private extension SceneDelegate
         
         switch settingsName
         {
-        case Settings.userInterfaceFeatures.theme.$useCustom.settingsKey, Settings.userInterfaceFeatures.theme.$customColor.settingsKey, Settings.userInterfaceFeatures.theme.$accentColor.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
+        case Settings.userInterfaceFeatures.theme.$customLightColor.settingsKey, Settings.userInterfaceFeatures.theme.$customDarkColor.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
             self.window?.tintColor = UIColor.themeColor
+            self.window?.overrideUserInterfaceStyle = Settings.userInterfaceFeatures.theme.style.userInterfaceStyle
             self.window?.setNeedsLayout()
         default: break
         }

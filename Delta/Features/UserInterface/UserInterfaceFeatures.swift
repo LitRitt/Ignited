@@ -18,13 +18,12 @@ struct UserInterfaceFeatures: FeatureContainer
     var toasts
     
     @Feature(name: "Show Status Bar",
-             description: "Show the Status Bar during gameplay.",
-             options: StatusBarOptions())
+             hidden: true)
     var statusBar
     
-    @Feature(name: "Theme Color",
-             description: "Change the accent color of the app.",
-             options: ThemeColorOptions())
+    @Feature(name: "Theme",
+             description: "Change the colors of the app.",
+             options: ThemeOptions())
     var theme
     
     @Feature(name: "App Icon",
