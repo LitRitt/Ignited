@@ -512,7 +512,7 @@ private extension SaveStatesViewController
         
         if saveState.game?.previewSaveState != saveState
         {
-            let previewAction = Action(title: NSLocalizedString("Set as Preview Save State", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "eye.fill"), action: { [unowned self] action in
+            let previewAction = Action(title: NSLocalizedString("Set as Preview Save State", comment: ""), style: .default, image: UIImage(systemName: "eye.fill"), action: { [unowned self] action in
                 self.updatePreviewSaveState(saveState)
             })
             actions.append(previewAction)
@@ -528,7 +528,7 @@ private extension SaveStatesViewController
         let cancelAction = Action(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, action: nil)
         actions.append(cancelAction)
         
-        let renameAction = Action(title: NSLocalizedString("Rename", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "pencil.and.ellipsis.rectangle"), action: { [unowned self] action in
+        let renameAction = Action(title: NSLocalizedString("Rename", comment: ""), style: .default, image: UIImage(systemName: "pencil.and.ellipsis.rectangle"), action: { [unowned self] action in
             self.renameSaveState(saveState)
         })
         actions.append(renameAction)
@@ -538,20 +538,20 @@ private extension SaveStatesViewController
         case .auto: break
         case .quick: break
         case .general:
-            let lockAction = Action(title: NSLocalizedString("Lock", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "lock.fill"), action: { [unowned self] action in
+            let lockAction = Action(title: NSLocalizedString("Lock", comment: ""), style: .default, image: UIImage(systemName: "lock.fill"), action: { [unowned self] action in
                 self.lockSaveState(saveState)
             })
             actions.append(lockAction)
             
         case .locked:
-            let unlockAction = Action(title: NSLocalizedString("Unlock", comment: ""), style: .default, image: UIImage(symbolNameIfAvailable: "lock.open.fill"), action: { [unowned self] action in
+            let unlockAction = Action(title: NSLocalizedString("Unlock", comment: ""), style: .default, image: UIImage(systemName: "lock.open.fill"), action: { [unowned self] action in
                 self.unlockSaveState(saveState)
             })
             actions.append(unlockAction)
         case .rewind: break
         }
         
-        let deleteAction = Action(title: NSLocalizedString("Delete", comment: ""), style: .destructive, image: UIImage(symbolNameIfAvailable: "trash"), action: { [unowned self] action in
+        let deleteAction = Action(title: NSLocalizedString("Delete", comment: ""), style: .destructive, image: UIImage(systemName: "trash"), action: { [unowned self] action in
             self.deleteSaveState(saveState)
         })
         actions.append(deleteAction)
