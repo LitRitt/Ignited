@@ -477,7 +477,7 @@ extension GamesViewController: ImportControllerDelegate
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + max(0.1 + (Double(urls.count) * 0.01), 0.5)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + max(0.1 + (Double(urls.count) * 0.02), 2)) {
             if let window = self.view.window
             {
                 let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
