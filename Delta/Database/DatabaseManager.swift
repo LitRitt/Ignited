@@ -122,7 +122,10 @@ extension DatabaseManager
                     return nil
                 }
                 
+                let bios = Game(context: context)
+                
                 let filename: String
+                var artworkURL: URL? = nil
                 
                 switch identifier
                 {
@@ -135,6 +138,20 @@ extension DatabaseManager
                     
                     filename = "nds.bios"
                     
+                    if let artwork = UIImage(named: "DSHome"),
+                       let artworkData = artwork.pngData()
+                    {
+                        do
+                        {
+                            artworkURL = DatabaseManager.artworkURL(for: bios)
+                            try artworkData.write(to: artworkURL!, options: .atomic)
+                        }
+                        catch
+                        {
+                            print("Failed to copy default DS home screen artwork.", error)
+                        }
+                    }
+                    
                 case Game.melonDSDSiBIOSIdentifier:
                     guard
                         FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiBIOS7URL.path) &&
@@ -144,29 +161,29 @@ extension DatabaseManager
                     else { return nil }
                     
                     filename = "dsi.bios"
+                    
+                    if let artwork = UIImage(named: "DSiHome"),
+                       let artworkData = artwork.pngData()
+                    {
+                        do
+                        {
+                            artworkURL = DatabaseManager.artworkURL(for: bios)
+                            try artworkData.write(to: artworkURL!, options: .atomic)
+                        }
+                        catch
+                        {
+                            print("Failed to copy default DSi home screen artwork.", error)
+                        }
+                    }
                 
                 default: filename = "system.bios"
                 }
                 
-                let bios = Game(context: context)
                 bios.name = name
                 bios.identifier = identifier
                 bios.type = .ds
                 bios.filename = filename
-                
-                if let artwork = UIImage(named: "Home"), let artworkData = artwork.pngData()
-                {
-                    do
-                    {
-                        let destinationURL = DatabaseManager.artworkURL(for: bios)
-                        try artworkData.write(to: destinationURL, options: .atomic)
-                        bios.artworkURL = destinationURL
-                    }
-                    catch
-                    {
-                        print("Failed to copy default DS home screen artwork.", error)
-                    }
-                }
+                bios.artworkURL = artworkURL
                 
                 return bios
             }
@@ -362,7 +379,42 @@ extension DatabaseManager
                 
                 let databaseMetadata = self.gamesDatabase?.metadata(for: game)
                 game.name = databaseMetadata?.name ?? url.deletingPathExtension().lastPathComponent
-                game.artworkURL = databaseMetadata?.artworkURL
+                
+                if let artworkURL = databaseMetadata?.artworkURL
+                {
+                    game.artworkURL = artworkURL
+                }
+                else
+                {
+                    var artwork: UIImage? = nil
+                    
+                    switch gameType
+                    {
+                    case .nes: artwork = UIImage(named: "NES")
+                    case .genesis: artwork = UIImage(named: "GEN")
+                    case .snes: artwork = UIImage(named: "SNES")
+                    case .n64: artwork = UIImage(named: "N64")
+                    case .gbc where (url.pathExtension == "gb"): artwork = UIImage(named: "GB")
+                    case .gbc: artwork = UIImage(named: "GBC")
+                    case .gba: artwork = UIImage(named: "GBA")
+                    case .ds: artwork = UIImage(named: "DS")
+                    default: break
+                    }
+                    
+                    if let artworkData = artwork?.pngData()
+                    {
+                        do
+                        {
+                            let artworkURL = DatabaseManager.artworkURL(for: game)
+                            try artworkData.write(to: artworkURL, options: .atomic)
+                            game.artworkURL = artworkURL
+                        }
+                        catch
+                        {
+                            print("Failed to copy default DS home screen artwork.", error)
+                        }
+                    }
+                }
                 
                 let gameCollection = GameCollection(context: context)
                 gameCollection.identifier = gameType.rawValue
@@ -606,33 +658,75 @@ extension DatabaseManager
             
             let game = context.object(with: game.objectID) as! Game
             
-            if game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier
+            if game.identifier == Game.melonDSBIOSIdentifier,
+               let artwork = UIImage(named: "DSHome"),
+               let artworkData = artwork.pngData()
             {
-                if let artwork = UIImage(named: "Home"), let artworkData = artwork.pngData()
+                do
                 {
-                    do
-                    {
-                        let artworkURL = DatabaseManager.artworkURL(for: game)
-                        try artworkData.write(to: artworkURL, options: .atomic)
-                        game.artworkURL = artworkURL
-                    }
-                    catch
-                    {
-                        print("Failed to copy default DS home screen artwork.", error)
-                    }
+                    let artworkURL = DatabaseManager.artworkURL(for: game)
+                    try artworkData.write(to: artworkURL, options: .atomic)
+                    game.artworkURL = artworkURL
+                }
+                catch
+                {
+                    print("Failed to copy default DS home screen artwork.", error)
+                }
+            }
+            else if game.identifier == Game.melonDSDSiBIOSIdentifier,
+                    let artwork = UIImage(named: "DSiHome"),
+                    let artworkData = artwork.pngData()
+            {
+                do
+                {
+                    let artworkURL = DatabaseManager.artworkURL(for: game)
+                    try artworkData.write(to: artworkURL, options: .atomic)
+                    game.artworkURL = artworkURL
+                }
+                catch
+                {
+                    print("Failed to copy default DSi home screen artwork.", error)
                 }
             }
             else
             {
                 let databaseMetadata = self.gamesDatabase?.metadata(for: game)
-                guard let artworkURL = databaseMetadata?.artworkURL else {
-                    print("Database Artwork not found for \(game.name)")
-                    return
+                if let artworkURL = databaseMetadata?.artworkURL
+                {
+                    game.artworkURL = artworkURL
                 }
-                
-                game.artworkURL = artworkURL
+                else
+                {
+                    var artwork: UIImage? = nil
+                    
+                    switch game.type
+                    {
+                    case .nes: artwork = UIImage(named: "NES")
+                    case .genesis: artwork = UIImage(named: "GEN")
+                    case .snes: artwork = UIImage(named: "SNES")
+                    case .n64: artwork = UIImage(named: "N64")
+                    case .gbc where (game.fileURL.pathExtension == "gb"): artwork = UIImage(named: "GB")
+                    case .gbc: artwork = UIImage(named: "GBC")
+                    case .gba: artwork = UIImage(named: "GBA")
+                    case .ds: artwork = UIImage(named: "DS")
+                    default: break
+                    }
+                    
+                    if let artworkData = artwork?.pngData()
+                    {
+                        do
+                        {
+                            let artworkURL = DatabaseManager.artworkURL(for: game)
+                            try artworkData.write(to: artworkURL, options: .atomic)
+                            game.artworkURL = artworkURL
+                        }
+                        catch
+                        {
+                            print("Failed to copy default DS home screen artwork.", error)
+                        }
+                    }
+                }
             }
-            
             context.saveWithErrorLogging()
         }
     }
