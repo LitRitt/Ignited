@@ -13,6 +13,11 @@ class GridCollectionViewGameCell: UICollectionViewCell
     let imageView = UIImageView()
     let textLabel = UILabel()
     
+    var accentColor: UIColor = UIColor.systemGray
+    
+    var isPaused: Bool = false
+    var isFavorite: Bool = false
+    
     var imageSize: CGSize = CGSize(width: 100, height: 100) {
         didSet {
             self.updateImageSize()
