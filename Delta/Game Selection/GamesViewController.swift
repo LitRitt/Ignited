@@ -501,29 +501,45 @@ private extension GamesViewController
     
     func makeOptionsMenu() -> UIMenu
     {
-        let gamePreviewsAction = UIAction(title: NSLocalizedString("Game Previews", comment: ""),
-                                          image: UIImage(symbolNameIfAvailable: "contextualmenu.and.cursorarrow"),
-                                          state: Settings.userInterfaceFeatures.previews.isEnabled ? .on : .off,
-                                          handler: { action in
-            Settings.userInterfaceFeatures.previews.isEnabled = !Settings.userInterfaceFeatures.previews.isEnabled
-            self.updateOptionsMenu()
-        })
-        
-        var options: [UIMenuElement] = [self.makeSaveStateMenu(), self.makeRandomGameMenu(), gamePreviewsAction, self.makeLibraryMenu(), self.makeHelpMenu()]
+        var options: [UIMenuElement] = [self.makeSaveStateMenu(), self.makePreviewMenu(), self.makeCustomizationMenu(), self.makeOtherMenu()]
         
         if let _ = SyncManager.shared.service
         {
             options.insert(self.makeSyncMenu(), at: 0)
         }
         
-        return UIMenu(title: "", children: options)
+        return UIMenu(title: NSLocalizedString("Options", comment: ""), children: options)
+    }
+    
+    func makePreviewMenu() -> UIMenu
+    {
+        let previewOptions: [UIAction] = [
+            UIAction(title: NSLocalizedString("Context Menu", comment: ""),
+                     image: UIImage(systemName: "text.below.photo"),
+                     state: Settings.userInterfaceFeatures.previews.isEnabled ? .on : .off,
+                     handler: { action in
+                         Settings.userInterfaceFeatures.previews.isEnabled = !Settings.userInterfaceFeatures.previews.isEnabled
+                         self.updateOptionsMenu()
+            }),
+            UIAction(title: NSLocalizedString("Live Artwork", comment: ""),
+                     image: UIImage(systemName: "photo"),
+                     state: Settings.libraryFeatures.artwork.useScreenshots ? .on : .off,
+                     handler: { action in
+                         Settings.libraryFeatures.artwork.useScreenshots = !Settings.libraryFeatures.artwork.useScreenshots
+                         self.updateOptionsMenu()
+            })
+        ]
+        
+        return UIMenu(title: NSLocalizedString("Game Previews", comment: ""),
+                      image: UIImage(systemName: "photo.on.rectangle"),
+                      children: previewOptions)
     }
     
     func makeSaveStateMenu() -> UIMenu
     {
         let saveStateOptions: [UIAction] = [
             UIAction(title: NSLocalizedString("Auto Save", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "tray.and.arrow.down"),
+                     image: UIImage(systemName: "tray.and.arrow.down"),
                      state: Settings.gameplayFeatures.saveStates.autoSave ? .on : .off,
                      handler: { action in
                          if Settings.gameplayFeatures.saveStates.autoSave
@@ -536,9 +552,9 @@ private extension GamesViewController
                              Settings.gameplayFeatures.saveStates.autoSave = true
                          }
                          self.updateOptionsMenu()
-            }),
+                     }),
             UIAction(title: NSLocalizedString("Auto Load", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "tray.and.arrow.up"),
+                     image: UIImage(systemName: "tray.and.arrow.up"),
                      state: Settings.gameplayFeatures.saveStates.autoLoad ? .on : .off,
                      handler: { action in
                          if Settings.gameplayFeatures.saveStates.autoLoad
@@ -552,11 +568,11 @@ private extension GamesViewController
                              
                          }
                          self.updateOptionsMenu()
-            })
+                     })
         ]
         
         return UIMenu(title: NSLocalizedString("Save States", comment: ""),
-                      image: UIImage(symbolNameIfAvailable: "square.and.arrow.down"),
+                      image: UIImage(systemName: "memorychip"),
                       children: saveStateOptions)
     }
     
@@ -564,43 +580,94 @@ private extension GamesViewController
     {
         let syncOptions: [UIAction] = [
             UIAction(title: NSLocalizedString("Auto Sync", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "arrow.triangle.2.circlepath"),
+                     image: UIImage(systemName: "arrow.triangle.2.circlepath.icloud"),
                      state: Settings.gameplayFeatures.autoSync.isEnabled ? .on : .off,
                      handler: { action in
                          Settings.gameplayFeatures.autoSync.isEnabled = !Settings.gameplayFeatures.autoSync.isEnabled
                          self.updateOptionsMenu()
-            }),
+                     }),
             UIAction(title: NSLocalizedString("Sync Now", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "icloud.and.arrow.up"),
+                     image: UIImage(systemName: "checkmark.icloud"),
                      handler: { action in
                          self.forceNextSyncingToast = true
                          self.sync()
-            })
+                     })
         ]
         
         return UIMenu(title: NSLocalizedString("Ignited Sync", comment: ""),
-                      image: UIImage(symbolNameIfAvailable: "arrow.triangle.2.circlepath.icloud"),
+                      image: UIImage(systemName: "icloud.and.arrow.up"),
                       children: syncOptions)
     }
     
-    func makeLibraryMenu() -> UIMenu
+    func makeCustomizationMenu() -> UIMenu
     {
-        return UIMenu(title: "",
+        return UIMenu(title: NSLocalizedString("Customization", comment: ""),
                       options: [.displayInline],
-                      children: [self.makeSortingMenu(), self.makeArtworkSizeMenu()])
+                      children: [self.makeThemeMenu(), self.makeArtworkSizeMenu(), self.makeSortingMenu()])
+    }
+    
+    func makeThemeMenu() -> UIMenu
+    {
+        return UIMenu(title: NSLocalizedString("Theme", comment: ""),
+                      image: UIImage(systemName: "paintbrush"),
+                      children: [self.makeThemeStyleMenu(), self.makeThemeColorMenu()])
+    }
+    
+    func makeThemeStyleMenu() -> UIMenu
+    {
+        var themeStyleOptions: [UIAction] = []
+        
+        for themeStyle in ThemeStyle.allCases
+        {
+            themeStyleOptions.append(
+                UIAction(title: themeStyle.description,
+                         image: UIImage(systemName: themeStyle.symbolName),
+                         state: Settings.userInterfaceFeatures.theme.style == themeStyle ? .on : .off,
+                         handler: { action in
+                             Settings.userInterfaceFeatures.theme.style = themeStyle
+                             self.updateOptionsMenu()
+                })
+            )
+        }
+        
+        return UIMenu(title: NSLocalizedString("Style", comment: ""),
+                      image: UIImage(systemName: "circle.lefthalf.filled"),
+                      children: themeStyleOptions)
+    }
+    
+    func makeThemeColorMenu() -> UIMenu
+    {
+        var themeColorOptions: [UIAction] = []
+        
+        for themeColor in ThemeColor.allCases
+        {
+            themeColorOptions.append(
+                UIAction(title: themeColor.description,
+                         state: Settings.userInterfaceFeatures.theme.color == themeColor ? .on : .off,
+                         handler: { action in
+                             Settings.userInterfaceFeatures.theme.color = themeColor
+                             AppIconOptions.updateAppIcon()
+                             self.updateOptionsMenu()
+                })
+            )
+        }
+        
+        return UIMenu(title: NSLocalizedString("Color", comment: ""),
+                      image: UIImage(systemName: "paintpalette"),
+                      children: themeColorOptions)
     }
     
     func makeRandomGameMenu() -> UIMenu
     {
         let randomGameOptions: [UIAction] = [
-            UIAction(title: NSLocalizedString("All Games", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "play.square.stack"),
+            UIAction(title: NSLocalizedString("From Library", comment: ""),
+                     image: UIImage(systemName: "building.columns"),
                      handler: { action in
                          Settings.userInterfaceFeatures.randomGame.useCollection = false
                          NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
             }),
-            UIAction(title: NSLocalizedString("Current Library", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "play.square"),
+            UIAction(title: NSLocalizedString("From Collection", comment: ""),
+                     image: UIImage(systemName: "books.vertical"),
                      handler: { action in
                          Settings.userInterfaceFeatures.randomGame.useCollection = true
                          NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
@@ -608,108 +675,89 @@ private extension GamesViewController
         ]
         
         return UIMenu(title: NSLocalizedString("Random Game", comment: ""),
-                      image: UIImage(symbolNameIfAvailable: "dice"),
+                      image: UIImage(systemName: "dice"),
                       children: randomGameOptions)
     }
     
     func makeSortingMenu() -> UIMenu
     {
         let favoritesAction = UIAction(title: NSLocalizedString("Favorites First", comment: ""),
-                                       image: UIImage(symbolNameIfAvailable: "star"),
-                                       state: Settings.gamesCollectionFeatures.favorites.favoriteSort ? .on : .off,
+                                       image: UIImage(systemName: "star"),
+                                       state: Settings.libraryFeatures.favorites.favoriteSort ? .on : .off,
                                        handler: { action in
-                                           Settings.gamesCollectionFeatures.favorites.favoriteSort = !Settings.gamesCollectionFeatures.favorites.favoriteSort
+                                           Settings.libraryFeatures.favorites.favoriteSort = !Settings.libraryFeatures.favorites.favoriteSort
                                            self.updateOptionsMenu()
         })
         
-        let sortOptions: [UIAction] = [
-            UIAction(title: SortOrder.alphabeticalAZ.rawValue,
-                     image: UIImage(symbolNameIfAvailable: "arrowtriangle.up"),
-                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .alphabeticalAZ ? .on : .off,
-                     handler: { action in
-                         Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalAZ
-                         self.updateOptionsMenu()
-            }),
-            UIAction(title: SortOrder.alphabeticalZA.rawValue,
-                     image: UIImage(symbolNameIfAvailable: "arrowtriangle.down"),
-                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .alphabeticalZA ? .on : .off,
-                     handler: { action in
-                         Settings.gamesCollectionFeatures.artwork.sortOrder = .alphabeticalZA
-                         self.updateOptionsMenu()
-            }),
-            UIAction(title: SortOrder.mostRecent.rawValue,
-                     image: UIImage(symbolNameIfAvailable: "arrow.clockwise"),
-                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .mostRecent ? .on : .off,
-                     handler: { action in
-                         Settings.gamesCollectionFeatures.artwork.sortOrder = .mostRecent
-                         self.updateOptionsMenu()
-            }),
-            UIAction(title: SortOrder.leastRecent.rawValue,
-                     image: UIImage(symbolNameIfAvailable: "arrow.counterclockwise"),
-                     state: Settings.gamesCollectionFeatures.artwork.sortOrder == .leastRecent ? .on : .off,
-                     handler: { action in
-                         Settings.gamesCollectionFeatures.artwork.sortOrder = .leastRecent
-                         self.updateOptionsMenu()
-            })
-        ]
+        var sortOptions: [UIAction] = []
         
-        let sortMenu = UIMenu(title: NSLocalizedString("", comment: ""),
+        for sortOrder in SortOrder.allCases {
+            sortOptions.append(
+                UIAction(title: sortOrder.description,
+                         image: UIImage(systemName: sortOrder.symbolName),
+                         state: Settings.libraryFeatures.artwork.sortOrder == sortOrder ? .on : .off,
+                         handler: { action in
+                             Settings.libraryFeatures.artwork.sortOrder = sortOrder
+                             self.updateOptionsMenu()
+                })
+            )
+        }
+        
+        let sortMenu = UIMenu(title: "",
                               options: [.displayInline],
                               children: sortOptions)
         
         return UIMenu(title: NSLocalizedString("Game Sorting", comment: ""),
-                              image: UIImage(symbolNameIfAvailable: "arrow.up.and.down.text.horizontal"),
+                              image: UIImage(systemName: "arrow.up.and.down.text.horizontal"),
                               children: [favoritesAction, sortMenu])
     }
     
     func makeArtworkSizeMenu() -> UIMenu
     {
-        let artworkSizeOptions: [UIAction] = [
-            UIAction(title: ArtworkSize.small.rawValue,
-                     image: UIImage(symbolNameIfAvailable: "squareshape.split.3x3"),
-                     state: Settings.gamesCollectionFeatures.artwork.size == .small ? .on : .off,
-                     handler: { action in
-                         Settings.gamesCollectionFeatures.artwork.size = .small
-                         self.updateOptionsMenu()
-            }),
-            UIAction(title: ArtworkSize.medium.rawValue,
-                     image: UIImage(symbolNameIfAvailable: "squareshape.split.2x2"),
-                     state: Settings.gamesCollectionFeatures.artwork.size == .medium ? .on : .off,
-                     handler: { action in
-                         Settings.gamesCollectionFeatures.artwork.size = .medium
-                         self.updateOptionsMenu()
-            }),
-            UIAction(title: ArtworkSize.large.rawValue,
-                     image: UIImage(symbolNameIfAvailable: "squareshape"),
-                     state: Settings.gamesCollectionFeatures.artwork.size == .large ? .on : .off,
-                     handler: { action in
-                         Settings.gamesCollectionFeatures.artwork.size = .large
-                         self.updateOptionsMenu()
-            })
-        ]
+        var artworkSizeOptions: [UIAction] = []
+        
+        for artworkSize in ArtworkSize.allCases
+        {
+            artworkSizeOptions.append(
+                UIAction(title: artworkSize.description,
+                         image: UIImage(systemName: artworkSize.symbolName),
+                         state: Settings.libraryFeatures.artwork.size == artworkSize ? .on : .off,
+                         handler: { action in
+                             Settings.libraryFeatures.artwork.size = artworkSize
+                             self.updateOptionsMenu()
+                })
+            )
+        }
         
         return UIMenu(title: NSLocalizedString("Artwork Size", comment: ""),
-                      image: UIImage(symbolNameIfAvailable: "aspectratio"),
+                      image: UIImage(systemName: "square.resize"),
                       children: artworkSizeOptions)
+    }
+    
+    func makeOtherMenu() -> UIMenu
+    {
+        return UIMenu(title: NSLocalizedString("Other", comment: ""),
+                      options: [.displayInline],
+                      children: [self.makeRandomGameMenu(), self.makeHelpMenu()])
     }
     
     func makeHelpMenu() -> UIMenu
     {
         let helpOptions: [UIAction] = [
             UIAction(title: NSLocalizedString("Documentation", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "doc.richtext"),
+                     image: UIImage(systemName: "doc.richtext"),
                      handler: { action in
                          UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
             }),
             UIAction(title: NSLocalizedString("Release Notes", comment: ""),
-                     image: UIImage(symbolNameIfAvailable: "doc.badge.clock"),
+                     image: UIImage(systemName: "doc.badge.clock"),
                      handler: { action in
                          UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
             })
         ]
         
         return UIMenu(title: NSLocalizedString("Help", comment: ""),
-                      image: UIImage(symbolNameIfAvailable: "exclamationmark.questionmark"),
+                      image: UIImage(systemName: "exclamationmark.questionmark"),
                       children: helpOptions)
     }
 }
@@ -858,7 +906,7 @@ private extension GamesViewController
         
         switch settingsName
         {
-        case Settings.userInterfaceFeatures.theme.$useCustom.settingsKey, Settings.userInterfaceFeatures.theme.$customColor.settingsKey, Settings.userInterfaceFeatures.theme.$accentColor.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
+        case Settings.userInterfaceFeatures.theme.$customDarkColor.settingsKey, Settings.userInterfaceFeatures.theme.$customDarkColor.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
             self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
             
         default: break
