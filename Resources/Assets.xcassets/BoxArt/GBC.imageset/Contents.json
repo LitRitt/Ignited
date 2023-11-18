@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "gbc.png",
+      "filename" : "GBC.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "gbc@2x.png",
+      "filename" : "GBC@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "gbc@3x.png",
+      "filename" : "GBC@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

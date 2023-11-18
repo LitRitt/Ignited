@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "nes.png",
+      "filename" : "NES.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "nes@2x.png",
+      "filename" : "NES@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "nes@3x.png",
+      "filename" : "NES@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }
