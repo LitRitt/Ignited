@@ -123,20 +123,9 @@ private extension AppIconShortcutsViewController
     }
     
     func configureGameCell(_ cell: GameTableViewCell, with game: Game, for indexPath: IndexPath)
-    {        
-        cell.nameLabel?.textColor = .label
-                
+    {
         cell.nameLabel.text = game.name
-        cell.artworkImageView.image = #imageLiteral(resourceName: "NES")
-        
-        cell.artworkImageView.clipsToBounds = true
-        cell.artworkImageView.layer.borderWidth = 1.2
-        cell.artworkImageView.layer.cornerRadius = 15
-        cell.artworkImageView.contentMode = .scaleToFill
-        
-        cell.artworkImageView.tintColor = UIColor.white
-        cell.artworkImageView.layer.borderColor = UIColor.ignitedLightGray.cgColor
-        cell.artworkImageView.backgroundColor = self.view.tintColor.dynamicTint(0.1, style: UITraitCollection.current.userInterfaceStyle)
+        cell.artworkImageView.image = UIImage.makePlaceholder()
         
         cell.artworkImageViewLeadingConstraint.constant = 15
         cell.artworkImageViewTrailingConstraint.constant = 15

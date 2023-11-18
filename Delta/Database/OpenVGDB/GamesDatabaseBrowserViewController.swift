@@ -78,6 +78,12 @@ class GamesDatabaseBrowserViewController: UITableViewController
     {
         super.didReceiveMemoryWarning()
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        self.tableView.reloadData()
+    }
 }
 
 private extension GamesDatabaseBrowserViewController
@@ -86,8 +92,8 @@ private extension GamesDatabaseBrowserViewController
     {
         /* Placeholder View */
         let placeholderView = RSTPlaceholderView()
-        placeholderView.textLabel.textColor = UIColor.lightText
-        placeholderView.detailTextLabel.textColor = UIColor.lightText
+        placeholderView.textLabel.textColor = UIColor.secondaryLabel
+        placeholderView.detailTextLabel.textColor = UIColor.secondaryLabel
         self.dataSource.placeholderView = placeholderView
         
         
@@ -143,19 +149,9 @@ private extension GamesDatabaseBrowserViewController
 {
     func configure(cell: GameTableViewCell, with metadata: GameMetadata, for indexPath: IndexPath)
     {
-        cell.backgroundColor = .systemBackground
-        
         cell.nameLabel.text = metadata.name ?? NSLocalizedString("Unknown", comment: "")
-        cell.artworkImageView.image = #imageLiteral(resourceName: "NES")
         
-        cell.artworkImageView.layer.masksToBounds = true
-        cell.artworkImageView.layer.borderWidth = 2
-        cell.artworkImageView.layer.cornerRadius = 15
-        cell.artworkImageView.contentMode = .scaleToFill
-        
-        cell.artworkImageView.tintColor = UIColor.white
-        cell.artworkImageView.layer.borderColor = UIColor.lightGray.cgColor
-        cell.artworkImageView.backgroundColor = self.view.tintColor
+        cell.artworkImageView.image = UIImage.makePlaceholder()
         
         cell.artworkImageViewLeadingConstraint.constant = 15
         cell.artworkImageViewTrailingConstraint.constant = 15
