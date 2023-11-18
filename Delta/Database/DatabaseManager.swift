@@ -123,7 +123,6 @@ extension DatabaseManager
                 }
                 
                 let filename: String
-                var artworkURL: URL? = nil
                 
                 switch identifier
                 {
@@ -136,6 +135,30 @@ extension DatabaseManager
                     
                     filename = "nds.bios"
                     
+                case Game.melonDSDSiBIOSIdentifier:
+                    guard
+                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiBIOS7URL.path) &&
+                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiBIOS9URL.path) &&
+                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiFirmwareURL.path) &&
+                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiNANDURL.path)
+                    else { return nil }
+                    
+                    filename = "dsi.bios"
+                
+                default: filename = "system.bios"
+                }
+                
+                let bios = Game(context: context)
+                bios.name = name
+                bios.identifier = identifier
+                bios.type = .ds
+                bios.filename = filename
+                
+                var artworkURL: URL? = nil
+                
+                switch identifier
+                {
+                case Game.melonDSBIOSIdentifier:
                     if let artwork = UIImage(named: "DSHome"),
                        let artworkData = artwork.pngData()
                     {
@@ -151,15 +174,6 @@ extension DatabaseManager
                     }
                     
                 case Game.melonDSDSiBIOSIdentifier:
-                    guard
-                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiBIOS7URL.path) &&
-                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiBIOS9URL.path) &&
-                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiFirmwareURL.path) &&
-                        FileManager.default.fileExists(atPath: MelonDSEmulatorBridge.shared.dsiNANDURL.path)
-                    else { return nil }
-                    
-                    filename = "dsi.bios"
-                    
                     if let artwork = UIImage(named: "DSiHome"),
                        let artworkData = artwork.pngData()
                     {
@@ -174,14 +188,9 @@ extension DatabaseManager
                         }
                     }
                 
-                default: filename = "system.bios"
+                default: break
                 }
                 
-                let bios = Game(context: context)
-                bios.name = name
-                bios.identifier = identifier
-                bios.type = .ds
-                bios.filename = filename
                 bios.artworkURL = artworkURL
                 
                 return bios
