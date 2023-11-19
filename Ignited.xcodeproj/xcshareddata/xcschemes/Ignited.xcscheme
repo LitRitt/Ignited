@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BFFA71D61AAC406100EE9DD1"
                BuildableName = "Ignited.app"
-               BlueprintName = "Delta"
-               ReferencedContainer = "container:Delta.xcodeproj">
+               BlueprintName = "Ignited"
+               ReferencedContainer = "container:Ignited.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,8 +46,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BFFA71D61AAC406100EE9DD1"
             BuildableName = "Ignited.app"
-            BlueprintName = "Delta"
-            ReferencedContainer = "container:Delta.xcodeproj">
+            BlueprintName = "Ignited"
+            ReferencedContainer = "container:Ignited.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -70,8 +70,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BFFA71D61AAC406100EE9DD1"
             BuildableName = "Ignited.app"
-            BlueprintName = "Delta"
-            ReferencedContainer = "container:Delta.xcodeproj">
+            BlueprintName = "Ignited"
+            ReferencedContainer = "container:Ignited.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -108,8 +108,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BFFA71D61AAC406100EE9DD1"
             BuildableName = "Ignited.app"
-            BlueprintName = "Delta"
-            ReferencedContainer = "container:Delta.xcodeproj">
+            BlueprintName = "Ignited"
+            ReferencedContainer = "container:Ignited.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Delta.xcodeproj">
+      location = "group:Ignited.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Cores/DeltaCore/DeltaCore.xcodeproj">
@@ -39,8 +39,5 @@
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Delta.xcodeproj">
    </FileRef>
 </Workspace>
