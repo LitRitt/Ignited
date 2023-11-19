@@ -417,7 +417,7 @@ extension GameViewController
         // Lays out self.gameView, so we can pin self.sustainButtonsContentView to it without resulting in a temporary "cannot satisfy constraints".
         self.view.layoutIfNeeded()
         
-        self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.isEnabled ? Settings.controllerFeatures.skin.opacity : 0.7
+        self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
         self.airPlayContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.airPlayContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -840,7 +840,7 @@ private extension GameViewController
                let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
                controllerSkin.hasTouchScreen(for: traits)
             {
-                if !(Settings.controllerFeatures.skin.alwaysShow && Settings.controllerFeatures.skin.isEnabled)
+                if !Settings.controllerFeatures.skin.alwaysShow
                 {
                     Settings.localControllerPlayerIndex = nil
                 }
@@ -853,7 +853,7 @@ private extension GameViewController
             }
             else
             {
-                if !(Settings.controllerFeatures.skin.alwaysShow && Settings.controllerFeatures.skin.isEnabled)
+                if !Settings.controllerFeatures.skin.alwaysShow
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil // TODO: Does this need changed to 0?
@@ -946,7 +946,7 @@ private extension GameViewController
     {
         for gameController in ExternalGameControllerManager.shared.connectedControllers
         {
-            gameController.triggerDeadzone = Settings.controllerFeatures.controller.isEnabled ? Float(Settings.controllerFeatures.controller.triggerDeadzone) : 0.15
+            gameController.triggerDeadzone = Float(Settings.controllerFeatures.controller.triggerDeadzone)
         }
     }
     
@@ -1162,22 +1162,15 @@ private extension GameViewController
     {
         if let bridge = self.emulatorCore?.deltaCore.emulatorBridge as? GBCEmulatorBridge
         {
-            if Settings.gbcFeatures.palettes.isEnabled
+            if Settings.gbcFeatures.palettes.multiPalette
             {
-                if Settings.gbcFeatures.palettes.multiPalette
-                {
-                    setMultiPalette(palette1: Settings.gbcFeatures.palettes.palette.colors,
-                                    palette2: Settings.gbcFeatures.palettes.spritePalette1.colors,
-                                    palette3: Settings.gbcFeatures.palettes.spritePalette2.colors)
-                }
-                else
-                {
-                    setSinglePalette(palette: Settings.gbcFeatures.palettes.palette.colors)
-                }
+                setMultiPalette(palette1: Settings.gbcFeatures.palettes.palette.colors,
+                                palette2: Settings.gbcFeatures.palettes.spritePalette1.colors,
+                                palette3: Settings.gbcFeatures.palettes.spritePalette2.colors)
             }
             else
             {
-                setSinglePalette(palette: GameboyPalette.nilColors)
+                setSinglePalette(palette: Settings.gbcFeatures.palettes.palette.colors)
             }
             
             bridge.updatePalette()
@@ -1224,16 +1217,9 @@ private extension GameViewController
     
     func updateControllerSkinCustomization()
     {
-        self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.isEnabled ? Settings.controllerFeatures.skin.opacity : 0.7
+        self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
-        if Settings.controllerFeatures.skin.isEnabled
-        {
-            self.backgroundColor = Settings.controllerFeatures.skin.matchTheme ? UIColor.themeColor : UIColor(Settings.controllerFeatures.skin.backgroundColor)
-        }
-        else
-        {
-            self.backgroundColor = .black
-        }
+        self.backgroundColor = Settings.controllerFeatures.skin.matchTheme ? UIColor.themeColor : UIColor(Settings.controllerFeatures.skin.backgroundColor)
     }
 }
 
@@ -2035,14 +2021,7 @@ extension GameViewController
             }
             else
             {
-                if Settings.gameplayFeatures.fastForward.isEnabled
-                {
-                    emulatorCore.rate = Settings.gameplayFeatures.fastForward.speed
-                }
-                else
-                {
-                    emulatorCore.rate = emulatorCore.deltaCore.supportedRates.upperBound
-                }
+                emulatorCore.rate = Settings.gameplayFeatures.fastForward.speed
                 
                 if Settings.userInterfaceFeatures.toasts.fastForward,
                    Settings.gameplayFeatures.fastForward.toggle
@@ -2143,8 +2122,6 @@ extension GameViewController
         }
         else
         {
-            guard Settings.gameplayFeatures.quickSettings.isEnabled else { return }
-            
             if self._isQuickSettingsOpen
             {
                 self._isQuickSettingsOpen = false

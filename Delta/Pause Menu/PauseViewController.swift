@@ -191,12 +191,9 @@ private extension PauseViewController
                                     image: UIImage.symbolWithTemplate(name: "backward.end.fill"),
                                     action: { _ in })
         
-        if Settings.gameplayFeatures.screenshots.isEnabled
-        {
-            self.screenshotItem = MenuItem(text: NSLocalizedString("Screenshot", comment: ""),
-                                           image: UIImage.symbolWithTemplate(name: "camera.fill"),
-                                           action: { _ in })
-        }
+        self.screenshotItem = MenuItem(text: NSLocalizedString("Screenshot", comment: ""),
+                                       image: UIImage.symbolWithTemplate(name: "camera.fill"),
+                                       action: { _ in })
         
         if Settings.userInterfaceFeatures.statusBar.isEnabled
         {
@@ -215,12 +212,9 @@ private extension PauseViewController
             })
         }
         
-        if Settings.gameplayFeatures.fastForward.isEnabled
-        {
-            self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""),
-                                            image: UIImage.symbolWithTemplate(name: "forward.fill"),
-                                            action: { _ in })
-        }
+        self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""),
+                                        image: UIImage.symbolWithTemplate(name: "forward.fill"),
+                                        action: { _ in })
         
         if Settings.gameplayFeatures.rotationLock.isEnabled
         {
@@ -237,19 +231,13 @@ private extension PauseViewController
             })
         }
         
-        if Settings.gbcFeatures.palettes.isEnabled
-        {
-            self.paletteItem = MenuItem(text: NSLocalizedString("Color Palette", comment: ""),
-                                        image: UIImage.symbolWithTemplate(name: "swatchpalette.fill"),
-                                        action: { _ in })
-        }
+        self.paletteItem = MenuItem(text: NSLocalizedString("Color Palette", comment: ""),
+                                    image: UIImage.symbolWithTemplate(name: "swatchpalette.fill"),
+                                    action: { _ in })
         
-        if Settings.gameplayFeatures.quickSettings.isEnabled
-        {
-            self.quickSettingsItem = MenuItem(text: NSLocalizedString("Quick Settings", comment: ""),
-                                              image: UIImage.symbolWithTemplate(name: "gearshape.fill"),
-                                              action: { _ in })
-        }
+        self.quickSettingsItem = MenuItem(text: NSLocalizedString("Quick Settings", comment: ""),
+                                          image: UIImage.symbolWithTemplate(name: "gearshape.fill"),
+                                          action: { _ in })
         
         if Settings.controllerFeatures.backgroundBlur.isEnabled
         {

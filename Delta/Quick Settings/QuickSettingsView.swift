@@ -116,7 +116,7 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if self.fastForwardEnabled && Settings.gameplayFeatures.fastForward.isEnabled
+                if self.fastForwardEnabled
                 {
                     Section() {
                         VStack {
@@ -186,7 +186,7 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if self.gameAudioEnabled && Settings.gameplayFeatures.gameAudio.isEnabled
+                if self.gameAudioEnabled
                 {
                     Section() {
                         VStack {
@@ -216,7 +216,7 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if self.controllerSkinEnabled && Settings.controllerFeatures.skin.isEnabled
+                if self.controllerSkinEnabled
                 {
                     Section() {
                         VStack {
@@ -320,7 +320,6 @@ struct QuickSettingsView: View
                 }
                 
                 if self.colorPalettesEnabled,
-                   Settings.gbcFeatures.palettes.isEnabled,
                    self.systemsWithPalettes.contains(system)
                 {
                     Section() {
@@ -399,41 +398,35 @@ struct QuickSettingsView: View
                             .onChange(of: self.quickActionsEnabled) { value in
                                 Settings.gameplayFeatures.quickSettings.quickActionsEnabled = value
                             }
-                        if Settings.gameplayFeatures.fastForward.isEnabled {
-                            Toggle("Fast Forward", isOn: self.$fastForwardEnabled)
-                                .onChange(of: self.fastForwardEnabled) { value in
-                                    Settings.gameplayFeatures.quickSettings.fastForwardEnabled = value
-                                }
-                            if self.fastForwardEnabled {
-                                Toggle("Expanded Fast Forward", isOn: self.$expandedFastForwardEnabled)
-                                    .onChange(of: self.expandedFastForwardEnabled) { value in
-                                        Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled = value
-                                    }
+                        Toggle("Fast Forward", isOn: self.$fastForwardEnabled)
+                            .onChange(of: self.fastForwardEnabled) { value in
+                                Settings.gameplayFeatures.quickSettings.fastForwardEnabled = value
                             }
+                        if self.fastForwardEnabled {
+                            Toggle("Expanded Fast Forward", isOn: self.$expandedFastForwardEnabled)
+                                .onChange(of: self.expandedFastForwardEnabled) { value in
+                                    Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled = value
+                                }
                         }
-                        if Settings.gameplayFeatures.gameAudio.isEnabled {
-                            Toggle("Game Audio", isOn: self.$gameAudioEnabled)
-                                .onChange(of: self.gameAudioEnabled) { value in
-                                    Settings.gameplayFeatures.quickSettings.gameAudioEnabled = value
-                                }
-                            if self.gameAudioEnabled {
-                                Toggle("Expanded Game Audio", isOn: self.$expandedGameAudioEnabled)
-                                    .onChange(of: self.expandedGameAudioEnabled) { value in
-                                        Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = value
-                                    }
+                        Toggle("Game Audio", isOn: self.$gameAudioEnabled)
+                            .onChange(of: self.gameAudioEnabled) { value in
+                                Settings.gameplayFeatures.quickSettings.gameAudioEnabled = value
                             }
+                        if self.gameAudioEnabled {
+                            Toggle("Expanded Game Audio", isOn: self.$expandedGameAudioEnabled)
+                                .onChange(of: self.expandedGameAudioEnabled) { value in
+                                    Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = value
+                                }
                         }
-                        if Settings.controllerFeatures.skin.isEnabled {
-                            Toggle("Controller Skin", isOn: self.$controllerSkinEnabled)
-                                .onChange(of: self.controllerSkinEnabled) { value in
-                                    Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = value
-                                }
-                            if self.controllerSkinEnabled {
-                                Toggle("Expanded Controller Skin", isOn: self.$expandedControllerSkinEnabled)
-                                    .onChange(of: self.expandedControllerSkinEnabled) { value in
-                                        Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled = value
-                                    }
+                        Toggle("Controller Skin", isOn: self.$controllerSkinEnabled)
+                            .onChange(of: self.controllerSkinEnabled) { value in
+                                Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = value
                             }
+                        if self.controllerSkinEnabled {
+                            Toggle("Expanded Controller Skin", isOn: self.$expandedControllerSkinEnabled)
+                                .onChange(of: self.expandedControllerSkinEnabled) { value in
+                                    Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled = value
+                                }
                         }
                         if Settings.controllerFeatures.backgroundBlur.isEnabled {
                             Toggle("Background Blur", isOn: self.$backgroundBlurEnabled)
@@ -447,8 +440,7 @@ struct QuickSettingsView: View
                                     }
                             }
                         }
-                        if self.systemsWithPalettes.contains(system),
-                           Settings.gbcFeatures.palettes.isEnabled
+                        if self.systemsWithPalettes.contains(system)
                         {
                             Toggle("Color Palettes", isOn: self.$colorPalettesEnabled)
                                 .onChange(of: self.colorPalettesEnabled) { value in

@@ -15,15 +15,6 @@ extension UIColor
 {
     static var themeColor: UIColor
     {
-        let baseColor: UIColor
-        
-        if Settings.userInterfaceFeatures.theme.isEnabled
-        {
-            return Settings.userInterfaceFeatures.theme.color.uiColor
-        }
-        else
-        {
-            return ThemeColor.orange.uiColor
-        }
+        return Settings.userInterfaceFeatures.theme.color.uiColor
     }
 }

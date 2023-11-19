@@ -439,15 +439,13 @@ private extension GameCollectionViewController
     //MARK: - Configure Cells
     func configure(_ cell: GridCollectionViewGameCell, for indexPath: IndexPath)
     {
-        let featureEnabled = Settings.libraryFeatures.artwork.isEnabled
-        
         let game = self.dataSource.item(at: indexPath) as! Game
         
-        cell.isFavorite = game.isFavorite && (featureEnabled && Settings.libraryFeatures.favorites.favoriteHighlight)
+        cell.isFavorite = game.isFavorite && Settings.libraryFeatures.favorites.favoriteHighlight
         
         cell.isPaused = game.fileURL == self.activeEmulatorCore?.game.fileURL
         
-        cell.neverPlayed = game.playedDate == nil && (featureEnabled && Settings.libraryFeatures.artwork.showNewGames)
+        cell.neverPlayed = game.playedDate == nil && Settings.libraryFeatures.artwork.showNewGames
         
         if cell.isFavorite
         {
@@ -469,9 +467,9 @@ private extension GameCollectionViewController
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
-        cell.imageView.layer.cornerRadius = featureEnabled ? Settings.libraryFeatures.artwork.cornerRadius : 16
-        cell.imageView.layer.borderWidth = featureEnabled ? Settings.libraryFeatures.artwork.borderWidth : 2
-        cell.layer.shadowOpacity = featureEnabled ? Float(Settings.libraryFeatures.artwork.shadowOpacity) : 0.5
+        cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.roundedCorners
+        cell.imageView.layer.borderWidth = Settings.libraryFeatures.artwork.borderWidth
+        cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.glowOpacity)
         
         cell.layer.shadowRadius = 5.0
         cell.layer.shadowColor = cell.accentColor.cgColor
