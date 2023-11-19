@@ -1,5 +1,5 @@
 //
-//  AppIcon.swift
+//  AppIconOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 5/2/23.
@@ -145,38 +145,25 @@ extension AppIconOptions
     {
         let currentIcon = UIApplication.shared.alternateIconName
         
-        if Settings.userInterfaceFeatures.appIcon.isEnabled
+        if Settings.userInterfaceFeatures.appIcon.useTheme
         {
-            if Settings.userInterfaceFeatures.appIcon.useTheme
+            let themeIcon = Settings.userInterfaceFeatures.theme.color
+            
+            switch themeIcon
             {
-                guard Settings.userInterfaceFeatures.theme.isEnabled else
-                {
-                    if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
-                    return
-                }
-                
-                let themeIcon = Settings.userInterfaceFeatures.theme.color
-                
-                switch themeIcon
-                {
-                case .orange: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
-                default: if currentIcon != themeIcon.assetName { UIApplication.shared.setAlternateIconName(themeIcon.assetName) }
-                }
-            }
-            else
-            {
-                let altIcon = Settings.userInterfaceFeatures.appIcon.alternateIcon
-                
-                switch altIcon
-                {
-                case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
-                default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
-                }
+            case .orange: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+            default: if currentIcon != themeIcon.assetName { UIApplication.shared.setAlternateIconName(themeIcon.assetName) }
             }
         }
         else
         {
-            if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+            let altIcon = Settings.userInterfaceFeatures.appIcon.alternateIcon
+            
+            switch altIcon
+            {
+            case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+            default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
+            }
         }
     }
 }

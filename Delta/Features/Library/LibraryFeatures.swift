@@ -13,19 +13,21 @@ struct LibraryFeatures: FeatureContainer
     static let shared = LibraryFeatures()
     
     @Feature(name: "Artwork Options",
-             description: "Change the style of the game artwork.",
-             options: GameArtworkOptions())
+             description: "Customize the look of your game artwork.",
+             options: GameArtworkOptions(),
+             permanent: true)
     var artwork
     
+    @Feature(name: "Favorite Games",
+             description: "Make your favorite games easy to find.",
+             options: FavoriteGamesOptions(),
+             permanent: true)
+    var favorites
+    
     @Feature(name: "Animated Artwork",
-             description: "Bring your Library to life.",
+             description: "Bring your Library to life with your favorite GIFs.",
              options: AnimatedArtworkOptions())
     var animation
-    
-    @Feature(name: "Favorite Games",
-             description: "Bring your favorite games front and center.",
-             options: FavoriteGamesOptions())
-    var favorites
     
     private init()
     {

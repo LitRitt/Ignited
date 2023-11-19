@@ -1,5 +1,5 @@
 //
-//  FavoriteGames.swift
+//  FavoriteGamesOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 6/3/23.

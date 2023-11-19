@@ -1,5 +1,5 @@
 //
-//  QuickSettings.swift
+//  QuickSettingsOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 5/14/23.

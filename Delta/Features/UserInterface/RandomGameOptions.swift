@@ -1,5 +1,5 @@
 //
-//  RandomGame.swift
+//  RandomGameOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 8/17/23.

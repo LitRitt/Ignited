@@ -12,15 +12,15 @@ struct AdvancedFeatures: FeatureContainer
 {
     static let shared = AdvancedFeatures()
     
-    @Feature(name: "Controller Skin Debugging",
-             description: "Enable to show controller skin debugging features in the pause menu.",
-             options: SkinDebugOptions())
-    var skinDebug
-    
     @Feature(name: "Power User Tools",
-             description: "Access potentially dangerous tools. Useful for debugging or troubleshooting.",
+             description: "Intended for troubleshooting and other power user tasks. ",
              options: PowerUserOptions())
     var powerUser
+    
+    @Feature(name: "Controller Skin Debugging",
+             description: "Useful for creating and debugging controller skins.",
+             options: SkinDebugOptions())
+    var skinDebug
     
     private init()
     {

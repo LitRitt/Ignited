@@ -1,5 +1,5 @@
 //
-//  GameboyPalette.swift
+//  GameboyPaletteOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 5/10/23.

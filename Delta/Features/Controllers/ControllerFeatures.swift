@@ -14,26 +14,29 @@ struct ControllerFeatures: FeatureContainer
     
     @Feature(name: "Skin Options",
              description: "Change the look of controller skins.",
-             options: SkinOptions())
+             options: SkinOptions(),
+             permanent: true)
     var skin
     
     @Feature(name: "Controller Options",
              description: "Change how the app responds to controller inputs.",
-             options: ControllerOptions())
+             options: ControllerOptions(),
+             permanent: true)
     var controller
     
     @Feature(name: "Background Blur",
-             description: "Use a live blurred game screen as the background of skins.",
+             description: "Use a blurred game screen as the background of skins.",
              options: BackgroundBlurOptions())
     var backgroundBlur
     
     @Feature(name: "AirPlay Skins",
              description: "Customize the appearance of games when AirPlaying to your TV.",
-             options: AirPlaySkinsOptions())
+             options: AirPlaySkinsOptions(),
+             hidden: true)
     var airPlaySkins
     
     @Feature(name: "Show Screen During AirPlay",
-             description: "Enable to show the main game screen on both the external display, as well as on the controller skin.")
+             description: "Enable to show the main game screen on your device while AirPlaying.")
     var airPlayKeepScreen
     
     private init()

@@ -1,5 +1,5 @@
 //
-//  SkinDebug.swift
+//  SkinDebugOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 5/1/23.

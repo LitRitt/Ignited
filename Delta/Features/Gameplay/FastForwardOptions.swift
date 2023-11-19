@@ -1,5 +1,5 @@
 //
-//  FastForward.swift
+//  FastForwardOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 4/30/23.

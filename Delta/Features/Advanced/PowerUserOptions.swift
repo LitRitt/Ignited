@@ -1,5 +1,5 @@
 //
-//  PowerUser.swift
+//  PowerUserOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 5/1/23.
@@ -296,8 +296,7 @@ extension PowerUserOptions
                 Settings.n64Features.n64graphics.graphicsAPI = .openGLES2
                 
             case .gameScreenshot:
-                Settings.gameplayFeatures.screenshots.saveToFiles = false
-                Settings.gameplayFeatures.screenshots.saveToPhotos = true
+                Settings.gameplayFeatures.screenshots.saveLocation = .photos
                 Settings.gameplayFeatures.screenshots.playCountdown = false
                 Settings.gameplayFeatures.screenshots.size = .x5
                 
@@ -337,14 +336,12 @@ extension PowerUserOptions
                 Settings.controllerFeatures.skin.backgroundColor = .black
                 
             case .backgroundBlur:
-                Settings.controllerFeatures.backgroundBlur.blurBackground = true
-                Settings.controllerFeatures.backgroundBlur.blurAirPlay = true
-                Settings.controllerFeatures.backgroundBlur.blurAspect = true
-                Settings.controllerFeatures.backgroundBlur.blurOverride = false
-                Settings.controllerFeatures.backgroundBlur.blurStrength = 1.0
-                Settings.controllerFeatures.backgroundBlur.blurBrightness = 0.0
-                Settings.controllerFeatures.backgroundBlur.blurTint = true
-                Settings.controllerFeatures.backgroundBlur.blurTintIntensity = 0.15
+                Settings.controllerFeatures.backgroundBlur.blurEnabled = true
+                Settings.controllerFeatures.backgroundBlur.showDuringAirPlay = true
+                Settings.controllerFeatures.backgroundBlur.maintainAspect = true
+                Settings.controllerFeatures.backgroundBlur.overrideSkin = false
+                Settings.controllerFeatures.backgroundBlur.strength = 1.0
+                Settings.controllerFeatures.backgroundBlur.tintIntensity = 0.15
                 
             case .controller:
                 Settings.controllerFeatures.controller.triggerDeadzone = 0.15
@@ -357,9 +354,9 @@ extension PowerUserOptions
                 Settings.libraryFeatures.artwork.showNewGames = true
                 Settings.libraryFeatures.artwork.titleSize = 1.0
                 Settings.libraryFeatures.artwork.titleMaxLines = 3
-                Settings.libraryFeatures.artwork.cornerRadius = 16
+                Settings.libraryFeatures.artwork.roundedCorners = 0.15
                 Settings.libraryFeatures.artwork.borderWidth = 2
-                Settings.libraryFeatures.artwork.shadowOpacity = 0.5
+                Settings.libraryFeatures.artwork.glowOpacity = 0.5
                 
             case .animatedArtwork:
                 Settings.libraryFeatures.animation.animationSpeed = 1.0
@@ -390,10 +387,12 @@ extension PowerUserOptions
                 Settings.userInterfaceFeatures.theme.color = .orange
                 Settings.userInterfaceFeatures.theme.customLightColor = .accentColor
                 Settings.userInterfaceFeatures.theme.customDarkColor = .accentColor
+                AppIconOptions.updateAppIconPreference()
                 
             case .appIcon:
                 Settings.userInterfaceFeatures.appIcon.useTheme = true
                 Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
+                AppIconOptions.updateAppIconPreference()
                 
             case .randomGame:
                 Settings.userInterfaceFeatures.randomGame.useCollection = false

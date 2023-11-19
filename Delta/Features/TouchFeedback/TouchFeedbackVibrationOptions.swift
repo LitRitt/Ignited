@@ -1,5 +1,5 @@
 //
-//  TouchFeedbackVibration.swift
+//  TouchFeedbackVibrationOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 4/29/23.

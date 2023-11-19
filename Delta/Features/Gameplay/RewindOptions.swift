@@ -1,5 +1,5 @@
 //
-//  SaveStateRewind.swift
+//  RewindOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 4/30/23.
@@ -10,7 +10,7 @@ import SwiftUI
 
 import Features
 
-struct SaveStateRewindOptions
+struct RewindOptions
 {
     @Option(name: "Keep Save States",
             description: "Enable to keep save states even after quitting a game. This let's you use rewind as a secondary auto-save method. Disable to use rewind purely as a convenience feature. States will be deleted when quitting a game.")

@@ -1,5 +1,5 @@
 //
-//  GameScreenshot.swift
+//  GameScreenshotOptions.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 4/24/23.
@@ -41,16 +41,31 @@ extension ScreenshotSize: LocalizedOptionValue
     }
 }
 
+enum ScreenshotSaveLocation: String, CaseIterable, CustomStringConvertible
+{
+    case photos = "Photos"
+    case files = "Files"
+    case both = "Photos & Files"
+    
+    var description: String {
+        return self.rawValue
+    }
+}
+
+extension ScreenshotSaveLocation: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        Text(self.description)
+    }
+}
+
 struct GameScreenshotOptions
 {
     @Option(name: "Image Size", description: "Choose the size of screenshots. This only increases the export size, it does not increase the quality.", values: ScreenshotSize.allCases)
     var size: ScreenshotSize? = .x5
     
-    @Option(name: "Save to Files", description: "Save the screenshot to the app's directory in Files.")
-    var saveToFiles: Bool = false
-    
-    @Option(name: "Save to Photos", description: "Save the screenshot to the Photo Library.")
-    var saveToPhotos: Bool = true
+    @Option(name: "Save Location", description: "Choose where to save screenshots.", values: ScreenshotSaveLocation.allCases)
+    var saveLocation: ScreenshotSaveLocation = .photos
     
     @Option(name: "Countdown", description: "After initiating a screenshot, play a 3 second countdown before capturing the screenshot.")
     var playCountdown: Bool = false

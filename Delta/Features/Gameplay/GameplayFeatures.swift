@@ -14,23 +14,32 @@ struct GameplayFeatures: FeatureContainer
     
     @Feature(name: "Game Audio",
              description: "Change how and when audio is played.",
-             options: GameAudioOptions())
+             options: GameAudioOptions(),
+             permanent: true)
     var gameAudio
     
     @Feature(name: "Game Screenshots",
              description: "Capture screenshots of gameplay to your files or photos.",
-             options: GameScreenshotOptions())
+             options: GameScreenshotOptions(),
+             permanent: true)
     var screenshots
     
     @Feature(name: "Fast Forward",
              description: "Speed up gameplay to save time.",
-             options: FastForwardOptions())
+             options: FastForwardOptions(),
+             permanent: true)
     var fastForward
     
-    @Feature(name: "Save State Rewind",
+    @Feature(name: "Rewind",
              description: "Automatically save state at a given interval on supported systems. Allows you to rewind to a recent game state to undo mistakes.",
-             options: SaveStateRewindOptions())
+             options: RewindOptions())
     var rewind
+    
+    @Feature(name: "Quick Settings Menu",
+             description: "Access common gameplay settings quickly from the pause menu or a controller/skin button.",
+             options: QuickSettingsOptions(),
+             permanent: true)
+    var quickSettings
     
     @Feature(name: "Save States",
              options: SaveStatesOptions(),
@@ -48,11 +57,6 @@ struct GameplayFeatures: FeatureContainer
     @Feature(name: "Rotation Lock",
              description: "Make rotation lock available in the pause menu. Lets you lock your game in either portrait or landscape orientation.")
     var rotationLock
-    
-    @Feature(name: "Quick Settings Menu",
-             description: "Access common gameplay settings quickly from the pause menu or a controller/skin button.",
-             options: QuickSettingsOptions())
-    var quickSettings
     
     private init()
     {

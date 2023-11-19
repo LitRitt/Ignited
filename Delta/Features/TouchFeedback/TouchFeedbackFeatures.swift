@@ -17,15 +17,15 @@ struct TouchFeedbackFeatures: FeatureContainer
              options: TouchFeedbackVibrationOptions())
     var touchVibration
     
-    @Feature(name: "Touch Sounds",
-             description: "Play sounds when interacting with controller skins.",
-             options: TouchFeedbackAudioOptions())
-    var touchAudio
-    
     @Feature(name: "Touch Overlay",
              description: "Display an overlay when interacting with controller skins.",
              options: TouchFeedbackOverlayOptions())
     var touchOverlay
+    
+    @Feature(name: "Touch Sounds",
+             description: "Play sounds when interacting with controller skins.",
+             options: TouchFeedbackAudioOptions())
+    var touchAudio
     
     private init()
     {
