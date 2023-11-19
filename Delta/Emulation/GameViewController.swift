@@ -1895,7 +1895,9 @@ extension GameViewController
                 }
             }
             
-            if Settings.gameplayFeatures.screenshots.saveToPhotos
+            let saveLocation = Settings.gameplayFeatures.screenshots.saveLocation
+            
+            if saveLocation == .photos || saveLocation == .both
             {
                 PHPhotoLibrary.runIfAuthorized
                 {
@@ -1903,7 +1905,7 @@ extension GameViewController
                 }
             }
             
-            if Settings.gameplayFeatures.screenshots.saveToFiles
+            if saveLocation == .files || saveLocation == .both
             {
                 let screenshotsDirectory = FileManager.default.documentsDirectory.appendingPathComponent("Screenshots")
                 
