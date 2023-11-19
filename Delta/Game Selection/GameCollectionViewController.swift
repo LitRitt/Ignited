@@ -392,7 +392,7 @@ private extension GameCollectionViewController
             if var overlayImage = cell.imageView.image,
                cell.isPaused || cell.isFavorite || cell.neverPlayed
             {
-                overlayImage = overlayImage.configureArtwork(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, neverPlayed: cell.neverPlayed)
+                overlayImage = overlayImage.configureArtwork(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite)
                 cell.imageView.image = overlayImage
             }
             else
@@ -459,7 +459,6 @@ private extension GameCollectionViewController
         
         cell.imageView.backgroundColor = cell.accentColor.adjustHSBA(hueDelta: 0, saturationDelta: -0.15, brightnessDelta: traitCollection.userInterfaceStyle == .light ? 0.3 : -0.3, alphaDelta: 0)
         cell.imageView.layer.borderColor = cell.accentColor.cgColor
-        cell.imageView.tintColor = cell.accentColor
         cell.textLabel.textColor = UIColor.label
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
@@ -472,39 +471,32 @@ private extension GameCollectionViewController
         cell.layer.shadowColor = cell.accentColor.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 0)
         
-        if self.traitCollection.horizontalSizeClass == .regular
+        if Settings.libraryFeatures.artwork.titleSize == 0
         {
-            let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .subheadline).withSymbolicTraits(.traitBold)!
-            cell.textLabel.font = UIFont(descriptor: fontDescriptor, size: 0)
+            cell.textLabel.isHidden = true
         }
         else
         {
-            if Settings.libraryFeatures.artwork.titleSize == 0
-            {
-                cell.textLabel.isHidden = true
-            }
-            else
-            {
-                let fontSize = Settings.libraryFeatures.artwork.isEnabled ? Settings.libraryFeatures.artwork.titleSize : 1.0
-                
-                switch Settings.libraryFeatures.artwork.size
-                {
-                case .small:
-                    cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(10 * fontSize)
-                case .medium:
-                    cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(12 * fontSize)
-                case .large:
-                    cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(14 * fontSize)
-                }
-                
-                cell.textLabel.isHidden = false
-            }
+            let fontSize = Settings.libraryFeatures.artwork.size.textSize * Settings.libraryFeatures.artwork.titleSize
+            
+            cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(fontSize)
+            cell.textLabel.isHidden = false
         }
         
         cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         
-        cell.textLabel.text = game.name
-        cell.textLabel.numberOfLines = Settings.libraryFeatures.artwork.isEnabled ? Int(floor(Settings.libraryFeatures.artwork.titleMaxLines)) : 3
+        cell.textLabel.numberOfLines = Int(floor(Settings.libraryFeatures.artwork.titleMaxLines))
+        
+        if cell.neverPlayed
+        {
+            cell.textLabel.text = game.name
+            cell.textLabel.addDot(cell.accentColor)
+        }
+        else
+        {
+            cell.textLabel.attributedText = nil
+            cell.textLabel.text = game.name
+        }
     }
     
     func updateCellAspectRatio(_ cell: GridCollectionViewGameCell, with image: UIImage)

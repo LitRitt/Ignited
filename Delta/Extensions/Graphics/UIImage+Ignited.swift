@@ -27,7 +27,7 @@ extension UIImage
         return configuredImage.withTintColor(accentColor)
     }
     
-    func configureArtwork(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, neverPlayed: Bool = false, boundSize: CGFloat = 100) -> UIImage
+    func configureArtwork(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, boundSize: CGFloat = 100) -> UIImage
     {
         let renderSize: CGSize
         
@@ -47,9 +47,6 @@ extension UIImage
         let ratio = pauseImage.size.height / pauseImage.size.width
         pauseRenderSize = CGSize(width: boundSize * 0.45 / ratio, height: boundSize * 0.45)
         let pauseOrigin = CGPoint(x: (renderSize.width - pauseRenderSize.width) / 2, y: (renderSize.height - pauseRenderSize.height) / 2)
-        
-        let neverPlayedRenderSize = CGSize(width: boundSize * 0.16, height: boundSize * 0.16)
-        let neverPlayedOrigin = CGPoint(x: renderSize.width - ((boundSize * 0.07) + neverPlayedRenderSize.width), y: boundSize * 0.07)
         
         let favoriteImage = UIImage.symbolWithTemplate(name: "star.circle.fill", pointSize: boundSize * 0.2, accentColor: accentColor)
         let favoriteRenderSize = CGSize(width: boundSize * 0.2, height: boundSize * 0.2)
@@ -75,19 +72,6 @@ extension UIImage
                 // Pause Symbol
                 ctx.setShadow(offset: .zero, blur: boundSize * 0.3, color: accentColor.adjustBrightness(-0.5).cgColor)
                 pauseImage.draw(in: CGRect(origin: pauseOrigin, size: pauseRenderSize))
-            }
-            
-            if neverPlayed
-            {
-                ctx.setFillColor(accentColor.adjustBrightness(-0.4).cgColor)
-                ctx.setShadow(offset: CGSize(width: 0, height: 0), blur: boundSize * 0.08, color: accentColor.adjustBrightness(-0.5).cgColor)
-                ctx.fillEllipse(in: CGRect(origin: neverPlayedOrigin, size: neverPlayedRenderSize))
-                
-                ctx.restoreGState()
-                ctx.saveGState()
-                
-                ctx.setFillColor(accentColor.adjustBrightness(0.15).cgColor)
-                ctx.fillEllipse(in: CGRect(x: neverPlayedOrigin.x + 2, y: neverPlayedOrigin.y + 2, width: neverPlayedRenderSize.width - 4, height: neverPlayedRenderSize.height - 4))
             }
             
             if isFavorite
