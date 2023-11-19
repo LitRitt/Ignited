@@ -73,7 +73,7 @@ extension UIImage
                 ctx.fill([CGRect(origin: .zero, size: renderSize)])
                 
                 // Pause Symbol
-                ctx.setShadow(offset: CGSize(width: 0, height: 0), blur: boundSize * 0.3, color: accentColor.adjustBrightness(-0.5).cgColor)
+                ctx.setShadow(offset: .zero, blur: boundSize * 0.3, color: accentColor.adjustBrightness(-0.5).cgColor)
                 pauseImage.draw(in: CGRect(origin: pauseOrigin, size: pauseRenderSize))
             }
             
@@ -92,14 +92,13 @@ extension UIImage
             
             if isFavorite
             {
-                ctx.setFillColor(accentColor.adjustBrightness(-0.4).cgColor)
-                ctx.setShadow(offset: CGSize(width: 0, height: 0), blur: boundSize * 0.1, color: accentColor.adjustBrightness(-0.5).cgColor)
+                ctx.setFillColor(accentColor.adjustBrightness(-0.5).cgColor)
+                ctx.setShadow(offset: .zero, blur: boundSize * 0.1, color: accentColor.adjustBrightness(-0.5).cgColor)
                 ctx.fillEllipse(in: CGRect(origin: favoriteOrigin, size: favoriteRenderSize))
                 
                 ctx.restoreGState()
-                ctx.saveGState()
                 
-                ctx.setFillColor(accentColor.adjustBrightness(0.15).cgColor)
+                ctx.setFillColor(accentColor.adjustBrightness(0.1).cgColor)
                 favoriteImage.draw(in: CGRect(origin: favoriteOrigin, size: favoriteRenderSize))
             }
         }
