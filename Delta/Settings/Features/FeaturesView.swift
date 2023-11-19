@@ -52,12 +52,7 @@ extension FeaturesView
         
         init(featureContainer: FeatureContainer)
         {
-            // Sort features alphabetically by name.
-            let sortedFeatures = featureContainer.allFeatures.sorted { (featureA, featureB) in
-                return String(describing: featureA.name) < String(describing: featureB.name)
-            }
-            
-            self.sortedFeatures = sortedFeatures.filter { !$0.hidden }
+            self.sortedFeatures = featureContainer.allFeatures.filter { !$0.hidden }
         }
     }
 }
