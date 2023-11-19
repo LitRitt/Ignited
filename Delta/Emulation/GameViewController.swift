@@ -697,6 +697,11 @@ extension GameViewController
             default: break
             }
             
+            if url!.pathExtension.lowercased() == "gbc"
+            {
+                pauseViewController.paletteItem = nil
+            }
+            
             self.pauseViewController = pauseViewController
             
         default: break
