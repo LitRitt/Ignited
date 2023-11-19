@@ -15,6 +15,7 @@ public protocol AnyFeature<Options>: ObservableObject, Identifiable
     
     var name: LocalizedStringKey { get }
     var description: LocalizedStringKey?  { get }
+    var permanent: Bool { get }
     var hidden: Bool { get }
     
     var key: String  { get }

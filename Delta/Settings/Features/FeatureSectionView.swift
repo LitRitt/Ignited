@@ -17,7 +17,7 @@ struct FeatureSection<T: AnyFeature>: View
     
     var body: some View {
         Section {
-            if feature.allOptions.isEmpty != ((feature.allOptions.first?.key == "isOn") && (feature.allOptions.count == 1))
+            if feature.allOptions.isEmpty
             {
                 Toggle(feature.name, isOn: $feature.isEnabled)
                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
@@ -25,20 +25,11 @@ struct FeatureSection<T: AnyFeature>: View
             else
             {
                 NavigationLink(destination: FeatureDetailView(feature: feature)) {
-                    HStack {
+                    if !feature.permanent {
+                        Toggle(feature.name, isOn: $feature.isEnabled)
+                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                    } else {
                         Text(feature.name)
-                        Spacer()
-                        
-                        if feature.isEnabled
-                        {
-                            Text("On")
-                                .foregroundColor(.secondary)
-                        }
-                        else
-                        {
-                            Text("Off")
-                                .foregroundColor(.secondary)
-                        }
                     }
                 }
             }
@@ -58,30 +49,15 @@ private struct FeatureDetailView<Feature: AnyFeature>: View
     
     var body: some View {
         Form {
-            Section {
-                Toggle(isOn: $feature.isEnabled.animation()) {
-                    Text(feature.name)
-                        .bold()
-                }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
-            } footer: {
-                if let description = feature.description
+            ForEach(feature.allOptions, id: \.key) { option in
+                if let optionView = optionView(option)
                 {
-                    Text(description)
-                }
-            }
-            
-            if feature.isEnabled
-            {
-                ForEach(feature.allOptions, id: \.key) { option in
-                    if let optionView = optionView(option)
-                    {
-                        Section {
-                            optionView
-                        } footer: {
-                            if let description = option.description
-                            {
-                                Text(description)
-                            }
+                    Section {
+                        optionView
+                    } footer: {
+                        if let description = option.description
+                        {
+                            Text(description)
                         }
                     }
                 }

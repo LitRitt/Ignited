@@ -32,7 +32,7 @@ public final class Feature<Options>: _AnyFeature
     
     public var isEnabled: Bool {
         get {
-            let isEnabled = UserDefaults.standard.bool(forKey: self.key)
+            let isEnabled = UserDefaults.standard.bool(forKey: self.key) || self.permanent
             return isEnabled
         }
         set {
