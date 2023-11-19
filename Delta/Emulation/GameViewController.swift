@@ -605,7 +605,7 @@ extension GameViewController
                 self.performQuickSettingsAction()
             }
             
-            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.blurBackground
+            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.blurEnabled
             pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
                 self.performBlurBackgroundAction()
             }
@@ -668,13 +668,14 @@ extension GameViewController
             default: break
             }
             
-            if !Settings.controllerFeatures.backgroundBlur.blurOverride,
+            if !Settings.controllerFeatures.backgroundBlur.overrideSkin,
                self.controllerView.backgroundBlur != nil
             {
                 pauseViewController.blurBackgroudItem = nil
             }
             
-            if !Settings.controllerFeatures.backgroundBlur.blurAirPlay
+            if !Settings.controllerFeatures.backgroundBlur.showDuringAirPlay,
+               UIApplication.shared.isExternalDisplayConnected
             {
                 pauseViewController.blurBackgroudItem = nil
             }
@@ -1086,7 +1087,7 @@ private extension GameViewController
             {
                 for (screen, gameView) in zip(screens, self.gameViews)
                 {
-                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && Settings.controllerFeatures.backgroundBlur.blurAirPlay
+                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && Settings.controllerFeatures.backgroundBlur.showDuringAirPlay
                     
                     let enabled = screen.isTouchScreen || enableBlurScreen
                     
@@ -1124,25 +1125,18 @@ private extension GameViewController
     
     func updateBlurBackground()
     {
-        self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.blurAspect
-        self.blurScreenOverride = Settings.controllerFeatures.backgroundBlur.blurOverride
-        self.blurScreenStrength = Settings.controllerFeatures.backgroundBlur.blurStrength
-        if Settings.controllerFeatures.backgroundBlur.blurTint
+        self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
+        self.blurScreenOverride = Settings.controllerFeatures.backgroundBlur.overrideSkin || !Settings.controllerFeatures.backgroundBlur.isEnabled
+        self.blurScreenStrength = Settings.controllerFeatures.backgroundBlur.strength
+        switch traitCollection.userInterfaceStyle
         {
-            switch traitCollection.userInterfaceStyle
-            {
-            case .light:
-                self.blurScreenBrightness = Settings.controllerFeatures.backgroundBlur.blurTintIntensity
-                
-            case .dark, .unspecified:
-                var intensity = Settings.controllerFeatures.backgroundBlur.blurTintIntensity
-                intensity.negate()
-                self.blurScreenBrightness = intensity
-            }
-        }
-        else
-        {
-            self.blurScreenBrightness = Settings.controllerFeatures.backgroundBlur.blurBrightness
+        case .light:
+            self.blurScreenBrightness = Settings.controllerFeatures.backgroundBlur.tintIntensity
+            
+        case .dark, .unspecified:
+            var intensity = Settings.controllerFeatures.backgroundBlur.tintIntensity
+            intensity.negate()
+            self.blurScreenBrightness = intensity
         }
         
         // Set enabled last as it's the property that triggers updateGameViews()
@@ -1153,7 +1147,7 @@ private extension GameViewController
         }
         else
         {
-            self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled ? Settings.controllerFeatures.backgroundBlur.blurBackground : false
+            self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.controllerFeatures.backgroundBlur.blurEnabled
         }
         
     }
@@ -2198,9 +2192,9 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
-        let enabled = !Settings.controllerFeatures.backgroundBlur.blurBackground
+        let enabled = !Settings.controllerFeatures.backgroundBlur.blurEnabled
         self.blurScreenEnabled = enabled
-        Settings.controllerFeatures.backgroundBlur.blurBackground = enabled
+        Settings.controllerFeatures.backgroundBlur.blurEnabled = enabled
         
         if Settings.userInterfaceFeatures.toasts.backgroundBlur
         {

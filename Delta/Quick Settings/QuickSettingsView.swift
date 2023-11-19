@@ -35,10 +35,8 @@ struct QuickSettingsView: View
     @State private var controllerSkinBackgroundColor: Color = Settings.controllerFeatures.skin.backgroundColor
     @State private var controllerSkinAirPlayKeepScreen: Bool = Settings.controllerFeatures.airPlayKeepScreen.isEnabled
     
-    @State private var backgroundBlurStrength: Double = Settings.controllerFeatures.backgroundBlur.blurStrength
-    @State private var backgroundBlurBrightness: Double = Settings.controllerFeatures.backgroundBlur.blurBrightness
-    @State private var backgroundBlurTintIntensity: Double = Settings.controllerFeatures.backgroundBlur.blurTintIntensity
-    @State private var backgroundBlurTintEnabled: Bool = Settings.controllerFeatures.backgroundBlur.blurTint
+    @State private var backgroundBlurStrength: Double = Settings.controllerFeatures.backgroundBlur.strength
+    @State private var backgroundBlurTintIntensity: Double = Settings.controllerFeatures.backgroundBlur.tintIntensity
     
     @State private var gameboyPalette: GameboyPalette = Settings.gbcFeatures.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = Settings.gbcFeatures.palettes.spritePalette1
@@ -264,53 +262,33 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.backgroundBlurStrength = 1.0
-                                    Settings.controllerFeatures.backgroundBlur.blurStrength = self.backgroundBlurStrength
+                                    Settings.controllerFeatures.backgroundBlur.strength = self.backgroundBlurStrength
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
                                 .onChange(of: self.backgroundBlurStrength) { value in
-                                    Settings.controllerFeatures.backgroundBlur.blurStrength = value
+                                    Settings.controllerFeatures.backgroundBlur.strength = value
                                 }
-                            if self.backgroundBlurTintEnabled {
-                                HStack {
-                                    Text("Tint Intensity: \(self.backgroundBlurTintIntensity * 100, specifier: "%.f")%")
-                                    Spacer()
-                                    Button("Reset") {
-                                        self.backgroundBlurTintIntensity = 0.1
-                                        Settings.controllerFeatures.backgroundBlur.blurTintIntensity = self.backgroundBlurTintIntensity
-                                    }.buttonStyle(.borderless)
-                                }
-                                Slider(value: self.$backgroundBlurTintIntensity, in: 0.05...0.30, step: 0.05)
-                                    .onChange(of: self.backgroundBlurTintIntensity) { value in
-                                        Settings.controllerFeatures.backgroundBlur.blurTintIntensity = value
-                                    }
-                            } else {
-                                HStack {
-                                    Text("Blur Brightness: \(self.backgroundBlurBrightness * 100, specifier: "%.f")%")
-                                    Spacer()
-                                    Button("Reset") {
-                                        self.backgroundBlurBrightness = 0
-                                        Settings.controllerFeatures.backgroundBlur.blurBrightness = self.backgroundBlurBrightness
-                                    }.buttonStyle(.borderless)
-                                }
-                                Slider(value: self.$backgroundBlurBrightness, in: -0.5...0.5, step: 0.05)
-                                    .onChange(of: self.backgroundBlurBrightness) { value in
-                                        Settings.controllerFeatures.backgroundBlur.blurBrightness = value
-                                    }
+                            HStack {
+                                Text("Tint Intensity: \(self.backgroundBlurTintIntensity * 100, specifier: "%.f")%")
+                                Spacer()
+                                Button("Reset") {
+                                    self.backgroundBlurTintIntensity = 0.15
+                                    Settings.controllerFeatures.backgroundBlur.tintIntensity = self.backgroundBlurTintIntensity
+                                }.buttonStyle(.borderless)
                             }
+                            Slider(value: self.$backgroundBlurTintIntensity, in: -0.5...0.5, step: 0.05)
+                                .onChange(of: self.backgroundBlurTintIntensity) { value in
+                                    Settings.controllerFeatures.backgroundBlur.tintIntensity = value
+                                }
                             if self.expandedBackgroundBlurEnabled {
-                                Toggle("Light/Dark Mode Tint", isOn: self.$backgroundBlurTintEnabled)
+                                Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$showDuringAirPlay.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                    .onChange(of: self.backgroundBlurTintEnabled) { value in
-                                        Settings.controllerFeatures.backgroundBlur.blurTint = value
-                                    }
-                                Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$blurAirPlay.valueBinding)
+                                Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$maintainAspect.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$blurAspect.valueBinding)
+                                Toggle("Override Skin Setting", isOn: Settings.controllerFeatures.backgroundBlur.$overrideSkin.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Override Skin Setting", isOn: Settings.controllerFeatures.backgroundBlur.$blurOverride.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Blur Enabled", isOn: Settings.controllerFeatures.backgroundBlur.$blurBackground.valueBinding)
+                                Toggle("Show During Override", isOn: Settings.controllerFeatures.backgroundBlur.$blurEnabled.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }
