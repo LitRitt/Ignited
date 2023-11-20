@@ -392,7 +392,7 @@ private extension GameCollectionViewController
             if var overlayImage = cell.imageView.image,
                cell.isPaused || cell.isFavorite || cell.neverPlayed
             {
-                overlayImage = overlayImage.configureArtwork(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite)
+                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite)
                 cell.imageView.image = overlayImage
             }
             else
@@ -490,7 +490,7 @@ private extension GameCollectionViewController
         if cell.neverPlayed
         {
             cell.textLabel.text = game.name
-            cell.textLabel.addDot(cell.accentColor)
+            cell.textLabel.addNewGameDot(cell.accentColor)
         }
         else
         {

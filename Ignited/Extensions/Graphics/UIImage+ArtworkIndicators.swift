@@ -1,8 +1,8 @@
 //
-//  UIImage+Ignited.swift
-//  Delta
+//  UIImage+ArtworkIndicators.swift
+//  Ignited
 //
-//  Created by Chris Rittenhouse on 11/10/23.
+//  Created by Chris Rittenhouse on 11/20/23.
 //  Copyright © 2023 LitRitt. All rights reserved.
 //
 
@@ -10,24 +10,7 @@ import UIKit
 
 extension UIImage
 {
-    static func symbolWithTemplate(name: String, pointSize: CGFloat = 30, accentColor: UIColor = UIColor.themeColor) -> UIImage
-    {
-        let configuration = SymbolConfiguration(pointSize: pointSize)
-        
-        guard let symbolImage = UIImage(systemName: name, withConfiguration: configuration),
-              let cgImage = symbolImage.cgImage
-        else {
-            return UIImage()
-        }
-        
-        let image = UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: .up).withRenderingMode(.alwaysTemplate)
-        
-        guard let configuredImage = image.applyingSymbolConfiguration(configuration) else { return image }
-        
-        return configuredImage.withTintColor(accentColor)
-    }
-    
-    func configureArtwork(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, boundSize: CGFloat = 100) -> UIImage
+    func drawArtworkIndicators(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, boundSize: CGFloat = 100) -> UIImage
     {
         let renderSize: CGSize
         
@@ -42,13 +25,13 @@ extension UIImage
             renderSize = CGSize(width: boundSize / ratio, height: boundSize)
         }
         
-        let pauseImage = UIImage.symbolWithTemplate(name: "pause.fill", pointSize: boundSize * 0.45, accentColor: accentColor)
+        let pauseImage = UIImage.symbolWithTemplate(name: "pause.fill", pointSize: boundSize * 0.45, accentColor: accentColor) ?? UIImage()
         let pauseRenderSize: CGSize
         let ratio = pauseImage.size.height / pauseImage.size.width
         pauseRenderSize = CGSize(width: boundSize * 0.45 / ratio, height: boundSize * 0.45)
         let pauseOrigin = CGPoint(x: (renderSize.width - pauseRenderSize.width) / 2, y: (renderSize.height - pauseRenderSize.height) / 2)
         
-        let favoriteImage = UIImage.symbolWithTemplate(name: "star.circle.fill", pointSize: boundSize * 0.2, accentColor: accentColor)
+        let favoriteImage = UIImage.symbolWithTemplate(name: "star.circle.fill", pointSize: boundSize * 0.2, accentColor: accentColor) ?? UIImage()
         let favoriteRenderSize = CGSize(width: boundSize * 0.2, height: boundSize * 0.2)
         let favoriteOrigin = CGPoint(x: boundSize * 0.05, y: boundSize * 0.05)
         
@@ -84,27 +67,6 @@ extension UIImage
                 
                 ctx.setFillColor(accentColor.adjustBrightness(0.1).cgColor)
                 favoriteImage.draw(in: CGRect(origin: favoriteOrigin, size: favoriteRenderSize))
-            }
-        }
-    }
-    
-    static func makePlaceholder() -> UIImage
-    {
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = UIScreen.main.scale
-        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 100, height: 100), format: format)
-        
-        return renderer.image { (context) in
-            let ctx = context.cgContext
-            
-            let rect = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
-            ctx.setFillColor(UIColor.systemBackground.cgColor)
-            ctx.fill(rect)
-            
-            if let image = UIImage(systemName: "questionmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 60))?.withTintColor(UIColor.label, renderingMode: .alwaysTemplate)
-            {
-                let imageWidth = 60 * (image.size.width / image.size.height)
-                image.draw(in: CGRect(x: (100 - imageWidth) / 2, y: 20, width: imageWidth, height: 60))
             }
         }
     }

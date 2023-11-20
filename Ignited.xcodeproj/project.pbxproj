@@ -36,7 +36,7 @@
 		AC0BF8182A8ECD7000C47A5A /* RandomGameOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */; };
 		AC14384B2A4F670F0099977F /* DSAirPlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384A2A4F670F0099977F /* DSAirPlayOptions.swift */; };
 		AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384C2A4F67430099977F /* DSFeatures.swift */; };
-		AC1E64AC2B0989D6009CFD67 /* UILabel+UnplayedIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1E64AB2B0989D6009CFD67 /* UILabel+UnplayedIcon.swift */; };
+		AC1E64AC2B0989D6009CFD67 /* UILabel+NewGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1E64AB2B0989D6009CFD67 /* UILabel+NewGame.swift */; };
 		AC1EAE652A005F6C0072C858 /* AdvancedFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */; };
 		AC1EAE672A0061910072C858 /* PowerUserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE662A0061910072C858 /* PowerUserOptions.swift */; };
 		AC1EAE6B2A006CC30072C858 /* SkinDebugOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE6A2A006CC30072C858 /* SkinDebugOptions.swift */; };
@@ -44,11 +44,12 @@
 		AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E72A112DA30098266B /* QuickSettingsView.swift */; };
 		AC2059EA2A117B570098266B /* QuickSettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E92A117B570098266B /* QuickSettingsOptions.swift */; };
 		AC23D2D62AFDCD2A0056CC3F /* SaveStatesOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2D52AFDCD2A0056CC3F /* SaveStatesOptions.swift */; };
-		AC23D2DF2AFE7B030056CC3F /* UIImage+Ignited.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2DE2AFE7B030056CC3F /* UIImage+Ignited.swift */; };
+		AC23D2DF2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2DE2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift */; };
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */; };
 		AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D0A842A19702C00EEEB39 /* Patron.swift */; };
 		AC31535C2AFC094C004EB51E /* UIApplication+Webpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */; };
+		AC3BC8E72B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */; };
 		AC3CE7F62A2BA822008A8C43 /* LibraryFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */; };
 		AC3CE7F82A2BB485008A8C43 /* AnimatedArtworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */; };
 		AC3CE7FA2A2BB496008A8C43 /* FavoriteGamesOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F92A2BB496008A8C43 /* FavoriteGamesOptions.swift */; };
@@ -302,7 +303,7 @@
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
 		AC14384A2A4F670F0099977F /* DSAirPlayOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSAirPlayOptions.swift; sourceTree = "<group>"; };
 		AC14384C2A4F67430099977F /* DSFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSFeatures.swift; sourceTree = "<group>"; };
-		AC1E64AB2B0989D6009CFD67 /* UILabel+UnplayedIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+UnplayedIcon.swift"; sourceTree = "<group>"; };
+		AC1E64AB2B0989D6009CFD67 /* UILabel+NewGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+NewGame.swift"; sourceTree = "<group>"; };
 		AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedFeatures.swift; sourceTree = "<group>"; };
 		AC1EAE662A0061910072C858 /* PowerUserOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerUserOptions.swift; sourceTree = "<group>"; };
 		AC1EAE6A2A006CC30072C858 /* SkinDebugOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinDebugOptions.swift; sourceTree = "<group>"; };
@@ -310,11 +311,12 @@
 		AC2059E72A112DA30098266B /* QuickSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsView.swift; sourceTree = "<group>"; };
 		AC2059E92A117B570098266B /* QuickSettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsOptions.swift; sourceTree = "<group>"; };
 		AC23D2D52AFDCD2A0056CC3F /* SaveStatesOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStatesOptions.swift; sourceTree = "<group>"; };
-		AC23D2DE2AFE7B030056CC3F /* UIImage+Ignited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ignited.swift"; sourceTree = "<group>"; };
+		AC23D2DE2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SymbolTemplates.swift"; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtworkOptions.swift; sourceTree = "<group>"; };
 		AC2D0A842A19702C00EEEB39 /* Patron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
 		AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Webpage.swift"; sourceTree = "<group>"; };
+		AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ArtworkIndicators.swift"; sourceTree = "<group>"; };
 		AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryFeatures.swift; sourceTree = "<group>"; };
 		AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedArtworkOptions.swift; sourceTree = "<group>"; };
 		AC3CE7F92A2BB496008A8C43 /* FavoriteGamesOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGamesOptions.swift; sourceTree = "<group>"; };
@@ -663,8 +665,9 @@
 			isa = PBXGroup;
 			children = (
 				BF797A2C1C2D339F00F1A000 /* UILabel+FontSize.swift */,
-				AC1E64AB2B0989D6009CFD67 /* UILabel+UnplayedIcon.swift */,
-				AC23D2DE2AFE7B030056CC3F /* UIImage+Ignited.swift */,
+				AC1E64AB2B0989D6009CFD67 /* UILabel+NewGame.swift */,
+				AC23D2DE2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift */,
+				AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */,
 				BF7AE8091C2E8C7600B1B5BC /* UIColor+Theme.swift */,
 				AC8E5BC929CCF77700F32D19 /* UIColor+AdjustHSBA.swift */,
 				ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */,
@@ -1746,7 +1749,7 @@
 				AC1EAE652A005F6C0072C858 /* AdvancedFeatures.swift in Sources */,
 				AC84B57429FF1BDA0090F274 /* FastForwardOptions.swift in Sources */,
 				BFFA4C091E8A24D600D87934 /* GameTableViewCell.swift in Sources */,
-				AC1E64AC2B0989D6009CFD67 /* UILabel+UnplayedIcon.swift in Sources */,
+				AC1E64AC2B0989D6009CFD67 /* UILabel+NewGame.swift in Sources */,
 				BFFC46231D5984A000AF2CC6 /* LaunchViewController.swift in Sources */,
 				D5864970297734280081477E /* CheatMetadata.swift in Sources */,
 				AC84B57029FF102A0090F274 /* GameAudioOptions.swift in Sources */,
@@ -1757,7 +1760,7 @@
 				BF34FA071CF0F510006624C7 /* EditCheatViewController.swift in Sources */,
 				BF1F45A421AF274D00EF9895 /* SyncResultViewController.swift in Sources */,
 				AC3CE7F82A2BB485008A8C43 /* AnimatedArtworkOptions.swift in Sources */,
-				AC23D2DF2AFE7B030056CC3F /* UIImage+Ignited.swift in Sources */,
+				AC23D2DF2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift in Sources */,
 				AC27348029FE950E00B4CB2E /* GameArtworkOptions.swift in Sources */,
 				AC3CE7FA2A2BB496008A8C43 /* FavoriteGamesOptions.swift in Sources */,
 				AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */,
@@ -1793,6 +1796,7 @@
 				BF6EE5E91F7C5F860051AD6C /* _GameControllerInputMapping.swift in Sources */,
 				BF5942871E09BC8B0051894B /* _ControllerSkin.swift in Sources */,
 				BF95E2791E4982A10030E7AD /* GamesDatabaseBrowserViewController.swift in Sources */,
+				AC3BC8E72B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift in Sources */,
 				D524F4A3273DE9C000D500B2 /* ProcessInfo+JIT.swift in Sources */,
 				BFDCA1E9244F7E1000B8FBDB /* Delta5ToDelta6.xcmappingmodel in Sources */,
 				BFD097211D3A01B8005A44C2 /* SaveStatesViewController.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  UILabel+UnplayedIcon.swift
+//  UILabel+NewGame.swift
 //  Delta
 //
 //  Created by Chris Rittenhouse on 11/18/23.
@@ -10,7 +10,7 @@ import UIKit
 
 extension UILabel
 {
-    func addDot(_ color: UIColor)
+    func addNewGameDot(_ color: UIColor)
     {
         // Create icon renderer
         let format = UIGraphicsImageRendererFormat()
