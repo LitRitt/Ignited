@@ -1,6 +1,6 @@
 //
 //  UIApplication+TopViewController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 8/5/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

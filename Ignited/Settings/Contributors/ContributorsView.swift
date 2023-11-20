@@ -1,6 +1,6 @@
 //
 //  ContributionsView.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 2/2/23.
 //  Copyright © 2023 Riley Testut. All rights reserved.

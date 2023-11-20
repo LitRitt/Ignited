@@ -1,6 +1,6 @@
 //
 //  CGColor+RGB.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 5/12/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 6/6/22.
 //  Copyright © 2022 Riley Testut. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  Bundle+AppIconImage.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 6/7/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

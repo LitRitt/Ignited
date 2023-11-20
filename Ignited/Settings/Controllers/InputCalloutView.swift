@@ -1,6 +1,6 @@
 //
 //  InputCalloutView.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 7/9/17.
 //  Copyright © 2017 Riley Testut. All rights reserved.

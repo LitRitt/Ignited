@@ -1,6 +1,6 @@
 //
 //  FavoriteGamesOptions.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 6/3/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

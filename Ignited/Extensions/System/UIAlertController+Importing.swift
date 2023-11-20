@@ -1,6 +1,6 @@
 //
 //  UIAlertController+Importing.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 1/13/17.
 //  Copyright © 2017 Riley Testut. All rights reserved.

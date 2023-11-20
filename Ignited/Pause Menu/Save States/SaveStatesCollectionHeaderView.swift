@@ -1,6 +1,6 @@
 //
 //  SaveStatesCollectionHeaderView.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 3/15/16.
 //  Copyright © 2016 Riley Testut. All rights reserved.

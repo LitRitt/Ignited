@@ -1,6 +1,6 @@
 //
 //  UIDevice+Processor.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 9/21/19.
 //  Copyright © 2019 Riley Testut. All rights reserved.

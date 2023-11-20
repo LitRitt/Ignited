@@ -1,6 +1,6 @@
 //
 //  UIColor+AdjustHSBA.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 3/23/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

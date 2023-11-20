@@ -1,6 +1,6 @@
 //
 //  PopoverMenuViewController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 9/2/17.
 //  Copyright © 2017 Riley Testut. All rights reserved.

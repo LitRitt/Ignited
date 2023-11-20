@@ -1,6 +1,6 @@
 //
 //  TouchFeedbackVibrationOptions.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 4/29/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

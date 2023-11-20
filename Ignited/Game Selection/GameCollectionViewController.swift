@@ -1,6 +1,6 @@
 //
 //  GameCollectionViewController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 8/12/16.
 //  Copyright © 2016 Riley Testut. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  AppIconShortcutsViewController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 12/19/17.
 //  Copyright © 2017 Riley Testut. All rights reserved.

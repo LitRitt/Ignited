@@ -1,6 +1,6 @@
 //
 //  ProcessInfo+JIT.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 9/14/21.
 //  Copyright © 2021 Riley Testut. All rights reserved.

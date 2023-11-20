@@ -1,6 +1,6 @@
 //
 //  GameCollection.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 11/1/15.
 //  Copyright © 2015 Riley Testut. All rights reserved.

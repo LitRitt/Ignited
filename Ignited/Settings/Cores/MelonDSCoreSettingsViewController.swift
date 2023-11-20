@@ -1,6 +1,6 @@
 //
 //  MelonDSCoreSettingsViewController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 4/13/20.
 //  Copyright © 2020 Riley Testut. All rights reserved.

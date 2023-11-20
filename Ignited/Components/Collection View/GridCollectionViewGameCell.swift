@@ -1,6 +1,6 @@
 //
 //  GridCollectionViewGameCell.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 4/1/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

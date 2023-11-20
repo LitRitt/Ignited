@@ -1,6 +1,6 @@
 //
 //  GameControllerInputMapping.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 8/30/16.
 //  Copyright (c) 2016 Riley Testut. All rights reserved.

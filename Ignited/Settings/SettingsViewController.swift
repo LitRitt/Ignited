@@ -1,6 +1,6 @@
 //
 //  SettingsViewController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 9/4/15.
 //  Copyright © 2015 Riley Testut. All rights reserved.

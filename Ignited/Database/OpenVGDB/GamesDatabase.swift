@@ -1,6 +1,6 @@
 //
 //  GamesDatabase.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 11/16/16.
 //  Copyright © 2016 Riley Testut. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  ActionInput.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 8/28/17.
 //  Copyright © 2017 Riley Testut. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  ControllerSkinsViewController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 10/19/16.
 //  Copyright © 2016 Riley Testut. All rights reserved.

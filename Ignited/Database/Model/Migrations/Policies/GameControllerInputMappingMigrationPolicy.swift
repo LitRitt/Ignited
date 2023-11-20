@@ -1,6 +1,6 @@
 //
 //  GameControllerInputMappingMigrationPolicy.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 1/30/19.
 //  Copyright © 2019 Riley Testut. All rights reserved.

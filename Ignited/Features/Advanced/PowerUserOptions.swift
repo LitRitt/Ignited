@@ -1,6 +1,6 @@
 //
 //  PowerUserOptions.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 5/1/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

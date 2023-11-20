@@ -1,6 +1,6 @@
 //
 //  BackgroundBlurOptions.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 6/28/23.
 //  Copyright © 2023 LitRitt. All rights reserved.

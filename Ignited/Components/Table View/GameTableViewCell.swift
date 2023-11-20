@@ -1,6 +1,6 @@
 //
 //  GameTableViewCell.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 3/27/17.
 //  Copyright © 2017 Riley Testut. All rights reserved.

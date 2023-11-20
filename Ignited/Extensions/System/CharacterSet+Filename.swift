@@ -1,6 +1,6 @@
 //
 //  CharacterSet+Filename.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 4/28/22.
 //  Copyright © 2022 Riley Testut. All rights reserved.

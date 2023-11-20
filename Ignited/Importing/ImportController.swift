@@ -1,6 +1,6 @@
 //
 //  ImportController.swift
-//  Delta
+//  Ignited
 //
 //  Created by Riley Testut on 10/10/15.
 //  Copyright © 2015 Riley Testut. All rights reserved.

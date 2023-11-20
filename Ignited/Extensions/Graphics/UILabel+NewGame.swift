@@ -1,6 +1,6 @@
 //
 //  UILabel+NewGame.swift
-//  Delta
+//  Ignited
 //
 //  Created by Chris Rittenhouse on 11/18/23.
 //  Copyright © 2023 LitRitt. All rights reserved.
