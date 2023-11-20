@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage
 {
-    func drawArtworkIndicators(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, boundSize: CGFloat = 100) -> UIImage
+    func drawArtworkIndicators(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, borderWidth: CGFloat = 2, boundSize: CGFloat = 100) -> UIImage
     {
         let renderSize: CGSize
         
@@ -31,9 +31,11 @@ extension UIImage
         pauseRenderSize = CGSize(width: boundSize * 0.45 / ratio, height: boundSize * 0.45)
         let pauseOrigin = CGPoint(x: (renderSize.width - pauseRenderSize.width) / 2, y: (renderSize.height - pauseRenderSize.height) / 2)
         
-        let favoriteImage = UIImage.symbolWithTemplate(name: "star.circle.fill", pointSize: boundSize * 0.2, accentColor: accentColor) ?? UIImage()
+        let favoriteImage = UIImage.symbolWithTemplate(name: "star.circle.fill", pointSize: boundSize * 0.2, accentColor: accentColor.adjustBrightness(-0.6))
         let favoriteRenderSize = CGSize(width: boundSize * 0.2, height: boundSize * 0.2)
         let favoriteOrigin = CGPoint(x: boundSize * 0.05, y: boundSize * 0.05)
+        let starRenderSize = CGSize(width: favoriteRenderSize.width - (borderWidth * 2), height: favoriteRenderSize.height - (borderWidth * 2))
+        let starOrigin = CGPoint(x: favoriteOrigin.x + borderWidth, y: favoriteOrigin.y + borderWidth)
         
         let format = UIGraphicsImageRendererFormat()
         format.scale = UIScreen.main.scale
@@ -59,14 +61,13 @@ extension UIImage
             
             if isFavorite
             {
-                ctx.setFillColor(accentColor.adjustBrightness(-0.5).cgColor)
+                ctx.setFillColor(accentColor.cgColor)
                 ctx.setShadow(offset: .zero, blur: boundSize * 0.1, color: accentColor.adjustBrightness(-0.5).cgColor)
                 ctx.fillEllipse(in: CGRect(origin: favoriteOrigin, size: favoriteRenderSize))
                 
                 ctx.restoreGState()
                 
-                ctx.setFillColor(accentColor.adjustBrightness(0.1).cgColor)
-                favoriteImage.draw(in: CGRect(origin: favoriteOrigin, size: favoriteRenderSize))
+                favoriteImage.draw(in: CGRect(origin: starOrigin, size: starRenderSize))
             }
         }
     }

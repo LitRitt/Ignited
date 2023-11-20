@@ -392,7 +392,8 @@ private extension GameCollectionViewController
             if var overlayImage = cell.imageView.image,
                cell.isPaused || cell.isFavorite || cell.neverPlayed
             {
-                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite)
+                let borderWidth = Settings.libraryFeatures.artwork.borderWidth
+                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth)
                 cell.imageView.image = overlayImage
             }
             else
