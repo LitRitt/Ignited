@@ -439,11 +439,21 @@ private extension GameCollectionViewController
         let game = self.dataSource.item(at: indexPath) as! Game
         let layout = self.collectionViewLayout as! GridCollectionViewLayout
         
+        let fetchRequest: NSFetchRequest<SaveState> = SaveState.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(SaveState.game), game)
+        
+        var saveStateCount: Int = 0
+        do {
+            saveStateCount = try DatabaseManager.shared.viewContext.count(for: fetchRequest)
+        } catch {
+            print(error)
+        }
+        
         cell.isFavorite = game.isFavorite && Settings.libraryFeatures.favorites.favoriteHighlight
         
         cell.isPaused = game.fileURL == self.activeEmulatorCore?.game.fileURL
         
-        cell.neverPlayed = game.playedDate == nil && Settings.libraryFeatures.artwork.showNewGames
+        cell.neverPlayed = (game.playedDate == nil) && (saveStateCount == 0) && Settings.libraryFeatures.artwork.showNewGames
         
         if cell.isFavorite
         {
