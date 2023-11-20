@@ -390,7 +390,7 @@ private extension GameCollectionViewController
             cell.imageView.image = image
             
             if var overlayImage = cell.imageView.image,
-               cell.isPaused || cell.isFavorite || cell.neverPlayed
+               cell.isPaused || cell.isFavorite
             {
                 let borderWidth = Settings.libraryFeatures.artwork.borderWidth
                 overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth)
