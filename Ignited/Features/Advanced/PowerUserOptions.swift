@@ -71,6 +71,11 @@ extension PowerUserOptions
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }
         
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
+            self.showFeatureDisabledNotification(topViewController)
+            return
+        }
+        
         let alertController = UIAlertController(title: NSLocalizedString("Copy Refresh Token?", comment: ""), message: NSLocalizedString("This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.", comment: ""), preferredStyle: .alert)
         alertController.popoverPresentationController?.sourceView = topViewController.view
         alertController.popoverPresentationController?.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.maxY, width: 0, height: 0)
@@ -106,6 +111,11 @@ extension PowerUserOptions
     static func clearAutoSaveStates()
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }
+        
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
+            self.showFeatureDisabledNotification(topViewController)
+            return
+        }
         
         let alertController = UIAlertController(title: NSLocalizedString("⚠️ Clear States? ⚠️", comment: ""), message: NSLocalizedString("This will delete all auto save states from every game. The auto-load save states feature relies on these auto save states to resume your game where you left off. Deleting them can be useful to reduce the size of your Sync backup.", comment: ""), preferredStyle: .alert)
         alertController.popoverPresentationController?.sourceView = topViewController.view
@@ -159,6 +169,11 @@ extension PowerUserOptions
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }
         
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
+            self.showFeatureDisabledNotification(topViewController)
+            return
+        }
+        
         let alertController = UIAlertController(title: NSLocalizedString("⚠️ Reset Artwork? ⚠️", comment: ""), message: NSLocalizedString("This will reset the artwork for every game to the one provided by the games database used by Ignited. Do not proceed if you do not have backup of your custom artworks.", comment: ""), preferredStyle: .alert)
         alertController.popoverPresentationController?.sourceView = topViewController.view
         alertController.popoverPresentationController?.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.maxY, width: 0, height: 0)
@@ -200,6 +215,11 @@ extension PowerUserOptions
         switch feature
         {
         case .allFeatures:
+            guard Settings.advancedFeatures.powerUser.isEnabled else {
+                self.showFeatureDisabledNotification(topViewController)
+                return
+            }
+            
             alertController = UIAlertController(title: NSLocalizedString("Reset All Feature Settings?", comment: ""), message: NSLocalizedString("This cannot be undone, please only do so if you are absolutely sure your issue cannot be solved by resetting an individual feature, or want to return to a stock Ignited experience.", comment: ""), preferredStyle: .alert)
             
         default:
@@ -232,6 +252,18 @@ extension PowerUserOptions
         alertController.addAction(.cancel)
         
         topViewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    static func showFeatureDisabledNotification(_ viewController: UIViewController)
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("You must enable Power User Tools via the toggle on the previous page to use these options.", comment: ""), preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = viewController.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: viewController.view.bounds.midX, y: viewController.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in }))
+        
+        viewController.present(alertController, animated: true, completion: nil)
     }
 }
     
