@@ -25,7 +25,7 @@ extension UIImage
             renderSize = CGSize(width: boundSize / ratio, height: boundSize)
         }
         
-        let pauseImage = UIImage.symbolWithTemplate(name: "pause.fill", pointSize: boundSize * 0.45, accentColor: accentColor) ?? UIImage()
+        let pauseImage = UIImage.symbolWithTemplate(name: "pause.fill", pointSize: boundSize * 0.45, accentColor: accentColor)
         let pauseRenderSize: CGSize
         let ratio = pauseImage.size.height / pauseImage.size.width
         pauseRenderSize = CGSize(width: boundSize * 0.45 / ratio, height: boundSize * 0.45)
