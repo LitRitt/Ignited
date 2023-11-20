@@ -15,7 +15,7 @@ extension UILabel
         // Create icon renderer
         let format = UIGraphicsImageRendererFormat()
         format.scale = UIScreen.main.scale
-        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30), format: format)
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 39, height: 30), format: format)
         
         // Create Attachment with dot icon
         let imageAttachment = NSTextAttachment()
@@ -36,13 +36,13 @@ extension UILabel
         
         // Set bound to reposition
         // Constants are magic
-        imageAttachment.bounds = CGRect(x: 0, y: -1 * (font.pointSize * 0.035), width: font.pointSize * 0.8, height: font.pointSize * 0.8)
+        imageAttachment.bounds = CGRect(x: 0, y: -1 * (font.pointSize * 0.04), width: font.pointSize * 0.8 * 1.3, height: font.pointSize * 0.8)
         
         // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         let finalString = NSMutableAttributedString(string: "")
         finalString.append(attachmentString)
-        let textAfterIcon = NSAttributedString(string: " " + (text ?? ""))
+        let textAfterIcon = NSAttributedString(string: text ?? "")
         finalString.append(textAfterIcon)
         
         // Set attributed text to attachment string
