@@ -104,7 +104,7 @@ struct GameArtworkOptions
             HStack {
                 Text("0%")
                 Slider(value: value, in: 0.0...0.25, step: 0.05)
-                Text("50%")
+                Text("25%")
             }
         }.displayInline()
     })
