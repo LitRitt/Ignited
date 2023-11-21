@@ -423,12 +423,10 @@ extension PowerUserOptions
                 Settings.userInterfaceFeatures.theme.darkColor = .accentColor
                 Settings.userInterfaceFeatures.theme.lightFavoriteColor = .accentColor
                 Settings.userInterfaceFeatures.theme.darkFavoriteColor = .accentColor
-                AppIconOptions.updateAppIconPreference()
                 
             case .appIcon:
-                Settings.userInterfaceFeatures.appIcon.useTheme = true
                 Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
-                AppIconOptions.updateAppIconPreference()
+                AppIconOptions.updateAppIcon()
                 
             case .randomGame:
                 Settings.userInterfaceFeatures.randomGame.useCollection = false

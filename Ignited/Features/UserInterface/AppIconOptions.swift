@@ -14,7 +14,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
     case normal = "Default"
     case neon = "Neon"
-    case pride = "Pride"
     case classic = "Classic"
     case simple = "Simple"
     case glass = "Glass"
@@ -31,7 +30,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: String {
         switch self
         {
-        case .normal, .neon, .pride: return "LitRitt"
+        case .normal, .neon: return "LitRitt"
         case .classic: return "Kongolabongo"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
@@ -43,7 +42,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         {
         case .normal: return "IconOrange"
         case .neon: return "IconNeon"
-        case .pride: return "IconPride"
         case .classic: return "IconClassic"
         case .simple: return "IconSimple"
         case .glass: return "IconGlass"
@@ -69,17 +67,6 @@ extension AppIcon: Equatable
 
 struct AppIconOptions
 {
-    @Option(name: "Match Theme Color",
-            description: "Enable to use an app icon that matches theme color setting (does not apply to custom theme colors). Disable to use the default app icon, or one of the alternate icons specified below.",
-            detailView: { value in
-        Toggle("Match Theme Color", isOn: value)
-            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-            .onChange(of: value.wrappedValue) { _ in
-                updateAppIcon()
-            }.displayInline()
-    })
-    var useTheme: Bool = true
-    
     @Option(name: "Alternate App Icon",
             description: "Choose from alternate app icons created by the community.",
             detailView: { value in
@@ -98,13 +85,8 @@ struct AppIconOptions
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                     Spacer()
-                    if icon == .normal {
-                        Image(uiImage: Bundle.appIcon(forTheme: Settings.userInterfaceFeatures.theme.color) ?? UIImage())
-                            .cornerRadius(13)
-                    } else {
-                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                            .cornerRadius(13)
-                    }
+                    Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
+                        .cornerRadius(13)
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -113,7 +95,7 @@ struct AppIconOptions
             }
         }
         .onChange(of: value.wrappedValue) { _ in
-            updateAppIconPreference()
+            updateAppIcon()
         }
         .displayInline()
     })
@@ -134,36 +116,15 @@ struct AppIconOptions
 
 extension AppIconOptions
 {
-    static func updateAppIconPreference()
-    {
-        Settings.userInterfaceFeatures.appIcon.useTheme = Settings.userInterfaceFeatures.appIcon.alternateIcon == .normal
-        
-        updateAppIcon()
-    }
-    
     static func updateAppIcon()
     {
         let currentIcon = UIApplication.shared.alternateIconName
+        let altIcon = Settings.userInterfaceFeatures.appIcon.alternateIcon
         
-        if Settings.userInterfaceFeatures.appIcon.useTheme
+        switch altIcon
         {
-            let themeIcon = Settings.userInterfaceFeatures.theme.color
-            
-            switch themeIcon
-            {
-            case .orange: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
-            default: if currentIcon != themeIcon.assetName { UIApplication.shared.setAlternateIconName(themeIcon.assetName) }
-            }
-        }
-        else
-        {
-            let altIcon = Settings.userInterfaceFeatures.appIcon.alternateIcon
-            
-            switch altIcon
-            {
-            case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
-            default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
-            }
+        case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+        default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
         }
     }
 }

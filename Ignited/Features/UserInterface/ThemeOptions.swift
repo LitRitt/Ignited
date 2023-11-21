@@ -30,21 +30,6 @@ enum ThemeColor: String, CaseIterable, CustomStringConvertible, Identifiable
         return self.rawValue
     }
     
-    var assetName: String {
-        switch self
-        {
-        case .red: return "IconRed"
-        case .orange: return "IconOrange"
-        case .yellow: return "IconYellow"
-        case .green: return "IconGreen"
-        case .teal: return "IconTeal"
-        case .blue: return "IconBlue"
-        case .purple: return "IconPurple"
-        case .pink: return "IconPink"
-        case .custom: return "IconPride"
-        }
-    }
-    
     var uiColor: UIColor {
         switch self
         {
@@ -164,26 +149,13 @@ struct ThemeOptions
     var style: ThemeStyle = .auto
     
     @Option(name: "Color",
-            description: "Choose an accent color for the app. This will apply to many parts of the UI, including the app icon if enabled.",
+            description: "Choose an accent color for the app.",
             detailView: { value in
-        List {
-            ForEach(ThemeColor.allCases) { color in
-                HStack {
-                    if color == value.wrappedValue
-                    {
-                        Text("✓").foregroundColor(color.color)
-                    }
-                    color.localizedDescription.foregroundColor(color.color)
-                    Spacer()
-                    Image(uiImage: Bundle.appIcon(forTheme: color) ?? UIImage())
-                        .cornerRadius(13)
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    value.wrappedValue = color
-                }
+        Picker("Color", selection: value) {
+            ForEach(ThemeColor.allCases, id: \.self) { color in
+                color.localizedDescription
             }
-        }
+        }.pickerStyle(.menu)
         .onChange(of: value.wrappedValue) { _ in
             AppIconOptions.updateAppIcon()
         }
