@@ -222,7 +222,7 @@ struct QuickSettingsView: View
                                 Text("Controller Skin Opacity: \(self.controllerSkinOpacity * 100, specifier: "%.f")%")
                                 Spacer()
                                 Button("Reset") {
-                                    self.controllerSkinOpacity = 1.0
+                                    self.controllerSkinOpacity = 0.7
                                     Settings.controllerFeatures.skin.opacity = self.controllerSkinOpacity
                                 }.buttonStyle(.borderless)
                             }
