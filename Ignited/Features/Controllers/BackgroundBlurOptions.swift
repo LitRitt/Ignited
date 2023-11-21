@@ -40,7 +40,7 @@ struct BackgroundBlurOptions
             }
         }.displayInline()
     })
-    var tintIntensity: Double = 0.15
+    var tintIntensity: Double = 0.1
      
     @Option(name: "Show During AirPlay",
              description: "Display the blurred background during AirPlay.")
@@ -56,7 +56,7 @@ struct BackgroundBlurOptions
     
     @Option(name: "Show During Override",
              description: "When the Override Skin Setting option above is enabled, this option determines whether the background blur is shown.")
-    var blurEnabled: Bool = true
+    var overrideSetting: Bool = true
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

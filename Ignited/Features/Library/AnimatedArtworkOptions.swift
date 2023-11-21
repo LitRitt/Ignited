@@ -68,5 +68,5 @@ struct AnimatedArtworkOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetAnimatedArtwork: Bool = false
+    var reset: Bool = false
 }

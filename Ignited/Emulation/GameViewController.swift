@@ -605,7 +605,7 @@ extension GameViewController
                 self.performQuickSettingsAction()
             }
             
-            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.blurEnabled
+            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.overrideSetting
             pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
                 self.performBlurBackgroundAction()
             }
@@ -1152,7 +1152,7 @@ private extension GameViewController
         }
         else
         {
-            self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.controllerFeatures.backgroundBlur.blurEnabled
+            self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.controllerFeatures.backgroundBlur.overrideSetting
         }
         
     }
@@ -2199,9 +2199,9 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
-        let enabled = !Settings.controllerFeatures.backgroundBlur.blurEnabled
+        let enabled = !Settings.controllerFeatures.backgroundBlur.overrideSetting
         self.blurScreenEnabled = enabled
-        Settings.controllerFeatures.backgroundBlur.blurEnabled = enabled
+        Settings.controllerFeatures.backgroundBlur.overrideSetting = enabled
         
         if Settings.userInterfaceFeatures.toasts.backgroundBlur
         {
