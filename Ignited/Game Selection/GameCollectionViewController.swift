@@ -389,19 +389,19 @@ private extension GameCollectionViewController
             
             cell.imageView.image = image
             
+            self.updateCellAspectRatio(cell, with: image)
+            
             if var overlayImage = cell.imageView.image,
                cell.isPaused || cell.isFavorite
             {
                 let borderWidth = Settings.libraryFeatures.artwork.borderWidth
-                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth)
+                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height))
                 cell.imageView.image = overlayImage
             }
             else
             {
                 self.beginAnimatingArtwork(cell, at: indexPath)
             }
-            
-            self.updateCellAspectRatio(cell, with: image)
         }
     }
     
