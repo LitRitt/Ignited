@@ -101,7 +101,7 @@ extension PauseViewController
             let gridMenuViewController = self.pauseNavigationController.topViewController as! GridMenuViewController
             
             let navigationBarAppearance = self.pauseNavigationController.navigationBar.standardAppearance.copy()
-            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemThinMaterial)
             navigationBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.2)
             
             navigationBarAppearance.shadowColor = UIColor.label.withAlphaComponent(0.2)

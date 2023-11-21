@@ -429,7 +429,7 @@ extension GameViewController
         self.sustainButtonsContentView.isHidden = true
         self.view.insertSubview(self.sustainButtonsContentView, aboveSubview: self.airPlayContentView)
         
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         
         self.airPlayBlurView = UIVisualEffectView(effect: blurEffect)

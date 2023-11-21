@@ -128,12 +128,12 @@ extension GamesViewController
         if let navigationController = self.navigationController
         { 
             let navigationBarAppearance = navigationController.navigationBar.standardAppearance.copy()
-            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+            navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemThinMaterial)
             navigationController.navigationBar.standardAppearance = navigationBarAppearance
             navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
             
             let toolbarAppearance = navigationController.toolbar.standardAppearance.copy()
-            toolbarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+            toolbarAppearance.backgroundEffect = UIBlurEffect(style: .systemThinMaterial)
             navigationController.toolbar.standardAppearance = toolbarAppearance
             
             if #available(iOS 15, *)
@@ -233,7 +233,7 @@ private extension GamesViewController
         {
         case .opaque: searchResultsController.dataSource.placeholderView = placeholderView
         case .translucent:
-            let vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial)))
+            let vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemThinMaterial)))
             vibrancyView.contentView.addSubview(placeholderView, pinningEdgesWith: .zero)
             searchResultsController.dataSource.placeholderView = vibrancyView
         }

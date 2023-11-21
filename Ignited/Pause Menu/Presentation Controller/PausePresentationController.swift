@@ -91,7 +91,7 @@ class PausePresentationController: UIPresentationController
         self.vibrancyView.contentView.addSubview(self.contentView)
         
         self.presentationAnimator.addAnimations {
-            let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+            let blurEffect = UIBlurEffect(style: .systemThinMaterial)
             
             self.blurringView.effect = blurEffect
             self.vibrancyView.effect = UIVibrancyEffect(blurEffect: blurEffect)

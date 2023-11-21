@@ -222,7 +222,7 @@ private extension SaveStatesViewController
         case .translucent:
             self.view.backgroundColor = nil
             
-            self.vibrancyView.effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial))
+            self.vibrancyView.effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemThinMaterial))
             
             self.placeholderView.textLabel.textColor = UIColor.white
             self.placeholderView.detailTextLabel.textColor = UIColor.white
