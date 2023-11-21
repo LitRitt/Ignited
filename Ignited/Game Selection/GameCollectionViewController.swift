@@ -413,7 +413,7 @@ private extension GameCollectionViewController
         {
             fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Game.gameCollection), gameCollection)
         }
-        var sortDescriptors = Settings.libraryFeatures.favorites.favoriteSort ? [NSSortDescriptor(keyPath: \Game.isFavorite, ascending: false)] : []
+        var sortDescriptors = Settings.libraryFeatures.favorites.sortFirst ? [NSSortDescriptor(keyPath: \Game.isFavorite, ascending: false)] : []
         
         switch Settings.libraryFeatures.artwork.sortOrder
         {
@@ -449,15 +449,22 @@ private extension GameCollectionViewController
             print(error)
         }
         
-        cell.isFavorite = game.isFavorite && Settings.libraryFeatures.favorites.favoriteHighlight
+        cell.isFavorite = game.isFavorite
         
         cell.isPaused = game.fileURL == self.activeEmulatorCore?.game.fileURL
         
         cell.neverPlayed = (game.playedDate == nil) && (saveStateCount == 0) && Settings.libraryFeatures.artwork.showNewGames
         
-        if cell.isFavorite
+        if cell.isFavorite && Settings.libraryFeatures.favorites.highlighted
         {
-            cell.accentColor = UIColor(cgColor: Settings.libraryFeatures.favorites.favoriteColor.cgColor ?? UIColor.yellow.cgColor)
+            if Settings.libraryFeatures.favorites.themed
+            {
+                cell.accentColor = Settings.userInterfaceFeatures.theme.color.favoriteColor
+            }
+            else
+            {
+                cell.accentColor = UIColor(cgColor: Settings.libraryFeatures.favorites.color.cgColor ?? UIColor.yellow.cgColor)
+            }
         }
         else if cell.isPaused || Settings.libraryFeatures.artwork.themeAll
         {
@@ -830,7 +837,7 @@ private extension GameCollectionViewController
         
         let favoriteAction: Action
         
-        if Settings.libraryFeatures.favorites.favoriteGames[game.type.rawValue]!.contains(game.identifier)
+        if Settings.libraryFeatures.favorites.games[game.type.rawValue]!.contains(game.identifier)
         {
             favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(systemName: "star.slash"), action: { [unowned self] action in
                 self.removeFavoriteGame(for: game)
@@ -1236,7 +1243,7 @@ private extension GameCollectionViewController
     
     func addFavoriteGame(for game: Game)
     {
-        guard var favorites = Settings.libraryFeatures.favorites.favoriteGames[game.type.rawValue] else { return }
+        guard var favorites = Settings.libraryFeatures.favorites.games[game.type.rawValue] else { return }
         
         favorites.append(game.identifier)
         self.removeShadowForGame(for: game)
@@ -1247,13 +1254,13 @@ private extension GameCollectionViewController
             
             context.saveWithErrorLogging()
             
-            Settings.libraryFeatures.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            Settings.libraryFeatures.favorites.games.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
     func removeFavoriteGame(for game: Game)
     {
-        guard var favorites = Settings.libraryFeatures.favorites.favoriteGames[game.type.rawValue],
+        guard var favorites = Settings.libraryFeatures.favorites.games[game.type.rawValue],
               let index = favorites.firstIndex(of: game.identifier) else { return }
         
         favorites.remove(at: index)
@@ -1265,7 +1272,7 @@ private extension GameCollectionViewController
             
             context.saveWithErrorLogging()
             
-            Settings.libraryFeatures.favorites.favoriteGames.updateValue(favorites, forKey: game.type.rawValue)
+            Settings.libraryFeatures.favorites.games.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
@@ -1312,10 +1319,10 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.$customLightColor.settingsKey, Settings.userInterfaceFeatures.theme.$customDarkColor.settingsKey, Settings.libraryFeatures.favorites.$favoriteColor.settingsKey, Settings.libraryFeatures.favorites.$favoriteHighlight.settingsKey, Settings.libraryFeatures.favorites.settingsKey, Settings.libraryFeatures.artwork.$themeAll.settingsKey:
+        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.$lightColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkColor.settingsKey, Settings.userInterfaceFeatures.theme.$lightFavoriteColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkFavoriteColor.settingsKey, Settings.libraryFeatures.favorites.$color.settingsKey, Settings.libraryFeatures.favorites.$highlighted.settingsKey, Settings.libraryFeatures.favorites.$themed.settingsKey, Settings.libraryFeatures.favorites.settingsKey, Settings.libraryFeatures.artwork.$themeAll.settingsKey:
             self.update()
             
-        case Settings.libraryFeatures.artwork.$sortOrder.settingsKey, Settings.libraryFeatures.favorites.$favoriteSort.settingsKey:
+        case Settings.libraryFeatures.artwork.$sortOrder.settingsKey, Settings.libraryFeatures.favorites.$sortFirst.settingsKey:
             self.updateDataSource()
             self.update()
             

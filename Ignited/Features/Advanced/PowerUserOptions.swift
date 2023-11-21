@@ -291,7 +291,7 @@ extension PowerUserOptions
         case favoriteGames
         // User Interface
         case toastNotifications
-        case themeColor
+        case theme
         case appIcon
         case randomGame
         // Touch Feedback
@@ -396,9 +396,10 @@ extension PowerUserOptions
                 Settings.libraryFeatures.animation.animationMaxLength = 30
                 
             case .favoriteGames:
-                Settings.libraryFeatures.favorites.favoriteSort = true
-                Settings.libraryFeatures.favorites.favoriteHighlight = true
-                Settings.libraryFeatures.favorites.favoriteColor = .yellow
+                Settings.libraryFeatures.favorites.sortFirst = true
+                Settings.libraryFeatures.favorites.highlighted = true
+                Settings.libraryFeatures.favorites.themed = true
+                Settings.libraryFeatures.favorites.color = .yellow
                 
             case .toastNotifications:
                 Settings.userInterfaceFeatures.toasts.duration = 1.5
@@ -415,10 +416,13 @@ extension PowerUserOptions
                 Settings.userInterfaceFeatures.toasts.altSkin = false
                 Settings.userInterfaceFeatures.toasts.debug = false
                 
-            case .themeColor:
+            case .theme:
+                Settings.userInterfaceFeatures.theme.style = .auto
                 Settings.userInterfaceFeatures.theme.color = .orange
-                Settings.userInterfaceFeatures.theme.customLightColor = .accentColor
-                Settings.userInterfaceFeatures.theme.customDarkColor = .accentColor
+                Settings.userInterfaceFeatures.theme.lightColor = .accentColor
+                Settings.userInterfaceFeatures.theme.darkColor = .accentColor
+                Settings.userInterfaceFeatures.theme.lightFavoriteColor = .accentColor
+                Settings.userInterfaceFeatures.theme.darkFavoriteColor = .accentColor
                 AppIconOptions.updateAppIconPreference()
                 
             case .appIcon:

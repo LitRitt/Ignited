@@ -60,8 +60,30 @@ enum ThemeColor: String, CaseIterable, CustomStringConvertible, Identifiable
             return UIColor() { (traits) in
                 switch traits.userInterfaceStyle
                 {
-                case .light: return UIColor(Settings.userInterfaceFeatures.theme.customLightColor)
-                case .dark, .unspecified: return UIColor(Settings.userInterfaceFeatures.theme.customDarkColor)
+                case .light: return UIColor(Settings.userInterfaceFeatures.theme.lightColor)
+                case .dark, .unspecified: return UIColor(Settings.userInterfaceFeatures.theme.darkColor)
+                }
+            }
+        }
+    }
+    
+    var favoriteColor: UIColor {
+        switch self
+        {
+        case .red: return UIColor(named: "IgnitedOrange")!
+        case .orange: return UIColor(named: "IgnitedYellow")!
+        case .yellow: return UIColor(named: "IgnitedGreen")!
+        case .green: return UIColor(named: "IgnitedTeal")!
+        case .teal: return UIColor(named: "IgnitedBlue")!
+        case .blue: return UIColor(named: "IgnitedPurple")!
+        case .purple: return UIColor(named: "IgnitedPink")!
+        case .pink: return UIColor(named: "IgnitedRed")!
+        case .custom:
+            return UIColor() { (traits) in
+                switch traits.userInterfaceStyle
+                {
+                case .light: return UIColor(Settings.userInterfaceFeatures.theme.lightFavoriteColor)
+                case .dark, .unspecified: return UIColor(Settings.userInterfaceFeatures.theme.darkFavoriteColor)
                 }
             }
         }
@@ -175,7 +197,7 @@ struct ThemeOptions
         ColorPicker("Custom Light Color", selection: value, supportsOpacity: false)
             .displayInline()
     })
-    var customLightColor: Color = .accentColor
+    var lightColor: Color = .orange
     
     @Option(name: "Custom Dark Color",
             description: "Select a custom color to use with the dark style.",
@@ -183,13 +205,29 @@ struct ThemeOptions
         ColorPicker("Custom Dark Color", selection: value, supportsOpacity: false)
             .displayInline()
     })
-    var customDarkColor: Color = .accentColor
+    var darkColor: Color = .orange
+    
+    @Option(name: "Custom Favorite Light Color",
+            description: "Select a custom favorite color to use with the light style.",
+            detailView: { value in
+        ColorPicker("Custom Favorite Light Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var lightFavoriteColor: Color = .yellow
+    
+    @Option(name: "Custom Favorite Dark Color",
+            description: "Select a custom favorite color to use with the dark style.",
+            detailView: { value in
+        ColorPicker("Custom Favorite Dark Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var darkFavoriteColor: Color = .yellow
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in
         Button("Restore Defaults") {
-            PowerUserOptions.resetFeature(.themeColor)
+            PowerUserOptions.resetFeature(.theme)
         }
         .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(.red)

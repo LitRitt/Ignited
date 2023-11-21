@@ -211,7 +211,7 @@ private extension SceneDelegate
         
         switch settingsName
         {
-        case Settings.userInterfaceFeatures.theme.$customLightColor.settingsKey, Settings.userInterfaceFeatures.theme.$customDarkColor.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
+        case Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.$lightColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkColor.settingsKey, Settings.userInterfaceFeatures.theme.$lightFavoriteColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkFavoriteColor.settingsKey:
             self.window?.tintColor = UIColor.themeColor
             self.window?.overrideUserInterfaceStyle = Settings.userInterfaceFeatures.theme.style.userInterfaceStyle
             self.window?.setNeedsLayout()

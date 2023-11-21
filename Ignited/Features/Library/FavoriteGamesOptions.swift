@@ -14,11 +14,15 @@ import Features
 struct FavoriteGamesOptions
 {
     @Option
-    var favoriteSort: Bool = true
+    var sortFirst: Bool = true
     
     @Option(name: "Highlight Favorite Games",
             description: "Give your favorite games a distinct color.")
-    var favoriteHighlight: Bool = true
+    var highlighted: Bool = true
+    
+    @Option(name: "Use Theme Color",
+            description: "Use a color complementary to your theme color. Disable to use the custom color selected below.")
+    var themed: Bool = true
     
     @Option(name: "Favorite Highlight Color",
             description: "Select a custom color to use to highlight your favorite games.",
@@ -26,10 +30,10 @@ struct FavoriteGamesOptions
         ColorPicker("Favorite Highlight Color", selection: value, supportsOpacity: false)
             .displayInline()
     })
-    var favoriteColor: Color = .yellow
+    var color: Color = .yellow
     
     @Option
-    var favoriteGames: [String: [String]] = [
+    var games: [String: [String]] = [
         System.ds.gameType.rawValue: [],
         System.gba.gameType.rawValue: [],
         System.gbc.gameType.rawValue: [],
@@ -49,5 +53,5 @@ struct FavoriteGamesOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetFavoriteGames: Bool = false
+    var reset: Bool = false
 }

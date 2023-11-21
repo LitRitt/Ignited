@@ -681,13 +681,13 @@ private extension GamesViewController
     
     func makeSortingMenu() -> UIMenu
     {
-        let favoritesAction = Settings.libraryFeatures.favorites.favoriteSort
+        let favoritesAction = Settings.libraryFeatures.favorites.sortFirst
         ?
         UIAction(title: NSLocalizedString("Favorites First", comment: ""),
                  image: UIImage(systemName: "star"),
                  state: .on,
                  handler: { action in
-            Settings.libraryFeatures.favorites.favoriteSort = false
+            Settings.libraryFeatures.favorites.sortFirst = false
             self.updateOptionsMenu()
         })
         :
@@ -695,7 +695,7 @@ private extension GamesViewController
                  image: UIImage(systemName: "star.slash"),
                  state: .off,
                  handler: { action in
-            Settings.libraryFeatures.favorites.favoriteSort = true
+            Settings.libraryFeatures.favorites.sortFirst = true
             self.updateOptionsMenu()
         })
         
@@ -916,7 +916,7 @@ private extension GamesViewController
         
         switch settingsName
         {
-        case Settings.userInterfaceFeatures.theme.$customDarkColor.settingsKey, Settings.userInterfaceFeatures.theme.$customDarkColor.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey:
+        case Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.$lightColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkColor.settingsKey, Settings.userInterfaceFeatures.theme.$lightFavoriteColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkFavoriteColor.settingsKey:
             self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
             
         default: break
