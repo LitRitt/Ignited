@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage
 {
-    static func symbolWithTemplate(name: String, pointSize: CGFloat = 50, accentColor: UIColor = UIColor.themeColor, orientation: Orientation = .up) -> UIImage
+    static func symbolWithTemplate(name: String, pointSize: CGFloat = 30, accentColor: UIColor = UIColor.themeColor, orientation: Orientation = .up) -> UIImage
     {
         guard let symbolImage = UIImage(systemName: name, withConfiguration: SymbolConfiguration(pointSize: pointSize)),
               let cgImage = symbolImage.cgImage else { return UIImage() }
