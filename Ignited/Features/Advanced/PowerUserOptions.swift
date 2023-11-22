@@ -397,8 +397,7 @@ extension PowerUserOptions
                 
             case .favoriteGames:
                 Settings.libraryFeatures.favorites.sortFirst = true
-                Settings.libraryFeatures.favorites.highlighted = true
-                Settings.libraryFeatures.favorites.themed = true
+                Settings.libraryFeatures.favorites.colorMode = .theme
                 Settings.libraryFeatures.favorites.color = .yellow
                 
             case .toastNotifications:

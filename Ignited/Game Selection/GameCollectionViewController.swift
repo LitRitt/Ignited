@@ -446,16 +446,9 @@ private extension GameCollectionViewController
         
         cell.neverPlayed = (game.playedDate == nil) && (saveStateCount == 0) && Settings.libraryFeatures.artwork.showNewGames
         
-        if cell.isFavorite && Settings.libraryFeatures.favorites.highlighted
+        if cell.isFavorite
         {
-            if Settings.libraryFeatures.favorites.themed
-            {
-                cell.accentColor = Settings.userInterfaceFeatures.theme.color.favoriteColor
-            }
-            else
-            {
-                cell.accentColor = UIColor(cgColor: Settings.libraryFeatures.favorites.color.cgColor ?? UIColor.yellow.cgColor)
-            }
+            cell.accentColor = Settings.libraryFeatures.favorites.colorMode.uiColor
         }
         else if cell.isPaused || Settings.libraryFeatures.artwork.themeAll
         {
@@ -1334,7 +1327,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.$lightColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkColor.settingsKey, Settings.userInterfaceFeatures.theme.$lightFavoriteColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkFavoriteColor.settingsKey, Settings.libraryFeatures.favorites.$color.settingsKey, Settings.libraryFeatures.favorites.$highlighted.settingsKey, Settings.libraryFeatures.favorites.$themed.settingsKey, Settings.libraryFeatures.favorites.settingsKey, Settings.libraryFeatures.artwork.$themeAll.settingsKey:
+        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$lightColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkColor.settingsKey, Settings.userInterfaceFeatures.theme.$lightFavoriteColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkFavoriteColor.settingsKey, Settings.libraryFeatures.favorites.$color.settingsKey, Settings.libraryFeatures.favorites.$colorMode.settingsKey, Settings.libraryFeatures.favorites.settingsKey, Settings.libraryFeatures.artwork.$themeAll.settingsKey:
             self.update()
             
         case Settings.libraryFeatures.artwork.$sortOrder.settingsKey, Settings.libraryFeatures.favorites.$sortFirst.settingsKey:
