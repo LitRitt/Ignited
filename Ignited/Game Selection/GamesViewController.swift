@@ -58,7 +58,6 @@ class GamesViewController: UIViewController
     private var syncingProgressObservation: NSKeyValueObservation?
     private var forceNextSyncingToast: Bool = false
     
-    @IBOutlet private var importButton: UIBarButtonItem!
     @IBOutlet private var optionsButton: UIBarButtonItem!
     @IBOutlet private var playButton: UIBarButtonItem!
     
@@ -110,12 +109,6 @@ extension GamesViewController
         }
         
         self.importController.presentingViewController = self
-        
-        let importActions = self.importController.makeActions().menuActions
-        let importMenu = UIMenu(title: NSLocalizedString("Import From…", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), children: importActions)
-        self.importButton.menu = importMenu
-        self.importButton.action = nil
-        self.importButton.target = nil
         
         self.updateOptionsMenu()
         self.updatePlayMenu()
@@ -252,7 +245,7 @@ private extension GamesViewController
     {
         NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         
-        self.optionsButton.menu = self.makeOptionsMenu()
+        self.updateOptionsMenu()
         self.updatePlayMenu()
         
         if Settings.gameplayFeatures.autoSync.isEnabled
@@ -646,7 +639,7 @@ private extension GamesViewController
                               options: [.displayInline],
                               children: sortOptions)
         
-        return UIMenu(title: NSLocalizedString("Game Sorting", comment: ""),
+        return UIMenu(title: NSLocalizedString("Sorting", comment: ""),
                               image: UIImage(systemName: "arrow.up.and.down.text.horizontal"),
                               children: [favoritesAction, sortMenu])
     }
@@ -712,8 +705,13 @@ extension GamesViewController
         self.playButton.target = nil
     }
     
-    private func makePlayMenu() -> UIMenu?
+    private func makePlayMenu() -> UIMenu
     {
+        let importActions = self.importController.makeActions().menuActions
+        let importMenu = UIMenu(title: NSLocalizedString("Import Games", comment: ""),
+                                image: UIImage(systemName: "plus"),
+                                children: importActions)
+        
         let gamesFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
         gamesFetchRequest.returnsObjectsAsFaults = false
         gamesFetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Game.playedDate), ascending: false)]
@@ -728,9 +726,9 @@ extension GamesViewController
         
         if recentGames.count == 0
         {
-            self.playButton.image = nil
+            self.playButton.image = UIImage(systemName: "plus")
             
-            return nil
+            return importMenu
         }
         else
         {
@@ -755,7 +753,7 @@ extension GamesViewController
                              }),
                     UIMenu(title: NSLocalizedString("Play Another Game", comment: ""),
                            options: .displayInline,
-                           children: [self.makeRecentGamesMenu(recentGames), self.makeRandomGameMenu()])
+                           children: [importMenu, self.makeRecentGamesMenu(recentGames), self.makeRandomGameMenu()])
                 ]
                 
                 return UIMenu(title: game.name,
@@ -766,7 +764,7 @@ extension GamesViewController
                 self.playButton.image = UIImage(systemName: "play.fill")
                 
                  return UIMenu(title: NSLocalizedString("No Game Playing", comment: ""),
-                               children: [self.makeRecentGamesMenu(recentGames), self.makeRandomGameMenu()])
+                               children: [importMenu, self.makeRecentGamesMenu(recentGames), self.makeRandomGameMenu()])
             }
         }
     }
