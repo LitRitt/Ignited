@@ -531,7 +531,6 @@ extension GameViewController
             let gamesViewController = (segue.destination as! UINavigationController).topViewController as! GamesViewController
             
             gamesViewController.theme = .opaque
-            gamesViewController.showResumeButton = false
             
         case "showGamesViewController":
             let gamesViewController = (segue.destination as! UINavigationController).topViewController as! GamesViewController
@@ -540,15 +539,15 @@ extension GameViewController
             {
                 gamesViewController.theme = .translucent
                 gamesViewController.activeEmulatorCore = emulatorCore
-                gamesViewController.showResumeButton = true
                 
                 self.updateAutoSaveState()
             }
             else
             {
                 gamesViewController.theme = .opaque
-                gamesViewController.showResumeButton = false
             }
+            
+            gamesViewController.updatePlayMenu()
             
         case "pause":
             

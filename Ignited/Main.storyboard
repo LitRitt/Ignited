@@ -40,21 +40,17 @@
                                     <segue destination="xMK-Cs-fAS" kind="presentation" identifier="showSettings" id="uN5-PN-7FK"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="ellipsis.circle" catalog="system" id="7uc-GQ-gIK" userLabel="Menu Button">
-                                <connections>
-                                    <action selector="changeArtworkSize" destination="jeE-WD-wXO" id="Tqi-kx-5Yg"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem image="ellipsis.circle" catalog="system" id="7uc-GQ-gIK" userLabel="Menu Button"/>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="FeA-O5-xd2">
-                            <connections>
-                                <action selector="importFiles" destination="jeE-WD-wXO" id="A1s-kE-NkM"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="plus" catalog="system" id="FeA-O5-xd2"/>
+                            <barButtonItem image="play.fill" catalog="system" id="wcM-Mb-ab5" userLabel="Play Button"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="importButton" destination="FeA-O5-xd2" id="A44-3S-Okz"/>
                         <outlet property="optionsButton" destination="7uc-GQ-gIK" id="FAe-6f-UPE"/>
+                        <outlet property="playButton" destination="wcM-Mb-ab5" id="VsL-va-1wH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYx-xE-nis" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -310,6 +306,7 @@
     <resources>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="gear" catalog="system" width="128" height="122"/>
+        <image name="play.fill" catalog="system" width="117" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
     </resources>
 </document>

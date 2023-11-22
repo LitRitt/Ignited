@@ -40,17 +40,7 @@ class GameCollectionViewController: UICollectionViewController
     
     var theme: Theme = .opaque {
         didSet {
-            // self.collectionView?.reloadData()
-            
-            // Calling reloadData sometimes will not update the cells correctly if an insertion/deletion animation is in progress
-            // As a workaround, we manually iterate over and configure each cell ourselves
-            for cell in self.collectionView?.visibleCells ?? []
-            {
-                if let indexPath = self.collectionView?.indexPath(for: cell)
-                {
-                    self.configure(cell as! GridCollectionViewGameCell, for: indexPath)
-                }
-            }
+            self.collectionView?.reloadData()
         }
     }
     
@@ -98,6 +88,7 @@ extension GameCollectionViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.settingsDidChange(_:)), name: .settingsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.resumeCurrentGame), name: .resumePlaying, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.startRandomGame), name: .startRandomGame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.startRecentlyPlayedGame), name: .startRecentlyPlayedGame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.unwindFromSettingsAndUpdate), name: .unwindFromSettings, object: nil)
         
         self.update()
@@ -825,6 +816,30 @@ private extension GameCollectionViewController
         }
         
         self.performSegue(withIdentifier: "resumeCurrentGame", sender: randomGame)
+    }
+    
+    @objc func startRecentlyPlayedGame(_ notification: Notification)
+    {
+        guard let game = notification.object as? Game else { return }
+        
+        if Settings.gameplayFeatures.saveStates.autoLoad
+        {
+            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+            
+            do
+            {
+                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                self.activeSaveState = saveStates?.last
+            }
+            catch
+            {
+                print(error)
+            }
+        }
+        
+        self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
     }
 }
 

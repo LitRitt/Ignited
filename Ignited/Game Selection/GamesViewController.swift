@@ -37,18 +37,9 @@ class GamesViewController: UIViewController
         }
     }
     
-    public var showResumeButton: Bool = false {
-        didSet {
-            self.updateToolbar()
-        }
-    }
-    
     private var pageViewController: UIPageViewController!
     private var placeholderView: RSTPlaceholderView!
     private var pageControl: UIPageControl!
-    private var resumeButton: UIBarButtonItem!
-    
-    private var toolbarFlexibleSpacer : UIBarButtonItem!
     private var toolbarFixedSpacer: UIBarButtonItem!
     
     private let fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>
@@ -69,6 +60,7 @@ class GamesViewController: UIViewController
     
     @IBOutlet private var importButton: UIBarButtonItem!
     @IBOutlet private var optionsButton: UIBarButtonItem!
+    @IBOutlet private var playButton: UIBarButtonItem!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("initWithNibName: not implemented")
@@ -108,22 +100,6 @@ extension GamesViewController
         self.view.insertSubview(self.placeholderView, at: 0)
         
         self.pageControl = UIPageControl()
-        self.pageControl.translatesAutoresizingMaskIntoConstraints = false
-        self.pageControl.hidesForSinglePage = false
-        self.pageControl.allowsContinuousInteraction = false
-        self.pageControl.numberOfPages = 3
-        self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
-        self.pageControl.pageIndicatorTintColor = UIColor.gray
-        self.navigationController?.toolbar.addSubview(self.pageControl)
-        
-        self.pageControl.centerXAnchor.constraint(equalTo: (self.navigationController?.toolbar.centerXAnchor)!, constant: 0).isActive = true
-        self.pageControl.centerYAnchor.constraint(equalTo: (self.navigationController?.toolbar.centerYAnchor)!, constant: 0).isActive = true
-        
-        self.resumeButton = UIBarButtonItem(title: "Resume", style: .done, target: self, action: #selector(self.resumeCurrentGame))
-        
-        self.toolbarFlexibleSpacer = UIBarButtonItem(systemItem: .flexibleSpace)
-        self.toolbarFixedSpacer = UIBarButtonItem(systemItem: .fixedSpace)
-        self.toolbarFixedSpacer.width = 8
         
         if let navigationController = self.navigationController
         { 
@@ -131,15 +107,6 @@ extension GamesViewController
             navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemThinMaterial)
             navigationController.navigationBar.standardAppearance = navigationBarAppearance
             navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-            
-            let toolbarAppearance = navigationController.toolbar.standardAppearance.copy()
-            toolbarAppearance.backgroundEffect = UIBlurEffect(style: .systemThinMaterial)
-            navigationController.toolbar.standardAppearance = toolbarAppearance
-            
-            if #available(iOS 15, *)
-            {
-                navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance
-            }
         }
         
         self.importController.presentingViewController = self
@@ -151,6 +118,7 @@ extension GamesViewController
         self.importButton.target = nil
         
         self.updateOptionsMenu()
+        self.updatePlayMenu()
         
         self.prepareSearchController()
         
@@ -280,23 +248,12 @@ private extension GamesViewController
         }
     }
     
-    func updateToolbar()
-    {
-        if self.showResumeButton
-        {
-            self.setToolbarItems([self.toolbarFlexibleSpacer, self.resumeButton, self.toolbarFixedSpacer], animated: true)
-        }
-        else
-        {
-            self.setToolbarItems([], animated: true)
-        }
-    }
-    
     func unwindFromSettingsAndSync()
     {
         NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         
         self.optionsButton.menu = self.makeOptionsMenu()
+        self.updatePlayMenu()
         
         if Settings.gameplayFeatures.autoSync.isEnabled
         {
@@ -358,8 +315,6 @@ private extension GamesViewController
             resetPageViewController = true
         }
         
-        self.navigationController?.setToolbarHidden(sections < 1, animated: animated)
-        
         if sections > 0
         {
             // Reset page view controller if currently hidden or current child should view controller no longer exists
@@ -398,12 +353,6 @@ private extension GamesViewController
             self.pageViewController.view.setHidden(true, animated: animated)
             self.placeholderView.setHidden(false, animated: animated)
         }
-    }
-    
-    @objc func resumeCurrentGame()
-    {
-        NotificationCenter.default.post(name: .resumePlaying, object: nil, userInfo: [:])
-        self.showResumeButton = false
     }
 }
 
@@ -460,6 +409,8 @@ extension GamesViewController: ImportControllerDelegate
             if games.count > 0
             {
                 importedGames = games
+                
+                self.updatePlayMenu()
             }
         }
         
@@ -488,8 +439,8 @@ extension GamesViewController: ImportControllerDelegate
         }
     }
 }
-//MARK: - Menu Actions -
-/// Menu Actions
+//MARK: - Options Menu -
+/// Options Menu
 private extension GamesViewController
 {
     func updateOptionsMenu()
@@ -657,28 +608,6 @@ private extension GamesViewController
                       children: themeColorOptions)
     }
     
-    func makeRandomGameMenu() -> UIMenu
-    {
-        let randomGameOptions: [UIAction] = [
-            UIAction(title: NSLocalizedString("From Library", comment: ""),
-                     image: UIImage(systemName: "building.columns"),
-                     handler: { action in
-                         Settings.userInterfaceFeatures.randomGame.useCollection = false
-                         NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
-            }),
-            UIAction(title: NSLocalizedString("From Collection", comment: ""),
-                     image: UIImage(systemName: "books.vertical"),
-                     handler: { action in
-                         Settings.userInterfaceFeatures.randomGame.useCollection = true
-                         NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
-            })
-        ]
-        
-        return UIMenu(title: NSLocalizedString("Random Game", comment: ""),
-                      image: UIImage(systemName: "dice"),
-                      children: randomGameOptions)
-    }
-    
     func makeSortingMenu() -> UIMenu
     {
         let favoritesAction = Settings.libraryFeatures.favorites.sortFirst
@@ -748,7 +677,7 @@ private extension GamesViewController
     {
         return UIMenu(title: NSLocalizedString("Other", comment: ""),
                       options: [.displayInline],
-                      children: [self.makeRandomGameMenu(), self.makeHelpMenu()])
+                      children: [self.makeHelpMenu()])
     }
     
     func makeHelpMenu() -> UIMenu
@@ -769,6 +698,119 @@ private extension GamesViewController
         return UIMenu(title: NSLocalizedString("Help", comment: ""),
                       image: UIImage(systemName: "exclamationmark.questionmark"),
                       children: helpOptions)
+    }
+}
+
+//MARK: - Play Menu -
+/// Play Menu
+extension GamesViewController
+{
+    func updatePlayMenu()
+    {
+        self.playButton.menu = self.makePlayMenu()
+        self.playButton.action = nil
+        self.playButton.target = nil
+    }
+    
+    private func makePlayMenu() -> UIMenu?
+    {
+        let gamesFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        gamesFetchRequest.returnsObjectsAsFaults = false
+        gamesFetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Game.playedDate), ascending: false)]
+        
+        var recentGames: [Game] = []
+        
+        do {
+            recentGames = try DatabaseManager.shared.viewContext.fetch(gamesFetchRequest)
+        } catch {
+            print(error)
+        }
+        
+        if recentGames.count == 0
+        {
+            self.playButton.image = nil
+            
+            return nil
+        }
+        else
+        {
+            if let core = self.activeEmulatorCore,
+               let game = core.game as? Game
+            {
+                self.playButton.image = UIImage(systemName: "pause.fill")
+                
+                let playOptions: [UIMenuElement] = [
+                    UIAction(title: NSLocalizedString("Resume", comment: ""),
+                             image: UIImage(systemName: "play"),
+                             handler: { action in
+                                 NotificationCenter.default.post(name: .resumePlaying, object: nil, userInfo: [:])
+                             }),
+                    UIAction(title: NSLocalizedString("Quit", comment: ""),
+                             image: UIImage(systemName: "power"),
+                             handler: { action in
+                                 self.quitEmulation()
+                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                     self.updatePlayMenu()
+                                 }
+                             }),
+                    UIMenu(title: NSLocalizedString("Play Another Game", comment: ""),
+                           options: .displayInline,
+                           children: [self.makeRecentGamesMenu(recentGames), self.makeRandomGameMenu()])
+                ]
+                
+                return UIMenu(title: game.name,
+                              children: playOptions)
+            }
+            else
+            {
+                self.playButton.image = UIImage(systemName: "play.fill")
+                
+                 return UIMenu(title: NSLocalizedString("No Game Playing", comment: ""),
+                               children: [self.makeRecentGamesMenu(recentGames), self.makeRandomGameMenu()])
+            }
+        }
+    }
+    
+    private func makeRecentGamesMenu(_ recentGames: [Game]) -> UIMenu
+    {
+        var recentGamesOptions: [UIMenuElement] = []
+        
+        for game in recentGames {
+            guard game.playedDate != nil else { continue }
+            
+            recentGamesOptions.append(
+                UIAction(title: game.name,
+                         handler: { action in
+                             NotificationCenter.default.post(name: .startRecentlyPlayedGame, object: game, userInfo: [:])
+                         })
+            )
+        }
+        
+        return UIMenu(title: NSLocalizedString("Recent Games", comment: ""),
+                       image: UIImage(systemName: "clock.arrow.circlepath"),
+                       children: recentGamesOptions)
+    }
+    
+    private func makeRandomGameMenu() -> UIMenu
+    {
+        let randomGameOptions: [UIAction] = [
+            UIAction(title: NSLocalizedString("From Library", comment: ""),
+                     image: UIImage(systemName: "building.columns"),
+                     handler: { action in
+                         Settings.userInterfaceFeatures.randomGame.useCollection = false
+                         NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
+            }),
+            UIAction(title: NSLocalizedString("From Collection", comment: ""),
+                     image: UIImage(systemName: "books.vertical"),
+                     handler: { action in
+                         Settings.userInterfaceFeatures.randomGame.useCollection = true
+                         NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
+            })
+        ]
+        
+        return UIMenu(title: NSLocalizedString("Random Game", comment: ""),
+                      image: UIImage(systemName: "dice"),
+                      children: randomGameOptions)
     }
 }
 
@@ -851,7 +893,6 @@ private extension GamesViewController
             }
             
             self.theme = .opaque
-            self.showResumeButton = false
         }
     }
 }
@@ -912,17 +953,6 @@ private extension GamesViewController
     
     @objc func settingsDidChange(_ notification: Notification)
     {
-        guard let settingsName = notification.userInfo?[Settings.NotificationUserInfoKey.name] as? Settings.Name else { return }
-        
-        switch settingsName
-        {
-        case Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.userInterfaceFeatures.theme.$lightColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkColor.settingsKey, Settings.userInterfaceFeatures.theme.$lightFavoriteColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkFavoriteColor.settingsKey:
-            self.pageControl.currentPageIndicatorTintColor = UIColor.themeColor
-            
-        default: break
-            
-        }
-        
         guard let emulatorCore = self.activeEmulatorCore else { return }
         guard let game = emulatorCore.game as? Game else { return }
         
@@ -1012,6 +1042,7 @@ extension GamesViewController: UIAdaptivePresentationControllerDelegate
 public extension Notification.Name
 {
     static let resumePlaying = Notification.Name("resumeCurrentGameNotification")
+    static let startRecentlyPlayedGame = Notification.Name("startRecentlyPlayedGameNotification")
     static let startRandomGame = Notification.Name("startRandomGameNotification")
     static let unwindFromSettings = Notification.Name("unwindFromSettingsNotification")
     static let dismissSettings = Notification.Name("dismissSettingsNotification")
