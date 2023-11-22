@@ -115,5 +115,5 @@ struct QuickSettingsOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetQuickSettings: Bool = false
+    var reset: Bool = false
 }

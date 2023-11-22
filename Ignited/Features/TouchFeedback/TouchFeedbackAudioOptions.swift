@@ -85,5 +85,5 @@ struct TouchFeedbackAudioOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetTouchAudio: Bool = false
+    var reset: Bool = false
 }

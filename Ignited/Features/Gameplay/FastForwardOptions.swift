@@ -53,5 +53,5 @@ struct FastForwardOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetFastForward: Bool = false
+    var reset: Bool = false
 }

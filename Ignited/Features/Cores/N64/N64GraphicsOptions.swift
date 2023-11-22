@@ -52,5 +52,5 @@ struct N64GraphicsOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetN64Graphics: Bool = false
+    var reset: Bool = false
 }

@@ -85,5 +85,5 @@ struct ToastNotificationOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetToastNotifications: Bool = false
+    var reset: Bool = false
 }

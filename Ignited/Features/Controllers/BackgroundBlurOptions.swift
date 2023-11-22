@@ -68,5 +68,5 @@ struct BackgroundBlurOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetBackgroundBlur: Bool = false
+    var reset: Bool = false
 }

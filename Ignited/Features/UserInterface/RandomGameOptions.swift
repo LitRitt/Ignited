@@ -26,6 +26,6 @@ struct RandomGameOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetRandomGame: Bool = false
+    var reset: Bool = false
 }
 

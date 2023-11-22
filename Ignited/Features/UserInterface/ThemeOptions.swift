@@ -205,5 +205,5 @@ struct ThemeOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetThemeColor: Bool = false
+    var reset: Bool = false
 }

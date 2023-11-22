@@ -80,5 +80,5 @@ struct SkinOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetSkins: Bool = false
+    var reset: Bool = false
 }

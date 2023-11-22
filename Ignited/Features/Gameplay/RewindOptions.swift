@@ -56,5 +56,5 @@ struct RewindOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetSaveStateRewind: Bool = false
+    var reset: Bool = false
 }

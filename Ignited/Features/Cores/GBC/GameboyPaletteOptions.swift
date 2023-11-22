@@ -277,5 +277,5 @@ struct GameboyPaletteOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetGameboyPalettes: Bool = false
+    var reset: Bool = false
 }

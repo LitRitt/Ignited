@@ -102,7 +102,7 @@ struct SkinDebugOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetSkinDebug: Bool = false
+    var reset: Bool = false
 }
 
 extension SkinDebugOptions

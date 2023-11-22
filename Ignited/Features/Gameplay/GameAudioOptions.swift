@@ -45,5 +45,5 @@ struct GameAudioOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetGameAudio: Bool = false
+    var reset: Bool = false
 }

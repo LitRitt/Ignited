@@ -37,5 +37,5 @@ struct ControllerOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetController: Bool = false
+    var reset: Bool = false
 }

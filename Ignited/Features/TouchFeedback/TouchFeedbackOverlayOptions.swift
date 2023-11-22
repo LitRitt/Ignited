@@ -75,5 +75,5 @@ struct TouchFeedbackOverlayOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetTouchOverlay: Bool = false
+    var reset: Bool = false
 }

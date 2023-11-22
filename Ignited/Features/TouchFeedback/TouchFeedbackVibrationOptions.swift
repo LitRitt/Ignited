@@ -49,5 +49,5 @@ struct TouchFeedbackVibrationOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetTouchVibration: Bool = false
+    var reset: Bool = false
 }

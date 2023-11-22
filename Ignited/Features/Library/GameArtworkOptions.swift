@@ -252,5 +252,5 @@ struct GameArtworkOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetArtworkCustomization: Bool = false
+    var reset: Bool = false
 }

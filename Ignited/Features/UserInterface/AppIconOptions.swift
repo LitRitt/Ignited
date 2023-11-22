@@ -111,7 +111,7 @@ struct AppIconOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetAppIcon: Bool = false
+    var reset: Bool = false
 }
 
 extension AppIconOptions

@@ -80,5 +80,5 @@ struct GameScreenshotOptions
         .foregroundColor(.red)
         .displayInline()
     })
-    var resetGameScreenshots: Bool = false
+    var reset: Bool = false
 }
