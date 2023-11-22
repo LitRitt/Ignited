@@ -32,6 +32,7 @@ struct QuickSettingsView: View
     @State private var gameAudioVolume: Double = Settings.gameplayFeatures.gameAudio.volume
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
+    @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
     @State private var controllerSkinBackgroundColor: Color = Settings.controllerFeatures.skin.backgroundColor
     @State private var controllerSkinAirPlayKeepScreen: Bool = Settings.controllerFeatures.airPlayKeepScreen.isEnabled
     
@@ -233,12 +234,18 @@ struct QuickSettingsView: View
                             
                             if self.expandedControllerSkinEnabled
                             {
-                                ColorPicker("Background Color", selection: self.$controllerSkinBackgroundColor, supportsOpacity: false)
+                                Picker("Background Color", selection: self.$controllerSkinColorMode) {
+                                    ForEach(SkinBackgroundColor.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.controllerSkinColorMode) { value in
+                                        Settings.controllerFeatures.skin.colorMode = value
+                                    }
+                                ColorPicker("Custom Background Color", selection: self.$controllerSkinBackgroundColor, supportsOpacity: false)
                                     .onChange(of: self.controllerSkinBackgroundColor) { value in
                                         Settings.controllerFeatures.skin.backgroundColor = value
                                     }
-                                Toggle("Match Theme Color", isOn: Settings.controllerFeatures.skin.$matchTheme.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Show Screen During AirPlay", isOn: self.$controllerSkinAirPlayKeepScreen)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                     .onChange(of: self.controllerSkinAirPlayKeepScreen) { value in

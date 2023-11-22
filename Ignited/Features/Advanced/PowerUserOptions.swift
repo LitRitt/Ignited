@@ -364,7 +364,7 @@ extension PowerUserOptions
             case .skin:
                 Settings.controllerFeatures.skin.opacity = 0.7
                 Settings.controllerFeatures.skin.alwaysShow = false
-                Settings.controllerFeatures.skin.matchTheme = false
+                Settings.controllerFeatures.skin.colorMode = .none
                 Settings.controllerFeatures.skin.backgroundColor = .black
                 
             case .backgroundBlur:
@@ -445,7 +445,7 @@ extension PowerUserOptions
             case .touchOverlay:
                 Settings.touchFeedbackFeatures.touchOverlay.themed = true
                 Settings.touchFeedbackFeatures.touchOverlay.overlayColor = .white
-                Settings.touchFeedbackFeatures.touchOverlay.style = .glow
+                Settings.touchFeedbackFeatures.touchOverlay.style = .bubble
                 Settings.touchFeedbackFeatures.touchOverlay.opacity = 1.0
                 Settings.touchFeedbackFeatures.touchOverlay.size = 1.0
                 

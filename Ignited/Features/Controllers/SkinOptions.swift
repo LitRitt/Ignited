@@ -10,8 +10,51 @@ import SwiftUI
 
 import Features
 
+enum SkinBackgroundColor: String, CaseIterable, CustomStringConvertible
+{
+    case none = "None"
+    case theme = "Theme"
+    case custom = "Custom"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var uiColor: UIColor {
+        switch self {
+        case .none: return .black
+        case .theme: return Settings.userInterfaceFeatures.theme.color.uiColor
+        case .custom: return UIColor(Settings.controllerFeatures.skin.backgroundColor)
+        }
+    }
+}
+
+extension SkinBackgroundColor: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        return Text(self.description)
+    }
+}
+
 struct SkinOptions
 {
+    @Option(name: "Background Color",
+            description: "Choose which color to use for the controller skin background.",
+            values: SkinBackgroundColor.allCases)
+    var colorMode: SkinBackgroundColor = .none
+    
+    @Option(name: "Custom Background Color",
+            description: "Select a custom color to use as the controller skin background.",
+            detailView: { value in
+        ColorPicker("Background Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var backgroundColor: Color = .black
+    
+    @Option(name: "Show With Controller",
+            description: "Always show the controller skin, even if there's a physical controller connected.")
+    var alwaysShow: Bool = false
+    
     @Option(name: "Opacity", description: "Change the opacity of supported controller skins.", detailView: { value in
         VStack {
             HStack {
@@ -26,22 +69,6 @@ struct SkinOptions
         }.displayInline()
     })
     var opacity: Double = 0.7
-    
-    @Option(name: "Show With Controller",
-            description: "Always show the controller skin, even if there's a physical controller connected.")
-    var alwaysShow: Bool = false
-    
-    @Option(name: "Match Theme Color",
-            description: "Enable to use the theme color as the controller skin background color. Disable to use the color chosen below.")
-    var matchTheme: Bool = false
-    
-    @Option(name: "Background Color",
-            description: "Select a color to use as the controller skin background.",
-            detailView: { value in
-        ColorPicker("Background Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
-    var backgroundColor: Color = .black
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
