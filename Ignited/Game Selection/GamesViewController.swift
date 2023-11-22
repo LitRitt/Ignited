@@ -955,12 +955,14 @@ private extension GamesViewController
     }
     
     @objc func syncingDidFinish(_ notification: Notification)
-    {      
+    {
         guard Settings.gameplayFeatures.autoSync.isEnabled || self.forceNextSyncingToast else { return }
         
         DispatchQueue.main.async {
             guard let result = notification.userInfo?[SyncCoordinator.syncResultKey] as? SyncResult else { return }
             self.showSyncFinishedToastView(result: result)
+            
+            self.updatePlayMenu()
         }
     }
     
