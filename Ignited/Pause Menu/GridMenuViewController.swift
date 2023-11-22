@@ -23,6 +23,12 @@ class GridMenuViewController: UICollectionViewController
         get { return self.collectionView?.contentSize ?? CGSize.zero }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        self.collectionView.reloadData()
+    }
+    
     private let dataSource = RSTArrayCollectionViewDataSource<MenuItem>(items: [])
     
     private var prototypeCell = GridCollectionViewCell()
