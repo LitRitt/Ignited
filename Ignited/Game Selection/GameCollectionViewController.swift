@@ -465,12 +465,12 @@ private extension GameCollectionViewController
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
-        cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.roundedCorners
-        cell.imageView.layer.borderWidth = Settings.libraryFeatures.artwork.borderWidth
-        cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.glowOpacity)
+        cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.style.roundedCorners
+        cell.imageView.layer.borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
+        cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.style.glowOpacity)
         
         cell.layer.shadowRadius = 5.0
-        cell.layer.shadowColor = cell.accentColor.cgColor
+        cell.layer.shadowColor = Settings.libraryFeatures.artwork.style.glowColor?.cgColor ?? cell.accentColor.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         if Settings.libraryFeatures.artwork.titleSize == 0

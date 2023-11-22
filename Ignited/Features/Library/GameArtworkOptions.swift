@@ -11,6 +11,65 @@ import SwiftUI
 
 import Features
 
+enum ArtworkStyle: String, CaseIterable, CustomStringConvertible
+{
+    case vibrant = "Vibrant"
+    case simple = "Simple"
+    case custom = "Custom"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var symbolName: String {
+        switch self
+        {
+        case .vibrant: return "photo.artframe"
+        case .simple: return "photo"
+        case .custom: return "wrench.and.screwdriver"
+        }
+    }
+    
+    var roundedCorners: Double {
+        switch self {
+        case .vibrant: return 0.15
+        case .simple: return 0
+        case .custom: return Settings.libraryFeatures.artwork.roundedCorners
+        }
+    }
+    
+    var borderWidth: Double {
+        switch self {
+        case .vibrant: return 2.0
+        case .simple: return 0
+        case .custom: return Settings.libraryFeatures.artwork.borderWidth
+        }
+    }
+    
+    var glowOpacity: Double {
+        switch self {
+        case .vibrant: return 0.7
+        case .simple: return 0.3
+        case .custom: return Settings.libraryFeatures.artwork.glowOpacity
+        }
+    }
+    
+    var glowColor: Color? {
+        switch self {
+        case .vibrant: return nil
+        case .simple: return .black
+        case .custom: return Settings.libraryFeatures.artwork.glowColor
+        }
+    }
+}
+
+extension ArtworkStyle: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        return Text(self.description)
+    }
+}
+
 enum ArtworkSize: String, CaseIterable, CustomStringConvertible
 {
     case small = "Small"
@@ -86,19 +145,15 @@ struct GameArtworkOptions
     @Option
     var size: ArtworkSize = .medium
     
-    @Option(name: "Theme All Artwork", description: "Apply the theme color to all game artwork, not just the currently running game.")
-    var themeAll: Bool = true
+    @Option(name: "Style",
+            description: "Choose the style to use for artwork.",
+            values: ArtworkStyle.allCases)
+    var style: ArtworkStyle = .vibrant
     
-    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
-    var showNewGames: Bool = true
-    
-    @Option(name: "Use Game Screenshots", description: "Enable to show the most recent save state's screenshot of the game as its artwork.")
-    var useScreenshots: Bool = true
-    
-    @Option(name: "Rounded Corners", description: "How round the corners should be.", detailView: { value in
+    @Option(name: "Custom Rounded Corners", description: "How round the corners should be.", detailView: { value in
         VStack {
             HStack {
-                Text("Rounded Corners: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Text("Custom Rounded Corners: \(value.wrappedValue * 100, specifier: "%.f")%")
                 Spacer()
             }
             HStack {
@@ -110,10 +165,10 @@ struct GameArtworkOptions
     })
     var roundedCorners: Double = 0.15
     
-    @Option(name: "Border Width", description: "How thick the border should be.", detailView: { value in
+    @Option(name: "Custom Border Width", description: "How thick the border should be.", detailView: { value in
         VStack {
             HStack {
-                Text("Border Width: \(value.wrappedValue, specifier: "%.1f")pt")
+                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt")
                 Spacer()
             }
             HStack {
@@ -125,10 +180,10 @@ struct GameArtworkOptions
     })
     var borderWidth: Double = 2
     
-    @Option(name: "Glow Intensity", description: "How intense the theme colored glow effect is.", detailView: { value in
+    @Option(name: "Custom Glow Intensity", description: "How intense the theme colored glow effect is.", detailView: { value in
         VStack {
             HStack {
-                Text("Glow Intensity: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Text("Custom Glow Intensity: \(value.wrappedValue * 100, specifier: "%.f")%")
                 Spacer()
             }
             HStack {
@@ -139,6 +194,23 @@ struct GameArtworkOptions
         }.displayInline()
     })
     var glowOpacity: Double = 0.5
+    
+    @Option(name: "Custom Glow Color",
+            description: "Select a custom color to use for the glow around artwork.",
+            detailView: { value in
+        ColorPicker("Custom Glow Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var glowColor: Color = .white
+    
+    @Option(name: "Theme All Artwork", description: "Apply the theme color to all game artwork, not just the currently running game.")
+    var themeAll: Bool = true
+    
+    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
+    var showNewGames: Bool = true
+    
+    @Option(name: "Use Game Screenshots", description: "Enable to show the most recent save state's screenshot of the game as its artwork.")
+    var useScreenshots: Bool = true
     
     @Option(name: "Title Size", description: "The size of the game's title.", detailView: { value in
         VStack {

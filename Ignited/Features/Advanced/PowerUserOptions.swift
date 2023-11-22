@@ -389,6 +389,7 @@ extension PowerUserOptions
                 Settings.libraryFeatures.artwork.roundedCorners = 0.15
                 Settings.libraryFeatures.artwork.borderWidth = 2
                 Settings.libraryFeatures.artwork.glowOpacity = 0.5
+                Settings.libraryFeatures.artwork.glowColor = .white
                 
             case .animatedArtwork:
                 Settings.libraryFeatures.animation.animationSpeed = 1.0

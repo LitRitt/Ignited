@@ -474,7 +474,7 @@ private extension GamesViewController
             })
         ]
         
-        return UIMenu(title: NSLocalizedString("Game Previews", comment: ""),
+        return UIMenu(title: NSLocalizedString("Previews", comment: ""),
                       image: UIImage(systemName: "photo.on.rectangle"),
                       children: previewOptions)
     }
@@ -538,7 +538,7 @@ private extension GamesViewController
                      })
         ]
         
-        return UIMenu(title: NSLocalizedString("Ignited Sync", comment: ""),
+        return UIMenu(title: NSLocalizedString("Sync", comment: ""),
                       image: UIImage(systemName: "icloud.and.arrow.up"),
                       children: syncOptions)
     }
@@ -547,7 +547,7 @@ private extension GamesViewController
     {
         return UIMenu(title: NSLocalizedString("Customization", comment: ""),
                       options: [.displayInline],
-                      children: [self.makeThemeMenu(), self.makeArtworkSizeMenu(), self.makeSortingMenu()])
+                      children: [self.makeThemeMenu(), self.makeArtworkMenu(), self.makeSortingMenu()])
     }
     
     func makeThemeMenu() -> UIMenu
@@ -644,6 +644,35 @@ private extension GamesViewController
                               children: [favoritesAction, sortMenu])
     }
     
+    func makeArtworkMenu() -> UIMenu
+    {
+        return UIMenu(title: NSLocalizedString("Artwork", comment: ""),
+                      image: UIImage(systemName: "person.crop.artframe"),
+                      children: [self.makeArtworkStyleMenu(), self.makeArtworkSizeMenu()])
+    }
+    
+    func makeArtworkStyleMenu() -> UIMenu
+    {
+        var artworkStyleOptions: [UIAction] = []
+        
+        for artworkStyle in ArtworkStyle.allCases
+        {
+            artworkStyleOptions.append(
+                UIAction(title: artworkStyle.description,
+                         image: UIImage(systemName: artworkStyle.symbolName),
+                         state: Settings.libraryFeatures.artwork.style == artworkStyle ? .on : .off,
+                         handler: { action in
+                             Settings.libraryFeatures.artwork.style = artworkStyle
+                             self.updateOptionsMenu()
+                })
+            )
+        }
+        
+        return UIMenu(title: NSLocalizedString("Style", comment: ""),
+                      image: UIImage(systemName: "paintbrush.pointed"),
+                      children: artworkStyleOptions)
+    }
+    
     func makeArtworkSizeMenu() -> UIMenu
     {
         var artworkSizeOptions: [UIAction] = []
@@ -661,7 +690,7 @@ private extension GamesViewController
             )
         }
         
-        return UIMenu(title: NSLocalizedString("Artwork Size", comment: ""),
+        return UIMenu(title: NSLocalizedString("Size", comment: ""),
                       image: UIImage(systemName: "square.resize"),
                       children: artworkSizeOptions)
     }
@@ -708,7 +737,7 @@ extension GamesViewController
     private func makePlayMenu() -> UIMenu
     {
         let importActions = self.importController.makeActions().menuActions
-        let importMenu = UIMenu(title: NSLocalizedString("Import Games", comment: ""),
+        let importMenu = UIMenu(title: NSLocalizedString("Import", comment: ""),
                                 image: UIImage(systemName: "plus"),
                                 children: importActions)
         
@@ -784,7 +813,7 @@ extension GamesViewController
             )
         }
         
-        return UIMenu(title: NSLocalizedString("Recent Games", comment: ""),
+        return UIMenu(title: NSLocalizedString("Recent", comment: ""),
                        image: UIImage(systemName: "clock.arrow.circlepath"),
                        children: recentGamesOptions)
     }
@@ -792,13 +821,13 @@ extension GamesViewController
     private func makeRandomGameMenu() -> UIMenu
     {
         let randomGameOptions: [UIAction] = [
-            UIAction(title: NSLocalizedString("From Library", comment: ""),
+            UIAction(title: NSLocalizedString("Library", comment: ""),
                      image: UIImage(systemName: "building.columns"),
                      handler: { action in
                          Settings.userInterfaceFeatures.randomGame.useCollection = false
                          NotificationCenter.default.post(name: .startRandomGame, object: nil, userInfo: [:])
             }),
-            UIAction(title: NSLocalizedString("From Collection", comment: ""),
+            UIAction(title: NSLocalizedString("Collection", comment: ""),
                      image: UIImage(systemName: "books.vertical"),
                      handler: { action in
                          Settings.userInterfaceFeatures.randomGame.useCollection = true
@@ -806,7 +835,7 @@ extension GamesViewController
             })
         ]
         
-        return UIMenu(title: NSLocalizedString("Random Game", comment: ""),
+        return UIMenu(title: NSLocalizedString("Random", comment: ""),
                       image: UIImage(systemName: "dice"),
                       children: randomGameOptions)
     }
