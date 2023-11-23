@@ -127,6 +127,8 @@ extension GamesViewController
             self.updateSections(animated: false)
         }
         
+        self.preparePopoverMenuController()
+        
         DispatchQueue.global().async {
             self.activeEmulatorCore?.stop()
         }
@@ -281,12 +283,12 @@ private extension GamesViewController
         return viewController
     }
     
-    func updateSections(animated: Bool)
+    func updateSections(animated: Bool, resetPages: Bool = false)
     {
         let sections = self.fetchedResultsController.sections?.first?.numberOfObjects ?? 0
         self.pageControl.numberOfPages = sections
         
-        var resetPageViewController = false
+        var resetPageViewController = resetPages
         
         if let viewController = self.pageViewController.viewControllers?.first as? GameCollectionViewController, let gameCollection = viewController.gameCollection
         {
@@ -330,7 +332,13 @@ private extension GamesViewController
                     
                     self.pageViewController.setViewControllers([viewController], direction: .forward, animated: false, completion: nil)
                     
-                    self.title = viewController.title
+                    if let popoverMenuButton = self.navigationItem.popoverMenuController?.popoverMenuButton
+                    {
+                        popoverMenuButton.title = viewController.title ?? NSLocalizedString("Games", comment: "")
+                        popoverMenuButton.bounds.size = popoverMenuButton.intrinsicContentSize
+                        
+                        self.navigationController?.navigationBar.layoutIfNeeded()
+                    }
                     self.pageControl.currentPage = index
                 }
             }
@@ -341,10 +349,59 @@ private extension GamesViewController
         }
         else
         {
-            self.title = NSLocalizedString("Games", comment: "")
+            if let popoverMenuButton = self.navigationItem.popoverMenuController?.popoverMenuButton
+            {
+                popoverMenuButton.title = NSLocalizedString("Games", comment: "")
+                popoverMenuButton.bounds.size = popoverMenuButton.intrinsicContentSize
+                
+                self.navigationController?.navigationBar.layoutIfNeeded()
+            }
             
             self.pageViewController.view.setHidden(true, animated: animated)
             self.placeholderView.setHidden(false, animated: animated)
+        }
+    }
+}
+
+//MARK: - Popover Menu -
+/// Popover Menu
+private extension GamesViewController
+{
+    func preparePopoverMenuController()
+    {
+        let listMenuViewController = ListMenuViewController()
+        listMenuViewController.title = NSLocalizedString("Collections", comment: "")
+        
+        let navigationController = UINavigationController(rootViewController: listMenuViewController)
+        navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
+        
+        let popoverMenuController = PopoverMenuController(popoverViewController: navigationController)
+        self.navigationItem.popoverMenuController = popoverMenuController
+        if let gameCollections = self.fetchedResultsController.fetchedObjects as? [GameCollection],
+           let viewController = self.pageViewController.viewControllers?.first as? GameCollectionViewController
+        {
+            let items = gameCollections.map { [unowned self, weak popoverMenuController, weak listMenuViewController] gameCollection -> MenuItem in
+                let item = MenuItem(text: gameCollection.system?.localizedShortName ?? NSLocalizedString("Collection", comment: ""),
+                                    image: UIImage.symbolWithTemplate(name: "key.fill"))
+                { [weak popoverMenuController, weak listMenuViewController] item in
+                    listMenuViewController?.items.forEach { $0.isSelected = ($0 == item) }
+                    popoverMenuController?.isActive = false
+                    
+                    viewController.gameCollection = gameCollection
+                    Settings.previousGameCollection = gameCollection
+                    
+                    self.updateSections(animated: true, resetPages: true)
+                }
+                item.isSelected = (gameCollection == viewController.gameCollection)
+                
+                return item
+            }
+            listMenuViewController.items = items
+        }
+        
+        if let gameCollection = Settings.previousGameCollection
+        {
+            popoverMenuController.popoverMenuButton.title = gameCollection.system?.localizedShortName ?? NSLocalizedString("Games", comment: "")
         }
     }
 }
@@ -1029,7 +1086,13 @@ extension GamesViewController: UIPageViewControllerDataSource, UIPageViewControl
             Settings.previousGameCollection = nil
         }
         
-        self.title = pageViewController.viewControllers?.first?.title
+        if let popoverMenuButton = self.navigationItem.popoverMenuController?.popoverMenuButton
+        {
+            popoverMenuButton.title = pageViewController.viewControllers?.first?.title ?? NSLocalizedString("Games", comment: "")
+            popoverMenuButton.bounds.size = popoverMenuButton.intrinsicContentSize
+            
+            self.navigationController?.navigationBar.layoutIfNeeded()
+        }
     }
 }
 

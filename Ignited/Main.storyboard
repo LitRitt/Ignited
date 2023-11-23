@@ -33,7 +33,7 @@
                             <constraint firstItem="tmn-gd-5UN" firstAttribute="top" secondItem="3Bk-k3-7J9" secondAttribute="top" id="nhS-aC-rUR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Games" id="pFk-as-3k4">
+                    <navigationItem key="navigationItem" id="pFk-as-3k4">
                         <leftBarButtonItems>
                             <barButtonItem image="gear" catalog="system" id="2gg-lC-FhX" userLabel="Settings Button">
                                 <connections>
