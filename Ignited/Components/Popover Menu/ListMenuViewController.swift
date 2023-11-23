@@ -21,7 +21,7 @@ class ListMenuViewController: UITableViewController
     
     override var preferredContentSize: CGSize {
         get {
-            return CGSize(width: 200, height: self.tableView.rowHeight * CGFloat(self.items.count))
+            return CGSize(width: 300, height: self.tableView.rowHeight * CGFloat(self.items.count))
         }
         set {}
     }

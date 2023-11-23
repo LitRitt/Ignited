@@ -389,7 +389,7 @@ private extension GamesViewController
            let viewController = self.pageViewController.viewControllers?.first as? GameCollectionViewController
         {
             let items = gameCollections.map { [unowned self, weak popoverMenuController, weak listMenuViewController] gameCollection -> MenuItem in
-                let item = MenuItem(text: gameCollection.system?.localizedShortName ?? NSLocalizedString("Collection", comment: ""),
+                let item = MenuItem(text: gameCollection.system?.localizedName ?? NSLocalizedString("Collection", comment: ""),
                                     image: UIImage.symbolWithTemplate(name: "key.fill"))
                 { [weak popoverMenuController, weak listMenuViewController] item in
                     listMenuViewController?.items.forEach { $0.isSelected = ($0 == item) }
