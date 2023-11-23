@@ -56,6 +56,7 @@ class GamesViewController: UIViewController
     }
     private var syncingProgressObservation: NSKeyValueObservation?
     private var forceNextSyncingToast: Bool = false
+    private var skipPreparingPopoverMenu: Bool = false
     
     @IBOutlet private var optionsButton: UIBarButtonItem!
     @IBOutlet private var playButton: UIBarButtonItem!
@@ -109,12 +110,12 @@ extension GamesViewController
         
         self.importController.presentingViewController = self
         
+        self.updateTheme()
         self.updateOptionsMenu()
         self.updatePlayMenu()
         
         self.prepareSearchController()
         
-        self.updateTheme()
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -338,6 +339,10 @@ private extension GamesViewController
                         
                         self.navigationController?.navigationBar.layoutIfNeeded()
                     }
+                    else
+                    {
+                        self.title = viewController.title ?? NSLocalizedString("Games", comment: "")
+                    }
                     self.pageControl.currentPage = index
                 }
             }
@@ -348,13 +353,12 @@ private extension GamesViewController
         }
         else
         {
-            if let popoverMenuButton = self.navigationItem.popoverMenuController?.popoverMenuButton
-            {
-                popoverMenuButton.title = NSLocalizedString("Games", comment: "")
-                popoverMenuButton.bounds.size = popoverMenuButton.intrinsicContentSize
-                
-                self.navigationController?.navigationBar.layoutIfNeeded()
-            }
+            self.title = nil
+            self.navigationItem.popoverMenuController = nil
+            
+            self.navigationController?.navigationBar.layoutIfNeeded()
+            
+            self.skipPreparingPopoverMenu = true
             
             self.pageViewController.view.setHidden(true, animated: animated)
             self.placeholderView.setHidden(false, animated: animated)
@@ -368,6 +372,11 @@ private extension GamesViewController
 {
     func preparePopoverMenuController()
     {
+        guard !self.skipPreparingPopoverMenu else {
+            self.skipPreparingPopoverMenu = false
+            return
+        }
+        
         let listMenuViewController = ListMenuViewController()
         listMenuViewController.title = NSLocalizedString("Collections", comment: "")
         
@@ -398,10 +407,7 @@ private extension GamesViewController
             listMenuViewController.items = items
         }
         
-        if let gameCollection = Settings.previousGameCollection
-        {
-            popoverMenuController.popoverMenuButton.title = gameCollection.system?.localizedShortName ?? NSLocalizedString("Games", comment: "")
-        }
+        popoverMenuController.popoverMenuButton.title = Settings.previousGameCollection?.system?.localizedShortName ?? (self.title ?? NSLocalizedString("Games", comment: ""))
     }
 }
 
@@ -460,6 +466,8 @@ extension GamesViewController: ImportControllerDelegate
                 importedGames = games
                 
                 self.updatePlayMenu()
+                self.preparePopoverMenuController()
+                self.updateSections(animated: true, resetPages: true)
             }
         }
         
@@ -1020,6 +1028,8 @@ private extension GamesViewController
             self.showSyncFinishedToastView(result: result)
             
             self.updatePlayMenu()
+            self.preparePopoverMenuController()
+            self.updateSections(animated: true, resetPages: true)
         }
     }
     
@@ -1086,13 +1096,7 @@ extension GamesViewController: UIPageViewControllerDataSource, UIPageViewControl
             Settings.previousGameCollection = nil
         }
         
-        if let popoverMenuButton = self.navigationItem.popoverMenuController?.popoverMenuButton
-        {
-            popoverMenuButton.title = pageViewController.viewControllers?.first?.title ?? NSLocalizedString("Games", comment: "")
-            popoverMenuButton.bounds.size = popoverMenuButton.intrinsicContentSize
-            
-            self.navigationController?.navigationBar.layoutIfNeeded()
-        }
+        self.preparePopoverMenuController()
     }
 }
 
