@@ -40,7 +40,6 @@ class GamesViewController: UIViewController
     private var pageViewController: UIPageViewController!
     private var placeholderView: RSTPlaceholderView!
     private var pageControl: UIPageControl!
-    private var toolbarFixedSpacer: UIBarButtonItem!
     
     private let fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>
     
