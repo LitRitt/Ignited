@@ -392,7 +392,7 @@
 		BF04E6FE1DB8625C000F35D3 /* ControllerSkinsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerSkinsViewController.swift; sourceTree = "<group>"; };
 		BF07200E219A3A9500F05DA4 /* ZIPFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ZIPFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF0758DE2202827C005110F2 /* Delta 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Delta 4.xcdatamodel"; sourceTree = "<group>"; };
-		BF090CF11B490D8300DCAB45 /* Delta-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Delta-Bridging-Header.h"; sourceTree = "<group>"; };
+		BF090CF11B490D8300DCAB45 /* Ignited-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ignited-Bridging-Header.h"; sourceTree = "<group>"; };
 		BF1020E21F95B05B00313182 /* DeltaToDelta2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DeltaToDelta2.xcmappingmodel; sourceTree = "<group>"; };
 		BF107EC31BF413F000E0C32C /* GamesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesViewController.swift; sourceTree = "<group>"; };
 		BF11734F1DA32CF600047DF8 /* ControllersSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllersSettingsViewController.swift; sourceTree = "<group>"; };
@@ -405,7 +405,7 @@
 		BF1F45AA21AF4B5800EF9895 /* SyncResultsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SyncResultsViewController.storyboard; sourceTree = "<group>"; };
 		BF1F45AC21AF57BA00EF9895 /* HarmonyMetadataKey+Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HarmonyMetadataKey+Keys.swift"; sourceTree = "<group>"; };
 		BF1F45BE21AF676F00EF9895 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
-		BF27CC861BC9E3C600A20D89 /* Delta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Delta.entitlements; sourceTree = "<group>"; };
+		BF27CC861BC9E3C600A20D89 /* Ignited.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ignited.entitlements; sourceTree = "<group>"; };
 		BF27CC8A1BC9FE4D00A20D89 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-appletvos/Pods.framework"; sourceTree = "<group>"; };
 		BF27CC941BCB7B7A00A20D89 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		BF2B98E51C97E32F00F6D57D /* SaveStatesCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveStatesCollectionHeaderView.swift; sourceTree = "<group>"; };
@@ -1346,8 +1346,8 @@
 		BFFA71DA1AAC406100EE9DD1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BF090CF11B490D8300DCAB45 /* Delta-Bridging-Header.h */,
-				BF27CC861BC9E3C600A20D89 /* Delta.entitlements */,
+				BF090CF11B490D8300DCAB45 /* Ignited-Bridging-Header.h */,
+				BF27CC861BC9E3C600A20D89 /* Ignited.entitlements */,
 				BFFA71DB1AAC406100EE9DD1 /* Info.plist */,
 				BFAB9F87219A4B670080EC7D /* GoogleService-Info.plist */,
 			);
@@ -2097,7 +2097,7 @@
 				STRIP_STYLE = "non-global";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = BETA;
 				SWIFT_INCLUDE_PATHS = "$(inherited) \"$(SRCROOT)/Cores/GPGXDeltaCore/Sources/GPGXBridge\"";
-				SWIFT_OBJC_BRIDGING_HEADER = "Ignited/Supporting Files/Delta-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Ignited/Supporting Files/Ignited-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2139,7 +2139,7 @@
 				STRIP_STYLE = "non-global";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_INCLUDE_PATHS = "$(inherited) \"$(SRCROOT)/Cores/GPGXDeltaCore/Sources/GPGXBridge\"";
-				SWIFT_OBJC_BRIDGING_HEADER = "Ignited/Supporting Files/Delta-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Ignited/Supporting Files/Ignited-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
