@@ -216,16 +216,16 @@ private extension SaveStatesViewController
             
             self.vibrancyView.effect = nil
             
-            self.placeholderView.textLabel.textColor = UIColor.gray
-            self.placeholderView.detailTextLabel.textColor = UIColor.gray
+            self.placeholderView.textLabel.textColor = .label
+            self.placeholderView.detailTextLabel.textColor = .secondaryLabel
             
         case .translucent:
             self.view.backgroundColor = nil
             
             self.vibrancyView.effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial))
             
-            self.placeholderView.textLabel.textColor = UIColor.white
-            self.placeholderView.detailTextLabel.textColor = UIColor.white
+            self.placeholderView.textLabel.textColor = .label
+            self.placeholderView.detailTextLabel.textColor = .secondaryLabel
         }
         
         self.sortButton.transform = CGAffineTransform.identity.rotated(by: Settings.sortSaveStatesByOldestFirst ? 0 : .pi)
