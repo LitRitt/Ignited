@@ -45,7 +45,7 @@ class GridCollectionViewCell: UICollectionViewCell
         }
     }
     
-    private var vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemThinMaterial)))
+    private var vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial)))
     
     private var imageViewTopAnchorConstraint: NSLayoutConstraint!
     

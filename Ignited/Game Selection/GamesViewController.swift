@@ -194,7 +194,7 @@ private extension GamesViewController
         {
         case .opaque: searchResultsController.dataSource.placeholderView = placeholderView
         case .translucent:
-            let vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemThinMaterial)))
+            let vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial)))
             vibrancyView.contentView.addSubview(placeholderView, pinningEdgesWith: .zero)
             searchResultsController.dataSource.placeholderView = vibrancyView
         }
