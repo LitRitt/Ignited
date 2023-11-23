@@ -144,7 +144,7 @@ extension GameCollectionViewController
             saveStatesViewController.delegate = self
             saveStatesViewController.game = game
             saveStatesViewController.mode = .loading
-            saveStatesViewController.theme = self.theme
+            saveStatesViewController.theme = .translucent
             
         case "preferredControllerSkins":
             let game = sender as! Game
