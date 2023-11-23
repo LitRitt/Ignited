@@ -90,6 +90,7 @@ extension GameCollectionViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.startRandomGame), name: .startRandomGame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.startRecentlyPlayedGame), name: .startRecentlyPlayedGame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.unwindFromSettingsAndUpdate), name: .unwindFromSettings, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameCollectionViewController.resumeCurrentGame), name: UIDevice.deviceDidShakeNotification, object: nil)
         
         self.update()
     }
