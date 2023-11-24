@@ -386,7 +386,7 @@ private extension GameCollectionViewController
             if var overlayImage = cell.imageView.image,
                cell.isPaused || cell.isFavorite
             {
-                let borderWidth = Settings.libraryFeatures.artwork.borderWidth
+                let borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
                 overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height))
                 cell.imageView.image = overlayImage
             }
@@ -451,27 +451,23 @@ private extension GameCollectionViewController
         {
             cell.accentColor = Settings.libraryFeatures.favorites.colorMode.uiColor
         }
-        else if cell.isPaused || Settings.libraryFeatures.artwork.themeAll
+        else
         {
             cell.accentColor = UIColor.themeColor
         }
-        else
-        {
-            cell.accentColor = UIColor.systemGray
-        }
         
-        cell.imageView.backgroundColor = cell.accentColor.adjustHSBA(hueDelta: 0, saturationDelta: -0.15, brightnessDelta: traitCollection.userInterfaceStyle == .light ? 0.3 : -0.3, alphaDelta: 0)
-        cell.imageView.layer.borderColor = cell.accentColor.cgColor
-        cell.textLabel.textColor = UIColor.label
+        cell.imageView.backgroundColor = Settings.libraryFeatures.artwork.style.backgroundColor ?? cell.accentColor.adjustHSBA(hueDelta: 0, saturationDelta: -0.15, brightnessDelta: traitCollection.userInterfaceStyle == .light ? 0.3 : -0.3, alphaDelta: 0)
+        cell.imageView.layer.borderColor = Settings.libraryFeatures.artwork.style.borderColor?.cgColor ?? cell.accentColor.cgColor
+        cell.textLabel.textColor = Settings.libraryFeatures.artwork.style.textColor
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
         
-        cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.style.roundedCorners
+        cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.style.cornerRadius
         cell.imageView.layer.borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
-        cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.style.glowOpacity)
+        cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.style.shadowOpacity)
         
-        cell.layer.shadowRadius = 5.0
-        cell.layer.shadowColor = Settings.libraryFeatures.artwork.style.glowColor?.cgColor ?? cell.accentColor.cgColor
+        cell.layer.shadowRadius = Settings.libraryFeatures.artwork.style.shadowRadius
+        cell.layer.shadowColor = Settings.libraryFeatures.artwork.style.shadowColor?.cgColor ?? cell.accentColor.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         if Settings.libraryFeatures.artwork.titleSize == 0
@@ -1328,7 +1324,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.userInterfaceFeatures.theme.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$lightColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkColor.settingsKey, Settings.userInterfaceFeatures.theme.$lightFavoriteColor.settingsKey, Settings.userInterfaceFeatures.theme.$darkFavoriteColor.settingsKey, Settings.libraryFeatures.favorites.$color.settingsKey, Settings.libraryFeatures.favorites.$colorMode.settingsKey, Settings.libraryFeatures.favorites.settingsKey, Settings.libraryFeatures.artwork.$themeAll.settingsKey:
+        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey:
             self.update()
             
         case Settings.libraryFeatures.artwork.$sortOrder.settingsKey, Settings.libraryFeatures.favorites.$sortFirst.settingsKey:

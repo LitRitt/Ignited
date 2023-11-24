@@ -11,10 +11,25 @@ import SwiftUI
 
 import Features
 
+enum ArtworkCustomColor: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case theme = "Theme"
+    case custom = "Custom"
+    
+    var description: String {
+        return rawValue
+    }
+    
+    var localizedDescription: Text {
+        Text(description)
+    }
+}
+
 enum ArtworkStyle: String, CaseIterable, CustomStringConvertible
 {
+    case basic = "Basic"
     case vibrant = "Vibrant"
-    case simple = "Simple"
+    case flat = "Flat"
     case custom = "Custom"
     
     var description: String {
@@ -24,41 +39,82 @@ enum ArtworkStyle: String, CaseIterable, CustomStringConvertible
     var symbolName: String {
         switch self
         {
-        case .vibrant: return "photo.artframe"
-        case .simple: return "photo"
+        case .basic: return "swirl.circle.righthalf.filled"
+        case .vibrant: return "cloud.rainbow.half"
+        case .flat: return "photo"
         case .custom: return "wrench.and.screwdriver"
         }
     }
     
-    var roundedCorners: Double {
+    var backgroundColor: UIColor? {
         switch self {
+        case .basic: return nil
+        case .vibrant: return nil
+        case .flat: return nil
+        case .custom: return Settings.libraryFeatures.artwork.backgroundColorMode == .custom ? UIColor(Settings.libraryFeatures.artwork.backgroundColor) : nil
+        }
+    }
+    
+    var borderColor: UIColor? {
+        switch self {
+        case .basic: return .secondaryLabel
+        case .vibrant: return nil
+        case .flat: return .black
+        case .custom: return Settings.libraryFeatures.artwork.borderColorMode == .custom ? UIColor(Settings.libraryFeatures.artwork.borderColor) : nil
+        }
+    }
+    
+    var textColor: UIColor {
+        switch self {
+        case .basic: return .label
+        case .vibrant: return .label
+        case .flat: return .label
+        case .custom: return Settings.libraryFeatures.artwork.textColorMode == .custom ? UIColor(Settings.libraryFeatures.artwork.textColor) : .secondaryLabel
+        }
+    }
+    
+    var shadowColor: UIColor? {
+        switch self {
+        case .basic: return .systemBackground
+        case .vibrant: return nil
+        case .flat: return .black
+        case .custom: return Settings.libraryFeatures.artwork.shadowColorMode == .custom ? UIColor(Settings.libraryFeatures.artwork.shadowColor) : nil
+        }
+    }
+    
+    var cornerRadius: Double {
+        switch self {
+        case .basic: return 0.1
         case .vibrant: return 0.15
-        case .simple: return 0
-        case .custom: return Settings.libraryFeatures.artwork.roundedCorners
+        case .flat: return 0
+        case .custom: return Settings.libraryFeatures.artwork.cornerRadius
         }
     }
     
     var borderWidth: Double {
         switch self {
-        case .vibrant: return 2.0
-        case .simple: return 0
+        case .basic: return 1.2
+        case .vibrant: return 2
+        case .flat: return 0
         case .custom: return Settings.libraryFeatures.artwork.borderWidth
         }
     }
     
-    var glowOpacity: Double {
+    var shadowOpacity: Double {
         switch self {
+        case .basic: return 0.3
         case .vibrant: return 0.7
-        case .simple: return 0.3
-        case .custom: return Settings.libraryFeatures.artwork.glowOpacity
+        case .flat: return 0
+        case .custom: return Settings.libraryFeatures.artwork.shadowOpacity
         }
     }
     
-    var glowColor: Color? {
+    var shadowRadius: Double {
         switch self {
-        case .vibrant: return nil
-        case .simple: return .black
-        case .custom: return Settings.libraryFeatures.artwork.glowColor
+        case .basic: return 3
+        case .vibrant: return 7
+        case .flat: return 0
+        case .custom: return Settings.libraryFeatures.artwork.shadowRadius
         }
     }
 }
@@ -145,15 +201,63 @@ struct GameArtworkOptions
     @Option
     var size: ArtworkSize = .medium
     
-    @Option(name: "Style",
-            description: "Choose the style to use for artwork.",
-            values: ArtworkStyle.allCases)
-    var style: ArtworkStyle = .vibrant
+    @Option
+    var useScreenshots: Bool = true
     
-    @Option(name: "Custom Rounded Corners", description: "How round the corners should be.", detailView: { value in
+    @Option(name: "Style",
+            description: "Choose the style to use for game artwork.",
+            values: ArtworkStyle.allCases)
+    var style: ArtworkStyle = .basic
+    
+    @Option(name: "Background Color Mode",
+            values: ArtworkCustomColor.allCases)
+    var backgroundColorMode: ArtworkCustomColor = .custom
+    
+    @Option(name: "Custom Background Color",
+            detailView: { value in
+        ColorPicker("Custom Background Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var backgroundColor: Color = .orange
+    
+    @Option(name: "Border Color Mode",
+            values: ArtworkCustomColor.allCases)
+    var borderColorMode: ArtworkCustomColor = .custom
+    
+    @Option(name: "Custom Border Color",
+            detailView: { value in
+        ColorPicker("Custom Border Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var borderColor: Color = .orange
+    
+    @Option(name: "Text Color Mode",
+            values: ArtworkCustomColor.allCases)
+    var textColorMode: ArtworkCustomColor = .custom
+    
+    @Option(name: "Custom Text Color",
+            detailView: { value in
+        ColorPicker("Custom Text Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var textColor: Color = .black
+    
+    @Option(name: "Shadow Color Mode",
+            values: ArtworkCustomColor.allCases)
+    var shadowColorMode: ArtworkCustomColor = .custom
+    
+    @Option(name: "Custom Shadow Color",
+            detailView: { value in
+        ColorPicker("Custom Shadow Color", selection: value, supportsOpacity: false)
+            .displayInline()
+    })
+    var shadowColor: Color = .white
+    
+    @Option(name: "Custom Corner Radius",
+            detailView: { value in
         VStack {
             HStack {
-                Text("Custom Rounded Corners: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%")
                 Spacer()
             }
             HStack {
@@ -163,9 +267,10 @@ struct GameArtworkOptions
             }
         }.displayInline()
     })
-    var roundedCorners: Double = 0.15
+    var cornerRadius: Double = 0.15
     
-    @Option(name: "Custom Border Width", description: "How thick the border should be.", detailView: { value in
+    @Option(name: "Custom Border Width",
+            detailView: { value in
         VStack {
             HStack {
                 Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt")
@@ -180,10 +285,27 @@ struct GameArtworkOptions
     })
     var borderWidth: Double = 2
     
-    @Option(name: "Custom Glow Intensity", description: "How intense the theme colored glow effect is.", detailView: { value in
+    @Option(name: "Custom Shadow Radius",
+            detailView: { value in
         VStack {
             HStack {
-                Text("Custom Glow Intensity: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("0pt")
+                Slider(value: value, in: 0.0...10.0, step: 0.5)
+                Text("10pt")
+            }
+        }.displayInline()
+    })
+    var shadowRadius: Double = 5
+    
+    @Option(name: "Custom Shadow Opacity",
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
                 Spacer()
             }
             HStack {
@@ -193,26 +315,10 @@ struct GameArtworkOptions
             }
         }.displayInline()
     })
-    var glowOpacity: Double = 0.5
+    var shadowOpacity: Double = 0.5
     
-    @Option(name: "Custom Glow Color",
-            description: "Select a custom color to use for the glow around artwork.",
+    @Option(name: "Title Size",
             detailView: { value in
-        ColorPicker("Custom Glow Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
-    var glowColor: Color = .white
-    
-    @Option(name: "Theme All Artwork", description: "Apply the theme color to all game artwork, not just the currently running game.")
-    var themeAll: Bool = true
-    
-    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
-    var showNewGames: Bool = true
-    
-    @Option(name: "Use Game Screenshots", description: "Enable to show the most recent save state's screenshot of the game as its artwork.")
-    var useScreenshots: Bool = true
-    
-    @Option(name: "Title Size", description: "The size of the game's title.", detailView: { value in
         VStack {
             HStack {
                 Text("Title Size: \(value.wrappedValue * 100, specifier: "%.f")%")
@@ -227,7 +333,8 @@ struct GameArtworkOptions
     })
     var titleSize: Double = 1.0
     
-    @Option(name: "Title Max Lines", description: "How many lines the title can occupy.", detailView: { value in
+    @Option(name: "Title Max Lines",
+            detailView: { value in
         VStack {
             HStack {
                 Text("Title Max Lines: \(value.wrappedValue, specifier: "%.f")")
@@ -241,6 +348,9 @@ struct GameArtworkOptions
         }.displayInline()
     })
     var titleMaxLines: Double = 3
+    
+    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
+    var showNewGames: Bool = true
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

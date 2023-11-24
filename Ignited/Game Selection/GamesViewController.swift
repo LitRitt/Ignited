@@ -173,7 +173,12 @@ extension GamesViewController
     
     @IBAction private func unwindFromSettingsViewController(_ segue: UIStoryboardSegue)
     {
-        self.unwindFromSettingsAndSync()
+        self.unwindFromSettings()
+        
+        if Settings.gameplayFeatures.autoSync.isEnabled
+        {
+            self.sync()
+        }
     }
 }
 
@@ -230,7 +235,7 @@ private extension GamesViewController
     {
         switch self.theme
         {
-        case .opaque: self.view.backgroundColor = .systemBackground
+        case .opaque: self.view.backgroundColor = .secondarySystemBackground
         case .translucent: self.view.backgroundColor = nil
         }
                 
@@ -243,17 +248,12 @@ private extension GamesViewController
         }
     }
     
-    func unwindFromSettingsAndSync()
+    func unwindFromSettings()
     {
         NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         
         self.updateOptionsMenu()
         self.updatePlayMenu()
-        
-        if Settings.gameplayFeatures.autoSync.isEnabled
-        {
-            self.sync()
-        }
     }
 }
 
@@ -1129,7 +1129,15 @@ extension GamesViewController: UIAdaptivePresentationControllerDelegate
 {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController)
     {
-        self.unwindFromSettingsAndSync()
+        if Settings.gameplayFeatures.autoSync.isEnabled
+        {
+            self.sync()
+        }
+    }
+    
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController)
+    {
+        self.unwindFromSettings()
     }
 }
 

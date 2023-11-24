@@ -381,15 +381,18 @@ extension PowerUserOptions
             case .artworkCustomization:
                 Settings.libraryFeatures.artwork.sortOrder = .alphabeticalAZ
                 Settings.libraryFeatures.artwork.size = .medium
-                Settings.libraryFeatures.artwork.themeAll = true
+                Settings.libraryFeatures.artwork.style = .basic
+                Settings.libraryFeatures.artwork.backgroundColor = .orange
+                Settings.libraryFeatures.artwork.borderColor = .orange
+                Settings.libraryFeatures.artwork.textColor = .black
+                Settings.libraryFeatures.artwork.shadowColor = .white
+                Settings.libraryFeatures.artwork.cornerRadius = 0.15
+                Settings.libraryFeatures.artwork.borderWidth = 1.5
+                Settings.libraryFeatures.artwork.shadowOpacity = 0.5
                 Settings.libraryFeatures.artwork.useScreenshots = true
                 Settings.libraryFeatures.artwork.showNewGames = true
                 Settings.libraryFeatures.artwork.titleSize = 1.0
                 Settings.libraryFeatures.artwork.titleMaxLines = 3
-                Settings.libraryFeatures.artwork.roundedCorners = 0.15
-                Settings.libraryFeatures.artwork.borderWidth = 2
-                Settings.libraryFeatures.artwork.glowOpacity = 0.5
-                Settings.libraryFeatures.artwork.glowColor = .white
                 
             case .animatedArtwork:
                 Settings.libraryFeatures.animation.animationSpeed = 1.0
