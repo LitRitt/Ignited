@@ -56,7 +56,9 @@ class GamesViewController: UIViewController
     }
     private var syncingProgressObservation: NSKeyValueObservation?
     private var forceNextSyncingToast: Bool = false
+    
     private var skipPreparingPopoverMenu: Bool = false
+    private var noGamesImported: Bool = true
     
     @IBOutlet private var optionsButton: UIBarButtonItem!
     @IBOutlet private var playButton: UIBarButtonItem!
@@ -305,6 +307,8 @@ private extension GamesViewController
         
         if sections > 0
         {
+            self.noGamesImported = false
+            
             // Reset page view controller if currently hidden or current child should view controller no longer exists
             if self.pageViewController.view.isHidden || resetPageViewController
             {
@@ -352,6 +356,7 @@ private extension GamesViewController
             self.navigationController?.navigationBar.layoutIfNeeded()
             
             self.skipPreparingPopoverMenu = true
+            self.noGamesImported = true
             
             self.pageViewController.view.setHidden(true, animated: animated)
             self.placeholderView.setHidden(false, animated: animated)
@@ -460,7 +465,8 @@ extension GamesViewController: ImportControllerDelegate
                 
                 self.updatePlayMenu()
                 self.preparePopoverMenuController()
-                self.updateSections(animated: true, resetPages: true)
+                
+                if self.noGamesImported { self.updateSections(animated: true, resetPages: true) }
             }
         }
         
@@ -528,7 +534,7 @@ private extension GamesViewController
                      handler: { action in
                          Settings.libraryFeatures.artwork.useScreenshots = !Settings.libraryFeatures.artwork.useScreenshots
                          self.updateOptionsMenu()
-                         self.updateSections(animated: true, resetPages: true)
+                         self.updateSections(animated: true)
             })
         ]
         
@@ -1024,7 +1030,8 @@ private extension GamesViewController
             
             self.updatePlayMenu()
             self.preparePopoverMenuController()
-            self.updateSections(animated: true, resetPages: true)
+            
+            if self.noGamesImported { self.updateSections(animated: true, resetPages: true) }
         }
     }
     
