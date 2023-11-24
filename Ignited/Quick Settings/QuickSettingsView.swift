@@ -10,22 +10,11 @@ import SwiftUI
 
 import Features
 
-private enum Systems: String, CaseIterable
-{
-    case gba = "com.rileytestut.delta.game.gba"
-    case gbc = "com.rileytestut.delta.game.gbc"
-    case ds = "com.rileytestut.delta.game.ds"
-    case nes = "com.rileytestut.delta.game.nes"
-    case snes = "com.rileytestut.delta.game.snes"
-    case n64 = "com.rileytestut.delta.game.n64"
-    case genesis = "com.rileytestut.delta.game.genesis"
-}
-
 @available(iOS 15.0, *)
 struct QuickSettingsView: View
 {
     private var system: String
-    private let systemsWithPalettes = [Systems.gbc.rawValue]
+    private let systemsWithPalettes = [System.gb.gameType.rawValue]
     
     @State private var fastForwardSpeed: Double
     
