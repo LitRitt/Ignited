@@ -47,6 +47,13 @@ class ListMenuViewController: UITableViewController
         self.tableView.dataSource = self.dataSource
         self.tableView.rowHeight = 44
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: RSTCellContentGenericCellIdentifier)
+        
+        self.tableView.backgroundColor = .clear
+        self.tableView.backgroundView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial)))
+        self.tableView.separatorEffect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial))
+        
+        self.tableView.tableHeaderView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial)))
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
 }
 
@@ -59,5 +66,11 @@ extension ListMenuViewController
         item.action(item)
         
         self.tableView.reloadData()
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        cell.backgroundColor = .clear
+        cell.backgroundView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial)))
     }
 }
