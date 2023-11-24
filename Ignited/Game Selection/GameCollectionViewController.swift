@@ -842,16 +842,16 @@ private extension GameCollectionViewController
         
         let favoriteAction: Action
         
-        if Settings.libraryFeatures.favorites.games[game.type.rawValue]!.contains(game.identifier)
+        if game.isFavorite
         {
             favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(systemName: "star.slash"), action: { [unowned self] action in
-                self.removeFavoriteGame(for: game)
+                self.favoriteGame(for: game, isFavorite: false)
             })
         }
         else
         {
             favoriteAction = Action(title: NSLocalizedString("Add Favorite", comment: ""), style: .default, image: UIImage(systemName: "star"), action: { [unowned self] action in
-                self.addFavoriteGame(for: game)
+                self.favoriteGame(for: game, isFavorite: true)
             })
         }
         
@@ -1246,42 +1246,18 @@ private extension GameCollectionViewController
         self.performSegue(withIdentifier: "preferredControllerSkins", sender: game)
     }
     
-    func addFavoriteGame(for game: Game)
+    func favoriteGame(for game: Game, isFavorite: Bool)
     {
-        guard var favorites = Settings.libraryFeatures.favorites.games[game.type.rawValue] else { return }
-        
-        favorites.append(game.identifier)
         self.removeShadowForGame(for: game)
         
         DatabaseManager.shared.performBackgroundTask { (context) in
             let game = context.object(with: game.objectID) as! Game
-            game.isFavorite = true
+            game.isFavorite = isFavorite
             
             context.saveWithErrorLogging()
-            
-            Settings.libraryFeatures.favorites.games.updateValue(favorites, forKey: game.type.rawValue)
         }
     }
     
-    func removeFavoriteGame(for game: Game)
-    {
-        guard var favorites = Settings.libraryFeatures.favorites.games[game.type.rawValue],
-              let index = favorites.firstIndex(of: game.identifier) else { return }
-        
-        favorites.remove(at: index)
-        self.removeShadowForGame(for: game)
-        
-        DatabaseManager.shared.performBackgroundTask { (context) in
-            let game = context.object(with: game.objectID) as! Game
-            game.isFavorite = false
-            
-            context.saveWithErrorLogging()
-            
-            Settings.libraryFeatures.favorites.games.updateValue(favorites, forKey: game.type.rawValue)
-        }
-    }
-    
-    //TODO: Probably a better way to do this
     func removeShadowForGame(for game: Game)
     {
         for cell in self.collectionView?.visibleCells ?? []

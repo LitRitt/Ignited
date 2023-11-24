@@ -55,17 +55,6 @@ struct FavoriteGamesOptions
     })
     var color: Color = .yellow
     
-    @Option
-    var games: [String: [String]] = [
-        System.ds.gameType.rawValue: [],
-        System.gba.gameType.rawValue: [],
-        System.gbc.gameType.rawValue: [],
-        System.nes.gameType.rawValue: [],
-        System.snes.gameType.rawValue: [],
-        System.n64.gameType.rawValue: [],
-        System.genesis.gameType.rawValue: []
-    ]
-    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in
