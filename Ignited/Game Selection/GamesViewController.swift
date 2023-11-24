@@ -133,10 +133,7 @@ extension GamesViewController
             self.activeEmulatorCore?.stop()
         }
         
-        if Settings.gameplayFeatures.autoSync.isEnabled
-        {
-            self.sync()
-        }
+        self.sync()
     }
     
     override func didReceiveMemoryWarning()
@@ -174,11 +171,7 @@ extension GamesViewController
     @IBAction private func unwindFromSettingsViewController(_ segue: UIStoryboardSegue)
     {
         self.unwindFromSettings()
-        
-        if Settings.gameplayFeatures.autoSync.isEnabled
-        {
-            self.sync()
-        }
+        self.sync()
     }
 }
 
@@ -912,6 +905,8 @@ private extension GamesViewController
 {
     @IBAction func sync()
     {
+        guard Settings.gameplayFeatures.autoSync.isEnabled else { return }
+        
         // Show toast view in case sync started before this view controller existed.
         self.showSyncingToastViewIfNeeded()
         
@@ -1129,10 +1124,7 @@ extension GamesViewController: UIAdaptivePresentationControllerDelegate
 {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController)
     {
-        if Settings.gameplayFeatures.autoSync.isEnabled
-        {
-            self.sync()
-        }
+        self.sync()
     }
     
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController)
