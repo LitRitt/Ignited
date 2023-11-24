@@ -113,7 +113,7 @@
 		ACCDD4872A6386020034A6C0 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4832A6386020034A6C0 /* click.mp3 */; };
 		ACCDD4882A6386020034A6C0 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4842A6386020034A6C0 /* beep.mp3 */; };
 		ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD48A2A63864E0034A6C0 /* tock.mp3 */; };
-		ACD5FA032A0C4C84005CDCF1 /* GBCFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */; };
+		ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */; };
 		ACD5FA052A0C4D58005CDCF1 /* GameboyPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
@@ -380,7 +380,7 @@
 		ACCDD4832A6386020034A6C0 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		ACCDD4842A6386020034A6C0 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 		ACCDD48A2A63864E0034A6C0 /* tock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tock.mp3; sourceTree = "<group>"; };
-		ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCFeatures.swift; sourceTree = "<group>"; };
+		ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFeatures.swift; sourceTree = "<group>"; };
 		ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboyPaletteOptions.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
@@ -704,7 +704,7 @@
 			children = (
 				AC1438492A4F66D40099977F /* DS */,
 				AC56DDEE2A35F327007C8372 /* N64 */,
-				ACD5FA012A0C4C28005CDCF1 /* GBC */,
+				ACD5FA012A0C4C28005CDCF1 /* GB */,
 			);
 			path = Cores;
 			sourceTree = "<group>";
@@ -871,13 +871,13 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		ACD5FA012A0C4C28005CDCF1 /* GBC */ = {
+		ACD5FA012A0C4C28005CDCF1 /* GB */ = {
 			isa = PBXGroup;
 			children = (
-				ACD5FA022A0C4C84005CDCF1 /* GBCFeatures.swift */,
+				ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */,
 				ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */,
 			);
-			path = GBC;
+			path = GB;
 			sourceTree = "<group>";
 		};
 		ACD727D129EE0B200028B8A8 /* Patrons */ = {
@@ -1779,7 +1779,7 @@
 				BF2B98E61C97E32F00F6D57D /* SaveStatesCollectionHeaderView.swift in Sources */,
 				BFC9B7391CEFCD34008629BB /* CheatsViewController.swift in Sources */,
 				D5864978297756CE0081477E /* CheatBaseView.swift in Sources */,
-				ACD5FA032A0C4C84005CDCF1 /* GBCFeatures.swift in Sources */,
+				ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */,
 				BF353FFF1C5DA3C500C1184C /* PausePresentationController.swift in Sources */,
 				ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */,
 				AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */,

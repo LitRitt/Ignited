@@ -8,9 +8,9 @@
 
 import Features
 
-struct GBCFeatures: FeatureContainer
+struct GBFeatures: FeatureContainer
 {
-    static let shared = GBCFeatures()
+    static let shared = GBFeatures()
     
     @Feature(name: "Game Boy Palettes",
              description: "Enable to change the color palette used for GB games.",

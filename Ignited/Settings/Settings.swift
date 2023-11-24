@@ -46,7 +46,7 @@ extension Settings
 struct Settings
 {
     static let dsFeatures = DSFeatures.shared
-    static let gbcFeatures = GBCFeatures.shared
+    static let gbFeatures = GBFeatures.shared
     static let n64Features = N64Features.shared
     static let gameplayFeatures = GameplayFeatures.shared
     static let controllerFeatures = ControllerFeatures.shared
@@ -90,7 +90,7 @@ struct Settings
             Settings.touchFeedbackFeatures.touchVibration.settingsKey.rawValue: true,
             Settings.advancedFeatures.skinDebug.settingsKey.rawValue: false,
             Settings.advancedFeatures.powerUser.settingsKey.rawValue: false,
-            Settings.gbcFeatures.palettes.settingsKey.rawValue: true,
+            Settings.gbFeatures.palettes.settingsKey.rawValue: true,
             Settings.n64Features.n64graphics.settingsKey.rawValue: false,
             Settings.dsFeatures.dsAirPlay.settingsKey.rawValue: true,
             Settings.dsFeatures.dsiSupport.settingsKey.rawValue: false
@@ -241,7 +241,16 @@ extension Settings
             
             // Controller skin doesn't exist, so fall back to standard controller skin
             
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == YES", #keyPath(ControllerSkin.gameType), system.gameType.rawValue, #keyPath(ControllerSkin.isStandard))
+            // Redirect secondary systems to primary core skin
+            var gameType = system.gameType.rawValue
+            
+            switch system.gameType
+            {
+            case .gb: gameType = System.gbc.gameType.rawValue
+            default: break
+            }
+            
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == YES", #keyPath(ControllerSkin.gameType), gameType, #keyPath(ControllerSkin.isStandard))
             
             if let controllerSkin = try DatabaseManager.shared.viewContext.fetch(fetchRequest).first
             {
@@ -349,6 +358,7 @@ private extension Settings
         {
         case .nes: systemName = "nes"
         case .snes: systemName = "snes"
+        case .gb: systemName = "gb"
         case .gbc: systemName = "gbc"
         case .gba: systemName = "gba"
         case .n64: systemName = "n64"

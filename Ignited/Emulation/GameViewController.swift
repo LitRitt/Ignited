@@ -643,7 +643,7 @@ extension GameViewController
             }
             
             if let game = self.game,
-               game.type != .gbc
+               game.type != .gb
             {
                 pauseViewController.paletteItem = nil
             }
@@ -660,7 +660,7 @@ extension GameViewController
                 // GPGX core does not support background blur yet.
                 pauseViewController.blurBackgroudItem = nil
                 
-            case .gbc?:
+            case .gbc?, .gb?:
                 // Rewind is disabled on GBC. Crashes gambette
                 pauseViewController.rewindItem = nil
 
@@ -694,11 +694,6 @@ extension GameViewController
                 pauseViewController.cheatCodesItem = nil
                 
             default: break
-            }
-            
-            if url!.pathExtension.lowercased() == "gbc"
-            {
-                pauseViewController.paletteItem = nil
             }
             
             self.pauseViewController = pauseViewController
@@ -1160,15 +1155,15 @@ private extension GameViewController
     {
         if let bridge = self.emulatorCore?.deltaCore.emulatorBridge as? GBCEmulatorBridge
         {
-            if Settings.gbcFeatures.palettes.multiPalette
+            if Settings.gbFeatures.palettes.multiPalette
             {
-                setMultiPalette(palette1: Settings.gbcFeatures.palettes.palette.colors,
-                                palette2: Settings.gbcFeatures.palettes.spritePalette1.colors,
-                                palette3: Settings.gbcFeatures.palettes.spritePalette2.colors)
+                setMultiPalette(palette1: Settings.gbFeatures.palettes.palette.colors,
+                                palette2: Settings.gbFeatures.palettes.spritePalette1.colors,
+                                palette3: Settings.gbFeatures.palettes.spritePalette2.colors)
             }
             else
             {
-                setSinglePalette(palette: Settings.gbcFeatures.palettes.palette.colors)
+                setSinglePalette(palette: Settings.gbFeatures.palettes.palette.colors)
             }
             
             bridge.updatePalette()
@@ -2429,7 +2424,7 @@ extension GameViewController
             pauseView.dismiss()
         }
         
-        if Settings.gbcFeatures.palettes.multiPalette
+        if Settings.gbFeatures.palettes.multiPalette
         {
             let alertController = UIAlertController(title: NSLocalizedString("Change Which Palette?", comment: ""), message: nil, preferredStyle: .actionSheet)
             alertController.popoverPresentationController?.sourceView = self.view
@@ -2444,9 +2439,9 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (Settings.gbcFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (Settings.gbFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                        Settings.gbcFeatures.palettes.palette = palette
+                        Settings.gbFeatures.palettes.palette = palette
                         self.resumeEmulation()
                         if Settings.userInterfaceFeatures.toasts.palette
                         {
@@ -2466,9 +2461,9 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (Settings.gbcFeatures.palettes.spritePalette1.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (Settings.gbFeatures.palettes.spritePalette1.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                        Settings.gbcFeatures.palettes.spritePalette1 = palette
+                        Settings.gbFeatures.palettes.spritePalette1 = palette
                         self.resumeEmulation()
                         if Settings.userInterfaceFeatures.toasts.palette
                         {
@@ -2488,9 +2483,9 @@ extension GameViewController
                 
                 for palette in GameboyPalette.allCases
                 {
-                    let text = (Settings.gbcFeatures.palettes.spritePalette2.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                    let text = (Settings.gbFeatures.palettes.spritePalette2.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                        Settings.gbcFeatures.palettes.spritePalette2 = palette
+                        Settings.gbFeatures.palettes.spritePalette2 = palette
                         self.resumeEmulation()
                         if Settings.userInterfaceFeatures.toasts.palette
                         {
@@ -2519,9 +2514,9 @@ extension GameViewController
             
             for palette in GameboyPalette.allCases
             {
-                let text = (Settings.gbcFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
+                let text = (Settings.gbFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                 alertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
-                    Settings.gbcFeatures.palettes.palette = palette
+                    Settings.gbFeatures.palettes.palette = palette
                     self.resumeEmulation()
                     if Settings.userInterfaceFeatures.toasts.palette
                     {
@@ -2848,7 +2843,7 @@ private extension GameViewController
         case Settings.userInterfaceFeatures.statusBar.settingsKey:
             self.updateStatusBar()
             
-        case Settings.gbcFeatures.palettes.$palette.settingsKey, Settings.gbcFeatures.palettes.settingsKey, Settings.gbcFeatures.palettes.$spritePalette1.settingsKey, Settings.gbcFeatures.palettes.$spritePalette2.settingsKey, Settings.gbcFeatures.palettes.$multiPalette.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette1Color4.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette2Color4.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color1.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color2.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color3.settingsKey, Settings.gbcFeatures.palettes.$customPalette3Color4.settingsKey:
+        case Settings.gbFeatures.palettes.$palette.settingsKey, Settings.gbFeatures.palettes.settingsKey, Settings.gbFeatures.palettes.$spritePalette1.settingsKey, Settings.gbFeatures.palettes.$spritePalette2.settingsKey, Settings.gbFeatures.palettes.$multiPalette.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color4.settingsKey:
             self.updateGameboyPalette()
             
         case Settings.gameplayFeatures.quickSettings.$fastForwardSpeed.settingsKey:

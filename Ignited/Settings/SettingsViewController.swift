@@ -177,14 +177,18 @@ class SettingsViewController: UITableViewController
         case Segue.controllerSkins:
             let preferredControllerSkinsViewController = segue.destination as! PreferredControllerSkinsViewController
             
-            if indexPath.row < System.registeredSystems.count
+            if indexPath.row < filteredSystems.count
             {
-                let system = System.registeredSystems[indexPath.row]
+                let system = filteredSystems[indexPath.row]
                 preferredControllerSkinsViewController.system = system
             }
             
         case Segue.dsSettings: break
         }
+    }
+    
+    var filteredSystems: [System] {
+        return System.registeredSystems.filter { $0.deltaCore.gameType != .gb }
     }
 }
 
@@ -286,7 +290,7 @@ extension SettingsViewController
         switch section
         {
         case .controllers: return 4 // Temporarily hide other controller indexes until controller logic is finalized
-        case .controllerSkins: return System.registeredSystems.count + 1
+        case .controllerSkins: return filteredSystems.count + 1
         case .syncing: return SyncManager.shared.coordinator?.account == nil ? 1 : super.tableView(tableView, numberOfRowsInSection: sectionIndex)
         default:
             if isSectionHidden(section)
@@ -323,9 +327,9 @@ extension SettingsViewController
             }
             
         case .controllerSkins:
-            if indexPath.row < System.registeredSystems.count
+            if indexPath.row < filteredSystems.count
             {
-                cell.textLabel?.text = System.registeredSystems[indexPath.row].localizedName
+                cell.textLabel?.text = filteredSystems[indexPath.row].localizedName
             }
             else
             {

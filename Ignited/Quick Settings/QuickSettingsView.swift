@@ -39,9 +39,9 @@ struct QuickSettingsView: View
     @State private var backgroundBlurStrength: Double = Settings.controllerFeatures.backgroundBlur.strength
     @State private var backgroundBlurTintIntensity: Double = Settings.controllerFeatures.backgroundBlur.tintIntensity
     
-    @State private var gameboyPalette: GameboyPalette = Settings.gbcFeatures.palettes.palette
-    @State private var gameboySpritePalette1: GameboyPalette = Settings.gbcFeatures.palettes.spritePalette1
-    @State private var gameboySpritePalette2: GameboyPalette = Settings.gbcFeatures.palettes.spritePalette2
+    @State private var gameboyPalette: GameboyPalette = Settings.gbFeatures.palettes.palette
+    @State private var gameboySpritePalette1: GameboyPalette = Settings.gbFeatures.palettes.spritePalette1
+    @State private var gameboySpritePalette2: GameboyPalette = Settings.gbFeatures.palettes.spritePalette2
     
     @State private var quickActionsEnabled: Bool = Settings.gameplayFeatures.quickSettings.quickActionsEnabled
     @State private var fastForwardEnabled: Bool = Settings.gameplayFeatures.quickSettings.fastForwardEnabled
@@ -322,14 +322,14 @@ struct QuickSettingsView: View
                                 }
                             }
                             .onChange(of: self.gameboyPalette) { value in
-                                    Settings.gbcFeatures.palettes.palette = value
+                                    Settings.gbFeatures.palettes.palette = value
                                 }
                         }
                     } header: {
                         Text("Main Color Palette")
                     }.listStyle(.insetGrouped)
                         
-                    if Settings.gbcFeatures.palettes.multiPalette
+                    if Settings.gbFeatures.palettes.multiPalette
                     {
                         Section() {
                             HStack {
@@ -346,7 +346,7 @@ struct QuickSettingsView: View
                                     }
                                 }
                                 .onChange(of: self.gameboySpritePalette1) { value in
-                                        Settings.gbcFeatures.palettes.spritePalette1 = value
+                                        Settings.gbFeatures.palettes.spritePalette1 = value
                                     }
                             }
                         } header: {
@@ -368,7 +368,7 @@ struct QuickSettingsView: View
                                     }
                                 }
                                 .onChange(of: self.gameboySpritePalette2) { value in
-                                    Settings.gbcFeatures.palettes.spritePalette2 = value
+                                    Settings.gbFeatures.palettes.spritePalette2 = value
                                 }
                             }
                         } header: {

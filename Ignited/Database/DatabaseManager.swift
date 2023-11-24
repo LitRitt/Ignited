@@ -402,7 +402,7 @@ extension DatabaseManager
                     case .genesis: artwork = UIImage(named: "GEN")
                     case .snes: artwork = UIImage(named: "SNES")
                     case .n64: artwork = UIImage(named: "N64")
-                    case .gbc where (url.pathExtension == "gb"): artwork = UIImage(named: "GB")
+                    case .gb: artwork = UIImage(named: "GB")
                     case .gbc: artwork = UIImage(named: "GBC")
                     case .gba: artwork = UIImage(named: "GBA")
                     case .ds: artwork = UIImage(named: "DS")

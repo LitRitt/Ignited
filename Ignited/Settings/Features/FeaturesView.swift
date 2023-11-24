@@ -38,7 +38,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
         case .touchFeedback: return Settings.touchFeedbackFeatures
         case .advanced: return Settings.advancedFeatures
         case .n64: return Settings.n64Features
-        case .gbc: return Settings.gbcFeatures
+        case .gbc: return Settings.gbFeatures
         }
     }
 }

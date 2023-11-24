@@ -534,7 +534,7 @@ private extension GamesViewController
                      handler: { action in
                          Settings.libraryFeatures.artwork.useScreenshots = !Settings.libraryFeatures.artwork.useScreenshots
                          self.updateOptionsMenu()
-                         self.updateSections(animated: true)
+                         self.updateSections(animated: true, resetPages: true)
             })
         ]
         

@@ -16,18 +16,18 @@ import Roxas
 
 struct PowerUserOptions
 {
-    @Option(name: "Copy Google Drive Refresh Token",
-            description: "This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.",
+    @Option(name: "Fix Game Collection Associations",
+            description: "This will fix any games that are associated with the wrong collections.",
             detailView: { _ in
-        Button("Copy Google Drive Refresh Token") {
-            copyGoogleDriveRefreshToken()
+        Button("Fix Game Collection Associations") {
+            fixGameCollections()
         }
         .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(.red)
         .displayInline()
     })
-    var copyGoogleDriveRefreshToken: String = ""
-
+    var fixGameCollections: String = ""
+    
     @Option(name: "Clear Auto Save States",
             description: "This will delete all auto save states from every game. The auto-load save states feature relies on these auto save states to resume your game where you left off. Deleting them can be useful to reduce the size of your Sync backup.",
             detailView: { _ in
@@ -63,10 +63,59 @@ struct PowerUserOptions
         .displayInline()
     })
     var resetAllSettings: String = ""
+    
+    @Option(name: "Copy Google Drive Refresh Token",
+            description: "This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.",
+            detailView: { _ in
+        Button("Copy Google Drive Refresh Token") {
+            copyGoogleDriveRefreshToken()
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
+        .displayInline()
+    })
+    var copyGoogleDriveRefreshToken: String = ""
 }
 
 extension PowerUserOptions
 {
+    static func fixGameCollections()
+    {
+        guard let topViewController = UIApplication.shared.topViewController() else { return }
+        
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
+            self.showFeatureDisabledNotification(topViewController)
+            return
+        }
+        
+        let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        gameFetchRequest.returnsObjectsAsFaults = false
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            do
+            {
+                let games = try gameFetchRequest.execute()
+                
+                for game in games
+                {
+                    let gameCollection = GameCollection(context: context)
+                    gameCollection.identifier = game.type.rawValue
+                    gameCollection.index = Int16(System(gameType: game.type)?.year ?? 2000)
+                    gameCollection.games.insert(game)
+                }
+                
+                context.saveWithErrorLogging()
+            }
+            catch
+            {
+                print("Failed to fix game collections.")
+            }
+        }
+        
+        let toast = RSTToastView(text: NSLocalizedString("Fixed Game Collections", comment: ""), detailText: nil)
+        toast.show(in: topViewController.view, duration: 5.0)
+    }
+    
     static func copyGoogleDriveRefreshToken()
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }
@@ -271,7 +320,7 @@ extension PowerUserOptions
 {
     enum Feature: Int, CaseIterable
     {
-        // GBC
+        // GB
         case gameboyPalettes
         // N64
         case n64Graphics
@@ -307,22 +356,22 @@ extension PowerUserOptions
             switch self
             {
             case .gameboyPalettes:
-                Settings.gbcFeatures.palettes.multiPalette = false
-                Settings.gbcFeatures.palettes.palette = .studio
-                Settings.gbcFeatures.palettes.spritePalette1 = .studio
-                Settings.gbcFeatures.palettes.spritePalette2 = .studio
-                Settings.gbcFeatures.palettes.customPalette1Color1 = Color(fromRGB: GameboyPalette.studio.colors[0])
-                Settings.gbcFeatures.palettes.customPalette1Color2 = Color(fromRGB: GameboyPalette.studio.colors[1])
-                Settings.gbcFeatures.palettes.customPalette1Color3 = Color(fromRGB: GameboyPalette.studio.colors[2])
-                Settings.gbcFeatures.palettes.customPalette1Color4 = Color(fromRGB: GameboyPalette.studio.colors[3])
-                Settings.gbcFeatures.palettes.customPalette2Color1 = Color(fromRGB: GameboyPalette.minty.colors[0])
-                Settings.gbcFeatures.palettes.customPalette2Color2 = Color(fromRGB: GameboyPalette.minty.colors[1])
-                Settings.gbcFeatures.palettes.customPalette2Color3 = Color(fromRGB: GameboyPalette.minty.colors[2])
-                Settings.gbcFeatures.palettes.customPalette2Color4 = Color(fromRGB: GameboyPalette.minty.colors[3])
-                Settings.gbcFeatures.palettes.customPalette3Color1 = Color(fromRGB: GameboyPalette.spacehaze.colors[0])
-                Settings.gbcFeatures.palettes.customPalette3Color2 = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
-                Settings.gbcFeatures.palettes.customPalette3Color3 = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
-                Settings.gbcFeatures.palettes.customPalette3Color4 = Color(fromRGB: GameboyPalette.spacehaze.colors[3])
+                Settings.gbFeatures.palettes.multiPalette = false
+                Settings.gbFeatures.palettes.palette = .studio
+                Settings.gbFeatures.palettes.spritePalette1 = .studio
+                Settings.gbFeatures.palettes.spritePalette2 = .studio
+                Settings.gbFeatures.palettes.customPalette1Color1 = Color(fromRGB: GameboyPalette.studio.colors[0])
+                Settings.gbFeatures.palettes.customPalette1Color2 = Color(fromRGB: GameboyPalette.studio.colors[1])
+                Settings.gbFeatures.palettes.customPalette1Color3 = Color(fromRGB: GameboyPalette.studio.colors[2])
+                Settings.gbFeatures.palettes.customPalette1Color4 = Color(fromRGB: GameboyPalette.studio.colors[3])
+                Settings.gbFeatures.palettes.customPalette2Color1 = Color(fromRGB: GameboyPalette.minty.colors[0])
+                Settings.gbFeatures.palettes.customPalette2Color2 = Color(fromRGB: GameboyPalette.minty.colors[1])
+                Settings.gbFeatures.palettes.customPalette2Color3 = Color(fromRGB: GameboyPalette.minty.colors[2])
+                Settings.gbFeatures.palettes.customPalette2Color4 = Color(fromRGB: GameboyPalette.minty.colors[3])
+                Settings.gbFeatures.palettes.customPalette3Color1 = Color(fromRGB: GameboyPalette.spacehaze.colors[0])
+                Settings.gbFeatures.palettes.customPalette3Color2 = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
+                Settings.gbFeatures.palettes.customPalette3Color3 = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
+                Settings.gbFeatures.palettes.customPalette3Color4 = Color(fromRGB: GameboyPalette.spacehaze.colors[3])
                 
             case .n64Graphics:
                 Settings.n64Features.n64graphics.graphicsAPI = .openGLES2

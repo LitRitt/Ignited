@@ -25,6 +25,7 @@ enum System: CaseIterable
     case genesis
     case snes
     case n64
+    case gb
     case gbc
     case gba
     case ds
@@ -35,7 +36,7 @@ enum System: CaseIterable
     }
     
     static var allCores: [DeltaCoreProtocol] {
-        return [NES.core, SNES.core, N64.core, GBC.core, GBA.core, DS.core, MelonDS.core, GPGX.core]
+        return [NES.core, SNES.core, N64.core, GB.core, GBC.core, GBA.core, DS.core, MelonDS.core, GPGX.core]
     }
 }
 
@@ -47,6 +48,7 @@ extension System
         case .nes: return NSLocalizedString("Nintendo", comment: "")
         case .snes: return NSLocalizedString("Super Nintendo", comment: "")
         case .n64: return NSLocalizedString("Nintendo 64", comment: "")
+        case .gb: return NSLocalizedString("Game Boy", comment: "")
         case .gbc: return NSLocalizedString("Game Boy Color", comment: "")
         case .gba: return NSLocalizedString("Game Boy Advance", comment: "")
         case .ds: return NSLocalizedString("Nintendo DS", comment: "")
@@ -60,10 +62,11 @@ extension System
         case .nes: return NSLocalizedString("NES", comment: "")
         case .snes: return NSLocalizedString("SNES", comment: "")
         case .n64: return NSLocalizedString("N64", comment: "")
+        case .gb: return NSLocalizedString("GB", comment: "")
         case .gbc: return NSLocalizedString("GBC", comment: "")
         case .gba: return NSLocalizedString("GBA", comment: "")
         case .ds: return NSLocalizedString("DS", comment: "")
-        case .genesis: return NSLocalizedString("Genesis", comment: "")
+        case .genesis: return NSLocalizedString("GEN", comment: "")
         }
     }
     
@@ -74,6 +77,7 @@ extension System
         case .genesis: return 1989
         case .snes: return 1990
         case .n64: return 1996
+        case .gb: return 1989
         case .gbc: return 1998
         case .gba: return 2001
         case .ds: return 2004
@@ -89,6 +93,7 @@ extension System
         case .nes: return NES.core
         case .snes: return SNES.core
         case .n64: return N64.core
+        case .gb: return GB.core
         case .gbc: return GBC.core
         case .gba: return GBA.core
         case .ds: return Settings.preferredCore(for: .ds) ?? MelonDS.core
@@ -102,6 +107,7 @@ extension System
         case .nes: return .nes
         case .snes: return .snes
         case .n64: return .n64
+        case .gb: return .gb
         case .gbc: return .gbc
         case .gba: return .gba
         case .ds: return .ds
@@ -116,6 +122,7 @@ extension System
         case GameType.nes: self = .nes
         case GameType.snes: self = .snes
         case GameType.n64: self = .n64
+        case GameType.gb: self = .gb
         case GameType.gbc: self = .gbc
         case GameType.gba: self = .gba
         case GameType.ds: self = .ds
@@ -134,7 +141,8 @@ extension DeltaCore.GameType
         case "nes": self = .nes
         case "smc", "sfc", "fig": self = .snes
         case "n64", "z64": self = .n64
-        case "gbc", "gb": self = .gbc
+        case "gb": self = .gb
+        case "gbc": self = .gbc
         case "gba": self = .gba
         case "ds", "nds": self = .ds
         case "gen", "bin", "md", "smd", "sms", "gg", "sg", "mdx", "m3u", "chd": self = .genesis
