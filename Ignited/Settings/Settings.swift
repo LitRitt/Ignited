@@ -241,16 +241,7 @@ extension Settings
             
             // Controller skin doesn't exist, so fall back to standard controller skin
             
-            // Redirect secondary systems to primary core skin
-            var gameType = system.gameType.rawValue
-            
-            switch system.gameType
-            {
-            case .gb: gameType = System.gbc.gameType.rawValue
-            default: break
-            }
-            
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == YES", #keyPath(ControllerSkin.gameType), gameType, #keyPath(ControllerSkin.isStandard))
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == YES", #keyPath(ControllerSkin.gameType), system.gameType.rawValue, #keyPath(ControllerSkin.isStandard))
             
             if let controllerSkin = try DatabaseManager.shared.viewContext.fetch(fetchRequest).first
             {
