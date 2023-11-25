@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         Settings.registerDefaults()
         self.registerCores()
         self.configureAppearance()
+        self.updateBuildCounter()
         
         // Controllers
         ExternalGameControllerManager.shared.startMonitoring()
@@ -128,6 +129,19 @@ private extension AppDelegate
     func configureAppearance()
     {
         self.window?.tintColor = UIColor.themeColor
+    }
+    
+    func updateBuildCounter()
+    {
+        guard let buildNumber = Bundle.main.buildNumber else { return }
+        
+        if Settings.lastUpdateShown < buildNumber
+        {
+            // Put update launch code here
+            
+        }
+        
+        Settings.lastUpdateShown = buildNumber
     }
 }
 
@@ -230,6 +244,8 @@ private extension AppDelegate
 {
     @objc func databaseManagerDidStart(_ notification: Notification)
     {
+        DatabaseManager.shared.repairGameCollections()
+        
         guard let deepLink = self.appLaunchDeepLink else { return }
         
         DispatchQueue.main.async {

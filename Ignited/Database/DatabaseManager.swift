@@ -738,6 +738,35 @@ extension DatabaseManager
             context.saveWithErrorLogging()
         }
     }
+    
+    func repairGameCollections()
+    {
+        let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        gameFetchRequest.returnsObjectsAsFaults = false
+        
+        self.performBackgroundTask { (context) in
+            do
+            {
+                let games = try gameFetchRequest.execute()
+                
+                for game in games
+                {
+                    guard let gameType = GameType(fileExtension: game.fileURL.pathExtension) else { continue }
+                    
+                    let gameCollection = GameCollection(context: context)
+                    gameCollection.identifier = gameType.rawValue
+                    gameCollection.index = Int16(System(gameType: gameType)?.year ?? 2000)
+                    gameCollection.games.insert(game)
+                }
+                
+                context.saveWithErrorLogging()
+            }
+            catch
+            {
+                print("Failed to fix game collections.")
+            }
+        }
+    }
 }
 
 //MARK: - File URLs -

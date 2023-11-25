@@ -100,37 +100,10 @@ extension PowerUserOptions
             return
         }
         
-        self.repairGameCollections()
+        DatabaseManager.shared.repairGameCollections()
         
         let toast = RSTToastView(text: NSLocalizedString("Fixed Game Collections", comment: ""), detailText: nil)
         toast.show(in: topViewController.view, duration: 5.0)
-    }
-    
-    static func repairGameCollections()
-    {
-        let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
-        gameFetchRequest.returnsObjectsAsFaults = false
-        
-        DatabaseManager.shared.performBackgroundTask { (context) in
-            do
-            {
-                let games = try gameFetchRequest.execute()
-                
-                for game in games
-                {
-                    let gameCollection = GameCollection(context: context)
-                    gameCollection.identifier = game.type.rawValue
-                    gameCollection.index = Int16(System(gameType: game.type)?.year ?? 2000)
-                    gameCollection.games.insert(game)
-                }
-                
-                context.saveWithErrorLogging()
-            }
-            catch
-            {
-                print("Failed to fix game collections.")
-            }
-        }
     }
     
     static func copyGoogleDriveRefreshToken()

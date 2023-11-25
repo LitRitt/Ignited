@@ -1036,6 +1036,8 @@ private extension GamesViewController
             self.updatePlayMenu()
             self.preparePopoverMenuController()
             
+            DatabaseManager.shared.repairGameCollections()
+            
             if self.noGamesImported { self.updateSections(animated: true, resetPages: true) }
         }
     }

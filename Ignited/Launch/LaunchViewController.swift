@@ -153,16 +153,6 @@ extension LaunchViewController
                 showGameViewController()
             })
         }
-        
-        guard let buildNumber = Bundle.main.buildNumber else { return }
-        
-        if Settings.lastUpdateShown < buildNumber
-        {
-            // Repair Game Colections
-            PowerUserOptions.repairGameCollections()
-        }
-        
-        Settings.lastUpdateShown = buildNumber
     }
 }
 
