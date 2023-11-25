@@ -483,15 +483,16 @@ private extension GameCollectionViewController
         cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(fontSize)
         cell.textLabel.isHidden = Settings.libraryFeatures.artwork.titleSize == 0
         cell.textLabel.numberOfLines = Int(floor(Settings.libraryFeatures.artwork.titleMaxLines))
-        cell.textLabel.text = game.name
         
         if cell.neverPlayed
         {
+            cell.textLabel.text = game.name
             cell.textLabel.addNewGameDot(cell.accentColor)
         }
         else
         {
             cell.textLabel.attributedText = nil
+            cell.textLabel.text = game.name
         }
     }
     
