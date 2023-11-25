@@ -75,6 +75,17 @@ struct PowerUserOptions
         .displayInline()
     })
     var copyGoogleDriveRefreshToken: String = ""
+    
+    @Option(name: "Reset Build Counter",
+            detailView: { _ in
+        Button("Reset Build Counter") {
+            Settings.lastUpdateShown = 1
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
+        .displayInline()
+    })
+    var resetBuildCounter: String = ""
 }
 
 extension PowerUserOptions
@@ -88,6 +99,14 @@ extension PowerUserOptions
             return
         }
         
+        self.repairGameCollections()
+        
+        let toast = RSTToastView(text: NSLocalizedString("Fixed Game Collections", comment: ""), detailText: nil)
+        toast.show(in: topViewController.view, duration: 5.0)
+    }
+    
+    static func repairGameCollections()
+    {
         let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
         gameFetchRequest.returnsObjectsAsFaults = false
         
@@ -111,9 +130,6 @@ extension PowerUserOptions
                 print("Failed to fix game collections.")
             }
         }
-        
-        let toast = RSTToastView(text: NSLocalizedString("Fixed Game Collections", comment: ""), detailText: nil)
-        toast.show(in: topViewController.view, duration: 5.0)
     }
     
     static func copyGoogleDriveRefreshToken()
