@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Games-->
+        <!--Games View Controller-->
         <scene sceneID="Cd2-Pf-cua">
             <objects>
                 <viewController id="jeE-WD-wXO" customClass="GamesViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,15 +34,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pFk-as-3k4">
-                        <leftBarButtonItems>
-                            <barButtonItem image="gear" catalog="system" id="2gg-lC-FhX" userLabel="Settings Button">
-                                <connections>
-                                    <segue destination="xMK-Cs-fAS" kind="presentation" identifier="showSettings" id="uN5-PN-7FK"/>
-                                </connections>
-                            </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" image="gear" catalog="system" id="2gg-lC-FhX" userLabel="Settings Button">
+                            <connections>
+                                <segue destination="xMK-Cs-fAS" kind="presentation" identifier="showSettings" id="uN5-PN-7FK"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
                             <barButtonItem image="ellipsis.circle" catalog="system" id="7uc-GQ-gIK" userLabel="Menu Button"/>
-                        </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" image="play.fill" catalog="system" id="wcM-Mb-ab5" userLabel="Play Button"/>
+                            <barButtonItem image="play.fill" catalog="system" id="wcM-Mb-ab5" userLabel="Play Button"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="optionsButton" destination="7uc-GQ-gIK" id="FAe-6f-UPE"/>
