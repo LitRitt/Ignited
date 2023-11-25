@@ -1,7 +1,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-#include "Pods/Target Support Files/Pods-Delta/Pods-Delta.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.debug.xcconfig"
 #include "CodeSigning.xcconfig"
 
 MARKETING_VERSION = 1.7

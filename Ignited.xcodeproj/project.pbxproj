@@ -32,7 +32,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		1FA4ABA79AB72914FE414A61 /* libPods-Delta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC866E433B3BA9AE18ABA1EC /* libPods-Delta.a */; };
 		AC0BF8182A8ECD7000C47A5A /* RandomGameOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */; };
 		AC14384B2A4F670F0099977F /* DSAirPlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384A2A4F670F0099977F /* DSAirPlayOptions.swift */; };
 		AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384C2A4F67430099977F /* DSFeatures.swift */; };
@@ -105,6 +104,7 @@
 		ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudioOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudioOptions.swift */; };
 		ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlayOptions.swift */; };
 		ACBFE6D62A590CA5002DDD04 /* ControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */; };
+		ACC4430ADE09EB6F81ADBEE3 /* libPods-Ignited.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */; };
 		ACCD9DB52A01A54200B235C4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB42A01A54200B235C4 /* ThemeOptions.swift */; };
 		ACCD9DB72A01AF9F00B235C4 /* Color+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */; };
 		ACCD9DB92A01BA5500B235C4 /* AppIconOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB82A01BA5500B235C4 /* AppIconOptions.swift */; };
@@ -298,6 +298,8 @@
 
 /* Begin PBXFileReference section */
 		22506DA00971C4300AF90A35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7148D8F30DCE0AE3C815E6F3 /* Pods-Ignited.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignited.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.debug.xcconfig"; sourceTree = "<group>"; };
+		7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ignited.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19FF50F55441BC2B2248241 /* Pods-Delta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Delta/Pods-Delta.release.xcconfig"; sourceTree = "<group>"; };
 		AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomGameOptions.swift; sourceTree = "<group>"; };
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
@@ -554,7 +556,7 @@
 		D5D797E5298D946200738869 /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
 		D5D797E7298DC9E200738869 /* cheatbase.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = cheatbase.zip; sourceTree = "<group>"; };
 		D5F82FB72981D3AC00B229AF /* LegacySearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySearchBar.swift; sourceTree = "<group>"; };
-		DC866E433B3BA9AE18ABA1EC /* libPods-Delta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Delta.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB395375D0B32B2C6B9B6D1E /* Pods-Ignited.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignited.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,9 +580,9 @@
 				BFCADF1E25D22FE2008D78FB /* Systems.framework in Frameworks */,
 				BF69FBC923E3A8380051BEEA /* libNestopia.a in Frameworks */,
 				D524F4A1273DE9A100D500B2 /* AltKit in Frameworks */,
-				1FA4ABA79AB72914FE414A61 /* libPods-Delta.a in Frameworks */,
 				BFFDF03F23E3C28A00931B96 /* libGambatte.a in Frameworks */,
 				BFFDF03723E3BB2600931B96 /* libSnes9x.a in Frameworks */,
+				ACC4430ADE09EB6F81ADBEE3 /* libPods-Ignited.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1196,7 +1198,7 @@
 				BF9F4FCE1AAD7B87004C9500 /* DeltaCore.framework */,
 				BFC134E01AAD82460087AD7B /* SNESDeltaCore.framework */,
 				22506DA00971C4300AF90A35 /* Pods.framework */,
-				DC866E433B3BA9AE18ABA1EC /* libPods-Delta.a */,
+				7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1410,6 +1412,8 @@
 			children = (
 				C786AF1D2DDB6223BE2063CC /* Pods-Delta.debug.xcconfig */,
 				A19FF50F55441BC2B2248241 /* Pods-Delta.release.xcconfig */,
+				7148D8F30DCE0AE3C815E6F3 /* Pods-Ignited.debug.xcconfig */,
+				DB395375D0B32B2C6B9B6D1E /* Pods-Ignited.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1505,7 +1509,7 @@
 			);
 			mainGroup = BFFA71CE1AAC406100EE9DD1;
 			packageReferences = (
-				D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */,
+				D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */,
 			);
 			productRefGroup = BFFA71D81AAC406100EE9DD1 /* Products */;
 			projectDirPath = "";
@@ -1552,7 +1556,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Delta/Pods-Delta-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Ignited/Pods-Ignited-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/DSDeltaCore/DSDeltaCore.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/DeltaCore/DeltaCore.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GBADeltaCore/GBADeltaCore.bundle",
@@ -1585,7 +1589,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Delta/Pods-Delta-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ignited/Pods-Ignited-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BF14D8981DE7A519002CA1BE /* mogenerator */ = {
@@ -1630,7 +1634,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Delta-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Ignited-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2197,7 +2201,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */ = {
+		D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rileytestut/AltKit.git";
 			requirement = {
@@ -2210,7 +2214,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D524F4A0273DE9A100D500B2 /* AltKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */;
+			package = D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */;
 			productName = AltKit;
 		};
 /* End XCSwiftPackageProductDependency section */

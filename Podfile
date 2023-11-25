@@ -2,7 +2,7 @@ platform :ios, '14.0'
 
 inhibit_all_warnings!
 
-target 'Delta' do
+target 'Ignited' do
     use_modular_headers!
 
     pod 'SQLite.swift', '~> 0.12.0'

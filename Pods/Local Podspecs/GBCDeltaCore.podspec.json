@@ -28,7 +28,9 @@
   "resource_bundles": {
     "GBCDeltaCore": [
       "GBCDeltaCore/**/*.deltamapping",
-      "GBCDeltaCore/**/*.ignitedskin"
+      "GBCDeltaCore/**/*-com.rileytestut.GBDeltaCore.deltamapping",
+      "GBCDeltaCore/**/*.ignitedskin",
+      "GBCDeltaCore/**/*-com.rileytestut.GBDeltaCore.ignitedskin"
     ]
   },
   "dependencies": {

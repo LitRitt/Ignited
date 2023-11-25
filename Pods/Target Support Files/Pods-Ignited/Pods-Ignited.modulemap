@@ -1,0 +1,6 @@
+module Pods_Ignited {
+  umbrella header "Pods-Ignited-umbrella.h"
+
+  export *
+  module * { export * }
+}

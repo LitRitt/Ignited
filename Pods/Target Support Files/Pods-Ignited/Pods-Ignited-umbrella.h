@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_DeltaVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_DeltaVersionString[];
+FOUNDATION_EXPORT double Pods_IgnitedVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_IgnitedVersionString[];
 
