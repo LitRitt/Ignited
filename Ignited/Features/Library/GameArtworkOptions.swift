@@ -75,7 +75,7 @@ enum ArtworkStyle: String, CaseIterable, CustomStringConvertible
     
     var shadowColor: UIColor? {
         switch self {
-        case .basic: return .systemBackground
+        case .basic: return .black
         case .vibrant: return nil
         case .flat: return .black
         case .custom: return Settings.libraryFeatures.artwork.shadowColorMode == .custom ? UIColor(Settings.libraryFeatures.artwork.shadowColor) : nil
@@ -102,8 +102,8 @@ enum ArtworkStyle: String, CaseIterable, CustomStringConvertible
     
     var shadowOpacity: Double {
         switch self {
-        case .basic: return 0.3
-        case .vibrant: return 0.7
+        case .basic: return 0.5
+        case .vibrant: return 0.8
         case .flat: return 0
         case .custom: return Settings.libraryFeatures.artwork.shadowOpacity
         }
@@ -111,8 +111,8 @@ enum ArtworkStyle: String, CaseIterable, CustomStringConvertible
     
     var shadowRadius: Double {
         switch self {
-        case .basic: return 3
-        case .vibrant: return 7
+        case .basic: return 5
+        case .vibrant: return 8
         case .flat: return 0
         case .custom: return Settings.libraryFeatures.artwork.shadowRadius
         }
@@ -253,6 +253,38 @@ struct GameArtworkOptions
     })
     var shadowColor: Color = .white
     
+    @Option(name: "Custom Shadow Radius",
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt")
+                Spacer()
+            }
+            HStack {
+                Text("0pt")
+                Slider(value: value, in: 0.0...10.0, step: 0.5)
+                Text("10pt")
+            }
+        }.displayInline()
+    })
+    var shadowRadius: Double = 5
+    
+    @Option(name: "Custom Shadow Opacity",
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...1.0, step: 0.1)
+                Text("100%")
+            }
+        }.displayInline()
+    })
+    var shadowOpacity: Double = 0.5
+    
     @Option(name: "Custom Corner Radius",
             detailView: { value in
         VStack {
@@ -284,38 +316,6 @@ struct GameArtworkOptions
         }.displayInline()
     })
     var borderWidth: Double = 2
-    
-    @Option(name: "Custom Shadow Radius",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...10.0, step: 0.5)
-                Text("10pt")
-            }
-        }.displayInline()
-    })
-    var shadowRadius: Double = 5
-    
-    @Option(name: "Custom Shadow Opacity",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.1)
-                Text("100%")
-            }
-        }.displayInline()
-    })
-    var shadowOpacity: Double = 0.5
     
     @Option(name: "Title Size",
             detailView: { value in

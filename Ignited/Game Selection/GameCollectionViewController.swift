@@ -459,7 +459,6 @@ private extension GameCollectionViewController
             cell.layer.shadowOpacity = Float(Settings.libraryFeatures.favorites.style.shadowOpacity)
             cell.layer.shadowRadius = Settings.libraryFeatures.favorites.style.shadowRadius
             cell.layer.shadowColor = Settings.libraryFeatures.favorites.style.shadowColor?.cgColor ?? cell.accentColor.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 0)
         }
         else
         {
@@ -469,6 +468,7 @@ private extension GameCollectionViewController
             
             cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.style.cornerRadius
             cell.imageView.layer.borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
+            
             cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.style.shadowOpacity)
             cell.layer.shadowRadius = Settings.libraryFeatures.artwork.style.shadowRadius
             cell.layer.shadowColor = Settings.libraryFeatures.artwork.style.shadowColor?.cgColor ?? cell.accentColor.cgColor
@@ -476,7 +476,7 @@ private extension GameCollectionViewController
         
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
-        cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cell.layer.shadowOffset = CGSize(width: 0, height: cell.layer.shadowRadius / 3)
         
         let fontSize = Settings.libraryFeatures.artwork.size.textSize * Settings.libraryFeatures.artwork.titleSize
         

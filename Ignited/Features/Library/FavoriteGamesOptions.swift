@@ -142,6 +142,38 @@ struct FavoriteGamesOptions
     })
     var shadowColor: Color = .white
     
+    @Option(name: "Custom Shadow Radius",
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt")
+                Spacer()
+            }
+            HStack {
+                Text("0pt")
+                Slider(value: value, in: 0.0...10.0, step: 0.5)
+                Text("10pt")
+            }
+        }.displayInline()
+    })
+    var shadowRadius: Double = 5
+    
+    @Option(name: "Custom Shadow Opacity",
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...1.0, step: 0.1)
+                Text("100%")
+            }
+        }.displayInline()
+    })
+    var shadowOpacity: Double = 0.5
+    
     @Option(name: "Custom Corner Radius",
             detailView: { value in
         VStack {
@@ -173,38 +205,6 @@ struct FavoriteGamesOptions
         }.displayInline()
     })
     var borderWidth: Double = 2
-    
-    @Option(name: "Custom Shadow Radius",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...10.0, step: 0.5)
-                Text("10pt")
-            }
-        }.displayInline()
-    })
-    var shadowRadius: Double = 5
-    
-    @Option(name: "Custom Shadow Opacity",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.1)
-                Text("100%")
-            }
-        }.displayInline()
-    })
-    var shadowOpacity: Double = 0.5
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
