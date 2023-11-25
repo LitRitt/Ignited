@@ -74,13 +74,13 @@ extension System
         switch self
         {
         case .nes: return 1985
-        case .genesis: return 1989
         case .snes: return 1990
         case .n64: return 1996
-        case .gb: return 1997
+        case .gb: return 1997 // 1989
         case .gbc: return 1998
         case .gba: return 2001
         case .ds: return 2004
+        case .genesis: return 2005 // 1989
         }
     }
 }
