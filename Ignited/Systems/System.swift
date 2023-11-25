@@ -77,7 +77,7 @@ extension System
         case .genesis: return 1989
         case .snes: return 1990
         case .n64: return 1996
-        case .gb: return 1989
+        case .gb: return 1997
         case .gbc: return 1998
         case .gba: return 2001
         case .ds: return 2004
