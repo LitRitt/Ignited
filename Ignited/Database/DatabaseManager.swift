@@ -751,7 +751,8 @@ extension DatabaseManager
                 
                 for game in games
                 {
-                    guard let gameType = GameType(fileExtension: game.fileURL.pathExtension) else { continue }
+                    guard let gameType = GameType(fileExtension: game.fileURL.pathExtension),
+                          gameType.rawValue != game.type.rawValue else { continue }
                     
                     let gameCollection = GameCollection(context: context)
                     gameCollection.identifier = gameType.rawValue
