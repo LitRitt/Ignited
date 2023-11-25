@@ -100,7 +100,7 @@ extension PowerUserOptions
             return
         }
         
-        DatabaseManager.shared.repairGameCollections()
+        DatabaseManager.shared.repairGameCollections(repairAll: true)
         
         let toast = RSTToastView(text: NSLocalizedString("Fixed Game Collections", comment: ""), detailText: nil)
         toast.show(in: topViewController.view, duration: 5.0)

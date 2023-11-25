@@ -739,7 +739,7 @@ extension DatabaseManager
         }
     }
     
-    func repairGameCollections()
+    func repairGameCollections(repairAll: Bool = false)
     {
         let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
         gameFetchRequest.returnsObjectsAsFaults = false
@@ -752,7 +752,7 @@ extension DatabaseManager
                 for game in games
                 {
                     guard let gameType = GameType(fileExtension: game.fileURL.pathExtension),
-                          gameType.rawValue != game.type.rawValue else { continue }
+                          (gameType.rawValue != game.type.rawValue) || repairAll else { continue }
                     
                     let gameCollection = GameCollection(context: context)
                     gameCollection.identifier = gameType.rawValue
