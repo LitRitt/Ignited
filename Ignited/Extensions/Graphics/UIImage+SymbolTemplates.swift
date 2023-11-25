@@ -10,10 +10,19 @@ import UIKit
 
 extension UIImage
 {
-    static func symbolWithTemplate(name: String, pointSize: CGFloat = 30, accentColor: UIColor = UIColor.themeColor, orientation: Orientation = .up) -> UIImage
+    static func symbolWithTemplate(name: String, pointSize: CGFloat = 30, accentColor: UIColor = UIColor.themeColor, orientation: Orientation = .up, backupSymbolName: String = "") -> UIImage
     {
         guard let symbolImage = UIImage(systemName: name, withConfiguration: SymbolConfiguration(pointSize: pointSize)),
-              let cgImage = symbolImage.cgImage else { return UIImage() }
+              let cgImage = symbolImage.cgImage else
+        {
+            guard let symbolImage = UIImage(systemName: backupSymbolName, withConfiguration: SymbolConfiguration(pointSize: pointSize)),
+                  let cgImage = symbolImage.cgImage else
+            {
+                return UIImage()
+            }
+            
+            return UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: orientation).withRenderingMode(.alwaysTemplate).withTintColor(accentColor)
+        }
         
         return UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: orientation).withRenderingMode(.alwaysTemplate).withTintColor(accentColor)
     }

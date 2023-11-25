@@ -247,7 +247,7 @@ private extension PauseViewController
         }
         
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""),
-                                           image: UIImage.symbolWithTemplate(name: "button.horizontal.top.press.fill"),
+                                           image: UIImage.symbolWithTemplate(name: "button.horizontal.top.press.fill", backupSymbolName: "digitalcrown.horizontal.press"),
                                            action: { _ in })
         
         if Settings.advancedFeatures.skinDebug.hasAlt
