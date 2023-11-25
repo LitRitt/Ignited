@@ -41,7 +41,7 @@ struct PowerUserOptions
     var clearAutoSaves: String = ""
     
     @Option(name: "Reset All Album Artwork",
-            description: "Resets the artwork for every game to the artwork provided by the database, if there is one.",
+            description: "This resets the artwork for every game to what it was when it was imported.",
             detailView: { _ in
         Button("Reset All Album Artwork") {
             resetAllArtwork()
@@ -53,7 +53,7 @@ struct PowerUserOptions
     var resetArtwork: String = ""
     
     @Option(name: "Reset All Feature Settings",
-            description: "Resets every single feature setting to their default values. This cannot be undone, please only do so if you are absolutely sure your issue cannot be solved by resetting an individual feature, or want to return to a stock Ignited experience.",
+            description: "This resets every feature setting to its default state.",
             detailView: { _ in
         Button("Reset All Feature Settings") {
             resetFeature(.allFeatures)
@@ -77,6 +77,7 @@ struct PowerUserOptions
     var copyGoogleDriveRefreshToken: String = ""
     
     @Option(name: "Reset Build Counter",
+            description: "This will force update actions, such as repairs, to be taken next app launch.",
             detailView: { _ in
         Button("Reset Build Counter") {
             Settings.lastUpdateShown = 1
@@ -447,9 +448,13 @@ extension PowerUserOptions
                 Settings.libraryFeatures.artwork.sortOrder = .alphabeticalAZ
                 Settings.libraryFeatures.artwork.size = .medium
                 Settings.libraryFeatures.artwork.style = .basic
+                Settings.libraryFeatures.artwork.backgroundColorMode = .custom
                 Settings.libraryFeatures.artwork.backgroundColor = .orange
+                Settings.libraryFeatures.artwork.borderColorMode = .custom
                 Settings.libraryFeatures.artwork.borderColor = .orange
+                Settings.libraryFeatures.artwork.textColorMode = .theme
                 Settings.libraryFeatures.artwork.textColor = .black
+                Settings.libraryFeatures.artwork.shadowColorMode = .theme
                 Settings.libraryFeatures.artwork.shadowColor = .white
                 Settings.libraryFeatures.artwork.cornerRadius = 0.15
                 Settings.libraryFeatures.artwork.borderWidth = 1.5
@@ -466,8 +471,15 @@ extension PowerUserOptions
                 
             case .favoriteGames:
                 Settings.libraryFeatures.favorites.sortFirst = true
-                Settings.libraryFeatures.favorites.colorMode = .theme
-                Settings.libraryFeatures.favorites.color = .yellow
+                Settings.libraryFeatures.favorites.style = .theme
+                Settings.libraryFeatures.favorites.backgroundColorMode = .custom
+                Settings.libraryFeatures.favorites.backgroundColor = .orange
+                Settings.libraryFeatures.favorites.borderColorMode = .custom
+                Settings.libraryFeatures.favorites.borderColor = .orange
+                Settings.libraryFeatures.favorites.textColorMode = .theme
+                Settings.libraryFeatures.favorites.textColor = .black
+                Settings.libraryFeatures.favorites.shadowColorMode = .theme
+                Settings.libraryFeatures.favorites.shadowColor = .white
                 
             case .toastNotifications:
                 Settings.userInterfaceFeatures.toasts.duration = 1.5

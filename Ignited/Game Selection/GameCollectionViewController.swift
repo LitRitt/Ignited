@@ -441,60 +441,57 @@ private extension GameCollectionViewController
             print(error)
         }
         
+        cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         cell.isFavorite = game.isFavorite
-        
         cell.isPaused = game.fileURL == self.activeEmulatorCore?.game.fileURL
-        
         cell.neverPlayed = (game.playedDate == nil) && (saveStateCount == 0) && Settings.libraryFeatures.artwork.showNewGames
+        cell.accentColor = cell.isFavorite ? (Settings.libraryFeatures.favorites.style.backgroundColor ?? UIColor.themeColor) : UIColor.themeColor
         
         if cell.isFavorite
         {
-            cell.accentColor = Settings.libraryFeatures.favorites.colorMode.uiColor
+            cell.imageView.backgroundColor = Settings.libraryFeatures.favorites.style.backgroundColor ?? cell.accentColor.adjustHSBA(hueDelta: 0, saturationDelta: -0.15, brightnessDelta: traitCollection.userInterfaceStyle == .light ? 0.3 : -0.3, alphaDelta: 0)
+            cell.imageView.layer.borderColor = Settings.libraryFeatures.favorites.style.borderColor?.cgColor ?? cell.accentColor.cgColor
+            cell.textLabel.textColor = Settings.libraryFeatures.favorites.style.textColor
+            
+            cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.favorites.style.cornerRadius
+            cell.imageView.layer.borderWidth = Settings.libraryFeatures.favorites.style.borderWidth
+            
+            cell.layer.shadowOpacity = Float(Settings.libraryFeatures.favorites.style.shadowOpacity)
+            cell.layer.shadowRadius = Settings.libraryFeatures.favorites.style.shadowRadius
+            cell.layer.shadowColor = Settings.libraryFeatures.favorites.style.shadowColor?.cgColor ?? cell.accentColor.cgColor
+            cell.layer.shadowOffset = CGSize(width: 0, height: 0)
         }
         else
         {
-            cell.accentColor = UIColor.themeColor
+            cell.imageView.backgroundColor = Settings.libraryFeatures.artwork.style.backgroundColor ?? cell.accentColor.adjustHSBA(hueDelta: 0, saturationDelta: -0.15, brightnessDelta: traitCollection.userInterfaceStyle == .light ? 0.3 : -0.3, alphaDelta: 0)
+            cell.imageView.layer.borderColor = Settings.libraryFeatures.artwork.style.borderColor?.cgColor ?? cell.accentColor.cgColor
+            cell.textLabel.textColor = Settings.libraryFeatures.artwork.style.textColor
+            
+            cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.style.cornerRadius
+            cell.imageView.layer.borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
+            cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.style.shadowOpacity)
+            cell.layer.shadowRadius = Settings.libraryFeatures.artwork.style.shadowRadius
+            cell.layer.shadowColor = Settings.libraryFeatures.artwork.style.shadowColor?.cgColor ?? cell.accentColor.cgColor
         }
         
-        cell.imageView.backgroundColor = Settings.libraryFeatures.artwork.style.backgroundColor ?? cell.accentColor.adjustHSBA(hueDelta: 0, saturationDelta: -0.15, brightnessDelta: traitCollection.userInterfaceStyle == .light ? 0.3 : -0.3, alphaDelta: 0)
-        cell.imageView.layer.borderColor = Settings.libraryFeatures.artwork.style.borderColor?.cgColor ?? cell.accentColor.cgColor
-        cell.textLabel.textColor = Settings.libraryFeatures.artwork.style.textColor
         cell.imageView.clipsToBounds = true
         cell.imageView.contentMode = .scaleToFill
-        
-        cell.imageView.layer.cornerRadius = layout.itemWidth * Settings.libraryFeatures.artwork.style.cornerRadius
-        cell.imageView.layer.borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
-        cell.layer.shadowOpacity = Float(Settings.libraryFeatures.artwork.style.shadowOpacity)
-        
-        cell.layer.shadowRadius = Settings.libraryFeatures.artwork.style.shadowRadius
-        cell.layer.shadowColor = Settings.libraryFeatures.artwork.style.shadowColor?.cgColor ?? cell.accentColor.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 0)
         
-        if Settings.libraryFeatures.artwork.titleSize == 0
-        {
-            cell.textLabel.isHidden = true
-        }
-        else
-        {
-            let fontSize = Settings.libraryFeatures.artwork.size.textSize * Settings.libraryFeatures.artwork.titleSize
-            
-            cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(fontSize)
-            cell.textLabel.isHidden = false
-        }
+        let fontSize = Settings.libraryFeatures.artwork.size.textSize * Settings.libraryFeatures.artwork.titleSize
         
-        cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
-        
+        cell.textLabel.font = UIFont.preferredFont(forTextStyle: .caption1).withSize(fontSize)
+        cell.textLabel.isHidden = Settings.libraryFeatures.artwork.titleSize == 0
         cell.textLabel.numberOfLines = Int(floor(Settings.libraryFeatures.artwork.titleMaxLines))
+        cell.textLabel.text = game.name
         
         if cell.neverPlayed
         {
-            cell.textLabel.text = game.name
             cell.textLabel.addNewGameDot(cell.accentColor)
         }
         else
         {
             cell.textLabel.attributedText = nil
-            cell.textLabel.text = game.name
         }
     }
     

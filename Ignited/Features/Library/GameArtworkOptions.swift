@@ -233,7 +233,7 @@ struct GameArtworkOptions
     
     @Option(name: "Text Color Mode",
             values: ArtworkCustomColor.allCases)
-    var textColorMode: ArtworkCustomColor = .custom
+    var textColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Text Color",
             detailView: { value in
@@ -244,7 +244,7 @@ struct GameArtworkOptions
     
     @Option(name: "Shadow Color Mode",
             values: ArtworkCustomColor.allCases)
-    var shadowColorMode: ArtworkCustomColor = .custom
+    var shadowColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Shadow Color",
             detailView: { value in
@@ -262,7 +262,7 @@ struct GameArtworkOptions
             }
             HStack {
                 Text("0%")
-                Slider(value: value, in: 0.0...0.25, step: 0.05)
+                Slider(value: value, in: 0.0...0.25, step: 0.01)
                 Text("25%")
             }
         }.displayInline()
