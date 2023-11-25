@@ -679,21 +679,22 @@ extension GameViewController
                 pauseViewController.blurBackgroudItem = nil
             }
             
-            let url = self.game?.fileURL
-            let fileName = url!.path.components(separatedBy: "/").last
-            
-            switch fileName
+            if let url = self.game?.fileURL,
+               let fileName = url.path.components(separatedBy: "/").last
             {
-            case "dsi.bios":
-                pauseViewController.rewindItem = nil
-                pauseViewController.saveStateItem = nil
-                pauseViewController.loadStateItem = nil
-                pauseViewController.cheatCodesItem = nil
-                
-            case "nds.bios":
-                pauseViewController.cheatCodesItem = nil
-                
-            default: break
+                switch fileName
+                {
+                case "dsi.bios":
+                    pauseViewController.rewindItem = nil
+                    pauseViewController.saveStateItem = nil
+                    pauseViewController.loadStateItem = nil
+                    pauseViewController.cheatCodesItem = nil
+                    
+                case "nds.bios":
+                    pauseViewController.cheatCodesItem = nil
+                    
+                default: break
+                }
             }
             
             self.pauseViewController = pauseViewController
@@ -3084,10 +3085,16 @@ private extension GameViewController
     
     @objc func deviceDidShake(with notification: Notification)
     {
+        guard self.emulatorCore?.state == .running else { return }
+        
         guard Settings.advancedFeatures.skinDebug.isEnabled,
               Settings.advancedFeatures.skinDebug.traitOverride else
         {
-            guard Settings.gameplayFeatures.quickSettings.shakeToOpen else { return }
+            guard Settings.gameplayFeatures.quickSettings.shakeToOpen else
+            {
+                self.performPauseAction()
+                return
+            }
             
             self.performQuickSettingsAction()
             return
