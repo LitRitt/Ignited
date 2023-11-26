@@ -24,7 +24,7 @@ end
 # Unlink DeltaCore to prevent conflicts with Systems.framework
 post_install do |installer|
     installer.pods_project.targets.each do |target|
-        if target.name == "Pods-Delta"
+        if target.name == "Pods-Ignited"
             puts "Updating #{target.name} OTHER_LDFLAGS"
             target.build_configurations.each do |config|
                 xcconfig_path = config.base_configuration_reference.real_path
