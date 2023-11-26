@@ -399,13 +399,15 @@ extension DatabaseManager
                     switch gameType
                     {
                     case .nes: artwork = UIImage(named: "NES")
-                    case .genesis: artwork = UIImage(named: "GEN")
                     case .snes: artwork = UIImage(named: "SNES")
                     case .n64: artwork = UIImage(named: "N64")
                     case .gb: artwork = UIImage(named: "GB")
                     case .gbc: artwork = UIImage(named: "GBC")
                     case .gba: artwork = UIImage(named: "GBA")
                     case .ds: artwork = UIImage(named: "DS")
+                    case .genesis: artwork = UIImage(named: "GEN")
+                    case .ms: artwork = UIImage(named: "MS")
+                    case .gg: artwork = UIImage(named: "GG")
                     default: break
                     }
                     
@@ -710,13 +712,15 @@ extension DatabaseManager
                     switch game.type
                     {
                     case .nes: artwork = UIImage(named: "NES")
-                    case .genesis: artwork = UIImage(named: "GEN")
                     case .snes: artwork = UIImage(named: "SNES")
                     case .n64: artwork = UIImage(named: "N64")
-                    case .gbc where (game.fileURL.pathExtension == "gb"): artwork = UIImage(named: "GB")
+                    case .gb: artwork = UIImage(named: "GB")
                     case .gbc: artwork = UIImage(named: "GBC")
                     case .gba: artwork = UIImage(named: "GBA")
                     case .ds: artwork = UIImage(named: "DS")
+                    case .genesis: artwork = UIImage(named: "GEN")
+                    case .ms: artwork = UIImage(named: "MS")
+                    case .gg: artwork = UIImage(named: "GG")
                     default: break
                     }
                     

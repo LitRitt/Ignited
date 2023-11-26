@@ -66,6 +66,20 @@
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
+			<string>GB Game</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.rileytestut.delta.game.gb</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array/>
+			<key>CFBundleTypeName</key>
 			<string>GBC Game</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
@@ -130,6 +144,34 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.rileytestut.delta.game.genesis</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array/>
+			<key>CFBundleTypeName</key>
+			<string>MS Game</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.rileytestut.delta.game.ms</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array/>
+			<key>CFBundleTypeName</key>
+			<string>GG Game</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.rileytestut.delta.game.gg</string>
 			</array>
 		</dict>
 	</array>
@@ -346,6 +388,23 @@
 				<string>com.rileytestut.delta.game</string>
 			</array>
 			<key>UTTypeDescription</key>
+			<string>GB Game</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.rileytestut.delta.game.gb</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gb</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.rileytestut.delta.game</string>
+			</array>
+			<key>UTTypeDescription</key>
 			<string>GBC Game</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.rileytestut.delta.game.gbc</string>
@@ -354,7 +413,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>gbc</string>
-					<string>gb</string>
 				</array>
 			</dict>
 		</dict>
@@ -434,12 +492,45 @@
 					<string>bin</string>
 					<string>md</string>
 					<string>smd</string>
-					<string>sms</string>
-					<string>gg</string>
 					<string>sg</string>
-					<string>mdx</string>
-					<string>m3u</string>
-					<string>chd</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.rileytestut.delta.game</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>MS Game</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>com.rileytestut.delta.game.ms</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sms</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.rileytestut.delta.game</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>GG Game</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>com.rileytestut.delta.game.gg</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gg</string>
 				</array>
 			</dict>
 		</dict>

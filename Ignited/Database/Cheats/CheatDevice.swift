@@ -93,8 +93,8 @@ extension CheatDevice
         case .cdActionReplay8, .cdActionReplay10: return .genesis
             
         // Not yet supported
-        case .gameGearActionReplay, .gameGearGameGenie: return nil
-        case .masterSystemActionReplay, .masterSystemGameGenie: return nil
+        case .gameGearActionReplay, .gameGearGameGenie: return .gg
+        case .masterSystemActionReplay, .masterSystemGameGenie: return .ms
         }
     }
     

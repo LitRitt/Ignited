@@ -654,7 +654,7 @@ extension GameViewController
                 // Cheats are not supported by DeSmuME core.
                 pauseViewController.cheatCodesItem = nil
                 
-            case .genesis?:
+            case .genesis?, .ms?, .gg?:
                 // GPGX core does not support cheats yet.
                 pauseViewController.cheatCodesItem = nil
                 // GPGX core does not support background blur yet.
@@ -1140,16 +1140,14 @@ private extension GameViewController
         }
         
         // Set enabled last as it's the property that triggers updateGameViews()
-        if let game = self.game,
-           game.type == .genesis
+        if let game = self.game
         {
-            self.blurScreenEnabled = false //TODO: Fix background blur on genesis
+            switch game.type
+            {
+            case .genesis, .ms, .gg: self.blurScreenEnabled = false //TODO: Fix background blur on genesis
+            default: self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.controllerFeatures.backgroundBlur.overrideSetting
+            }
         }
-        else
-        {
-            self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.controllerFeatures.backgroundBlur.overrideSetting
-        }
-        
     }
     
     func updateGameboyPalette()
