@@ -269,7 +269,7 @@ struct QuickSettingsView: View
                                 Text("Tint Intensity: \(self.backgroundBlurTintIntensity * 100, specifier: "%.f")%")
                                 Spacer()
                                 Button("Reset") {
-                                    self.backgroundBlurTintIntensity = 0.15
+                                    self.backgroundBlurTintIntensity = 0.1
                                     Settings.controllerFeatures.backgroundBlur.tintIntensity = self.backgroundBlurTintIntensity
                                 }.buttonStyle(.borderless)
                             }
