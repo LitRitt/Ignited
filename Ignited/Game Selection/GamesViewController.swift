@@ -717,9 +717,21 @@ private extension GamesViewController
     
     func makeArtworkMenu() -> UIMenu
     {
+        let forceAspectOption = UIAction(title: NSLocalizedString("Force Aspect Ratio", comment: ""),
+                                         image: UIImage(systemName: "aspectratio"),
+                                         state: Settings.libraryFeatures.artwork.forceAspect ? .on : .off,
+                                         handler: { action in
+            Settings.libraryFeatures.artwork.forceAspect = !Settings.libraryFeatures.artwork.forceAspect
+            self.updateOptionsMenu()
+        })
+        
+        let styleMenu = UIMenu(title: "",
+                              options: [.displayInline],
+                              children: [self.makeArtworkStyleMenu(), self.makeArtworkSizeMenu()])
+        
         return UIMenu(title: NSLocalizedString("Artwork", comment: ""),
                       image: UIImage(systemName: "person.crop.artframe"),
-                      children: [self.makeArtworkStyleMenu(), self.makeArtworkSizeMenu()])
+                      children: [forceAspectOption, styleMenu])
     }
     
     func makeArtworkStyleMenu() -> UIMenu

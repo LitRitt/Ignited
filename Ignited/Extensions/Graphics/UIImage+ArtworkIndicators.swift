@@ -8,27 +8,36 @@
 
 import UIKit
 
+import DeltaCore
+
 extension UIImage
 {
-    func drawArtworkIndicators(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, borderWidth: CGFloat = 2, boundSize: CGFloat = 100) -> UIImage
+    func drawArtworkIndicators(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, borderWidth: CGFloat = 2, boundSize: CGFloat = 100, for gameType: GameType? = nil) -> UIImage
     {
         let renderSize: CGSize
+        var forcedRatio: CGFloat = 1
+        let originalRatio: CGFloat = self.size.width / self.size.height
+
+        if let gameType = gameType
+        {
+            forcedRatio = System(gameType: gameType)?.artworkAspectRatio ?? 1
+        }
         
-        if self.size.width > self.size.height
+        if originalRatio > 1
         { // Horizontal base image
-            let ratio = self.size.width / self.size.height
+            let ratio =  Settings.libraryFeatures.artwork.forceAspect ? (forcedRatio < 1 ? 1 / forcedRatio : forcedRatio) : originalRatio
             renderSize = CGSize(width: boundSize, height: boundSize / ratio)
         }
         else
         { // Vertical base image
-            let ratio = self.size.height / self.size.width
-            renderSize = CGSize(width: boundSize / ratio, height: boundSize)
+            let ratio = Settings.libraryFeatures.artwork.forceAspect ? (forcedRatio > 1 ? 1 / forcedRatio : forcedRatio) : originalRatio
+            renderSize = CGSize(width: boundSize * ratio, height: boundSize)
         }
         
         let pauseImage = UIImage.symbolWithTemplate(name: "pause.fill", pointSize: boundSize * 0.45, accentColor: accentColor)
         let pauseRenderSize: CGSize
-        let ratio = pauseImage.size.height / pauseImage.size.width
-        pauseRenderSize = CGSize(width: boundSize * 0.45 / ratio, height: boundSize * 0.45)
+        let pauseImageRatio = pauseImage.size.height / pauseImage.size.width
+        pauseRenderSize = CGSize(width: boundSize * 0.45 / pauseImageRatio, height: boundSize * 0.45)
         let pauseOrigin = CGPoint(x: (renderSize.width - pauseRenderSize.width) / 2, y: (renderSize.height - pauseRenderSize.height) / 2)
         
         let favoriteImage = UIImage.symbolWithTemplate(name: "star.circle.fill", pointSize: boundSize * 0.2, accentColor: accentColor.adjustBrightness(-0.6))

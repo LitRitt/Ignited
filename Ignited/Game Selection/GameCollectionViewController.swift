@@ -378,19 +378,19 @@ private extension GameCollectionViewController
             
             let cell = cell as! GridCollectionViewGameCell
             let game = self.dataSource.item(at: indexPath) as! Game
+            var gameType = game.type
             
             cell.imageView.image = image
             
-            self.updateCellAspectRatio(cell, with: image)
-            
-            if var overlayImage = cell.imageView.image,
-               cell.isPaused || cell.isFavorite
+            if var overlayImage = cell.imageView.image
             {
                 let borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
-                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height))
+                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height), for: gameType)
                 cell.imageView.image = overlayImage
+                self.updateCellAspectRatio(cell, with: overlayImage)
             }
-            else
+            
+            if !cell.isPaused && !cell.isFavorite
             {
                 self.beginAnimatingArtwork(cell, at: indexPath)
             }
@@ -1298,7 +1298,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey:
+        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.libraryFeatures.artwork.$forceAspect.settingsKey:
             self.update()
             
         case Settings.libraryFeatures.artwork.$sortOrder.settingsKey, Settings.libraryFeatures.favorites.$sortFirst.settingsKey:

@@ -204,6 +204,9 @@ struct GameArtworkOptions
     @Option
     var useScreenshots: Bool = true
     
+    @Option
+    var forceAspect: Bool = false
+    
     @Option(name: "Style",
             description: "Choose the style to use for game artwork.",
             values: ArtworkStyle.allCases)
@@ -363,4 +366,26 @@ struct GameArtworkOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension System
+{
+    var size: CGSize {
+        switch self {
+        case .genesis: return CGSize(width: 74, height: 100)
+        case .ms: return CGSize(width: 74, height: 100)
+        case .gg: return CGSize(width: 72, height: 100)
+        case .nes: return CGSize(width: 73, height: 100)
+        case .snes: return CGSize(width: 100, height: 73)
+        case .n64: return CGSize(width: 100, height: 70)
+        case .gb: return CGSize(width: 100, height: 98)
+        case .gbc: return CGSize(width: 100, height: 98)
+        case .gba: return CGSize(width: 100, height: 100)
+        case .ds: return CGSize(width: 100, height: 97)
+        }
+    }
+    
+    var artworkAspectRatio: CGFloat {
+        return size.width / size.height
+    }
 }
