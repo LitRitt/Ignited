@@ -63,6 +63,8 @@ class GameCollectionViewController: UICollectionViewController
     private var _importingSaveFileGame: Game?
     private var _exportedSaveFileURL: URL?
     
+    private var gamesWithLiveArtwork = Set<String>()
+    
     required init?(coder aDecoder: NSCoder)
     {
         self.dataSource = RSTFetchedResultsCollectionViewPrefetchingDataSource<Game, UIImage>(fetchedResultsController: NSFetchedResultsController())
@@ -342,12 +344,14 @@ private extension GameCollectionViewController
                        let saveState = saveStates.last
                     {
                         imageOperation = LoadImageURLOperation(url: saveState.imageFileURL)
+                        self.gamesWithLiveArtwork.insert(game.identifier)
                     }
                     else
                     {
                         guard let artworkURL = game.artworkURL else { return Operation() }
                         
                         imageOperation = LoadImageURLOperation(url: artworkURL)
+                        self.gamesWithLiveArtwork.remove(game.identifier)
                     }
                 }
                 catch
@@ -357,6 +361,7 @@ private extension GameCollectionViewController
                     guard let artworkURL = game.artworkURL else { return Operation() }
                     
                     imageOperation = LoadImageURLOperation(url: artworkURL)
+                    self.gamesWithLiveArtwork.remove(game.identifier)
                 }
             }
             else
@@ -364,6 +369,7 @@ private extension GameCollectionViewController
                 guard let artworkURL = game.artworkURL else { return Operation() }
                 
                 imageOperation = LoadImageURLOperation(url: artworkURL)
+                self.gamesWithLiveArtwork.remove(game.identifier)
             }
             
             imageOperation.resultHandler = { (image, error) in
@@ -385,7 +391,7 @@ private extension GameCollectionViewController
             if var overlayImage = cell.imageView.image
             {
                 let borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
-                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height), for: gameType)
+                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height), for: (self.gamesWithLiveArtwork.contains(game.identifier) ? nil : gameType))
                 cell.imageView.image = overlayImage
                 self.updateCellAspectRatio(cell, with: overlayImage)
             }

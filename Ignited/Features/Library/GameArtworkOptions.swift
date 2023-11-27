@@ -205,7 +205,7 @@ struct GameArtworkOptions
     var useScreenshots: Bool = true
     
     @Option
-    var forceAspect: Bool = false
+    var forceAspect: Bool = true
     
     @Option(name: "Style",
             description: "Choose the style to use for game artwork.",

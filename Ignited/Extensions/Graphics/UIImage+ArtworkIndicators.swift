@@ -15,12 +15,12 @@ extension UIImage
     func drawArtworkIndicators(_ accentColor: UIColor, isPaused: Bool = false, isFavorite: Bool = false, borderWidth: CGFloat = 2, boundSize: CGFloat = 100, for gameType: GameType? = nil) -> UIImage
     {
         let renderSize: CGSize
-        var forcedRatio: CGFloat = 1
         let originalRatio: CGFloat = self.size.width / self.size.height
+        var forcedRatio: CGFloat = originalRatio
 
         if let gameType = gameType
         {
-            forcedRatio = System(gameType: gameType)?.artworkAspectRatio ?? 1
+            forcedRatio = System(gameType: gameType)?.artworkAspectRatio ?? originalRatio
         }
         
         if originalRatio > 1
