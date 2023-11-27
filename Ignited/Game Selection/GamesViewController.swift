@@ -213,24 +213,16 @@ private extension GamesViewController
         self.searchController?.searchHandler = { [weak self, weak searchResultsController] (searchValue, _) in
             guard let self = self else { return nil }
             
-            if self.searchController?.searchBar.text?.isEmpty == false
-            {
-                self.pageViewController.view.isHidden = true
-            }
-            else
-            {
-                self.pageViewController.view.isHidden = false
-            }
-            
             searchResultsController?.dataSource.predicate = searchValue.predicate
             return nil
         }
         self.searchController?.searchBar.barStyle = .default
         
         self.navigationItem.searchController = self.searchController
-        self.navigationItem.hidesSearchBarWhenScrolling = false
-        
+        self.navigationItem.hidesSearchBarWhenScrolling = true
         self.definesPresentationContext = true
+        
+        if #available(iOS 16, *) { self.navigationItem.preferredSearchBarPlacement = .stacked }
     }
     
     func updateTheme()
@@ -412,7 +404,8 @@ private extension GamesViewController
             listMenuViewController.items = items
         }
         
-        popoverMenuController.popoverMenuButton.title = Settings.previousGameCollection?.system?.localizedShortName ?? (self.title ?? NSLocalizedString("Games", comment: ""))
+        let title = traitCollection.userInterfaceIdiom == .pad ? Settings.previousGameCollection?.system?.localizedName : Settings.previousGameCollection?.system?.localizedShortName
+        popoverMenuController.popoverMenuButton.title = title ?? (self.title ?? NSLocalizedString("Games", comment: ""))
     }
 }
 
