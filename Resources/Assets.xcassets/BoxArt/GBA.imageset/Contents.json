@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "GBA.png",
+      "filename" : "gba.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "GBA@2x.png",
+      "filename" : "gba@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "GBA@3x.png",
+      "filename" : "gba@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

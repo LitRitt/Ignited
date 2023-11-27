@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "SNES.png",
+      "filename" : "snes.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "SNES@2x.png",
+      "filename" : "snes@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "SNES@3x.png",
+      "filename" : "snes@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

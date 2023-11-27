@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "NDS.png",
+      "filename" : "nds.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "NDS@2x.png",
+      "filename" : "nds@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "NDS@3x.png",
+      "filename" : "nds@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

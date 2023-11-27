@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "N64.png",
+      "filename" : "n64.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "N64@2x.png",
+      "filename" : "n64@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "N64@3x.png",
+      "filename" : "n64@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
