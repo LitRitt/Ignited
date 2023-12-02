@@ -197,11 +197,11 @@ extension GridMenuViewController
               let item = self.items[indexPath.item] as? MenuItem else { return }
         
         self.previousIndexPath = indexPath
-        item.isSelected = !item.isSelected
         
         if let holdAction = item.holdAction {
             holdAction(item)
         } else {
+            item.isSelected = !item.isSelected
             item.action(item)
         }
     }
