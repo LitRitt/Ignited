@@ -58,6 +58,11 @@ struct GameplayFeatures: FeatureContainer
              description: "Make rotation lock available in the pause menu. Lets you lock your game in either portrait or landscape orientation.")
     var rotationLock
     
+    @Feature(name: "Sustain Buttons",
+             options: SustainButtonsOptions(),
+             hidden: true)
+    var sustainButtons
+    
     private init()
     {
         self.prepareFeatures()

@@ -170,11 +170,11 @@ class GameViewController: DeltaCore.GameViewController
     private var isSelectingSustainedButtons = false
     private var sustainInputsMapping: SustainInputsMapping?
     private var shouldResetSustainedInputs = false
+    private var isSustainingInputs = false
     
     private var sustainButtonsContentView: UIView!
     private var sustainButtonsBlurView: UIVisualEffectView!
     private var sustainButtonsBackgroundView: RSTPlaceholderView!
-    private var inputsToSustain = [AnyInput: Double]()
     
     private var airPlayContentView: UIView!
     private var airPlayBlurView: UIVisualEffectView!
@@ -310,9 +310,13 @@ class GameViewController: DeltaCore.GameViewController
             guard let pausingGameController = self.pausingGameController, gameController == pausingGameController else { return }
             
             if input != StandardGameControllerInput.menu,
-               input.stringValue != "quickSettings"
+               input.stringValue != "quickSettings",
+               let game = self.game as? Game
             {
-                self.inputsToSustain[AnyInput(input)] = value
+                self.isSustainingInputs = true
+                var inputsToSustain = self.getInputs(for: game)
+                inputsToSustain[AnyInput(input)] = value
+                Settings.gameplayFeatures.sustainButtons.heldInputs[game.identifier] = inputsToSustain
             }
             
             if input.stringValue == "quickSettings"
@@ -375,9 +379,12 @@ class GameViewController: DeltaCore.GameViewController
         
         if self.isSelectingSustainedButtons
         {
-            if input.isContinuous
+            if input.isContinuous,
+               let game = self.game as? Game
             {
-                self.inputsToSustain[AnyInput(input)] = nil
+                var inputsToSustain = self.getInputs(for: game)
+                inputsToSustain[AnyInput(input)] = nil
+                Settings.gameplayFeatures.sustainButtons.heldInputs[game.identifier] = inputsToSustain
             }
         }
         else
@@ -652,8 +659,35 @@ extension GameViewController
                 self.performDebugModeAction()
             }
             
-            pauseViewController.sustainButtonsItem?.isSelected = gameController.sustainedInputs.count > 0
+            pauseViewController.sustainButtonsItem?.isSelected = gameController.sustainedInputs.count > 0 || self.isSustainingInputs
             pauseViewController.sustainButtonsItem?.action = { [unowned self, unowned pauseViewController] item in
+                
+                guard let game = self.game as? Game else { return }
+                
+                let heldInputs = self.getInputs(for: game)
+                
+                if heldInputs.count == 0
+                {
+                    for input in gameController.sustainedInputs.keys
+                    {
+                        gameController.unsustain(input)
+                    }
+                    
+                    if item.isSelected
+                    {
+                        self.showSustainButtonView()
+                        pauseViewController.dismiss()
+                    }
+                }
+                else
+                {
+                    self.updateSustainedButtons(gameController: gameController)
+                }
+                
+                // Re-set gameController as pausingGameController.
+                self.pausingGameController = gameController
+            }
+            pauseViewController.sustainButtonsItem?.holdAction = { [unowned self, unowned pauseViewController] item in
                 
                 for input in gameController.sustainedInputs.keys
                 {
@@ -665,9 +699,6 @@ extension GameViewController
                     self.showSustainButtonView()
                     pauseViewController.dismiss()
                 }
-                
-                // Re-set gameController as pausingGameController.
-                self.pausingGameController = gameController
             }
             
             if self.emulatorCore?.deltaCore.supportedRates.upperBound == 1
@@ -976,6 +1007,20 @@ private extension GameViewController
         self.updateControllerTriggerDeadzone()
     }
     
+    func getInputs(for game: Game) -> [AnyInput: Double]
+    {
+        if let heldInputs = Settings.gameplayFeatures.sustainButtons.heldInputs[game.identifier]
+        {
+            return heldInputs
+        }
+        else
+        {
+            Settings.gameplayFeatures.sustainButtons.heldInputs[game.identifier] = [:]
+            
+            return [:]
+        }
+    }
+    
     func updateControllerTriggerDeadzone()
     {
         for gameController in ExternalGameControllerManager.shared.connectedControllers
@@ -1245,6 +1290,30 @@ private extension GameViewController
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
         self.backgroundColor = Settings.controllerFeatures.skin.colorMode.uiColor
+    }
+    
+    func updateSustainedButtons(gameController: GameController)
+    {
+        if self.isSustainingInputs
+        {
+            self.isSustainingInputs = false
+            
+            for input in gameController.sustainedInputs.keys
+            {
+                gameController.unsustain(input)
+            }
+        }
+        else if let game = self.game as? Game
+        {
+            self.isSustainingInputs = true
+            
+            let inputsToSustain = self.getInputs(for: game)
+            
+            for (input, value) in inputsToSustain
+            {
+                gameController.sustain(input, value: value)
+            }
+        }
     }
 }
 
@@ -1712,11 +1781,14 @@ private extension GameViewController
 {
     func showSustainButtonView()
     {
-        guard let gameController = self.pausingGameController else { return }
+        guard let gameController = self.pausingGameController,
+              let game = self.game as? Game else { return }
         
         self.blurScreenInFront = true
         
         self.isSelectingSustainedButtons = true
+        
+        Settings.gameplayFeatures.sustainButtons.heldInputs[game.identifier] = [:]
         
         let sustainInputsMapping = SustainInputsMapping(gameController: gameController)
         gameController.addReceiver(self, inputMapping: sustainInputsMapping)
@@ -1738,7 +1810,8 @@ private extension GameViewController
     
     func hideSustainButtonView()
     {
-        guard let gameController = self.pausingGameController else { return }
+        guard let gameController = self.pausingGameController,
+              let game = self.game as? Game else { return }
         
         self.isSelectingSustainedButtons = false
         
@@ -1746,9 +1819,20 @@ private extension GameViewController
         self.sustainInputsMapping = nil
         
         // Activate all sustained inputs, since they will now be mapped to game inputs.
-        for (input, value) in self.inputsToSustain
+        let inputsToSustain = self.getInputs(for: game)
+        
+        for (input, value) in inputsToSustain
         {
             gameController.sustain(input, value: value)
+        }
+        
+        if gameController.sustainedInputs.count > 0
+        {
+            self.isSustainingInputs = true
+        }
+        else
+        {
+            self.isSustainingInputs = false
         }
         
         let blurEffect = self.sustainButtonsBlurView.effect
@@ -1764,8 +1848,6 @@ private extension GameViewController
             self.sustainButtonsContentView.isHidden = true
             self.sustainButtonsBlurView.effect = blurEffect
         }
-        
-        self.inputsToSustain = [:]
         
         if !UIApplication.shared.isExternalDisplayConnected
         {

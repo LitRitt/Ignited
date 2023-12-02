@@ -118,6 +118,7 @@
 		ACD5FA052A0C4D58005CDCF1 /* GameboyPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
+		ACFFFB582B1BB92600273BB4 /* SustainButtonsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */; };
 		BF00BEA625B758AA00C8607D /* SystemBIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00BEA525B758AA00C8607D /* SystemBIOS.swift */; };
 		BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */; };
 		BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF04E6FE1DB8625C000F35D3 /* ControllerSkinsViewController.swift */; };
@@ -388,6 +389,7 @@
 		ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboyPaletteOptions.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
+		ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SustainButtonsOptions.swift; sourceTree = "<group>"; };
 		B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CodeSigning.xcconfig; sourceTree = "<group>"; };
 		B57FE4EE2A98930B00C5E989 /* Build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Build.xcconfig; sourceTree = "<group>"; };
 		BF00BEA525B758AA00C8607D /* SystemBIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemBIOS.swift; sourceTree = "<group>"; };
@@ -761,6 +763,7 @@
 				AC84B57329FF1BDA0090F274 /* FastForwardOptions.swift */,
 				AC2059E92A117B570098266B /* QuickSettingsOptions.swift */,
 				AC23D2D52AFDCD2A0056CC3F /* SaveStatesOptions.swift */,
+				ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */,
 			);
 			path = Gameplay;
 			sourceTree = "<group>";
@@ -1725,6 +1728,7 @@
 				BF5942951E09BD1A0051894B /* NSManagedObjectContext+Conveniences.swift in Sources */,
 				AC24C4272B1AB1CB0054278D /* StatusBarOptions.swift in Sources */,
 				AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */,
+				ACFFFB582B1BB92600273BB4 /* SustainButtonsOptions.swift in Sources */,
 				AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */,
 				BFC3628021ADE2BA00EF2BE6 /* UIAlertController+Error.swift in Sources */,
 				BF353FF91C5D870B00C1184C /* MenuItem.swift in Sources */,
