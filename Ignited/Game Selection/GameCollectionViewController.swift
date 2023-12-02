@@ -1546,7 +1546,7 @@ extension GameCollectionViewController
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
         
-        let preview = UITargetedPreview(view: cell.imageView)
+        let preview = UITargetedPreview(view: cell.imageView, parameters: parameters)
         return preview
     }
     
