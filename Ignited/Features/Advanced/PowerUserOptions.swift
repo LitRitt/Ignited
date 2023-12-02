@@ -368,7 +368,6 @@ extension PowerUserOptions
                 
             case .gameScreenshot:
                 Settings.gameplayFeatures.screenshots.saveLocation = .photos
-                Settings.gameplayFeatures.screenshots.playCountdown = false
                 Settings.gameplayFeatures.screenshots.size = .x5
                 
             case .gameAudio:
@@ -383,10 +382,7 @@ extension PowerUserOptions
                 
             case .fastForward:
                 Settings.gameplayFeatures.fastForward.speed = 3.0
-                Settings.gameplayFeatures.fastForward.toggle = true
-                Settings.gameplayFeatures.fastForward.prompt = false
-                Settings.gameplayFeatures.fastForward.slowmo = false
-                Settings.gameplayFeatures.fastForward.unsafe = false
+                Settings.gameplayFeatures.fastForward.mode = .toggle
                 
             case .quickSettings:
                 Settings.gameplayFeatures.quickSettings.quickActionsEnabled = true

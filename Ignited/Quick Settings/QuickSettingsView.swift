@@ -17,6 +17,7 @@ struct QuickSettingsView: View
     private let systemsWithPalettes = [System.gb.gameType.rawValue]
     
     @State private var fastForwardSpeed: Double
+    @State private var fastForwardMode: FastForwardMode = Settings.gameplayFeatures.fastForward.mode
     
     @State private var gameAudioVolume: Double = Settings.gameplayFeatures.gameAudio.volume
     
@@ -165,8 +166,14 @@ struct QuickSettingsView: View
                                         Settings.gameplayFeatures.quickSettings.fastForwardSpeed = self.fastForwardSpeed
                                     }
                                 }.padding(.top, 10)
-                                Toggle("Toggle Fast Forward", isOn: Settings.gameplayFeatures.fastForward.$toggle.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                Picker("Fast Forward Mode", selection: self.$fastForwardMode) {
+                                    ForEach(FastForwardMode.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.fastForwardMode) { value in
+                                        Settings.gameplayFeatures.fastForward.mode = value
+                                    }
                             }
                         }.buttonStyle(.borderless)
                     } header: {

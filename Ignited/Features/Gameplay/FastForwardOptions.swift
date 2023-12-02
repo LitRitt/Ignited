@@ -10,6 +10,60 @@ import SwiftUI
 
 import Features
 
+enum FastForwardSpeed: Double, CaseIterable, CustomStringConvertible
+{
+    case x025 = 0.25
+    case x05 = 0.5
+    case x2 = 2
+    case x3 = 3
+    case x4 = 4
+    case x6 = 6
+    case x8 = 8
+    
+    var description: String {
+        switch self {
+        case .x025: return "25%"
+        case .x05: return "50%"
+        case .x2: return "200%"
+        case .x3: return "300%"
+        case .x4: return "400%"
+        case .x6: return "600%"
+        case .x8: return "800%"
+        }
+    }
+}
+
+extension FastForwardSpeed: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        return Text(self.description)
+    }
+}
+
+enum FastForwardMode: String, CaseIterable, CustomStringConvertible
+{
+    case hold = "Hold"
+    case toggle = "Toggle"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var symbolName: String {
+        switch self {
+        case .hold: return "button.horizontal.top.press"
+        case .toggle: return "switch.2"
+        }
+    }
+}
+
+extension FastForwardMode: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        return Text(self.description)
+    }
+}
+
 struct FastForwardOptions
 {
     @Option(name: "Custom Speed", description: "Set your prefferred fast forward speed.", detailView: { value in
@@ -19,29 +73,18 @@ struct FastForwardOptions
                 Spacer()
             }
             HStack {
-                Text("50%")
-                Slider(value: value, in: 0.5...4.0, step: 0.05)
-                Text("400%")
+                Text("10%")
+                Slider(value: value, in: 0.1...8.0, step: 0.1)
+                Text("800%")
             }
         }.displayInline()
     })
     var speed: Double = 3.0
     
-    @Option(name: "Toggle Fast Forward",
-            description: "When enabled, fast forward buttons will act as a toggle. When disabled, fast forward buttons only activate when held down.")
-    var toggle: Bool = true
-    
-    @Option(name: "Choose Speed Each Activation",
-            description: "Enable to choose a speed each time you activate fast forward, instead of using the set speed above.")
-    var prompt: Bool = false
-    
-    @Option(name: "Show Slowmo Speeds",
-            description: "Enable to show speed choices that slow down gameplay instead of speeding it up.")
-    var slowmo: Bool = false
-    
-    @Option(name: "Show Unsafe Speeds",
-            description: "Enable to show speed choices that are above those determined to be safe.")
-    var unsafe: Bool = false
+    @Option(name: "Fast Forward Mode",
+            description: "In toggle mode, fast forward buttons will act as a toggle. In hold mode,, fast forward buttons only activate when held down.",
+            values: FastForwardMode.allCases)
+    var mode: FastForwardMode = .toggle
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

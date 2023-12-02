@@ -67,9 +67,6 @@ struct GameScreenshotOptions
     @Option(name: "Save Location", description: "Choose where to save screenshots.", values: ScreenshotSaveLocation.allCases)
     var saveLocation: ScreenshotSaveLocation = .photos
     
-    @Option(name: "Countdown", description: "After initiating a screenshot, play a 3 second countdown before capturing the screenshot.")
-    var playCountdown: Bool = false
-    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in
