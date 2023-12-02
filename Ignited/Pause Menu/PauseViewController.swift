@@ -195,12 +195,9 @@ private extension PauseViewController
                                        image: UIImage.symbolWithTemplate(name: "camera.fill"),
                                        action: { _ in })
         
-        if Settings.userInterfaceFeatures.statusBar.isEnabled
-        {
-            self.statusBarItem = MenuItem(text: NSLocalizedString("Status Bar", comment: ""),
-                                          image: UIImage.symbolWithTemplate(name: "clock.fill"),
-                                          action: { _ in })
-        }
+        self.statusBarItem = MenuItem(text: NSLocalizedString("Status Bar", comment: ""),
+                                      image: UIImage.symbolWithTemplate(name: "clock.fill"),
+                                      action: { _ in })
         
         if Settings.gameplayFeatures.rewind.isEnabled
         {
