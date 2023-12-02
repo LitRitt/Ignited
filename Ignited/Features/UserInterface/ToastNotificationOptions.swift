@@ -45,11 +45,11 @@ struct ToastNotificationOptions
     
     @Option(name: "Fast Forward Toggled",
             description: "Show toasts when toggling fast forward.")
-    var fastForward: Bool = false
+    var fastForward: Bool = true
     
     @Option(name: "Status Bar Toggled",
             description: "Show toasts when toggling showing the status bar.")
-    var statusBar: Bool = false
+    var statusBar: Bool = true
     
     @Option(name: "Rotation Lock Toggled",
             description: "Show toasts when toggling rotation lock.")
@@ -61,15 +61,15 @@ struct ToastNotificationOptions
     
     @Option(name: "Color Palette Changed",
             description: "Show toasts when changing color palettes.")
-    var palette: Bool = false
+    var palette: Bool = true
     
     @Option(name: "Background Blur Toggled",
             description: "Show toasts when toggleing the background blur.")
-    var backgroundBlur: Bool = false
+    var backgroundBlur: Bool = true
     
     @Option(name: "Alternate Skin Toggled",
             description: "Show toasts when toggling the controller alternate skin.")
-    var altSkin: Bool = false
+    var altSkin: Bool = true
     
     @Option(name: "Debug Mode",
             description: "Show toasts when performing debug actions.")
