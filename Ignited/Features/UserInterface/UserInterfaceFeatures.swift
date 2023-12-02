@@ -29,7 +29,8 @@ struct UserInterfaceFeatures: FeatureContainer
              options: ToastNotificationOptions())
     var toasts
     
-    @Feature(name: "Show Status Bar",
+    @Feature(name: "Status Bar",
+             options: StatusBarOptions(),
              hidden: true)
     var statusBar
     

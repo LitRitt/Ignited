@@ -44,6 +44,7 @@
 		AC2059EA2A117B570098266B /* QuickSettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2059E92A117B570098266B /* QuickSettingsOptions.swift */; };
 		AC23D2D62AFDCD2A0056CC3F /* SaveStatesOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2D52AFDCD2A0056CC3F /* SaveStatesOptions.swift */; };
 		AC23D2DF2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC23D2DE2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift */; };
+		AC24C4272B1AB1CB0054278D /* StatusBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC24C4262B1AB1CB0054278D /* StatusBarOptions.swift */; };
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */; };
 		AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D0A842A19702C00EEEB39 /* Patron.swift */; };
@@ -314,6 +315,7 @@
 		AC2059E92A117B570098266B /* QuickSettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsOptions.swift; sourceTree = "<group>"; };
 		AC23D2D52AFDCD2A0056CC3F /* SaveStatesOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStatesOptions.swift; sourceTree = "<group>"; };
 		AC23D2DE2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SymbolTemplates.swift"; sourceTree = "<group>"; };
+		AC24C4262B1AB1CB0054278D /* StatusBarOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarOptions.swift; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtworkOptions.swift; sourceTree = "<group>"; };
 		AC2D0A842A19702C00EEEB39 /* Patron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				ACCD9DB42A01A54200B235C4 /* ThemeOptions.swift */,
 				ACCD9DB82A01BA5500B235C4 /* AppIconOptions.swift */,
 				AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */,
+				AC24C4262B1AB1CB0054278D /* StatusBarOptions.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -1509,7 +1512,7 @@
 			);
 			mainGroup = BFFA71CE1AAC406100EE9DD1;
 			packageReferences = (
-				D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */,
+				D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */,
 			);
 			productRefGroup = BFFA71D81AAC406100EE9DD1 /* Products */;
 			projectDirPath = "";
@@ -1720,6 +1723,7 @@
 				AC1EAE6B2A006CC30072C858 /* SkinDebugOptions.swift in Sources */,
 				BF4828841F9027B600028B97 /* Delta.xcdatamodeld in Sources */,
 				BF5942951E09BD1A0051894B /* NSManagedObjectContext+Conveniences.swift in Sources */,
+				AC24C4272B1AB1CB0054278D /* StatusBarOptions.swift in Sources */,
 				AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */,
 				AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */,
 				BFC3628021ADE2BA00EF2BE6 /* UIAlertController+Error.swift in Sources */,
@@ -2201,7 +2205,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */ = {
+		D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rileytestut/AltKit.git";
 			requirement = {
@@ -2214,7 +2218,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D524F4A0273DE9A100D500B2 /* AltKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */;
+			package = D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */;
 			productName = AltKit;
 		};
 /* End XCSwiftPackageProductDependency section */

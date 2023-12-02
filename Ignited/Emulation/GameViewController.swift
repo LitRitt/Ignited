@@ -241,6 +241,10 @@ class GameViewController: DeltaCore.GameViewController
         return !Settings.userInterfaceFeatures.statusBar.isEnabled
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle(rawValue: Settings.userInterfaceFeatures.statusBar.style.rawValue) ?? .default
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.updateControllerSkin() //TODO: See if this fixes ny's issue of disappearring blur background
@@ -584,6 +588,9 @@ extension GameViewController
             pauseViewController.statusBarItem?.isSelected = Settings.userInterfaceFeatures.statusBar.isEnabled
             pauseViewController.statusBarItem?.action = { [unowned self] item in
                 self.performStatusBarAction()
+            }
+            pauseViewController.statusBarItem?.holdAction = { [unowned self] item in
+                self.performStatusBarAction(hold: true)
             }
             
             pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
@@ -1772,23 +1779,37 @@ extension GameViewController
         self.present(alertController, animated: true)
     }
     
-    func performStatusBarAction()
+    func performStatusBarAction(hold: Bool = false)
     {
-        Settings.userInterfaceFeatures.statusBar.isEnabled = !Settings.userInterfaceFeatures.statusBar.isEnabled
+        let text: String
+        
+        if hold
+        {
+            if let pauseView = self.pauseViewController { pauseView.dismiss() }
+            
+            if Settings.userInterfaceFeatures.statusBar.style == .dark {
+                Settings.userInterfaceFeatures.statusBar.style = .light
+                text = NSLocalizedString("Status Bar: Light Content", comment: "")
+            } else {
+                Settings.userInterfaceFeatures.statusBar.style = .dark
+                text = NSLocalizedString("Status Bar: Dark Content", comment: "")
+            }
+        }
+        else
+        {
+            if Settings.userInterfaceFeatures.statusBar.isEnabled {
+                Settings.userInterfaceFeatures.statusBar.isEnabled = false
+                text = NSLocalizedString("Status Bar: Enabled", comment: "")
+            } else {
+                Settings.userInterfaceFeatures.statusBar.isEnabled = true
+                text = NSLocalizedString("Status Bar: Disabled", comment: "")
+            }
+        }
         
         self.updateStatusBar()
         
         if Settings.userInterfaceFeatures.toasts.statusBar
         {
-            let text: String
-            if Settings.userInterfaceFeatures.statusBar.isEnabled
-            {
-                text = NSLocalizedString("Status Bar Enabled", comment: "")
-            }
-            else
-            {
-                text = NSLocalizedString("Status Bar Disabled", comment: "")
-            }
             self.presentToastView(text: text)
         }
     }

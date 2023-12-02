@@ -26,6 +26,10 @@ class LaunchViewController: RSTLaunchViewController
         return self.gameViewController?.prefersStatusBarHidden ?? false
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.gameViewController?.preferredStatusBarStyle ?? .default
+    }
+    
     override var childForHomeIndicatorAutoHidden: UIViewController? {
         return self.gameViewController
     }
