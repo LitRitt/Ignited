@@ -187,6 +187,28 @@ extension GridMenuViewController
 
 extension GridMenuViewController
 {
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
+    {
+        guard let item = self.items[indexPath.item] as? MenuItem,
+              let menu = item.menu else { return nil }
+        
+        return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath, previewProvider: nil) { _ in
+            return menu
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+    {
+        guard let indexPath = configuration.identifier as? NSIndexPath,
+              let cell = collectionView.cellForItem(at: indexPath as IndexPath) as? GridCollectionViewCell else { return nil }
+        
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        
+        let preview = UITargetedPreview(view: cell.contentView, parameters: parameters)
+        return preview
+    }
+    
     @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer)
     {
         guard gestureRecognizer.state == .began else { return }

@@ -15,15 +15,17 @@ class MenuItem: NSObject
     var image: UIImage?
     var action: ((MenuItem) -> Void)
     var holdAction: ((MenuItem) -> Void)?
+    var menu: UIMenu?
     
     @objc dynamic var isSelected = false
     
-    init(text: String, image: UIImage?, action: @escaping ((MenuItem) -> Void), holdAction: ((MenuItem) -> Void)? = nil)
+    init(text: String, image: UIImage?, action: @escaping ((MenuItem) -> Void), holdAction: ((MenuItem) -> Void)? = nil, menu: UIMenu? = nil)
     {
         self.image = image
         self.text = text
         self.action = action
         self.holdAction = holdAction
+        self.menu = menu
     }
 }
 
