@@ -9,7 +9,7 @@
 import UIKit
 import Roxas
 
-class GridMenuViewController: UICollectionViewController
+class GridMenuViewController: UICollectionViewController, UIGestureRecognizerDelegate
 {
     var items: [MenuItem] {
         get { return self.dataSource.items }
@@ -77,6 +77,12 @@ extension GridMenuViewController
         
         // Manually update prototype cell properties
         self.prototypeCell.contentView.widthAnchor.constraint(equalToConstant: collectionViewLayout.itemWidth).isActive = true
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(gestureRecognizer:)))
+        longPressGesture.delegate = self
+        longPressGesture.delaysTouchesBegan = true
+        
+        self.collectionView?.addGestureRecognizer(longPressGesture)
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -176,6 +182,28 @@ extension GridMenuViewController
         let item = self.items[indexPath.item]
         item.isSelected = !item.isSelected
         item.action(item)
+    }
+}
+
+extension GridMenuViewController
+{
+    @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer)
+    {
+        guard gestureRecognizer.state == .began else { return }
+
+        let pressedItem = gestureRecognizer.location(in: collectionView)
+
+        guard let indexPath = collectionView?.indexPathForItem(at: pressedItem),
+              let item = self.items[indexPath.item] as? MenuItem else { return }
+        
+        self.previousIndexPath = indexPath
+        item.isSelected = !item.isSelected
+        
+        if let holdAction = item.holdAction {
+            holdAction(item)
+        } else {
+            item.action(item)
+        }
     }
 }
 
