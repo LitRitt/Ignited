@@ -33,7 +33,7 @@ class ControllerInputsViewController: UIViewController
     
     private let supportedActionInputs: [ActionInput] = [.quickSave, .quickLoad, .quickSettings, .fastForward]
     
-    private var gameViewController: DeltaCore.GameViewController!
+    private var gameViewController: DeltaCore.GameViewController?
     private var actionsMenuViewController: GridMenuViewController!
     
     private var calloutViews = [AnyInput: InputCalloutView]()
@@ -65,7 +65,7 @@ class ControllerInputsViewController: UIViewController
     {
         super.viewDidLoad()
         
-        self.gameViewController.controllerView.addReceiver(self)
+        self.gameViewController?.controllerView.addReceiver(self)
         
         if let navigationController = self.navigationController
         {
@@ -75,8 +75,10 @@ class ControllerInputsViewController: UIViewController
         {
             self.navigationController?.navigationBar.barStyle = .default
         }
-        
-        NSLayoutConstraint.activate([self.gameViewController.gameView.centerYAnchor.constraint(equalTo: self.actionsMenuViewController.view.centerYAnchor)])
+        if let gameViewController = self.gameViewController
+        {
+            NSLayoutConstraint.activate([gameViewController.gameView.centerYAnchor.constraint(equalTo: self.actionsMenuViewController.view.centerYAnchor)])
+        }
         
         self.preparePopoverMenuController()
         self.updateSystem()
@@ -103,8 +105,8 @@ class ControllerInputsViewController: UIViewController
                 traits.displayType = .standard
             }
             
-            self.gameViewController.controllerView.overrideControllerSkinTraits = traits
-            self.gameViewController.blurScreenOverride = true
+            self.gameViewController?.controllerView.overrideControllerSkinTraits = traits
+            self.gameViewController?.blurScreenOverride = true
             
             _didLayoutSubviews = true
         }
@@ -120,7 +122,7 @@ class ControllerInputsViewController: UIViewController
         }
         
         // controllerView must be first responder to receive keyboard presses.
-        self.gameViewController.controllerView.becomeFirstResponder()
+        self.gameViewController?.controllerView.becomeFirstResponder()
     }
 }
 
@@ -180,8 +182,8 @@ private extension ControllerInputsViewController
         }
         
         // Update controller view's controller skin.
-        self.gameViewController.controllerView.controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: self.system.gameType)
-        self.gameViewController.view.setNeedsUpdateConstraints()
+        self.gameViewController?.controllerView.controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: self.system.gameType)
+        self.gameViewController?.view.setNeedsUpdateConstraints()
         
         // Fetch input mapping if it hasn't already been fetched.
         if let gameController = self.gameController, self.inputMappings[self.system] == nil
@@ -279,7 +281,7 @@ private extension ControllerInputsViewController
     func prepareCallouts()
     {
         guard
-            let controllerView = self.gameViewController.controllerView,
+            let controllerView = self.gameViewController?.controllerView,
             let traits = controllerView.controllerSkinTraits,
             let items = controllerView.controllerSkin?.items(for: traits, alt: false),
             let controllerViewInputMapping = controllerView.defaultInputMapping,
@@ -494,7 +496,7 @@ private extension ControllerInputsViewController
         guard let input = self.calloutViews.first(where: { $0.value == calloutView })?.key else { return nil }
         
         guard
-            let controllerView = self.gameViewController.controllerView,
+            let controllerView = self.gameViewController?.controllerView,
             let traits = controllerView.controllerSkinTraits,
             let items = controllerView.controllerSkin?.items(for: traits, alt: false)
         else { return nil }
@@ -578,7 +580,7 @@ extension ControllerInputsViewController: GameControllerReceiver
         
         switch gameController
         {
-        case self.gameViewController.controllerView:
+        case self.gameViewController?.controllerView:
             if let calloutView = self.calloutViews[AnyInput(controllerInput)]
             {
                 if controllerInput.isContinuous
