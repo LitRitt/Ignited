@@ -201,12 +201,6 @@ struct GameArtworkOptions
     @Option
     var size: ArtworkSize = .medium
     
-    @Option
-    var useScreenshots: Bool = true
-    
-    @Option
-    var forceAspect: Bool = true
-    
     @Option(name: "Style",
             description: "Choose the style to use for game artwork.",
             values: ArtworkStyle.allCases)
@@ -354,6 +348,12 @@ struct GameArtworkOptions
     
     @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
     var showNewGames: Bool = true
+    
+    @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
+    var useScreenshots: Bool = true
+    
+    @Option(name: "Force Aspect Ratio", description: "Enable to make all artwork within a given system use consistent aspect ratios.")
+    var forceAspect: Bool = true
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
