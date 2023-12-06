@@ -1233,10 +1233,10 @@
             </objects>
             <point key="canvasLocation" x="4858" y="-931"/>
         </scene>
-        <!--Game View Controller-->
+        <!--Mapping Game View Controller-->
         <scene sceneID="qAz-yz-iOc">
             <objects>
-                <viewController id="LIv-AL-s86" customClass="GameViewController" customModule="DeltaCore" sceneMemberID="viewController">
+                <viewController id="LIv-AL-s86" customClass="MappingGameViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9u3-RP-Qcj"/>
                         <viewControllerLayoutGuide type="bottom" id="XGZ-ro-kQv"/>

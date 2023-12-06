@@ -33,7 +33,7 @@ class ControllerInputsViewController: UIViewController
     
     private let supportedActionInputs: [ActionInput] = [.quickSave, .quickLoad, .quickSettings, .fastForward]
     
-    private var gameViewController: DeltaCore.GameViewController!
+    private var gameViewController: MappingGameViewController!
     private var actionsMenuViewController: GridMenuViewController!
     
     private var calloutViews = [AnyInput: InputCalloutView]()
@@ -132,7 +132,7 @@ extension ControllerInputsViewController
         
         switch identifier
         {
-        case "embedGameViewController": self.gameViewController = segue.destination as? DeltaCore.GameViewController
+        case "embedGameViewController": self.gameViewController = segue.destination as? MappingGameViewController
         case "embedActionsMenuViewController":
             self.actionsMenuViewController = segue.destination as? GridMenuViewController
             self.prepareActionsMenuViewController()
