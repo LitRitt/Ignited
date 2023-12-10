@@ -349,6 +349,9 @@ struct GameArtworkOptions
     @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
     var showNewGames: Bool = true
     
+    @Option(name: "Show Pause Icon", description: "Enable to show a pause icon on your artwork when that game is currently paused.")
+    var showPauseIcon: Bool = true
+    
     @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
     var useScreenshots: Bool = true
     

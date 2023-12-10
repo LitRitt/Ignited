@@ -206,6 +206,9 @@ struct FavoriteGamesOptions
     })
     var borderWidth: Double = 2
     
+    @Option(name: "Show Star Icon", description: "Enable to show a star icon on your favorite games' artwork.")
+    var showStarIcon: Bool = true
+    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in

@@ -388,10 +388,13 @@ private extension GameCollectionViewController
             
             cell.imageView.image = image
             
+            let isPaused = cell.isPaused && Settings.libraryFeatures.artwork.showPauseIcon
+            let isFavorite = cell.isFavorite && Settings.libraryFeatures.favorites.showStarIcon
+            
             if var overlayImage = cell.imageView.image
             {
                 let borderWidth = Settings.libraryFeatures.artwork.style.borderWidth
-                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: cell.isPaused, isFavorite: cell.isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height), for: (self.gamesWithLiveArtwork.contains(game.identifier) ? nil : gameType))
+                overlayImage = overlayImage.drawArtworkIndicators(cell.accentColor, isPaused: isPaused, isFavorite: isFavorite, borderWidth: borderWidth, boundSize: max(cell.imageSize.width, cell.imageSize.height), for: (self.gamesWithLiveArtwork.contains(game.identifier) ? nil : gameType))
                 cell.imageView.image = overlayImage
                 self.updateCellAspectRatio(cell, with: overlayImage)
             }
