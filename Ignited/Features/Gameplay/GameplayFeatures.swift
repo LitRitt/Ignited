@@ -12,6 +12,12 @@ struct GameplayFeatures: FeatureContainer
 {
     static let shared = GameplayFeatures()
     
+    @Feature(name: "Pause Menu",
+             description: "Change the order of button in the pause menu.",
+             options: PauseMenuOptions(),
+             permanent: true)
+    var pauseMenu
+    
     @Feature(name: "Game Audio",
              description: "Change how and when audio is played.",
              options: GameAudioOptions(),

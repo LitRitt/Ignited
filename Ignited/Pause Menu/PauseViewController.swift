@@ -19,7 +19,14 @@ class PauseViewController: UIViewController, PauseInfoProviding
     }
     
     var pauseItems: [MenuItem] {
-        return [self.saveStateItem, self.loadStateItem, self.restartItem, self.screenshotItem, self.statusBarItem, self.sustainButtonsItem, self.rewindItem, self.fastForwardItem, self.rotationLockItem, self.paletteItem, self.quickSettingsItem, self.blurBackgroudItem, self.cheatCodesItem, self.altSkinItem, self.debugModeItem].compactMap { $0 }
+        var items: [MenuItem?] = []
+        
+        for item in Settings.gameplayFeatures.pauseMenu.buttonOrder
+        {
+            items.append(self.pauseItem(for: item))
+        }
+        
+        return items.compactMap { $0 }
     }
     
     /// Pause Items
@@ -272,6 +279,32 @@ private extension PauseViewController
         {
             self.additionalSafeAreaInsets.left = 0
             self.additionalSafeAreaInsets.right = 0
+        }
+    }
+}
+
+private extension PauseViewController
+{
+    func pauseItem(for itemString: String) -> MenuItem?
+    {
+        switch itemString
+        {
+        case "Save State": return self.saveStateItem
+        case "Load State": return self.loadStateItem
+        case "Restart": return self.restartItem
+        case "Screenshot": return self.screenshotItem
+        case "Status Bar": return self.statusBarItem
+        case "Sustain Buttons": return self.sustainButtonsItem
+        case "Rewind": return self.rewindItem
+        case "Fast Forward": return self.fastForwardItem
+        case "Rotation Lock": return self.rotationLockItem
+        case "Palettes": return self.paletteItem
+        case "Quick Settings": return self.quickSettingsItem
+        case "Backgroud Blur": return self.blurBackgroudItem
+        case "Cheat Codes": return self.cheatCodesItem
+        case "Alt Skin": return self.altSkinItem
+        case "Debug Mode": return self.debugModeItem
+        default: return nil
         }
     }
 }

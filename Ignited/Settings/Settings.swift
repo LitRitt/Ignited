@@ -48,7 +48,7 @@ struct Settings
     static let dsFeatures = DSFeatures.shared
     static let gbFeatures = GBFeatures.shared
     static let n64Features = N64Features.shared
-    static let gameplayFeatures = GameplayFeatures.shared
+    static let gameplayFeatures =  GameplayFeatures.shared
     static let controllerFeatures = ControllerFeatures.shared
     static let libraryFeatures = LibraryFeatures.shared
     static let userInterfaceFeatures = UserInterfaceFeatures.shared
