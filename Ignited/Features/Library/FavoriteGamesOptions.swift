@@ -104,7 +104,7 @@ struct FavoriteGamesOptions
     
     @Option(name: "Custom Background Color",
             detailView: { value in
-        ColorPicker("Custom Background Color", selection: value, supportsOpacity: false)
+        ColorPicker("Custom Background Color", selection: value, supportsOpacity: true)
             .displayInline()
     })
     var backgroundColor: Color = .orange
