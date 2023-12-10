@@ -38,7 +38,7 @@ extension SkinBackgroundColor: LocalizedOptionValue
 
 struct SkinOptions
 {
-    @Option(name: "Background Color",
+    @Option(name: "Background Color Mode",
             description: "Choose which color to use for the controller skin background.",
             values: SkinBackgroundColor.allCases)
     var colorMode: SkinBackgroundColor = .none
