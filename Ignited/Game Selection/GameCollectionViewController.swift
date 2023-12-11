@@ -1364,6 +1364,27 @@ extension GameCollectionViewController: UIViewControllerPreviewingDelegate
             gameViewController.previewSaveState = previewSaveState
             gameViewController.previewImage = UIImage(contentsOfFile: previewSaveState.imageFileURL.path)
         }
+        else if Settings.gameplayFeatures.saveStates.autoLoad
+        {
+            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+            
+            do
+            {
+                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                
+                if let autoLoadState = saveStates?.last
+                {
+                    gameViewController.previewSaveState = autoLoadState
+                    gameViewController.previewImage = UIImage(contentsOfFile: autoLoadState.imageFileURL.path)
+                }
+            }
+            catch
+            {
+                print(error)
+            }
+        }
         
         if let emulatorBridge = gameViewController.emulatorCore?.deltaCore.emulatorBridge as? MelonDSEmulatorBridge
         {
