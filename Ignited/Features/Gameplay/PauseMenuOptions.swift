@@ -20,7 +20,7 @@ extension [String]: LocalizedOptionValue
 struct PauseMenuOptions
 {
     @Option(name: "Button Order",
-            description: "Change the order button appear in the pause menu.",
+            description: "Change the order that buttons appear in the pause menu.",
             detailView: { items in
         List {
             ForEach(items, id: \.self) { $item in
