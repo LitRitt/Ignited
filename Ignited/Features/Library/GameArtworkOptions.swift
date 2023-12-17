@@ -384,7 +384,7 @@ extension System
         case .gb: return CGSize(width: 100, height: 98)
         case .gbc: return CGSize(width: 100, height: 98)
         case .gba: return CGSize(width: 100, height: 100)
-        case .ds: return CGSize(width: 100, height: 97)
+        case .ds: return CGSize(width: 100, height: 90)
         }
     }
     
