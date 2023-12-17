@@ -1307,7 +1307,7 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.libraryFeatures.artwork.$forceAspect.settingsKey:
+        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.libraryFeatures.artwork.$forceAspect.settingsKey, Settings.libraryFeatures.artwork.$showNewGames.settingsKey, Settings.libraryFeatures.artwork.$showPauseIcon.settingsKey, Settings.libraryFeatures.favorites.$showStarIcon.settingsKey:
             self.update()
             
         case Settings.libraryFeatures.artwork.$sortOrder.settingsKey, Settings.libraryFeatures.favorites.$sortFirst.settingsKey:

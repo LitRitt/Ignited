@@ -710,6 +710,13 @@ private extension GamesViewController
     
     func makeArtworkMenu() -> UIMenu
     {
+        return UIMenu(title: NSLocalizedString("Artwork", comment: ""),
+                      image: UIImage(systemName: "person.crop.artframe"),
+                      children: [self.makeArtworkStyleMenu(), self.makeArtworkSizeMenu(), self.makeArtworkOptionsMenu()])
+    }
+    
+    func makeArtworkOptionsMenu() -> UIMenu
+    {
         let forceAspectOption = UIAction(title: NSLocalizedString("Force Aspect Ratio", comment: ""),
                                          image: UIImage(systemName: "aspectratio"),
                                          state: Settings.libraryFeatures.artwork.forceAspect ? .on : .off,
@@ -718,13 +725,33 @@ private extension GamesViewController
             self.updateOptionsMenu()
         })
         
-        let styleMenu = UIMenu(title: "",
-                              options: [.displayInline],
-                              children: [self.makeArtworkStyleMenu(), self.makeArtworkSizeMenu()])
+        let newGameIconOption = UIAction(title: NSLocalizedString("New Game Icon", comment: ""),
+                                         image: UIImage(systemName: "circle.fill"),
+                                         state: Settings.libraryFeatures.artwork.showNewGames ? .on : .off,
+                                         handler: { action in
+            Settings.libraryFeatures.artwork.showNewGames = !Settings.libraryFeatures.artwork.showNewGames
+            self.updateOptionsMenu()
+        })
         
-        return UIMenu(title: NSLocalizedString("Artwork", comment: ""),
-                      image: UIImage(systemName: "person.crop.artframe"),
-                      children: [forceAspectOption, styleMenu])
+        let pauseIconOption = UIAction(title: NSLocalizedString("Pause Icon", comment: ""),
+                                         image: UIImage(systemName: "pause.fill"),
+                                         state: Settings.libraryFeatures.artwork.showPauseIcon ? .on : .off,
+                                         handler: { action in
+            Settings.libraryFeatures.artwork.showPauseIcon = !Settings.libraryFeatures.artwork.showPauseIcon
+            self.updateOptionsMenu()
+        })
+        
+        let favoritesIconOption = UIAction(title: NSLocalizedString("Favorites Icon", comment: ""),
+                                         image: UIImage(systemName: "star.circle.fill"),
+                                           state: Settings.libraryFeatures.favorites.showStarIcon ? .on : .off,
+                                         handler: { action in
+            Settings.libraryFeatures.favorites.showStarIcon = !Settings.libraryFeatures.favorites.showStarIcon
+            self.updateOptionsMenu()
+        })
+        
+        return UIMenu(title: NSLocalizedString("Options", comment: ""),
+                      image: UIImage(systemName: "gearshape"),
+                      children: [forceAspectOption, newGameIconOption, pauseIconOption, favoritesIconOption])
     }
     
     func makeArtworkStyleMenu() -> UIMenu
