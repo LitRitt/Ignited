@@ -3157,7 +3157,12 @@ private extension GameViewController
         {
             guard Settings.gameplayFeatures.quickSettings.shakeToOpen else
             {
-                self.performPauseAction()
+                switch Settings.gameplayFeatures.pauseMenu.shakeToPause
+                {
+                case .enabled: self.performPauseAction()
+                case .gyroDisables where !self.isGyroActive: self.performPauseAction()
+                default: break
+                }
                 return
             }
             

@@ -10,6 +10,24 @@ import SwiftUI
 
 import Features
 
+enum ShakeToPauseMode: String, CaseIterable, CustomStringConvertible
+{
+    case enabled = "Enabled"
+    case gyroDisables = "Gyro Disables"
+    case disabled = "Disabled"
+    
+    var description: String {
+        return self.rawValue
+    }
+}
+
+extension ShakeToPauseMode: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        return Text(self.description)
+    }
+}
+
 extension [String]: LocalizedOptionValue
 {
     public var localizedDescription: Text {
@@ -32,6 +50,11 @@ struct PauseMenuOptions
         }
     })
     var buttonOrder: [String] = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Cheat Codes", "Alt Skin", "Debug Mode"]
+    
+    @Option(name: "Shake to Open",
+            description: "Allows you to shake your device to open the pause menu. Only works when all other device shake features are disabled. This feature acts as a failsafe to ensure you can always access the pause menu even if you are unable to via the controller or skin. Disable at your own risk.",
+            values: ShakeToPauseMode.allCases)
+    var shakeToPause: ShakeToPauseMode = .enabled
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
