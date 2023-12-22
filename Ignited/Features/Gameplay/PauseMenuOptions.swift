@@ -20,7 +20,7 @@ extension [String]: LocalizedOptionValue
 struct PauseMenuOptions
 {
     @Option(name: "Button Order",
-            description: "Change the order that buttons appear in the pause menu.",
+            description: "Change the order that buttons appear in the pause menu. Tap and hold an item to move it up or down the list.",
             detailView: { items in
         List {
             ForEach(items, id: \.self) { $item in
@@ -30,7 +30,6 @@ struct PauseMenuOptions
                 items.wrappedValue.move(fromOffsets: from, toOffset: to)
             }
         }
-//        .environment(\.editMode, .constant(.active))
     })
     var buttonOrder: [String] = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Cheat Codes", "Alt Skin", "Debug Mode"]
     
@@ -38,7 +37,7 @@ struct PauseMenuOptions
             description: "Reset all options to their default values.",
             detailView: { _ in
         Button("Restore Defaults") {
-            PowerUserOptions.resetFeature(.gameAudio)
+            PowerUserOptions.resetFeature(.pauseMenu)
         }
         .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(.red)

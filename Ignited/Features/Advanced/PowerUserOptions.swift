@@ -315,6 +315,7 @@ extension PowerUserOptions
         // N64
         case n64Graphics
         // Gameplay
+        case pauseMenu
         case gameScreenshot
         case gameAudio
         case saveStateRewind
@@ -365,6 +366,9 @@ extension PowerUserOptions
                 
             case .n64Graphics:
                 Settings.n64Features.n64graphics.graphicsAPI = .openGLES2
+                
+            case .pauseMenu:
+                Settings.gameplayFeatures.pauseMenu.buttonOrder = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Cheat Codes", "Alt Skin", "Debug Mode"]
                 
             case .gameScreenshot:
                 Settings.gameplayFeatures.screenshots.saveLocation = .photos
