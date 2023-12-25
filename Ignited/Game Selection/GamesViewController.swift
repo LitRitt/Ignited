@@ -213,6 +213,15 @@ private extension GamesViewController
         self.searchController?.searchHandler = { [weak self, weak searchResultsController] (searchValue, _) in
             guard let self = self else { return nil }
             
+            if self.searchController?.searchBar.text?.isEmpty == false
+            {
+                self.pageViewController.view.isHidden = true
+            }
+            else
+            {
+                self.pageViewController.view.isHidden = false
+            }
+            
             searchResultsController?.dataSource.predicate = searchValue.predicate
             return nil
         }
