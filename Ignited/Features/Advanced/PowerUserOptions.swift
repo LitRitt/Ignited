@@ -64,17 +64,17 @@ struct PowerUserOptions
     })
     var resetAllSettings: String = ""
     
-    @Option(name: "Copy Google Drive Refresh Token",
-            description: "This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.",
-            detailView: { _ in
-        Button("Copy Google Drive Refresh Token") {
-            copyGoogleDriveRefreshToken()
-        }
-        .font(.system(size: 17, weight: .bold, design: .default))
-        .foregroundColor(.red)
-        .displayInline()
-    })
-    var copyGoogleDriveRefreshToken: String = ""
+//    @Option(name: "Copy Google Drive Refresh Token",
+//            description: "This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.",
+//            detailView: { _ in
+//        Button("Copy Google Drive Refresh Token") {
+//            copyGoogleDriveRefreshToken()
+//        }
+//        .font(.system(size: 17, weight: .bold, design: .default))
+//        .foregroundColor(.red)
+//        .displayInline()
+//    })
+//    var copyGoogleDriveRefreshToken: String = ""
     
     @Option(name: "Reset Build Counter",
             description: "This will force update actions, such as repairs, to be taken next app launch.",
@@ -106,46 +106,46 @@ extension PowerUserOptions
         toast.show(in: topViewController.view, duration: 5.0)
     }
     
-    static func copyGoogleDriveRefreshToken()
-    {
-        guard let topViewController = UIApplication.shared.topViewController() else { return }
-        
-        guard Settings.advancedFeatures.powerUser.isEnabled else {
-            self.showFeatureDisabledNotification(topViewController)
-            return
-        }
-        
-        let alertController = UIAlertController(title: NSLocalizedString("Copy Refresh Token?", comment: ""), message: NSLocalizedString("This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.", comment: ""), preferredStyle: .alert)
-        alertController.popoverPresentationController?.sourceView = topViewController.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
-            
-            guard let coordinator = SyncManager.shared.coordinator else
-            {
-                let toast = RSTToastView(text: NSLocalizedString("Failed to copy token", comment: ""), detailText: NSLocalizedString("You must enable Ignited Sync and use the Google Drive service.", comment: ""))
-                toast.show(in: topViewController.view, duration: 5.0)
-                return
-            }
-            
-            guard let service = coordinator.service as? DriveService,
-                  let token = service.refreshToken else
-            {
-                let toast = RSTToastView(text: NSLocalizedString("Failed to copy token", comment: ""), detailText: NSLocalizedString("You must use the Google Drive service with Ignited Sync. The Dropbox service is not supported.", comment: ""))
-                toast.show(in: topViewController.view, duration: 5.0)
-                return
-            }
-
-            UIPasteboard.general.string = token
-            let toast = RSTToastView(text: NSLocalizedString("Successfully copied token", comment: ""), detailText: NSLocalizedString("Paste it in a safe place, and only use it with applications and services you trust.", comment: ""))
-            toast.show(in: topViewController.view, duration: 5.0)
-        }))
-        
-        alertController.addAction(.cancel)
-        
-        topViewController.present(alertController, animated: true, completion: nil)
-    }
+//    static func copyGoogleDriveRefreshToken()
+//    {
+//        guard let topViewController = UIApplication.shared.topViewController() else { return }
+//        
+//        guard Settings.advancedFeatures.powerUser.isEnabled else {
+//            self.showFeatureDisabledNotification(topViewController)
+//            return
+//        }
+//        
+//        let alertController = UIAlertController(title: NSLocalizedString("Copy Refresh Token?", comment: ""), message: NSLocalizedString("This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.", comment: ""), preferredStyle: .alert)
+//        alertController.popoverPresentationController?.sourceView = topViewController.view
+//        alertController.popoverPresentationController?.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.maxY, width: 0, height: 0)
+//        alertController.popoverPresentationController?.permittedArrowDirections = []
+//        
+//        alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
+//            
+//            guard let coordinator = SyncManager.shared.coordinator else
+//            {
+//                let toast = RSTToastView(text: NSLocalizedString("Failed to copy token", comment: ""), detailText: NSLocalizedString("You must enable Ignited Sync and use the Google Drive service.", comment: ""))
+//                toast.show(in: topViewController.view, duration: 5.0)
+//                return
+//            }
+//            
+//            guard let service = coordinator.service as? DriveService,
+//                  let token = service.refreshToken else
+//            {
+//                let toast = RSTToastView(text: NSLocalizedString("Failed to copy token", comment: ""), detailText: NSLocalizedString("You must use the Google Drive service with Ignited Sync. The Dropbox service is not supported.", comment: ""))
+//                toast.show(in: topViewController.view, duration: 5.0)
+//                return
+//            }
+//
+//            UIPasteboard.general.string = token
+//            let toast = RSTToastView(text: NSLocalizedString("Successfully copied token", comment: ""), detailText: NSLocalizedString("Paste it in a safe place, and only use it with applications and services you trust.", comment: ""))
+//            toast.show(in: topViewController.view, duration: 5.0)
+//        }))
+//        
+//        alertController.addAction(.cancel)
+//        
+//        topViewController.present(alertController, animated: true, completion: nil)
+//    }
 
     static func clearAutoSaveStates()
     {
