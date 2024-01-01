@@ -16,18 +16,6 @@ import Roxas
 
 struct PowerUserOptions
 {
-    @Option(name: "Fix Game Collection Associations",
-            description: "This will fix any games that are associated with the wrong collections.",
-            detailView: { _ in
-        Button("Fix Game Collection Associations") {
-            fixGameCollections()
-        }
-        .font(.system(size: 17, weight: .bold, design: .default))
-        .foregroundColor(.red)
-        .displayInline()
-    })
-    var fixGameCollections: String = ""
-    
     @Option(name: "Clear Auto Save States",
             description: "This will delete all auto save states from every game. The auto-load save states feature relies on these auto save states to resume your game where you left off. Deleting them can be useful to reduce the size of your Sync backup.",
             detailView: { _ in
@@ -75,6 +63,18 @@ struct PowerUserOptions
 //        .displayInline()
 //    })
 //    var copyGoogleDriveRefreshToken: String = ""
+    
+    @Option(name: "Fix Game Collection Associations",
+            description: "This will fix any games that are associated with the wrong collections.",
+            detailView: { _ in
+        Button("Fix Game Collection Associations") {
+            fixGameCollections()
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
+        .displayInline()
+    })
+    var fixGameCollections: String = ""
     
     @Option(name: "Reset Build Counter",
             description: "This will force update actions, such as repairs, to be taken next app launch.",
