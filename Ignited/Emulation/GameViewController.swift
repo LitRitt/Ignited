@@ -2246,6 +2246,7 @@ extension GameViewController
     func performMainMenuAction()
     {
         self.dismissQuickSettings()
+        self.updateAutoSaveState()
         self.pauseEmulation()
         self.controllerView.resignFirstResponder()
         self._isQuickSettingsOpen = false
