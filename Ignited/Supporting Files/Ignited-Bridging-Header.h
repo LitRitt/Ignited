@@ -4,3 +4,5 @@
 
 #import "NSFetchedResultsController+Conveniences.h"
 #import "ControllerSkinConfigurations.h"
+#import "ALTPatreonBenefitType.h"
+#import "ALTSourceUserInfoKey.h"

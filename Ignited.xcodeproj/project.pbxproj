@@ -47,7 +47,7 @@
 		AC24C4272B1AB1CB0054278D /* StatusBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC24C4262B1AB1CB0054278D /* StatusBarOptions.swift */; };
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */; };
-		AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D0A842A19702C00EEEB39 /* Patron.swift */; };
+		AC2D0A852A19702C00EEEB39 /* LegacyPatron.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D0A842A19702C00EEEB39 /* LegacyPatron.swift */; };
 		AC31535C2AFC094C004EB51E /* UIApplication+Webpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */; };
 		AC3BC8E72B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */; };
 		AC3CE7F62A2BA822008A8C43 /* LibraryFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */; };
@@ -100,6 +100,18 @@
 		AC8E5BCA29CCF77700F32D19 /* UIColor+AdjustHSBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8E5BC929CCF77700F32D19 /* UIColor+AdjustHSBA.swift */; };
 		AC99B33D2B254B10001A2A1F /* PauseMenuOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99B33C2B254B10001A2A1F /* PauseMenuOptions.swift */; };
 		ACAAE2FA2A0E337F004E0B3A /* CGColor+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */; };
+		ACAB77172B468BA3001AB619 /* PatreonAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77162B468BA3001AB619 /* PatreonAccount.swift */; };
+		ACAB771B2B468C6B001AB619 /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB771A2B468C6B001AB619 /* Fetchable.swift */; };
+		ACAB77222B468C81001AB619 /* Benefit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB771D2B468C80001AB619 /* Benefit.swift */; };
+		ACAB77232B468C81001AB619 /* PatreonAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB771E2B468C80001AB619 /* PatreonAPI.swift */; };
+		ACAB77242B468C81001AB619 /* Campaign.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB771F2B468C80001AB619 /* Campaign.swift */; };
+		ACAB77252B468C81001AB619 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77202B468C80001AB619 /* Patron.swift */; };
+		ACAB77262B468C81001AB619 /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77212B468C80001AB619 /* Tier.swift */; };
+		ACAB772F2B468CF3001AB619 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77292B468CF3001AB619 /* LoadingState.swift */; };
+		ACAB77302B468CF3001AB619 /* ALTPatreonBenefitType.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAB772B2B468CF3001AB619 /* ALTPatreonBenefitType.m */; };
+		ACAB77312B468CF3001AB619 /* ALTAppPermission.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAB772C2B468CF3001AB619 /* ALTAppPermission.m */; };
+		ACAB77322B468CF3001AB619 /* ALTSourceUserInfoKey.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAB772E2B468CF3001AB619 /* ALTSourceUserInfoKey.m */; };
+		ACAB773B2B46926F001AB619 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB773A2B46926F001AB619 /* Keychain.swift */; };
 		ACB3CB8A29FDCF2A002B53DE /* GameScreenshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */; };
 		ACB3CB8C29FDCF4D002B53DE /* ToastNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */; };
 		ACB3CB8E29FDD3E9002B53DE /* TouchFeedbackFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */; };
@@ -119,6 +131,8 @@
 		ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */; };
 		ACD5FA052A0C4D58005CDCF1 /* GameboyPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */; };
+		ACE43DB62B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */; };
+		ACE43DB82B4695A200AD9287 /* Result+Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
 		ACFFFB582B1BB92600273BB4 /* SustainButtonsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */; };
 		BF00BEA625B758AA00C8607D /* SystemBIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00BEA525B758AA00C8607D /* SystemBIOS.swift */; };
@@ -320,7 +334,7 @@
 		AC24C4262B1AB1CB0054278D /* StatusBarOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarOptions.swift; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtworkOptions.swift; sourceTree = "<group>"; };
-		AC2D0A842A19702C00EEEB39 /* Patron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
+		AC2D0A842A19702C00EEEB39 /* LegacyPatron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyPatron.swift; sourceTree = "<group>"; };
 		AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Webpage.swift"; sourceTree = "<group>"; };
 		AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ArtworkIndicators.swift"; sourceTree = "<group>"; };
 		AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryFeatures.swift; sourceTree = "<group>"; };
@@ -373,6 +387,21 @@
 		AC8E5BC929CCF77700F32D19 /* UIColor+AdjustHSBA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AdjustHSBA.swift"; sourceTree = "<group>"; };
 		AC99B33C2B254B10001A2A1F /* PauseMenuOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseMenuOptions.swift; sourceTree = "<group>"; };
 		ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+RGB.swift"; sourceTree = "<group>"; };
+		ACAB77162B468BA3001AB619 /* PatreonAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatreonAccount.swift; sourceTree = "<group>"; };
+		ACAB771A2B468C6B001AB619 /* Fetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
+		ACAB771D2B468C80001AB619 /* Benefit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Benefit.swift; sourceTree = "<group>"; };
+		ACAB771E2B468C80001AB619 /* PatreonAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatreonAPI.swift; sourceTree = "<group>"; };
+		ACAB771F2B468C80001AB619 /* Campaign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Campaign.swift; sourceTree = "<group>"; };
+		ACAB77202B468C80001AB619 /* Patron.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
+		ACAB77212B468C80001AB619 /* Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
+		ACAB77282B468CF3001AB619 /* ALTAppPermission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTAppPermission.h; sourceTree = "<group>"; };
+		ACAB77292B468CF3001AB619 /* LoadingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		ACAB772A2B468CF3001AB619 /* ALTSourceUserInfoKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTSourceUserInfoKey.h; sourceTree = "<group>"; };
+		ACAB772B2B468CF3001AB619 /* ALTPatreonBenefitType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALTPatreonBenefitType.m; sourceTree = "<group>"; };
+		ACAB772C2B468CF3001AB619 /* ALTAppPermission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALTAppPermission.m; sourceTree = "<group>"; };
+		ACAB772D2B468CF3001AB619 /* ALTPatreonBenefitType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTPatreonBenefitType.h; sourceTree = "<group>"; };
+		ACAB772E2B468CF3001AB619 /* ALTSourceUserInfoKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALTSourceUserInfoKey.m; sourceTree = "<group>"; };
+		ACAB773A2B46926F001AB619 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenshotOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotificationOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackFeatures.swift; sourceTree = "<group>"; };
@@ -391,6 +420,8 @@
 		ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFeatures.swift; sourceTree = "<group>"; };
 		ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboyPaletteOptions.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatronsView.swift; sourceTree = "<group>"; };
+		ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+ManagedObjectContext.swift"; sourceTree = "<group>"; };
+		ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Conveniences.swift"; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
 		ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SustainButtonsOptions.swift; sourceTree = "<group>"; };
 		B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CodeSigning.xcconfig; sourceTree = "<group>"; };
@@ -646,6 +677,8 @@
 		AC3C7A682B07D2C90027F07B /* System */ = {
 			isa = PBXGroup;
 			children = (
+				ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */,
+				ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */,
 				AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */,
 				BF647A6922FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift */,
 				AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */,
@@ -848,6 +881,48 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
+		ACAB77182B468BBC001AB619 /* Patreon */ = {
+			isa = PBXGroup;
+			children = (
+				ACAB77162B468BA3001AB619 /* PatreonAccount.swift */,
+			);
+			path = Patreon;
+			sourceTree = "<group>";
+		};
+		ACAB77192B468C50001AB619 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				ACAB771A2B468C6B001AB619 /* Fetchable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		ACAB771C2B468C80001AB619 /* Patreon */ = {
+			isa = PBXGroup;
+			children = (
+				ACAB771D2B468C80001AB619 /* Benefit.swift */,
+				ACAB771E2B468C80001AB619 /* PatreonAPI.swift */,
+				ACAB771F2B468C80001AB619 /* Campaign.swift */,
+				ACAB77202B468C80001AB619 /* Patron.swift */,
+				ACAB77212B468C80001AB619 /* Tier.swift */,
+			);
+			path = Patreon;
+			sourceTree = "<group>";
+		};
+		ACAB77272B468CF3001AB619 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				ACAB77282B468CF3001AB619 /* ALTAppPermission.h */,
+				ACAB77292B468CF3001AB619 /* LoadingState.swift */,
+				ACAB772A2B468CF3001AB619 /* ALTSourceUserInfoKey.h */,
+				ACAB772B2B468CF3001AB619 /* ALTPatreonBenefitType.m */,
+				ACAB772C2B468CF3001AB619 /* ALTAppPermission.m */,
+				ACAB772D2B468CF3001AB619 /* ALTPatreonBenefitType.h */,
+				ACAB772E2B468CF3001AB619 /* ALTSourceUserInfoKey.m */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
 		ACB3CB8529FDCEAD002B53DE /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -894,7 +969,7 @@
 		ACD727D129EE0B200028B8A8 /* Patrons */ = {
 			isa = PBXGroup;
 			children = (
-				AC2D0A842A19702C00EEEB39 /* Patron.swift */,
+				AC2D0A842A19702C00EEEB39 /* LegacyPatron.swift */,
 				ACD727D429EE0BDD0028B8A8 /* PatronsView.swift */,
 			);
 			path = Patrons;
@@ -984,6 +1059,7 @@
 		BF5942571E09BB5D0051894B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				ACAB773A2B46926F001AB619 /* Keychain.swift */,
 				BF4828871F90290F00028B97 /* Action.swift */,
 				BF1F45BE21AF676F00EF9895 /* Box.swift */,
 				BFE0229C1F5B56840052D888 /* Popover Menu */,
@@ -1035,6 +1111,7 @@
 				BF6B82A31F7CC29A00042BFB /* Transformers */,
 				BFEF24F01F7DD4B600454C62 /* Migrations */,
 				BF5942761E09BC7C0051894B /* Misc */,
+				ACAB77182B468BBC001AB619 /* Patreon */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1347,6 +1424,9 @@
 				BF59428C1E09BCE50051894B /* Importing */,
 				BF930FFB1EB6D6EC00E8DBA0 /* Systems */,
 				BF525EE61FF5F355004AA849 /* Deep Linking */,
+				ACAB771C2B468C80001AB619 /* Patreon */,
+				ACAB77192B468C50001AB619 /* Protocols */,
+				ACAB77272B468CF3001AB619 /* Types */,
 				BF5942571E09BB5D0051894B /* Components */,
 				BF696B7E1D9B2AE6009639E0 /* Theming */,
 				BF090CEE1B490C1A00DCAB45 /* Extensions */,
@@ -1517,7 +1597,7 @@
 			);
 			mainGroup = BFFA71CE1AAC406100EE9DD1;
 			packageReferences = (
-				D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */,
+				D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */,
 			);
 			productRefGroup = BFFA71D81AAC406100EE9DD1 /* Products */;
 			projectDirPath = "";
@@ -1682,6 +1762,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACAB772F2B468CF3001AB619 /* LoadingState.swift in Sources */,
 				BFB3645823245A6000CD0EB1 /* LicensesViewController.swift in Sources */,
 				BFC6F7B81F435BC500221B96 /* Input+Display.swift in Sources */,
 				BF59426A1E09BBD00051894B /* GridCollectionViewCell.swift in Sources */,
@@ -1705,7 +1786,7 @@
 				AC4C1A7E29E4B15D0031B0AD /* Bundle+BuildNumber.swift in Sources */,
 				BFA0D1271D3AE1F600565894 /* GameViewController.swift in Sources */,
 				BF59428A1E09BC8B0051894B /* _SaveState.swift in Sources */,
-				AC2D0A852A19702C00EEEB39 /* Patron.swift in Sources */,
+				AC2D0A852A19702C00EEEB39 /* LegacyPatron.swift in Sources */,
 				ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudioOptions.swift in Sources */,
 				BFC1F2CC22F9515F00606A45 /* CopyDeepLinkActivity.swift in Sources */,
 				BF5942801E09BC830051894B /* SaveState.swift in Sources */,
@@ -1728,8 +1809,10 @@
 				BFFC46201D59823500AF2CC6 /* InitialGamesStoryboardSegue.swift in Sources */,
 				BF15AF841F54B43B009B6AAB /* ActionInput.swift in Sources */,
 				AC1EAE6B2A006CC30072C858 /* SkinDebugOptions.swift in Sources */,
+				ACE43DB62B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift in Sources */,
 				BF4828841F9027B600028B97 /* Delta.xcdatamodeld in Sources */,
 				BF5942951E09BD1A0051894B /* NSManagedObjectContext+Conveniences.swift in Sources */,
+				ACAB771B2B468C6B001AB619 /* Fetchable.swift in Sources */,
 				AC24C4272B1AB1CB0054278D /* StatusBarOptions.swift in Sources */,
 				AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */,
 				ACFFFB582B1BB92600273BB4 /* SustainButtonsOptions.swift in Sources */,
@@ -1741,6 +1824,7 @@
 				BF18B61F1E2985F900F70067 /* UIAlertController+Importing.swift in Sources */,
 				AC5A40762B2106470049B755 /* MappingGameViewController.swift in Sources */,
 				D586497229774ABD0081477E /* CheatBase.swift in Sources */,
+				ACE43DB82B4695A200AD9287 /* Result+Conveniences.swift in Sources */,
 				BFDD04F11D5E2C27002D450E /* GameCollectionViewController.swift in Sources */,
 				BFE4269E1D9C68E600DC913F /* SaveStatesStoryboardSegue.swift in Sources */,
 				AC1EAE6F2A0154380072C858 /* FeatureSectionView.swift in Sources */,
@@ -1783,6 +1867,7 @@
 				AC2059E82A112DA30098266B /* QuickSettingsView.swift in Sources */,
 				AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */,
 				ACCD9DB52A01A54200B235C4 /* ThemeOptions.swift in Sources */,
+				ACAB77232B468C81001AB619 /* PatreonAPI.swift in Sources */,
 				BF3D6C53220286750083E05A /* Delta3ToDelta4.xcmappingmodel in Sources */,
 				BF5942881E09BC8B0051894B /* _Game.swift in Sources */,
 				AC89DC992A4CACFC000DBD0C /* ControllerFeatures.swift in Sources */,
@@ -1793,10 +1878,13 @@
 				AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */,
 				AC84B57229FF1A780090F274 /* RewindOptions.swift in Sources */,
 				ACCD9DB92A01BA5500B235C4 /* AppIconOptions.swift in Sources */,
+				ACAB77172B468BA3001AB619 /* PatreonAccount.swift in Sources */,
+				ACAB77222B468C81001AB619 /* Benefit.swift in Sources */,
 				BF2B98E61C97E32F00F6D57D /* SaveStatesCollectionHeaderView.swift in Sources */,
 				BFC9B7391CEFCD34008629BB /* CheatsViewController.swift in Sources */,
 				D5864978297756CE0081477E /* CheatBaseView.swift in Sources */,
 				ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */,
+				ACAB77252B468C81001AB619 /* Patron.swift in Sources */,
 				BF353FFF1C5DA3C500C1184C /* PausePresentationController.swift in Sources */,
 				ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */,
 				AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */,
@@ -1813,6 +1901,7 @@
 				BF6EE5E91F7C5F860051AD6C /* _GameControllerInputMapping.swift in Sources */,
 				BF5942871E09BC8B0051894B /* _ControllerSkin.swift in Sources */,
 				BF95E2791E4982A10030E7AD /* GamesDatabaseBrowserViewController.swift in Sources */,
+				ACAB77322B468CF3001AB619 /* ALTSourceUserInfoKey.m in Sources */,
 				AC3BC8E72B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift in Sources */,
 				D524F4A3273DE9C000D500B2 /* ProcessInfo+JIT.swift in Sources */,
 				BFDCA1E9244F7E1000B8FBDB /* Delta5ToDelta6.xcmappingmodel in Sources */,
@@ -1824,6 +1913,7 @@
 				AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */,
 				AC99B33D2B254B10001A2A1F /* PauseMenuOptions.swift in Sources */,
 				AC2059EA2A117B570098266B /* QuickSettingsOptions.swift in Sources */,
+				ACAB773B2B46926F001AB619 /* Keychain.swift in Sources */,
 				BF107EC41BF413F000E0C32C /* GamesViewController.swift in Sources */,
 				BF3D6C512202865F0083E05A /* Delta2ToDelta3.xcmappingmodel in Sources */,
 				BF59426F1E09BC5D0051894B /* DatabaseManager.swift in Sources */,
@@ -1836,6 +1926,7 @@
 				AC56DDF22A35F3F2007C8372 /* N64GraphicsOptions.swift in Sources */,
 				ACAAE2FA2A0E337F004E0B3A /* CGColor+RGB.swift in Sources */,
 				BFAB9F7D219A43380080EC7D /* SyncManager.swift in Sources */,
+				ACAB77262B468C81001AB619 /* Tier.swift in Sources */,
 				AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */,
 				ACB3CB8E29FDD3E9002B53DE /* TouchFeedbackFeatures.swift in Sources */,
 				AC89DC9B2A4CADD6000DBD0C /* BackgroundBlurOptions.swift in Sources */,
@@ -1852,6 +1943,7 @@
 				BF8CA9361F5F651900499FDD /* PopoverMenuController.swift in Sources */,
 				BFEF24F31F7DD4FD00454C62 /* SaveStateMigrationPolicy.swift in Sources */,
 				BF5942931E09BD1A0051894B /* NSFetchedResultsController+Conveniences.m in Sources */,
+				ACAB77302B468CF3001AB619 /* ALTPatreonBenefitType.m in Sources */,
 				BF4828881F90290F00028B97 /* Action.swift in Sources */,
 				ACD727D529EE0BDD0028B8A8 /* PatronsView.swift in Sources */,
 				BF6BF3271EB87EB8008E83CD /* PhotoLibraryImportOption.swift in Sources */,
@@ -1861,6 +1953,8 @@
 				BF696B801D9B2B02009639E0 /* Theme.swift in Sources */,
 				BF7AE8081C2E858400B1B5BC /* GridMenuViewController.swift in Sources */,
 				BF6BF31A1EB82146008E83CD /* ClipboardImportOption.swift in Sources */,
+				ACAB77242B468C81001AB619 /* Campaign.swift in Sources */,
+				ACAB77312B468CF3001AB619 /* ALTAppPermission.m in Sources */,
 				BF59427F1E09BC830051894B /* GameCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2215,7 +2309,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */ = {
+		D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rileytestut/AltKit.git";
 			requirement = {
@@ -2228,7 +2322,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D524F4A0273DE9A100D500B2 /* AltKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit.git" */;
+			package = D524F49F273DE9A100D500B2 /* XCRemoteSwiftPackageReference "AltKit" */;
 			productName = AltKit;
 		};
 /* End XCSwiftPackageProductDependency section */

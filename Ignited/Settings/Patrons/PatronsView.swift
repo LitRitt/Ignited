@@ -22,7 +22,7 @@ extension PatronsView
     fileprivate class ViewModel: ObservableObject
     {
         @Published
-        var patrons: [Patron]?
+        var patrons: [LegacyPatron]?
         
         @Published
         var error: Error?
@@ -48,7 +48,7 @@ extension PatronsView
                     {
                         if let data = data
                         {
-                            let patrons = try PropertyListDecoder().decode([Patron].self, from: data)
+                            let patrons = try PropertyListDecoder().decode([LegacyPatron].self, from: data)
                             DispatchQueue.main.async {
                                 self.patrons = patrons
                             }
@@ -127,7 +127,7 @@ struct PatronsView: View
         }
     }
     
-    fileprivate init(patrons: [Patron]? = nil, viewModel: ViewModel = ViewModel())
+    fileprivate init(patrons: [LegacyPatron]? = nil, viewModel: ViewModel = ViewModel())
     {
         if let patrons
         {
