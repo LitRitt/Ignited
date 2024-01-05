@@ -213,7 +213,7 @@ extension PatreonAPI
                         }
                         
                         return patron
-                    }.filter { $0.benefits.contains(where: { $0.type == .credits }) }
+                    }.filter { $0.benefits.contains(where: { $0.type == .credit }) }
                     
                     allPatrons.append(contentsOf: patrons)
                     

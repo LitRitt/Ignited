@@ -107,9 +107,6 @@
 		ACAB77242B468C81001AB619 /* Campaign.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB771F2B468C80001AB619 /* Campaign.swift */; };
 		ACAB77252B468C81001AB619 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77202B468C80001AB619 /* Patron.swift */; };
 		ACAB77262B468C81001AB619 /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77212B468C80001AB619 /* Tier.swift */; };
-		ACAB772F2B468CF3001AB619 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77292B468CF3001AB619 /* LoadingState.swift */; };
-		ACAB77302B468CF3001AB619 /* ALTPatreonBenefitType.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAB772B2B468CF3001AB619 /* ALTPatreonBenefitType.m */; };
-		ACAB77322B468CF3001AB619 /* ALTSourceUserInfoKey.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAB772E2B468CF3001AB619 /* ALTSourceUserInfoKey.m */; };
 		ACAB773B2B46926F001AB619 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB773A2B46926F001AB619 /* Keychain.swift */; };
 		ACB3CB8A29FDCF2A002B53DE /* GameScreenshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */; };
 		ACB3CB8C29FDCF4D002B53DE /* ToastNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */; };
@@ -400,11 +397,6 @@
 		ACAB771F2B468C80001AB619 /* Campaign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Campaign.swift; sourceTree = "<group>"; };
 		ACAB77202B468C80001AB619 /* Patron.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
 		ACAB77212B468C80001AB619 /* Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
-		ACAB77292B468CF3001AB619 /* LoadingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
-		ACAB772A2B468CF3001AB619 /* ALTSourceUserInfoKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTSourceUserInfoKey.h; sourceTree = "<group>"; };
-		ACAB772B2B468CF3001AB619 /* ALTPatreonBenefitType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALTPatreonBenefitType.m; sourceTree = "<group>"; };
-		ACAB772D2B468CF3001AB619 /* ALTPatreonBenefitType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTPatreonBenefitType.h; sourceTree = "<group>"; };
-		ACAB772E2B468CF3001AB619 /* ALTSourceUserInfoKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALTSourceUserInfoKey.m; sourceTree = "<group>"; };
 		ACAB773A2B46926F001AB619 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenshotOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotificationOptions.swift; sourceTree = "<group>"; };
@@ -919,18 +911,6 @@
 				ACAB77212B468C80001AB619 /* Tier.swift */,
 			);
 			path = Patreon;
-			sourceTree = "<group>";
-		};
-		ACAB77272B468CF3001AB619 /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				ACAB77292B468CF3001AB619 /* LoadingState.swift */,
-				ACAB772A2B468CF3001AB619 /* ALTSourceUserInfoKey.h */,
-				ACAB772B2B468CF3001AB619 /* ALTPatreonBenefitType.m */,
-				ACAB772D2B468CF3001AB619 /* ALTPatreonBenefitType.h */,
-				ACAB772E2B468CF3001AB619 /* ALTSourceUserInfoKey.m */,
-			);
-			path = Types;
 			sourceTree = "<group>";
 		};
 		ACB3CB8529FDCEAD002B53DE /* Features */ = {
@@ -1450,7 +1430,6 @@
 				BF525EE61FF5F355004AA849 /* Deep Linking */,
 				ACAB771C2B468C80001AB619 /* Patreon */,
 				ACAB77192B468C50001AB619 /* Protocols */,
-				ACAB77272B468CF3001AB619 /* Types */,
 				BF5942571E09BB5D0051894B /* Components */,
 				BF696B7E1D9B2AE6009639E0 /* Theming */,
 				BF090CEE1B490C1A00DCAB45 /* Extensions */,
@@ -1789,7 +1768,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACAB772F2B468CF3001AB619 /* LoadingState.swift in Sources */,
 				BFB3645823245A6000CD0EB1 /* LicensesViewController.swift in Sources */,
 				BFC6F7B81F435BC500221B96 /* Input+Display.swift in Sources */,
 				BF59426A1E09BBD00051894B /* GridCollectionViewCell.swift in Sources */,
@@ -1930,7 +1908,6 @@
 				BF6EE5E91F7C5F860051AD6C /* _GameControllerInputMapping.swift in Sources */,
 				BF5942871E09BC8B0051894B /* _ControllerSkin.swift in Sources */,
 				BF95E2791E4982A10030E7AD /* GamesDatabaseBrowserViewController.swift in Sources */,
-				ACAB77322B468CF3001AB619 /* ALTSourceUserInfoKey.m in Sources */,
 				AC3BC8E72B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift in Sources */,
 				D524F4A3273DE9C000D500B2 /* ProcessInfo+JIT.swift in Sources */,
 				BFDCA1E9244F7E1000B8FBDB /* Delta5ToDelta6.xcmappingmodel in Sources */,
@@ -1974,7 +1951,6 @@
 				ACE43DD02B478EDD00AD9287 /* PatreonSecrets.swift in Sources */,
 				BFEF24F31F7DD4FD00454C62 /* SaveStateMigrationPolicy.swift in Sources */,
 				BF5942931E09BD1A0051894B /* NSFetchedResultsController+Conveniences.m in Sources */,
-				ACAB77302B468CF3001AB619 /* ALTPatreonBenefitType.m in Sources */,
 				BF4828881F90290F00028B97 /* Action.swift in Sources */,
 				ACD727D529EE0BDD0028B8A8 /* PremiumPatronsView.swift in Sources */,
 				BF6BF3271EB87EB8008E83CD /* PhotoLibraryImportOption.swift in Sources */,

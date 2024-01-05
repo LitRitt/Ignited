@@ -16,12 +16,22 @@ extension PatreonAPI
     }
 }
 
+enum BenefitType: String
+{
+    case credit = "14405923"
+    case pro = "14401724"
+    case premium = "12920203"
+    case testFlight = "14405936"
+    case ota = "14390870"
+}
+
 struct Benefit: Hashable
 {
-    var type: ALTPatreonBenefitType
+    var type: BenefitType
     
     init(response: PatreonAPI.BenefitResponse)
     {
-        self.type = ALTPatreonBenefitType(response.id)
+        print(response.id)
+        self.type = BenefitType(rawValue: response.id) ?? .pro
     }
 }

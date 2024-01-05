@@ -11,14 +11,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="AboutHeader" id="xq2-Pl-zaG" customClass="AboutPatreonHeaderView" customModule="Ignited" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="580"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="568"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="XiA-Jf-XMp">
-                    <rect key="frame" x="16" y="2" width="343" height="528"/>
+                    <rect key="frame" x="16" y="2" width="343" height="546"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5Ol-zN-wYv">
-                            <rect key="frame" x="0.0" y="0.0" width="343" height="388"/>
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="406"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="f7H-EV-7Sx">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
@@ -53,11 +53,11 @@
                                     </constraints>
                                 </stackView>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FeG-e5-LJl">
-                                    <rect key="frame" x="0.0" y="65" width="343" height="323"/>
+                                    <rect key="frame" x="0.0" y="65" width="343" height="341"/>
                                     <color key="backgroundColor" white="0.5" alpha="0.25" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <mutableString key="text">Thanks for using Ignited! 🔥
 
-If you'd like to support me and the development of this app, consider becoming a patron. All patrons will gain access to Pro features of the app, as well as other benefits.
+If you'd like to support me and the development of this app, consider becoming a patron. All patrons will gain access to Pro features of the app and have their name listed below.
 
 OTA members are able to install and update the app by simply visiting a link in Safari. No signing service required, ne revokes, and no refreshing.
 
@@ -69,7 +69,7 @@ Premium members get their name listed in the app, with the option to provide a p
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="QS9-vO-bj8">
-                            <rect key="frame" x="0.0" y="413" width="343" height="115"/>
+                            <rect key="frame" x="0.0" y="431" width="343" height="115"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEi-L6-kQ8">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
@@ -101,7 +101,7 @@ Premium members get their name listed in the app, with the option to provide a p
             <constraints>
                 <constraint firstAttribute="trailingMargin" secondItem="XiA-Jf-XMp" secondAttribute="trailing" id="5Am-7b-Fwq"/>
                 <constraint firstItem="XiA-Jf-XMp" firstAttribute="leading" secondItem="xq2-Pl-zaG" secondAttribute="leadingMargin" id="IRk-tt-CTc"/>
-                <constraint firstAttribute="bottom" secondItem="XiA-Jf-XMp" secondAttribute="bottom" constant="50" id="dcS-XA-ZLZ"/>
+                <constraint firstAttribute="bottom" secondItem="XiA-Jf-XMp" secondAttribute="bottom" constant="20" id="dcS-XA-ZLZ"/>
                 <constraint firstItem="XiA-Jf-XMp" firstAttribute="top" secondItem="xq2-Pl-zaG" secondAttribute="top" constant="2" id="j8p-JX-Dcz"/>
             </constraints>
             <connections>

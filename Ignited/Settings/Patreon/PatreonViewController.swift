@@ -110,7 +110,7 @@ private extension PatreonViewController
         let defaultText = NSLocalizedString("""
         Thanks for using Ignited! 🔥
 
-        If you'd like to support me and the development of this app, consider becoming a patron. All patrons will gain access to Pro features of the app, as well as other benefits.
+        If you'd like to support me and the development of this app, consider becoming a patron. All patrons will gain access to Pro features of the app and have their name listed below.
 
         OTA members are able to install and update the app by simply visiting a link in Safari. No signing service required, ne revokes, and no refreshing.
 
@@ -276,7 +276,7 @@ extension PatreonViewController
             if kind == UICollectionView.elementKindSectionHeader
             {
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "PatronsHeader", for: indexPath) as! PatronsHeaderView
-                headerView.textLabel.text = NSLocalizedString("Special thanks to...", comment: "")
+                headerView.textLabel.text = NSLocalizedString("Ignited Patrons", comment: "")
                 return headerView
             }
             else
