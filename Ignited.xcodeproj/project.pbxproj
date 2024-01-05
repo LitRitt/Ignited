@@ -1355,12 +1355,12 @@
 		BFEC732F1AAECCBD00650035 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				ACE43DCA2B47680700AD9287 /* contributors.plist */,
-				ACE43DCB2B47680700AD9287 /* patrons.plist */,
 				AC53406029E32139009EDF08 /* Button Sounds */,
 				BF6BB2451BB73FE800CCF94A /* Assets.xcassets */,
 				BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */,
 				D5D797E7298DC9E200738869 /* cheatbase.zip */,
+				ACE43DCA2B47680700AD9287 /* contributors.plist */,
+				ACE43DCB2B47680700AD9287 /* patrons.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

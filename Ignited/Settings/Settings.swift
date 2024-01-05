@@ -103,10 +103,10 @@ struct Settings
 extension Settings
 {
     /// Update
-        static var lastUpdateShown: Int {
-            set { UserDefaults.standard.lastUpdateShown = newValue }
-            get { return UserDefaults.standard.lastUpdateShown }
-        }
+    static var lastUpdateShown: Int {
+        set { UserDefaults.standard.lastUpdateShown = newValue }
+        get { return UserDefaults.standard.lastUpdateShown }
+    }
     
     /// Controllers
     static var localControllerPlayerIndex: Int? = 0 {
@@ -334,6 +334,13 @@ extension Settings
         {
             NotificationCenter.default.post(name: Settings.didChangeNotification, object: controllerSkin, userInfo: [NotificationUserInfoKey.name: Name.preferredControllerSkin, NotificationUserInfoKey.system: system, NotificationUserInfoKey.traits: traits])
         }
+    }
+    
+    static func proFeaturesEnabled() -> Bool
+    {
+        guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
+                
+        return patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated
     }
 }
 
