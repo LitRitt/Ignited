@@ -152,7 +152,7 @@ struct ThemeOptions
             description: "Choose an accent color for the app. Custom options require Ignited Pro.",
             detailView: { value in
         Picker("Color", selection: value) {
-            ForEach(Settings.proFeaturesEnabled() ? ThemeColor.allCases : ThemeColor.allCases.filter { $0 != .custom }, id: \.self) { color in
+            ForEach(ThemeColor.allCases.filter { Settings.proFeaturesEnabled() || $0 != .custom }, id: \.self) { color in
                 color.localizedDescription
             }
         }.pickerStyle(.menu)
