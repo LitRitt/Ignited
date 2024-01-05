@@ -80,10 +80,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
     {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        
-        PatreonAPI.shared.refreshPatreonAccount()
-        PatreonAPI.shared.refreshCreatorAccessToken()
-        PatreonAPI.shared.updateProFeatures()
     }
     
     func sceneDidEnterBackground(_ scene: UIScene)

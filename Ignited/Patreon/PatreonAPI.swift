@@ -252,6 +252,10 @@ extension PatreonAPI
                 completion(.failure(error))
             }
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.updateProFeatures()
+        }
     }
 }
 

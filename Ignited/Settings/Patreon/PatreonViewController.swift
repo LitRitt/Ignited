@@ -118,7 +118,7 @@ private extension PatreonViewController
         """, comment: "")
         
         let isPatronText = NSLocalizedString("""
-        Thanks for becoming a patron! ❤️‍🔥
+        , thanks for becoming a patron! ❤️‍🔥
         
         Your account was linked successfully, and you now have access to Pro features of Ignited. A welcome message was sent to you on Patreon explaining how to access the other benefits of your membership.
         
@@ -142,7 +142,7 @@ private extension PatreonViewController
                 let boldedName = NSAttributedString(string: account.firstName ?? account.name,
                                                     attributes: [.font: UIFont.boldSystemFont(ofSize: font.pointSize),
                                                                  .foregroundColor: UIColor.label])
-                attributedText.insert(boldedName, at: 4)
+                attributedText.insert(boldedName, at: 0)
                 
                 headerView.textView.attributedText = attributedText
             }
