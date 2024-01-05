@@ -17,12 +17,12 @@ private extension NavigationLink where Label == EmptyView, Destination == EmptyV
     }
 }
 
-extension PatronsView
+extension PremiumPatronsView
 {
     fileprivate class ViewModel: ObservableObject
     {
         @Published
-        var patrons: [LegacyPatron]?
+        var patrons: [PremiumPatron]?
         
         @Published
         var error: Error?
@@ -48,7 +48,7 @@ extension PatronsView
                     {
                         if let data = data
                         {
-                            let patrons = try PropertyListDecoder().decode([LegacyPatron].self, from: data)
+                            let patrons = try PropertyListDecoder().decode([PremiumPatron].self, from: data)
                             DispatchQueue.main.async {
                                 self.patrons = patrons
                             }
@@ -71,10 +71,10 @@ extension PatronsView
     static func makeViewController() -> UIHostingController<some View>
     {
         let viewModel = ViewModel()
-        let contributorsView = PatronsView(viewModel: viewModel)
+        let contributorsView = PremiumPatronsView(viewModel: viewModel)
         
         let hostingController = UIHostingController(rootView: contributorsView)
-        hostingController.title = NSLocalizedString("Patrons", comment: "")
+        hostingController.title = NSLocalizedString("Premium", comment: "")
         
         viewModel.hostingController = hostingController
                 
@@ -82,7 +82,7 @@ extension PatronsView
     }
 }
 
-struct PatronsView: View
+struct PremiumPatronsView: View
 {
     @StateObject
     private var viewModel: ViewModel
@@ -93,14 +93,14 @@ struct PatronsView: View
     var body: some View {
         List {
             Section(content: {}, footer: {
-                Text("These individuals have become patrons of the highest tier. Their monetary contributions help make the continued development of this app possible. ❤️‍🔥")
+                Text("These individuals have become patrons of the highest tier. Their support helps make the continued development of this app possible. Please consider visiting their links below and supporting them in some way as well. ❤️‍🔥")
                     .font(.subheadline)
             })
             
             ForEach(viewModel.patrons ?? []) { patron in
                 Section {
                     // First row = contributor
-                    PatronCell(name: Text(patron.name).bold(), url: patron.url, linkName: patron.linkName) { webViewURL in
+                    PremiumPatronCell(name: Text(patron.name).bold(), url: patron.url, linkName: patron.linkName) { webViewURL in
                         viewModel.webViewURL = webViewURL
                     }
                 }
@@ -127,7 +127,7 @@ struct PatronsView: View
         }
     }
     
-    fileprivate init(patrons: [LegacyPatron]? = nil, viewModel: ViewModel = ViewModel())
+    fileprivate init(patrons: [PremiumPatron]? = nil, viewModel: ViewModel = ViewModel())
     {
         if let patrons
         {
@@ -139,7 +139,7 @@ struct PatronsView: View
     }
 }
 
-struct PatronCell: View
+struct PremiumPatronCell: View
 {
     var name: Text
     var url: URL?
@@ -194,7 +194,7 @@ struct PatronCell: View
     }
 }
 
-private extension PatronsView
+private extension PremiumPatronsView
 {
     func openURL(_ url: URL)
     {

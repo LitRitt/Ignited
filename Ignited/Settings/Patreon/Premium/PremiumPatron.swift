@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LegacyPatron: Identifiable, Decodable
+struct PremiumPatron: Identifiable, Decodable
 {
     var name: String
     

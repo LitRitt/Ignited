@@ -9,10 +9,10 @@
 import Foundation
 import AuthenticationServices
 
-private let clientID = "ZMx0EGUWe4TVWYXNZZwK_fbIK5jHFVWoUf1Qb-sqNXmT-YzAGwDPxxq7ak3_W5Q2"
-private let clientSecret = "1hktsZB89QyN69cB4R0tu55R4TCPQGXxvebYUUh7Y-5TLSnRswuxs6OUjdJ74IJt"
+private let clientID = "CglZbTZWwHIP8YGQpWirvzy7Xxn3uYyBQqYjGYnoYn-01wX-99JmZFkVZGVcybMS"
+private let clientSecret = "14BcPFbIT52Qfzg4mRmS7CWkN02NmMQkKaBjNDopiEynpcivvRd0rNRtYdxnnJn9"
 
-private let campaignID = "2863968"
+private let campaignID = "6668073"
 
 extension PatreonAPI
 {
@@ -96,11 +96,11 @@ extension PatreonAPI
         var components = URLComponents(string: "/oauth2/authorize")!
         components.queryItems = [URLQueryItem(name: "response_type", value: "code"),
                                  URLQueryItem(name: "client_id", value: clientID),
-                                 URLQueryItem(name: "redirect_uri", value: "https://rileytestut.com/patreon/altstore")]
+                                 URLQueryItem(name: "redirect_uri", value: "https://litritt.com/patreon/ignited")]
         
         let requestURL = components.url(relativeTo: self.baseURL)!
         
-        self.authenticationSession = ASWebAuthenticationSession(url: requestURL, callbackURLScheme: "altstore") { (callbackURL, error) in
+        self.authenticationSession = ASWebAuthenticationSession(url: requestURL, callbackURLScheme: "ignited") { (callbackURL, error) in
             do
             {
                 let callbackURL = try Result(callbackURL, error).get()
@@ -273,13 +273,18 @@ extension PatreonAPI
             }
         }
     }
+    
+    func refreshCreatorAccessToken()
+    {
+        Keychain.shared.patreonCreatorAccessToken = PatreonSecrets.shared.patreonCreatorAccessToken
+    }
 }
 
 private extension PatreonAPI
 {
     func fetchAccessToken(oauthCode: String, completion: @escaping (Result<(String, String), Swift.Error>) -> Void)
     {
-        let encodedRedirectURI = ("https://rileytestut.com/patreon/altstore" as NSString).addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        let encodedRedirectURI = ("https://litritt.com/patreon/ignited" as NSString).addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         let encodedOauthCode = (oauthCode as NSString).addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
         let body = "code=\(encodedOauthCode)&grant_type=authorization_code&client_id=\(clientID)&client_secret=\(clientSecret)&redirect_uri=\(encodedRedirectURI)"

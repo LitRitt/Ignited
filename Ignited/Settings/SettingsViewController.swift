@@ -17,6 +17,7 @@ private extension SettingsViewController
 {
     enum Section: Int, CaseIterable
     {
+        case patreon
         case syncing
         case features
         case cores
@@ -26,7 +27,6 @@ private extension SettingsViewController
         case skinDownloads
         case resourceLinks
         case officialLinks
-        case patreon
         case credits
     }
     
@@ -85,8 +85,8 @@ private extension SettingsViewController
     
     enum PatreonRow: Int, CaseIterable
     {
-        case patreonLink
-        case patrons
+        case patreonPro
+        case patreonPremium
     }
     
     enum CoresRow: Int, CaseIterable
@@ -226,9 +226,9 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    func showPatrons()
+    func showPremiumPatrons()
     {
-        let hostingController = PatronsView.makeViewController()
+        let hostingController = PremiumPatronsView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -413,8 +413,8 @@ extension SettingsViewController
         case .patreon:
             switch PatreonRow.allCases[indexPath.row]
             {
-            case .patreonLink: UIApplication.shared.openAppOrWebpage(site: "https://www.patreon.com/litritt")
-            case .patrons: self.showPatrons()
+            case .patreonPro: break
+            case .patreonPremium: self.showPremiumPatrons()
             }
             
             tableView.deselectRow(at: indexPath, animated: true)
