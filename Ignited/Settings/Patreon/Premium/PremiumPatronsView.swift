@@ -160,11 +160,13 @@ struct PremiumPatronCell: View
         } label: {
             HStack {
                 Text("🔥")
+                Spacer()
                 
                 self.name
                     .font(.system(size: 17)) // Match Settings screen
                 
                 Spacer()
+                Text("🔥")
                 
                 if let linkName
                 {

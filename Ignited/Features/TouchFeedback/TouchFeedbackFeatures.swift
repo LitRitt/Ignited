@@ -24,7 +24,8 @@ struct TouchFeedbackFeatures: FeatureContainer
     
     @Feature(name: "Touch Sounds",
              description: "Play sounds when interacting with controller skins.",
-             options: TouchFeedbackAudioOptions())
+             options: TouchFeedbackAudioOptions(),
+             pro: true)
     var touchAudio
     
     private init()

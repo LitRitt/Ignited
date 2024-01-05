@@ -26,7 +26,8 @@ struct ControllerFeatures: FeatureContainer
     
     @Feature(name: "Background Blur",
              description: "Use a blurred game screen as the background of skins.",
-             options: BackgroundBlurOptions())
+             options: BackgroundBlurOptions(),
+             pro: true)
     var backgroundBlur
     
     @Feature(name: "AirPlay Skins",

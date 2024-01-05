@@ -19,21 +19,49 @@ struct FeatureSection<T: AnyFeature>: View
         Section {
             if feature.allOptions.isEmpty
             {
-                Toggle(feature.name, isOn: $feature.isEnabled)
-                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                if feature.pro && !Settings.proFeaturesEnabled()
+                {
+                    HStack {
+                        Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                        Spacer()
+                    }.contentShape(Rectangle())
+                        .onTapGesture {
+                        UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this feature", comment: ""))
+                    }
+                }
+                else
+                {
+                    Toggle(isOn: $feature.isEnabled) {
+                        Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                    }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                }
             }
             else
             {
-                NavigationLink(destination: FeatureDetailView(feature: feature)) {
-                    if !feature.permanent {
-                        Toggle(feature.name, isOn: $feature.isEnabled)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                    } else {
-                        Text(feature.name)
+                if feature.pro && !Settings.proFeaturesEnabled()
+                {
+                    HStack {
+                        Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                        Spacer()
+                    }.contentShape(Rectangle())
+                        .onTapGesture {
+                        UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this feature", comment: ""))
+                    }
+                }
+                else
+                {
+                    NavigationLink(destination: FeatureDetailView(feature: feature)) {
+                        if !feature.permanent {
+                            Toggle(isOn: $feature.isEnabled) {
+                                Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                            }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                        } else {
+                            Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                        }
                     }
                 }
             }
-        }  footer: {
+        } footer: {
             if let description = feature.description
             {
                 Text(description)
@@ -79,6 +107,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
     let name: LocalizedStringKey
     let value: any LocalizedOptionValue
     let detailView: DetailView
+    let pro: Bool
     
     let option: Option
     
@@ -97,6 +126,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
         self.name = name
         self.value = value
         self.detailView = detailView
+        self.pro = option.pro
         
         self.option = option
     }
@@ -107,32 +137,45 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                 .environment(\.managedObjectContext, DatabaseManager.shared.viewContext)
                 .environment(\.featureOption, option)
             
-            if displayInline
+            if pro && !Settings.proFeaturesEnabled()
             {
-                // Display entire view inline.
-                detailView
+                HStack {
+                    Text(name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                    Spacer()
+                }.contentShape(Rectangle())
+                    .onTapGesture {
+                    UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this option", comment: ""))
+                }
             }
             else
             {
-                let wrappedDetailView = Form {
+                if displayInline
+                {
+                    // Display entire view inline.
                     detailView
                 }
-
-                NavigationLink(destination: wrappedDetailView) {
-                    HStack {
-                        Text(name)
-                        Spacer()
-
-                        value.localizedDescription
-                            .foregroundColor(.secondary)
+                else
+                {
+                    let wrappedDetailView = Form {
+                        detailView
                     }
+                    
+                    NavigationLink(destination: wrappedDetailView) {
+                        HStack {
+                            Text(name) + Text(pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                            Spacer()
+                            
+                            value.localizedDescription
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .overlay(
+                        // Hack to ensure displayInline preference is in View hierarchy.
+                        detailView
+                            .hidden()
+                            .frame(width: 0, height: 0)
+                    )
                 }
-                .overlay(
-                    // Hack to ensure displayInline preference is in View hierarchy.
-                    detailView
-                        .hidden()
-                        .frame(width: 0, height: 0)
-                )
             }
         }
         .onPreferenceChange(DisplayInlineKey.self) { displayInline in

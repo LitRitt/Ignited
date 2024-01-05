@@ -12,12 +12,15 @@ import SwiftUI
 public struct OptionToggleView: View
 {
     var name: LocalizedStringKey
+    var pro: Bool
     
     @Binding
     var selectedValue: Bool
 
     public var body: some View {
-        Toggle(name, isOn: $selectedValue)
+        Toggle(isOn: $selectedValue) {
+            Text(name) + Text(pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+        }
             .toggleStyle(SwitchToggleStyle(tint: .accentColor))
             .displayInline()
     }

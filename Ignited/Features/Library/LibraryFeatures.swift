@@ -26,7 +26,8 @@ struct LibraryFeatures: FeatureContainer
     
     @Feature(name: "Animated Artwork",
              description: "Bring your Library to life with your favorite GIFs.",
-             options: AnimatedArtworkOptions())
+             options: AnimatedArtworkOptions(),
+             pro: true)
     var animation
     
     private init()

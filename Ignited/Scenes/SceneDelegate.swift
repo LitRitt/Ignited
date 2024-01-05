@@ -83,6 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         
         PatreonAPI.shared.refreshPatreonAccount()
         PatreonAPI.shared.refreshCreatorAccessToken()
+        PatreonAPI.shared.updateProFeatures()
     }
     
     func sceneDidEnterBackground(_ scene: UIScene)

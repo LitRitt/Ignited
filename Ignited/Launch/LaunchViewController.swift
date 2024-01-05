@@ -112,6 +112,7 @@ extension LaunchViewController
         
         PatreonAPI.shared.refreshPatreonAccount()
         PatreonAPI.shared.refreshCreatorAccessToken()
+        PatreonAPI.shared.updateProFeatures()
         
         self.presentedGameViewController = true
         

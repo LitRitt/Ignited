@@ -31,7 +31,6 @@ struct Benefit: Hashable
     
     init(response: PatreonAPI.BenefitResponse)
     {
-        print(response.id)
         self.type = BenefitType(rawValue: response.id) ?? .pro
     }
 }

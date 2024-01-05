@@ -278,6 +278,29 @@ extension PatreonAPI
     {
         Keychain.shared.patreonCreatorAccessToken = PatreonSecrets.shared.patreonCreatorAccessToken
     }
+    
+    func updateProFeatures()
+    {
+        if !Settings.proFeaturesEnabled()
+        {
+            Settings.gameplayFeatures.rewind.isEnabled = false
+            Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
+            Settings.controllerFeatures.backgroundBlur.isEnabled = false
+            if Settings.libraryFeatures.artwork.style == .custom {
+                Settings.libraryFeatures.artwork.style = .basic
+            }
+            if Settings.libraryFeatures.favorites.style == .custom {
+                Settings.libraryFeatures.favorites.style = .theme
+            }
+            Settings.libraryFeatures.animation.isEnabled = false
+            if Settings.userInterfaceFeatures.theme.color == .custom {
+                Settings.userInterfaceFeatures.theme.color = .orange
+            }
+            Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
+            Settings.touchFeedbackFeatures.touchAudio.isEnabled = false
+            AppIconOptions.updateAppIcon()
+        }
+    }
 }
 
 private extension PatreonAPI

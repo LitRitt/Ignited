@@ -82,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         PatreonAPI.shared.refreshPatreonAccount()
         PatreonAPI.shared.refreshCreatorAccessToken()
+        PatreonAPI.shared.updateProFeatures()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication)

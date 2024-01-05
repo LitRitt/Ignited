@@ -340,7 +340,7 @@ extension Settings
     {
         guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
                 
-        return patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated
+        return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated) || Settings.advancedFeatures.proOverride.isEnabled
     }
 }
 
