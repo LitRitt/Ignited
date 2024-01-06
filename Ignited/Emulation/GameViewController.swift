@@ -352,7 +352,8 @@ class GameViewController: DeltaCore.GameViewController
             case .toggleFastForward, .fastForward: fastForwardInput()
                 
             case .quickSettings:
-                if let action = Settings.gameplayFeatures.quickSettings.buttonReplacement
+                if let action = Settings.gameplayFeatures.quickSettings.buttonReplacement,
+                   Settings.proFeaturesEnabled()
                 {
                     switch action
                     {
@@ -1054,6 +1055,7 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
+                   Settings.proFeaturesEnabled(),
                    let core = self?.emulatorCore,
                    let buttonSoundFile = self?.buttonSoundFile
                 {
@@ -1065,6 +1067,7 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
+                   Settings.proFeaturesEnabled(),
                    let core = self?.emulatorCore,
                    let buttonSoundPlayer = self?.buttonSoundPlayer
                 {
@@ -1215,6 +1218,11 @@ private extension GameViewController
             var intensity = Settings.controllerFeatures.backgroundBlur.tintIntensity
             intensity.negate()
             self.blurScreenBrightness = intensity
+        }
+        
+        guard Settings.proFeaturesEnabled() else {
+            self.blurScreenEnabled = false
+            return
         }
         
         // Set enabled last as it's the property that triggers updateGameViews()
