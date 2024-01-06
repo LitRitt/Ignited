@@ -98,7 +98,7 @@ struct FavoriteGamesOptions
     
     @Option(name: "Style",
             description: "Choose the style to use for favorite game artwork. Custom options require Ignited Pro.",
-            values: Settings.proFeaturesEnabled() ? FavoriteArtworkStyle.allCases : [.none, .theme])
+            values: Settings.proFeaturesEnabled ? FavoriteArtworkStyle.allCases : [.none, .theme])
     var style: FavoriteArtworkStyle = .theme
     
     @Option(name: "Background Color Mode",

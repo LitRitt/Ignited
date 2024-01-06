@@ -353,7 +353,7 @@ class GameViewController: DeltaCore.GameViewController
                 
             case .quickSettings:
                 if let action = Settings.gameplayFeatures.quickSettings.buttonReplacement,
-                   Settings.proFeaturesEnabled()
+                   Settings.proFeaturesEnabled
                 {
                     switch action
                     {
@@ -1055,7 +1055,7 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   Settings.proFeaturesEnabled(),
+                   Settings.proFeaturesEnabled,
                    let core = self?.emulatorCore,
                    let buttonSoundFile = self?.buttonSoundFile
                 {
@@ -1067,7 +1067,7 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   Settings.proFeaturesEnabled(),
+                   Settings.proFeaturesEnabled,
                    let core = self?.emulatorCore,
                    let buttonSoundPlayer = self?.buttonSoundPlayer
                 {
@@ -1220,7 +1220,7 @@ private extension GameViewController
             self.blurScreenBrightness = intensity
         }
         
-        guard Settings.proFeaturesEnabled() else {
+        guard Settings.proFeaturesEnabled else {
             self.blurScreenEnabled = false
             return
         }

@@ -19,7 +19,7 @@ struct FeatureSection<T: AnyFeature>: View
         Section {
             if feature.allOptions.isEmpty
             {
-                if feature.pro && !Settings.proFeaturesEnabled()
+                if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
                         Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
@@ -38,7 +38,7 @@ struct FeatureSection<T: AnyFeature>: View
             }
             else
             {
-                if feature.pro && !Settings.proFeaturesEnabled()
+                if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
                         Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
@@ -137,7 +137,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                 .environment(\.managedObjectContext, DatabaseManager.shared.viewContext)
                 .environment(\.featureOption, option)
             
-            if pro && !Settings.proFeaturesEnabled()
+            if pro && !Settings.proFeaturesEnabled
             {
                 HStack {
                     Text(name) + Text(" (PRO)").foregroundColor(.accentColor).bold()

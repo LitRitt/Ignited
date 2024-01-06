@@ -336,11 +336,12 @@ extension Settings
         }
     }
     
-    static func proFeaturesEnabled() -> Bool
-    {
-        guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
-                
-        return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated) || Settings.advancedFeatures.proOverride.isEnabled
+    static var proFeaturesEnabled: Bool {
+        get {
+            guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
+            
+            return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated) || Settings.advancedFeatures.proOverride.isEnabled
+        }
     }
 }
 

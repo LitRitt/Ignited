@@ -285,7 +285,8 @@ extension PatreonAPI
     
     func updateProFeatures()
     {
-        if !Settings.proFeaturesEnabled()
+        // Reset all Pro settings if user isn't a Pro member
+        if !Settings.proFeaturesEnabled
         {
             Settings.gameplayFeatures.rewind.isEnabled = false
             Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
@@ -302,6 +303,15 @@ extension PatreonAPI
             }
             Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
             Settings.touchFeedbackFeatures.touchAudio.isEnabled = false
+            if Settings.gbFeatures.palettes.palette.pro {
+                Settings.gbFeatures.palettes.palette = .studio
+            }
+            if Settings.gbFeatures.palettes.spritePalette1.pro {
+                Settings.gbFeatures.palettes.spritePalette1 = .studio
+            }
+            if Settings.gbFeatures.palettes.spritePalette2.pro {
+                Settings.gbFeatures.palettes.spritePalette2 = .studio
+            }
             AppIconOptions.updateAppIcon()
         }
     }
