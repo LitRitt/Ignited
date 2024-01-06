@@ -537,6 +537,8 @@ private extension GameCollectionViewController
     
     func beginAnimatingArtwork(_ cell: GridCollectionViewGameCell, at indexPath: IndexPath)
     {
+        guard Settings.libraryFeatures.animation.isEnabled else { return }
+        
         let game = self.dataSource.item(at: indexPath)
         if let artworkURL = game.artworkURL,
            artworkURL.pathExtension.lowercased() == "gif"
