@@ -656,7 +656,7 @@ private extension GamesViewController
     {
         var themeColorOptions: [UIAction] = []
         
-        for themeColor in ThemeColor.allCases
+        for themeColor in ThemeColor.allCases.filter { Settings.proFeaturesEnabled() || $0 != .custom }
         {
             themeColorOptions.append(
                 UIAction(title: themeColor.description,
@@ -767,7 +767,7 @@ private extension GamesViewController
     {
         var artworkStyleOptions: [UIAction] = []
         
-        for artworkStyle in ArtworkStyle.allCases
+        for artworkStyle in ArtworkStyle.allCases.filter { Settings.proFeaturesEnabled() || $0 != .custom }
         {
             artworkStyleOptions.append(
                 UIAction(title: artworkStyle.description,

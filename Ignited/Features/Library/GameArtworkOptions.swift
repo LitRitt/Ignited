@@ -201,120 +201,20 @@ struct GameArtworkOptions
     @Option
     var size: ArtworkSize = .medium
     
-    @Option(name: "Style",
-            description: "Choose the style to use for game artwork.",
-            values: ArtworkStyle.allCases)
-    var style: ArtworkStyle = .basic
+    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
+    var showNewGames: Bool = true
     
-    @Option(name: "Background Color Mode",
-            values: ArtworkCustomColor.allCases)
-    var backgroundColorMode: ArtworkCustomColor = .custom
+    @Option(name: "Show Pause Icon", description: "Enable to show a pause icon on your artwork when that game is currently paused.")
+    var showPauseIcon: Bool = true
     
-    @Option(name: "Custom Background Color",
-            detailView: { value in
-        ColorPicker("Custom Background Color", selection: value, supportsOpacity: true)
-            .displayInline()
-    })
-    var backgroundColor: Color = .orange
+    @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
+    var useScreenshots: Bool = true
     
-    @Option(name: "Border Color Mode",
-            values: ArtworkCustomColor.allCases)
-    var borderColorMode: ArtworkCustomColor = .custom
-    
-    @Option(name: "Custom Border Color",
-            detailView: { value in
-        ColorPicker("Custom Border Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
-    var borderColor: Color = .orange
-    
-    @Option(name: "Text Color Mode",
-            values: ArtworkCustomColor.allCases)
-    var textColorMode: ArtworkCustomColor = .theme
-    
-    @Option(name: "Custom Text Color",
-            detailView: { value in
-        ColorPicker("Custom Text Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
-    var textColor: Color = .black
-    
-    @Option(name: "Shadow Color Mode",
-            values: ArtworkCustomColor.allCases)
-    var shadowColorMode: ArtworkCustomColor = .theme
-    
-    @Option(name: "Custom Shadow Color",
-            detailView: { value in
-        ColorPicker("Custom Shadow Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
-    var shadowColor: Color = .white
-    
-    @Option(name: "Custom Shadow Radius",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt")
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...10.0, step: 0.5)
-                Text("10pt")
-            }
-        }.displayInline()
-    })
-    var shadowRadius: Double = 5
-    
-    @Option(name: "Custom Shadow Opacity",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.1)
-                Text("100%")
-            }
-        }.displayInline()
-    })
-    var shadowOpacity: Double = 0.5
-    
-    @Option(name: "Custom Corner Radius",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...0.25, step: 0.01)
-                Text("25%")
-            }
-        }.displayInline()
-    })
-    var cornerRadius: Double = 0.15
-    
-    @Option(name: "Custom Border Width",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt")
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...3.0, step: 0.5)
-                Text("3pt")
-            }
-        }.displayInline()
-    })
-    var borderWidth: Double = 2
+    @Option(name: "Force Aspect Ratio", description: "Enable to make all artwork within a given system use consistent aspect ratios.")
+    var forceAspect: Bool = true
     
     @Option(name: "Title Size",
+            description: "Change the size of game titles.",
             detailView: { value in
         VStack {
             HStack {
@@ -331,6 +231,7 @@ struct GameArtworkOptions
     var titleSize: Double = 1.0
     
     @Option(name: "Title Max Lines",
+            description: "Change the maximum number of lines that game titles can occupy.",
             detailView: { value in
         VStack {
             HStack {
@@ -346,17 +247,146 @@ struct GameArtworkOptions
     })
     var titleMaxLines: Double = 3
     
-    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
-    var showNewGames: Bool = true
+    @Option(name: "Style",
+            description: "Choose the style to use for game artwork. Custom options require Ignited Pro.",
+            values: Settings.proFeaturesEnabled() ? ArtworkStyle.allCases : [.basic, .vibrant, .flat])
+    var style: ArtworkStyle = .basic
     
-    @Option(name: "Show Pause Icon", description: "Enable to show a pause icon on your artwork when that game is currently paused.")
-    var showPauseIcon: Bool = true
+    @Option(name: "Background Color Mode",
+            description: "Choose which background color to use with the custom style option.",
+            pro: true,
+            values: ArtworkCustomColor.allCases)
+    var backgroundColorMode: ArtworkCustomColor = .custom
     
-    @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
-    var useScreenshots: Bool = true
+    @Option(name: "Custom Background Color",
+            description: "Choose the color to use for the custom background color mode.",
+            pro: true,
+            detailView: { value in
+        ColorPicker(selection: value, supportsOpacity: true) {
+            Text("Custom Background Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
+    })
+    var backgroundColor: Color = .orange
     
-    @Option(name: "Force Aspect Ratio", description: "Enable to make all artwork within a given system use consistent aspect ratios.")
-    var forceAspect: Bool = true
+    @Option(name: "Border Color Mode",
+            description: "Choose which border color to use with the custom style option.",
+            pro: true,
+            values: ArtworkCustomColor.allCases)
+    var borderColorMode: ArtworkCustomColor = .custom
+    
+    @Option(name: "Custom Border Color",
+            description: "Choose the color to use for the custom border color mode.",
+            pro: true,
+            detailView: { value in
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Border Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
+    })
+    var borderColor: Color = .orange
+    
+    @Option(name: "Text Color Mode",
+            description: "Choose which text color to use with the custom style option.",
+            pro: true,
+            values: ArtworkCustomColor.allCases)
+    var textColorMode: ArtworkCustomColor = .theme
+    
+    @Option(name: "Custom Text Color",
+            description: "Choose the color to use for the custom text color mode.",
+            pro: true,
+            detailView: { value in
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Text Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
+    })
+    var textColor: Color = .black
+    
+    @Option(name: "Shadow Color Mode",
+            description: "Choose which shadow color to use with the custom style option.",
+            pro: true,
+            values: ArtworkCustomColor.allCases)
+    var shadowColorMode: ArtworkCustomColor = .theme
+    
+    @Option(name: "Custom Shadow Color",
+            description: "Choose the color to use for the custom shadow color mode.",
+            pro: true,
+            detailView: { value in
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Shadow Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
+    })
+    var shadowColor: Color = .white
+    
+    @Option(name: "Custom Shadow Radius",
+            description: "Change the shadow radius to use with the custom style option.",
+            pro: true,
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Spacer()
+            }
+            HStack {
+                Text("0pt")
+                Slider(value: value, in: 0.0...10.0, step: 0.5)
+                Text("10pt")
+            }
+        }.displayInline()
+    })
+    var shadowRadius: Double = 5
+    
+    @Option(name: "Custom Shadow Opacity",
+            description: "Change the shadow opacity to use with the custom style option.",
+            pro: true,
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...1.0, step: 0.1)
+                Text("100%")
+            }
+        }.displayInline()
+    })
+    var shadowOpacity: Double = 0.5
+    
+    @Option(name: "Custom Corner Radius",
+            description: "Change the corner radius to use with the custom style option.",
+            pro: true,
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Spacer()
+            }
+            HStack {
+                Text("0%")
+                Slider(value: value, in: 0.0...0.25, step: 0.01)
+                Text("25%")
+            }
+        }.displayInline()
+    })
+    var cornerRadius: Double = 0.15
+    
+    @Option(name: "Custom Border Width",
+            description: "Change the border witdh to use with the custom style option.",
+            pro: true,
+            detailView: { value in
+        VStack {
+            HStack {
+                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Spacer()
+            }
+            HStack {
+                Text("0pt")
+                Slider(value: value, in: 0.0...3.0, step: 0.5)
+                Text("3pt")
+            }
+        }.displayInline()
+    })
+    var borderWidth: Double = 2
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

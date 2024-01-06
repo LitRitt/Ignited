@@ -42,6 +42,7 @@ PODS:
   - Harmony/Harmony-Dropbox (0.1):
     - Roxas
     - SwiftyDropbox (~> 5.0.0)
+  - KeychainAccess (4.2.2)
   - MelonDSDeltaCore (0.1):
     - DeltaCore
   - N64DeltaCore (0.1):
@@ -74,6 +75,7 @@ DEPENDENCIES:
   - GBADeltaCore (from `Cores/GBADeltaCore`)
   - GBCDeltaCore (from `Cores/GBCDeltaCore`)
   - Harmony (from `External/Harmony`)
+  - KeychainAccess (~> 4.2.0)
   - MelonDSDeltaCore (from `Cores/MelonDSDeltaCore`)
   - N64DeltaCore (from `Cores/N64DeltaCore`)
   - NESDeltaCore (from `Cores/NESDeltaCore`)
@@ -91,6 +93,7 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - KeychainAccess
     - SDWebImage
     - SMCalloutView
     - SQLite.swift
@@ -130,11 +133,12 @@ SPEC CHECKSUMS:
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  Harmony: 107f1d950e4b1496364838df684429283fdc7bd8
+  Harmony: 1d8166b6168eec8cce046c4366765d15f7e3b9fc
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   MelonDSDeltaCore: 54593845eeccdfb343caaebcd4bfd48e4107aca1
   N64DeltaCore: c7a389b6cd3fe97a22395f0bfe9b26952798b3ef
   NESDeltaCore: ba4a55665370807587a4ce2df43febb9adc11cbd
-  Roxas: e033949a4635d421d80f2b594e27782c9c8630d3
+  Roxas: 1990039f843f5dc284918dc82375feb80020ef62
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
   SMCalloutView: 5c0ee363dc8e7204b2fda17dfad38c93e9e23481
   SNESDeltaCore: dd234d9bab44a42295ae06245718ca0c074ef8d2
@@ -142,6 +146,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: 378b4425a2e8d0cb24c7b0f2e3af72bfbaaf1e73
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: a20f7f53df009bbc122657539cd41e1cf31024fe
+PODFILE CHECKSUM: ed0291b75859be71272c9366eb56d90bfebb7138
 
 COCOAPODS: 1.14.3

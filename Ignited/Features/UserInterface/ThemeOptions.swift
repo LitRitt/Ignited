@@ -149,10 +149,10 @@ struct ThemeOptions
     var style: ThemeStyle = .auto
     
     @Option(name: "Color",
-            description: "Choose an accent color for the app.",
+            description: "Choose an accent color for the app. Custom options require Ignited Pro.",
             detailView: { value in
         Picker("Color", selection: value) {
-            ForEach(ThemeColor.allCases, id: \.self) { color in
+            ForEach(ThemeColor.allCases.filter { Settings.proFeaturesEnabled() || $0 != .custom }, id: \.self) { color in
                 color.localizedDescription
             }
         }.pickerStyle(.menu)
@@ -165,33 +165,41 @@ struct ThemeOptions
     
     @Option(name: "Custom Light Color",
             description: "Select a custom color to use with the light style.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Light Color", selection: value, supportsOpacity: false)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Light Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var lightColor: Color = .orange
     
     @Option(name: "Custom Dark Color",
             description: "Select a custom color to use with the dark style.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Dark Color", selection: value, supportsOpacity: false)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Dark Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var darkColor: Color = .orange
     
     @Option(name: "Custom Favorite Light Color",
             description: "Select a custom favorite color to use with the light style.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Favorite Light Color", selection: value, supportsOpacity: false)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Favorite Light Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var lightFavoriteColor: Color = .yellow
     
     @Option(name: "Custom Favorite Dark Color",
             description: "Select a custom favorite color to use with the dark style.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Favorite Dark Color", selection: value, supportsOpacity: false)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Favorite Dark Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var darkFavoriteColor: Color = .yellow
     

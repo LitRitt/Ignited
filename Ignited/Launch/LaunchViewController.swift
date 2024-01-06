@@ -110,6 +110,10 @@ extension LaunchViewController
         
         guard !self.presentedGameViewController else { return }
         
+        PatreonAPI.shared.refreshPatreonAccount()
+        PatreonAPI.shared.refreshCreatorAccessToken()
+        PatreonAPI.shared.updateProFeatures()
+        
         self.presentedGameViewController = true
         
         func showGameViewController()

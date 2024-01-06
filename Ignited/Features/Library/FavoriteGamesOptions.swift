@@ -93,60 +93,85 @@ struct FavoriteGamesOptions
     @Option
     var sortFirst: Bool = true
     
+    @Option(name: "Show Star Icon", description: "Enable to show a star icon on your favorite games' artwork.")
+    var showStarIcon: Bool = true
+    
     @Option(name: "Style",
-            description: "Choose the style to use for favorite game artwork.",
-            values: FavoriteArtworkStyle.allCases)
+            description: "Choose the style to use for favorite game artwork. Custom options require Ignited Pro.",
+            values: Settings.proFeaturesEnabled() ? FavoriteArtworkStyle.allCases : [.none, .theme])
     var style: FavoriteArtworkStyle = .theme
     
     @Option(name: "Background Color Mode",
+            description: "Choose which background color to use with the custom style option.",
+            pro: true,
             values: ArtworkCustomColor.allCases)
     var backgroundColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Background Color",
+            description: "Choose the color to use for the custom background color mode.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Background Color", selection: value, supportsOpacity: true)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: true) {
+            Text("Custom Background Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var backgroundColor: Color = .orange
     
     @Option(name: "Border Color Mode",
+            description: "Choose which border color to use with the custom style option.",
+            pro: true,
             values: ArtworkCustomColor.allCases)
     var borderColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Border Color",
+            description: "Choose the color to use for the custom border color mode.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Border Color", selection: value, supportsOpacity: false)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Border Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var borderColor: Color = .orange
     
     @Option(name: "Text Color Mode",
+            description: "Choose which text color to use with the custom style option.",
+            pro: true,
             values: ArtworkCustomColor.allCases)
     var textColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Text Color",
+            description: "Choose the color to use for the custom text color mode.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Text Color", selection: value, supportsOpacity: false)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Text Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var textColor: Color = .black
     
     @Option(name: "Shadow Color Mode",
+            description: "Choose which shadow color to use with the custom style option.",
+            pro: true,
             values: ArtworkCustomColor.allCases)
     var shadowColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Shadow Color",
+            description: "Choose the color to use for the custom shadow color mode.",
+            pro: true,
             detailView: { value in
-        ColorPicker("Custom Shadow Color", selection: value, supportsOpacity: false)
-            .displayInline()
+        ColorPicker(selection: value, supportsOpacity: false) {
+            Text("Custom Shadow Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+        }.displayInline()
     })
     var shadowColor: Color = .white
     
     @Option(name: "Custom Shadow Radius",
+            description: "Change the shadow radius to use with the custom style option.",
+            pro: true,
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt")
+                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
                 Spacer()
             }
             HStack {
@@ -159,10 +184,12 @@ struct FavoriteGamesOptions
     var shadowRadius: Double = 5
     
     @Option(name: "Custom Shadow Opacity",
+            description: "Change the shadow opacity to use with the custom style option.",
+            pro: true,
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
                 Spacer()
             }
             HStack {
@@ -175,10 +202,12 @@ struct FavoriteGamesOptions
     var shadowOpacity: Double = 0.5
     
     @Option(name: "Custom Corner Radius",
+            description: "Change the corner radius to use with the custom style option.",
+            pro: true,
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%")
+                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
                 Spacer()
             }
             HStack {
@@ -191,10 +220,12 @@ struct FavoriteGamesOptions
     var cornerRadius: Double = 0.15
     
     @Option(name: "Custom Border Width",
+            description: "Change the border witdh to use with the custom style option.",
+            pro: true,
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt")
+                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
                 Spacer()
             }
             HStack {
@@ -205,9 +236,6 @@ struct FavoriteGamesOptions
         }.displayInline()
     })
     var borderWidth: Double = 2
-    
-    @Option(name: "Show Star Icon", description: "Enable to show a star icon on your favorite games' artwork.")
-    var showStarIcon: Bool = true
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

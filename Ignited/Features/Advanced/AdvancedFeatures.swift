@@ -22,6 +22,17 @@ struct AdvancedFeatures: FeatureContainer
              options: SkinDebugOptions())
     var skinDebug
     
+    #if DEBUG
+    @Feature(name: "Enable Pro",
+             description: "For testing Ignited Pro features.")
+    var proOverride
+    #else
+    @Feature(name: "Enable Pro",
+             description: "For testing Ignited Pro features.",
+             hidden: true)
+    var proOverride
+    #endif
+    
     private init()
     {
         self.prepareFeatures()

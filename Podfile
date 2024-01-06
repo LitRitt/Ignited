@@ -8,6 +8,7 @@ target 'Ignited' do
     pod 'SQLite.swift', '~> 0.12.0'
     pod 'SDWebImage', '~> 3.8'
     pod 'SMCalloutView', '~> 2.1.0'
+    pod 'KeychainAccess', '~> 4.2.0'
 
     pod 'DeltaCore', :path => 'Cores/DeltaCore'
     pod 'NESDeltaCore', :path => 'Cores/NESDeltaCore'

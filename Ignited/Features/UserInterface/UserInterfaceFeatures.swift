@@ -21,7 +21,8 @@ struct UserInterfaceFeatures: FeatureContainer
     @Feature(name: "App Icon",
              description: "Change the app's icon.",
              options: AppIconOptions(),
-             permanent: true)
+             permanent: true,
+             pro: true)
     var appIcon
     
     @Feature(name: "Toast Notifications",

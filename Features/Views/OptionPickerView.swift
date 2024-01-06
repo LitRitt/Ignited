@@ -13,17 +13,22 @@ public struct OptionPickerView<Value: LocalizedOptionValue>: View
 {
     var name: LocalizedStringKey
     var options: [Value]
+    var pro: Bool
     
     @Binding
     var selectedValue: Value
 
     public var body: some View {
-        Picker(name, selection: $selectedValue) {
+        Picker(selection: $selectedValue, label: proLabel) {
             ForEach(options, id: \.self) { value in
                 value.localizedDescription
             }
         }
         .pickerStyle(.menu)
         .displayInline()
+    }
+    
+    var proLabel: some View {
+        Text(name) + Text(pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
     }
 }

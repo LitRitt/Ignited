@@ -15,6 +15,7 @@ public protocol AnyOption<Value>: AnyObject, Identifiable
     
     var name: LocalizedStringKey? { get }
     var description: LocalizedStringKey? { get }
+    var pro: Bool { get }
     
     var key: String { get }
     var settingsKey: SettingsName { get }
