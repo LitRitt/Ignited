@@ -744,6 +744,11 @@ extension GameViewController
                 pauseViewController.blurBackgroudItem = nil
             }
             
+            if !Settings.proFeaturesEnabled
+            {
+                pauseViewController.blurBackgroudItem = nil
+            }
+            
             if let url = self.game?.fileURL,
                let fileName = url.path.components(separatedBy: "/").last
             {
@@ -2587,7 +2592,7 @@ extension GameViewController
             alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
             alertController.popoverPresentationController?.permittedArrowDirections = []
             
-            for palette in GameboyPalette.allCases
+            for palette in GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled }
             {
                 let text = (Settings.gbFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                 alertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
