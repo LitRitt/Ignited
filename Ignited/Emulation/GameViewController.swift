@@ -1001,7 +1001,7 @@ private extension GameViewController
         self.controllerView.touchOverlayStyle = Settings.touchFeedbackFeatures.touchOverlay.style
         
         self.controllerView.isAltRepresentationsEnabled = Settings.advancedFeatures.skinDebug.useAlt
-        self.controllerView.isDebugModeEnabled = Settings.advancedFeatures.skinDebug.isOn
+        self.controllerView.isDebugModeEnabled = Settings.advancedFeatures.skinDebug.isOn && Settings.advancedFeatures.skinDebug.isEnabled
         
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
