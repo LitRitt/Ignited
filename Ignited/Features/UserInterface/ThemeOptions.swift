@@ -168,7 +168,7 @@ struct ThemeOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Light Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Light Color").addProLabel()
         }.displayInline()
     })
     var lightColor: Color = .orange
@@ -178,7 +178,7 @@ struct ThemeOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Dark Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Dark Color").addProLabel()
         }.displayInline()
     })
     var darkColor: Color = .orange
@@ -188,7 +188,7 @@ struct ThemeOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Favorite Light Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Favorite Light Color").addProLabel()
         }.displayInline()
     })
     var lightFavoriteColor: Color = .yellow
@@ -198,7 +198,7 @@ struct ThemeOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Favorite Dark Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Favorite Dark Color").addProLabel()
         }.displayInline()
     })
     var darkFavoriteColor: Color = .yellow

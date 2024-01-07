@@ -119,7 +119,7 @@ struct GameboyPaletteOptions
         List {
             ForEach(GameboyPalette.allCases.filter { !$0.custom }) { palette in
                 HStack {
-                    palette.localizedDescription + (palette.pro ? Text(" (PRO)").foregroundColor(.accentColor).bold() : Text(""))
+                    palette.localizedDescription.addProLabel(palette.pro)
                     Spacer()
                     Group {
                         Rectangle().foregroundColor(Color(fromRGB: palette.colors[0]))
@@ -156,7 +156,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { _ in
         HStack {
-            Text("Custom Palette 1") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Palette 1").addProLabel()
             Spacer()
             Group {
                 Rectangle().foregroundColor(Color(fromRGB: GameboyPalette.custom1.colors[0]))
@@ -172,7 +172,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 1") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 1").addProLabel()
         }.displayInline()
     })
     var customPalette1Color1: Color = Color(fromRGB: GameboyPalette.studio.colors[0])
@@ -181,7 +181,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 2") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 2").addProLabel()
         }.displayInline()
     })
     var customPalette1Color2: Color = Color(fromRGB: GameboyPalette.studio.colors[1])
@@ -190,7 +190,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 3") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 3").addProLabel()
         }.displayInline()
     })
     var customPalette1Color3: Color = Color(fromRGB: GameboyPalette.studio.colors[2])
@@ -199,7 +199,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 4") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 4").addProLabel()
         }.displayInline()
     })
     var customPalette1Color4: Color = Color(fromRGB: GameboyPalette.studio.colors[3])
@@ -208,7 +208,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { _ in
         HStack {
-            Text("Custom Palette 2") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Palette 2").addProLabel()
             Spacer()
             Group {
                 Rectangle().foregroundColor(Color(fromRGB: GameboyPalette.custom2.colors[0]))
@@ -224,7 +224,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 1") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 1").addProLabel()
         }.displayInline()
     })
     var customPalette2Color1: Color = Color(fromRGB: GameboyPalette.minty.colors[0])
@@ -233,7 +233,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 2") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 2").addProLabel()
         }.displayInline()
     })
     var customPalette2Color2: Color = Color(fromRGB: GameboyPalette.minty.colors[1])
@@ -242,7 +242,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 3") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 3").addProLabel()
         }.displayInline()
     })
     var customPalette2Color3: Color = Color(fromRGB: GameboyPalette.minty.colors[2])
@@ -251,7 +251,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 4") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 4").addProLabel()
         }.displayInline()
     })
     var customPalette2Color4: Color = Color(fromRGB: GameboyPalette.minty.colors[3])
@@ -260,7 +260,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { _ in
         HStack {
-            Text("Custom Palette 3") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Palette 3").addProLabel()
             Spacer()
             Group {
                 Rectangle().foregroundColor(Color(fromRGB: GameboyPalette.custom3.colors[0]))
@@ -276,7 +276,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 1") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 1").addProLabel()
         }.displayInline()
     })
     var customPalette3Color1: Color = Color(fromRGB: GameboyPalette.spacehaze.colors[0])
@@ -285,7 +285,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 2") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 2").addProLabel()
         }.displayInline()
     })
     var customPalette3Color2: Color = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
@@ -294,7 +294,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 3") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 3").addProLabel()
         }.displayInline()
     })
     var customPalette3Color3: Color = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
@@ -303,7 +303,7 @@ struct GameboyPaletteOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Color 4") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Color 4").addProLabel()
         }.displayInline()
     })
     var customPalette3Color4: Color = Color(fromRGB: GameboyPalette.spacehaze.colors[3])

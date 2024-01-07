@@ -19,7 +19,7 @@ public struct OptionToggleView: View
 
     public var body: some View {
         Toggle(isOn: $selectedValue) {
-            Text(name) + Text(pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+            Text(name).addProLabel(pro)
         }
             .toggleStyle(SwitchToggleStyle(tint: .accentColor))
             .displayInline()

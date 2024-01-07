@@ -112,7 +112,7 @@ struct FavoriteGamesOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: true) {
-            Text("Custom Background Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Background Color").addProLabel()
         }.displayInline()
     })
     var backgroundColor: Color = .orange
@@ -128,7 +128,7 @@ struct FavoriteGamesOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Border Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Border Color").addProLabel()
         }.displayInline()
     })
     var borderColor: Color = .orange
@@ -144,7 +144,7 @@ struct FavoriteGamesOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Text Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Text Color").addProLabel()
         }.displayInline()
     })
     var textColor: Color = .black
@@ -160,7 +160,7 @@ struct FavoriteGamesOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Shadow Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Shadow Color").addProLabel()
         }.displayInline()
     })
     var shadowColor: Color = .white
@@ -171,7 +171,7 @@ struct FavoriteGamesOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt").addProLabel()
                 Spacer()
             }
             HStack {
@@ -189,7 +189,7 @@ struct FavoriteGamesOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
                 Spacer()
             }
             HStack {
@@ -207,7 +207,7 @@ struct FavoriteGamesOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
                 Spacer()
             }
             HStack {
@@ -225,7 +225,7 @@ struct FavoriteGamesOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt").addProLabel()
                 Spacer()
             }
             HStack {

@@ -22,7 +22,7 @@ struct FeatureSection<T: AnyFeature>: View
                 if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
-                        Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                        Text(feature.name).addProLabel()
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
@@ -32,7 +32,7 @@ struct FeatureSection<T: AnyFeature>: View
                 else
                 {
                     Toggle(isOn: $feature.isEnabled) {
-                        Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                        Text(feature.name).addProLabel(feature.pro)
                     }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 }
             }
@@ -41,7 +41,7 @@ struct FeatureSection<T: AnyFeature>: View
                 if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
-                        Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                        Text(feature.name).addProLabel()
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
@@ -53,10 +53,10 @@ struct FeatureSection<T: AnyFeature>: View
                     NavigationLink(destination: FeatureDetailView(feature: feature)) {
                         if !feature.permanent {
                             Toggle(isOn: $feature.isEnabled) {
-                                Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                                Text(feature.name).addProLabel(feature.pro)
                             }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         } else {
-                            Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                            Text(feature.name).addProLabel(feature.pro)
                         }
                     }
                 }
@@ -140,7 +140,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
             if pro && !Settings.proFeaturesEnabled
             {
                 HStack {
-                    Text(name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                    Text(name).addProLabel()
                     Spacer()
                 }.contentShape(Rectangle())
                     .onTapGesture {
@@ -162,7 +162,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                     
                     NavigationLink(destination: wrappedDetailView) {
                         HStack {
-                            Text(name) + Text(pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                            Text(name).addProLabel(pro)
                             Spacer()
                             
                             value.localizedDescription
