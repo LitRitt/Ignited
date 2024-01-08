@@ -39,6 +39,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
     var rewindItem: MenuItem?
+    var microphoneItem: MenuItem?
     var rotationLockItem: MenuItem?
     var paletteItem: MenuItem?
     var quickSettingsItem: MenuItem?
@@ -220,6 +221,10 @@ private extension PauseViewController
                                         image: UIImage.symbolWithTemplate(name: "forward.fill"),
                                         action: { _ in })
         
+        self.microphoneItem = MenuItem(text: NSLocalizedString("Microphone", comment: ""),
+                                        image: UIImage.symbolWithTemplate(name: "mic.fill"),
+                                        action: { _ in })
+        
         if Settings.gameplayFeatures.rotationLock.isEnabled
         {
             self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""),
@@ -297,6 +302,7 @@ private extension PauseViewController
         case "Sustain Buttons": return self.sustainButtonsItem
         case "Rewind": return self.rewindItem
         case "Fast Forward": return self.fastForwardItem
+        case "Microphone": return self.microphoneItem
         case "Rotation Lock": return self.rotationLockItem
         case "Palettes": return self.paletteItem
         case "Quick Settings": return self.quickSettingsItem

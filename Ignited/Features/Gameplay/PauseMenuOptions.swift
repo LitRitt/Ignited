@@ -49,7 +49,7 @@ struct PauseMenuOptions
             }
         }
     })
-    var buttonOrder: [String] = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Cheat Codes", "Alt Skin", "Debug Mode"]
+    var buttonOrder: [String] = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Microphone", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Cheat Codes", "Alt Skin", "Debug Mode"]
     
     @Option(name: "Shake to Open",
             description: "Allows you to shake your device to open the pause menu. Only works when all other device shake features are disabled. This feature acts as a failsafe to ensure you can always access the pause menu even if you are unable to via the controller or skin. Disable at your own risk.",

@@ -605,6 +605,11 @@ extension GameViewController
                 self.performStatusBarAction(hold: true)
             }
             
+            pauseViewController.microphoneItem?.isSelected = Settings.gameplayFeatures.micSupport.isEnabled
+            pauseViewController.microphoneItem?.action = { [unowned self] item in
+                self.performMicrophoneAction()
+            }
+            
             func makeFastForwardSpeedMenu() -> UIMenu
             {
                 var fastForwardOptions: [UIMenuElement] = []
@@ -713,11 +718,19 @@ extension GameViewController
                 pauseViewController.paletteItem = nil
             }
             
+            if let game = self.game,
+               game.type != .ds
+            {
+                pauseViewController.microphoneItem = nil
+            }
+            
             switch self.game?.type
             {
             case .ds? where self.emulatorCore?.deltaCore == DS.core:
                 // Cheats are not supported by DeSmuME core.
                 pauseViewController.cheatCodesItem = nil
+                // Microphone is not supported by DeSmuME core.
+                pauseViewController.microphoneItem = nil
                 
             case .genesis?, .ms?, .gg?:
                 // GPGX core does not support cheats yet.
