@@ -1920,10 +1920,10 @@ extension GameViewController
         {
             if Settings.userInterfaceFeatures.statusBar.isEnabled {
                 Settings.userInterfaceFeatures.statusBar.isEnabled = false
-                text = NSLocalizedString("Status Bar: Enabled", comment: "")
+                text = NSLocalizedString("Status Bar: Disabled", comment: "")
             } else {
                 Settings.userInterfaceFeatures.statusBar.isEnabled = true
-                text = NSLocalizedString("Status Bar: Disabled", comment: "")
+                text = NSLocalizedString("Status Bar: Enabled", comment: "")
             }
         }
         
