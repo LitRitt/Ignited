@@ -31,8 +31,8 @@ struct UserInterfaceFeatures: FeatureContainer
     var toasts
     
     @Feature(name: "Status Bar",
-             options: StatusBarOptions(),
-             hidden: true)
+             description: "Show status bar during gameplay to keep track of time and battery usage.",
+             options: StatusBarOptions())
     var statusBar
     
     @Feature(name: "Random Game",
