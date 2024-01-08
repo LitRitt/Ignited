@@ -413,8 +413,8 @@ private extension GamesViewController
             listMenuViewController.items = items
         }
         
-        let title = traitCollection.userInterfaceIdiom == .pad ? Settings.previousGameCollection?.system?.localizedName : Settings.previousGameCollection?.system?.localizedShortName
-        popoverMenuController.popoverMenuButton.title = title ?? (self.title ?? NSLocalizedString("Games", comment: ""))
+        let title = Settings.previousGameCollection?.system?.localizedName ?? self.title
+        popoverMenuController.popoverMenuButton.title = title ?? NSLocalizedString("Games", comment: "")
     }
 }
 

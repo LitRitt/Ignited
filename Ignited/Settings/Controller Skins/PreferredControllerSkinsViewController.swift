@@ -46,7 +46,7 @@ extension PreferredControllerSkinsViewController
         
         if let system = self.system
         {
-            self.title = self.game?.name ?? system.localizedShortName
+            self.title = self.game?.name ?? system.localizedName
         }
         else
         {

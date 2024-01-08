@@ -33,7 +33,7 @@ class GameCollectionViewController: UICollectionViewController
 {
     var gameCollection: GameCollection? {
         didSet {
-            self.title = traitCollection.userInterfaceIdiom == .pad ? self.gameCollection?.name : self.gameCollection?.shortName
+            self.title = self.gameCollection?.name
             self.updateDataSource()
         }
     }
