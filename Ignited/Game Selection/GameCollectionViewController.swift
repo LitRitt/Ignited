@@ -1362,31 +1362,39 @@ extension GameCollectionViewController: UIViewControllerPreviewingDelegate
         let gameViewController = PreviewGameViewController()
         gameViewController.game = game
         
-        if let previewSaveState = game.previewSaveState
+        if Settings.userInterfaceFeatures.previews.isEnabled
         {
-            gameViewController.previewSaveState = previewSaveState
-            gameViewController.previewImage = UIImage(contentsOfFile: previewSaveState.imageFileURL.path)
-        }
-        else if Settings.gameplayFeatures.saveStates.autoLoad
-        {
-            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
-            
-            do
+            if let previewSaveState = game.previewSaveState
             {
-                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                gameViewController.previewSaveState = previewSaveState
+                gameViewController.previewImage = UIImage(contentsOfFile: previewSaveState.imageFileURL.path)
+            }
+            else if Settings.gameplayFeatures.saveStates.autoLoad
+            {
+                let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
                 
-                if let autoLoadState = saveStates?.last
+                do
                 {
-                    gameViewController.previewSaveState = autoLoadState
-                    gameViewController.previewImage = UIImage(contentsOfFile: autoLoadState.imageFileURL.path)
+                    let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                    
+                    if let autoLoadState = saveStates?.last
+                    {
+                        gameViewController.previewSaveState = autoLoadState
+                        gameViewController.previewImage = UIImage(contentsOfFile: autoLoadState.imageFileURL.path)
+                    }
+                }
+                catch
+                {
+                    print(error)
                 }
             }
-            catch
-            {
-                print(error)
-            }
+        }
+        else
+        {
+            gameViewController.previewSaveState = nil
+            gameViewController.previewImage = nil
         }
         
         if let emulatorBridge = gameViewController.emulatorCore?.deltaCore.emulatorBridge as? MelonDSEmulatorBridge
