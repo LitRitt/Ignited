@@ -817,11 +817,11 @@ private extension GamesViewController
     func makeHelpMenu() -> UIMenu
     {
         let helpOptions: [UIAction] = [
-            UIAction(title: NSLocalizedString("Documentation", comment: ""),
-                     image: UIImage(systemName: "doc.richtext"),
-                     handler: { action in
-                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
-            }),
+//            UIAction(title: NSLocalizedString("Documentation", comment: ""),
+//                     image: UIImage(systemName: "doc.richtext"),
+//                     handler: { action in
+//                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
+//            }),
             UIAction(title: NSLocalizedString("Release Notes", comment: ""),
                      image: UIImage(systemName: "doc.badge.clock"),
                      handler: { action in
