@@ -185,6 +185,20 @@ class GameViewController: DeltaCore.GameViewController
     private var buttonSoundFile: AVAudioFile?
     private var buttonSoundPlayer: AVAudioPlayer?
     
+    private var isMicEnabled: Bool {
+        get {
+            if let game = self.game,
+               game.type != .ds
+            {
+                return false
+            }
+            else
+            {
+                return Settings.gameplayFeatures.micSupport.isEnabled
+            }
+        }
+    }
+    
     private var isGyroActive = false
     private var presentedGyroAlert = false
     
@@ -1733,8 +1747,24 @@ private extension GameViewController
 {
     func updateAudio()
     {
-        self.emulatorCore?.audioManager.respectsSilentMode = Settings.gameplayFeatures.gameAudio.respectSilent
-        self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
+        if self.emulatorCore?.audioManager.isMicEnabled != self.isMicEnabled {
+            self.emulatorCore?.audioManager.isMicEnabled = self.isMicEnabled
+            
+            if let emulatorCore = self.emulatorCore,
+               let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? MelonDSEmulatorBridge
+            {
+                emulatorBridge.prepareAudioEngine()
+            }
+        }
+        
+        if self.emulatorCore?.audioManager.respectsSilentMode != Settings.gameplayFeatures.gameAudio.respectSilent {
+            self.emulatorCore?.audioManager.respectsSilentMode = Settings.gameplayFeatures.gameAudio.respectSilent
+        }
+        
+        if self.emulatorCore?.audioManager.playWithOtherMedia != Settings.gameplayFeatures.gameAudio.playOver {
+            self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
+        }
+        
         self.emulatorCore?.audioManager.audioVolume = Float(Settings.gameplayFeatures.gameAudio.volume)
     }
 }
@@ -1943,6 +1973,26 @@ extension GameViewController
         self.updateStatusBar()
         
         if Settings.userInterfaceFeatures.toasts.statusBar
+        {
+            self.presentToastView(text: text)
+        }
+    }
+    
+    func performMicrophoneAction()
+    {
+        let text: String
+        
+        if Settings.gameplayFeatures.micSupport.isEnabled {
+            Settings.gameplayFeatures.micSupport.isEnabled = false
+            text = NSLocalizedString("Microphone Disabled", comment: "")
+        } else {
+            Settings.gameplayFeatures.micSupport.isEnabled = true
+            text = NSLocalizedString("Microphone Enabled", comment: "")
+        }
+        
+        self.updateAudio()
+        
+        if Settings.userInterfaceFeatures.toasts.microphone
         {
             self.presentToastView(text: text)
         }
