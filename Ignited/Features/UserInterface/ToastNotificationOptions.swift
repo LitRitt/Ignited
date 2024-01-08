@@ -47,6 +47,10 @@ struct ToastNotificationOptions
             description: "Show toasts when toggling fast forward.")
     var fastForward: Bool = true
     
+    @Option(name: "Microphone Toggled",
+            description: "Show toasts when toggling the microphone.")
+    var microphone: Bool = true
+    
     @Option(name: "Status Bar Toggled",
             description: "Show toasts when toggling showing the status bar.")
     var statusBar: Bool = true
