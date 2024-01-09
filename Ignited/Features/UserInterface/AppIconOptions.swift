@@ -95,26 +95,63 @@ struct AppIconOptions
             description: "Choose from alternate app icons created by the community.",
             detailView: { value in
         List {
-            ForEach(AppIcon.allCases) { icon in
-                HStack {
-                    if icon == value.wrappedValue {
-                        Text("✓")
-                            .foregroundColor(.accentColor)
-                        icon.localizedDescription
-                            .foregroundColor(.accentColor)
-                    } else {
-                        icon.localizedDescription
+            Section(header: Text("Alternate Icons")) {
+                ForEach(AppIcon.allCases.filter { !$0.pro }) { icon in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            if icon == value.wrappedValue {
+                                HStack {
+                                    Text("✓")
+                                    icon.localizedDescription
+                                }
+                                .foregroundColor(.accentColor)
+                            } else {
+                                icon.localizedDescription
+                            }
+                            Text("by \(icon.author)")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
+                            .cornerRadius(13)
                     }
-                    Text("- by \(icon.author)")
-                        .font(.system(size: 15))
-                        .foregroundColor(.gray)
-                    Spacer()
-                    Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                        .cornerRadius(13)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        value.wrappedValue = icon
+                    }
                 }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    value.wrappedValue = icon
+            }
+            Section(header: Text("Pro Icons")) {
+                ForEach(AppIcon.allCases.filter { $0.pro }) { icon in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            if icon == value.wrappedValue {
+                                HStack {
+                                    Text("✓")
+                                    icon.localizedDescription
+                                }
+                                .foregroundColor(.accentColor)
+                                    .addProLabel()
+                            } else {
+                                icon.localizedDescription.addProLabel()
+                            }
+                            Text("by \(icon.author)")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
+                            .cornerRadius(13)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if Settings.proFeaturesEnabled {
+                            value.wrappedValue = icon
+                        } else {
+                            UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required to use this icon", comment: ""))
+                        }
+                    }
                 }
             }
         }
