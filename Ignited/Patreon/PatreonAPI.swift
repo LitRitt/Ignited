@@ -301,7 +301,9 @@ extension PatreonAPI
             if Settings.userInterfaceFeatures.theme.color == .custom {
                 Settings.userInterfaceFeatures.theme.color = .orange
             }
-            Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
+            if Settings.userInterfaceFeatures.appIcon.alternateIcon.pro {
+                Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
+            }
             Settings.touchFeedbackFeatures.touchAudio.isEnabled = false
             if Settings.gbFeatures.palettes.palette.pro {
                 Settings.gbFeatures.palettes.palette = .studio
