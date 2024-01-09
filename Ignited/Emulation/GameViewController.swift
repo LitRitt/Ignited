@@ -305,6 +305,8 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.unwindFromQuickSettings), name: .unwindFromSettings, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deviceDidShake(with:)), name: UIDevice.deviceDidShakeNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: .appWillBecomeInactive, object: nil)
     }
     
     deinit
@@ -3223,6 +3225,11 @@ private extension GameViewController
     {
         guard let scene = notification.object as? ExternalDisplayScene else { return }
         self.disconnectExternalDisplay(for: scene)
+    }
+    
+    @objc func appWillBecomeInactive(with notification: Notification)
+    {
+        self.updateAutoSaveState(true)
     }
     
     @objc func deviceDidShake(with notification: Notification)
