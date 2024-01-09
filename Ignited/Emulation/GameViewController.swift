@@ -16,6 +16,7 @@ import GBCDeltaCore
 import N64DeltaCore
 import MelonDSDeltaCore
 import GPGXDeltaCore
+import SNESDeltaCore
 import Systems
 
 import struct DSDeltaCore.DS
@@ -117,6 +118,7 @@ class GameViewController: DeltaCore.GameViewController
             }
             
             self.updateControllers()
+            self.updateCoreSettings()
             self.updateGraphics()
             self.updateAudio()
             
@@ -1715,6 +1717,21 @@ extension GameViewController: CheatsViewControllerDelegate
     }
 }
 
+//MARK: - Core Settings -
+/// Core Settings
+private extension GameViewController
+{
+    func updateCoreSettings()
+    {
+        guard let emulatorCore = self.emulatorCore else { return }
+        
+        if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? SNESEmulatorBridge
+        {
+            emulatorBridge.isInvalidVRAMAccessEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled
+        }
+    }
+}
+
 //MARK: - Debug -
 /// Debug
 private extension GameViewController
@@ -2971,6 +2988,9 @@ private extension GameViewController
             
         case Settings.touchFeedbackFeatures.touchOverlay.$style.settingsKey:
             self.controllerView.touchOverlayStyle = Settings.touchFeedbackFeatures.touchOverlay.style
+            
+        case Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey:
+            self.updateCoreSettings()
             
         case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey:
             self.updateAudio()

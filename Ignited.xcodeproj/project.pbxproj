@@ -108,6 +108,7 @@
 		ACAB77252B468C81001AB619 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77202B468C80001AB619 /* Patron.swift */; };
 		ACAB77262B468C81001AB619 /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77212B468C80001AB619 /* Tier.swift */; };
 		ACAB773B2B46926F001AB619 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB773A2B46926F001AB619 /* Keychain.swift */; };
+		ACADE4C92B4DA8450001B050 /* SNESFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */; };
 		ACB3CB8A29FDCF2A002B53DE /* GameScreenshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */; };
 		ACB3CB8C29FDCF4D002B53DE /* ToastNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */; };
 		ACB3CB8E29FDD3E9002B53DE /* TouchFeedbackFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */; };
@@ -399,6 +400,7 @@
 		ACAB77202B468C80001AB619 /* Patron.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
 		ACAB77212B468C80001AB619 /* Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
 		ACAB773A2B46926F001AB619 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNESFeatures.swift; sourceTree = "<group>"; };
 		ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenshotOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotificationOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackFeatures.swift; sourceTree = "<group>"; };
@@ -749,6 +751,7 @@
 		AC3CE7FD2A2C2E74008A8C43 /* Cores */ = {
 			isa = PBXGroup;
 			children = (
+				ACADE4C72B4DA8250001B050 /* SNES */,
 				AC1438492A4F66D40099977F /* DS */,
 				AC56DDEE2A35F327007C8372 /* N64 */,
 				ACD5FA012A0C4C28005CDCF1 /* GB */,
@@ -914,6 +917,14 @@
 				ACAB77212B468C80001AB619 /* Tier.swift */,
 			);
 			path = Patreon;
+			sourceTree = "<group>";
+		};
+		ACADE4C72B4DA8250001B050 /* SNES */ = {
+			isa = PBXGroup;
+			children = (
+				ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */,
+			);
+			path = SNES;
 			sourceTree = "<group>";
 		};
 		ACB3CB8529FDCEAD002B53DE /* Features */ = {
@@ -1806,6 +1817,7 @@
 				BF48F74E219A16DA00BC2FC1 /* SyncingServicesViewController.swift in Sources */,
 				AC8E5BCA29CCF77700F32D19 /* UIColor+AdjustHSBA.swift in Sources */,
 				AC3CE7F62A2BA822008A8C43 /* LibraryFeatures.swift in Sources */,
+				ACADE4C92B4DA8450001B050 /* SNESFeatures.swift in Sources */,
 				BFE593CA21F3F8B7003412A6 /* GameSave.swift in Sources */,
 				BF63A1B521A4B76E00EE8F61 /* RecordVersionsViewController.swift in Sources */,
 				BF6424831F5B8F3F00D6AB44 /* ListMenuViewController.swift in Sources */,

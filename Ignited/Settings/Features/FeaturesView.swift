@@ -21,6 +21,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
     case touchFeedback = "Touch Feedback"
     case advanced = "Advanced"
     // Core Features
+    case snes = "Super Nintendo"
     case n64 = "Nintendo 64"
     case gbc = "Game Boy Color"
     
@@ -37,6 +38,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
         case .userInterface: return Settings.userInterfaceFeatures
         case .touchFeedback: return Settings.touchFeedbackFeatures
         case .advanced: return Settings.advancedFeatures
+        case .snes: return Settings.snesFeatures
         case .n64: return Settings.n64Features
         case .gbc: return Settings.gbFeatures
         }

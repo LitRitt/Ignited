@@ -48,6 +48,7 @@ struct Settings
     static let dsFeatures = DSFeatures.shared
     static let gbFeatures = GBFeatures.shared
     static let n64Features = N64Features.shared
+    static let snesFeatures = SNESFeatures.shared
     static let gameplayFeatures =  GameplayFeatures.shared
     static let controllerFeatures = ControllerFeatures.shared
     static let libraryFeatures = LibraryFeatures.shared
@@ -92,6 +93,7 @@ struct Settings
             Settings.touchFeedbackFeatures.touchVibration.settingsKey.rawValue: true,
             Settings.advancedFeatures.skinDebug.settingsKey.rawValue: false,
             Settings.advancedFeatures.powerUser.settingsKey.rawValue: false,
+            Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey.rawValue: false,
             Settings.gbFeatures.palettes.settingsKey.rawValue: true,
             Settings.n64Features.n64graphics.settingsKey.rawValue: false,
             Settings.dsFeatures.dsAirPlay.settingsKey.rawValue: true,

@@ -91,6 +91,7 @@ private extension SettingsViewController
     
     enum CoresRow: Int, CaseIterable
     {
+        case snes
         case n64
         case gbc
         case ds
@@ -402,6 +403,8 @@ extension SettingsViewController
         case .cores:
             switch CoresRow.allCases[indexPath.row]
             {
+            case .snes:
+                self.showFeatures(featureGroup: .snes)
             case .gbc:
                 self.showFeatures(featureGroup: .gbc)
             case .n64:
