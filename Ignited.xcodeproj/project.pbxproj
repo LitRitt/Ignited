@@ -109,6 +109,7 @@
 		ACAB77262B468C81001AB619 /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB77212B468C80001AB619 /* Tier.swift */; };
 		ACAB773B2B46926F001AB619 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB773A2B46926F001AB619 /* Keychain.swift */; };
 		ACADE4C92B4DA8450001B050 /* SNESFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */; };
+		ACADE4CB2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACADE4CA2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift */; };
 		ACB3CB8A29FDCF2A002B53DE /* GameScreenshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */; };
 		ACB3CB8C29FDCF4D002B53DE /* ToastNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */; };
 		ACB3CB8E29FDD3E9002B53DE /* TouchFeedbackFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */; };
@@ -401,6 +402,7 @@
 		ACAB77212B468C80001AB619 /* Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
 		ACAB773A2B46926F001AB619 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNESFeatures.swift; sourceTree = "<group>"; };
+		ACADE4CA2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNESInvalidVRAMOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenshotOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotificationOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackFeatures.swift; sourceTree = "<group>"; };
@@ -923,6 +925,7 @@
 			isa = PBXGroup;
 			children = (
 				ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */,
+				ACADE4CA2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift */,
 			);
 			path = SNES;
 			sourceTree = "<group>";
@@ -1904,6 +1907,7 @@
 				ACAB77222B468C81001AB619 /* Benefit.swift in Sources */,
 				BF2B98E61C97E32F00F6D57D /* SaveStatesCollectionHeaderView.swift in Sources */,
 				ACE43DC52B4733B000AD9287 /* PatreonComponents.swift in Sources */,
+				ACADE4CB2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift in Sources */,
 				BFC9B7391CEFCD34008629BB /* CheatsViewController.swift in Sources */,
 				D5864978297756CE0081477E /* CheatBaseView.swift in Sources */,
 				ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */,

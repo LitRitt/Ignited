@@ -310,6 +310,8 @@ extension PowerUserOptions
 {
     enum Feature: Int, CaseIterable
     {
+        // SNES
+        case snesInvalidVRAM
         // GB
         case gameboyPalettes
         // N64
@@ -363,6 +365,9 @@ extension PowerUserOptions
                 Settings.gbFeatures.palettes.customPalette3Color2 = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
                 Settings.gbFeatures.palettes.customPalette3Color3 = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
                 Settings.gbFeatures.palettes.customPalette3Color4 = Color(fromRGB: GameboyPalette.spacehaze.colors[3])
+                
+            case .snesInvalidVRAM:
+                Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames = []
                 
             case .n64Graphics:
                 Settings.n64Features.n64graphics.graphicsAPI = .openGLES2

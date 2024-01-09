@@ -1723,11 +1723,13 @@ private extension GameViewController
 {
     func updateCoreSettings()
     {
-        guard let emulatorCore = self.emulatorCore else { return }
+        guard let emulatorCore = self.emulatorCore,
+              let game = self.game as? Game else { return }
         
         if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? SNESEmulatorBridge
         {
-            emulatorBridge.isInvalidVRAMAccessEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled
+            let gameEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
+            emulatorBridge.isInvalidVRAMAccessEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled && gameEnabled
         }
     }
 }

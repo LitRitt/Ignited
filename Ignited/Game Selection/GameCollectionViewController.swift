@@ -901,6 +901,21 @@ private extension GameCollectionViewController
             DatabaseManager.shared.resetArtwork(for: game)
         })
         
+        let invalidVRAMAccessAction: Action
+        
+        if Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
+        {
+            invalidVRAMAccessAction = Action(title: NSLocalizedString("Disable Invalid VRAM", comment: ""), style: .default, image: UIImage(systemName: "memorychip"), action: { [unowned self] action in
+                self.toggleInvalidVRAM(for: game, enable: false)
+            })
+        }
+        else
+        {
+            invalidVRAMAccessAction = Action(title: NSLocalizedString("Enable Invalid VRAM", comment: ""), style: .default, image: UIImage(systemName: "memorychip.fill"), action: { [unowned self] action in
+                self.toggleInvalidVRAM(for: game, enable: true)
+            })
+        }
+        
         var actions: [Action] = []
         
         switch game.type
@@ -909,6 +924,8 @@ private extension GameCollectionViewController
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, shareAction, resetArtworkAction, deleteAction]
         case .ds where game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier:
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction, resetArtworkAction]
+        case .snes where Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled:
+            actions = [cancelAction, favoriteAction, invalidVRAMAccessAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         default:
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         }
@@ -1265,6 +1282,15 @@ private extension GameCollectionViewController
             game.isFavorite = isFavorite
             
             context.saveWithErrorLogging()
+        }
+    }
+    
+    func toggleInvalidVRAM(for game: Game, enable: Bool)
+    {
+        if enable {
+            Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.append(game.identifier)
+        } else {
+            Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.removeAll(where: { $0 == game.identifier })
         }
     }
     

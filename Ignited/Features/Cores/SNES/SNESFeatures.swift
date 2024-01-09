@@ -13,7 +13,8 @@ struct SNESFeatures: FeatureContainer
     static let shared = SNESFeatures()
     
     @Feature(name: "Invalid VRAM Access",
-             description: "Enable to allow invalid VRAM access. This allows some games to properly display chinese fonts.\n\n⚠️ Do not enable this feature if you don't know what you're doing.")
+             description: "Enable to allow invalid VRAM access. After enabling the feature here, you must also enable it for individual games from the game's context menu.",
+             options: SNESInvalidVRAMOptions())
     var allowInvalidVRAMAccess
     
     private init()
