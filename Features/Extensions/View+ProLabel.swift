@@ -1,5 +1,5 @@
 //
-//  Text+ProLabel.swift
+//  View+ProLabel.swift
 //  Ignited
 //
 //  Created by Chris Rittenhouse on 1/6/24.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public extension Text
+public extension View
 {
     @ViewBuilder
     func addProLabel(_ isPro: Bool = true) -> some View

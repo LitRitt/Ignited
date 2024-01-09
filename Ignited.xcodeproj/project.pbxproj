@@ -124,7 +124,7 @@
 		ACCDD4872A6386020034A6C0 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4832A6386020034A6C0 /* click.mp3 */; };
 		ACCDD4882A6386020034A6C0 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4842A6386020034A6C0 /* beep.mp3 */; };
 		ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD48A2A63864E0034A6C0 /* tock.mp3 */; };
-		ACD5C7692B4A7868008B28AC /* Text+ProLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5C7672B4A605B008B28AC /* Text+ProLabel.swift */; };
+		ACD5C7692B4A7868008B28AC /* View+ProLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */; };
 		ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */; };
 		ACD5FA052A0C4D58005CDCF1 /* GameboyPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PremiumPatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PremiumPatronsView.swift */; };
@@ -414,7 +414,7 @@
 		ACCDD4832A6386020034A6C0 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		ACCDD4842A6386020034A6C0 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 		ACCDD48A2A63864E0034A6C0 /* tock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tock.mp3; sourceTree = "<group>"; };
-		ACD5C7672B4A605B008B28AC /* Text+ProLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+ProLabel.swift"; sourceTree = "<group>"; };
+		ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ProLabel.swift"; sourceTree = "<group>"; };
 		ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFeatures.swift; sourceTree = "<group>"; };
 		ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboyPaletteOptions.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PremiumPatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPatronsView.swift; sourceTree = "<group>"; };
@@ -856,7 +856,7 @@
 		AC8C20F829FDAA550044748D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				ACD5C7672B4A605B008B28AC /* Text+ProLabel.swift */,
+				ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */,
 				AC8C211329FDAC460044748D /* UserDefaults+OptionValues.swift */,
 				AC8C211529FDAC660044748D /* Collection+Optionals.swift */,
 				AC8C211729FDAC800044748D /* NotificationName+Settings.swift */,
@@ -1750,7 +1750,7 @@
 				AC8C212E29FDAE400044748D /* FeatureContainer.swift in Sources */,
 				AC8C213029FDAE400044748D /* SettingsName.swift in Sources */,
 				AC8C212629FDAE100044748D /* Feature.swift in Sources */,
-				ACD5C7692B4A7868008B28AC /* Text+ProLabel.swift in Sources */,
+				ACD5C7692B4A7868008B28AC /* View+ProLabel.swift in Sources */,
 				AC8C212D29FDAE400044748D /* AnyOption.swift in Sources */,
 				AC8C212F29FDAE400044748D /* OptionalProtocol.swift in Sources */,
 				AC8C213429FDAE400044748D /* DisplayInlineKey.swift in Sources */,
