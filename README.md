@@ -23,13 +23,10 @@ Ignited is a multi-core emulator front-end for iOS devices. It provides a beauti
     - NES: [Nestopia](https://github.com/0ldsk00l/nestopia)
     - SNES: [Snes9x](https://github.com/snes9xgit/snes9x)
     - N64: [mupen64plus](https://github.com/mupen64plus/mupen64plus-core)
-    - GB: [Gambatte](https://github.com/sinamas/gambatte)
-    - GBC: [Gambatte](https://github.com/sinamas/gambatte)
+    - GB/GBC: [Gambatte](https://github.com/sinamas/gambatte)
     - GBA: [visualboyadvance-m](https://github.com/visualboyadvance-m/visualboyadvance-m)
     - DS: [melonDS](https://github.com/Arisotura/melonDS)
-    - GEN: [Genesis Plus GX](https://github.com/ekeeke/Genesis-Plus-GX)
-    - SMS: [Genesis Plus GX](https://github.com/ekeeke/Genesis-Plus-GX)
-    - GG: [Genesis Plus GX](https://github.com/ekeeke/Genesis-Plus-GX)
+    - GEN/SMS/GG: [Genesis Plus GX](https://github.com/ekeeke/Genesis-Plus-GX)
 - Beautiful, native UI.
     - Browse and play your favorite games with a UI designed from the ground up for iOS.
     - Automatically displays appropriate box art for imported games.
