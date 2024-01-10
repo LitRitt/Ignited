@@ -12,9 +12,9 @@ struct GBFeatures: FeatureContainer
 {
     static let shared = GBFeatures()
     
-    @Feature(name: "Game Boy Palettes",
-             description: "Enable to change the color palette used for GB games.",
-             options: GameboyPaletteOptions(),
+    @Feature(name: "Color Palettes",
+             description: "Change the color palette used for GB games.",
+             options: GBPaletteOptions(),
              permanent: true)
     var palettes
     

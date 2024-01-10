@@ -272,7 +272,7 @@ extension PowerUserOptions
         // SNES
         case snesInvalidVRAM
         // GB
-        case gameboyPalettes
+        case gbPalettes
         // N64
         case n64Graphics
         // Gameplay
@@ -307,7 +307,7 @@ extension PowerUserOptions
         {
             switch self
             {
-            case .gameboyPalettes:
+            case .gbPalettes:
                 Settings.gbFeatures.palettes.multiPalette = false
                 Settings.gbFeatures.palettes.palette = .studio
                 Settings.gbFeatures.palettes.spritePalette1 = .studio

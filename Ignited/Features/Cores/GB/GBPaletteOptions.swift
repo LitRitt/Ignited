@@ -1,5 +1,5 @@
 //
-//  GameboyPaletteOptions.swift
+//  GBPaletteOptions.swift
 //  Ignited
 //
 //  Created by Chris Rittenhouse on 5/10/23.
@@ -16,9 +16,6 @@ enum GameboyPalette: String, CaseIterable, CustomStringConvertible, Identifiable
     case dmg = "DMG"
     case pocket = "Pocket"
     case light = "Light"
-    case custom1 = "Custom 1"
-    case custom2 = "Custom 2"
-    case custom3 = "Custom 3"
     case kirokaze = "Kirokaze"
     case iceCream = "Ice Cream"
     case mist = "Mist"
@@ -34,6 +31,9 @@ enum GameboyPalette: String, CaseIterable, CustomStringConvertible, Identifiable
     case grapefruit = "Grapefruit"
     case amber = "Amber"
     case minty = "Minty"
+    case custom1 = "Custom 1"
+    case custom2 = "Custom 2"
+    case custom3 = "Custom 3"
     
     var description: String {
         return self.rawValue
@@ -111,7 +111,7 @@ extension GameboyPalette
     }
 }
 
-struct GameboyPaletteOptions
+struct GBPaletteOptions
 {
     @Option(name: "Color Palettes",
             description: "See what colors are used in each palette. Ignited Pro is required to unlock all palettes and to use custom palettes.",
@@ -312,7 +312,7 @@ struct GameboyPaletteOptions
             description: "Reset all options to their default values.",
             detailView: { _ in
         Button("Restore Defaults") {
-            PowerUserOptions.resetFeature(.gameboyPalettes)
+            PowerUserOptions.resetFeature(.gbPalettes)
         }
         .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(.red)

@@ -128,7 +128,7 @@
 		ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD48A2A63864E0034A6C0 /* tock.mp3 */; };
 		ACD5C7692B4A7868008B28AC /* View+ProLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */; };
 		ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */; };
-		ACD5FA052A0C4D58005CDCF1 /* GameboyPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */; };
+		ACD5FA052A0C4D58005CDCF1 /* GBPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PremiumPatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PremiumPatronsView.swift */; };
 		ACE43DB62B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */; };
 		ACE43DB82B4695A200AD9287 /* Result+Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */; };
@@ -420,7 +420,7 @@
 		ACCDD48A2A63864E0034A6C0 /* tock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tock.mp3; sourceTree = "<group>"; };
 		ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ProLabel.swift"; sourceTree = "<group>"; };
 		ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFeatures.swift; sourceTree = "<group>"; };
-		ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboyPaletteOptions.swift; sourceTree = "<group>"; };
+		ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPaletteOptions.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PremiumPatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPatronsView.swift; sourceTree = "<group>"; };
 		ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+ManagedObjectContext.swift"; sourceTree = "<group>"; };
 		ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Conveniences.swift"; sourceTree = "<group>"; };
@@ -968,7 +968,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */,
-				ACD5FA042A0C4D58005CDCF1 /* GameboyPaletteOptions.swift */,
+				ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */,
 			);
 			path = GB;
 			sourceTree = "<group>";
@@ -1852,7 +1852,7 @@
 				BFDD04F11D5E2C27002D450E /* GameCollectionViewController.swift in Sources */,
 				BFE4269E1D9C68E600DC913F /* SaveStatesStoryboardSegue.swift in Sources */,
 				AC1EAE6F2A0154380072C858 /* FeatureSectionView.swift in Sources */,
-				ACD5FA052A0C4D58005CDCF1 /* GameboyPaletteOptions.swift in Sources */,
+				ACD5FA052A0C4D58005CDCF1 /* GBPaletteOptions.swift in Sources */,
 				BFFA71DD1AAC406100EE9DD1 /* AppDelegate.swift in Sources */,
 				BF525EE81FF5F370004AA849 /* DeepLinkController.swift in Sources */,
 				AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */,
