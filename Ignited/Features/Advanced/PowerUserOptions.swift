@@ -274,7 +274,7 @@ extension PowerUserOptions
         // GB
         case gbPalettes
         // N64
-        case n64Graphics
+        case n64OpenGLES3
         // Gameplay
         case pauseMenu
         case gameScreenshot
@@ -328,8 +328,8 @@ extension PowerUserOptions
             case .snesInvalidVRAM:
                 Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames = []
                 
-            case .n64Graphics:
-                Settings.n64Features.n64graphics.graphicsAPI = .openGLES2
+            case .n64OpenGLES3:
+                Settings.n64Features.openGLES3.enabledGames = []
                 
             case .pauseMenu:
                 Settings.gameplayFeatures.pauseMenu.buttonOrder = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Cheat Codes", "Alt Skin", "Debug Mode"]

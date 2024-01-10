@@ -916,6 +916,21 @@ private extension GameCollectionViewController
             })
         }
         
+        let openGLES3Action: Action
+        
+        if Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier })
+        {
+            openGLES3Action = Action(title: NSLocalizedString("Disable OpenGLES 3", comment: ""), style: .default, image: UIImage(systemName: "3.circle"), action: { [unowned self] action in
+                self.toggleOpenGLES3(for: game, enable: false)
+            })
+        }
+        else
+        {
+            openGLES3Action = Action(title: NSLocalizedString("Enable OpenGLES 3", comment: ""), style: .default, image: UIImage(systemName: "3.circle.fill"), action: { [unowned self] action in
+                self.toggleOpenGLES3(for: game, enable: true)
+            })
+        }
+        
         var actions: [Action] = []
         
         switch game.type
@@ -926,6 +941,8 @@ private extension GameCollectionViewController
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction, resetArtworkAction]
         case .snes where Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled:
             actions = [cancelAction, favoriteAction, invalidVRAMAccessAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
+        case .n64 where Settings.n64Features.openGLES3.isEnabled:
+            actions = [cancelAction, favoriteAction, openGLES3Action, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         default:
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         }
@@ -1291,6 +1308,15 @@ private extension GameCollectionViewController
             Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.append(game.identifier)
         } else {
             Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.removeAll(where: { $0 == game.identifier })
+        }
+    }
+    
+    func toggleOpenGLES3(for game: Game, enable: Bool)
+    {
+        if enable {
+            Settings.n64Features.openGLES3.enabledGames.append(game.identifier)
+        } else {
+            Settings.n64Features.openGLES3.enabledGames.removeAll(where: { $0 == game.identifier })
         }
     }
     

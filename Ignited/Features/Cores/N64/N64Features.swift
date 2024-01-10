@@ -12,10 +12,10 @@ struct N64Features: FeatureContainer
 {
     static let shared = N64Features()
     
-    @Feature(name: "Graphics",
-             description: "Enable to customize the graphics options.",
-             options: N64GraphicsOptions())
-    var n64graphics
+    @Feature(name: "OpenGLES 3",
+             description: "Enable to allow OpenGLES 3. This fixes graphical issues in some games, but may cause others to crash. After enabling the feature here, you must also enable it for individual games from the game's context menu.",
+             options: N64OpenGLES3Options())
+    var openGLES3
     
     private init()
     {

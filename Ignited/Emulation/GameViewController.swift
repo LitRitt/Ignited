@@ -1749,7 +1749,16 @@ private extension GameViewController
 {
     func updateGraphics()
     {
-        self.emulatorCore?.videoManager.renderingAPI = Settings.n64Features.n64graphics.isEnabled ? Settings.n64Features.n64graphics.graphicsAPI.api : EAGLRenderingAPI.openGLES2
+        guard let game = self.game as? Game else { return }
+        
+        if Settings.n64Features.openGLES3.isEnabled,
+           Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier }) {
+            self.emulatorCore?.videoManager.renderingAPI = .openGLES3
+        }
+        else
+        {
+            self.emulatorCore?.videoManager.renderingAPI = .openGLES2
+        }
     }
     
     func changeGraphicsAPI()
@@ -2985,7 +2994,7 @@ private extension GameViewController
         case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey:
             self.updateAudio()
             
-        case Settings.n64Features.n64graphics.$graphicsAPI.settingsKey:
+        case Settings.n64Features.openGLES3.settingsKey, Settings.n64Features.openGLES3.$enabledGames.settingsKey:
             self.changeGraphicsAPI()
             
         case Settings.touchFeedbackFeatures.touchAudio.$sound.settingsKey:
