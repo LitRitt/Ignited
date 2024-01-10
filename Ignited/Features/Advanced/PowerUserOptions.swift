@@ -52,18 +52,6 @@ struct PowerUserOptions
     })
     var resetAllSettings: String = ""
     
-//    @Option(name: "Copy Google Drive Refresh Token",
-//            description: "This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.",
-//            detailView: { _ in
-//        Button("Copy Google Drive Refresh Token") {
-//            copyGoogleDriveRefreshToken()
-//        }
-//        .font(.system(size: 17, weight: .bold, design: .default))
-//        .foregroundColor(.red)
-//        .displayInline()
-//    })
-//    var copyGoogleDriveRefreshToken: String = ""
-    
     @Option(name: "Fix Game Collection Associations",
             description: "This will fix any games that are associated with the wrong collections.",
             detailView: { _ in
@@ -91,68 +79,36 @@ struct PowerUserOptions
 
 extension PowerUserOptions
 {
+    static func resetBuildCounter()
+    {
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
+            self.showFeatureDisabledToast()
+            return
+        }
+        
+        Settings.lastUpdateShown = 1
+        
+        ToastView.show(NSLocalizedString("Successfully Reset Build Counter", comment: ""), onEdge: .bottom, duration: 3.0)
+    }
+    
     static func fixGameCollections()
     {
-        guard let topViewController = UIApplication.shared.topViewController() else { return }
-        
         guard Settings.advancedFeatures.powerUser.isEnabled else {
-            self.showFeatureDisabledNotification(topViewController)
+            self.showFeatureDisabledToast()
             return
         }
         
         DatabaseManager.shared.repairGameCollections(repairAll: true)
         
-        let toast = RSTToastView(text: NSLocalizedString("Fixed Game Collections", comment: ""), detailText: nil)
-        toast.show(in: topViewController.view, duration: 5.0)
+        ToastView.show(NSLocalizedString("Successfully Fixed Game Collections", comment: ""), onEdge: .bottom, duration: 3.0)
     }
-    
-//    static func copyGoogleDriveRefreshToken()
-//    {
-//        guard let topViewController = UIApplication.shared.topViewController() else { return }
-//        
-//        guard Settings.advancedFeatures.powerUser.isEnabled else {
-//            self.showFeatureDisabledNotification(topViewController)
-//            return
-//        }
-//        
-//        let alertController = UIAlertController(title: NSLocalizedString("Copy Refresh Token?", comment: ""), message: NSLocalizedString("This token will allow other applications and services to access the files in your Google Drive Ignited Sync backup, including games, saves, states, skins, and cheats. Do not give it away to anyone, and only use it if you trust the application that you use it with.", comment: ""), preferredStyle: .alert)
-//        alertController.popoverPresentationController?.sourceView = topViewController.view
-//        alertController.popoverPresentationController?.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.maxY, width: 0, height: 0)
-//        alertController.popoverPresentationController?.permittedArrowDirections = []
-//        
-//        alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
-//            
-//            guard let coordinator = SyncManager.shared.coordinator else
-//            {
-//                let toast = RSTToastView(text: NSLocalizedString("Failed to copy token", comment: ""), detailText: NSLocalizedString("You must enable Ignited Sync and use the Google Drive service.", comment: ""))
-//                toast.show(in: topViewController.view, duration: 5.0)
-//                return
-//            }
-//            
-//            guard let service = coordinator.service as? DriveService,
-//                  let token = service.refreshToken else
-//            {
-//                let toast = RSTToastView(text: NSLocalizedString("Failed to copy token", comment: ""), detailText: NSLocalizedString("You must use the Google Drive service with Ignited Sync. The Dropbox service is not supported.", comment: ""))
-//                toast.show(in: topViewController.view, duration: 5.0)
-//                return
-//            }
-//
-//            UIPasteboard.general.string = token
-//            let toast = RSTToastView(text: NSLocalizedString("Successfully copied token", comment: ""), detailText: NSLocalizedString("Paste it in a safe place, and only use it with applications and services you trust.", comment: ""))
-//            toast.show(in: topViewController.view, duration: 5.0)
-//        }))
-//        
-//        alertController.addAction(.cancel)
-//        
-//        topViewController.present(alertController, animated: true, completion: nil)
-//    }
 
     static func clearAutoSaveStates()
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }
         
         guard Settings.advancedFeatures.powerUser.isEnabled else {
-            self.showFeatureDisabledNotification(topViewController)
+            self.showFeatureDisabledToast()
             return
         }
         
@@ -185,6 +141,9 @@ extension PowerUserOptions
                                 context.delete(saveState)
                             }
                             context.saveWithErrorLogging()
+                            
+                            // All toasts show on main thread
+                            ToastView.show(NSLocalizedString("Successfully Cleared All Auto Save States", comment: ""), in: topViewController.view, onEdge: .bottom, duration: 3.0)
                         }
                         catch
                         {
@@ -209,7 +168,7 @@ extension PowerUserOptions
         guard let topViewController = UIApplication.shared.topViewController() else { return }
         
         guard Settings.advancedFeatures.powerUser.isEnabled else {
-            self.showFeatureDisabledNotification(topViewController)
+            self.showFeatureDisabledToast()
             return
         }
         
@@ -232,6 +191,9 @@ extension PowerUserOptions
                     {
                         DatabaseManager.shared.resetArtwork(for: game)
                     }
+                    
+                    // All toasts show on main thread
+                    ToastView.show(NSLocalizedString("Successfully Reset All Artwork", comment: ""), in: topViewController.view, onEdge: .bottom, duration: 3.0)
                 }
                 catch
                 {
@@ -255,7 +217,7 @@ extension PowerUserOptions
         {
         case .allFeatures:
             guard Settings.advancedFeatures.powerUser.isEnabled else {
-                self.showFeatureDisabledNotification(topViewController)
+                self.showFeatureDisabledToast()
                 return
             }
             
@@ -275,11 +237,15 @@ extension PowerUserOptions
                 {
                     feature.resetSettings()
                 }
+                
+                ToastView.show(NSLocalizedString("Successfully Reset All Feature Settings", comment: ""), in: topViewController.view, onEdge: .bottom, duration: 3.0)
             })
             
         default:
             resetAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
                 feature.resetSettings()
+                
+                ToastView.show(NSLocalizedString("Successfully Reset Feature Settings", comment: ""), in: topViewController.view, onEdge: .bottom, duration: 3.0)
             })
         }
         
@@ -293,16 +259,9 @@ extension PowerUserOptions
         topViewController.present(alertController, animated: true, completion: nil)
     }
     
-    static func showFeatureDisabledNotification(_ viewController: UIViewController)
+    static func showFeatureDisabledToast()
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("You must enable Power User Tools via the toggle on the previous page to use these options.", comment: ""), preferredStyle: .alert)
-        alertController.popoverPresentationController?.sourceView = viewController.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: viewController.view.bounds.midX, y: viewController.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in }))
-        
-        viewController.present(alertController, animated: true, completion: nil)
+        ToastView.show(NSLocalizedString("Enable Power User Tools to use this feature", comment: ""), onEdge: .bottom)
     }
 }
     
