@@ -46,7 +46,7 @@ class GamesViewController: UIViewController
     private var searchController: RSTSearchController?
     private lazy var importController: ImportController = self.makeImportController()
     
-    private var syncingToastView: RSTToastView? {
+    private var syncingToastView: ToastView? {
         didSet {
             if self.syncingToastView == nil
             {
@@ -969,7 +969,7 @@ private extension GamesViewController
     {
         guard let coordinator = SyncManager.shared.coordinator, let syncProgress = SyncManager.shared.syncProgress, coordinator.isSyncing && self.syncingToastView == nil else { return }
 
-        let toastView = RSTToastView(text: NSLocalizedString("Syncing...", comment: ""), detailText: syncProgress.localizedAdditionalDescription)
+        let toastView = ToastView(text: NSLocalizedString("Syncing...", comment: ""), detailText: syncProgress.localizedAdditionalDescription)
         toastView.activityIndicatorView.startAnimating()
         toastView.addTarget(self, action: #selector(GamesViewController.hideSyncingToastView), for: .touchUpInside)
         toastView.show(in: self.view)
@@ -987,12 +987,12 @@ private extension GamesViewController
     
     func showSyncFinishedToastView(result: SyncResult)
     {
-        let toastView: RSTToastView
+        let toastView: ToastView
         
         switch result
         {
-        case .success: toastView = RSTToastView(text: NSLocalizedString("Sync Complete", comment: ""), detailText: nil)
-        case .failure(let error): toastView = RSTToastView(text: NSLocalizedString("Sync Failed", comment: ""), detailText: error.failureReason)
+        case .success: toastView = ToastView(text: NSLocalizedString("Sync Complete", comment: ""), detailText: nil)
+        case .failure(let error): toastView = ToastView(text: NSLocalizedString("Sync Failed", comment: ""), detailText: error.failureReason)
         }
         
         toastView.textLabel.textAlignment = .center

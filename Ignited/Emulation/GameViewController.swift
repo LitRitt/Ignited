@@ -518,8 +518,7 @@ extension GameViewController
         
         if self.emulatorCore?.deltaCore == DS.core, UserDefaults.standard.desmumeDeprecatedAlertCount < 3
         {
-            let toastView = RSTToastView(text: NSLocalizedString("DeSmuME Core Deprecated", comment: ""), detailText: NSLocalizedString("Switch to the melonDS core in Settings for latest improvements.", comment: ""))
-            self.show(toastView, duration: 5.0)
+            ToastView.show(NSLocalizedString("DeSmuME Core Deprecated", comment: ""), in: self.view, detailText: NSLocalizedString("Switch to the melonDS core in Settings for latest improvements.", comment: ""), onEdge: .top, duration: 5.0)
             
             UserDefaults.standard.desmumeDeprecatedAlertCount += 1
         }
@@ -2706,9 +2705,7 @@ extension GameViewController
         guard Settings.userInterfaceFeatures.toasts.isEnabled else { return }
         
         DispatchQueue.main.async {
-            let toastView = RSTToastView(text: text, detailText: nil)
-            toastView.edgeOffset.vertical = 8
-            self.show(toastView, duration: duration ?? Settings.userInterfaceFeatures.toasts.duration)
+            ToastView.show(text, in: self.view, onEdge: .top, duration: duration ?? Settings.userInterfaceFeatures.toasts.duration)
         }
     }
 }
@@ -2864,13 +2861,6 @@ extension GameViewController: GameViewControllerDelegate
 
 private extension GameViewController
 {
-    func show(_ toastView: RSTToastView, duration: TimeInterval = 3.0)
-    {
-        toastView.textLabel.textAlignment = .center
-        toastView.presentationEdge = .top
-        toastView.show(in: self.view, duration: duration)
-    }
-    
     func showJITEnabledAlert()
     {
         guard !self.presentedJITAlert, self.presentedViewController == nil, self.game != nil else { return }
@@ -2892,9 +2882,7 @@ private extension GameViewController
                 duration = 2.0
             }
             
-            let toastView = RSTToastView(text: NSLocalizedString("JIT Compilation Enabled", comment: ""), detailText: detailText)
-            toastView.edgeOffset.vertical = 8
-            self.show(toastView, duration: duration)
+            ToastView.show(NSLocalizedString("JIT Compilation Enabled", comment: ""), in: self.view, detailText: detailText, duration: duration)
             
             UserDefaults.standard.jitEnabledAlertCount += 1
         }
@@ -3131,8 +3119,7 @@ private extension GameViewController
         
         func presentToastView()
         {
-            let toastView = RSTToastView(text: NSLocalizedString("Autorotation Disabled", comment: ""), detailText: NSLocalizedString("Pause game to change orientation.", comment: ""))
-            self.show(toastView)
+            ToastView.show(NSLocalizedString("Autorotation Disabled", comment: ""), in: self.view, detailText: NSLocalizedString("Pause game to change orientation.", comment: ""))
         }
         
         DispatchQueue.main.async {
