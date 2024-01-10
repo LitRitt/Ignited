@@ -40,15 +40,17 @@ extension ToastView
         let toast = ToastView(text: text, detailText: detailText)
         toast.presentationEdge = presentationEdge
         
-        if let view = view
-        {
-            toast.show(in: view, duration: duration)
-        }
-        else
-        {
-            guard let topViewController = UIApplication.shared.topViewController() else { return }
-            
-            toast.show(in: topViewController.view, duration: duration)
+        DispatchQueue.main.async {
+            if let view = view
+            {
+                toast.show(in: view, duration: duration)
+            }
+            else
+            {
+                guard let topViewController = UIApplication.shared.topViewController() else { return }
+                
+                toast.show(in: topViewController.view, duration: duration)
+            }
         }
     }
 }
