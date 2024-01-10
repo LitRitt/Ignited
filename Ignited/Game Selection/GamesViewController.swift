@@ -82,7 +82,6 @@ class GamesViewController: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.syncingDidFinish(_:)), name: SyncCoordinator.didFinishSyncingNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.settingsDidChange(_:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.emulationDidQuit(_:)), name: EmulatorCore.emulationDidQuitNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.graphicsRenderingAPIDidChange(_:)), name: .graphicsRenderingAPIDidChange, object: nil)
     }
 }
 
@@ -1083,15 +1082,6 @@ private extension GamesViewController
         }
     }
     
-    @objc func graphicsRenderingAPIDidChange(_ notification: Notification)
-    {
-        if let emulatorCore = self.activeEmulatorCore
-        {
-            emulatorCore.stop()
-        }
-        self.quitEmulation()
-    }
-    
     @objc func emulationDidQuit(_ notification: Notification)
     {
         self.quitEmulation()
@@ -1200,6 +1190,5 @@ public extension Notification.Name
     static let startRandomGame = Notification.Name("startRandomGameNotification")
     static let unwindFromSettings = Notification.Name("unwindFromSettingsNotification")
     static let dismissSettings = Notification.Name("dismissSettingsNotification")
-    static let graphicsRenderingAPIDidChange = Notification.Name("graphicsRenderingAPIDidChangeNotification")
     static let appWillBecomeInactive = Notification.Name("appWillBecomeInactiveNotification")
 }

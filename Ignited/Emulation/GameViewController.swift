@@ -1751,22 +1751,18 @@ private extension GameViewController
     {
         guard let game = self.game as? Game else { return }
         
+        guard game.type == .n64 else { return }
+        
         if Settings.n64Features.openGLES3.isEnabled,
            Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier }) {
             self.emulatorCore?.videoManager.renderingAPI = .openGLES3
+            Settings.currentOpenGLESVersion = 3
         }
         else
         {
             self.emulatorCore?.videoManager.renderingAPI = .openGLES2
+            Settings.currentOpenGLESVersion = 2
         }
-    }
-    
-    func changeGraphicsAPI()
-    {
-        NotificationCenter.default.post(name: .graphicsRenderingAPIDidChange, object: nil, userInfo: [:])
-        
-        self.emulatorCore?.gameViews.forEach { $0.inputImage = nil }
-        self.game = nil
     }
 }
 
@@ -2993,9 +2989,6 @@ private extension GameViewController
             
         case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey:
             self.updateAudio()
-            
-        case Settings.n64Features.openGLES3.settingsKey, Settings.n64Features.openGLES3.$enabledGames.settingsKey:
-            self.changeGraphicsAPI()
             
         case Settings.touchFeedbackFeatures.touchAudio.$sound.settingsKey:
             self.updateButtonAudioFeedbackSound()

@@ -26,6 +26,7 @@ extension GameCollectionViewController
         case alreadyRunning
         case downloadingGameSave
         case biosNotFound
+        case openGLESVersionMismatch
     }
 }
 
@@ -676,6 +677,10 @@ private extension GameCollectionViewController
                 
                 self.present(alertController, animated: true, completion: nil)
             }
+            catch LaunchError.openGLESVersionMismatch
+            {
+                self.showOpenGLESVersionMismatchError()
+            }
             catch
             {
                 let alertController = UIAlertController(title: NSLocalizedString("Unable to Launch Game", comment: ""), error: error)
@@ -747,12 +752,19 @@ private extension GameCollectionViewController
                 else { throw LaunchError.biosNotFound }
             }
         }
+        
+        guard self.checkOpenGLESVersion(for: game) else { throw LaunchError.openGLESVersionMismatch }
     }
     
     @objc func resumeCurrentGame()
     {
         guard let emulatorCore = self.activeEmulatorCore else { return }
         guard let game = emulatorCore.game as? Game else { return }
+        
+        guard self.checkOpenGLESVersion(for: game) else {
+            self.showOpenGLESVersionMismatchError()
+            return
+        }
         
         let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
         fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -796,7 +808,12 @@ private extension GameCollectionViewController
             print(error)
         }
         
-        guard let randomGame = games.randomElement() else { return }
+        games = games.filter { self.checkOpenGLESVersion(for: $0) }
+        
+        guard let randomGame = games.randomElement() else {
+            self.showNoValidGamesError()
+            return
+        }
         
         if Settings.gameplayFeatures.saveStates.autoLoad
         {
@@ -822,6 +839,11 @@ private extension GameCollectionViewController
     {
         guard let game = notification.object as? Game else { return }
         
+        guard self.checkOpenGLESVersion(for: game) else {
+            self.showOpenGLESVersionMismatchError()
+            return
+        }
+        
         if Settings.gameplayFeatures.saveStates.autoLoad
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
@@ -840,6 +862,44 @@ private extension GameCollectionViewController
         }
         
         self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
+    }
+    
+    func checkOpenGLESVersion(for game: Game) -> Bool
+    {
+        if game.type == .n64,
+           let currentOpenGLESVersion = Settings.currentOpenGLESVersion
+        {
+            let requestedOpenGLESVersion: Int
+            
+            if Settings.n64Features.openGLES3.isEnabled,
+               Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier }) {
+                requestedOpenGLESVersion = 3
+            }
+            else
+            {
+                requestedOpenGLESVersion = 2
+            }
+            
+            guard currentOpenGLESVersion == requestedOpenGLESVersion else { return false }
+        }
+        
+        return true
+    }
+    
+    func showOpenGLESVersionMismatchError()
+    {
+        let currentVersion = Settings.currentOpenGLESVersion
+        
+        let alertController = UIAlertController(title: NSLocalizedString("OpenGLES Mismatch", comment: ""), message: NSLocalizedString("The OpenGLES version this game is trying to use (\(currentVersion == 2 ? "OpenGLES 3" : "OpenGLES 2")) does not match the version the core is currently using (\(currentVersion == 2 ? "OpenGLES 2" : "OpenGLES 3")). You must restart the app to play this game.", comment: ""), preferredStyle: .alert)
+        alertController.addAction(.ok)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showNoValidGamesError()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("No Valid Games", comment: ""), message: NSLocalizedString("No games were found when trying to launch a random game.", comment: ""), preferredStyle: .alert)
+        alertController.addAction(.ok)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -1304,6 +1364,8 @@ private extension GameCollectionViewController
     
     func toggleInvalidVRAM(for game: Game, enable: Bool)
     {
+        self.removeShadowForGame(for: game)
+        
         if enable {
             Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.append(game.identifier)
         } else {
@@ -1313,6 +1375,8 @@ private extension GameCollectionViewController
     
     func toggleOpenGLES3(for game: Game, enable: Bool)
     {
+        self.removeShadowForGame(for: game)
+        
         if enable {
             Settings.n64Features.openGLES3.enabledGames.append(game.identifier)
         } else {

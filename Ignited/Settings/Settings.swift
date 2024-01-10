@@ -111,6 +111,9 @@ extension Settings
         get { return UserDefaults.standard.lastUpdateShown }
     }
     
+    /// OpenGLES
+    static var currentOpenGLESVersion: Int? = nil
+    
     /// Controllers
     static var localControllerPlayerIndex: Int? = 0 {
         didSet {
