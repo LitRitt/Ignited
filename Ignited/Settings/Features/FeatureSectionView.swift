@@ -26,7 +26,7 @@ struct FeatureSection<T: AnyFeature>: View
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
-                        UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this feature", comment: ""))
+                            ToastView.show(NSLocalizedString("Ignited Pro is required for this feature", comment: ""), onEdge: .bottom)
                     }
                 }
                 else
@@ -45,7 +45,7 @@ struct FeatureSection<T: AnyFeature>: View
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
-                        UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this feature", comment: ""))
+                            ToastView.show(NSLocalizedString("Ignited Pro is required for this feature", comment: ""), onEdge: .bottom)
                     }
                 }
                 else
@@ -144,7 +144,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                     Spacer()
                 }.contentShape(Rectangle())
                     .onTapGesture {
-                    UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this option", comment: ""))
+                        ToastView.show(NSLocalizedString("Ignited Pro is required for this option", comment: ""), onEdge: .bottom)
                 }
             }
             else

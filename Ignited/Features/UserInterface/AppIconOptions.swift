@@ -149,7 +149,7 @@ struct AppIconOptions
                         if Settings.proFeaturesEnabled {
                             value.wrappedValue = icon
                         } else {
-                            UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required to use this icon", comment: ""))
+                            ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
                         }
                     }
                 }
