@@ -308,7 +308,7 @@ class GameViewController: DeltaCore.GameViewController
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deviceDidShake(with:)), name: UIDevice.deviceDidShakeNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: .appWillBecomeInactive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     deinit

@@ -1205,5 +1205,4 @@ public extension Notification.Name
     static let startRandomGame = Notification.Name("startRandomGameNotification")
     static let unwindFromSettings = Notification.Name("unwindFromSettingsNotification")
     static let dismissSettings = Notification.Name("dismissSettingsNotification")
-    static let appWillBecomeInactive = Notification.Name("appWillBecomeInactiveNotification")
 }
