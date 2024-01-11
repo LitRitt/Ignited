@@ -120,6 +120,11 @@ class MelonDSCoreSettingsViewController: UITableViewController
             self.navigationItem.rightBarButtonItem = nil
         }
         
+        if #available(iOS 15, *)
+        {
+            self.tableView.register(AttributedHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: AttributedHeaderFooterView.reuseIdentifier)
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(MelonDSCoreSettingsViewController.willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
@@ -490,9 +495,44 @@ extension MelonDSCoreSettingsViewController
             case (false, .vertical): return NSLocalizedString("When AirPlaying DS games, both screens will be stacked vertically on the external display.", comment: "")
             case (false, .horizontal): return NSLocalizedString("When AirPlaying DS games, both screens will be placed side-by-side on the external display.", comment: "")
             }
-
-        default: return super.tableView(tableView, titleForFooterInSection: section.rawValue)
+            
+        case .dsBIOS, .dsiBIOS:
+            guard #available(iOS 15, *) else { break }
+            return nil
+            
+        default: break
         }
+        
+        return super.tableView(tableView, titleForFooterInSection: section.rawValue)
+    }
+
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
+    {
+        let section = Section(rawValue: section)!
+        guard !isSectionHidden(section) else { return nil }
+        
+        switch section
+        {
+        case .dsBIOS, .dsiBIOS:
+            guard #available(iOS 15, *), let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AttributedHeaderFooterView.reuseIdentifier) as? AttributedHeaderFooterView else { break }
+            
+            let systemName = (section == .dsiBIOS) ? String(localized: "DSi") : String(localized: "DS")
+            
+            var attributedText = AttributedString(localized: "Ignited requires these BIOS files in order to play Nintendo \(systemName) games.")
+            attributedText += " "
+            
+            var learnMore = AttributedString(localized: "Learn more…")
+            learnMore.link = URL(string: "https://docs.ignitedemulator.com/help/bios-files")
+            attributedText += learnMore
+            
+            footerView.attributedText = attributedText
+            
+            return footerView
+            
+        default: break
+        }
+        
+        return super.tableView(tableView, viewForFooterInSection: section.rawValue)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat

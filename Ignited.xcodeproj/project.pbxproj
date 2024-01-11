@@ -32,6 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AC0076DC2B50655400EBC46C /* AttributedHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0076DB2B50655400EBC46C /* AttributedHeaderFooterView.swift */; };
 		AC0BF8182A8ECD7000C47A5A /* RandomGameOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */; };
 		AC14384B2A4F670F0099977F /* DSAirPlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384A2A4F670F0099977F /* DSAirPlayOptions.swift */; };
 		AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384C2A4F67430099977F /* DSFeatures.swift */; };
@@ -324,6 +325,7 @@
 		22506DA00971C4300AF90A35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7148D8F30DCE0AE3C815E6F3 /* Pods-Ignited.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignited.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.debug.xcconfig"; sourceTree = "<group>"; };
 		7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ignited.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC0076DB2B50655400EBC46C /* AttributedHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedHeaderFooterView.swift; sourceTree = "<group>"; };
 		AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomGameOptions.swift; sourceTree = "<group>"; };
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
 		AC14384A2A4F670F0099977F /* DSAirPlayOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSAirPlayOptions.swift; sourceTree = "<group>"; };
@@ -1222,6 +1224,7 @@
 				BFFA4C081E8A24D600D87934 /* GameTableViewCell.swift */,
 				BF71CF891FE904B1001F1613 /* GameTableViewCell.xib */,
 				BF8A333321A484A000A42FD4 /* BadgedTableViewCell.swift */,
+				AC0076DB2B50655400EBC46C /* AttributedHeaderFooterView.swift */,
 			);
 			path = "Table View";
 			sourceTree = "<group>";
@@ -1793,6 +1796,7 @@
 				BF647A6A22FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift in Sources */,
 				BFF6452E1F7CC5060056533E /* GameControllerInputMappingTransformer.swift in Sources */,
 				BF59427C1E09BC830051894B /* Cheat.swift in Sources */,
+				AC0076DC2B50655400EBC46C /* AttributedHeaderFooterView.swift in Sources */,
 				BFBAB2E31EB685A2004E0B0E /* DeltaCoreProtocol+Delta.swift in Sources */,
 				AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */,
 				BF3540081C5DAFAD00C1184C /* PauseTransitionCoordinator.swift in Sources */,

@@ -132,6 +132,11 @@ class SettingsViewController: UITableViewController
         {
             self.versionLabel.text = NSLocalizedString("Ignited", comment: "")
         }
+        
+        if #available(iOS 15, *)
+        {
+            self.tableView.register(AttributedHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: AttributedHeaderFooterView.reuseIdentifier)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -434,27 +439,32 @@ extension SettingsViewController
         }
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
+    {
+        let section = Section(rawValue: section)!
+        guard !isSectionHidden(section) else { return nil }
+        
+        switch section
         {
-        primary:
-            switch Section(rawValue: indexPath.section)!
-            {
-            case .cores:
-                let row = CoresRow(rawValue: indexPath.row)!
-                switch row
-                {
-                case .n64:
-//                    return 0.0
-                    break
-                    
-                default: break
-                }
-                
-            default: break
-            }
+        case .controllerSkins:
+            guard #available(iOS 15, *), let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AttributedHeaderFooterView.reuseIdentifier) as? AttributedHeaderFooterView else { break }
             
-            return super.tableView(tableView, heightForRowAt: indexPath)
+            var attributedText = AttributedString(localized: "Customize the appearance of each system.")
+            attributedText += " "
+            
+            var learnMore = AttributedString(localized: "Learn more…")
+            learnMore.link = URL(string: "https://docs.ignitedemulator.com/using-ignited/settings/controller-skins")
+            attributedText += learnMore
+            
+            footerView.attributedText = attributedText
+            
+            return footerView
+            
+        default: break
         }
+        
+        return super.tableView(tableView, viewForFooterInSection: section.rawValue)
+    }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
