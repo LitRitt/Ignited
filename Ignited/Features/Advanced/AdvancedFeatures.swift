@@ -22,6 +22,12 @@ struct AdvancedFeatures: FeatureContainer
              options: SkinDebugOptions())
     var skinDebug
     
+    @Feature(name: "Low Battery",
+             description: "Choose when the app starts reacting to low device battery.",
+             options: LowBatteryOptions(),
+             permanent: true)
+    var lowBattery
+    
     #if DEBUG
     @Feature(name: "Enable Pro",
              description: "For testing Ignited Pro features.")

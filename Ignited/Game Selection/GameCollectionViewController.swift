@@ -27,6 +27,7 @@ extension GameCollectionViewController
         case downloadingGameSave
         case biosNotFound
         case openGLESVersionMismatch
+        case criticalBatteryLevel
     }
 }
 
@@ -681,6 +682,10 @@ private extension GameCollectionViewController
             {
                 self.showOpenGLESVersionMismatchError()
             }
+            catch LaunchError.criticalBatteryLevel
+            {
+                self.showCriticalBatteryError()
+            }
             catch
             {
                 let alertController = UIAlertController(title: NSLocalizedString("Unable to Launch Game", comment: ""), error: error)
@@ -754,6 +759,8 @@ private extension GameCollectionViewController
         }
         
         guard self.checkOpenGLESVersion(for: game) else { throw LaunchError.openGLESVersionMismatch }
+        
+        guard !self.checkForCriticalBattery() else { throw LaunchError.criticalBatteryLevel }
     }
     
     @objc func resumeCurrentGame()
@@ -763,6 +770,11 @@ private extension GameCollectionViewController
         
         guard self.checkOpenGLESVersion(for: game) else {
             self.showOpenGLESVersionMismatchError()
+            return
+        }
+        
+        guard !self.checkForCriticalBattery() else {
+            self.showCriticalBatteryError()
             return
         }
         
@@ -785,6 +797,11 @@ private extension GameCollectionViewController
     
     @objc func startRandomGame()
     {
+        guard !self.checkForCriticalBattery() else {
+            self.showCriticalBatteryError()
+            return
+        }
+        
         let gameFetchRequest = Game.rst_fetchRequest() as! NSFetchRequest<Game>
         
         if Settings.userInterfaceFeatures.randomGame.useCollection,
@@ -844,6 +861,11 @@ private extension GameCollectionViewController
             return
         }
         
+        guard !self.checkForCriticalBattery() else {
+            self.showCriticalBatteryError()
+            return
+        }
+        
         if Settings.gameplayFeatures.saveStates.autoLoad
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
@@ -898,6 +920,26 @@ private extension GameCollectionViewController
     func showNoValidGamesError()
     {
         let alertController = UIAlertController(title: NSLocalizedString("No Valid Games", comment: ""), message: NSLocalizedString("No games were found when trying to launch a random game.", comment: ""), preferredStyle: .alert)
+        alertController.addAction(.ok)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func checkForCriticalBattery() -> Bool
+    {
+        let currentBatteryLevel = Double(UIDevice.current.batteryLevel)
+        let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
+        
+        if currentBatteryLevel < criticalBatteryLevel
+        {
+            return true
+        }
+        
+        return false
+    }
+    
+    func showCriticalBatteryError()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Critical Battery!", comment: ""), message: NSLocalizedString(String(format: "You cannot launch any games while your device is below %.f% battery.", Settings.advancedFeatures.lowBattery.criticalLevel * 100), comment: ""), preferredStyle: .alert)
         alertController.addAction(.ok)
         self.present(alertController, animated: true, completion: nil)
     }

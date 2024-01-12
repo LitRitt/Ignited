@@ -301,6 +301,7 @@ extension PowerUserOptions
         case touchOverlay
         // Advanced
         case skinDebug
+        case lowPower
         case allFeatures
         
         func resetSettings()
@@ -475,6 +476,10 @@ extension PowerUserOptions
                 Settings.advancedFeatures.skinDebug.displayType = Settings.advancedFeatures.skinDebug.defaultDisplayType
                 Settings.advancedFeatures.skinDebug.useAlt = false
                 Settings.advancedFeatures.skinDebug.hasAlt = false
+                
+            case .lowPower:
+                Settings.advancedFeatures.lowBattery.lowLevel = 0.10
+                Settings.advancedFeatures.lowBattery.criticalLevel = 0.05
                 
             case .allFeatures:
                 break

@@ -33,6 +33,7 @@
 
 /* Begin PBXBuildFile section */
 		AC0076DC2B50655400EBC46C /* AttributedHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0076DB2B50655400EBC46C /* AttributedHeaderFooterView.swift */; };
+		AC0076DE2B509B4200EBC46C /* LowBatteryOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0076DD2B509B4200EBC46C /* LowBatteryOptions.swift */; };
 		AC0BF8182A8ECD7000C47A5A /* RandomGameOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */; };
 		AC14384B2A4F670F0099977F /* DSAirPlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384A2A4F670F0099977F /* DSAirPlayOptions.swift */; };
 		AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384C2A4F67430099977F /* DSFeatures.swift */; };
@@ -326,6 +327,7 @@
 		7148D8F30DCE0AE3C815E6F3 /* Pods-Ignited.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignited.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.debug.xcconfig"; sourceTree = "<group>"; };
 		7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ignited.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC0076DB2B50655400EBC46C /* AttributedHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedHeaderFooterView.swift; sourceTree = "<group>"; };
+		AC0076DD2B509B4200EBC46C /* LowBatteryOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowBatteryOptions.swift; sourceTree = "<group>"; };
 		AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomGameOptions.swift; sourceTree = "<group>"; };
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
 		AC14384A2A4F670F0099977F /* DSAirPlayOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSAirPlayOptions.swift; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 				AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */,
 				AC1EAE662A0061910072C858 /* PowerUserOptions.swift */,
 				AC1EAE6A2A006CC30072C858 /* SkinDebugOptions.swift */,
+				AC0076DD2B509B4200EBC46C /* LowBatteryOptions.swift */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -1950,6 +1953,7 @@
 				BF59426F1E09BC5D0051894B /* DatabaseManager.swift in Sources */,
 				BF4828861F9028F500028B97 /* System.swift in Sources */,
 				BF13A7561D5D29B0000BB055 /* PreviewGameViewController.swift in Sources */,
+				AC0076DE2B509B4200EBC46C /* LowBatteryOptions.swift in Sources */,
 				AC14384B2A4F670F0099977F /* DSAirPlayOptions.swift in Sources */,
 				BF6866171DCAC8B900BF2D06 /* ControllerSkin+Configuring.swift in Sources */,
 				BF713C0822499ED4004A1A2B /* PreviousHarmony.xcdatamodeld in Sources */,

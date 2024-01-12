@@ -201,6 +201,8 @@ class GameViewController: DeltaCore.GameViewController
         }
     }
     
+    private var batteryLowNotificationShown = false
+    
     private var isGyroActive = false
     private var presentedGyroAlert = false
     
@@ -309,6 +311,11 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deviceDidShake(with:)), name: UIDevice.deviceDidShakeNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        // Battery
+        UIDevice.current.isBatteryMonitoringEnabled = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.batteryLevelDidChange(with:)), name: UIDevice.batteryLevelDidChangeNotification, object: nil)
     }
     
     deinit
@@ -3241,6 +3248,57 @@ private extension GameViewController
     @objc func appWillBecomeInactive(with notification: Notification)
     {
         self.updateAutoSaveState(true)
+    }
+    
+    @objc func batteryLevelDidChange(with notification: Notification)
+    {
+        guard let emulatorCore = self.emulatorCore,
+              let game = self.game else { return }
+        
+        let currentBatteryLevel = Double(UIDevice.current.batteryLevel)
+        let lowBatteryLevel = Settings.advancedFeatures.lowBattery.lowLevel
+        let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
+        
+        // Battery low, create auto save state
+        if currentBatteryLevel < lowBatteryLevel
+        {
+            self.updateAutoSaveState(true)
+            
+            // Battery critical, quit emulation
+            if currentBatteryLevel < criticalBatteryLevel
+            {
+                NotificationCenter.default.post(name: EmulatorCore.emulationDidQuitNotification, object: nil)
+                
+                self.emulatorCore?.stop()
+                
+                return
+            }
+            
+            if !self.batteryLowNotificationShown
+            {
+                self.showBatteryLowNotification()
+            }
+        }
+    }
+    
+    func showBatteryLowNotification()
+    {
+        let lowBatteryLevel = Settings.advancedFeatures.lowBattery.lowLevel
+        let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
+        
+        self.pauseEmulation()
+        
+        let alertController = UIAlertController(title: NSLocalizedString(String(format: "Battery At %.f%!", lowBatteryLevel * 100), comment: ""), message: NSLocalizedString(String(format: "Ignited will begin creating auto save states in case your device suddenly powers off. At %.f% battery your game session will end and you won't be able to launch a game until you charge your device.", criticalBatteryLevel * 100), comment: ""), preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+            self.resumeEmulation()
+        }))
+        self.present(alertController, animated: true, completion: nil)
+        
+        self.batteryLowNotificationShown = true
     }
     
     @objc func deviceDidShake(with notification: Notification)
