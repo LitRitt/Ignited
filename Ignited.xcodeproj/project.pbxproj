@@ -111,6 +111,7 @@
 		ACAB773B2B46926F001AB619 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAB773A2B46926F001AB619 /* Keychain.swift */; };
 		ACADE4C92B4DA8450001B050 /* SNESFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */; };
 		ACADE4CB2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACADE4CA2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift */; };
+		ACAEA77F2B50FA0A008A7D45 /* UIAlertController+PreparePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAEA77E2B50FA0A008A7D45 /* UIAlertController+PreparePopover.swift */; };
 		ACB3CB8A29FDCF2A002B53DE /* GameScreenshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */; };
 		ACB3CB8C29FDCF4D002B53DE /* ToastNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */; };
 		ACB3CB8E29FDD3E9002B53DE /* TouchFeedbackFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */; };
@@ -406,6 +407,7 @@
 		ACAB773A2B46926F001AB619 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		ACADE4C82B4DA8450001B050 /* SNESFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNESFeatures.swift; sourceTree = "<group>"; };
 		ACADE4CA2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNESInvalidVRAMOptions.swift; sourceTree = "<group>"; };
+		ACAEA77E2B50FA0A008A7D45 /* UIAlertController+PreparePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+PreparePopover.swift"; sourceTree = "<group>"; };
 		ACB3CB8929FDCF2A002B53DE /* GameScreenshotOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenshotOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8B29FDCF4D002B53DE /* ToastNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotificationOptions.swift; sourceTree = "<group>"; };
 		ACB3CB8D29FDD3E9002B53DE /* TouchFeedbackFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackFeatures.swift; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 				BF6424841F5CBDC900D6AB44 /* UIView+ParentViewController.swift */,
 				BF18B61E1E2985F900F70067 /* UIAlertController+Importing.swift */,
 				BFC3627F21ADE2BA00EF2BE6 /* UIAlertController+Error.swift */,
+				ACAEA77E2B50FA0A008A7D45 /* UIAlertController+PreparePopover.swift */,
 				BFCEA67D1D56FF640061A534 /* UIViewControllerContextTransitioning+Conveniences.swift */,
 				BF5942911E09BD1A0051894B /* NSManagedObject+Conveniences.swift */,
 				BF5942921E09BD1A0051894B /* NSManagedObjectContext+Conveniences.swift */,
@@ -1905,6 +1908,7 @@
 				AC89DC992A4CACFC000DBD0C /* ControllerFeatures.swift in Sources */,
 				AC432A362A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift in Sources */,
 				BF56450D220239B800A8EA26 /* GameControllerInputMappingMigrationPolicy.swift in Sources */,
+				ACAEA77F2B50FA0A008A7D45 /* UIAlertController+PreparePopover.swift in Sources */,
 				BF95E2771E4977BF0030E7AD /* GameMetadata.swift in Sources */,
 				BFFC461F1D59823500AF2CC6 /* GamesStoryboardSegue.swift in Sources */,
 				AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */,

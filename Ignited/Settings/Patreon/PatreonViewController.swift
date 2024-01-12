@@ -252,6 +252,8 @@ private extension PatreonViewController
         }
         
         let alertController = UIAlertController(title: NSLocalizedString("Are you sure you want to unlink your Patreon account?", comment: ""), message: NSLocalizedString("You will no longer have access to Pro feature.", comment: ""), preferredStyle: .actionSheet)
+        alertController.preparePopoverPresentationController(self.view)
+        
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Unlink Patreon Account", comment: ""), style: .destructive) { _ in signOut() })
         alertController.addAction(.cancel)
         self.present(alertController, animated: true, completion: nil)
