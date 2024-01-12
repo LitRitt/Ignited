@@ -2437,9 +2437,7 @@ extension GameViewController
         }
         
         let alertController = UIAlertController(title: NSLocalizedString("Choose Device Override", comment: ""), message: NSLocalizedString("This allows you to test your skins on devices that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "iPhone", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .iphone
@@ -2487,9 +2485,7 @@ extension GameViewController
         }
         
         let alertController = UIAlertController(title: NSLocalizedString("Choose Display Type Override", comment: ""), message: NSLocalizedString("This allows you to test your skins on display types that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "Standard", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.displayType = .standard
@@ -2537,9 +2533,7 @@ extension GameViewController
         }
         
         let alertController = UIAlertController(title: NSLocalizedString("Choose Preset Traits", comment: ""), message: NSLocalizedString("Set your override traits based on existing device and display type combinations.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "Standard iPhone", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .iphone
@@ -2602,15 +2596,11 @@ extension GameViewController
         if Settings.gbFeatures.palettes.multiPalette
         {
             let alertController = UIAlertController(title: NSLocalizedString("Change Which Palette?", comment: ""), message: nil, preferredStyle: .actionSheet)
-            alertController.popoverPresentationController?.sourceView = self.view
-            alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-            alertController.popoverPresentationController?.permittedArrowDirections = []
+            alertController.preparePopoverPresentationController(self.view)
             
             alertController.addAction(UIAlertAction(title: "Main Palette", style: .default, handler: { (action) in
                 let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Main Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
-                paletteAlertController.popoverPresentationController?.sourceView = self.view
-                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                paletteAlertController.preparePopoverPresentationController(self.view)
                 
                 for palette in GameboyPalette.allCases
                 {
@@ -2630,9 +2620,7 @@ extension GameViewController
             }))
             alertController.addAction(UIAlertAction(title: "Sprite Palette 1", style: .default, handler: { (action) in
                 let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Sprite Palette 1", comment: ""), message: nil, preferredStyle: .actionSheet)
-                paletteAlertController.popoverPresentationController?.sourceView = self.view
-                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                paletteAlertController.preparePopoverPresentationController(self.view)
                 
                 for palette in GameboyPalette.allCases
                 {
@@ -2652,9 +2640,7 @@ extension GameViewController
             }))
             alertController.addAction(UIAlertAction(title: "Sprite Palette 2", style: .default, handler: { (action) in
                 let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Sprite Palette 2", comment: ""), message: nil, preferredStyle: .actionSheet)
-                paletteAlertController.popoverPresentationController?.sourceView = self.view
-                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                paletteAlertController.preparePopoverPresentationController(self.view)
                 
                 for palette in GameboyPalette.allCases
                 {
@@ -2683,9 +2669,7 @@ extension GameViewController
         else
         {
             let alertController = UIAlertController(title: NSLocalizedString("Choose Color Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
-            alertController.popoverPresentationController?.sourceView = self.view
-            alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-            alertController.popoverPresentationController?.permittedArrowDirections = []
+            alertController.preparePopoverPresentationController(self.view)
             
             for palette in GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled }
             {
@@ -3326,9 +3310,7 @@ private extension GameViewController
         self.pauseEmulation()
         
         let alertController = UIAlertController(title: NSLocalizedString("Override Traits Menu", comment: ""), message: NSLocalizedString("This popup was activated by shaking your device while using the Override Traits feature. You can use it to change or reset your override traits, or to recover from situations where you can't access the main menu.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "Choose Preset Traits", style: .default, handler: { (action) in
             self.performPresetTraitsAction()
