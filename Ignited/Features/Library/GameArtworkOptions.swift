@@ -208,7 +208,7 @@ struct GameArtworkOptions
     var showPauseIcon: Bool = true
     
     @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
-    var useScreenshots: Bool = true
+    var useScreenshots: Bool = false
     
     @Option(name: "Force Aspect Ratio", description: "Enable to make all artwork within a given system use consistent aspect ratios.")
     var forceAspect: Bool = true
