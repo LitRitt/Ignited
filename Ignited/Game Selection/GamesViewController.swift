@@ -1069,6 +1069,8 @@ private extension GamesViewController
         {
             self.quitEmulation()
         }
+        
+        self.updatePlayMenu()
     }
     
     @objc func syncingDidStart(_ notification: Notification)
