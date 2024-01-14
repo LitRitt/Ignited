@@ -372,10 +372,8 @@ extension PowerUserOptions
                 Settings.controllerFeatures.skin.backgroundColor = .black
                 
             case .backgroundBlur:
-                Settings.controllerFeatures.backgroundBlur.overrideSetting = true
                 Settings.controllerFeatures.backgroundBlur.showDuringAirPlay = true
                 Settings.controllerFeatures.backgroundBlur.maintainAspect = true
-                Settings.controllerFeatures.backgroundBlur.overrideSkin = false
                 Settings.controllerFeatures.backgroundBlur.strength = 1.0
                 Settings.controllerFeatures.backgroundBlur.tintIntensity = 0.1
                 

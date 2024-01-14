@@ -104,7 +104,7 @@ class ControllerInputsViewController: UIViewController
             }
             
             self.gameViewController.controllerView.overrideControllerSkinTraits = traits
-            self.gameViewController.blurScreenOverride = true
+            self.gameViewController.blurScreenEnabled = false
             
             _didLayoutSubviews = true
         }

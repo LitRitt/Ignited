@@ -248,12 +248,9 @@ private extension PauseViewController
                                           image: UIImage.symbolWithTemplate(name: "gearshape.fill"),
                                           action: { _ in })
         
-        if Settings.controllerFeatures.backgroundBlur.isEnabled
-        {
-            self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""),
+        self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""),
                                               image: UIImage.symbolWithTemplate(name: "aqi.medium"),
                                               action: { _ in })
-        }
         
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""),
                                            image: UIImage.symbolWithTemplate(name: "button.horizontal.top.press.fill", backupSymbolName: "digitalcrown.horizontal.press"),

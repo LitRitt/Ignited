@@ -68,7 +68,7 @@ struct ToastNotificationOptions
     var palette: Bool = true
     
     @Option(name: "Background Blur Toggled",
-            description: "Show toasts when toggleing the background blur.")
+            description: "Show toasts when toggling the background blur.")
     var backgroundBlur: Bool = true
     
     @Option(name: "Alternate Skin Toggled",
