@@ -17,6 +17,12 @@ struct N64Features: FeatureContainer
              options: N64OpenGLES3Options())
     var openGLES3
     
+    @Feature(name: "Overscan",
+             description: "Enable to allow Overscan settings. Overscan allows you to reduce the black borders in N64 games. Use the Overscan option in the pause menu to edit the values for that game.",
+             options: N64OverscanOptions(),
+             hidden: true)
+    var overscan
+    
     private init()
     {
         self.prepareFeatures()

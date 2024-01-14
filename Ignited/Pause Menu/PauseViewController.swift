@@ -44,6 +44,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var paletteItem: MenuItem?
     var quickSettingsItem: MenuItem?
     var blurBackgroudItem: MenuItem?
+    var overscanEditorItem: MenuItem?
     var altSkinItem: MenuItem?
     var debugModeItem: MenuItem?
     
@@ -175,6 +176,7 @@ private extension PauseViewController
         self.paletteItem = nil
         self.quickSettingsItem = nil
         self.blurBackgroudItem = nil
+        self.overscanEditorItem = nil
         self.sustainButtonsItem = nil
         self.fastForwardItem = nil
         self.debugModeItem = nil
@@ -252,6 +254,10 @@ private extension PauseViewController
                                               image: UIImage.symbolWithTemplate(name: "aqi.medium"),
                                               action: { _ in })
         
+        self.overscanEditorItem = MenuItem(text: NSLocalizedString("Overscan Editor", comment: ""),
+                                               image: UIImage.symbolWithTemplate(name: "arrow.up.and.down.and.arrow.left.and.right"),
+                                               action: { _ in })
+        
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""),
                                            image: UIImage.symbolWithTemplate(name: "button.horizontal.top.press.fill", backupSymbolName: "digitalcrown.horizontal.press"),
                                            action: { _ in })
@@ -304,6 +310,7 @@ private extension PauseViewController
         case "Palettes": return self.paletteItem
         case "Quick Settings": return self.quickSettingsItem
         case "Backgroud Blur": return self.blurBackgroudItem
+        case "Overscan Editor": return self.overscanEditorItem
         case "Cheat Codes": return self.cheatCodesItem
         case "Alt Skin": return self.altSkinItem
         case "Debug Mode": return self.debugModeItem

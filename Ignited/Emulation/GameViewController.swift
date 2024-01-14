@@ -123,6 +123,8 @@ class GameViewController: DeltaCore.GameViewController
             self.updateAudio()
             
             self.presentedGyroAlert = false
+            self.isEditingOverscanInsets = false
+            self.overscanEditorView.isHidden = true
             
             self.clearRewindSaveStates()
         }
@@ -181,6 +183,9 @@ class GameViewController: DeltaCore.GameViewController
     private var airPlayContentView: UIView!
     private var airPlayBlurView: UIVisualEffectView!
     private var airPlayBackgroundView: RSTPlaceholderView!
+    
+    private var overscanEditorView: OverscanEditorView!
+    private var isEditingOverscanInsets = false
     
     private var rewindTimer: Timer?
     
@@ -450,6 +455,24 @@ extension GameViewController
         
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
+        let overscanEditorNib = UINib(nibName: "OverscanEditorView", bundle: nil)
+        self.overscanEditorView = overscanEditorNib.instantiate(withOwner: nil, options: nil)[0] as? OverscanEditorView
+        self.overscanEditorView.isHidden = true
+        self.view.insertSubview(self.overscanEditorView, aboveSubview: self.gameView)
+        
+        self.overscanEditorView.applyButton.addTarget(self, action: #selector(GameViewController.applyOverscanInsets), for: .touchDown)
+        self.overscanEditorView.doneButton.addTarget(self, action: #selector(GameViewController.finishEditingOverscanInsets), for: .touchDown)
+        self.overscanEditorView.resetButton.addTarget(self, action: #selector(GameViewController.resetOverscanInsets), for: .touchDown)
+        
+        self.overscanEditorView.topInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanTopInsetIncrease), for: .touchDown)
+        self.overscanEditorView.topInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanTopInsetDecrease), for: .touchDown)
+        self.overscanEditorView.bottomInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanBottomInsetIncrease), for: .touchDown)
+        self.overscanEditorView.bottomInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanBottomInsetDecrease), for: .touchDown)
+        self.overscanEditorView.leftInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanLeftInsetIncrease), for: .touchDown)
+        self.overscanEditorView.leftInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanLeftInsetDecrease), for: .touchDown)
+        self.overscanEditorView.rightInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanRightInsetIncrease), for: .touchDown)
+        self.overscanEditorView.rightInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanRightInsetDecrease), for: .touchDown)
+        
         self.airPlayContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.airPlayContentView.translatesAutoresizingMaskIntoConstraints = false
         self.airPlayContentView.isHidden = true
@@ -506,6 +529,12 @@ extension GameViewController
         sustainButtonsVibrancyView.contentView.addSubview(self.sustainButtonsBackgroundView)
         
         // Auto Layout
+        self.overscanEditorView.translatesAutoresizingMaskIntoConstraints = false
+        self.overscanEditorView.leadingAnchor.constraint(equalTo: self.gameView.leadingAnchor).isActive = true
+        self.overscanEditorView.trailingAnchor.constraint(equalTo: self.gameView.trailingAnchor).isActive = true
+        self.overscanEditorView.topAnchor.constraint(equalTo: self.gameView.topAnchor).isActive = true
+        self.overscanEditorView.bottomAnchor.constraint(equalTo: self.gameView.bottomAnchor).isActive = true
+        
         self.airPlayContentView.leadingAnchor.constraint(equalTo: self.gameView.leadingAnchor).isActive = true
         self.airPlayContentView.trailingAnchor.constraint(equalTo: self.gameView.trailingAnchor).isActive = true
         self.airPlayContentView.topAnchor.constraint(equalTo: self.gameView.topAnchor).isActive = true
@@ -679,6 +708,11 @@ extension GameViewController
                 self.performBlurBackgroundAction()
             }
             
+            pauseViewController.overscanEditorItem?.isSelected = self.isEditingOverscanInsets
+            pauseViewController.overscanEditorItem?.action = { [unowned self] item in
+                self.performOverscanEditorAction()
+            }
+            
             pauseViewController.altSkinItem?.isSelected = Settings.advancedFeatures.skinDebug.useAlt
             pauseViewController.altSkinItem?.action = { [unowned self] item in
                 self.performAltRepresentationsAction()
@@ -746,6 +780,12 @@ extension GameViewController
                game.type != .ds
             {
                 pauseViewController.microphoneItem = nil
+            }
+            
+            if let game = self.game,
+               game.type != .n64
+            {
+                pauseViewController.overscanEditorItem = nil
             }
             
             switch self.game?.type
@@ -933,7 +973,7 @@ private extension GameViewController
         if let index = Settings.localControllerPlayerIndex, !ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0.playerIndex == index })
         {
             self.controllerView.playerIndex = index
-            self.controllerView.isHidden = false
+            self.controllerView.isHidden = self.isEditingOverscanInsets
         }
         else
         {
@@ -955,7 +995,7 @@ private extension GameViewController
             }
             else
             {
-                if !Settings.controllerFeatures.skin.alwaysShow
+                if !Settings.controllerFeatures.skin.alwaysShow || self.isEditingOverscanInsets
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil // TODO: Does this need changed to 0?
@@ -1332,7 +1372,7 @@ private extension GameViewController
     {
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
-        self.backgroundColor = Settings.controllerFeatures.skin.colorMode.uiColor
+        self.backgroundColor = self.isEditingOverscanInsets ? UIColor.red : Settings.controllerFeatures.skin.colorMode.uiColor
     }
     
     func updateSustainedButtons(gameController: GameController)
@@ -1730,6 +1770,163 @@ private extension GameViewController
             let gameEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
             emulatorBridge.isInvalidVRAMAccessEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled && gameEnabled
         }
+        else if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? N64EmulatorBridge
+        {
+            emulatorBridge.overscanTop = game.overscanTop
+            emulatorBridge.overscanBottom = game.overscanBottom
+            emulatorBridge.overscanLeft = game.overscanLeft
+            emulatorBridge.overscanRight = game.overscanRight
+            
+            self.overscanEditorView.topInsetLabel.text = "\(game.overscanTop)"
+            self.overscanEditorView.bottomInsetLabel.text = "\(game.overscanBottom)"
+            self.overscanEditorView.leftInsetLabel.text = "\(game.overscanLeft)"
+            self.overscanEditorView.rightInsetLabel.text = "\(game.overscanRight)"
+            
+            emulatorBridge.updateOverscanConfig()
+        }
+    }
+    
+    func updateOverscanInset(for edge: OverscanInsetEdge, increase: Bool)
+    {
+        guard let game = self.game as? Game else { return }
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            let game = context.object(with: game.objectID) as! Game
+            
+            switch edge
+            {
+            case .top:
+                let oldInset = game.overscanTop
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanTop = newInset
+                
+                DispatchQueue.main.async{ self.overscanEditorView.topInsetLabel.text = "\(newInset)" }
+                
+            case .bottom:
+                let oldInset = game.overscanBottom
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanBottom = newInset
+                
+                DispatchQueue.main.async{ self.overscanEditorView.bottomInsetLabel.text = "\(newInset)" }
+                
+            case .left:
+                let oldInset = game.overscanLeft
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanLeft = newInset
+                    
+                DispatchQueue.main.async{ self.overscanEditorView.leftInsetLabel.text = "\(newInset)" }
+                
+            case .right:
+                let oldInset = game.overscanRight
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanRight = newInset
+                    
+                DispatchQueue.main.async{ self.overscanEditorView.rightInsetLabel.text = "\(newInset)" }
+            }
+            
+            context.saveWithErrorLogging()
+        }
+    }
+    
+    @objc func finishEditingOverscanInsets()
+    {
+        self.performOverscanEditorAction()
+    }
+    
+    @objc func resetOverscanInsets()
+    {
+        guard let game = self.game as? Game else { return }
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            let game = context.object(with: game.objectID) as! Game
+            
+            game.overscanTop = 0
+            game.overscanBottom = 0
+            game.overscanLeft = 0
+            game.overscanRight = 0
+            
+            context.saveWithErrorLogging()
+        }
+        
+        self.overscanEditorView.topInsetLabel.text = "0"
+        self.overscanEditorView.bottomInsetLabel.text = "0"
+        self.overscanEditorView.leftInsetLabel.text = "0"
+        self.overscanEditorView.rightInsetLabel.text = "0"
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.applyOverscanInsets()
+        }
+    }
+    
+    
+    @objc func applyOverscanInsets()
+    {
+        guard let emulatorCore = self.emulatorCore,
+              let game = self.game as? Game else { return }
+        
+        self.updateAutoSaveState()
+        self.updateCoreSettings()
+        
+        emulatorCore.stop()
+        emulatorCore.start()
+        
+        let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+        fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+        
+        do
+        {
+            let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+            if let activeSaveState = saveStates?.last
+            {
+                self.overrideToastNotification = true
+                self.load(activeSaveState)
+            }
+        }
+        catch
+        {
+            print(error)
+        }
+    }
+    
+    @objc func overscanTopInsetIncrease()
+    {
+        self.updateOverscanInset(for: .top, increase: true)
+    }
+    
+    @objc func overscanTopInsetDecrease()
+    {
+        self.updateOverscanInset(for: .top, increase: false)
+    }
+    
+    @objc func overscanBottomInsetIncrease()
+    {
+        self.updateOverscanInset(for: .bottom, increase: true)
+    }
+    
+    @objc func overscanBottomInsetDecrease()
+    {
+        self.updateOverscanInset(for: .bottom, increase: false)
+    }
+    
+    @objc func overscanLeftInsetIncrease()
+    {
+        self.updateOverscanInset(for: .left, increase: true)
+    }
+    
+    @objc func overscanLeftInsetDecrease()
+    {
+        self.updateOverscanInset(for: .left, increase: false)
+    }
+    
+    @objc func overscanRightInsetIncrease()
+    {
+        self.updateOverscanInset(for: .right, increase: true)
+    }
+    
+    @objc func overscanRightInsetDecrease()
+    {
+        self.updateOverscanInset(for: .right, increase: false)
     }
 }
 
@@ -2375,6 +2572,37 @@ extension GameViewController
             else
             {
                 text = NSLocalizedString("Background Blur Disabled", comment: "")
+            }
+            self.presentToastView(text: text)
+        }
+    }
+    
+    func performOverscanEditorAction()
+    {
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let enabled = !self.isEditingOverscanInsets
+        
+        UIView.animate(withDuration: 0.2) {
+            self.overscanEditorView.isHidden = !enabled
+            self.isEditingOverscanInsets = enabled
+            
+            self.updateControllers()
+        }
+        
+        if Settings.userInterfaceFeatures.toasts.overscan
+        {
+            let text: String
+            if enabled
+            {
+                text = NSLocalizedString("Overscan Editor Enabled", comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Overscan Editor Disabled", comment: "")
             }
             self.presentToastView(text: text)
         }

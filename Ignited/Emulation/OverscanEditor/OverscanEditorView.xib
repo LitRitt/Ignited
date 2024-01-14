@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Duo-4K-WF8" userLabel="Overscan Editor View" customClass="OverscanEditorView" customModule="Ignited" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0O4-Kd-D81" userLabel="Top Inset View">
+                    <rect key="frame" x="150" y="20.000000000000004" width="100" height="50.333333333333343"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="UZh-Pi-1Vt" userLabel="Top Inset Decrease Button">
+                            <rect key="frame" x="0.0" y="8" width="40" height="34.333333333333336"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.down.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uLx-5b-PfH" userLabel="Top Inset Label">
+                            <rect key="frame" x="40" y="14.999999999999998" width="20.333333333333329" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="cqc-np-LbR" userLabel="Top Inset Increase Button">
+                            <rect key="frame" x="60.333333333333343" y="8" width="39.666666666666657" height="34.333333333333336"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.up.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="g2g-sT-4DQ"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75323365066225167" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </stackView>
+                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="p1H-jQ-D1q" userLabel="Bottom Inset View">
+                    <rect key="frame" x="147.33333333333334" y="229.66666666666666" width="105.33333333333334" height="50.333333333333343"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="24o-0R-44e" userLabel="Bottom Inset Decrease Button">
+                            <rect key="frame" x="0.0" y="8" width="42.666666666666664" height="34.333333333333336"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.down.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfc-Zo-743" userLabel="Bottom Inset Label">
+                            <rect key="frame" x="42.666666666666657" y="14.999999999999998" width="20.333333333333329" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Vdf-2B-4xV" userLabel="Bottom Inset Increase Button">
+                            <rect key="frame" x="63" y="8" width="42.333333333333343" height="34.333333333333336"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.up.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="0EQ-Iz-1Bc"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75323365066225167" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </stackView>
+                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="F6k-XB-xvo" userLabel="Left Inset View">
+                    <rect key="frame" x="20.000000000000004" y="100" width="50.333333333333343" height="100"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="9gr-PK-1nQ" userLabel="Left Inset Increase Button">
+                            <rect key="frame" x="0.66666666666666785" y="0.0" width="49" height="34.333333333333336"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.up.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sZ-Io-8zP" userLabel="Left Inset Label">
+                            <rect key="frame" x="14.999999999999998" y="40" width="20.333333333333329" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="qna-5U-k3b" userLabel="Left Inset Decrease Button">
+                            <rect key="frame" x="0.66666666666666785" y="65.666666666666671" width="49" height="34.333333333333329"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.down.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="cwc-GP-4o8"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75323365066225167" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </stackView>
+                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Jor-YF-8xw" userLabel="Right Inset View">
+                    <rect key="frame" x="329.66666666666669" y="100" width="50.333333333333314" height="100"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="So4-kJ-4Sp" userLabel="Right Inset Increase Button">
+                            <rect key="frame" x="0.66666666666666785" y="0.0" width="49" height="34.333333333333336"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.up.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1K-m1-KME" userLabel="Right Inset Label">
+                            <rect key="frame" x="14.999999999999998" y="40" width="20.333333333333329" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="drb-Bc-FZS" userLabel="Right Inset Decrease Button">
+                            <rect key="frame" x="0.66666666666666785" y="65.666666666666671" width="49" height="34.333333333333329"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="arrowshape.down.fill" catalog="system">
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="fpI-8G-gr7"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75323365066225167" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </stackView>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzT-UJ-vJL" userLabel="Done Button">
+                    <rect key="frame" x="20" y="245.66666666666666" width="64.333333333333329" height="34.333333333333343"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75323365066225167" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Done">
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gwF-BD-eYn" userLabel="Apply Button">
+                    <rect key="frame" x="312.33333333333331" y="245.66666666666666" width="67.666666666666686" height="34.333333333333343"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75323365066225167" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Apply">
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hRg-NY-vKa" userLabel="Reset Button">
+                    <rect key="frame" x="312.66666666666669" y="20.000000000000004" width="67.333333333333314" height="34.333333333333343"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.75323365070000003" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Reset">
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="yHU-TL-1t4"/>
+            <constraints>
+                <constraint firstItem="Jor-YF-8xw" firstAttribute="centerY" secondItem="Duo-4K-WF8" secondAttribute="centerY" id="34l-1M-aaO"/>
+                <constraint firstAttribute="bottom" secondItem="p1H-jQ-D1q" secondAttribute="bottom" constant="20" id="8TT-g6-VQK"/>
+                <constraint firstAttribute="bottom" secondItem="EzT-UJ-vJL" secondAttribute="bottom" constant="20" id="97M-Aa-2ti"/>
+                <constraint firstAttribute="trailing" secondItem="Jor-YF-8xw" secondAttribute="trailing" constant="20" id="C5Z-4X-Hfh"/>
+                <constraint firstAttribute="trailing" secondItem="hRg-NY-vKa" secondAttribute="trailing" constant="20" id="DmC-yp-pXj"/>
+                <constraint firstItem="0O4-Kd-D81" firstAttribute="top" secondItem="Duo-4K-WF8" secondAttribute="top" constant="20" id="E4c-k0-0Oo"/>
+                <constraint firstItem="F6k-XB-xvo" firstAttribute="leading" secondItem="Duo-4K-WF8" secondAttribute="leading" constant="20" id="Gnn-hv-KJn"/>
+                <constraint firstItem="EzT-UJ-vJL" firstAttribute="leading" secondItem="Duo-4K-WF8" secondAttribute="leading" constant="20" id="JWf-hg-Wjy"/>
+                <constraint firstAttribute="trailing" secondItem="gwF-BD-eYn" secondAttribute="trailing" constant="20" id="Za9-ee-VdH"/>
+                <constraint firstItem="F6k-XB-xvo" firstAttribute="centerY" secondItem="Duo-4K-WF8" secondAttribute="centerY" id="bO7-hM-93A"/>
+                <constraint firstAttribute="bottom" secondItem="gwF-BD-eYn" secondAttribute="bottom" constant="20" id="mmG-N6-F4f"/>
+                <constraint firstItem="p1H-jQ-D1q" firstAttribute="centerX" secondItem="Duo-4K-WF8" secondAttribute="centerX" id="reX-K6-30G"/>
+                <constraint firstItem="hRg-NY-vKa" firstAttribute="top" secondItem="Duo-4K-WF8" secondAttribute="top" constant="20" id="sZq-NO-Aao"/>
+                <constraint firstItem="0O4-Kd-D81" firstAttribute="centerX" secondItem="Duo-4K-WF8" secondAttribute="centerX" id="vKn-pt-17S"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="applyButton" destination="gwF-BD-eYn" id="p6K-1m-mbH"/>
+                <outlet property="bottomInsetDecreaseButton" destination="24o-0R-44e" id="nt6-tx-XmE"/>
+                <outlet property="bottomInsetIncreaseButton" destination="Vdf-2B-4xV" id="qRF-q7-14L"/>
+                <outlet property="bottomInsetLabel" destination="bfc-Zo-743" id="wpB-8d-VY3"/>
+                <outlet property="doneButton" destination="EzT-UJ-vJL" id="J7J-lR-Npa"/>
+                <outlet property="leftInsetDecreaseButton" destination="qna-5U-k3b" id="uAA-up-HVr"/>
+                <outlet property="leftInsetIncreaseButton" destination="9gr-PK-1nQ" id="BGC-JQ-YzR"/>
+                <outlet property="leftInsetLabel" destination="6sZ-Io-8zP" id="wfW-gx-XZC"/>
+                <outlet property="resetButton" destination="hRg-NY-vKa" id="bci-Da-lV8"/>
+                <outlet property="rightInsetDecreaseButton" destination="drb-Bc-FZS" id="umI-69-mqc"/>
+                <outlet property="rightInsetIncreaseButton" destination="So4-kJ-4Sp" id="6cM-Pz-XpR"/>
+                <outlet property="rightInsetLabel" destination="C1K-m1-KME" id="MT9-Ci-RIu"/>
+                <outlet property="topInsetDecreaseButton" destination="UZh-Pi-1Vt" id="oFK-WB-M5L"/>
+                <outlet property="topInsetIncreaseButton" destination="cqc-np-LbR" id="3oN-0k-VZB"/>
+                <outlet property="topInsetLabel" destination="uLx-5b-PfH" id="Zkq-kr-5xq"/>
+            </connections>
+            <point key="canvasLocation" x="-535" y="317"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrowshape.down.fill" catalog="system" width="123" height="128"/>
+        <image name="arrowshape.up.fill" catalog="system" width="123" height="128"/>
+    </resources>
+</document>

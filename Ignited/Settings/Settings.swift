@@ -96,6 +96,7 @@ struct Settings
             Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey.rawValue: false,
             Settings.gbFeatures.palettes.settingsKey.rawValue: true,
             Settings.n64Features.openGLES3.settingsKey.rawValue: false,
+            Settings.n64Features.overscan.settingsKey.rawValue: true,
             Settings.dsFeatures.dsAirPlay.settingsKey.rawValue: true,
             Settings.dsFeatures.dsiSupport.settingsKey.rawValue: false
         ] as [String : Any]

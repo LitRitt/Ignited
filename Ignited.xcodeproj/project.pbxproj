@@ -55,6 +55,9 @@
 		AC3CE7F62A2BA822008A8C43 /* LibraryFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */; };
 		AC3CE7F82A2BB485008A8C43 /* AnimatedArtworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */; };
 		AC3CE7FA2A2BB496008A8C43 /* FavoriteGamesOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F92A2BB496008A8C43 /* FavoriteGamesOptions.swift */; };
+		AC4138582B524C76008653D4 /* N64OverscanOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4138572B524C76008653D4 /* N64OverscanOptions.swift */; };
+		AC41385A2B5264B4008653D4 /* OverscanEditorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC4138592B5264B4008653D4 /* OverscanEditorView.xib */; };
+		AC41385D2B526A5F008653D4 /* OverscanEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */; };
 		AC432A362A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4BB76C2B094A9A0097E908 /* FeaturesView.swift */; };
@@ -351,6 +354,9 @@
 		AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryFeatures.swift; sourceTree = "<group>"; };
 		AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedArtworkOptions.swift; sourceTree = "<group>"; };
 		AC3CE7F92A2BB496008A8C43 /* FavoriteGamesOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGamesOptions.swift; sourceTree = "<group>"; };
+		AC4138572B524C76008653D4 /* N64OverscanOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64OverscanOptions.swift; sourceTree = "<group>"; };
+		AC4138592B5264B4008653D4 /* OverscanEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverscanEditorView.xib; sourceTree = "<group>"; };
+		AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverscanEditorView.swift; sourceTree = "<group>"; };
 		AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlaySkinsOptions.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4BB76C2B094A9A0097E908 /* FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesView.swift; sourceTree = "<group>"; };
@@ -770,6 +776,15 @@
 			path = Cores;
 			sourceTree = "<group>";
 		};
+		AC41385B2B526A42008653D4 /* OverscanEditor */ = {
+			isa = PBXGroup;
+			children = (
+				AC4138592B5264B4008653D4 /* OverscanEditorView.xib */,
+				AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */,
+			);
+			path = OverscanEditor;
+			sourceTree = "<group>";
+		};
 		AC48D1F42A44AA3500492DF3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -794,6 +809,7 @@
 			children = (
 				AC56DDEF2A35F38D007C8372 /* N64Features.swift */,
 				ACFABEA72B4F050B00E24374 /* N64OpenGLES3Options.swift */,
+				AC4138572B524C76008653D4 /* N64OverscanOptions.swift */,
 			);
 			path = N64;
 			sourceTree = "<group>";
@@ -1482,6 +1498,7 @@
 				BF63BDE91D389EEB00FCB040 /* GameViewController.swift */,
 				BF13A7551D5D29B0000BB055 /* PreviewGameViewController.swift */,
 				BF15AF831F54B43B009B6AAB /* ActionInput.swift */,
+				AC41385B2B526A42008653D4 /* OverscanEditor */,
 			);
 			path = Emulation;
 			sourceTree = "<group>";
@@ -1648,6 +1665,7 @@
 			files = (
 				D5D797E9298DCC7300738869 /* cheatbase.zip in Resources */,
 				BFAB9F88219A4B670080EC7D /* GoogleService-Info.plist in Resources */,
+				AC41385A2B5264B4008653D4 /* OverscanEditorView.xib in Resources */,
 				BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */,
 				ACCDD4862A6386020034A6C0 /* snap.mp3 in Resources */,
 				ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */,
@@ -1916,10 +1934,12 @@
 				AC84B57229FF1A780090F274 /* RewindOptions.swift in Sources */,
 				ACCD9DB92A01BA5500B235C4 /* AppIconOptions.swift in Sources */,
 				ACAB77172B468BA3001AB619 /* PatreonAccount.swift in Sources */,
+				AC4138582B524C76008653D4 /* N64OverscanOptions.swift in Sources */,
 				ACAB77222B468C81001AB619 /* Benefit.swift in Sources */,
 				BF2B98E61C97E32F00F6D57D /* SaveStatesCollectionHeaderView.swift in Sources */,
 				ACE43DC52B4733B000AD9287 /* PatreonComponents.swift in Sources */,
 				ACADE4CB2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift in Sources */,
+				AC41385D2B526A5F008653D4 /* OverscanEditorView.swift in Sources */,
 				BFC9B7391CEFCD34008629BB /* CheatsViewController.swift in Sources */,
 				D5864978297756CE0081477E /* CheatBaseView.swift in Sources */,
 				ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */,
