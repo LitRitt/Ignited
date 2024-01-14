@@ -296,7 +296,8 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .externalGameControllerDidDisconnect, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnterBackground(with:)), name: UIApplication.didEnterBackgroundNotification, object: UIApplication.shared)
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didBecomeActiveApp(with:)), name: UIScene.didActivateNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: UIApplication.willResignActiveNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.settingsDidChange(with:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deepLinkControllerLaunchGame(with:)), name: .deepLinkControllerLaunchGame, object: nil)
@@ -314,8 +315,6 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.unwindFromQuickSettings), name: .unwindFromSettings, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deviceDidShake(with:)), name: UIDevice.deviceDidShakeNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: UIApplication.willResignActiveNotification, object: nil)
         
         // Battery
         UIDevice.current.isBatteryMonitoringEnabled = true
@@ -3124,22 +3123,16 @@ private extension GameViewController
 {
     @objc func didEnterBackground(with notification: Notification)
     {
-        self.updateAutoSaveState()
+        self.updateAutoSaveState(true)
     }
     
-    @objc func didBecomeActiveApp(with notification: Notification)
+    @objc func appWillBecomeInactive(with notification: Notification)
     {
-        guard let scene = notification.object as? UIWindowScene, scene == self.view.window?.windowScene else { return }
-                        
         if #available(iOS 15.0, *),
            let presentedViewController = self.sheetPresentationController,
            self._isQuickSettingsOpen
         {
             presentedViewController.presentedViewController.dismiss(animated: true)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.resumeEmulation()
         }
     }
     
@@ -3448,11 +3441,6 @@ private extension GameViewController
     {
         guard let scene = notification.object as? ExternalDisplayScene else { return }
         self.disconnectExternalDisplay(for: scene)
-    }
-    
-    @objc func appWillBecomeInactive(with notification: Notification)
-    {
-        self.updateAutoSaveState(true)
     }
     
     @objc func batteryLevelDidChange(with notification: Notification)
