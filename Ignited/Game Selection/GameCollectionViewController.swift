@@ -1406,8 +1406,6 @@ private extension GameCollectionViewController
     
     func toggleInvalidVRAM(for game: Game, enable: Bool)
     {
-        self.removeShadowForGame(for: game)
-        
         if enable {
             Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.append(game.identifier)
         } else {
@@ -1417,8 +1415,6 @@ private extension GameCollectionViewController
     
     func toggleOpenGLES3(for game: Game, enable: Bool)
     {
-        self.removeShadowForGame(for: game)
-        
         if enable {
             Settings.n64Features.openGLES3.enabledGames.append(game.identifier)
         } else {
