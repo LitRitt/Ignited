@@ -30,6 +30,8 @@ class PatreonViewController: UICollectionViewController
     
     private var patronsResult: Result<[Patron], Error>?
     
+    private var isPatron = false
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -105,7 +107,7 @@ private extension PatreonViewController
         headerView.accountButton.removeTarget(self, action: nil, for: .primaryActionTriggered)
         
         let defaultSupportButtonTitle = NSLocalizedString("Become a patron", comment: "")
-        let isPatronSupportButtonTitle = NSLocalizedString("View Patreon", comment: "")
+        let isPatronSupportButtonTitle = NSLocalizedString("View membership", comment: "")
         
         let defaultText = NSLocalizedString("""
         Thanks for using Ignited! 🔥
@@ -120,7 +122,7 @@ private extension PatreonViewController
         let isPatronText = NSLocalizedString("""
         , thanks for becoming a patron! ❤️‍🔥
         
-        Your account was linked successfully, and you now have access to Pro features of Ignited. A welcome message was sent to you on Patreon explaining how to access the other benefits of your membership.
+        Your account was linked successfully, and you now have access to Pro features of Ignited.
         
         Your support means the world to me, and helps me support my family. I hope I can keep making Ignited better and that it will continue to be worth your investment.
         """, comment: "")
@@ -132,6 +134,8 @@ private extension PatreonViewController
             
             if account.isPatron
             {
+                self.isPatron = true
+                
                 headerView.supportButton.setTitle(isPatronSupportButtonTitle, for: .normal)
                 
                 let font = UIFont.systemFont(ofSize: 16)
@@ -148,12 +152,16 @@ private extension PatreonViewController
             }
             else
             {
+                self.isPatron = false
+                
                 headerView.supportButton.setTitle(defaultSupportButtonTitle, for: .normal)
                 headerView.textView.text = defaultText
             }
         }
         else
         {
+            self.isPatron = false
+            
             headerView.accountButton.addTarget(self, action: #selector(PatreonViewController.authenticate(_:)), for: .primaryActionTriggered)
             
             headerView.supportButton.setTitle(defaultSupportButtonTitle, for: .normal)
@@ -197,7 +205,7 @@ private extension PatreonViewController
     
     @objc func openPatreonURL(_ sender: UIButton)
     {
-        let patreonURL = URL(string: "https://www.patreon.com/litritt")!
+        let patreonURL = self.isPatron ? URL(string: "https://www.patreon.com/litritt/membership")! : URL(string: "https://www.patreon.com/litritt")!
         
         let safariViewController = SFSafariViewController(url: patreonURL)
         safariViewController.preferredControlTintColor = self.view.tintColor
