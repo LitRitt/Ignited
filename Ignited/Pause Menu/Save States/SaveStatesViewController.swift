@@ -484,11 +484,9 @@ private extension SaveStatesViewController
             self.update()
         }
         
-        let toastView = RSTToastView()
-        toastView.textLabel.text = Settings.sortSaveStatesByOldestFirst ? NSLocalizedString("Oldest First", comment: "") : NSLocalizedString("Newest First", comment: "")
-        toastView.presentationEdge = .top
-        toastView.tintColor = UIColor.themeColor
-        toastView.show(in: self.view, duration: 2.0)
+        let text = Settings.sortSaveStatesByOldestFirst ? NSLocalizedString("Oldest First", comment: "") : NSLocalizedString("Newest First", comment: "")
+        
+        ToastView.show(text)
     }
     
     //MARK: - Convenience Methods -

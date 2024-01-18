@@ -46,7 +46,7 @@ class GamesViewController: UIViewController
     private var searchController: RSTSearchController?
     private lazy var importController: ImportController = self.makeImportController()
     
-    private var syncingToastView: RSTToastView? {
+    private var syncingToastView: ToastView? {
         didSet {
             if self.syncingToastView == nil
             {
@@ -82,7 +82,6 @@ class GamesViewController: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.syncingDidFinish(_:)), name: SyncCoordinator.didFinishSyncingNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.settingsDidChange(_:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.emulationDidQuit(_:)), name: EmulatorCore.emulationDidQuitNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(GamesViewController.graphicsRenderingAPIDidChange(_:)), name: .graphicsRenderingAPIDidChange, object: nil)
     }
 }
 
@@ -94,10 +93,17 @@ extension GamesViewController
     {
         super.viewDidLoad()
         
+        let faqButton = UIButton(type: .system)
+        faqButton.addTarget(self, action: #selector(GamesViewController.openFAQ), for: .primaryActionTriggered)
+        faqButton.setTitle(NSLocalizedString("Learn More…", comment: ""), for: .normal)
+        faqButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
+        
         self.placeholderView = RSTPlaceholderView(frame: self.view.bounds)
         self.placeholderView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.placeholderView.textLabel.text = NSLocalizedString("No Games", comment: "")
         self.placeholderView.detailTextLabel.text = NSLocalizedString("You can import games by pressing the + button in the top right.", comment: "")
+        self.placeholderView.stackView.addArrangedSubview(faqButton)
+        self.placeholderView.stackView.setCustomSpacing(20.0, after: self.placeholderView.detailTextLabel)
         self.view.insertSubview(self.placeholderView, at: 0)
         
         self.pageControl = UIPageControl()
@@ -333,6 +339,7 @@ private extension GamesViewController
                 if let viewController = self.viewControllerForIndex(index)
                 {
                     self.pageViewController.view.setHidden(false, animated: animated)
+                    self.pageViewController.view.superview?.setHidden(false, animated: animated)
                     self.placeholderView.setHidden(true, animated: animated)
                     
                     self.pageViewController.setViewControllers([viewController], direction: .forward, animated: false, completion: nil)
@@ -367,8 +374,15 @@ private extension GamesViewController
             self.noGamesImported = true
             
             self.pageViewController.view.setHidden(true, animated: animated)
+            self.pageViewController.view.superview?.setHidden(true, animated: animated)
             self.placeholderView.setHidden(false, animated: animated)
         }
+    }
+    
+    @objc func openFAQ()
+    {
+        let faqURL = URL(string: "https://docs.ignitedemulator.com/getting-started/games")!
+        UIApplication.shared.open(faqURL)
     }
 }
 
@@ -413,8 +427,8 @@ private extension GamesViewController
             listMenuViewController.items = items
         }
         
-        let title = traitCollection.userInterfaceIdiom == .pad ? Settings.previousGameCollection?.system?.localizedName : Settings.previousGameCollection?.system?.localizedShortName
-        popoverMenuController.popoverMenuButton.title = title ?? (self.title ?? NSLocalizedString("Games", comment: ""))
+        let title = Settings.previousGameCollection?.system?.localizedName ?? self.title
+        popoverMenuController.popoverMenuButton.title = title ?? NSLocalizedString("Games", comment: "")
     }
 }
 
@@ -656,7 +670,7 @@ private extension GamesViewController
     {
         var themeColorOptions: [UIAction] = []
         
-        for themeColor in ThemeColor.allCases.filter { Settings.proFeaturesEnabled() || $0 != .custom }
+        for themeColor in ThemeColor.allCases.filter { Settings.proFeaturesEnabled || $0 != .custom }
         {
             themeColorOptions.append(
                 UIAction(title: themeColor.description,
@@ -767,7 +781,7 @@ private extension GamesViewController
     {
         var artworkStyleOptions: [UIAction] = []
         
-        for artworkStyle in ArtworkStyle.allCases.filter { Settings.proFeaturesEnabled() || $0 != .custom }
+        for artworkStyle in ArtworkStyle.allCases.filter { Settings.proFeaturesEnabled || $0 != .custom }
         {
             artworkStyleOptions.append(
                 UIAction(title: artworkStyle.description,
@@ -817,11 +831,11 @@ private extension GamesViewController
     func makeHelpMenu() -> UIMenu
     {
         let helpOptions: [UIAction] = [
-            UIAction(title: NSLocalizedString("Documentation", comment: ""),
-                     image: UIImage(systemName: "doc.richtext"),
-                     handler: { action in
-                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
-            }),
+//            UIAction(title: NSLocalizedString("Documentation", comment: ""),
+//                     image: UIImage(systemName: "doc.richtext"),
+//                     handler: { action in
+//                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
+//            }),
             UIAction(title: NSLocalizedString("Release Notes", comment: ""),
                      image: UIImage(systemName: "doc.badge.clock"),
                      handler: { action in
@@ -969,7 +983,7 @@ private extension GamesViewController
     {
         guard let coordinator = SyncManager.shared.coordinator, let syncProgress = SyncManager.shared.syncProgress, coordinator.isSyncing && self.syncingToastView == nil else { return }
 
-        let toastView = RSTToastView(text: NSLocalizedString("Syncing...", comment: ""), detailText: syncProgress.localizedAdditionalDescription)
+        let toastView = ToastView(text: NSLocalizedString("Syncing...", comment: ""), detailText: syncProgress.localizedAdditionalDescription)
         toastView.activityIndicatorView.startAnimating()
         toastView.addTarget(self, action: #selector(GamesViewController.hideSyncingToastView), for: .touchUpInside)
         toastView.show(in: self.view)
@@ -987,12 +1001,12 @@ private extension GamesViewController
     
     func showSyncFinishedToastView(result: SyncResult)
     {
-        let toastView: RSTToastView
+        let toastView: ToastView
         
         switch result
         {
-        case .success: toastView = RSTToastView(text: NSLocalizedString("Sync Complete", comment: ""), detailText: nil)
-        case .failure(let error): toastView = RSTToastView(text: NSLocalizedString("Sync Failed", comment: ""), detailText: error.failureReason)
+        case .success: toastView = ToastView(text: NSLocalizedString("Sync Complete", comment: ""), detailText: nil)
+        case .failure(let error): toastView = ToastView(text: NSLocalizedString("Sync Failed", comment: ""), detailText: error.failureReason)
         }
         
         toastView.textLabel.textAlignment = .center
@@ -1055,6 +1069,8 @@ private extension GamesViewController
         {
             self.quitEmulation()
         }
+        
+        self.updatePlayMenu()
     }
     
     @objc func syncingDidStart(_ notification: Notification)
@@ -1081,15 +1097,6 @@ private extension GamesViewController
             
             if self.noGamesImported { self.updateSections(animated: true, resetPages: true) }
         }
-    }
-    
-    @objc func graphicsRenderingAPIDidChange(_ notification: Notification)
-    {
-        if let emulatorCore = self.activeEmulatorCore
-        {
-            emulatorCore.stop()
-        }
-        self.quitEmulation()
     }
     
     @objc func emulationDidQuit(_ notification: Notification)
@@ -1200,5 +1207,4 @@ public extension Notification.Name
     static let startRandomGame = Notification.Name("startRandomGameNotification")
     static let unwindFromSettings = Notification.Name("unwindFromSettingsNotification")
     static let dismissSettings = Notification.Name("dismissSettingsNotification")
-    static let graphicsRenderingAPIDidChange = Notification.Name("graphicsRenderingAPIDidChangeNotification")
 }

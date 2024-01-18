@@ -19,33 +19,33 @@ struct FeatureSection<T: AnyFeature>: View
         Section {
             if feature.allOptions.isEmpty
             {
-                if feature.pro && !Settings.proFeaturesEnabled()
+                if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
-                        Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                        Text(feature.name).addProLabel()
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
-                        UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this feature", comment: ""))
+                            ToastView.show(NSLocalizedString("Ignited Pro is required for this feature", comment: ""), onEdge: .bottom)
                     }
                 }
                 else
                 {
                     Toggle(isOn: $feature.isEnabled) {
-                        Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                        Text(feature.name).addProLabel(feature.pro)
                     }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 }
             }
             else
             {
-                if feature.pro && !Settings.proFeaturesEnabled()
+                if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
-                        Text(feature.name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                        Text(feature.name).addProLabel()
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
-                        UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this feature", comment: ""))
+                            ToastView.show(NSLocalizedString("Ignited Pro is required for this feature", comment: ""), onEdge: .bottom)
                     }
                 }
                 else
@@ -53,10 +53,10 @@ struct FeatureSection<T: AnyFeature>: View
                     NavigationLink(destination: FeatureDetailView(feature: feature)) {
                         if !feature.permanent {
                             Toggle(isOn: $feature.isEnabled) {
-                                Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                                Text(feature.name).addProLabel(feature.pro)
                             }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         } else {
-                            Text(feature.name) + Text(feature.pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                            Text(feature.name).addProLabel(feature.pro)
                         }
                     }
                 }
@@ -137,14 +137,14 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                 .environment(\.managedObjectContext, DatabaseManager.shared.viewContext)
                 .environment(\.featureOption, option)
             
-            if pro && !Settings.proFeaturesEnabled()
+            if pro && !Settings.proFeaturesEnabled
             {
                 HStack {
-                    Text(name) + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                    Text(name).addProLabel()
                     Spacer()
                 }.contentShape(Rectangle())
                     .onTapGesture {
-                    UIApplication.shared.showToastNotification(text: NSLocalizedString("Ignited Pro is required for this option", comment: ""))
+                        ToastView.show(NSLocalizedString("Ignited Pro is required for this option", comment: ""), onEdge: .bottom)
                 }
             }
             else
@@ -162,7 +162,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                     
                     NavigationLink(destination: wrappedDetailView) {
                         HStack {
-                            Text(name) + Text(pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+                            Text(name).addProLabel(pro)
                             Spacer()
                             
                             value.localizedDescription

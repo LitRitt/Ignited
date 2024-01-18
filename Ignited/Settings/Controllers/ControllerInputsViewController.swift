@@ -104,7 +104,7 @@ class ControllerInputsViewController: UIViewController
             }
             
             self.gameViewController.controllerView.overrideControllerSkinTraits = traits
-            self.gameViewController.blurScreenOverride = true
+            self.gameViewController.blurScreenEnabled = false
             
             _didLayoutSubviews = true
         }
@@ -173,7 +173,7 @@ private extension ControllerInputsViewController
         // Update popoverMenuButton to display correctly on iOS 10.
         if let popoverMenuButton = self.navigationItem.popoverMenuController?.popoverMenuButton
         {
-            popoverMenuButton.title = self.system.localizedShortName
+            popoverMenuButton.title = self.system.localizedName
             popoverMenuButton.bounds.size = popoverMenuButton.intrinsicContentSize
             
             self.navigationController?.navigationBar.layoutIfNeeded()
@@ -219,7 +219,7 @@ private extension ControllerInputsViewController
         self.navigationItem.popoverMenuController = popoverMenuController
         
         let items = System.allCases.map { [unowned self, weak popoverMenuController, weak listMenuViewController] system -> MenuItem in
-            let item = MenuItem(text: system.localizedShortName, image: UIImage.symbolWithTemplate(name: "key.fill")) { [weak popoverMenuController, weak listMenuViewController] item in
+            let item = MenuItem(text: system.localizedName, image: UIImage.symbolWithTemplate(name: "key.fill")) { [weak popoverMenuController, weak listMenuViewController] item in
                 listMenuViewController?.items.forEach { $0.isSelected = ($0 == item) }
                 popoverMenuController?.isActive = false
                 

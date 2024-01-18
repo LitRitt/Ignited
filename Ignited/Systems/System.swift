@@ -47,9 +47,9 @@ extension System
     var localizedName: String {
         switch self
         {
-        case .genesis: return NSLocalizedString("Sega Genesis", comment: "")
-        case .ms: return NSLocalizedString("Sega Master System", comment: "")
-        case .gg: return NSLocalizedString("Sega Game Gear", comment: "")
+        case .genesis: return NSLocalizedString("Genesis", comment: "")
+        case .ms: return NSLocalizedString("Master System", comment: "")
+        case .gg: return NSLocalizedString("Game Gear", comment: "")
         case .nes: return NSLocalizedString("Nintendo", comment: "")
         case .snes: return NSLocalizedString("Super Nintendo", comment: "")
         case .n64: return NSLocalizedString("Nintendo 64", comment: "")
@@ -63,9 +63,9 @@ extension System
     var localizedShortName: String {
         switch self
         {
-        case .genesis: return NSLocalizedString("Genesis", comment: "")
-        case .ms: return NSLocalizedString("Master System", comment: "")
-        case .gg: return NSLocalizedString("Game Gear", comment: "")
+        case .genesis: return NSLocalizedString("GEN", comment: "")
+        case .ms: return NSLocalizedString("MS", comment: "")
+        case .gg: return NSLocalizedString("GG", comment: "")
         case .nes: return NSLocalizedString("NES", comment: "")
         case .snes: return NSLocalizedString("SNES", comment: "")
         case .n64: return NSLocalizedString("N64", comment: "")

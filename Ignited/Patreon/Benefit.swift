@@ -18,10 +18,9 @@ extension PatreonAPI
 
 enum BenefitType: String
 {
-    case credit = "14405923"
+    case credit = "14405936"
     case pro = "14401724"
     case premium = "12920203"
-    case testFlight = "14405936"
     case ota = "14390870"
 }
 

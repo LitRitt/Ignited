@@ -47,6 +47,10 @@ struct ToastNotificationOptions
             description: "Show toasts when toggling fast forward.")
     var fastForward: Bool = true
     
+    @Option(name: "Microphone Toggled",
+            description: "Show toasts when toggling the microphone.")
+    var microphone: Bool = true
+    
     @Option(name: "Status Bar Toggled",
             description: "Show toasts when toggling showing the status bar.")
     var statusBar: Bool = true
@@ -64,8 +68,12 @@ struct ToastNotificationOptions
     var palette: Bool = true
     
     @Option(name: "Background Blur Toggled",
-            description: "Show toasts when toggleing the background blur.")
+            description: "Show toasts when toggling the background blur.")
     var backgroundBlur: Bool = true
+    
+    @Option(name: "Overscan Editor",
+            description: "Show toasts when toggling the overscan editor.")
+    var overscan: Bool = true
     
     @Option(name: "Alternate Skin Toggled",
             description: "Show toasts when toggling the controller alternate skin.")

@@ -21,8 +21,7 @@ struct UserInterfaceFeatures: FeatureContainer
     @Feature(name: "App Icon",
              description: "Change the app's icon.",
              options: AppIconOptions(),
-             permanent: true,
-             pro: true)
+             permanent: true)
     var appIcon
     
     @Feature(name: "Toast Notifications",
@@ -31,8 +30,8 @@ struct UserInterfaceFeatures: FeatureContainer
     var toasts
     
     @Feature(name: "Status Bar",
-             options: StatusBarOptions(),
-             hidden: true)
+             description: "Show status bar during gameplay to keep track of time and battery usage.",
+             options: StatusBarOptions())
     var statusBar
     
     @Feature(name: "Random Game",

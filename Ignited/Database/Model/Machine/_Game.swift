@@ -16,6 +16,11 @@ public class _Game: NSManagedObject
         super.awakeFromInsert()
         
         setPrimitiveValue(false, forKey: #keyPath(Game.isFavorite))
+        
+        setPrimitiveValue(0, forKey: #keyPath(Game.overscanTop))
+        setPrimitiveValue(0, forKey: #keyPath(Game.overscanBottom))
+        setPrimitiveValue(0, forKey: #keyPath(Game.overscanLeft))
+        setPrimitiveValue(0, forKey: #keyPath(Game.overscanRight))
     }
 
     // MARK: - Properties
@@ -33,6 +38,14 @@ public class _Game: NSManagedObject
     @NSManaged public var type: GameType
     
     @NSManaged public var isFavorite: Bool
+    
+    @NSManaged public var overscanTop: UInt16
+    
+    @NSManaged public var overscanBottom: UInt16
+    
+    @NSManaged public var overscanLeft: UInt16
+    
+    @NSManaged public var overscanRight: UInt16
 
     // MARK: - Relationships
 

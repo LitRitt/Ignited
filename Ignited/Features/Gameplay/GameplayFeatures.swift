@@ -70,6 +70,10 @@ struct GameplayFeatures: FeatureContainer
              hidden: true)
     var sustainButtons
     
+    @Feature(name: "Mic Support",
+             hidden: true)
+    var micSupport
+    
     private init()
     {
         self.prepareFeatures()

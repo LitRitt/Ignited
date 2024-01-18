@@ -208,7 +208,7 @@ struct GameArtworkOptions
     var showPauseIcon: Bool = true
     
     @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
-    var useScreenshots: Bool = true
+    var useScreenshots: Bool = false
     
     @Option(name: "Force Aspect Ratio", description: "Enable to make all artwork within a given system use consistent aspect ratios.")
     var forceAspect: Bool = true
@@ -249,7 +249,7 @@ struct GameArtworkOptions
     
     @Option(name: "Style",
             description: "Choose the style to use for game artwork. Custom options require Ignited Pro.",
-            values: Settings.proFeaturesEnabled() ? ArtworkStyle.allCases : [.basic, .vibrant, .flat])
+            values: Settings.proFeaturesEnabled ? ArtworkStyle.allCases : [.basic, .vibrant, .flat])
     var style: ArtworkStyle = .basic
     
     @Option(name: "Background Color Mode",
@@ -263,7 +263,7 @@ struct GameArtworkOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: true) {
-            Text("Custom Background Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Background Color").addProLabel()
         }.displayInline()
     })
     var backgroundColor: Color = .orange
@@ -279,7 +279,7 @@ struct GameArtworkOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Border Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Border Color").addProLabel()
         }.displayInline()
     })
     var borderColor: Color = .orange
@@ -295,7 +295,7 @@ struct GameArtworkOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Text Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Text Color").addProLabel()
         }.displayInline()
     })
     var textColor: Color = .black
@@ -311,7 +311,7 @@ struct GameArtworkOptions
             pro: true,
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Shadow Color") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+            Text("Custom Shadow Color").addProLabel()
         }.displayInline()
     })
     var shadowColor: Color = .white
@@ -322,7 +322,7 @@ struct GameArtworkOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt").addProLabel()
                 Spacer()
             }
             HStack {
@@ -340,7 +340,7 @@ struct GameArtworkOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
                 Spacer()
             }
             HStack {
@@ -358,7 +358,7 @@ struct GameArtworkOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
                 Spacer()
             }
             HStack {
@@ -376,7 +376,7 @@ struct GameArtworkOptions
             detailView: { value in
         VStack {
             HStack {
-                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt") + Text(" (PRO)").foregroundColor(.accentColor).bold()
+                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt").addProLabel()
                 Spacer()
             }
             HStack {

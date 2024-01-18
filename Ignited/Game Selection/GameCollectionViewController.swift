@@ -26,6 +26,8 @@ extension GameCollectionViewController
         case alreadyRunning
         case downloadingGameSave
         case biosNotFound
+        case openGLESVersionMismatch
+        case criticalBatteryLevel
     }
 }
 
@@ -33,7 +35,7 @@ class GameCollectionViewController: UICollectionViewController
 {
     var gameCollection: GameCollection? {
         didSet {
-            self.title = traitCollection.userInterfaceIdiom == .pad ? self.gameCollection?.name : self.gameCollection?.shortName
+            self.title = self.gameCollection?.name
             self.updateDataSource()
         }
     }
@@ -537,6 +539,9 @@ private extension GameCollectionViewController
     
     func beginAnimatingArtwork(_ cell: GridCollectionViewGameCell, at indexPath: IndexPath)
     {
+        guard Settings.libraryFeatures.animation.isEnabled,
+              Settings.proFeaturesEnabled else { return }
+        
         let game = self.dataSource.item(at: indexPath)
         if let artworkURL = game.artworkURL,
            artworkURL.pathExtension.lowercased() == "gif"
@@ -673,6 +678,14 @@ private extension GameCollectionViewController
                 
                 self.present(alertController, animated: true, completion: nil)
             }
+            catch LaunchError.openGLESVersionMismatch
+            {
+                self.showOpenGLESVersionMismatchError()
+            }
+            catch LaunchError.criticalBatteryLevel
+            {
+                self.showCriticalBatteryError()
+            }
             catch
             {
                 let alertController = UIAlertController(title: NSLocalizedString("Unable to Launch Game", comment: ""), error: error)
@@ -744,12 +757,26 @@ private extension GameCollectionViewController
                 else { throw LaunchError.biosNotFound }
             }
         }
+        
+        guard self.checkOpenGLESVersion(for: game) else { throw LaunchError.openGLESVersionMismatch }
+        
+        guard !self.checkForCriticalBattery() else { throw LaunchError.criticalBatteryLevel }
     }
     
     @objc func resumeCurrentGame()
     {
         guard let emulatorCore = self.activeEmulatorCore else { return }
         guard let game = emulatorCore.game as? Game else { return }
+        
+        guard self.checkOpenGLESVersion(for: game) else {
+            self.showOpenGLESVersionMismatchError()
+            return
+        }
+        
+        guard !self.checkForCriticalBattery() else {
+            self.showCriticalBatteryError()
+            return
+        }
         
         let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
         fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
@@ -770,6 +797,11 @@ private extension GameCollectionViewController
     
     @objc func startRandomGame()
     {
+        guard !self.checkForCriticalBattery() else {
+            self.showCriticalBatteryError()
+            return
+        }
+        
         let gameFetchRequest = Game.rst_fetchRequest() as! NSFetchRequest<Game>
         
         if Settings.userInterfaceFeatures.randomGame.useCollection,
@@ -793,7 +825,12 @@ private extension GameCollectionViewController
             print(error)
         }
         
-        guard let randomGame = games.randomElement() else { return }
+        games = games.filter { self.checkOpenGLESVersion(for: $0) }
+        
+        guard let randomGame = games.randomElement() else {
+            self.showNoValidGamesError()
+            return
+        }
         
         if Settings.gameplayFeatures.saveStates.autoLoad
         {
@@ -819,6 +856,16 @@ private extension GameCollectionViewController
     {
         guard let game = notification.object as? Game else { return }
         
+        guard self.checkOpenGLESVersion(for: game) else {
+            self.showOpenGLESVersionMismatchError()
+            return
+        }
+        
+        guard !self.checkForCriticalBattery() else {
+            self.showCriticalBatteryError()
+            return
+        }
+        
         if Settings.gameplayFeatures.saveStates.autoLoad
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
@@ -837,6 +884,64 @@ private extension GameCollectionViewController
         }
         
         self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
+    }
+    
+    func checkOpenGLESVersion(for game: Game) -> Bool
+    {
+        if game.type == .n64,
+           let currentOpenGLESVersion = Settings.currentOpenGLESVersion
+        {
+            let requestedOpenGLESVersion: Int
+            
+            if Settings.n64Features.openGLES3.isEnabled,
+               Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier }) {
+                requestedOpenGLESVersion = 3
+            }
+            else
+            {
+                requestedOpenGLESVersion = 2
+            }
+            
+            guard currentOpenGLESVersion == requestedOpenGLESVersion else { return false }
+        }
+        
+        return true
+    }
+    
+    func showOpenGLESVersionMismatchError()
+    {
+        let currentVersion = Settings.currentOpenGLESVersion
+        
+        let alertController = UIAlertController(title: NSLocalizedString("OpenGLES Mismatch", comment: ""), message: NSLocalizedString("The OpenGLES version this game is trying to use (\(currentVersion == 2 ? "OpenGLES 3" : "OpenGLES 2")) does not match the version the core is currently using (\(currentVersion == 2 ? "OpenGLES 2" : "OpenGLES 3")). You must restart the app to play this game.", comment: ""), preferredStyle: .alert)
+        alertController.addAction(.ok)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showNoValidGamesError()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("No Valid Games", comment: ""), message: NSLocalizedString("No games were found when trying to launch a random game.", comment: ""), preferredStyle: .alert)
+        alertController.addAction(.ok)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func checkForCriticalBattery() -> Bool
+    {
+        let currentBatteryLevel = Double(UIDevice.current.batteryLevel)
+        let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
+        
+        if currentBatteryLevel < criticalBatteryLevel
+        {
+            return true
+        }
+        
+        return false
+    }
+    
+    func showCriticalBatteryError()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Critical Battery!", comment: ""), message: NSLocalizedString(String(format: "You cannot launch any games while your device is below %.f% battery.", Settings.advancedFeatures.lowBattery.criticalLevel * 100), comment: ""), preferredStyle: .alert)
+        alertController.addAction(.ok)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -898,6 +1003,36 @@ private extension GameCollectionViewController
             DatabaseManager.shared.resetArtwork(for: game)
         })
         
+        let invalidVRAMAccessAction: Action
+        
+        if Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
+        {
+            invalidVRAMAccessAction = Action(title: NSLocalizedString("Disable Invalid VRAM", comment: ""), style: .default, image: UIImage(systemName: "memorychip"), action: { [unowned self] action in
+                self.toggleInvalidVRAM(for: game, enable: false)
+            })
+        }
+        else
+        {
+            invalidVRAMAccessAction = Action(title: NSLocalizedString("Enable Invalid VRAM", comment: ""), style: .default, image: UIImage(systemName: "memorychip.fill"), action: { [unowned self] action in
+                self.toggleInvalidVRAM(for: game, enable: true)
+            })
+        }
+        
+        let openGLES3Action: Action
+        
+        if Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier })
+        {
+            openGLES3Action = Action(title: NSLocalizedString("Disable OpenGLES 3", comment: ""), style: .default, image: UIImage(systemName: "3.circle"), action: { [unowned self] action in
+                self.toggleOpenGLES3(for: game, enable: false)
+            })
+        }
+        else
+        {
+            openGLES3Action = Action(title: NSLocalizedString("Enable OpenGLES 3", comment: ""), style: .default, image: UIImage(systemName: "3.circle.fill"), action: { [unowned self] action in
+                self.toggleOpenGLES3(for: game, enable: true)
+            })
+        }
+        
         var actions: [Action] = []
         
         switch game.type
@@ -906,6 +1041,10 @@ private extension GameCollectionViewController
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, shareAction, resetArtworkAction, deleteAction]
         case .ds where game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier:
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction, resetArtworkAction]
+        case .snes where Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled:
+            actions = [cancelAction, favoriteAction, invalidVRAMAccessAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
+        case .n64 where Settings.n64Features.openGLES3.isEnabled:
+            actions = [cancelAction, favoriteAction, openGLES3Action, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         default:
             actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
         }
@@ -1265,6 +1404,24 @@ private extension GameCollectionViewController
         }
     }
     
+    func toggleInvalidVRAM(for game: Game, enable: Bool)
+    {
+        if enable {
+            Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.append(game.identifier)
+        } else {
+            Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.removeAll(where: { $0 == game.identifier })
+        }
+    }
+    
+    func toggleOpenGLES3(for game: Game, enable: Bool)
+    {
+        if enable {
+            Settings.n64Features.openGLES3.enabledGames.append(game.identifier)
+        } else {
+            Settings.n64Features.openGLES3.enabledGames.removeAll(where: { $0 == game.identifier })
+        }
+    }
+    
     func removeShadowForGame(for game: Game)
     {
         for cell in self.collectionView?.visibleCells ?? []
@@ -1359,31 +1516,39 @@ extension GameCollectionViewController: UIViewControllerPreviewingDelegate
         let gameViewController = PreviewGameViewController()
         gameViewController.game = game
         
-        if let previewSaveState = game.previewSaveState
+        if Settings.userInterfaceFeatures.previews.isEnabled
         {
-            gameViewController.previewSaveState = previewSaveState
-            gameViewController.previewImage = UIImage(contentsOfFile: previewSaveState.imageFileURL.path)
-        }
-        else if Settings.gameplayFeatures.saveStates.autoLoad
-        {
-            let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
-            
-            do
+            if let previewSaveState = game.previewSaveState
             {
-                let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                gameViewController.previewSaveState = previewSaveState
+                gameViewController.previewImage = UIImage(contentsOfFile: previewSaveState.imageFileURL.path)
+            }
+            else if Settings.gameplayFeatures.saveStates.autoLoad
+            {
+                let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
                 
-                if let autoLoadState = saveStates?.last
+                do
                 {
-                    gameViewController.previewSaveState = autoLoadState
-                    gameViewController.previewImage = UIImage(contentsOfFile: autoLoadState.imageFileURL.path)
+                    let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+                    
+                    if let autoLoadState = saveStates?.last
+                    {
+                        gameViewController.previewSaveState = autoLoadState
+                        gameViewController.previewImage = UIImage(contentsOfFile: autoLoadState.imageFileURL.path)
+                    }
+                }
+                catch
+                {
+                    print(error)
                 }
             }
-            catch
-            {
-                print(error)
-            }
+        }
+        else
+        {
+            gameViewController.previewSaveState = nil
+            gameViewController.previewImage = nil
         }
         
         if let emulatorBridge = gameViewController.emulatorCore?.deltaCore.emulatorBridge as? MelonDSEmulatorBridge

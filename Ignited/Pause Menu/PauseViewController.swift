@@ -39,10 +39,12 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
     var rewindItem: MenuItem?
+    var microphoneItem: MenuItem?
     var rotationLockItem: MenuItem?
     var paletteItem: MenuItem?
     var quickSettingsItem: MenuItem?
     var blurBackgroudItem: MenuItem?
+    var overscanEditorItem: MenuItem?
     var altSkinItem: MenuItem?
     var debugModeItem: MenuItem?
     
@@ -174,6 +176,7 @@ private extension PauseViewController
         self.paletteItem = nil
         self.quickSettingsItem = nil
         self.blurBackgroudItem = nil
+        self.overscanEditorItem = nil
         self.sustainButtonsItem = nil
         self.fastForwardItem = nil
         self.debugModeItem = nil
@@ -220,6 +223,10 @@ private extension PauseViewController
                                         image: UIImage.symbolWithTemplate(name: "forward.fill"),
                                         action: { _ in })
         
+        self.microphoneItem = MenuItem(text: NSLocalizedString("Microphone", comment: ""),
+                                        image: UIImage.symbolWithTemplate(name: "mic.fill"),
+                                        action: { _ in })
+        
         if Settings.gameplayFeatures.rotationLock.isEnabled
         {
             self.rotationLockItem = MenuItem(text: NSLocalizedString("Rotation Lock", comment: ""),
@@ -243,12 +250,13 @@ private extension PauseViewController
                                           image: UIImage.symbolWithTemplate(name: "gearshape.fill"),
                                           action: { _ in })
         
-        if Settings.controllerFeatures.backgroundBlur.isEnabled
-        {
-            self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""),
+        self.blurBackgroudItem = MenuItem(text: NSLocalizedString("Background Blur", comment: ""),
                                               image: UIImage.symbolWithTemplate(name: "aqi.medium"),
                                               action: { _ in })
-        }
+        
+        self.overscanEditorItem = MenuItem(text: NSLocalizedString("Overscan Editor", comment: ""),
+                                               image: UIImage.symbolWithTemplate(name: "arrow.up.and.down.and.arrow.left.and.right"),
+                                               action: { _ in })
         
         self.sustainButtonsItem = MenuItem(text: NSLocalizedString("Hold Buttons", comment: ""),
                                            image: UIImage.symbolWithTemplate(name: "button.horizontal.top.press.fill", backupSymbolName: "digitalcrown.horizontal.press"),
@@ -297,10 +305,12 @@ private extension PauseViewController
         case "Sustain Buttons": return self.sustainButtonsItem
         case "Rewind": return self.rewindItem
         case "Fast Forward": return self.fastForwardItem
+        case "Microphone": return self.microphoneItem
         case "Rotation Lock": return self.rotationLockItem
         case "Palettes": return self.paletteItem
         case "Quick Settings": return self.quickSettingsItem
         case "Backgroud Blur": return self.blurBackgroudItem
+        case "Overscan Editor": return self.overscanEditorItem
         case "Cheat Codes": return self.cheatCodesItem
         case "Alt Skin": return self.altSkinItem
         case "Debug Mode": return self.debugModeItem

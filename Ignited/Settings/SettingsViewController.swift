@@ -91,6 +91,7 @@ private extension SettingsViewController
     
     enum CoresRow: Int, CaseIterable
     {
+        case snes
         case n64
         case gbc
         case ds
@@ -130,6 +131,11 @@ class SettingsViewController: UITableViewController
         else
         {
             self.versionLabel.text = NSLocalizedString("Ignited", comment: "")
+        }
+        
+        if #available(iOS 15, *)
+        {
+            self.tableView.register(AttributedHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: AttributedHeaderFooterView.reuseIdentifier)
         }
     }
     
@@ -402,6 +408,8 @@ extension SettingsViewController
         case .cores:
             switch CoresRow.allCases[indexPath.row]
             {
+            case .snes:
+                self.showFeatures(featureGroup: .snes)
             case .gbc:
                 self.showFeatures(featureGroup: .gbc)
             case .n64:
@@ -431,27 +439,32 @@ extension SettingsViewController
         }
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
+    {
+        let section = Section(rawValue: section)!
+        guard !isSectionHidden(section) else { return nil }
+        
+        switch section
         {
-        primary:
-            switch Section(rawValue: indexPath.section)!
-            {
-            case .cores:
-                let row = CoresRow(rawValue: indexPath.row)!
-                switch row
-                {
-                case .n64:
-//                    return 0.0
-                    break
-                    
-                default: break
-                }
-                
-            default: break
-            }
+        case .controllerSkins:
+            guard #available(iOS 15, *), let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AttributedHeaderFooterView.reuseIdentifier) as? AttributedHeaderFooterView else { break }
             
-            return super.tableView(tableView, heightForRowAt: indexPath)
+            var attributedText = AttributedString(localized: "Customize the appearance of each system.")
+            attributedText += " "
+            
+            var learnMore = AttributedString(localized: "Learn more…")
+            learnMore.link = URL(string: "https://docs.ignitedemulator.com/using-ignited/settings/controller-skins")
+            attributedText += learnMore
+            
+            footerView.attributedText = attributedText
+            
+            return footerView
+            
+        default: break
         }
+        
+        return super.tableView(tableView, viewForFooterInSection: section.rawValue)
+    }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
@@ -468,42 +481,44 @@ extension SettingsViewController
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String?
     {
         let section = Section(rawValue: section)!
+        guard !isSectionHidden(section) else { return nil }
         
-        if isSectionHidden(section)
+        switch section
         {
-            return nil
-        }
-        else
-        {
-            return super.tableView(tableView, titleForFooterInSection: section.rawValue)
+        case .controllerSkins: return nil
+        default: return super.tableView(tableView, titleForFooterInSection: section.rawValue)
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         let section = Section(rawValue: section)!
+        guard !isSectionHidden(section) else { return 1 }
         
-        if isSectionHidden(section)
-        {
-            return 1
-        }
-        else
-        {
-            return super.tableView(tableView, heightForHeaderInSection: section.rawValue)
-        }
+        return super.tableView(tableView, heightForHeaderInSection: section.rawValue)
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
     {
         let section = Section(rawValue: section)!
+        guard !isSectionHidden(section) else { return 1 }
         
-        if isSectionHidden(section)
+        switch section
         {
-            return 1
+        case .controllerSkins: return UITableView.automaticDimension
+        default: return super.tableView(tableView, heightForFooterInSection: section.rawValue)
         }
-        else
+    }
+
+    override func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat
+    {
+        let section = Section(rawValue: section)!
+        guard !isSectionHidden(section) else { return 1 }
+        
+        switch section
         {
-            return super.tableView(tableView, heightForFooterInSection: section.rawValue)
+        case .controllerSkins: return 30
+        default: return UITableView.automaticDimension
         }
     }
 }

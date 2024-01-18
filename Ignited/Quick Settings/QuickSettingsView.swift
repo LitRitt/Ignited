@@ -289,10 +289,6 @@ struct QuickSettingsView: View
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$maintainAspect.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Override Skin Setting", isOn: Settings.controllerFeatures.backgroundBlur.$overrideSkin.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Show During Override", isOn: Settings.controllerFeatures.backgroundBlur.$overrideSetting.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }
                     } header: {

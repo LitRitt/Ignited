@@ -152,7 +152,7 @@ extension Game: Syncable
     }
     
     public var syncableKeys: Set<AnyKeyPath> {
-        return [\Game.artworkURL, \Game.filename, \Game.name, \Game.type, \Game.isFavorite]
+        return [\Game.artworkURL, \Game.filename, \Game.name, \Game.type, \Game.isFavorite, \Game.overscanTop, \Game.overscanBottom, \Game.overscanLeft, \Game.overscanRight]
     }
     
     public var syncableFiles: Set<File> {

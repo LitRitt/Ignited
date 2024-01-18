@@ -16,6 +16,7 @@ import GBCDeltaCore
 import N64DeltaCore
 import MelonDSDeltaCore
 import GPGXDeltaCore
+import SNESDeltaCore
 import Systems
 
 import struct DSDeltaCore.DS
@@ -117,10 +118,13 @@ class GameViewController: DeltaCore.GameViewController
             }
             
             self.updateControllers()
+            self.updateCoreSettings()
             self.updateGraphics()
             self.updateAudio()
             
             self.presentedGyroAlert = false
+            self.isEditingOverscanInsets = false
+            self.overscanEditorView.isHidden = true
             
             self.clearRewindSaveStates()
         }
@@ -180,10 +184,29 @@ class GameViewController: DeltaCore.GameViewController
     private var airPlayBlurView: UIVisualEffectView!
     private var airPlayBackgroundView: RSTPlaceholderView!
     
+    private var overscanEditorView: OverscanEditorView!
+    private var isEditingOverscanInsets = false
+    
     private var rewindTimer: Timer?
     
     private var buttonSoundFile: AVAudioFile?
     private var buttonSoundPlayer: AVAudioPlayer?
+    
+    private var isMicEnabled: Bool {
+        get {
+            if let game = self.game,
+               game.type != .ds
+            {
+                return false
+            }
+            else
+            {
+                return Settings.gameplayFeatures.micSupport.isEnabled
+            }
+        }
+    }
+    
+    private var batteryLowNotificationShown = false
     
     private var isGyroActive = false
     private var presentedGyroAlert = false
@@ -273,7 +296,8 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .externalGameControllerDidDisconnect, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnterBackground(with:)), name: UIApplication.didEnterBackgroundNotification, object: UIApplication.shared)
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didBecomeActiveApp(with:)), name: UIScene.didActivateNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: UIApplication.willResignActiveNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.settingsDidChange(with:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deepLinkControllerLaunchGame(with:)), name: .deepLinkControllerLaunchGame, object: nil)
@@ -291,6 +315,11 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.unwindFromQuickSettings), name: .unwindFromSettings, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deviceDidShake(with:)), name: UIDevice.deviceDidShakeNotification, object: nil)
+        
+        // Battery
+        UIDevice.current.isBatteryMonitoringEnabled = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.batteryLevelDidChange(with:)), name: UIDevice.batteryLevelDidChangeNotification, object: nil)
     }
     
     deinit
@@ -352,7 +381,8 @@ class GameViewController: DeltaCore.GameViewController
             case .toggleFastForward, .fastForward: fastForwardInput()
                 
             case .quickSettings:
-                if let action = Settings.gameplayFeatures.quickSettings.buttonReplacement
+                if let action = Settings.gameplayFeatures.quickSettings.buttonReplacement,
+                   Settings.proFeaturesEnabled
                 {
                     switch action
                     {
@@ -424,6 +454,24 @@ extension GameViewController
         
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
+        let overscanEditorNib = UINib(nibName: "OverscanEditorView", bundle: nil)
+        self.overscanEditorView = overscanEditorNib.instantiate(withOwner: nil, options: nil)[0] as? OverscanEditorView
+        self.overscanEditorView.isHidden = true
+        self.view.insertSubview(self.overscanEditorView, aboveSubview: self.gameView)
+        
+        self.overscanEditorView.applyButton.addTarget(self, action: #selector(GameViewController.applyOverscanInsets), for: .touchDown)
+        self.overscanEditorView.doneButton.addTarget(self, action: #selector(GameViewController.finishEditingOverscanInsets), for: .touchDown)
+        self.overscanEditorView.resetButton.addTarget(self, action: #selector(GameViewController.resetOverscanInsets), for: .touchDown)
+        
+        self.overscanEditorView.topInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanTopInsetIncrease), for: .touchDown)
+        self.overscanEditorView.topInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanTopInsetDecrease), for: .touchDown)
+        self.overscanEditorView.bottomInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanBottomInsetIncrease), for: .touchDown)
+        self.overscanEditorView.bottomInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanBottomInsetDecrease), for: .touchDown)
+        self.overscanEditorView.leftInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanLeftInsetIncrease), for: .touchDown)
+        self.overscanEditorView.leftInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanLeftInsetDecrease), for: .touchDown)
+        self.overscanEditorView.rightInsetIncreaseButton.addTarget(self, action: #selector(GameViewController.overscanRightInsetIncrease), for: .touchDown)
+        self.overscanEditorView.rightInsetDecreaseButton.addTarget(self, action: #selector(GameViewController.overscanRightInsetDecrease), for: .touchDown)
+        
         self.airPlayContentView = UIView(frame: CGRect(x: 0, y: 0, width: self.gameView.bounds.width, height: self.gameView.bounds.height))
         self.airPlayContentView.translatesAutoresizingMaskIntoConstraints = false
         self.airPlayContentView.isHidden = true
@@ -480,6 +528,12 @@ extension GameViewController
         sustainButtonsVibrancyView.contentView.addSubview(self.sustainButtonsBackgroundView)
         
         // Auto Layout
+        self.overscanEditorView.translatesAutoresizingMaskIntoConstraints = false
+        self.overscanEditorView.leadingAnchor.constraint(equalTo: self.gameView.leadingAnchor).isActive = true
+        self.overscanEditorView.trailingAnchor.constraint(equalTo: self.gameView.trailingAnchor).isActive = true
+        self.overscanEditorView.topAnchor.constraint(equalTo: self.gameView.topAnchor).isActive = true
+        self.overscanEditorView.bottomAnchor.constraint(equalTo: self.gameView.bottomAnchor).isActive = true
+        
         self.airPlayContentView.leadingAnchor.constraint(equalTo: self.gameView.leadingAnchor).isActive = true
         self.airPlayContentView.trailingAnchor.constraint(equalTo: self.gameView.trailingAnchor).isActive = true
         self.airPlayContentView.topAnchor.constraint(equalTo: self.gameView.topAnchor).isActive = true
@@ -499,8 +553,7 @@ extension GameViewController
         
         if self.emulatorCore?.deltaCore == DS.core, UserDefaults.standard.desmumeDeprecatedAlertCount < 3
         {
-            let toastView = RSTToastView(text: NSLocalizedString("DeSmuME Core Deprecated", comment: ""), detailText: NSLocalizedString("Switch to the melonDS core in Settings for latest improvements.", comment: ""))
-            self.show(toastView, duration: 5.0)
+            ToastView.show(NSLocalizedString("DeSmuME Core Deprecated", comment: ""), in: self.view, detailText: NSLocalizedString("Switch to the melonDS core in Settings for latest improvements.", comment: ""), onEdge: .top, duration: 5.0)
             
             UserDefaults.standard.desmumeDeprecatedAlertCount += 1
         }
@@ -604,6 +657,11 @@ extension GameViewController
                 self.performStatusBarAction(hold: true)
             }
             
+            pauseViewController.microphoneItem?.isSelected = Settings.gameplayFeatures.micSupport.isEnabled
+            pauseViewController.microphoneItem?.action = { [unowned self] item in
+                self.performMicrophoneAction()
+            }
+            
             func makeFastForwardSpeedMenu() -> UIMenu
             {
                 var fastForwardOptions: [UIMenuElement] = []
@@ -644,9 +702,14 @@ extension GameViewController
                 self.performQuickSettingsAction()
             }
             
-            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.overrideSetting
+            pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.isEnabled
             pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
                 self.performBlurBackgroundAction()
+            }
+            
+            pauseViewController.overscanEditorItem?.isSelected = self.isEditingOverscanInsets
+            pauseViewController.overscanEditorItem?.action = { [unowned self] item in
+                self.performOverscanEditorAction()
             }
             
             pauseViewController.altSkinItem?.isSelected = Settings.advancedFeatures.skinDebug.useAlt
@@ -712,11 +775,25 @@ extension GameViewController
                 pauseViewController.paletteItem = nil
             }
             
+            if let game = self.game,
+               game.type != .ds
+            {
+                pauseViewController.microphoneItem = nil
+            }
+            
+            if let game = self.game,
+               game.type != .n64
+            {
+                pauseViewController.overscanEditorItem = nil
+            }
+            
             switch self.game?.type
             {
             case .ds? where self.emulatorCore?.deltaCore == DS.core:
                 // Cheats are not supported by DeSmuME core.
                 pauseViewController.cheatCodesItem = nil
+                // Microphone is not supported by DeSmuME core.
+                pauseViewController.microphoneItem = nil
                 
             case .genesis?, .ms?, .gg?:
                 // GPGX core does not support cheats yet.
@@ -731,14 +808,13 @@ extension GameViewController
             default: break
             }
             
-            if !Settings.controllerFeatures.backgroundBlur.overrideSkin,
-               self.controllerView.backgroundBlur != nil
+            if !Settings.controllerFeatures.backgroundBlur.showDuringAirPlay,
+               UIApplication.shared.isExternalDisplayConnected
             {
                 pauseViewController.blurBackgroudItem = nil
             }
             
-            if !Settings.controllerFeatures.backgroundBlur.showDuringAirPlay,
-               UIApplication.shared.isExternalDisplayConnected
+            if !Settings.proFeaturesEnabled
             {
                 pauseViewController.blurBackgroudItem = nil
             }
@@ -896,7 +972,7 @@ private extension GameViewController
         if let index = Settings.localControllerPlayerIndex, !ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0.playerIndex == index })
         {
             self.controllerView.playerIndex = index
-            self.controllerView.isHidden = false
+            self.controllerView.isHidden = self.isEditingOverscanInsets
         }
         else
         {
@@ -918,7 +994,7 @@ private extension GameViewController
             }
             else
             {
-                if !Settings.controllerFeatures.skin.alwaysShow
+                if !Settings.controllerFeatures.skin.alwaysShow || self.isEditingOverscanInsets
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil // TODO: Does this need changed to 0?
@@ -995,7 +1071,7 @@ private extension GameViewController
         self.controllerView.touchOverlayStyle = Settings.touchFeedbackFeatures.touchOverlay.style
         
         self.controllerView.isAltRepresentationsEnabled = Settings.advancedFeatures.skinDebug.useAlt
-        self.controllerView.isDebugModeEnabled = Settings.advancedFeatures.skinDebug.isOn
+        self.controllerView.isDebugModeEnabled = Settings.advancedFeatures.skinDebug.isOn && Settings.advancedFeatures.skinDebug.isEnabled
         
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
@@ -1054,6 +1130,7 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
+                   Settings.proFeaturesEnabled,
                    let core = self?.emulatorCore,
                    let buttonSoundFile = self?.buttonSoundFile
                 {
@@ -1065,6 +1142,7 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
+                   Settings.proFeaturesEnabled,
                    let core = self?.emulatorCore,
                    let buttonSoundPlayer = self?.buttonSoundPlayer
                 {
@@ -1204,7 +1282,6 @@ private extension GameViewController
     func updateBlurBackground()
     {
         self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
-        self.blurScreenOverride = Settings.controllerFeatures.backgroundBlur.overrideSkin || !Settings.controllerFeatures.backgroundBlur.isEnabled
         self.blurScreenStrength = Settings.controllerFeatures.backgroundBlur.strength
         switch traitCollection.userInterfaceStyle
         {
@@ -1217,13 +1294,18 @@ private extension GameViewController
             self.blurScreenBrightness = intensity
         }
         
+        guard Settings.proFeaturesEnabled else {
+            self.blurScreenEnabled = false
+            return
+        }
+        
         // Set enabled last as it's the property that triggers updateGameViews()
         if let game = self.game
         {
             switch game.type
             {
             case .genesis, .ms, .gg: self.blurScreenEnabled = false //TODO: Fix background blur on genesis
-            default: self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.controllerFeatures.backgroundBlur.overrideSetting
+            default: self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && !self.isEditingOverscanInsets
             }
         }
     }
@@ -1289,7 +1371,7 @@ private extension GameViewController
     {
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
-        self.backgroundColor = Settings.controllerFeatures.skin.colorMode.uiColor
+        self.backgroundColor = self.isEditingOverscanInsets ? UIColor.red : Settings.controllerFeatures.skin.colorMode.uiColor
     }
     
     func updateSustainedButtons(gameController: GameController)
@@ -1673,6 +1755,180 @@ extension GameViewController: CheatsViewControllerDelegate
     }
 }
 
+//MARK: - Core Settings -
+/// Core Settings
+private extension GameViewController
+{
+    func updateCoreSettings()
+    {
+        guard let emulatorCore = self.emulatorCore,
+              let game = self.game as? Game else { return }
+        
+        if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? SNESEmulatorBridge
+        {
+            let gameEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
+            emulatorBridge.isInvalidVRAMAccessEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled && gameEnabled
+        }
+        else if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? N64EmulatorBridge
+        {
+            emulatorBridge.overscanTop = game.overscanTop
+            emulatorBridge.overscanBottom = game.overscanBottom
+            emulatorBridge.overscanLeft = game.overscanLeft
+            emulatorBridge.overscanRight = game.overscanRight
+            
+            self.overscanEditorView.topInsetLabel.text = "\(game.overscanTop)"
+            self.overscanEditorView.bottomInsetLabel.text = "\(game.overscanBottom)"
+            self.overscanEditorView.leftInsetLabel.text = "\(game.overscanLeft)"
+            self.overscanEditorView.rightInsetLabel.text = "\(game.overscanRight)"
+            
+            emulatorBridge.updateOverscanConfig()
+        }
+    }
+    
+    func updateOverscanInset(for edge: OverscanInsetEdge, increase: Bool)
+    {
+        guard let game = self.game as? Game else { return }
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            let game = context.object(with: game.objectID) as! Game
+            
+            switch edge
+            {
+            case .top:
+                let oldInset = game.overscanTop
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanTop = newInset
+                
+                DispatchQueue.main.async{ self.overscanEditorView.topInsetLabel.text = "\(newInset)" }
+                
+            case .bottom:
+                let oldInset = game.overscanBottom
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanBottom = newInset
+                
+                DispatchQueue.main.async{ self.overscanEditorView.bottomInsetLabel.text = "\(newInset)" }
+                
+            case .left:
+                let oldInset = game.overscanLeft
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanLeft = newInset
+                    
+                DispatchQueue.main.async{ self.overscanEditorView.leftInsetLabel.text = "\(newInset)" }
+                
+            case .right:
+                let oldInset = game.overscanRight
+                let newInset = increase ? min(oldInset + 1, N64OverscanOptions.maxValue) : (oldInset == 0 ? 0 : oldInset - 1)
+                game.overscanRight = newInset
+                    
+                DispatchQueue.main.async{ self.overscanEditorView.rightInsetLabel.text = "\(newInset)" }
+            }
+            
+            context.saveWithErrorLogging()
+        }
+    }
+    
+    @objc func finishEditingOverscanInsets()
+    {
+        self.performOverscanEditorAction()
+    }
+    
+    @objc func resetOverscanInsets()
+    {
+        guard let game = self.game as? Game else { return }
+        
+        DatabaseManager.shared.performBackgroundTask { (context) in
+            let game = context.object(with: game.objectID) as! Game
+            
+            game.overscanTop = 0
+            game.overscanBottom = 0
+            game.overscanLeft = 0
+            game.overscanRight = 0
+            
+            context.saveWithErrorLogging()
+        }
+        
+        self.overscanEditorView.topInsetLabel.text = "0"
+        self.overscanEditorView.bottomInsetLabel.text = "0"
+        self.overscanEditorView.leftInsetLabel.text = "0"
+        self.overscanEditorView.rightInsetLabel.text = "0"
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.applyOverscanInsets()
+        }
+    }
+    
+    
+    @objc func applyOverscanInsets()
+    {
+        guard let emulatorCore = self.emulatorCore,
+              let game = self.game as? Game else { return }
+        
+        self.updateAutoSaveState()
+        self.updateCoreSettings()
+        
+        emulatorCore.stop()
+        emulatorCore.start()
+        
+        let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
+        fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
+        
+        do
+        {
+            let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
+            if let activeSaveState = saveStates?.last
+            {
+                self.overrideToastNotification = true
+                self.load(activeSaveState)
+            }
+        }
+        catch
+        {
+            print(error)
+        }
+    }
+    
+    @objc func overscanTopInsetIncrease()
+    {
+        self.updateOverscanInset(for: .top, increase: true)
+    }
+    
+    @objc func overscanTopInsetDecrease()
+    {
+        self.updateOverscanInset(for: .top, increase: false)
+    }
+    
+    @objc func overscanBottomInsetIncrease()
+    {
+        self.updateOverscanInset(for: .bottom, increase: true)
+    }
+    
+    @objc func overscanBottomInsetDecrease()
+    {
+        self.updateOverscanInset(for: .bottom, increase: false)
+    }
+    
+    @objc func overscanLeftInsetIncrease()
+    {
+        self.updateOverscanInset(for: .left, increase: true)
+    }
+    
+    @objc func overscanLeftInsetDecrease()
+    {
+        self.updateOverscanInset(for: .left, increase: false)
+    }
+    
+    @objc func overscanRightInsetIncrease()
+    {
+        self.updateOverscanInset(for: .right, increase: true)
+    }
+    
+    @objc func overscanRightInsetDecrease()
+    {
+        self.updateOverscanInset(for: .right, increase: false)
+    }
+}
+
 //MARK: - Debug -
 /// Debug
 private extension GameViewController
@@ -1689,15 +1945,20 @@ private extension GameViewController
 {
     func updateGraphics()
     {
-        self.emulatorCore?.videoManager.renderingAPI = Settings.n64Features.n64graphics.isEnabled ? Settings.n64Features.n64graphics.graphicsAPI.api : EAGLRenderingAPI.openGLES2
-    }
-    
-    func changeGraphicsAPI()
-    {
-        NotificationCenter.default.post(name: .graphicsRenderingAPIDidChange, object: nil, userInfo: [:])
+        guard let game = self.game as? Game else { return }
         
-        self.emulatorCore?.gameViews.forEach { $0.inputImage = nil }
-        self.game = nil
+        guard game.type == .n64 else { return }
+        
+        if Settings.n64Features.openGLES3.isEnabled,
+           Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier }) {
+            self.emulatorCore?.videoManager.renderingAPI = .openGLES3
+            Settings.currentOpenGLESVersion = 3
+        }
+        else
+        {
+            self.emulatorCore?.videoManager.renderingAPI = .openGLES2
+            Settings.currentOpenGLESVersion = 2
+        }
     }
 }
 
@@ -1707,8 +1968,24 @@ private extension GameViewController
 {
     func updateAudio()
     {
-        self.emulatorCore?.audioManager.respectsSilentMode = Settings.gameplayFeatures.gameAudio.respectSilent
-        self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
+        if self.emulatorCore?.audioManager.isMicEnabled != self.isMicEnabled {
+            self.emulatorCore?.audioManager.isMicEnabled = self.isMicEnabled
+            
+            if let emulatorCore = self.emulatorCore,
+               let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? MelonDSEmulatorBridge
+            {
+                emulatorBridge.prepareAudioEngine()
+            }
+        }
+        
+        if self.emulatorCore?.audioManager.respectsSilentMode != Settings.gameplayFeatures.gameAudio.respectSilent {
+            self.emulatorCore?.audioManager.respectsSilentMode = Settings.gameplayFeatures.gameAudio.respectSilent
+        }
+        
+        if self.emulatorCore?.audioManager.playWithOtherMedia != Settings.gameplayFeatures.gameAudio.playOver {
+            self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
+        }
+        
         self.emulatorCore?.audioManager.audioVolume = Float(Settings.gameplayFeatures.gameAudio.volume)
     }
 }
@@ -1907,16 +2184,36 @@ extension GameViewController
         {
             if Settings.userInterfaceFeatures.statusBar.isEnabled {
                 Settings.userInterfaceFeatures.statusBar.isEnabled = false
-                text = NSLocalizedString("Status Bar: Enabled", comment: "")
+                text = NSLocalizedString("Status Bar: Disabled", comment: "")
             } else {
                 Settings.userInterfaceFeatures.statusBar.isEnabled = true
-                text = NSLocalizedString("Status Bar: Disabled", comment: "")
+                text = NSLocalizedString("Status Bar: Enabled", comment: "")
             }
         }
         
         self.updateStatusBar()
         
         if Settings.userInterfaceFeatures.toasts.statusBar
+        {
+            self.presentToastView(text: text)
+        }
+    }
+    
+    func performMicrophoneAction()
+    {
+        let text: String
+        
+        if Settings.gameplayFeatures.micSupport.isEnabled {
+            Settings.gameplayFeatures.micSupport.isEnabled = false
+            text = NSLocalizedString("Microphone Disabled", comment: "")
+        } else {
+            Settings.gameplayFeatures.micSupport.isEnabled = true
+            text = NSLocalizedString("Microphone Enabled", comment: "")
+        }
+        
+        self.updateAudio()
+        
+        if Settings.userInterfaceFeatures.toasts.microphone
         {
             self.presentToastView(text: text)
         }
@@ -2260,9 +2557,9 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
-        let enabled = !Settings.controllerFeatures.backgroundBlur.overrideSetting
+        let enabled = !Settings.controllerFeatures.backgroundBlur.isEnabled
         self.blurScreenEnabled = enabled
-        Settings.controllerFeatures.backgroundBlur.overrideSetting = enabled
+        Settings.controllerFeatures.backgroundBlur.isEnabled = enabled
         
         if Settings.userInterfaceFeatures.toasts.backgroundBlur
         {
@@ -2274,6 +2571,37 @@ extension GameViewController
             else
             {
                 text = NSLocalizedString("Background Blur Disabled", comment: "")
+            }
+            self.presentToastView(text: text)
+        }
+    }
+    
+    func performOverscanEditorAction()
+    {
+        if let pauseView = self.pauseViewController
+        {
+            pauseView.dismiss()
+        }
+        
+        let enabled = !self.isEditingOverscanInsets
+        
+        UIView.animate(withDuration: 0.2) {
+            self.overscanEditorView.isHidden = !enabled
+            self.isEditingOverscanInsets = enabled
+            
+            self.updateControllers()
+        }
+        
+        if Settings.userInterfaceFeatures.toasts.overscan
+        {
+            let text: String
+            if enabled
+            {
+                text = NSLocalizedString("Overscan Editor Enabled", comment: "")
+            }
+            else
+            {
+                text = NSLocalizedString("Overscan Editor Disabled", comment: "")
             }
             self.presentToastView(text: text)
         }
@@ -2329,9 +2657,7 @@ extension GameViewController
         }
         
         let alertController = UIAlertController(title: NSLocalizedString("Choose Device Override", comment: ""), message: NSLocalizedString("This allows you to test your skins on devices that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "iPhone", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .iphone
@@ -2379,9 +2705,7 @@ extension GameViewController
         }
         
         let alertController = UIAlertController(title: NSLocalizedString("Choose Display Type Override", comment: ""), message: NSLocalizedString("This allows you to test your skins on display types that you don't have access to.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "Standard", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.displayType = .standard
@@ -2429,9 +2753,7 @@ extension GameViewController
         }
         
         let alertController = UIAlertController(title: NSLocalizedString("Choose Preset Traits", comment: ""), message: NSLocalizedString("Set your override traits based on existing device and display type combinations.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "Standard iPhone", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .iphone
@@ -2494,15 +2816,11 @@ extension GameViewController
         if Settings.gbFeatures.palettes.multiPalette
         {
             let alertController = UIAlertController(title: NSLocalizedString("Change Which Palette?", comment: ""), message: nil, preferredStyle: .actionSheet)
-            alertController.popoverPresentationController?.sourceView = self.view
-            alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-            alertController.popoverPresentationController?.permittedArrowDirections = []
+            alertController.preparePopoverPresentationController(self.view)
             
             alertController.addAction(UIAlertAction(title: "Main Palette", style: .default, handler: { (action) in
                 let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Main Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
-                paletteAlertController.popoverPresentationController?.sourceView = self.view
-                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                paletteAlertController.preparePopoverPresentationController(self.view)
                 
                 for palette in GameboyPalette.allCases
                 {
@@ -2522,9 +2840,7 @@ extension GameViewController
             }))
             alertController.addAction(UIAlertAction(title: "Sprite Palette 1", style: .default, handler: { (action) in
                 let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Sprite Palette 1", comment: ""), message: nil, preferredStyle: .actionSheet)
-                paletteAlertController.popoverPresentationController?.sourceView = self.view
-                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                paletteAlertController.preparePopoverPresentationController(self.view)
                 
                 for palette in GameboyPalette.allCases
                 {
@@ -2544,9 +2860,7 @@ extension GameViewController
             }))
             alertController.addAction(UIAlertAction(title: "Sprite Palette 2", style: .default, handler: { (action) in
                 let paletteAlertController = UIAlertController(title: NSLocalizedString("Choose Sprite Palette 2", comment: ""), message: nil, preferredStyle: .actionSheet)
-                paletteAlertController.popoverPresentationController?.sourceView = self.view
-                paletteAlertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-                paletteAlertController.popoverPresentationController?.permittedArrowDirections = []
+                paletteAlertController.preparePopoverPresentationController(self.view)
                 
                 for palette in GameboyPalette.allCases
                 {
@@ -2575,11 +2889,9 @@ extension GameViewController
         else
         {
             let alertController = UIAlertController(title: NSLocalizedString("Choose Color Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
-            alertController.popoverPresentationController?.sourceView = self.view
-            alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-            alertController.popoverPresentationController?.permittedArrowDirections = []
+            alertController.preparePopoverPresentationController(self.view)
             
-            for palette in GameboyPalette.allCases
+            for palette in GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled }
             {
                 let text = (Settings.gbFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                 alertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
@@ -2609,9 +2921,7 @@ extension GameViewController
         guard Settings.userInterfaceFeatures.toasts.isEnabled else { return }
         
         DispatchQueue.main.async {
-            let toastView = RSTToastView(text: text, detailText: nil)
-            toastView.edgeOffset.vertical = 8
-            self.show(toastView, duration: duration ?? Settings.userInterfaceFeatures.toasts.duration)
+            ToastView.show(text, in: self.view, onEdge: .top, duration: duration ?? Settings.userInterfaceFeatures.toasts.duration)
         }
     }
 }
@@ -2767,13 +3077,6 @@ extension GameViewController: GameViewControllerDelegate
 
 private extension GameViewController
 {
-    func show(_ toastView: RSTToastView, duration: TimeInterval = 3.0)
-    {
-        toastView.textLabel.textAlignment = .center
-        toastView.presentationEdge = .top
-        toastView.show(in: self.view, duration: duration)
-    }
-    
     func showJITEnabledAlert()
     {
         guard !self.presentedJITAlert, self.presentedViewController == nil, self.game != nil else { return }
@@ -2795,9 +3098,7 @@ private extension GameViewController
                 duration = 2.0
             }
             
-            let toastView = RSTToastView(text: NSLocalizedString("JIT Compilation Enabled", comment: ""), detailText: detailText)
-            toastView.edgeOffset.vertical = 8
-            self.show(toastView, duration: duration)
+            ToastView.show(NSLocalizedString("JIT Compilation Enabled", comment: ""), in: self.view, detailText: detailText, duration: duration)
             
             UserDefaults.standard.jitEnabledAlertCount += 1
         }
@@ -2822,22 +3123,16 @@ private extension GameViewController
 {
     @objc func didEnterBackground(with notification: Notification)
     {
-        self.updateAutoSaveState()
+        self.updateAutoSaveState(true)
     }
     
-    @objc func didBecomeActiveApp(with notification: Notification)
+    @objc func appWillBecomeInactive(with notification: Notification)
     {
-        guard let scene = notification.object as? UIWindowScene, scene == self.view.window?.windowScene else { return }
-                        
         if #available(iOS 15.0, *),
            let presentedViewController = self.sheetPresentationController,
            self._isQuickSettingsOpen
         {
             presentedViewController.presentedViewController.dismiss(animated: true)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.resumeEmulation()
         }
     }
     
@@ -2894,11 +3189,11 @@ private extension GameViewController
         case Settings.touchFeedbackFeatures.touchOverlay.$style.settingsKey:
             self.controllerView.touchOverlayStyle = Settings.touchFeedbackFeatures.touchOverlay.style
             
+        case Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey:
+            self.updateCoreSettings()
+            
         case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey:
             self.updateAudio()
-            
-        case Settings.n64Features.n64graphics.$graphicsAPI.settingsKey:
-            self.changeGraphicsAPI()
             
         case Settings.touchFeedbackFeatures.touchAudio.$sound.settingsKey:
             self.updateButtonAudioFeedbackSound()
@@ -3031,8 +3326,7 @@ private extension GameViewController
         
         func presentToastView()
         {
-            let toastView = RSTToastView(text: NSLocalizedString("Autorotation Disabled", comment: ""), detailText: NSLocalizedString("Pause game to change orientation.", comment: ""))
-            self.show(toastView)
+            ToastView.show(NSLocalizedString("Autorotation Disabled", comment: ""), in: self.view, detailText: NSLocalizedString("Pause game to change orientation.", comment: ""))
         }
         
         DispatchQueue.main.async {
@@ -3149,6 +3443,57 @@ private extension GameViewController
         self.disconnectExternalDisplay(for: scene)
     }
     
+    @objc func batteryLevelDidChange(with notification: Notification)
+    {
+        guard let emulatorCore = self.emulatorCore,
+              let game = self.game else { return }
+        
+        let currentBatteryLevel = Double(UIDevice.current.batteryLevel)
+        let lowBatteryLevel = Settings.advancedFeatures.lowBattery.lowLevel
+        let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
+        
+        // Battery low, create auto save state
+        if currentBatteryLevel < lowBatteryLevel
+        {
+            self.updateAutoSaveState(true)
+            
+            // Battery critical, quit emulation
+            if currentBatteryLevel < criticalBatteryLevel
+            {
+                NotificationCenter.default.post(name: EmulatorCore.emulationDidQuitNotification, object: nil)
+                
+                self.emulatorCore?.stop()
+                
+                return
+            }
+            
+            if !self.batteryLowNotificationShown
+            {
+                self.showBatteryLowNotification()
+            }
+        }
+    }
+    
+    func showBatteryLowNotification()
+    {
+        let lowBatteryLevel = Settings.advancedFeatures.lowBattery.lowLevel
+        let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
+        
+        self.pauseEmulation()
+        
+        let alertController = UIAlertController(title: NSLocalizedString(String(format: "Battery At %.f%!", lowBatteryLevel * 100), comment: ""), message: NSLocalizedString(String(format: "Ignited will begin creating auto save states in case your device suddenly powers off. At %.f% battery your game session will end and you won't be able to launch a game until you charge your device.", criticalBatteryLevel * 100), comment: ""), preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+            self.resumeEmulation()
+        }))
+        self.present(alertController, animated: true, completion: nil)
+        
+        self.batteryLowNotificationShown = true
+    }
+    
     @objc func deviceDidShake(with notification: Notification)
     {
         guard self.emulatorCore?.state == .running else { return }
@@ -3174,9 +3519,7 @@ private extension GameViewController
         self.pauseEmulation()
         
         let alertController = UIAlertController(title: NSLocalizedString("Override Traits Menu", comment: ""), message: NSLocalizedString("This popup was activated by shaking your device while using the Override Traits feature. You can use it to change or reset your override traits, or to recover from situations where you can't access the main menu.", comment: ""), preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
+        alertController.preparePopoverPresentationController(self.view)
         
         alertController.addAction(UIAlertAction(title: "Choose Preset Traits", style: .default, handler: { (action) in
             self.performPresetTraitsAction()

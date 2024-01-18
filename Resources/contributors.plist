@@ -13,7 +13,7 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>Delta</string>
+				<string>Creator of Delta</string>
 				<key>link</key>
 				<string>https://github.com/rileytestut/Delta</string>
 			</dict>
@@ -30,15 +30,9 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>Setup xcconfig for building the project</string>
+				<string>Setup Build.xcconfig</string>
 				<key>link</key>
 				<string>https://github.com/LitRitt/Ignited/pull/30</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Copy Google Drive Refresh Token feature</string>
-				<key>link</key>
-				<string>https://github.com/LitRitt/Ignited/pull/31</string>
 			</dict>
 		</array>
 	</dict>
@@ -53,21 +47,9 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>Gameboy DMG and Pocket color palettes</string>
-				<key>link</key>
-				<string>https://github.com/icelaglace/GameBoyPalettes</string>
-			</dict>
-			<dict>
-				<key>name</key>
 				<string>Better NES palette</string>
 				<key>link</key>
 				<string>https://github.com/icelaglace/NESDeltaCore/commit/28766b419a3b939619318990fb030e3bddad671c</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>N64 joystick fix and Mempak fix</string>
-				<key>link</key>
-				<string>https://github.com/icelaglace/N64DeltaCore/commit/61accb34a8e0bd23d92b91f64ee4bfe9fa94452f</string>
 			</dict>
 		</array>
 	</dict>
@@ -82,7 +64,7 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>CheatBase</string>
+				<string>Creator of CheatBase</string>
 				<key>link</key>
 				<string>https://github.com/CheatBase/CheatBase</string>
 			</dict>

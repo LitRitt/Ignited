@@ -29,6 +29,6 @@ public struct OptionPickerView<Value: LocalizedOptionValue>: View
     }
     
     var proLabel: some View {
-        Text(name) + Text(pro ? " (PRO)" : "").foregroundColor(.accentColor).bold()
+        Text(name).addProLabel(pro)
     }
 }

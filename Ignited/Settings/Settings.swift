@@ -48,6 +48,7 @@ struct Settings
     static let dsFeatures = DSFeatures.shared
     static let gbFeatures = GBFeatures.shared
     static let n64Features = N64Features.shared
+    static let snesFeatures = SNESFeatures.shared
     static let gameplayFeatures =  GameplayFeatures.shared
     static let controllerFeatures = ControllerFeatures.shared
     static let libraryFeatures = LibraryFeatures.shared
@@ -72,6 +73,7 @@ struct Settings
             Settings.gameplayFeatures.screenshots.settingsKey.rawValue: true,
             Settings.gameplayFeatures.rewind.settingsKey.rawValue: false,
             Settings.gameplayFeatures.quickSettings.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.micSupport.settingsKey.rawValue: false,
             Settings.controllerFeatures.skin.settingsKey.rawValue: true,
             Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue: true,
             Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue: false,
@@ -91,8 +93,10 @@ struct Settings
             Settings.touchFeedbackFeatures.touchVibration.settingsKey.rawValue: true,
             Settings.advancedFeatures.skinDebug.settingsKey.rawValue: false,
             Settings.advancedFeatures.powerUser.settingsKey.rawValue: false,
+            Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey.rawValue: false,
             Settings.gbFeatures.palettes.settingsKey.rawValue: true,
-            Settings.n64Features.n64graphics.settingsKey.rawValue: false,
+            Settings.n64Features.openGLES3.settingsKey.rawValue: false,
+            Settings.n64Features.overscan.settingsKey.rawValue: true,
             Settings.dsFeatures.dsAirPlay.settingsKey.rawValue: true,
             Settings.dsFeatures.dsiSupport.settingsKey.rawValue: false
         ] as [String : Any]
@@ -107,6 +111,9 @@ extension Settings
         set { UserDefaults.standard.lastUpdateShown = newValue }
         get { return UserDefaults.standard.lastUpdateShown }
     }
+    
+    /// OpenGLES
+    static var currentOpenGLESVersion: Int? = nil
     
     /// Controllers
     static var localControllerPlayerIndex: Int? = 0 {
@@ -336,11 +343,12 @@ extension Settings
         }
     }
     
-    static func proFeaturesEnabled() -> Bool
-    {
-        guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
-                
-        return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated) || Settings.advancedFeatures.proOverride.isEnabled
+    static var proFeaturesEnabled: Bool {
+        get {
+            guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
+            
+            return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated) || Settings.advancedFeatures.proOverride.isEnabled
+        }
     }
 }
 

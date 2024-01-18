@@ -50,14 +50,6 @@ struct BackgroundBlurOptions
             description: "When scaling the blurred image to fit the background, maintain the aspect ratio instead of stretching the image only to the edges.")
     var maintainAspect: Bool = true
     
-    @Option(name: "Override Skin Setting",
-            description: "If a skin has set a preference to use a background blur or not, you can enable this option to override the skin's setting and always use the setting provided below.")
-    var overrideSkin: Bool = false
-    
-    @Option(name: "Show During Override",
-             description: "When the Override Skin Setting option above is enabled, this option determines whether the background blur is shown.")
-    var overrideSetting: Bool = true
-    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in

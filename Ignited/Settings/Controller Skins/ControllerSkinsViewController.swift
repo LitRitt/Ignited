@@ -195,6 +195,7 @@ private extension ControllerSkinsViewController
     @IBAction func resetControllerSkin(_ sender: UIBarButtonItem)
     {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.barButtonItem = sender
         alertController.addAction(.cancel)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Reset Controller Skin to Default", comment: ""), style: .destructive, handler: { (action) in
             self.delegate?.controllerSkinsViewControllerDidResetControllerSkin(self)
