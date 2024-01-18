@@ -39,7 +39,7 @@ extension PremiumPatronsView
             do
             {
                 // TODO: Make patrons load dynamically from Patreon directly
-                guard let url = try URL(string: "https://raw.githubusercontent.com/LitRitt/Ignited/develop/Resources/patrons.plist") else { return }
+                guard let url = try URL(string: "https://raw.githubusercontent.com/LitRitt/Ignited/main/Resources/patrons.plist") else { return }
                 
                 let request = URLRequest(url: url)
 
