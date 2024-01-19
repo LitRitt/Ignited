@@ -165,7 +165,7 @@ extension PatreonAPI
         }
     }
     
-    func fetchPatrons(completion: @escaping (Result<[Patron], Swift.Error>) -> Void)
+    func fetchPatrons(_ benefitType: BenefitType, completion: @escaping (Result<[Patron], Swift.Error>) -> Void)
     {
         var components = URLComponents(string: "/api/oauth2/v2/campaigns/\(campaignID)/members")!
         components.queryItems = [URLQueryItem(name: "include", value: "currently_entitled_tiers,currently_entitled_tiers.benefits"),
@@ -213,7 +213,7 @@ extension PatreonAPI
                         }
                         
                         return patron
-                    }.filter { $0.benefits.contains(where: { $0.type == .credit }) }
+                    }.filter { $0.benefits.contains(where: { $0.type == benefitType }) }
                     
                     allPatrons.append(contentsOf: patrons)
                     

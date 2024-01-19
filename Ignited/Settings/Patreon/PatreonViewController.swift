@@ -182,7 +182,7 @@ private extension PatreonViewController
             self.collectionView.reloadData()
         }
         
-        PatreonAPI.shared.fetchPatrons { (result) in
+        PatreonAPI.shared.fetchPatrons(.credit) { (result) in
             self.patronsResult = result
             
             do
