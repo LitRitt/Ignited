@@ -52,10 +52,14 @@ extension Patron
     }
 }
 
-class Patron
+class Patron: Identifiable
 {
     var name: String
     var identifier: String
+    
+    var id: String {
+        return self.identifier
+    }
     
     var status: Status
     
