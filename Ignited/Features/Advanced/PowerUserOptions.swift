@@ -395,7 +395,7 @@ extension PowerUserOptions
                 Settings.libraryFeatures.artwork.cornerRadius = 0.15
                 Settings.libraryFeatures.artwork.borderWidth = 1.5
                 Settings.libraryFeatures.artwork.shadowOpacity = 0.5
-                Settings.libraryFeatures.artwork.useScreenshots = true
+                Settings.libraryFeatures.artwork.useScreenshots = false
                 Settings.libraryFeatures.artwork.showNewGames = true
                 Settings.libraryFeatures.artwork.forceAspect = true
                 Settings.libraryFeatures.artwork.titleSize = 1.0
