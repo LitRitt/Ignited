@@ -1459,7 +1459,7 @@ private extension GameViewController
 /// Save States
 extension GameViewController: SaveStatesViewControllerDelegate
 {
-    private func updateAutoSaveState(_ ignoringAutoSaveOption: Bool = false)
+    private func updateAutoSaveState(_ ignoringAutoSaveOption: Bool = false, shouldSuspendEmulation: Bool = true)
     {
         guard Settings.gameplayFeatures.saveStates.autoSave || ignoringAutoSaveOption else { return }
         
@@ -1491,7 +1491,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
                 if let saveState = saveStates.first, saveStates.count >= 2
                 {
                     // If there are two or more auto save states, update the oldest one
-                    self.update(saveState, with: self.pausedSaveState)
+                    self.update(saveState, with: self.pausedSaveState, shouldSuspendEmulation: shouldSuspendEmulation)
                     
                     // Tiny hack: SaveStatesViewController sorts save states by creation date, so we update the creation date too
                     // Simpler than deleting old save states ¯\_(ツ)_/¯
@@ -3123,7 +3123,7 @@ private extension GameViewController
 {
     @objc func didEnterBackground(with notification: Notification)
     {
-        self.updateAutoSaveState(true)
+        self.updateAutoSaveState(true, shouldSuspendEmulation: false)
     }
     
     @objc func appWillBecomeInactive(with notification: Notification)
