@@ -17,6 +17,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case tribute = "Tribute"
     case cartridge = "Cartridge"
     case neon = "Neon"
+    case shield = "Hylian Shield"
     case simple = "Simple"
     case glass = "Glass"
     case ablaze = "Ablaze"
@@ -42,6 +43,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .classic, .ball, .kong, .black, .silver, .gold: return "Kongolabongo"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
+        case .shield: return "Scott the Rizzler"
         }
     }
     
@@ -62,13 +64,14 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .black: return "IconBlack"
         case .silver: return "IconSilver"
         case .gold: return "IconGold"
+        case .shield: return "IconShield"
         }
     }
     
     var pro: Bool {
         switch self
         {
-        case .connect, .cartridge, .ball, .kong, .black, .silver, .gold: return true
+        case .connect, .cartridge, .ball, .kong, .black, .silver, .gold, .shield: return true
         default: return false
         }
     }
