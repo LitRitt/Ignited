@@ -17,6 +17,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case tribute = "Tribute"
     case cartridge = "Cartridge"
     case neon = "Neon"
+    case sword = "Sealing Sword"
     case shield = "Hylian Shield"
     case simple = "Simple"
     case glass = "Glass"
@@ -39,7 +40,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: String {
         switch self
         {
-        case .normal, .connect, .tribute, .cartridge, .neon: return "LitRitt"
+        case .normal, .connect, .tribute, .cartridge, .neon, .sword: return "LitRitt"
         case .classic, .ball, .kong, .black, .silver, .gold: return "Kongolabongo"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
@@ -65,14 +66,24 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .silver: return "IconSilver"
         case .gold: return "IconGold"
         case .shield: return "IconShield"
+        case .sword: return "IconSword"
         }
     }
     
     var pro: Bool {
         switch self
         {
-        case .connect, .cartridge, .ball, .kong, .black, .silver, .gold, .shield: return true
-        default: return false
+        case .normal, .tribute, .neon, .simple, .glass, .ablaze, .classic: return false
+        default: return true
+        }
+    }
+    
+    var category: AppIconCategory {
+        switch self
+        {
+        case .connect, .cartridge, .black, .silver, .gold: return .pro
+        case .sword, .shield, .ball, .kong: return .game
+        default: return .basic
         }
     }
 }
@@ -92,14 +103,21 @@ extension AppIcon: Equatable
     }
 }
 
+enum AppIconCategory: String, CaseIterable
+{
+    case basic
+    case pro
+    case game
+}
+
 struct AppIconOptions
 {
     @Option(name: "Alternate App Icon",
             description: "Choose from alternate app icons created by the community.",
             detailView: { value in
         List {
-            Section(header: Text("Alternate Icons")) {
-                ForEach(AppIcon.allCases.filter { !$0.pro }) { icon in
+            Section {
+                ForEach(AppIcon.allCases.filter { $0.category == .basic }) { icon in
                     HStack {
                         VStack(alignment: .leading) {
                             if icon == value.wrappedValue {
@@ -124,9 +142,11 @@ struct AppIconOptions
                         value.wrappedValue = icon
                     }
                 }
+            } header: {
+                appIconSectionHeader("Basic Icons")
             }
-            Section(header: Text("Pro Icons")) {
-                ForEach(AppIcon.allCases.filter { $0.pro }) { icon in
+            Section {
+                ForEach(AppIcon.allCases.filter { $0.category == .game }) { icon in
                     HStack {
                         VStack(alignment: .leading) {
                             if icon == value.wrappedValue {
@@ -156,6 +176,42 @@ struct AppIconOptions
                         }
                     }
                 }
+            } header: {
+                appIconSectionHeader("Game Icons")
+            }
+            Section {
+                ForEach(AppIcon.allCases.filter { $0.category == .pro }) { icon in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            if icon == value.wrappedValue {
+                                HStack {
+                                    Text("✓")
+                                    icon.localizedDescription
+                                }
+                                .foregroundColor(.accentColor)
+                                    .addProLabel()
+                            } else {
+                                icon.localizedDescription.addProLabel()
+                            }
+                            Text("by \(icon.author)")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
+                            .cornerRadius(13)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if Settings.proFeaturesEnabled {
+                            value.wrappedValue = icon
+                        } else {
+                            ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
+                        }
+                    }
+                }
+            } header: {
+                appIconSectionHeader("Pro Icons")
             }
         }
         .onChange(of: value.wrappedValue) { _ in
@@ -180,6 +236,18 @@ struct AppIconOptions
 
 extension AppIconOptions
 {
+    @ViewBuilder
+    static func appIconSectionHeader(_ title: String) -> some View
+    {
+        return ZStack {
+            Color.accentColor
+                .frame(maxWidth: .infinity, idealHeight: 30, alignment: .center)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+            Text(title)
+                .font(.system(size: 20, weight: .bold))
+        }.padding([.top, .bottom], 10)
+    }
+    
     static func updateAppIcon()
     {
         let currentIcon = UIApplication.shared.alternateIconName
