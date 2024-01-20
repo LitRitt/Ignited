@@ -17,7 +17,9 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case tribute = "Tribute"
     case cartridge = "Cartridge"
     case neon = "Neon"
-    case sword = "Sealing Sword"
+    case sealing = "Sword That Seals"
+    case igniting = "Sword That Ignites"
+    case sword = "Master Sword"
     case shield = "Hylian Shield"
     case simple = "Simple"
     case glass = "Glass"
@@ -40,11 +42,11 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: String {
         switch self
         {
-        case .normal, .connect, .tribute, .cartridge, .neon, .sword: return "LitRitt"
+        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting: return "LitRitt"
         case .classic, .ball, .kong, .black, .silver, .gold: return "Kongolabongo"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
-        case .shield: return "Scott the Rizzler"
+        case .sword, .shield: return "Scott the Rizzler"
         }
     }
     
@@ -56,6 +58,8 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .tribute: return "IconTribute"
         case .cartridge: return "IconCartridge"
         case .neon: return "IconNeon"
+        case .sealing: return "IconSealing"
+        case .igniting: return "IconIgniting"
         case .classic: return "IconClassic"
         case .simple: return "IconSimple"
         case .glass: return "IconGlass"
@@ -82,7 +86,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         switch self
         {
         case .connect, .cartridge, .black, .silver, .gold: return .pro
-        case .sword, .shield, .ball, .kong: return .game
+        case .sealing, .igniting, .sword, .shield, .ball, .kong: return .game
         default: return .basic
         }
     }
