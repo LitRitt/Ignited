@@ -141,7 +141,6 @@
 		ACE43DC72B4733B000AD9287 /* AboutPatreonHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACE43DC42B4733B000AD9287 /* AboutPatreonHeaderView.xib */; };
 		ACE43DC92B473C0E00AD9287 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DC82B473C0E00AD9287 /* ToastView.swift */; };
 		ACE43DCC2B47680700AD9287 /* contributors.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACE43DCA2B47680700AD9287 /* contributors.plist */; };
-		ACE43DCD2B47680700AD9287 /* patrons.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACE43DCB2B47680700AD9287 /* patrons.plist */; };
 		ACE43DD02B478EDD00AD9287 /* PatreonSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DCF2B478EDD00AD9287 /* PatreonSecrets.swift */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
 		ACFABEA82B4F050B00E24374 /* N64OpenGLES3Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFABEA72B4F050B00E24374 /* N64OpenGLES3Options.swift */; };
@@ -439,7 +438,6 @@
 		ACE43DC42B4733B000AD9287 /* AboutPatreonHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutPatreonHeaderView.xib; sourceTree = "<group>"; };
 		ACE43DC82B473C0E00AD9287 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		ACE43DCA2B47680700AD9287 /* contributors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contributors.plist; sourceTree = "<group>"; };
-		ACE43DCB2B47680700AD9287 /* patrons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = patrons.plist; sourceTree = "<group>"; };
 		ACE43DCF2B478EDD00AD9287 /* PatreonSecrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatreonSecrets.swift; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
 		ACFABEA72B4F050B00E24374 /* N64OpenGLES3Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64OpenGLES3Options.swift; sourceTree = "<group>"; };
@@ -1392,7 +1390,6 @@
 				BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */,
 				D5D797E7298DC9E200738869 /* cheatbase.zip */,
 				ACE43DCA2B47680700AD9287 /* contributors.plist */,
-				ACE43DCB2B47680700AD9287 /* patrons.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1664,7 +1661,6 @@
 				ACE43DC72B4733B000AD9287 /* AboutPatreonHeaderView.xib in Resources */,
 				AC4D51A22B09F8B2008B245B /* LaunchScreen.storyboard in Resources */,
 				AC4D51A02B09F899008B245B /* GamesDatabase.storyboard in Resources */,
-				ACE43DCD2B47680700AD9287 /* patrons.plist in Resources */,
 				ACCDD4882A6386020034A6C0 /* beep.mp3 in Resources */,
 				AC4D519E2B09F881008B245B /* Settings.storyboard in Resources */,
 				BF1F45AB21AF4B5800EF9895 /* SyncResultsViewController.storyboard in Resources */,
