@@ -333,7 +333,7 @@ extension PowerUserOptions
                 Settings.n64Features.openGLES3.enabledGames = []
                 
             case .pauseMenu:
-                Settings.gameplayFeatures.pauseMenu.buttonOrder = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Cheat Codes", "Alt Skin", "Debug Mode"]
+                Settings.gameplayFeatures.pauseMenu.buttonOrder = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Microphone", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Overscan Editor", "Cheat Codes", "Alt Skin", "Debug Mode"]
                 
             case .gameScreenshot:
                 Settings.gameplayFeatures.screenshots.saveLocation = .photos
