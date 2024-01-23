@@ -12,23 +12,25 @@ import Features
 
 enum FastForwardSpeed: Double, CaseIterable, CustomStringConvertible
 {
-    case x025 = 0.25
-    case x05 = 0.5
-    case x2 = 2
-    case x3 = 3
-    case x4 = 4
-    case x6 = 6
-    case x8 = 8
+    case x25 = 0.25
+    case x50 = 0.5
+    case x150 = 1.5
+    case x200 = 2
+    case x300 = 3
+    case x400 = 4
+    case x600 = 6
+    case x800 = 8
     
     var description: String {
         switch self {
-        case .x025: return "25%"
-        case .x05: return "50%"
-        case .x2: return "200%"
-        case .x3: return "300%"
-        case .x4: return "400%"
-        case .x6: return "600%"
-        case .x8: return "800%"
+        case .x25: return "25%"
+        case .x50: return "50%"
+        case .x150: return "150%"
+        case .x200: return "200%"
+        case .x300: return "300%"
+        case .x400: return "400%"
+        case .x600: return "600%"
+        case .x800: return "800%"
         }
     }
 }
