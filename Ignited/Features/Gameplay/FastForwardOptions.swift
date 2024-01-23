@@ -66,7 +66,7 @@ extension FastForwardMode: LocalizedOptionValue
 
 struct FastForwardOptions
 {
-    @Option(name: "Custom Speed", description: "Set your prefferred fast forward speed.", detailView: { value in
+    @Option(name: "Custom Speed", description: "Set your preferred fast forward speed.", detailView: { value in
         VStack {
             HStack {
                 Text("Custom Speed: \(value.wrappedValue * 100, specifier: "%.f")%")
@@ -82,7 +82,7 @@ struct FastForwardOptions
     var speed: Double = 3.0
     
     @Option(name: "Fast Forward Mode",
-            description: "In toggle mode, fast forward buttons will act as a toggle. In hold mode,, fast forward buttons only activate when held down.",
+            description: "In toggle mode, fast forward buttons will act as a toggle. In hold mode, fast forward buttons only activate when held down.",
             values: FastForwardMode.allCases)
     var mode: FastForwardMode = .toggle
     
