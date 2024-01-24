@@ -130,7 +130,7 @@
 		ACCDD4872A6386020034A6C0 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4832A6386020034A6C0 /* click.mp3 */; };
 		ACCDD4882A6386020034A6C0 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4842A6386020034A6C0 /* beep.mp3 */; };
 		ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD48A2A63864E0034A6C0 /* tock.mp3 */; };
-		ACD5C7692B4A7868008B28AC /* View+ProLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */; };
+		ACD5C7692B4A7868008B28AC /* View+Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5C7672B4A605B008B28AC /* View+Labels.swift */; };
 		ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */; };
 		ACD5FA052A0C4D58005CDCF1 /* GBPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */; };
 		ACD727D529EE0BDD0028B8A8 /* PremiumPatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD727D429EE0BDD0028B8A8 /* PremiumPatronsView.swift */; };
@@ -281,7 +281,6 @@
 		D5AAF27729884F8600F21ACF /* CheatDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAF27629884F8600F21ACF /* CheatDevice.swift */; };
 		D5D797E6298D946200738869 /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D797E5298D946200738869 /* Contributor.swift */; };
 		D5D797E9298DCC7300738869 /* cheatbase.zip in Resources */ = {isa = PBXBuildFile; fileRef = D5D797E7298DC9E200738869 /* cheatbase.zip */; };
-		D5F82FB82981D3AC00B229AF /* LegacySearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F82FB72981D3AC00B229AF /* LegacySearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -427,7 +426,7 @@
 		ACCDD4832A6386020034A6C0 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		ACCDD4842A6386020034A6C0 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 		ACCDD48A2A63864E0034A6C0 /* tock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tock.mp3; sourceTree = "<group>"; };
-		ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ProLabel.swift"; sourceTree = "<group>"; };
+		ACD5C7672B4A605B008B28AC /* View+Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Labels.swift"; sourceTree = "<group>"; };
 		ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFeatures.swift; sourceTree = "<group>"; };
 		ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPaletteOptions.swift; sourceTree = "<group>"; };
 		ACD727D429EE0BDD0028B8A8 /* PremiumPatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPatronsView.swift; sourceTree = "<group>"; };
@@ -610,7 +609,6 @@
 		D5AAF27629884F8600F21ACF /* CheatDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatDevice.swift; sourceTree = "<group>"; };
 		D5D797E5298D946200738869 /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
 		D5D797E7298DC9E200738869 /* cheatbase.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = cheatbase.zip; sourceTree = "<group>"; };
-		D5F82FB72981D3AC00B229AF /* LegacySearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySearchBar.swift; sourceTree = "<group>"; };
 		DB395375D0B32B2C6B9B6D1E /* Pods-Ignited.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignited.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -882,7 +880,7 @@
 		AC8C20F829FDAA550044748D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				ACD5C7672B4A605B008B28AC /* View+ProLabel.swift */,
+				ACD5C7672B4A605B008B28AC /* View+Labels.swift */,
 				AC8C211329FDAC460044748D /* UserDefaults+OptionValues.swift */,
 				AC8C211529FDAC660044748D /* Collection+Optionals.swift */,
 				AC8C211729FDAC800044748D /* NotificationName+Settings.swift */,
@@ -1516,7 +1514,6 @@
 				D5AAF27629884F8600F21ACF /* CheatDevice.swift */,
 				D586497129774ABD0081477E /* CheatBase.swift */,
 				D5864977297756CE0081477E /* CheatBaseView.swift */,
-				D5F82FB72981D3AC00B229AF /* LegacySearchBar.swift */,
 			);
 			path = Cheats;
 			sourceTree = "<group>";
@@ -1777,7 +1774,7 @@
 				AC8C212E29FDAE400044748D /* FeatureContainer.swift in Sources */,
 				AC8C213029FDAE400044748D /* SettingsName.swift in Sources */,
 				AC8C212629FDAE100044748D /* Feature.swift in Sources */,
-				ACD5C7692B4A7868008B28AC /* View+ProLabel.swift in Sources */,
+				ACD5C7692B4A7868008B28AC /* View+Labels.swift in Sources */,
 				AC8C212D29FDAE400044748D /* AnyOption.swift in Sources */,
 				AC8C212F29FDAE400044748D /* OptionalProtocol.swift in Sources */,
 				AC8C213429FDAE400044748D /* DisplayInlineKey.swift in Sources */,
@@ -1951,7 +1948,6 @@
 				BFD097211D3A01B8005A44C2 /* SaveStatesViewController.swift in Sources */,
 				BF6EE5EB1F7C5F8F0051AD6C /* GameControllerInputMapping.swift in Sources */,
 				BF8A333421A484A000A42FD4 /* BadgedTableViewCell.swift in Sources */,
-				D5F82FB82981D3AC00B229AF /* LegacySearchBar.swift in Sources */,
 				BF3540021C5DA3D500C1184C /* PauseStoryboardSegue.swift in Sources */,
 				AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */,
 				AC99B33D2B254B10001A2A1F /* PauseMenuOptions.swift in Sources */,
@@ -2148,7 +2144,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DGLES_SILENCE_DEPRECATION";
@@ -2203,7 +2199,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DGLES_SILENCE_DEPRECATION";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
@@ -2233,7 +2229,7 @@
 				INFOPLIST_FILE = "Ignited/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2275,7 +2271,7 @@
 				INFOPLIST_FILE = "Ignited/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

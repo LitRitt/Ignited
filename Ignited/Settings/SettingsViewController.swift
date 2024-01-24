@@ -133,10 +133,7 @@ class SettingsViewController: UITableViewController
             self.versionLabel.text = NSLocalizedString("Ignited", comment: "")
         }
         
-        if #available(iOS 15, *)
-        {
-            self.tableView.register(AttributedHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: AttributedHeaderFooterView.reuseIdentifier)
-        }
+        self.tableView.register(AttributedHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: AttributedHeaderFooterView.reuseIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -447,7 +444,7 @@ extension SettingsViewController
         switch section
         {
         case .controllerSkins:
-            guard #available(iOS 15, *), let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AttributedHeaderFooterView.reuseIdentifier) as? AttributedHeaderFooterView else { break }
+            guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AttributedHeaderFooterView.reuseIdentifier) as? AttributedHeaderFooterView else { break }
             
             var attributedText = AttributedString(localized: "Customize the appearance of each system.")
             attributedText += " "

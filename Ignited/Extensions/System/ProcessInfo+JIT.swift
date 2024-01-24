@@ -29,13 +29,6 @@ extension ProcessInfo
     var isJITAvailable: Bool {
         guard UIDevice.current.supportsJIT && !ProcessInfo.isJITDisabled else { return false }
         
-        let ios14_4 = OperatingSystemVersion(majorVersion: 14, minorVersion: 4, patchVersion: 0)
-        if #available(iOS 14.2, *), !ProcessInfo.processInfo.isOperatingSystemAtLeast(ios14_4)
-        {
-            // JIT is always available on supported devices running iOS 14.2 - 14.3.
-            return true
-        }
-        
         return self.isDebugging
     }
 }

@@ -128,11 +128,6 @@ struct CheatBaseView: View
     private func cheatList() -> some View
     {
         VStack {
-            if #unavailable(iOS 15)
-            {
-                LegacySearchBar(text: $viewModel.searchText)
-            }
-            
             let listView = List {
                 if let filteredCheats = viewModel.filteredCheats
                 {
@@ -158,14 +153,7 @@ struct CheatBaseView: View
                 }
             }
             
-            if #available(iOS 15, *)
-            {
-                listView.searchable(text: $viewModel.searchText)
-            }
-            else
-            {
-                listView
-            }
+            listView.searchable(text: $viewModel.searchText)
         }
         .listStyle(.insetGrouped)
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)

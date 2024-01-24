@@ -129,10 +129,7 @@ extension PatreonAPI
             }
         }
         
-        if #available(iOS 13.0, *)
-        {
-            self.authenticationSession?.presentationContextProvider = self
-        }
+        self.authenticationSession?.presentationContextProvider = self
         
         self.authenticationSession?.start()
     }
@@ -437,7 +434,6 @@ private extension PatreonAPI
     }
 }
 
-@available(iOS 13.0, *)
 extension PatreonAPI: ASWebAuthenticationPresentationContextProviding
 {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor

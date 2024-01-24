@@ -18,15 +18,8 @@ enum ScreenshotSize: Double, CaseIterable, CustomStringConvertible
     case x2 = 2
     
     var description: String {
-        if #available(iOS 15, *)
-        {
-            let formattedText = self.rawValue.formatted(.number.decimalSeparator(strategy: .automatic))
-            return "\(formattedText)x Size"
-        }
-        else
-        {
-            return "\(self.rawValue)x Size"
-        }
+        let formattedText = self.rawValue.formatted(.number.decimalSeparator(strategy: .automatic))
+        return "\(formattedText)x Size"
     }
 }
 

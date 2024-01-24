@@ -44,23 +44,16 @@ extension UINavigationBar
         let containerView: UIView
         
         //TODO: Recursively search all subviews for title UILabel instead of hardcoded OS version-specific hierarchy traversals...
-        if #available(iOS 16, *)
-        {
-            guard let titleControl = contentView.subviews.first(where: { NSStringFromClass(type(of: $0)).contains("Title") }) else { return nil }
+        guard let titleControl = contentView.subviews.first(where: { NSStringFromClass(type(of: $0)).contains("Title") }) else { return nil }
 
-            if #available(iOS 17, *)
-            {
-                guard let view = titleControl.subviews.first else { return nil }
-                containerView = view
-            }
-            else
-            {
-                containerView = titleControl
-            }
+        if #available(iOS 17, *)
+        {
+            guard let view = titleControl.subviews.first else { return nil }
+            containerView = view
         }
         else
         {
-            containerView = contentView
+            containerView = titleControl
         }
         
         guard let titleLabel = containerView.subviews.first(where: { $0 is UILabel }) as? UILabel else { return nil }

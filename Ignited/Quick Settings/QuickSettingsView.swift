@@ -10,7 +10,6 @@ import SwiftUI
 
 import Features
 
-@available(iOS 15.0, *)
 struct QuickSettingsView: View
 {
     private var system: String
@@ -460,7 +459,6 @@ struct QuickSettingsView: View
     }
 }
 
-@available(iOS 15.0, *)
 extension QuickSettingsView
 {
     static func makeViewController(system system: String, speed speed: Double) -> UIHostingController<some View>

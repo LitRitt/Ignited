@@ -8,7 +8,6 @@
 
  import UIKit
 
- @available(iOS 15, *)
  final class AttributedHeaderFooterView: UITableViewHeaderFooterView
  {
      static let reuseIdentifier: String = "TextViewHeaderFooterView"
@@ -65,7 +64,6 @@
      }
  }
 
- @available(iOS 15, *)
  extension AttributedHeaderFooterView: UITextViewDelegate
  {
      func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool

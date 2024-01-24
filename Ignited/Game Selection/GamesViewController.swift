@@ -237,7 +237,7 @@ private extension GamesViewController
         self.navigationItem.hidesSearchBarWhenScrolling = true
         self.definesPresentationContext = true
         
-        if #available(iOS 16, *) { self.navigationItem.preferredSearchBarPlacement = .stacked }
+        self.navigationItem.preferredSearchBarPlacement = .stacked
     }
     
     func updateTheme()

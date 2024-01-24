@@ -120,10 +120,7 @@ class MelonDSCoreSettingsViewController: UITableViewController
             self.navigationItem.rightBarButtonItem = nil
         }
         
-        if #available(iOS 15, *)
-        {
-            self.tableView.register(AttributedHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: AttributedHeaderFooterView.reuseIdentifier)
-        }
+        self.tableView.register(AttributedHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: AttributedHeaderFooterView.reuseIdentifier)
         
         NotificationCenter.default.addObserver(self, selector: #selector(MelonDSCoreSettingsViewController.willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
@@ -495,7 +492,6 @@ extension MelonDSCoreSettingsViewController
             }
             
         case .dsBIOS, .dsiBIOS:
-            guard #available(iOS 15, *) else { break }
             return nil
             
         default: break
@@ -512,7 +508,7 @@ extension MelonDSCoreSettingsViewController
         switch section
         {
         case .dsBIOS, .dsiBIOS:
-            guard #available(iOS 15, *), let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AttributedHeaderFooterView.reuseIdentifier) as? AttributedHeaderFooterView else { break }
+            guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AttributedHeaderFooterView.reuseIdentifier) as? AttributedHeaderFooterView else { break }
             
             let systemName = (section == .dsiBIOS) ? String(localized: "DSi") : String(localized: "DS")
             

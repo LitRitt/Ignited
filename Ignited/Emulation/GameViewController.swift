@@ -233,20 +233,12 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     override var shouldAutorotate: Bool {
-        if #available(iOS 16, *)
-        {
-            return false
-        }
-        else
-        {
-            return !(self.isGyroActive || self.isOrientationLocked)
-        }
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if Settings.gameplayFeatures.rotationLock.isEnabled || self.isGyroActive,
-           let orientation = self.lockedOrientation,
-           #available(iOS 16, *)
+           let orientation = self.lockedOrientation
         {
             return orientation
         }
@@ -2241,10 +2233,7 @@ extension GameViewController
             self.presentToastView(text: text)
         }
         
-        if #available(iOS 16, *)
-        {
-            self.setNeedsUpdateOfSupportedInterfaceOrientations()
-        }
+        self.setNeedsUpdateOfSupportedInterfaceOrientations()
     }
     
     func lockOrientation()
@@ -2493,11 +2482,6 @@ extension GameViewController
                     pauseView.dismiss()
                 }
                 
-                guard #available(iOS 15.0, *) else {
-                    self.presentToastView(text: "Quick Menu Requires iOS 15")
-                    return
-                }
-                
                 if let speed = self.emulatorCore?.rate,
                    let system = self.game?.type.rawValue
                 {
@@ -2523,8 +2507,7 @@ extension GameViewController
     
     func dismissQuickSettings()
     {
-        if #available(iOS 15.0, *),
-           let presentedViewController = self.sheetPresentationController
+        if let presentedViewController = self.sheetPresentationController
         {
             presentedViewController.presentedViewController.dismiss(animated: true)
         }
@@ -3128,8 +3111,7 @@ private extension GameViewController
     
     @objc func appWillBecomeInactive(with notification: Notification)
     {
-        if #available(iOS 15.0, *),
-           let presentedViewController = self.sheetPresentationController,
+        if let presentedViewController = self.sheetPresentationController,
            self._isQuickSettingsOpen
         {
             presentedViewController.presentedViewController.dismiss(animated: true)
@@ -3312,12 +3294,9 @@ private extension GameViewController
         self.isGyroActive = true
         self.lockOrientation()
         
-        if #available(iOS 16, *)
-        {
-            // Needs called on main thread
-            DispatchQueue.main.async{
-                self.setNeedsUpdateOfSupportedInterfaceOrientations()
-            }
+        // Needs called on main thread
+        DispatchQueue.main.async{
+            self.setNeedsUpdateOfSupportedInterfaceOrientations()
         }
         
         guard !self.presentedGyroAlert else { return }
@@ -3348,12 +3327,9 @@ private extension GameViewController
         self.isGyroActive = false
         self.unlockOrientation()
         
-        if #available(iOS 16, *)
-        {
-            // Needs called on main thread
-            DispatchQueue.main.async{
-                self.setNeedsUpdateOfSupportedInterfaceOrientations()
-            }
+        // Needs called on main thread
+        DispatchQueue.main.async{
+            self.setNeedsUpdateOfSupportedInterfaceOrientations()
         }
     }
     

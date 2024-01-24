@@ -75,11 +75,7 @@ enum ThemeColor: String, CaseIterable, CustomStringConvertible, Identifiable
     }
     
     var color: Color {
-        if #available(iOS 15, *) {
-            Color(uiColor: uiColor)
-        } else {
-            Color(fromRGB: uiColor.cgColor.rgb())
-        }
+        Color(uiColor: uiColor)
     }
 }
 

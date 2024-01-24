@@ -1,4 +1,4 @@
-platform :ios, '14.0'
+platform :ios, '16.0'
 
 inhibit_all_warnings!
 
@@ -28,7 +28,7 @@ post_install do |installer|
         if target.name == "Pods-Ignited"
             puts "Updating #{target.name} OTHER_LDFLAGS"
             target.build_configurations.each do |config|
-		config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
                 xcconfig_path = config.base_configuration_reference.real_path
                 xcconfig = File.read(xcconfig_path)
                 new_xcconfig = xcconfig.sub('-l"DeltaCore"', '')
