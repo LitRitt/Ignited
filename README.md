@@ -125,7 +125,8 @@ Each system in Ignited is implemented as its own "Delta Core", which serves as a
 ## Project Requirements
 - Xcode 12
 - Swift 5+
-- iOS 14 or later
+- iOS 16 or later
+    - Ignited 1.8.5 is the last release to support iOS 14 and 15. You can download it [here](https://cdn.ignitedemulator.com/versions/1.8.5/Ignited.ipa)
 
 ## Compilation Instructions
 
