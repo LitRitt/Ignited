@@ -13,7 +13,7 @@ import Features
 struct RewindOptions
 {
     @Option(name: "Keep Save States",
-            description: "Enable to keep save states even after quitting a game. This let's you use rewind as a secondary auto-save method. Disable to use rewind purely as a convenience feature. States will be deleted when quitting a game.")
+            description: "Enable to preserve save states beyond game exit, utilizing rewind as an alternative auto-save option. If disabled, rewind is purely for convenience, and save states are removed when quitting the game.")
     var keepStates: Bool = true
     
     @Option(name: "Interval", description: "Change how often the game state should be saved.", detailView: { value in
