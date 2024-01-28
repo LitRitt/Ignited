@@ -115,11 +115,15 @@ extension AppIcon: Equatable
     }
 }
 
-enum AppIconCategory: String, CaseIterable
+enum AppIconCategory: String, CaseIterable, Identifiable
 {
-    case basic
-    case pro
-    case game
+    case basic = "Basic Icons"
+    case pro = "Pro Icons"
+    case game = "Game Icons"
+    
+    var id: String {
+        return self.rawValue
+    }
 }
 
 struct AppIconOptions
@@ -128,99 +132,8 @@ struct AppIconOptions
             description: "Choose from alternate app icons created by the community.",
             detailView: { value in
         List {
-            Section {
-                ForEach(AppIcon.allCases.filter { $0.category == .basic }) { icon in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            if icon == value.wrappedValue {
-                                HStack {
-                                    Text("✓")
-                                    icon.localizedDescription
-                                }
-                                .foregroundColor(.accentColor)
-                            } else {
-                                icon.localizedDescription
-                            }
-                            Text("by \(icon.author)")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        appIconImage(icon.assetName)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        value.wrappedValue = icon
-                    }
-                }
-            } header: {
-                appIconSectionHeader("Basic Icons")
-            }
-            Section {
-                ForEach(AppIcon.allCases.filter { $0.category == .game }) { icon in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            if icon == value.wrappedValue {
-                                HStack {
-                                    Text("✓")
-                                    icon.localizedDescription
-                                }
-                                .foregroundColor(.accentColor)
-                                    .addProLabel()
-                            } else {
-                                icon.localizedDescription.addProLabel()
-                            }
-                            Text("by \(icon.author)")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        appIconImage(icon.assetName)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if Settings.proFeaturesEnabled {
-                            value.wrappedValue = icon
-                        } else {
-                            ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
-                        }
-                    }
-                }
-            } header: {
-                appIconSectionHeader("Game Icons")
-            }
-            Section {
-                ForEach(AppIcon.allCases.filter { $0.category == .pro }) { icon in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            if icon == value.wrappedValue {
-                                HStack {
-                                    Text("✓")
-                                    icon.localizedDescription
-                                }
-                                .foregroundColor(.accentColor)
-                                    .addProLabel()
-                            } else {
-                                icon.localizedDescription.addProLabel()
-                            }
-                            Text("by \(icon.author)")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        appIconImage(icon.assetName)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if Settings.proFeaturesEnabled {
-                            value.wrappedValue = icon
-                        } else {
-                            ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
-                        }
-                    }
-                }
-            } header: {
-                appIconSectionHeader("Pro Icons")
+            ForEach(AppIconCategory.allCases) { category in
+                appIconSection(category, currentIcon: value)
             }
         }
         .onChange(of: value.wrappedValue) { _ in
@@ -246,6 +159,44 @@ struct AppIconOptions
 extension AppIconOptions
 {
     @ViewBuilder
+    static func appIconSection(_ category: AppIconCategory, currentIcon: Binding<AppIcon>) -> some View
+    {
+        Section {
+            ForEach(AppIcon.allCases.filter { $0.category == category }) { icon in
+                HStack {
+                    VStack(alignment: .leading) {
+                        if icon == currentIcon.wrappedValue {
+                            HStack {
+                                Text("✓")
+                                icon.localizedDescription
+                            }
+                            .foregroundColor(.accentColor)
+                                .addProLabel(category != .basic)
+                        } else {
+                            icon.localizedDescription.addProLabel(category != .basic)
+                        }
+                        Text("by \(icon.author)")
+                            .font(.system(size: 15))
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                    appIconImage(icon.assetName)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if Settings.proFeaturesEnabled || category == .basic {
+                        currentIcon.wrappedValue = icon
+                    } else {
+                        ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
+                    }
+                }
+            }
+        } header: {
+            appIconSectionHeader(category.rawValue)
+        }
+    }
+    
+    @ViewBuilder
     static func appIconImage(_ name: String) -> some View
     {
         return Image(uiImage: UIImage(named: name) ?? UIImage())
@@ -263,6 +214,7 @@ extension AppIconOptions
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             Text(title)
                 .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.white)
         }.padding([.top, .bottom], 10)
     }
     
