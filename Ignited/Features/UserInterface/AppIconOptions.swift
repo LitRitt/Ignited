@@ -142,8 +142,7 @@ struct AppIconOptions
                                 .foregroundColor(.gray)
                         }
                         Spacer()
-                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                            .cornerRadius(13)
+                        appIconImage(icon.assetName)
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -172,8 +171,7 @@ struct AppIconOptions
                                 .foregroundColor(.gray)
                         }
                         Spacer()
-                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                            .cornerRadius(13)
+                        appIconImage(icon.assetName)
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -206,8 +204,7 @@ struct AppIconOptions
                                 .foregroundColor(.gray)
                         }
                         Spacer()
-                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                            .cornerRadius(13)
+                        appIconImage(icon.assetName)
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -244,6 +241,15 @@ struct AppIconOptions
 
 extension AppIconOptions
 {
+    @ViewBuilder
+    static func appIconImage(_ name: String) -> some View
+    {
+        return Image(uiImage: UIImage(named: name) ?? UIImage())
+            .resizable()
+            .frame(width: 57, height: 57)
+            .cornerRadius(13)
+    }
+    
     @ViewBuilder
     static func appIconSectionHeader(_ title: String) -> some View
     {

@@ -71,7 +71,6 @@
 		AC5A40762B2106470049B755 /* MappingGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A40752B2106470049B755 /* MappingGameViewController.swift */; };
 		AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
-		AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */; };
 		AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */; };
 		AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */; };
 		AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */; };
@@ -367,7 +366,6 @@
 		AC5A40752B2106470049B755 /* MappingGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingGameViewController.swift; sourceTree = "<group>"; };
 		AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
-		AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIconImage.swift"; sourceTree = "<group>"; };
 		AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
@@ -698,7 +696,6 @@
 				ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */,
 				AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */,
 				BF647A6922FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift */,
-				AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */,
 				ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */,
 				D524F4A4273DEBB400D500B2 /* ServerManager+Delta.swift */,
 				D5011C47281B6E8B00A0760B /* CharacterSet+Filename.swift */,
@@ -1976,7 +1973,6 @@
 				BF99A5971DC2F9C400468E9E /* ControllerSkinTableViewCell.swift in Sources */,
 				ACB3CB8C29FDCF4D002B53DE /* ToastNotificationOptions.swift in Sources */,
 				ACB3CB9329FDD601002B53DE /* TouchFeedbackVibrationOptions.swift in Sources */,
-				AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */,
 				BFE9908024451E15006409A7 /* MelonDSCoreSettingsViewController.swift in Sources */,
 				BF5942861E09BC8B0051894B /* _Cheat.swift in Sources */,
 				BF5E7F441B9A650B00AE44F8 /* SettingsViewController.swift in Sources */,
