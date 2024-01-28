@@ -12,6 +12,7 @@ import Features
 
 enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
+    // Lit Pro
     case normal = "Default"
     case connect = "Connect"
     case tribute = "Tribute"
@@ -23,17 +24,21 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case sealingAlt = "Sword That Seals Alt"
     case igniting = "Sword That Ignites"
     case ignitingAlt = "Sword That Ignites Alt"
-    case sword = "Master Sword"
-    case shield = "Hylian Shield"
+    // Basic
     case simple = "Simple"
     case glass = "Glass"
     case ablaze = "Ablaze"
     case classic = "Classic"
+    // Kong Pro
     case ball = "Firé Ball"
     case kong = "King's Barrel"
     case black = "Space Black"
     case silver = "Silver"
     case gold = "Gold"
+    // Scott Pro
+    case sword = "Master Sword"
+    case shield = "Hylian Shield"
+    case mario = "Many Marios"
     
     var description: String {
         return self.rawValue
@@ -50,7 +55,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .classic, .ball, .kong, .black, .silver, .gold: return "Kongolabongo"
         case .simple, .glass: return "epicpal"
         case .ablaze: return "Salty"
-        case .sword, .shield: return "Scott the Rizzler"
+        case .sword, .shield, .mario: return "Scott the Rizzler"
         }
     }
     
@@ -79,6 +84,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .gold: return "IconGold"
         case .shield: return "IconShield"
         case .sword: return "IconSword"
+        case .mario: return "IconMario"
         }
     }
     
@@ -94,7 +100,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         switch self
         {
         case .connect, .cartridge, .black, .silver, .gold: return .pro
-        case .smash, .kirby, .sealing, .igniting, .sealingAlt, .ignitingAlt, .sword, .shield, .ball, .kong: return .game
+        case .smash, .kirby, .sealing, .igniting, .sealingAlt, .ignitingAlt, .sword, .shield, .mario, .ball, .kong: return .game
         default: return .basic
         }
     }
