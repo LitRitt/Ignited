@@ -118,8 +118,8 @@ extension AppIcon: Equatable
 enum AppIconCategory: String, CaseIterable, Identifiable
 {
     case basic = "Basic Icons"
-    case pro = "Pro Icons"
     case game = "Game Icons"
+    case pro = "Pro Icons"
     
     var id: String {
         return self.rawValue
