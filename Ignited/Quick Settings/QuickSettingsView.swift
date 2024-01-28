@@ -230,7 +230,7 @@ struct QuickSettingsView: View
                             if self.expandedControllerSkinEnabled
                             {
                                 Picker("Background Color", selection: self.$controllerSkinColorMode) {
-                                    ForEach(SkinBackgroundColor.allCases, id: \.self) { value in
+                                    ForEach(Settings.proFeaturesEnabled ? SkinBackgroundColor.allCases : [.none, .theme], id: \.self) { value in
                                         value.localizedDescription
                                     }
                                 }.pickerStyle(.menu)

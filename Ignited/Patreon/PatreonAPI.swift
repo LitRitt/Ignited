@@ -287,6 +287,9 @@ extension PatreonAPI
         {
             Settings.gameplayFeatures.rewind.isEnabled = false
             Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
+            if Settings.controllerFeatures.skin.colorMode == .custom {
+                Settings.controllerFeatures.skin.colorMode == .none
+            }
             Settings.controllerFeatures.backgroundBlur.isEnabled = false
             if Settings.libraryFeatures.artwork.style == .custom {
                 Settings.libraryFeatures.artwork.style = .basic
