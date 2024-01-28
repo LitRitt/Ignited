@@ -254,13 +254,13 @@ struct GameArtworkOptions
     
     @Option(name: "Background Color Mode",
             description: "Choose which background color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var backgroundColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Background Color",
             description: "Choose the color to use for the custom background color mode.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: true) {
             Text("Custom Background Color").addProLabel()
@@ -270,13 +270,13 @@ struct GameArtworkOptions
     
     @Option(name: "Border Color Mode",
             description: "Choose which border color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var borderColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Border Color",
             description: "Choose the color to use for the custom border color mode.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Custom Border Color").addProLabel()
@@ -286,13 +286,13 @@ struct GameArtworkOptions
     
     @Option(name: "Text Color Mode",
             description: "Choose which text color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var textColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Text Color",
             description: "Choose the color to use for the custom text color mode.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Custom Text Color").addProLabel()
@@ -302,13 +302,13 @@ struct GameArtworkOptions
     
     @Option(name: "Shadow Color Mode",
             description: "Choose which shadow color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var shadowColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Shadow Color",
             description: "Choose the color to use for the custom shadow color mode.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Custom Shadow Color").addProLabel()
@@ -318,7 +318,7 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Shadow Radius",
             description: "Change the shadow radius to use with the custom style option.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         VStack {
             HStack {
@@ -336,7 +336,7 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Shadow Opacity",
             description: "Change the shadow opacity to use with the custom style option.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         VStack {
             HStack {
@@ -354,7 +354,7 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Corner Radius",
             description: "Change the corner radius to use with the custom style option.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         VStack {
             HStack {
@@ -372,7 +372,7 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Border Width",
             description: "Change the border witdh to use with the custom style option.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         VStack {
             HStack {

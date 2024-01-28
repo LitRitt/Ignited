@@ -161,7 +161,7 @@ struct ThemeOptions
     
     @Option(name: "Custom Light Color",
             description: "Select a custom color to use with the light style.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Custom Light Color").addProLabel()
@@ -171,7 +171,7 @@ struct ThemeOptions
     
     @Option(name: "Custom Dark Color",
             description: "Select a custom color to use with the dark style.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Custom Dark Color").addProLabel()
@@ -181,7 +181,7 @@ struct ThemeOptions
     
     @Option(name: "Custom Favorite Light Color",
             description: "Select a custom favorite color to use with the light style.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Custom Favorite Light Color").addProLabel()
@@ -191,7 +191,7 @@ struct ThemeOptions
     
     @Option(name: "Custom Favorite Dark Color",
             description: "Select a custom favorite color to use with the dark style.",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Custom Favorite Dark Color").addProLabel()

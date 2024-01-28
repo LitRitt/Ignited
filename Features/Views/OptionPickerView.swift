@@ -13,7 +13,7 @@ public struct OptionPickerView<Value: LocalizedOptionValue>: View
 {
     var name: LocalizedStringKey
     var options: [Value]
-    var pro: Bool
+    var attributes: [FeatureAttribute]
     
     @Binding
     var selectedValue: Value
@@ -29,6 +29,9 @@ public struct OptionPickerView<Value: LocalizedOptionValue>: View
     }
     
     var proLabel: some View {
-        Text(name).addProLabel(pro)
+        let pro = self.attributes.contains(where: {$0 == .pro})
+        let beta = self.attributes.contains(where: {$0 == .beta})
+        
+        return Text(name).addProLabel(pro).addBetaLabel(beta)
     }
 }

@@ -44,8 +44,8 @@ struct QuickSettingsOptions
     
     @Option(name: "Replace Button",
             description: "Choose an input, like fast forward or screenshot, to use with the quick settings button on skins instead of opening the quick settings menu.",
-            pro: true,
-            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
+            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart],
+            attributes: [.pro])
     var buttonReplacement: ActionInput? = nil
     
     @Option(name: "Quick Actions",

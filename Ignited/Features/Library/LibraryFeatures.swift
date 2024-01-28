@@ -15,19 +15,19 @@ struct LibraryFeatures: FeatureContainer
     @Feature(name: "Artwork Options",
              description: "Customize the look of your game artwork.",
              options: GameArtworkOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var artwork
     
     @Feature(name: "Favorite Games",
              description: "Make your favorite games easy to find.",
              options: FavoriteGamesOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var favorites
     
     @Feature(name: "Animated Artwork",
              description: "Bring your Library to life with your favorite GIFs.",
              options: AnimatedArtworkOptions(),
-             pro: true)
+             attributes: [.pro])
     var animation
     
     private init()

@@ -20,7 +20,7 @@ struct N64Features: FeatureContainer
     @Feature(name: "Overscan",
              description: "Enable to allow Overscan settings. Overscan allows you to reduce the black borders in N64 games. Use the Overscan option in the pause menu to edit the values for that game.",
              options: N64OverscanOptions(),
-             hidden: true)
+             attributes: [.hidden])
     var overscan
     
     private init()

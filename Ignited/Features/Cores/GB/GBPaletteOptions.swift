@@ -153,7 +153,7 @@ struct GBPaletteOptions
     var spritePalette2: GameboyPalette = .studio
     
     @Option(name: "Custom Palette 1",
-            pro: true,
+            attributes: [.pro],
             detailView: { _ in
         HStack {
             Text("Custom Palette 1").addProLabel()
@@ -169,7 +169,7 @@ struct GBPaletteOptions
     var customPalette1: String = ""
     
     @Option(name: "Color 1",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 1").addProLabel()
@@ -178,7 +178,7 @@ struct GBPaletteOptions
     var customPalette1Color1: Color = Color(fromRGB: GameboyPalette.studio.colors[0])
     
     @Option(name: "Color 2",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 2").addProLabel()
@@ -187,7 +187,7 @@ struct GBPaletteOptions
     var customPalette1Color2: Color = Color(fromRGB: GameboyPalette.studio.colors[1])
     
     @Option(name: "Color 3",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 3").addProLabel()
@@ -196,7 +196,7 @@ struct GBPaletteOptions
     var customPalette1Color3: Color = Color(fromRGB: GameboyPalette.studio.colors[2])
     
     @Option(name: "Color 4",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 4").addProLabel()
@@ -205,7 +205,7 @@ struct GBPaletteOptions
     var customPalette1Color4: Color = Color(fromRGB: GameboyPalette.studio.colors[3])
     
     @Option(name: "Custom Palette 2",
-            pro: true,
+            attributes: [.pro],
             detailView: { _ in
         HStack {
             Text("Custom Palette 2").addProLabel()
@@ -221,7 +221,7 @@ struct GBPaletteOptions
     var customPalette2: String = ""
     
     @Option(name: "Color 1",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 1").addProLabel()
@@ -230,7 +230,7 @@ struct GBPaletteOptions
     var customPalette2Color1: Color = Color(fromRGB: GameboyPalette.minty.colors[0])
     
     @Option(name: "Color 2",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 2").addProLabel()
@@ -239,7 +239,7 @@ struct GBPaletteOptions
     var customPalette2Color2: Color = Color(fromRGB: GameboyPalette.minty.colors[1])
     
     @Option(name: "Color 3",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 3").addProLabel()
@@ -248,7 +248,7 @@ struct GBPaletteOptions
     var customPalette2Color3: Color = Color(fromRGB: GameboyPalette.minty.colors[2])
     
     @Option(name: "Color 4",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 4").addProLabel()
@@ -257,7 +257,7 @@ struct GBPaletteOptions
     var customPalette2Color4: Color = Color(fromRGB: GameboyPalette.minty.colors[3])
     
     @Option(name: "Custom Palette 3",
-            pro: true,
+            attributes: [.pro],
             detailView: { _ in
         HStack {
             Text("Custom Palette 3").addProLabel()
@@ -273,7 +273,7 @@ struct GBPaletteOptions
     var customPalette3: String = ""
     
     @Option(name: "Color 1",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 1").addProLabel()
@@ -282,7 +282,7 @@ struct GBPaletteOptions
     var customPalette3Color1: Color = Color(fromRGB: GameboyPalette.spacehaze.colors[0])
     
     @Option(name: "Color 2",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 2").addProLabel()
@@ -291,7 +291,7 @@ struct GBPaletteOptions
     var customPalette3Color2: Color = Color(fromRGB: GameboyPalette.spacehaze.colors[1])
     
     @Option(name: "Color 3",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 3").addProLabel()
@@ -300,7 +300,7 @@ struct GBPaletteOptions
     var customPalette3Color3: Color = Color(fromRGB: GameboyPalette.spacehaze.colors[2])
     
     @Option(name: "Color 4",
-            pro: true,
+            attributes: [.pro],
             detailView: { value in
         ColorPicker(selection: value, supportsOpacity: false) {
             Text("Color 4").addProLabel()
