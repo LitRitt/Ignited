@@ -260,12 +260,8 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Background Color",
             description: "Choose the color to use for the custom background color mode.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: true) {
-            Text("Custom Background Color").addProLabel()
-        }.displayInline()
-    })
+            transparency: true,
+            attributes: [.pro])
     var backgroundColor: Color = .orange
     
     @Option(name: "Border Color Mode",
@@ -276,12 +272,7 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Border Color",
             description: "Choose the color to use for the custom border color mode.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Border Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var borderColor: Color = .orange
     
     @Option(name: "Text Color Mode",
@@ -292,12 +283,7 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Text Color",
             description: "Choose the color to use for the custom text color mode.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Text Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var textColor: Color = .black
     
     @Option(name: "Shadow Color Mode",
@@ -308,12 +294,7 @@ struct GameArtworkOptions
     
     @Option(name: "Custom Shadow Color",
             description: "Choose the color to use for the custom shadow color mode.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Shadow Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var shadowColor: Color = .white
     
     @Option(name: "Custom Shadow Radius",

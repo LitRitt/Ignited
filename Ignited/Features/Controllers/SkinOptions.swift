@@ -44,11 +44,7 @@ struct SkinOptions
     var colorMode: SkinBackgroundColor = .none
     
     @Option(name: "Custom Background Color",
-            description: "Select a custom color to use as the controller skin background.",
-            detailView: { value in
-        ColorPicker("Custom Background Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
+            description: "Select a custom color to use as the controller skin background.")
     var backgroundColor: Color = .black
     
     @Option(name: "Show With Controller",

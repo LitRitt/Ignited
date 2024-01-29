@@ -146,6 +146,21 @@ public extension Option where Value == Bool, DetailView == OptionToggleView
     }
 }
 
+// "Color Picker" Option (User-visible, default color picker UI)
+public extension Option where Value == Color, DetailView == OptionColorPickerView<Value>
+{
+    // Non-Optional
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, transparency: Bool = false, attributes: [FeatureAttribute] = [])
+    {
+        self.init(defaultValue: wrappedValue, name: name, description: description, attributes: attributes)
+        
+        self.detailView = { [weak self] () -> DetailView? in
+            guard let self else { return nil }
+            return OptionColorPickerView(name: name, transparency: transparency, attributes: attributes, selectedValue: self.valueBinding)
+        }
+    }
+}
+
 // "Picker" Option (User-visible, pre-set options with default picker UI)
 public extension Option where Value: LocalizedOptionValue, DetailView == OptionPickerView<Value>
 {

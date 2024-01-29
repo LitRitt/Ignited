@@ -161,42 +161,22 @@ struct ThemeOptions
     
     @Option(name: "Custom Light Color",
             description: "Select a custom color to use with the light style.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Light Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var lightColor: Color = .orange
     
     @Option(name: "Custom Dark Color",
             description: "Select a custom color to use with the dark style.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Dark Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var darkColor: Color = .orange
     
     @Option(name: "Custom Favorite Light Color",
             description: "Select a custom favorite color to use with the light style.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Favorite Light Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var lightFavoriteColor: Color = .yellow
     
     @Option(name: "Custom Favorite Dark Color",
             description: "Select a custom favorite color to use with the dark style.",
-            attributes: [.pro],
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Favorite Dark Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var darkFavoriteColor: Color = .yellow
     
     @Option(name: "Restore Defaults",

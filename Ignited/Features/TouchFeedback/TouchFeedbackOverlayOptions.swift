@@ -25,11 +25,7 @@ struct TouchFeedbackOverlayOptions
     var themed: Bool = true
     
     @Option(name: "Custom Color",
-            description: "Select a custom color to use for the overlays.",
-            detailView: { value in
-        ColorPicker("Custom Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
+            description: "Select a custom color to use for the overlays.")
     var overlayColor: Color = .white
     
     @Option(name: "Style", description: "Choose the style to use for overlays.", values: ButtonOverlayStyle.allCases)
