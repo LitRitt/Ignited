@@ -18,6 +18,9 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case tribute = "Tribute"
     case cartridge = "Cartridge"
     case neon = "Neon"
+    case plumberRed = "Red Plumber"
+    case plumberGreen = "Green Plumber"
+    case goomba = "Stomp Bait"
     case smash = "Super Ignited Bros"
     case kirby = "Puffball"
     case sealing = "Sword That Seals"
@@ -31,7 +34,8 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case classic = "Classic"
     // Kong Pro
     case ball = "Firé Ball"
-    case kong = "King's Barrel"
+    case kong = "Barrel of Kong"
+    case kongFlame = "Barrel of Flame"
     case black = "Space Black"
     case silver = "Silver"
     case gold = "Gold"
@@ -48,14 +52,23 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         return self.rawValue
     }
     
-    var author: String {
+    var author: AppIconAuthor {
         switch self
         {
-        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby: return "LitRitt"
-        case .classic, .ball, .kong, .black, .silver, .gold: return "Kongolabongo"
-        case .simple, .glass: return "epicpal"
-        case .ablaze: return "Salty"
-        case .sword, .shield, .mario: return "Scott the Rizzler"
+        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba:
+            return .litritt
+            
+        case .classic, .ball, .kong, .kongFlame, .black, .silver, .gold:
+            return .kongo
+            
+        case .simple, .glass:
+            return .epicpal
+            
+        case .ablaze:
+            return .salty
+            
+        case .sword, .shield, .mario:
+            return .scott
         }
     }
     
@@ -67,6 +80,9 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .tribute: return "IconTribute"
         case .cartridge: return "IconCartridge"
         case .neon: return "IconNeon"
+        case .plumberRed: return "IconPlumberRed"
+        case .plumberGreen: return "IconPlumberGreen"
+        case .goomba: return "IconGoomba"
         case .smash: return "IconSmash"
         case .kirby: return "IconKirby"
         case .sealing: return "IconSealing"
@@ -78,7 +94,8 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .glass: return "IconGlass"
         case .ablaze: return "IconAblaze"
         case .ball: return "IconBall"
-        case .kong: return "IconKong"
+        case .kong: return "IconBarrelKong"
+        case .kongFlame: return "IconBarrelFlame"
         case .black: return "IconBlack"
         case .silver: return "IconSilver"
         case .gold: return "IconGold"
@@ -99,8 +116,10 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var category: AppIconCategory {
         switch self
         {
-        case .connect, .cartridge, .black, .silver, .gold: return .pro
-        case .smash, .kirby, .sealing, .igniting, .sealingAlt, .ignitingAlt, .sword, .shield, .mario, .ball, .kong: return .game
+        case _ where !self.pro: return .basic
+        case _ where self.author == .litritt: return .litPro
+        case _ where self.author == .kongo: return .kongPro
+        case _ where self.author == .scott: return .scottPro
         default: return .basic
         }
     }
@@ -124,8 +143,22 @@ extension AppIcon: Equatable
 enum AppIconCategory: String, CaseIterable, Identifiable
 {
     case basic = "Basic Icons"
-    case game = "Game Icons"
-    case pro = "Pro Icons"
+    case litPro = "Lit Pro Icons"
+    case kongPro = "Kongo Pro Icons"
+    case scottPro = "Scott Pro Icons"
+    
+    var id: String {
+        return self.rawValue
+    }
+}
+
+enum AppIconAuthor: String, CaseIterable, Identifiable
+{
+    case litritt = "LitRitt"
+    case kongo = "Kongolabongo"
+    case scott = "Scott the Rizzler"
+    case epicpal = "epicpal"
+    case salty = "Salty"
     
     var id: String {
         return self.rawValue
@@ -181,7 +214,7 @@ extension AppIconOptions
                         } else {
                             icon.localizedDescription.addProLabel(category != .basic)
                         }
-                        Text("by \(icon.author)")
+                        Text("by \(icon.author.rawValue)")
                             .font(.system(size: 15))
                             .foregroundColor(.gray)
                     }
