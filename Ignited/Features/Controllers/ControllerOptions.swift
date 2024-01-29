@@ -12,19 +12,12 @@ import Features
 
 struct ControllerOptions
 {
-    @Option(name: "Trigger Deadzone", description: "Change how far triggers need to be pressed before activating an input.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Trigger Deadzone: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.00...0.951, step: 0.05)
-                Text("95%")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Trigger Deadzone",
+            description: "Change how far triggers need to be pressed before activating an input.",
+            range: 0.00...0.95,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
     var triggerDeadzone: Double = 0.15
     
     @Option(name: "Restore Defaults",

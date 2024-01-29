@@ -161,6 +161,21 @@ public extension Option where Value == Color, DetailView == OptionColorPickerVie
     }
 }
 
+// "Slider" Option (User-visible, custom slider UI
+public extension Option where Value == Double, DetailView == OptionSliderView<Value>
+{
+    // Non-optional
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, range: ClosedRange<Value>, step: Double, unit: LocalizedStringKey = "", decimals: Int? = nil, isPercentage: Bool = false, attributes: [FeatureAttribute] = [])
+    {
+        self.init(defaultValue: wrappedValue, name: name, description: description, attributes: attributes)
+        
+        self.detailView = { [weak self] () -> DetailView? in
+            guard let self else { return nil }
+            return OptionSliderView(name: name, range: range, step: step, unit: unit, decimals: decimals, isPercentage: isPercentage, attributes: attributes, selectedValue: self.valueBinding)
+        }
+    }
+}
+
 // "Picker" Option (User-visible, pre-set options with default picker UI)
 public extension Option where Value: LocalizedOptionValue, DetailView == OptionPickerView<Value>
 {

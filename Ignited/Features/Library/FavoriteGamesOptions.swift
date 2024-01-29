@@ -148,74 +148,37 @@ struct FavoriteGamesOptions
     
     @Option(name: "Custom Shadow Radius",
             description: "Change the shadow radius to use with the custom style option.",
-            attributes: [.pro],
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...10.0, step: 0.5)
-                Text("10pt")
-            }
-        }.displayInline()
-    })
+            range: 0.0...10.0,
+            step: 0.5,
+            unit: "pt",
+            attributes: [.pro])
     var shadowRadius: Double = 5
     
     @Option(name: "Custom Shadow Opacity",
             description: "Change the shadow opacity to use with the custom style option.",
-            attributes: [.pro],
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.1)
-                Text("100%")
-            }
-        }.displayInline()
-    })
+            range: 0.0...1.0,
+            step: 0.1,
+            unit: "%",
+            isPercentage: true,
+            attributes: [.pro])
     var shadowOpacity: Double = 0.5
     
     @Option(name: "Custom Corner Radius",
             description: "Change the corner radius to use with the custom style option.",
-            attributes: [.pro],
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...0.25, step: 0.01)
-                Text("25%")
-            }
-        }.displayInline()
-    })
+            range: 0.0...0.25,
+            step: 0.01,
+            unit: "%",
+            isPercentage: true,
+            attributes: [.pro])
     var cornerRadius: Double = 0.15
     
     @Option(name: "Custom Border Width",
             description: "Change the border witdh to use with the custom style option.",
-            attributes: [.pro],
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...3.0, step: 0.5)
-                Text("3pt")
-            }
-        }.displayInline()
-    })
+            range: 0.0...3.0,
+            step: 0.5,
+            unit: "pt",
+            decimals: 1,
+            attributes: [.pro])
     var borderWidth: Double = 2
     
     @Option(name: "Restore Defaults",

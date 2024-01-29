@@ -12,19 +12,12 @@ import Features
 
 struct TouchFeedbackVibrationOptions
 {
-    @Option(name: "Strength", description: "The strength of vibrations.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Strength: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.05)
-                Text("100%")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Strength",
+            description: "The strength of vibrations.",
+            range: 0.0...1.0,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
     var strength: Double = 1.0
     
     @Option(name: "Buttons",
