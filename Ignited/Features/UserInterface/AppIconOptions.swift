@@ -14,14 +14,15 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
     // Lit Pro
     case normal = "Default"
-    case connect = "Connect"
     case tribute = "Tribute"
-    case cartridge = "Cartridge"
     case neon = "Neon"
+    case connect = "Connect"
+    case cartridge = "Cartridge"
+    case smash = "Super Ignited Bros"
     case plumberRed = "Red Plumber"
     case plumberGreen = "Green Plumber"
     case goomba = "Stomp Bait"
-    case smash = "Super Ignited Bros"
+    case pikachu = "Sparky"
     case kirby = "Puffball"
     case sealing = "Sword That Seals"
     case sealingAlt = "Sword That Seals Alt"
@@ -55,7 +56,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: AppIconAuthor {
         switch self
         {
-        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba:
+        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu:
             return .litritt
             
         case .classic, .ball, .kong, .kongFlame, .black, .silver, .gold:
@@ -84,6 +85,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .plumberGreen: return "IconPlumberGreen"
         case .goomba: return "IconGoomba"
         case .smash: return "IconSmash"
+        case .pikachu: return "IconPikachu"
         case .kirby: return "IconKirby"
         case .sealing: return "IconSealing"
         case .igniting: return "IconIgniting"
