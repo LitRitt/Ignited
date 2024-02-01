@@ -40,7 +40,6 @@ struct QuickSettingsView: View
     @State private var controllerSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.controllerSkinEnabled
     @State private var expandedControllerSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled
     @State private var backgroundBlurEnabled: Bool = Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled
-    @State private var expandedBackgroundBlurEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedBackgroundBlurEnabled
     @State private var colorPalettesEnabled: Bool = Settings.gameplayFeatures.quickSettings.colorPalettesEnabled
     
     var body: some View {
@@ -259,36 +258,36 @@ struct QuickSettingsView: View
                 {
                     Section() {
                         VStack {
-                            HStack {
-                                Text("Blur Strength: \(self.backgroundBlurStrength * 100, specifier: "%.f")%")
-                                Spacer()
-                                Button("Reset") {
-                                    self.backgroundBlurStrength = 1.0
-                                    Settings.controllerFeatures.backgroundBlur.strength = self.backgroundBlurStrength
-                                }.buttonStyle(.borderless)
-                            }
-                            Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
-                                .onChange(of: self.backgroundBlurStrength) { value in
-                                    Settings.controllerFeatures.backgroundBlur.strength = value
+                            if Settings.proFeaturesEnabled {
+                                HStack {
+                                    Text("Blur Strength: \(self.backgroundBlurStrength * 100, specifier: "%.f")%")
+                                    Spacer()
+                                    Button("Reset") {
+                                        self.backgroundBlurStrength = 1.0
+                                        Settings.controllerFeatures.backgroundBlur.strength = self.backgroundBlurStrength
+                                    }.buttonStyle(.borderless)
                                 }
-                            HStack {
-                                Text("Tint Intensity: \(self.backgroundBlurTintIntensity * 100, specifier: "%.f")%")
-                                Spacer()
-                                Button("Reset") {
-                                    self.backgroundBlurTintIntensity = 0.1
-                                    Settings.controllerFeatures.backgroundBlur.tintIntensity = self.backgroundBlurTintIntensity
-                                }.buttonStyle(.borderless)
-                            }
-                            Slider(value: self.$backgroundBlurTintIntensity, in: -0.5...0.5, step: 0.05)
-                                .onChange(of: self.backgroundBlurTintIntensity) { value in
-                                    Settings.controllerFeatures.backgroundBlur.tintIntensity = value
+                                Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
+                                    .onChange(of: self.backgroundBlurStrength) { value in
+                                        Settings.controllerFeatures.backgroundBlur.strength = value
+                                    }
+                                HStack {
+                                    Text("Tint Intensity: \(self.backgroundBlurTintIntensity * 100, specifier: "%.f")%")
+                                    Spacer()
+                                    Button("Reset") {
+                                        self.backgroundBlurTintIntensity = 0.1
+                                        Settings.controllerFeatures.backgroundBlur.tintIntensity = self.backgroundBlurTintIntensity
+                                    }.buttonStyle(.borderless)
                                 }
-                            if self.expandedBackgroundBlurEnabled {
-                                Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$showDuringAirPlay.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$maintainAspect.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                Slider(value: self.$backgroundBlurTintIntensity, in: -0.5...0.5, step: 0.05)
+                                    .onChange(of: self.backgroundBlurTintIntensity) { value in
+                                        Settings.controllerFeatures.backgroundBlur.tintIntensity = value
+                                    }
                             }
+                            Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$showDuringAirPlay.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$maintainAspect.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         }
                     } header: {
                         Text("Background Blur")
@@ -409,12 +408,6 @@ struct QuickSettingsView: View
                                 .onChange(of: self.backgroundBlurEnabled) { value in
                                     Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = value
                                 }
-                            if self.backgroundBlurEnabled {
-                                Toggle("Expanded Background Blur", isOn: self.$expandedBackgroundBlurEnabled)
-                                    .onChange(of: self.expandedBackgroundBlurEnabled) { value in
-                                        Settings.gameplayFeatures.quickSettings.expandedBackgroundBlurEnabled = value
-                                    }
-                            }
                         }
                         if self.systemsWithPalettes.contains(system)
                         {
