@@ -90,10 +90,6 @@ struct QuickSettingsOptions
             description: "Enable to show controller skin options in the quick settings.")
     var controllerSkinEnabled: Bool = true
     
-    @Option(name: "Expanded Controller Skin",
-            description: "Enable to show more controller skin options in the quick settings.")
-    var expandedControllerSkinEnabled: Bool = false
-    
     @Option(name: "Background Blur",
             description: "Enable to show background blur options in the quick settings.")
     var backgroundBlurEnabled: Bool = false

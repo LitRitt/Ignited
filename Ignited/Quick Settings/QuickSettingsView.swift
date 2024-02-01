@@ -38,7 +38,6 @@ struct QuickSettingsView: View
     @State private var gameAudioEnabled: Bool = Settings.gameplayFeatures.quickSettings.gameAudioEnabled
     @State private var expandedGameAudioEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled
     @State private var controllerSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.controllerSkinEnabled
-    @State private var expandedControllerSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled
     @State private var backgroundBlurEnabled: Bool = Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled
     @State private var colorPalettesEnabled: Bool = Settings.gameplayFeatures.quickSettings.colorPalettesEnabled
     
@@ -225,30 +224,28 @@ struct QuickSettingsView: View
                                 .onChange(of: self.controllerSkinOpacity) { value in
                                     Settings.controllerFeatures.skin.opacity = value
                                 }
-                            
-                            if self.expandedControllerSkinEnabled
-                            {
-                                Picker("Background Color", selection: self.$controllerSkinColorMode) {
-                                    ForEach(Settings.proFeaturesEnabled ? SkinBackgroundColor.allCases : [.none, .theme], id: \.self) { value in
-                                        value.localizedDescription
-                                    }
-                                }.pickerStyle(.menu)
-                                    .onChange(of: self.controllerSkinColorMode) { value in
-                                        Settings.controllerFeatures.skin.colorMode = value
-                                    }
+                            Picker("Background Color", selection: self.$controllerSkinColorMode) {
+                                ForEach(Settings.proFeaturesEnabled ? SkinBackgroundColor.allCases : [.none, .theme], id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.controllerSkinColorMode) { value in
+                                    Settings.controllerFeatures.skin.colorMode = value
+                                }
+                            if Settings.proFeaturesEnabled {
                                 ColorPicker("Custom Background Color", selection: self.$controllerSkinBackgroundColor, supportsOpacity: false)
                                     .onChange(of: self.controllerSkinBackgroundColor) { value in
                                         Settings.controllerFeatures.skin.backgroundColor = value
                                     }
-                                Toggle("Show Screen During AirPlay", isOn: self.$controllerSkinAirPlayKeepScreen)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                    .onChange(of: self.controllerSkinAirPlayKeepScreen) { value in
-                                        Settings.controllerFeatures.airPlayKeepScreen.isEnabled = value
-                                    }
-                                Toggle("Show Skin With Controller", isOn: Settings.controllerFeatures.skin.$alwaysShow.valueBinding)
-                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
-                        }
+                            Toggle("Show Screen During AirPlay", isOn: self.$controllerSkinAirPlayKeepScreen)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                .onChange(of: self.controllerSkinAirPlayKeepScreen) { value in
+                                    Settings.controllerFeatures.airPlayKeepScreen.isEnabled = value
+                                }
+                            Toggle("Show Skin With Controller", isOn: Settings.controllerFeatures.skin.$alwaysShow.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            }
                     } header: {
                         Text("Controller Skin")
                     }.listStyle(.insetGrouped)
@@ -397,12 +394,6 @@ struct QuickSettingsView: View
                             .onChange(of: self.controllerSkinEnabled) { value in
                                 Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = value
                             }
-                        if self.controllerSkinEnabled {
-                            Toggle("Expanded Controller Skin", isOn: self.$expandedControllerSkinEnabled)
-                                .onChange(of: self.expandedControllerSkinEnabled) { value in
-                                    Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled = value
-                                }
-                        }
                         if Settings.controllerFeatures.backgroundBlur.isEnabled {
                             Toggle("Background Blur", isOn: self.$backgroundBlurEnabled)
                                 .onChange(of: self.backgroundBlurEnabled) { value in

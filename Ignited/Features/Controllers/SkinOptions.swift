@@ -44,7 +44,8 @@ struct SkinOptions
     var colorMode: SkinBackgroundColor = .none
     
     @Option(name: "Custom Background Color",
-            description: "Select a custom color to use as the controller skin background.")
+            description: "Select a custom color to use as the controller skin background.",
+            attributes: [.pro])
     var backgroundColor: Color = .black
     
     @Option(name: "Show With Controller",
