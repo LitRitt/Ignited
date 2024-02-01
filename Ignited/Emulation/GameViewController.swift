@@ -801,11 +801,6 @@ extension GameViewController
                 pauseViewController.blurBackgroudItem = nil
             }
             
-            if !Settings.proFeaturesEnabled
-            {
-                pauseViewController.blurBackgroudItem = nil
-            }
-            
             if let url = self.game?.fileURL,
                let fileName = url.path.components(separatedBy: "/").last
             {
@@ -1117,7 +1112,6 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   Settings.proFeaturesEnabled,
                    let core = self?.emulatorCore,
                    let buttonSoundFile = self?.buttonSoundFile
                 {
@@ -1129,8 +1123,6 @@ private extension GameViewController
         {
             self.controllerView.buttonPressedHandler = { [weak self] () in
                 if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   Settings.proFeaturesEnabled,
-                   let core = self?.emulatorCore,
                    let buttonSoundPlayer = self?.buttonSoundPlayer
                 {
                     buttonSoundPlayer.play()
