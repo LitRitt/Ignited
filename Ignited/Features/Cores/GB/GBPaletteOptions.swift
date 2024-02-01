@@ -98,7 +98,7 @@ extension GameboyPalette
     
     var pro: Bool {
         switch self {
-        case .dmg, .pocket, .light, .studio: return false
+        case .dmg, .pocket, .light, .studio, .custom1: return false
         default: return true
         }
     }
@@ -153,10 +153,9 @@ struct GBPaletteOptions
     var spritePalette2: GameboyPalette = .studio
     
     @Option(name: "Custom Palette 1",
-            attributes: [.pro],
             detailView: { _ in
         HStack {
-            Text("Custom Palette 1").addProLabel()
+            Text("Custom Palette 1")
             Spacer()
             Group {
                 Rectangle().foregroundColor(Color(fromRGB: GameboyPalette.custom1.colors[0]))
@@ -168,20 +167,16 @@ struct GBPaletteOptions
     })
     var customPalette1: String = ""
     
-    @Option(name: "Color 1",
-            attributes: [.pro])
+    @Option(name: "Color 1")
     var customPalette1Color1: Color = Color(fromRGB: GameboyPalette.studio.colors[0])
     
-    @Option(name: "Color 2",
-            attributes: [.pro])
+    @Option(name: "Color 2")
     var customPalette1Color2: Color = Color(fromRGB: GameboyPalette.studio.colors[1])
     
-    @Option(name: "Color 3",
-            attributes: [.pro])
+    @Option(name: "Color 3")
     var customPalette1Color3: Color = Color(fromRGB: GameboyPalette.studio.colors[2])
     
-    @Option(name: "Color 4",
-            attributes: [.pro])
+    @Option(name: "Color 4")
     var customPalette1Color4: Color = Color(fromRGB: GameboyPalette.studio.colors[3])
     
     @Option(name: "Custom Palette 2",
