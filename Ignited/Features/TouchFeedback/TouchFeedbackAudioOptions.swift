@@ -54,10 +54,14 @@ extension TouchFeedbackSound: LocalizedOptionValue
 
 struct TouchFeedbackAudioOptions
 {
-    @Option(name: "Sound", description: "Choose the sound to play.", values: TouchFeedbackSound.allCases)
+    @Option(name: "Sound",
+            description: "Choose the sound to play. Free users are limited to the default \"Tock\" sound.",
+            values: TouchFeedbackSound.allCases,
+            attributes: [.pro])
     var sound: TouchFeedbackSound = .tock
     
-    @Option(name: "Use Game Volume", description: "When enabled, sounds will play at the same volume as gameplay. When disabled, sounds will play at the volume specified below.")
+    @Option(name: "Use Game Volume",
+            description: "When enabled, sounds will play at the same volume as gameplay. When disabled, sounds will play at the volume specified below.")
     var useGameVolume: Bool = true
     
     @Option(name: "Volume",
