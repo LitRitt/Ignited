@@ -285,7 +285,6 @@ extension PatreonAPI
         // Reset all Pro settings if user isn't a Pro member
         if !Settings.proFeaturesEnabled
         {
-            Settings.gameplayFeatures.rewind.isEnabled = false
             Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
             if Settings.controllerFeatures.skin.colorMode == .custom {
                 Settings.controllerFeatures.skin.colorMode = .none
