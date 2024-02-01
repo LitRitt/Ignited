@@ -1273,11 +1273,6 @@ private extension GameViewController
             self.blurScreenBrightness = intensity
         }
         
-        guard Settings.proFeaturesEnabled else {
-            self.blurScreenEnabled = false
-            return
-        }
-        
         // Set enabled last as it's the property that triggers updateGameViews()
         if let game = self.game
         {
