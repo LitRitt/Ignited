@@ -201,17 +201,22 @@ struct GameArtworkOptions
     @Option
     var size: ArtworkSize = .medium
     
-    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
+    @Option(name: "Show New Games",
+            description: "Enable to show an icon in the title of your games when they've never been played.")
     var showNewGames: Bool = true
     
-    @Option(name: "Show Pause Icon", description: "Enable to show a pause icon on your artwork when that game is currently paused.")
+    @Option(name: "Show Pause Icon",
+            description: "Enable to show a pause icon on your artwork when that game is currently paused.")
     var showPauseIcon: Bool = true
     
-    @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
-    var useScreenshots: Bool = false
-    
-    @Option(name: "Force Aspect Ratio", description: "Enable to make all artwork within a given system use consistent aspect ratios.")
+    @Option(name: "Force Aspect Ratio",
+            description: "Enable to make all artwork within a given system use consistent aspect ratios.")
     var forceAspect: Bool = true
+    
+    @Option(name: "Live Artwork",
+            description: "Enable to use a screenshot of your latest gameplay as the artwork.",
+            attributes: [.pro])
+    var useScreenshots: Bool = false
     
     @Option(name: "Title Size",
             description: "Change the size of game titles.",
