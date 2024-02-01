@@ -304,7 +304,7 @@ struct QuickSettingsView: View
                             }.frame(width: 40, height: 30).cornerRadius(5)
                             Spacer()
                             Picker("", selection: self.$gameboyPalette) {
-                                ForEach(GameboyPalette.allCases, id: \.self) { value in
+                                ForEach(GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled }, id: \.self) { value in
                                     value.localizedDescription
                                 }
                             }
@@ -328,7 +328,7 @@ struct QuickSettingsView: View
                                 }.frame(width: 40, height: 30).cornerRadius(5)
                                 Spacer()
                                 Picker("", selection: self.$gameboySpritePalette1) {
-                                    ForEach(GameboyPalette.allCases, id: \.self) { value in
+                                    ForEach(GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled }, id: \.self) { value in
                                         value.localizedDescription
                                     }
                                 }
@@ -350,7 +350,7 @@ struct QuickSettingsView: View
                                 }.frame(width: 40, height: 30).cornerRadius(5)
                                 Spacer()
                                 Picker("", selection: self.$gameboySpritePalette2) {
-                                    ForEach(GameboyPalette.allCases, id: \.self) { value in
+                                    ForEach(GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled }, id: \.self) { value in
                                         value.localizedDescription
                                     }
                                 }
