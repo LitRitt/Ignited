@@ -756,11 +756,6 @@ extension GameViewController
                 }
             }
             
-            if self.emulatorCore?.deltaCore.supportedRates.upperBound == 1
-            {
-                pauseViewController.fastForwardItem = nil
-            }
-            
             if let game = self.game,
                game.type != .gb
             {
