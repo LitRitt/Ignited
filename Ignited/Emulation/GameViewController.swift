@@ -3416,7 +3416,8 @@ private extension GameViewController
             self.updateAutoSaveState(true)
             
             // Battery critical, quit emulation
-            if currentBatteryLevel < criticalBatteryLevel
+            if currentBatteryLevel < criticalBatteryLevel,
+               !Settings.advancedFeatures.lowBattery.disableCriticalBattery
             {
                 NotificationCenter.default.post(name: EmulatorCore.emulationDidQuitNotification, object: nil)
                 
