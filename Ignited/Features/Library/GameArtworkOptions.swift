@@ -213,6 +213,14 @@ struct GameArtworkOptions
             description: "Enable to make all artwork within a given system use consistent aspect ratios.")
     var forceAspect: Bool = true
     
+    @Option(name: "Aspect Ratio Threshold",
+            description: "Change how close the original image aspect ratio must be to the forced ratio in order to apply the forced ratio.",
+            range: 0.1...0.5,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var forceAspectTheshold: Double = 0.2
+    
     @Option(name: "Live Artwork",
             description: "Enable to use a screenshot of your latest gameplay as the artwork.",
             attributes: [.pro])

@@ -23,14 +23,16 @@ extension UIImage
             forcedRatio = System(gameType: gameType)?.artworkAspectRatio ?? originalRatio
         }
         
+        let shouldForceAspectRatio = Settings.libraryFeatures.artwork.forceAspect && abs(1 - (forcedRatio / originalRatio)) < Settings.libraryFeatures.artwork.forceAspectTheshold
+        
         if originalRatio > 1
         { // Horizontal base image
-            let ratio =  Settings.libraryFeatures.artwork.forceAspect ? (forcedRatio < 1 ? 1 / forcedRatio : forcedRatio) : originalRatio
+            let ratio = shouldForceAspectRatio ? (forcedRatio < 1 ? 1 / forcedRatio : forcedRatio) : originalRatio
             renderSize = CGSize(width: boundSize, height: boundSize / ratio)
         }
         else
         { // Vertical base image
-            let ratio = Settings.libraryFeatures.artwork.forceAspect ? (forcedRatio > 1 ? 1 / forcedRatio : forcedRatio) : originalRatio
+            let ratio = shouldForceAspectRatio ? (forcedRatio > 1 ? 1 / forcedRatio : forcedRatio) : originalRatio
             renderSize = CGSize(width: boundSize * ratio, height: boundSize)
         }
         
