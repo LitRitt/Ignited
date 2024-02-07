@@ -1101,35 +1101,20 @@ private extension GameViewController
             try self.buttonSoundFile = AVAudioFile(forReading: buttonSoundURL)
             try self.buttonSoundPlayer = AVAudioPlayer(contentsOf: buttonSoundURL)
             
-            self.buttonSoundPlayer?.volume = Float(Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
+            self.buttonSoundPlayer?.volume = Float(Settings.touchFeedbackFeatures.touchAudio.useGameVolume ? Settings.gameplayFeatures.gameAudio.volume : Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
         }
         catch
         {
             print(error)
         }
         
-        if Settings.touchFeedbackFeatures.touchAudio.useGameVolume
-        {
-            self.controllerView.buttonPressedHandler = { [weak self] () in
-                if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   let core = self?.emulatorCore,
-                   let buttonSoundFile = self?.buttonSoundFile
-                {
-                    core.audioManager.playButtonSound(buttonSoundFile)
-                }
+        self.controllerView.buttonPressedHandler = { [weak self] () in
+            if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
+               let buttonSoundPlayer = self?.buttonSoundPlayer
+            {
+                buttonSoundPlayer.play()
             }
         }
-        else
-        {
-            self.controllerView.buttonPressedHandler = { [weak self] () in
-                if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   let buttonSoundPlayer = self?.buttonSoundPlayer
-                {
-                    buttonSoundPlayer.play()
-                }
-            }
-        }
-                
     }
     
     func playButtonAudioFeedbackSound()
@@ -1138,7 +1123,7 @@ private extension GameViewController
         {
             buttonSoundPlayer.volume = 1.0
             buttonSoundPlayer.play()
-            buttonSoundPlayer.volume = Float(Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
+            buttonSoundPlayer.volume = Float(Settings.touchFeedbackFeatures.touchAudio.useGameVolume ? Settings.gameplayFeatures.gameAudio.volume : Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
         }
     }
     
