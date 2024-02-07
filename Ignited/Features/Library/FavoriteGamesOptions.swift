@@ -14,7 +14,7 @@ import Features
 enum FavoriteArtworkStyle: String, CaseIterable, CustomStringConvertible
 {
     case none = "Default"
-    case theme = "Theme"
+    case theme = "Complimentary"
     case custom = "Custom"
     
     var description: String {
@@ -31,7 +31,7 @@ enum FavoriteArtworkStyle: String, CaseIterable, CustomStringConvertible
     
     var borderColor: UIColor? {
         switch self {
-        case .none: return Settings.libraryFeatures.artwork.style.borderColor
+        case .none: return Settings.userInterfaceFeatures.theme.color.uiColor
         case .theme: return Settings.userInterfaceFeatures.theme.color.favoriteColor
         case .custom: return Settings.libraryFeatures.favorites.borderColorMode == .custom ? UIColor(Settings.libraryFeatures.favorites.borderColor) : Settings.userInterfaceFeatures.theme.color.favoriteColor
         }
