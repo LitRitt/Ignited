@@ -56,6 +56,42 @@ struct PauseMenuOptions
             values: ShakeToPauseMode.allCases)
     var shakeToPause: ShakeToPauseMode = .enabled
     
+    @Option(name: "Screenshot Dismisses",
+            description: "Enable to make the screenshot option dismiss the pause menu when pressed.")
+    var screenshotDismisses: Bool = true
+    
+    @Option(name: "Status Bar Dismisses",
+            description: "Enable to make the status bar option dismiss the pause menu when pressed.")
+    var statusBarDismisses: Bool = true
+    
+    @Option(name: "Hold Buttons Dismisses",
+            description: "Enable to make the hold buttons option dismiss the pause menu when pressed.")
+    var holdButtonsDismisses: Bool = true
+    
+    @Option(name: "Fast Forward Dismisses",
+            description: "Enable to make the fast forward option dismiss the pause menu when pressed.")
+    var fastForwardDismisses: Bool = true
+    
+    @Option(name: "Microphone Dismisses",
+            description: "Enable to make the microphone option dismiss the pause menu when pressed.")
+    var microphoneDismisses: Bool = true
+    
+    @Option(name: "Alternate Skin Dismisses",
+            description: "Enable to make the alternate skin option dismiss the pause menu when pressed.")
+    var alternateSkinDismisses: Bool = true
+    
+    @Option(name: "Rotation Lock Dismisses",
+            description: "Enable to make the rotation lock option dismiss the pause menu when pressed.")
+    var rotationLockDismisses: Bool = true
+    
+    @Option(name: "Background Blur Dismisses",
+            description: "Enable to make the background blur option dismiss the pause menu when pressed.")
+    var backgroundBlurDismisses: Bool = true
+    
+    @Option(name: "Debug Mode Dismisses",
+            description: "Enable to make the debug mode option dismiss the pause menu when pressed.")
+    var debugModeDismisses: Bool = true
+    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in

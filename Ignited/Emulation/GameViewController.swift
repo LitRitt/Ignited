@@ -736,6 +736,11 @@ extension GameViewController
                 }
                 else
                 {
+                    if Settings.gameplayFeatures.pauseMenu.holdButtonsDismisses
+                    {
+                        pauseViewController.dismiss()
+                    }
+                    
                     self.updateSustainedButtons(gameController: gameController)
                 }
                 
@@ -2125,12 +2130,16 @@ extension GameViewController
     
     func performStatusBarAction(hold: Bool = false)
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.statusBarDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let text: String
         
         if hold
         {
-            if let pauseView = self.pauseViewController { pauseView.dismiss() }
-            
             if Settings.userInterfaceFeatures.statusBar.style == .dark {
                 Settings.userInterfaceFeatures.statusBar.style = .light
                 text = NSLocalizedString("Status Bar: Light Content", comment: "")
@@ -2160,6 +2169,12 @@ extension GameViewController
     
     func performMicrophoneAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.microphoneDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let text: String
         
         if Settings.gameplayFeatures.micSupport.isEnabled {
@@ -2180,6 +2195,12 @@ extension GameViewController
     
     func performRotationLockAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.rotationLockDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let text: String
         
         if self.isOrientationLocked
@@ -2226,13 +2247,13 @@ extension GameViewController
     
     func performScreenshotAction(hold: Bool = false)
     {
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
-        
         if hold
         {
+            if let pauseView = self.pauseViewController
+            {
+                pauseView.dismiss()
+            }
+            
             self.presentToastView(text: "3", duration: 1)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1)
@@ -2243,6 +2264,14 @@ extension GameViewController
             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
             {
                 self.presentToastView(text: "1", duration: 1)
+            }
+        }
+        else
+        {
+            if let pauseView = self.pauseViewController,
+               Settings.gameplayFeatures.pauseMenu.screenshotDismisses
+            {
+                pauseView.dismiss()
             }
         }
         
@@ -2386,6 +2415,12 @@ extension GameViewController
     
     func performFastForwardAction(activate: Bool)
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.fastForwardDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         guard let emulatorCore = self.emulatorCore else { return }
         let text: String
         
@@ -2507,6 +2542,12 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.backgroundBlurDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let enabled = !Settings.controllerFeatures.backgroundBlur.isEnabled
         self.blurScreenEnabled = enabled
         Settings.controllerFeatures.backgroundBlur.isEnabled = enabled
@@ -2559,6 +2600,12 @@ extension GameViewController
     
     func performAltRepresentationsAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.alternateSkinDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let enabled = !Settings.advancedFeatures.skinDebug.useAlt
         self.controllerView.isAltRepresentationsEnabled = enabled
         Settings.advancedFeatures.skinDebug.useAlt = enabled
@@ -2580,6 +2627,12 @@ extension GameViewController
     
     func performDebugModeAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.debugModeDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let enabled = !Settings.advancedFeatures.skinDebug.isOn
         Settings.advancedFeatures.skinDebug.isOn = enabled
         self.controllerView.isDebugModeEnabled = enabled
