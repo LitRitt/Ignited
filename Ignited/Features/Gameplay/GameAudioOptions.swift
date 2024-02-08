@@ -28,6 +28,10 @@ struct GameAudioOptions
             description: "Enable to play game audio over other media, such as voice chat or videos.")
     var playOver: Bool = true
     
+    @Option(name: "Mute During Fast Forward",
+            description: "Enable to mute game audio while fast forwarding.")
+    var fastForwardMutes: Bool = false
+    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in

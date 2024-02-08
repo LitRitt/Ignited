@@ -201,6 +201,8 @@ struct QuickSettingsView: View
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Toggle("Play Over Other Media", isOn: Settings.gameplayFeatures.gameAudio.$playOver.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                                Toggle("Mute During Fast Forward", isOn: Settings.gameplayFeatures.gameAudio.$fastForwardMutes.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
                         }
                     } header: {

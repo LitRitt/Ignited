@@ -1329,6 +1329,8 @@ private extension GameViewController
     func updateEmulationSpeed()
     {
         self.emulatorCore?.rate = Settings.gameplayFeatures.quickSettings.fastForwardSpeed
+        
+        self.updateAudio()
     }
     
     func updateControllerSkinCustomization()
@@ -1950,6 +1952,13 @@ private extension GameViewController
             self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
         }
         
+        let isFastForwarding = self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound
+        let mutedByFastForward = Settings.gameplayFeatures.gameAudio.fastForwardMutes && isFastForwarding
+        
+        if self.emulatorCore?.audioManager.mutedByFastForward != mutedByFastForward {
+            self.emulatorCore?.audioManager.mutedByFastForward = mutedByFastForward
+        }
+        
         self.emulatorCore?.audioManager.audioVolume = Float(Settings.gameplayFeatures.gameAudio.volume)
     }
 }
@@ -2440,6 +2449,8 @@ extension GameViewController
         {
             self.presentToastView(text: text)
         }
+        
+        self.updateAudio()
     }
     
     func updateFastForwardSpeed(speed: Double)
@@ -2452,6 +2463,8 @@ extension GameViewController
         {
             emulatorCore.rate = speed
         }
+        
+        self.updateAudio()
     }
     
     func performQuickSettingsAction()
@@ -3194,7 +3207,7 @@ private extension GameViewController
         case Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey:
             self.updateCoreSettings()
             
-        case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey:
+        case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey, Settings.gameplayFeatures.gameAudio.$fastForwardMutes.settingsKey:
             self.updateAudio()
             
         case Settings.touchFeedbackFeatures.touchAudio.$sound.settingsKey:
