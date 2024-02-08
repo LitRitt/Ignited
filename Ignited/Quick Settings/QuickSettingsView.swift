@@ -13,7 +13,7 @@ import Features
 struct QuickSettingsView: View
 {
     private var system: String
-    private let systemsWithPalettes = [System.gb.gameType.rawValue]
+    private let systemsWithPalettes = [System.gbc.gameType.rawValue]
     
     @State private var fastForwardSpeed: Double
     @State private var fastForwardMode: FastForwardMode = Settings.gameplayFeatures.fastForward.mode

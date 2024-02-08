@@ -762,7 +762,7 @@ extension GameViewController
             }
             
             if let game = self.game,
-               game.type != .gb
+               game.type != .gbc || game.fileURL.pathExtension.lowercased() != "gb"
             {
                 pauseViewController.paletteItem = nil
             }
@@ -793,7 +793,7 @@ extension GameViewController
                 // GPGX core does not support background blur yet.
                 pauseViewController.blurBackgroudItem = nil
                 
-            case .gbc?, .gb?:
+            case .gbc?:
                 // Rewind is disabled on GBC. Crashes gambette
                 pauseViewController.rewindItem = nil
 

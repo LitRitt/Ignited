@@ -476,7 +476,6 @@
 		3E82E205492677654BD20E486E6D55C6 /* NstBoardBmcSuperVision16in1.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 71119180D2FA8D01C9B8415982DF2F48 /* NstBoardBmcSuperVision16in1.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		3EC3A1B2E8D115DBCFC2BF7E85B0A2B9 /* DSi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA870A341DC180767606972489DD67B6 /* DSi.cpp */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3EDD257F814479B34C4E9A6809F3B4CE /* NstBoardUnlTf1201.hpp in Headers */ = {isa = PBXBuildFile; fileRef = FA7FFEFE1E052304BF91BFA4803C64FD /* NstBoardUnlTf1201.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
-		3F041337DA938A6C21E5D0B922AA23B0 /* Standard-com.rileytestut.GBDeltaCore.deltamapping in Resources */ = {isa = PBXBuildFile; fileRef = 4C5BF6CDAB400E1E313E38D1421FCE6C /* Standard-com.rileytestut.GBDeltaCore.deltamapping */; };
 		3F05A1EAFB55D09A47BB8651B943A268 /* System.h in Headers */ = {isa = PBXBuildFile; fileRef = FCA63B23C7182B7DEEEC6BFA316477DF /* System.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3F5F93A1B1A4F796AA7838A9A66A495C /* NstBoardBtlT230.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E0C5E41396089A943BA17C23BFA2D7A4 /* NstBoardBtlT230.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		3FBAB86B54062A011F94D5ABFD62B5A3 /* NstBoardCamerica.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 441228AA5E66C0369AB2F2A2ADC1A118 /* NstBoardCamerica.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -520,7 +519,6 @@
 		45C3B9CFAE799760CA4CBA57CD56DB27 /* NstVideoFilter2xSaI.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A7718B3ABE448977238DAA579725FAAB /* NstVideoFilter2xSaI.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		45CD0EC344360CDEB804ECAF751B1D59 /* NstBoardWaixingZs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 10B8B96D2134CC3962760AB5CDD981E1 /* NstBoardWaixingZs.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		45D59D82A200D8E9126690EEC535C1F2 /* Harmony-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 135479DB12CDBA7421BA7FB056BDBAFF /* Harmony-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		45DC8C3C0D23A86B68B60E09DD0B7E25 /* Standard-com.rileytestut.GBDeltaCore.ignitedskin in Resources */ = {isa = PBXBuildFile; fileRef = 1D99059EBBA5D17D5A0B70AB04443A35 /* Standard-com.rileytestut.GBDeltaCore.ignitedskin */; };
 		45E16C89C9189BD3A413347E77A8AF07 /* OIDURLSessionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = FCECE9365A3EB22166606A35BAEB7080 /* OIDURLSessionProvider.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		45FA217D8A09EC64E385E20F53E3727F /* OIDAuthorizationResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCE62E6C9C74B1746928FDE05AAA18A /* OIDAuthorizationResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		46101F59E3A158065A47CF0735D4C8ED /* pixform.h in Headers */ = {isa = PBXBuildFile; fileRef = DF1C0026A3BC4A3F917F6304CAE3B20E /* pixform.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -2470,7 +2468,6 @@
 		1D0B64EC00E3F2BA9E3510629766342D /* NstBoardJyCompany.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstBoardJyCompany.hpp; sourceTree = "<group>"; };
 		1D43CFE0EA63E954E145D35C4DE1549A /* fxemu.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = fxemu.h; sourceTree = "<group>"; };
 		1D70EBE244645AC68348F8554CCAE425 /* GLideN64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GLideN64.h; sourceTree = "<group>"; };
-		1D99059EBBA5D17D5A0B70AB04443A35 /* Standard-com.rileytestut.GBDeltaCore.ignitedskin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = "Standard-com.rileytestut.GBDeltaCore.ignitedskin"; sourceTree = "<group>"; };
 		1DA64753C1B07068007FD9D804301FA1 /* Context.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
 		1DAAC9179A168EF1A972AD73E45258E4 /* Debugger.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; path = Debugger.cpp; sourceTree = "<group>"; };
 		1DB37BC909ECB33A469C8AA133EA2550 /* ftgloadr.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ftgloadr.h; sourceTree = "<group>"; };
@@ -2844,7 +2841,6 @@
 		4C22C82316853ABB688358B93486CF8E /* libMelonDSDeltaCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMelonDSDeltaCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3E783DEB37965B03EA3BB9D35FAC53 /* retro_stat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = retro_stat.h; sourceTree = "<group>"; };
 		4C58ADDCE711014C11A7119D42F3EF4C /* RSTCellContentDataSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSTCellContentDataSource.m; path = Roxas/RSTCellContentDataSource.m; sourceTree = "<group>"; };
-		4C5BF6CDAB400E1E313E38D1421FCE6C /* Standard-com.rileytestut.GBDeltaCore.deltamapping */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.bplist; name = "Standard-com.rileytestut.GBDeltaCore.deltamapping"; path = "GBCDeltaCore/Standard-com.rileytestut.GBDeltaCore.deltamapping"; sourceTree = "<group>"; };
 		4C6DF156AFDEA4AF5D4961191D92B1D2 /* NstInpDevice.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; path = NstInpDevice.hpp; sourceTree = "<group>"; };
 		4C9123313400B4CCE5AA47C03B024B83 /* DSDeltaCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DSDeltaCore.release.xcconfig; sourceTree = "<group>"; };
 		4CA8450CB5C888067AD30FED5E51C859 /* F3DEX2CBFD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = F3DEX2CBFD.h; sourceTree = "<group>"; };
@@ -7185,7 +7181,6 @@
 			isa = PBXGroup;
 			children = (
 				82FAA3661AAB5C6B00962F32918B3CB8 /* Standard.ignitedskin */,
-				1D99059EBBA5D17D5A0B70AB04443A35 /* Standard-com.rileytestut.GBDeltaCore.ignitedskin */,
 			);
 			name = "Controller Skin";
 			path = "GBCDeltaCore/Controller Skin";
@@ -8062,7 +8057,6 @@
 			isa = PBXGroup;
 			children = (
 				6BA2B5676A3A5EFF7333BCF10CAD86BB /* Standard.deltamapping */,
-				4C5BF6CDAB400E1E313E38D1421FCE6C /* Standard-com.rileytestut.GBDeltaCore.deltamapping */,
 				B3CA60DABE74C790BDCEC7D4791FC4DF /* Controller Skin */,
 				7B3B5857B724098FAB3895E1521C2E22 /* gambatte */,
 				B258A4F61F98AE9CFB48C5799D09287A /* GBCDeltaCore */,
@@ -10930,8 +10924,6 @@
 			files = (
 				B59B180CBCC73F4ECB48B5E070C5CC76 /* Standard.deltamapping in Resources */,
 				D9B1316397E37174C05478869AE107ED /* Standard.ignitedskin in Resources */,
-				3F041337DA938A6C21E5D0B922AA23B0 /* Standard-com.rileytestut.GBDeltaCore.deltamapping in Resources */,
-				45DC8C3C0D23A86B68B60E09DD0B7E25 /* Standard-com.rileytestut.GBDeltaCore.ignitedskin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

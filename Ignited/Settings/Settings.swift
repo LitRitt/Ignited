@@ -373,7 +373,6 @@ private extension Settings
         {
         case .nes: systemName = "nes"
         case .snes: systemName = "snes"
-        case .gb: systemName = "gb"
         case .gbc: systemName = "gbc"
         case .gba: systemName = "gba"
         case .n64: systemName = "n64"
