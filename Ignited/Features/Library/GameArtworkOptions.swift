@@ -201,50 +201,43 @@ struct GameArtworkOptions
     @Option
     var size: ArtworkSize = .medium
     
-    @Option(name: "Show New Games", description: "Enable to show an icon in the title of your games when they've never been played.")
+    @Option(name: "Show New Games",
+            description: "Enable to show an icon in the title of your games when they've never been played.")
     var showNewGames: Bool = true
     
-    @Option(name: "Show Pause Icon", description: "Enable to show a pause icon on your artwork when that game is currently paused.")
+    @Option(name: "Show Pause Icon",
+            description: "Enable to show a pause icon on your artwork when that game is currently paused.")
     var showPauseIcon: Bool = true
     
-    @Option(name: "Live Artwork", description: "Enable to use a screenshot of your latest gameplay as the artwork.")
-    var useScreenshots: Bool = false
-    
-    @Option(name: "Force Aspect Ratio", description: "Enable to make all artwork within a given system use consistent aspect ratios.")
+    @Option(name: "Force Aspect Ratio",
+            description: "Enable to make all artwork within a given system use consistent aspect ratios.")
     var forceAspect: Bool = true
+    
+    @Option(name: "Aspect Ratio Threshold",
+            description: "Change how close the original image aspect ratio must be to the forced ratio in order to apply the forced ratio.",
+            range: 0.1...0.5,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var forceAspectTheshold: Double = 0.2
+    
+    @Option(name: "Live Artwork",
+            description: "Enable to use a screenshot of your latest gameplay as the artwork.",
+            attributes: [.pro])
+    var useScreenshots: Bool = false
     
     @Option(name: "Title Size",
             description: "Change the size of game titles.",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Title Size: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.5, step: 0.1)
-                Text("150%")
-            }
-        }.displayInline()
-    })
+            range: 0.0...1.5,
+            step: 0.1,
+            unit: "%",
+            isPercentage: true)
     var titleSize: Double = 1.0
     
     @Option(name: "Title Max Lines",
             description: "Change the maximum number of lines that game titles can occupy.",
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Title Max Lines: \(value.wrappedValue, specifier: "%.f")")
-                Spacer()
-            }
-            HStack {
-                Text("1")
-                Slider(value: value, in: 1...4, step: 1)
-                Text("4")
-            }
-        }.displayInline()
-    })
+            range: 1...4,
+            step: 1)
     var titleMaxLines: Double = 3
     
     @Option(name: "Style",
@@ -254,138 +247,82 @@ struct GameArtworkOptions
     
     @Option(name: "Background Color Mode",
             description: "Choose which background color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var backgroundColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Background Color",
             description: "Choose the color to use for the custom background color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: true) {
-            Text("Custom Background Color").addProLabel()
-        }.displayInline()
-    })
+            transparency: true,
+            attributes: [.pro])
     var backgroundColor: Color = .orange
     
     @Option(name: "Border Color Mode",
             description: "Choose which border color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var borderColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Border Color",
             description: "Choose the color to use for the custom border color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Border Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var borderColor: Color = .orange
     
     @Option(name: "Text Color Mode",
             description: "Choose which text color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var textColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Text Color",
             description: "Choose the color to use for the custom text color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Text Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var textColor: Color = .black
     
     @Option(name: "Shadow Color Mode",
             description: "Choose which shadow color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var shadowColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Shadow Color",
             description: "Choose the color to use for the custom shadow color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Shadow Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var shadowColor: Color = .white
     
     @Option(name: "Custom Shadow Radius",
             description: "Change the shadow radius to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...10.0, step: 0.5)
-                Text("10pt")
-            }
-        }.displayInline()
-    })
+            range: 0.0...10.0,
+            step: 0.5,
+            unit: "pt",
+            attributes: [.pro])
     var shadowRadius: Double = 5
     
-    @Option(name: "Custom Shadow Opacity",
-            description: "Change the shadow opacity to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.1)
-                Text("100%")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Custom Speed",
+            description: "Set your preferred fast forward speed.",
+            range: 0.0...1.0,
+            step: 0.1,
+            unit: "%",
+            isPercentage: true,
+            attributes: [.pro])
     var shadowOpacity: Double = 0.5
     
     @Option(name: "Custom Corner Radius",
             description: "Change the corner radius to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...0.25, step: 0.01)
-                Text("25%")
-            }
-        }.displayInline()
-    })
+            range: 0.0...0.25,
+            step: 0.01,
+            unit: "%",
+            isPercentage: true,
+            attributes: [.pro])
     var cornerRadius: Double = 0.15
     
     @Option(name: "Custom Border Width",
             description: "Change the border witdh to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...3.0, step: 0.5)
-                Text("3pt")
-            }
-        }.displayInline()
-    })
+            range: 0.0...3.0,
+            step: 0.5,
+            unit: "pt",
+            decimals: 1,
+            attributes: [.pro])
     var borderWidth: Double = 2
     
     @Option(name: "Restore Defaults",
@@ -411,7 +348,6 @@ extension System
         case .nes: return CGSize(width: 73, height: 100)
         case .snes: return CGSize(width: 100, height: 73)
         case .n64: return CGSize(width: 100, height: 70)
-        case .gb: return CGSize(width: 100, height: 98)
         case .gbc: return CGSize(width: 100, height: 98)
         case .gba: return CGSize(width: 100, height: 100)
         case .ds: return CGSize(width: 100, height: 90)

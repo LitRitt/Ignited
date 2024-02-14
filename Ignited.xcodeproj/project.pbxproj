@@ -67,11 +67,12 @@
 		AC4D519E2B09F881008B245B /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC4D519D2B09F881008B245B /* Settings.storyboard */; };
 		AC4D51A02B09F899008B245B /* GamesDatabase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC4D519F2B09F899008B245B /* GamesDatabase.storyboard */; };
 		AC4D51A22B09F8B2008B245B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC4D51A12B09F8B2008B245B /* LaunchScreen.storyboard */; };
+		AC52A7F22B67739200261267 /* OptionColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52A7F12B67739200261267 /* OptionColorPickerView.swift */; };
+		AC52A7F42B6773BB00261267 /* OptionSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52A7F32B6773BB00261267 /* OptionSliderView.swift */; };
 		AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEF2A35F38D007C8372 /* N64Features.swift */; };
 		AC5A40762B2106470049B755 /* MappingGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A40752B2106470049B755 /* MappingGameViewController.swift */; };
 		AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
-		AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */; };
 		AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */; };
 		AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */; };
 		AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */; };
@@ -363,11 +364,12 @@
 		AC4D519D2B09F881008B245B /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		AC4D519F2B09F899008B245B /* GamesDatabase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GamesDatabase.storyboard; sourceTree = "<group>"; };
 		AC4D51A12B09F8B2008B245B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AC52A7F12B67739200261267 /* OptionColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionColorPickerView.swift; sourceTree = "<group>"; };
+		AC52A7F32B6773BB00261267 /* OptionSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSliderView.swift; sourceTree = "<group>"; };
 		AC56DDEF2A35F38D007C8372 /* N64Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64Features.swift; sourceTree = "<group>"; };
 		AC5A40752B2106470049B755 /* MappingGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingGameViewController.swift; sourceTree = "<group>"; };
 		AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
-		AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIconImage.swift"; sourceTree = "<group>"; };
 		AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
@@ -698,7 +700,6 @@
 				ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */,
 				AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */,
 				BF647A6922FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift */,
-				AC650A762A314DC600B3405C /* Bundle+AppIconImage.swift */,
 				ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */,
 				D524F4A4273DEBB400D500B2 /* ServerManager+Delta.swift */,
 				D5011C47281B6E8B00A0760B /* CharacterSet+Filename.swift */,
@@ -850,6 +851,8 @@
 			children = (
 				AC8C20FD29FDAAB90044748D /* OptionPickerView.swift */,
 				AC8C20FF29FDAACB0044748D /* OptionToggleView.swift */,
+				AC52A7F12B67739200261267 /* OptionColorPickerView.swift */,
+				AC52A7F32B6773BB00261267 /* OptionSliderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1781,7 +1784,9 @@
 				AC8C213629FDAE400044748D /* OptionToggleView.swift in Sources */,
 				AC8C212C29FDAE400044748D /* AnyFeature.swift in Sources */,
 				AC8C213329FDAE400044748D /* LocalizedOptionValue.swift in Sources */,
+				AC52A7F22B67739200261267 /* OptionColorPickerView.swift in Sources */,
 				AC8C212A29FDAE400044748D /* NotificationName+Settings.swift in Sources */,
+				AC52A7F42B6773BB00261267 /* OptionSliderView.swift in Sources */,
 				AC8C212929FDAE400044748D /* Collection+Optionals.swift in Sources */,
 				AC8C213129FDAE400044748D /* SettingsUserInfoKey.swift in Sources */,
 				AC8C213529FDAE400044748D /* OptionPickerView.swift in Sources */,
@@ -1976,7 +1981,6 @@
 				BF99A5971DC2F9C400468E9E /* ControllerSkinTableViewCell.swift in Sources */,
 				ACB3CB8C29FDCF4D002B53DE /* ToastNotificationOptions.swift in Sources */,
 				ACB3CB9329FDD601002B53DE /* TouchFeedbackVibrationOptions.swift in Sources */,
-				AC650A772A314DC600B3405C /* Bundle+AppIconImage.swift in Sources */,
 				BFE9908024451E15006409A7 /* MelonDSCoreSettingsViewController.swift in Sources */,
 				BF5942861E09BC8B0051894B /* _Cheat.swift in Sources */,
 				BF5E7F441B9A650B00AE44F8 /* SettingsViewController.swift in Sources */,

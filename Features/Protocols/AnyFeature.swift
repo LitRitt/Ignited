@@ -8,6 +8,14 @@
 
 import SwiftUI
 
+public enum FeatureAttribute: String, CaseIterable
+{
+    case permanent = "Permanent"
+    case hidden = "Hidden"
+    case pro = "Pro"
+    case beta = "Beta"
+}
+
 @dynamicMemberLookup
 public protocol AnyFeature<Options>: ObservableObject, Identifiable
 {
@@ -15,9 +23,12 @@ public protocol AnyFeature<Options>: ObservableObject, Identifiable
     
     var name: LocalizedStringKey { get }
     var description: LocalizedStringKey?  { get }
+    var attributes: [FeatureAttribute] { get }
+    
+    var pro: Bool { get }
+    var beta: Bool { get }
     var permanent: Bool { get }
     var hidden: Bool { get }
-    var pro: Bool { get }
     
     var key: String  { get }
     var settingsKey: SettingsName { get }

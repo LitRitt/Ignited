@@ -35,19 +35,26 @@ public extension View
     }
     
     @ViewBuilder
-    func addBetaLabel() -> some View
+    func addBetaLabel(_ isBeta: Bool = true) -> some View
     {
-        HStack {
-            self
-            ZStack {
-                Color.accentColor
-                    .frame(width: 40, height: 20, alignment: .center)
-                    .clipShape(.capsule)
-                Text("BETA")
-                    .font(.system(size: 15, weight: .bold, design: .default))
-                    .foregroundColor(.white)
-                    .fontWidth(.compressed)
+        if isBeta
+        {
+            HStack {
+                self
+                ZStack {
+                    Color.accentColor
+                        .frame(width: 35, height: 20, alignment: .center)
+                        .clipShape(.capsule)
+                    Text("BETA")
+                        .font(.system(size: 15, weight: .bold, design: .default))
+                        .foregroundColor(.white)
+                        .fontWidth(.compressed)
+                }
             }
+        }
+        else
+        {
+            self
         }
     }
 }

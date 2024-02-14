@@ -68,19 +68,12 @@ extension FastForwardMode: LocalizedOptionValue
 
 struct FastForwardOptions
 {
-    @Option(name: "Custom Speed", description: "Set your preferred fast forward speed.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Speed: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("10%")
-                Slider(value: value, in: 0.1...8.0, step: 0.1)
-                Text("800%")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Custom Speed",
+            description: "Set your preferred fast forward speed.",
+            range: 0.1...8.0,
+            step: 0.1,
+            unit: "%",
+            isPercentage: true)
     var speed: Double = 3.0
     
     @Option(name: "Fast Forward Mode",

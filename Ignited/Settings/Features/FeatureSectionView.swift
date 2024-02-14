@@ -22,7 +22,7 @@ struct FeatureSection<T: AnyFeature>: View
                 if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
-                        Text(feature.name).addProLabel()
+                        Text(feature.name).addProLabel().addBetaLabel(feature.beta)
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
@@ -32,7 +32,7 @@ struct FeatureSection<T: AnyFeature>: View
                 else
                 {
                     Toggle(isOn: $feature.isEnabled) {
-                        Text(feature.name).addProLabel(feature.pro)
+                        Text(feature.name).addProLabel(feature.pro).addBetaLabel(feature.beta)
                     }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 }
             }
@@ -41,7 +41,7 @@ struct FeatureSection<T: AnyFeature>: View
                 if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
-                        Text(feature.name).addProLabel()
+                        Text(feature.name).addProLabel().addBetaLabel(feature.beta)
                         Spacer()
                     }.contentShape(Rectangle())
                         .onTapGesture {
@@ -53,10 +53,10 @@ struct FeatureSection<T: AnyFeature>: View
                     NavigationLink(destination: FeatureDetailView(feature: feature)) {
                         if !feature.permanent {
                             Toggle(isOn: $feature.isEnabled) {
-                                Text(feature.name).addProLabel(feature.pro)
+                                Text(feature.name).addProLabel(feature.pro).addBetaLabel(feature.beta)
                             }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         } else {
-                            Text(feature.name).addProLabel(feature.pro)
+                            Text(feature.name).addProLabel(feature.pro).addBetaLabel(feature.beta)
                         }
                     }
                 }
@@ -108,6 +108,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
     let value: any LocalizedOptionValue
     let detailView: DetailView
     let pro: Bool
+    let beta: Bool
     
     let option: Option
     
@@ -127,6 +128,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
         self.value = value
         self.detailView = detailView
         self.pro = option.pro
+        self.beta = option.beta
         
         self.option = option
     }
@@ -140,7 +142,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
             if pro && !Settings.proFeaturesEnabled
             {
                 HStack {
-                    Text(name).addProLabel()
+                    Text(name).addProLabel().addBetaLabel(beta)
                     Spacer()
                 }.contentShape(Rectangle())
                     .onTapGesture {
@@ -162,7 +164,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                     
                     NavigationLink(destination: wrappedDetailView) {
                         HStack {
-                            Text(name).addProLabel(pro)
+                            Text(name).addProLabel(pro).addBetaLabel(beta)
                             Spacer()
                             
                             value.localizedDescription

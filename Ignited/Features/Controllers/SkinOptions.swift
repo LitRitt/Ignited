@@ -39,35 +39,25 @@ extension SkinBackgroundColor: LocalizedOptionValue
 struct SkinOptions
 {
     @Option(name: "Background Color Mode",
-            description: "Choose which color to use for the controller skin background.",
-            values: SkinBackgroundColor.allCases)
+            description: "Choose which color to use for the controller skin background. Custom color requires Ignited Pro.",
+            values: Settings.proFeaturesEnabled ? SkinBackgroundColor.allCases : [.none, .theme])
     var colorMode: SkinBackgroundColor = .none
     
     @Option(name: "Custom Background Color",
             description: "Select a custom color to use as the controller skin background.",
-            detailView: { value in
-        ColorPicker("Custom Background Color", selection: value, supportsOpacity: false)
-            .displayInline()
-    })
+            attributes: [.pro])
     var backgroundColor: Color = .black
     
     @Option(name: "Show With Controller",
             description: "Always show the controller skin, even if there's a physical controller connected.")
     var alwaysShow: Bool = false
     
-    @Option(name: "Opacity", description: "Change the opacity of supported controller skins.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Opacity: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.05)
-                Text("100%")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Opacity",
+            description: "Change the opacity of supported controller skins.",
+            range: 0.0...1.00,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
     var opacity: Double = 0.7
     
     @Option(name: "Restore Defaults",

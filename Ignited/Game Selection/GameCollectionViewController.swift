@@ -929,7 +929,8 @@ private extension GameCollectionViewController
         let currentBatteryLevel = Double(UIDevice.current.batteryLevel)
         let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
         
-        if currentBatteryLevel < criticalBatteryLevel
+        if currentBatteryLevel < criticalBatteryLevel,
+           !Settings.advancedFeatures.lowBattery.disableCriticalBattery
         {
             return true
         }

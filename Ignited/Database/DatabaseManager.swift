@@ -380,8 +380,8 @@ extension DatabaseManager
                     case .nes: artwork = UIImage(named: "NES")
                     case .snes: artwork = UIImage(named: "SNES")
                     case .n64: artwork = UIImage(named: "N64")
-                    case .gb: artwork = UIImage(named: "GB")
-                    case .gbc: artwork = UIImage(named: "GBC")
+                    case .gbc where url.pathExtension.lowercased() == "gb": artwork = UIImage(named: "GB")
+                    case .gbc where url.pathExtension.lowercased() == "gbc": artwork = UIImage(named: "GBC")
                     case .gba: artwork = UIImage(named: "GBA")
                     case .ds: artwork = UIImage(named: "DS")
                     case .genesis: artwork = UIImage(named: "GEN")
@@ -661,8 +661,8 @@ extension DatabaseManager
                 case .nes: artwork = UIImage(named: "NES")
                 case .snes: artwork = UIImage(named: "SNES")
                 case .n64: artwork = UIImage(named: "N64")
-                case .gb: artwork = UIImage(named: "GB")
-                case .gbc: artwork = UIImage(named: "GBC")
+                case .gbc where game.fileURL.pathExtension.lowercased() == "gb": artwork = UIImage(named: "GB")
+                case .gbc where game.fileURL.pathExtension.lowercased() == "gbc": artwork = UIImage(named: "GBC")
                 case .gba: artwork = UIImage(named: "GBA")
                 case .ds: artwork = UIImage(named: "DS")
                 case .genesis: artwork = UIImage(named: "GEN")
@@ -694,6 +694,9 @@ extension DatabaseManager
         let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
         gameFetchRequest.returnsObjectsAsFaults = false
         
+        let gameCollectionFetchRequest: NSFetchRequest<GameCollection> = GameCollection.fetchRequest()
+        gameCollectionFetchRequest.returnsObjectsAsFaults = false
+        
         self.performBackgroundTask { (context) in
             do
             {
@@ -708,6 +711,21 @@ extension DatabaseManager
                     gameCollection.identifier = gameType.rawValue
                     gameCollection.index = Int16(System(gameType: gameType)?.year ?? 2000)
                     gameCollection.games.insert(game)
+                    
+                    game.type = gameType
+                }
+                
+                context.saveWithErrorLogging()
+                
+                let gameCollections = try gameCollectionFetchRequest.execute()
+                
+                for gameCollection in gameCollections
+                {
+                    if gameCollection.games.isEmpty
+                    {
+                        let temporaryGameCollection = context.object(with: gameCollection.objectID) as! GameCollection
+                        context.delete(temporaryGameCollection)
+                    }
                 }
                 
                 context.saveWithErrorLogging()

@@ -48,6 +48,8 @@ extension Double: LocalizedOptionValue {}
 extension String: LocalizedOptionValue {}
 extension Bool: LocalizedOptionValue {}
 
+extension Color: LocalizedOptionValue {}
+
 extension Optional: LocalizedOptionValue where Wrapped: LocalizedOptionValue
 {
     public var localizedDescription: Text {

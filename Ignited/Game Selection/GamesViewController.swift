@@ -543,23 +543,27 @@ private extension GamesViewController
     
     func makePreviewMenu() -> UIMenu
     {
-        let previewOptions: [UIAction] = [
+        var previewOptions: [UIAction] = [
             UIAction(title: NSLocalizedString("Context Menu", comment: ""),
                      image: UIImage(systemName: "text.below.photo"),
                      state: Settings.userInterfaceFeatures.previews.isEnabled ? .on : .off,
                      handler: { action in
                          Settings.userInterfaceFeatures.previews.isEnabled = !Settings.userInterfaceFeatures.previews.isEnabled
                          self.updateOptionsMenu()
-            }),
-            UIAction(title: NSLocalizedString("Live Artwork", comment: ""),
-                     image: UIImage(systemName: "photo"),
-                     state: Settings.libraryFeatures.artwork.useScreenshots ? .on : .off,
-                     handler: { action in
-                         Settings.libraryFeatures.artwork.useScreenshots = !Settings.libraryFeatures.artwork.useScreenshots
-                         self.updateOptionsMenu()
-                         self.updateSections(animated: true, resetPages: true)
             })
         ]
+        
+        if Settings.proFeaturesEnabled
+        {
+            previewOptions.append(UIAction(title: NSLocalizedString("Live Artwork", comment: ""),
+                                           image: UIImage(systemName: "photo"),
+                                           state: Settings.libraryFeatures.artwork.useScreenshots ? .on : .off,
+                                           handler: { action in
+                                               Settings.libraryFeatures.artwork.useScreenshots = !Settings.libraryFeatures.artwork.useScreenshots
+                                               self.updateOptionsMenu()
+                                               self.updateSections(animated: true, resetPages: true)
+            }))
+        }
         
         return UIMenu(title: NSLocalizedString("Previews", comment: ""),
                       image: UIImage(systemName: "photo.on.rectangle"),

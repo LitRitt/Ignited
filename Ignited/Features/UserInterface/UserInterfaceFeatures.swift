@@ -15,13 +15,13 @@ struct UserInterfaceFeatures: FeatureContainer
     @Feature(name: "Theme",
              description: "Change the theme and color of the app.",
              options: ThemeOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var theme
     
     @Feature(name: "App Icon",
              description: "Change the app's icon.",
              options: AppIconOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var appIcon
     
     @Feature(name: "Toast Notifications",
@@ -36,11 +36,11 @@ struct UserInterfaceFeatures: FeatureContainer
     
     @Feature(name: "Random Game",
              options: RandomGameOptions(),
-             hidden: true)
+             attributes: [.hidden])
     var randomGame
     
     @Feature(name: "Game Previews",
-             hidden: true)
+             attributes: [.hidden])
     var previews
     
     private init()

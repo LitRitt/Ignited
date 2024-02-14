@@ -12,26 +12,38 @@ import Features
 
 enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
+    // Lit Pro
     case normal = "Default"
-    case connect = "Connect"
     case tribute = "Tribute"
-    case cartridge = "Cartridge"
     case neon = "Neon"
+    case connect = "Connect"
+    case cartridge = "Cartridge"
+    case smash = "Super Ignited Bros"
+    case plumberRed = "Red Plumber"
+    case plumberGreen = "Green Plumber"
+    case goomba = "Stomp Bait"
+    case pikachu = "Sparky"
+    case kirby = "Puffball"
     case sealing = "Sword That Seals"
     case sealingAlt = "Sword That Seals Alt"
     case igniting = "Sword That Ignites"
     case ignitingAlt = "Sword That Ignites Alt"
-    case sword = "Master Sword"
-    case shield = "Hylian Shield"
+    // Basic
     case simple = "Simple"
     case glass = "Glass"
     case ablaze = "Ablaze"
     case classic = "Classic"
+    // Kong Pro
     case ball = "Firé Ball"
-    case kong = "King's Barrel"
+    case kong = "Barrel of Kong"
+    case kongFlame = "Barrel of Flame"
     case black = "Space Black"
     case silver = "Silver"
     case gold = "Gold"
+    // Scott Pro
+    case sword = "Master Sword"
+    case shield = "Hylian Shield"
+    case mario = "Many Marios"
     
     var description: String {
         return self.rawValue
@@ -41,14 +53,23 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         return self.rawValue
     }
     
-    var author: String {
+    var author: AppIconAuthor {
         switch self
         {
-        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt: return "LitRitt"
-        case .classic, .ball, .kong, .black, .silver, .gold: return "Kongolabongo"
-        case .simple, .glass: return "epicpal"
-        case .ablaze: return "Salty"
-        case .sword, .shield: return "Scott the Rizzler"
+        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu:
+            return .litritt
+            
+        case .classic, .ball, .kong, .kongFlame, .black, .silver, .gold:
+            return .kongo
+            
+        case .simple, .glass:
+            return .epicpal
+            
+        case .ablaze:
+            return .salty
+            
+        case .sword, .shield, .mario:
+            return .scott
         }
     }
     
@@ -60,6 +81,12 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .tribute: return "IconTribute"
         case .cartridge: return "IconCartridge"
         case .neon: return "IconNeon"
+        case .plumberRed: return "IconPlumberRed"
+        case .plumberGreen: return "IconPlumberGreen"
+        case .goomba: return "IconGoomba"
+        case .smash: return "IconSmash"
+        case .pikachu: return "IconPikachu"
+        case .kirby: return "IconKirby"
         case .sealing: return "IconSealing"
         case .igniting: return "IconIgniting"
         case .sealingAlt: return "IconSealingAlt"
@@ -69,12 +96,14 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .glass: return "IconGlass"
         case .ablaze: return "IconAblaze"
         case .ball: return "IconBall"
-        case .kong: return "IconKong"
+        case .kong: return "IconBarrelKong"
+        case .kongFlame: return "IconBarrelFlame"
         case .black: return "IconBlack"
         case .silver: return "IconSilver"
         case .gold: return "IconGold"
         case .shield: return "IconShield"
         case .sword: return "IconSword"
+        case .mario: return "IconMario"
         }
     }
     
@@ -89,8 +118,10 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var category: AppIconCategory {
         switch self
         {
-        case .connect, .cartridge, .black, .silver, .gold: return .pro
-        case .sealing, .igniting, .sealingAlt, .ignitingAlt, .sword, .shield, .ball, .kong: return .game
+        case _ where !self.pro: return .basic
+        case _ where self.author == .litritt: return .litPro
+        case _ where self.author == .kongo: return .kongPro
+        case _ where self.author == .scott: return .scottPro
         default: return .basic
         }
     }
@@ -111,11 +142,29 @@ extension AppIcon: Equatable
     }
 }
 
-enum AppIconCategory: String, CaseIterable
+enum AppIconCategory: String, CaseIterable, Identifiable
 {
-    case basic
-    case pro
-    case game
+    case basic = "Basic Icons"
+    case litPro = "Lit Pro Icons"
+    case kongPro = "Kongo Pro Icons"
+    case scottPro = "Scott Pro Icons"
+    
+    var id: String {
+        return self.rawValue
+    }
+}
+
+enum AppIconAuthor: String, CaseIterable, Identifiable
+{
+    case litritt = "LitRitt"
+    case kongo = "Kongolabongo"
+    case scott = "Scott the Rizzler"
+    case epicpal = "epicpal"
+    case salty = "Salty"
+    
+    var id: String {
+        return self.rawValue
+    }
 }
 
 struct AppIconOptions
@@ -124,102 +173,8 @@ struct AppIconOptions
             description: "Choose from alternate app icons created by the community.",
             detailView: { value in
         List {
-            Section {
-                ForEach(AppIcon.allCases.filter { $0.category == .basic }) { icon in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            if icon == value.wrappedValue {
-                                HStack {
-                                    Text("✓")
-                                    icon.localizedDescription
-                                }
-                                .foregroundColor(.accentColor)
-                            } else {
-                                icon.localizedDescription
-                            }
-                            Text("by \(icon.author)")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                            .cornerRadius(13)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        value.wrappedValue = icon
-                    }
-                }
-            } header: {
-                appIconSectionHeader("Basic Icons")
-            }
-            Section {
-                ForEach(AppIcon.allCases.filter { $0.category == .game }) { icon in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            if icon == value.wrappedValue {
-                                HStack {
-                                    Text("✓")
-                                    icon.localizedDescription
-                                }
-                                .foregroundColor(.accentColor)
-                                    .addProLabel()
-                            } else {
-                                icon.localizedDescription.addProLabel()
-                            }
-                            Text("by \(icon.author)")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                            .cornerRadius(13)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if Settings.proFeaturesEnabled {
-                            value.wrappedValue = icon
-                        } else {
-                            ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
-                        }
-                    }
-                }
-            } header: {
-                appIconSectionHeader("Game Icons")
-            }
-            Section {
-                ForEach(AppIcon.allCases.filter { $0.category == .pro }) { icon in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            if icon == value.wrappedValue {
-                                HStack {
-                                    Text("✓")
-                                    icon.localizedDescription
-                                }
-                                .foregroundColor(.accentColor)
-                                    .addProLabel()
-                            } else {
-                                icon.localizedDescription.addProLabel()
-                            }
-                            Text("by \(icon.author)")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        Image(uiImage: Bundle.appIcon(icon) ?? UIImage())
-                            .cornerRadius(13)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if Settings.proFeaturesEnabled {
-                            value.wrappedValue = icon
-                        } else {
-                            ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
-                        }
-                    }
-                }
-            } header: {
-                appIconSectionHeader("Pro Icons")
+            ForEach(AppIconCategory.allCases) { category in
+                appIconSection(category, currentIcon: value)
             }
         }
         .onChange(of: value.wrappedValue) { _ in
@@ -245,6 +200,53 @@ struct AppIconOptions
 extension AppIconOptions
 {
     @ViewBuilder
+    static func appIconSection(_ category: AppIconCategory, currentIcon: Binding<AppIcon>) -> some View
+    {
+        Section {
+            ForEach(AppIcon.allCases.filter { $0.category == category }) { icon in
+                HStack {
+                    VStack(alignment: .leading) {
+                        if icon == currentIcon.wrappedValue {
+                            HStack {
+                                Text("✓")
+                                icon.localizedDescription
+                            }
+                            .foregroundColor(.accentColor)
+                                .addProLabel(category != .basic)
+                        } else {
+                            icon.localizedDescription.addProLabel(category != .basic)
+                        }
+                        Text("by \(icon.author.rawValue)")
+                            .font(.system(size: 15))
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                    appIconImage(icon.assetName)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if Settings.proFeaturesEnabled || category == .basic {
+                        currentIcon.wrappedValue = icon
+                    } else {
+                        ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)
+                    }
+                }
+            }
+        } header: {
+            appIconSectionHeader(category.rawValue)
+        }
+    }
+    
+    @ViewBuilder
+    static func appIconImage(_ name: String) -> some View
+    {
+        return Image(uiImage: UIImage(named: name) ?? UIImage())
+            .resizable()
+            .frame(width: 57, height: 57)
+            .cornerRadius(13)
+    }
+    
+    @ViewBuilder
     static func appIconSectionHeader(_ title: String) -> some View
     {
         return ZStack {
@@ -253,6 +255,7 @@ extension AppIconOptions
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             Text(title)
                 .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.white)
         }.padding([.top, .bottom], 10)
     }
     

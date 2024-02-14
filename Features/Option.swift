@@ -15,7 +15,10 @@ public class Option<Value: OptionValue, DetailView: View>: _AnyOption
     // Nil name == hidden option.
     public let name: LocalizedStringKey?
     public let description: LocalizedStringKey?
+    public let attributes: [FeatureAttribute]
+    
     public let pro: Bool
+    public let beta: Bool
     
     public let values: (() -> [Value])?
     public private(set) var detailView: () -> DetailView? = { nil }
@@ -77,13 +80,16 @@ public class Option<Value: OptionValue, DetailView: View>: _AnyOption
         }
     }
     
-    private init(defaultValue: Value, name: LocalizedStringKey?, description: LocalizedStringKey?, pro: Bool = false, values: (() -> some Collection<Value>)?)
+    private init(defaultValue: Value, name: LocalizedStringKey?, description: LocalizedStringKey?, values: (() -> some Collection<Value>)?, attributes: [FeatureAttribute] = [])
     {
         self.defaultValue = defaultValue
         
         self.name = name
         self.description = description
-        self.pro = pro
+        self.attributes = attributes
+        
+        self.pro = self.attributes.contains(where: { $0 == .pro })
+        self.beta = self.attributes.contains(where: { $0 == .beta })
         
         if let values
         {
@@ -97,9 +103,9 @@ public class Option<Value: OptionValue, DetailView: View>: _AnyOption
         self.detailView = { nil }
     }
     
-    private convenience init(defaultValue: Value, name: LocalizedStringKey?, description: LocalizedStringKey?, pro: Bool = false)
+    private convenience init(defaultValue: Value, name: LocalizedStringKey?, description: LocalizedStringKey?, attributes: [FeatureAttribute] = [])
     {
-        self.init(defaultValue: defaultValue, name: name, description: description, pro: pro, values: (() -> [Value])?.none)
+        self.init(defaultValue: defaultValue, name: name, description: description, values: (() -> [Value])?.none, attributes: attributes)
     }
 }
 
@@ -129,13 +135,43 @@ public extension Option where DetailView == EmptyView
 public extension Option where Value == Bool, DetailView == OptionToggleView
 {
     // Non-Optional
-    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, pro: Bool = false)
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, attributes: [FeatureAttribute] = [])
     {
-        self.init(defaultValue: wrappedValue, name: name, description: description, pro: pro)
+        self.init(defaultValue: wrappedValue, name: name, description: description, attributes: attributes)
         
         self.detailView = { [weak self] () -> DetailView? in
             guard let self else { return nil }
-            return OptionToggleView(name: name, pro: pro, selectedValue: self.valueBinding)
+            return OptionToggleView(name: name, attributes: attributes, selectedValue: self.valueBinding)
+        }
+    }
+}
+
+// "Color Picker" Option (User-visible, default color picker UI)
+public extension Option where Value == Color, DetailView == OptionColorPickerView<Value>
+{
+    // Non-Optional
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, transparency: Bool = false, attributes: [FeatureAttribute] = [])
+    {
+        self.init(defaultValue: wrappedValue, name: name, description: description, attributes: attributes)
+        
+        self.detailView = { [weak self] () -> DetailView? in
+            guard let self else { return nil }
+            return OptionColorPickerView(name: name, transparency: transparency, attributes: attributes, selectedValue: self.valueBinding)
+        }
+    }
+}
+
+// "Slider" Option (User-visible, custom slider UI
+public extension Option where Value == Double, DetailView == OptionSliderView<Value>
+{
+    // Non-optional
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, range: ClosedRange<Value>, step: Double, unit: LocalizedStringKey = "", decimals: Int? = nil, isPercentage: Bool = false, attributes: [FeatureAttribute] = [])
+    {
+        self.init(defaultValue: wrappedValue, name: name, description: description, attributes: attributes)
+        
+        self.detailView = { [weak self] () -> DetailView? in
+            guard let self else { return nil }
+            return OptionSliderView(name: name, range: range, step: step, unit: unit, decimals: decimals, isPercentage: isPercentage, attributes: attributes, selectedValue: self.valueBinding)
         }
     }
 }
@@ -144,35 +180,35 @@ public extension Option where Value == Bool, DetailView == OptionToggleView
 public extension Option where Value: LocalizedOptionValue, DetailView == OptionPickerView<Value>
 {
     // Non-Optional
-    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, pro: Bool = false, values: @autoclosure @escaping () -> some Collection<Value>)
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, values: @autoclosure @escaping () -> some Collection<Value>, attributes: [FeatureAttribute] = [])
     {
-        self.init(defaultValue: wrappedValue, name: name, description: description, pro: pro, values: values)
+        self.init(defaultValue: wrappedValue, name: name, description: description, values: values, attributes: attributes)
         
         self.detailView = { [weak self] () -> DetailView? in
             guard let self else { return nil }
-            return OptionPickerView(name: name, options: Array(values()), pro: pro, selectedValue: self.valueBinding)
+            return OptionPickerView(name: name, options: Array(values()), attributes: attributes, selectedValue: self.valueBinding)
         }
     }
     
     // Optional, default = nil
-    convenience init(name: LocalizedStringKey, description: LocalizedStringKey? = nil, pro: Bool = false, values: @autoclosure @escaping () -> some Collection<Value>) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
+    convenience init(name: LocalizedStringKey, description: LocalizedStringKey? = nil, values: @autoclosure @escaping () -> some Collection<Value>, attributes: [FeatureAttribute] = []) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
     {
-        self.init(defaultValue: Value.none, name: name, description: description, pro: pro, values: values)
+        self.init(defaultValue: Value.none, name: name, description: description, values: values, attributes: attributes)
         
         self.detailView = { [weak self] () -> DetailView? in
             guard let self else { return nil }
-            return OptionPickerView(name: name, options: values().appendingNil(), pro: pro, selectedValue: self.valueBinding)
+            return OptionPickerView(name: name, options: values().appendingNil(), attributes: attributes, selectedValue: self.valueBinding)
         }
     }
     
     // Optional, default = non-nil
-    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, pro: Bool = false, values: @autoclosure @escaping () -> some Collection<Value>) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, values: @autoclosure @escaping () -> some Collection<Value>, attributes: [FeatureAttribute] = []) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
     {
-        self.init(defaultValue: wrappedValue, name: name, description: description, pro: pro, values: values)
+        self.init(defaultValue: wrappedValue, name: name, description: description, values: values)
         
         self.detailView = { [weak self] () -> DetailView? in
             guard let self else { return nil }
-            return OptionPickerView(name: name, options: values().appendingNil(), pro: pro, selectedValue: self.valueBinding)
+            return OptionPickerView(name: name, options: values().appendingNil(), attributes: attributes, selectedValue: self.valueBinding)
         }
     }
 }
@@ -181,9 +217,9 @@ public extension Option where Value: LocalizedOptionValue, DetailView == OptionP
 public extension Option where Value: LocalizedOptionValue
 {
     // Non-Optional
-    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, pro: Bool = false, @ViewBuilder detailView: @escaping (Binding<Value>) -> DetailView)
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, attributes: [FeatureAttribute] = [], @ViewBuilder detailView: @escaping (Binding<Value>) -> DetailView)
     {
-        self.init(defaultValue: wrappedValue, name: name, description: description, pro: pro)
+        self.init(defaultValue: wrappedValue, name: name, description: description, attributes: attributes)
         
         self.detailView = { [weak self] in
             guard let self else { return nil }
@@ -194,9 +230,9 @@ public extension Option where Value: LocalizedOptionValue
     }
     
     // Optional, default = nil
-    convenience init(name: LocalizedStringKey, description: LocalizedStringKey? = nil, pro: Bool = false, @ViewBuilder detailView: @escaping (Binding<Value>) -> DetailView) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
+    convenience init(name: LocalizedStringKey, description: LocalizedStringKey? = nil, attributes: [FeatureAttribute] = [], @ViewBuilder detailView: @escaping (Binding<Value>) -> DetailView) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
     {
-        self.init(defaultValue: Value.none, name: name, description: description, pro: pro)
+        self.init(defaultValue: Value.none, name: name, description: description, attributes: attributes)
         
         self.detailView = { [weak self] in
             guard let self else { return nil }
@@ -207,9 +243,9 @@ public extension Option where Value: LocalizedOptionValue
     }
     
     // Optional, default = non-nil
-    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, pro: Bool = false, @ViewBuilder detailView: @escaping (Binding<Value>) -> DetailView) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
+    convenience init(wrappedValue: Value, name: LocalizedStringKey, description: LocalizedStringKey? = nil, attributes: [FeatureAttribute] = [], @ViewBuilder detailView: @escaping (Binding<Value>) -> DetailView) where Value: OptionalProtocol, Value.Wrapped: LocalizedOptionValue
     {
-        self.init(defaultValue: wrappedValue, name: name, description: description, pro: pro)
+        self.init(defaultValue: wrappedValue, name: name, description: description, attributes: attributes)
         
         self.detailView = { [weak self] in
             guard let self else { return nil }

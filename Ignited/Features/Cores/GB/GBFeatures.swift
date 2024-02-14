@@ -15,7 +15,7 @@ struct GBFeatures: FeatureContainer
     @Feature(name: "Color Palettes",
              description: "Change the color palette used for GB games.",
              options: GBPaletteOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var palettes
     
     private init()

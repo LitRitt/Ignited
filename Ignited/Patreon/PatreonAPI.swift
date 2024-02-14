@@ -9,6 +9,8 @@
 import Foundation
 import AuthenticationServices
 
+import DeltaCore
+
 private let clientID = "CglZbTZWwHIP8YGQpWirvzy7Xxn3uYyBQqYjGYnoYn-01wX-99JmZFkVZGVcybMS"
 private let clientSecret = "14BcPFbIT52Qfzg4mRmS7CWkN02NmMQkKaBjNDopiEynpcivvRd0rNRtYdxnnJn9"
 
@@ -285,23 +287,39 @@ extension PatreonAPI
         // Reset all Pro settings if user isn't a Pro member
         if !Settings.proFeaturesEnabled
         {
-            Settings.gameplayFeatures.rewind.isEnabled = false
-            Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
-            Settings.controllerFeatures.backgroundBlur.isEnabled = false
+            // Live artwork
+            Settings.libraryFeatures.artwork.useScreenshots = false
+            // Rewind
+            Settings.gameplayFeatures.rewind.keepStates = false
+            Settings.gameplayFeatures.rewind.maxStates = 4
+            Settings.gameplayFeatures.rewind.interval = 15
+            // Background blur
+            Settings.controllerFeatures.backgroundBlur.tintIntensity = 0.1
+            Settings.controllerFeatures.backgroundBlur.strength = 1.0
+            // Touch overlay
+            if Settings.touchFeedbackFeatures.touchOverlay.style != .bubble {
+                Settings.touchFeedbackFeatures.touchOverlay.style = .bubble
+            }
+            // Touch audio
+            if Settings.touchFeedbackFeatures.touchAudio.sound != .tock {
+                Settings.touchFeedbackFeatures.touchAudio.sound = .tock
+            }
+            // Skin color
+            if Settings.controllerFeatures.skin.colorMode == .custom {
+                Settings.controllerFeatures.skin.colorMode = .none
+            }
+            // Artwork
             if Settings.libraryFeatures.artwork.style == .custom {
                 Settings.libraryFeatures.artwork.style = .basic
             }
             if Settings.libraryFeatures.favorites.style == .custom {
                 Settings.libraryFeatures.favorites.style = .theme
             }
-            Settings.libraryFeatures.animation.isEnabled = false
+            // Theme color
             if Settings.userInterfaceFeatures.theme.color == .custom {
                 Settings.userInterfaceFeatures.theme.color = .orange
             }
-            if Settings.userInterfaceFeatures.appIcon.alternateIcon.pro {
-                Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
-            }
-            Settings.touchFeedbackFeatures.touchAudio.isEnabled = false
+            // Palettes
             if Settings.gbFeatures.palettes.palette.pro {
                 Settings.gbFeatures.palettes.palette = .studio
             }
@@ -310,6 +328,10 @@ extension PatreonAPI
             }
             if Settings.gbFeatures.palettes.spritePalette2.pro {
                 Settings.gbFeatures.palettes.spritePalette2 = .studio
+            }
+            // App icon
+            if Settings.userInterfaceFeatures.appIcon.alternateIcon.pro {
+                Settings.userInterfaceFeatures.appIcon.alternateIcon = .normal
             }
             AppIconOptions.updateAppIcon()
         }

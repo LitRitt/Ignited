@@ -345,9 +345,11 @@ extension Settings
     
     static var proFeaturesEnabled: Bool {
         get {
+            if Settings.advancedFeatures.proOverride.isEnabled { return true }
+            
             guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
             
-            return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated) || Settings.advancedFeatures.proOverride.isEnabled
+            return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated)
         }
     }
 }
@@ -371,7 +373,6 @@ private extension Settings
         {
         case .nes: systemName = "nes"
         case .snes: systemName = "snes"
-        case .gb: systemName = "gb"
         case .gbc: systemName = "gbc"
         case .gba: systemName = "gba"
         case .n64: systemName = "n64"

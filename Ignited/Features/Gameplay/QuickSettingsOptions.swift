@@ -44,7 +44,6 @@ struct QuickSettingsOptions
     
     @Option(name: "Replace Button",
             description: "Choose an input, like fast forward or screenshot, to use with the quick settings button on skins instead of opening the quick settings menu.",
-            pro: true,
             values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
     var buttonReplacement: ActionInput? = nil
     
@@ -90,17 +89,9 @@ struct QuickSettingsOptions
             description: "Enable to show controller skin options in the quick settings.")
     var controllerSkinEnabled: Bool = true
     
-    @Option(name: "Expanded Controller Skin",
-            description: "Enable to show more controller skin options in the quick settings.")
-    var expandedControllerSkinEnabled: Bool = false
-    
     @Option(name: "Background Blur",
             description: "Enable to show background blur options in the quick settings.")
-    var backgroundBlurEnabled: Bool = true
-    
-    @Option(name: "Expanded Background Blur",
-            description: "Enable to show more background blur options in the quick settings.")
-    var expandedBackgroundBlurEnabled: Bool = false
+    var backgroundBlurEnabled: Bool = false
     
     @Option(name: "Color Palettes",
             description: "Enable to show color palette options in the quick settings.")

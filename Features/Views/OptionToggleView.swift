@@ -12,14 +12,17 @@ import SwiftUI
 public struct OptionToggleView: View
 {
     var name: LocalizedStringKey
-    var pro: Bool
+    var attributes: [FeatureAttribute]
     
     @Binding
     var selectedValue: Bool
 
     public var body: some View {
-        Toggle(isOn: $selectedValue) {
-            Text(name).addProLabel(pro)
+        let pro = self.attributes.contains(where: {$0 == .pro})
+        let beta = self.attributes.contains(where: {$0 == .beta})
+        
+        return Toggle(isOn: $selectedValue) {
+            Text(name).addProLabel(pro).addBetaLabel(beta)
         }
             .toggleStyle(SwitchToggleStyle(tint: .accentColor))
             .displayInline()

@@ -12,19 +12,12 @@ import Features
 
 struct GameAudioOptions
 {
-    @Option(name: "Game Volume", description: "Change how loud the game volume should be.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Volume: \(value.wrappedValue * 100, specifier: "%.f")%")
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.05)
-                Text("100%")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Game Volume",
+            description: "Change how loud the game volume should be.",
+            range: 0.0...1.0,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
     var volume: Double = 1.0
     
     @Option(name: "Respect Silent Mode",
@@ -34,6 +27,10 @@ struct GameAudioOptions
     @Option(name: "Play Over Other Media",
             description: "Enable to play game audio over other media, such as voice chat or videos.")
     var playOver: Bool = true
+    
+    @Option(name: "Mute During Fast Forward",
+            description: "Enable to mute game audio while fast forwarding.")
+    var fastForwardMutes: Bool = false
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

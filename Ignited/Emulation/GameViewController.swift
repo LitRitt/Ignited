@@ -736,6 +736,11 @@ extension GameViewController
                 }
                 else
                 {
+                    if Settings.gameplayFeatures.pauseMenu.holdButtonsDismisses
+                    {
+                        pauseViewController.dismiss()
+                    }
+                    
                     self.updateSustainedButtons(gameController: gameController)
                 }
                 
@@ -756,13 +761,8 @@ extension GameViewController
                 }
             }
             
-            if self.emulatorCore?.deltaCore.supportedRates.upperBound == 1
-            {
-                pauseViewController.fastForwardItem = nil
-            }
-            
             if let game = self.game,
-               game.type != .gb
+               game.type != .gbc || game.fileURL.pathExtension.lowercased() != "gb"
             {
                 pauseViewController.paletteItem = nil
             }
@@ -793,7 +793,7 @@ extension GameViewController
                 // GPGX core does not support background blur yet.
                 pauseViewController.blurBackgroudItem = nil
                 
-            case .gbc?, .gb?:
+            case .gbc?:
                 // Rewind is disabled on GBC. Crashes gambette
                 pauseViewController.rewindItem = nil
 
@@ -802,11 +802,6 @@ extension GameViewController
             
             if !Settings.controllerFeatures.backgroundBlur.showDuringAirPlay,
                UIApplication.shared.isExternalDisplayConnected
-            {
-                pauseViewController.blurBackgroudItem = nil
-            }
-            
-            if !Settings.proFeaturesEnabled
             {
                 pauseViewController.blurBackgroudItem = nil
             }
@@ -1111,38 +1106,20 @@ private extension GameViewController
             try self.buttonSoundFile = AVAudioFile(forReading: buttonSoundURL)
             try self.buttonSoundPlayer = AVAudioPlayer(contentsOf: buttonSoundURL)
             
-            self.buttonSoundPlayer?.volume = Float(Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
+            self.buttonSoundPlayer?.volume = Float(Settings.touchFeedbackFeatures.touchAudio.useGameVolume ? Settings.gameplayFeatures.gameAudio.volume : Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
         }
         catch
         {
             print(error)
         }
         
-        if Settings.touchFeedbackFeatures.touchAudio.useGameVolume
-        {
-            self.controllerView.buttonPressedHandler = { [weak self] () in
-                if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   Settings.proFeaturesEnabled,
-                   let core = self?.emulatorCore,
-                   let buttonSoundFile = self?.buttonSoundFile
-                {
-                    core.audioManager.playButtonSound(buttonSoundFile)
-                }
+        self.controllerView.buttonPressedHandler = { [weak self] () in
+            if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
+               let buttonSoundPlayer = self?.buttonSoundPlayer
+            {
+                buttonSoundPlayer.play()
             }
         }
-        else
-        {
-            self.controllerView.buttonPressedHandler = { [weak self] () in
-                if Settings.touchFeedbackFeatures.touchAudio.isEnabled,
-                   Settings.proFeaturesEnabled,
-                   let core = self?.emulatorCore,
-                   let buttonSoundPlayer = self?.buttonSoundPlayer
-                {
-                    buttonSoundPlayer.play()
-                }
-            }
-        }
-                
     }
     
     func playButtonAudioFeedbackSound()
@@ -1151,7 +1128,7 @@ private extension GameViewController
         {
             buttonSoundPlayer.volume = 1.0
             buttonSoundPlayer.play()
-            buttonSoundPlayer.volume = Float(Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
+            buttonSoundPlayer.volume = Float(Settings.touchFeedbackFeatures.touchAudio.useGameVolume ? Settings.gameplayFeatures.gameAudio.volume : Settings.touchFeedbackFeatures.touchAudio.buttonVolume)
         }
     }
     
@@ -1286,11 +1263,6 @@ private extension GameViewController
             self.blurScreenBrightness = intensity
         }
         
-        guard Settings.proFeaturesEnabled else {
-            self.blurScreenEnabled = false
-            return
-        }
-        
         // Set enabled last as it's the property that triggers updateGameViews()
         if let game = self.game
         {
@@ -1357,6 +1329,8 @@ private extension GameViewController
     func updateEmulationSpeed()
     {
         self.emulatorCore?.rate = Settings.gameplayFeatures.quickSettings.fastForwardSpeed
+        
+        self.updateAudio()
     }
     
     func updateControllerSkinCustomization()
@@ -1978,6 +1952,13 @@ private extension GameViewController
             self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
         }
         
+        let isFastForwarding = self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound
+        let mutedByFastForward = Settings.gameplayFeatures.gameAudio.fastForwardMutes && isFastForwarding
+        
+        if self.emulatorCore?.audioManager.mutedByFastForward != mutedByFastForward {
+            self.emulatorCore?.audioManager.mutedByFastForward = mutedByFastForward
+        }
+        
         self.emulatorCore?.audioManager.audioVolume = Float(Settings.gameplayFeatures.gameAudio.volume)
     }
 }
@@ -2158,12 +2139,16 @@ extension GameViewController
     
     func performStatusBarAction(hold: Bool = false)
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.statusBarDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let text: String
         
         if hold
         {
-            if let pauseView = self.pauseViewController { pauseView.dismiss() }
-            
             if Settings.userInterfaceFeatures.statusBar.style == .dark {
                 Settings.userInterfaceFeatures.statusBar.style = .light
                 text = NSLocalizedString("Status Bar: Light Content", comment: "")
@@ -2193,6 +2178,12 @@ extension GameViewController
     
     func performMicrophoneAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.microphoneDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let text: String
         
         if Settings.gameplayFeatures.micSupport.isEnabled {
@@ -2213,6 +2204,12 @@ extension GameViewController
     
     func performRotationLockAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.rotationLockDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let text: String
         
         if self.isOrientationLocked
@@ -2259,13 +2256,13 @@ extension GameViewController
     
     func performScreenshotAction(hold: Bool = false)
     {
-        if let pauseView = self.pauseViewController
-        {
-            pauseView.dismiss()
-        }
-        
         if hold
         {
+            if let pauseView = self.pauseViewController
+            {
+                pauseView.dismiss()
+            }
+            
             self.presentToastView(text: "3", duration: 1)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1)
@@ -2276,6 +2273,14 @@ extension GameViewController
             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
             {
                 self.presentToastView(text: "1", duration: 1)
+            }
+        }
+        else
+        {
+            if let pauseView = self.pauseViewController,
+               Settings.gameplayFeatures.pauseMenu.screenshotDismisses
+            {
+                pauseView.dismiss()
             }
         }
         
@@ -2419,6 +2424,12 @@ extension GameViewController
     
     func performFastForwardAction(activate: Bool)
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.fastForwardDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         guard let emulatorCore = self.emulatorCore else { return }
         let text: String
         
@@ -2438,6 +2449,8 @@ extension GameViewController
         {
             self.presentToastView(text: text)
         }
+        
+        self.updateAudio()
     }
     
     func updateFastForwardSpeed(speed: Double)
@@ -2450,6 +2463,8 @@ extension GameViewController
         {
             emulatorCore.rate = speed
         }
+        
+        self.updateAudio()
     }
     
     func performQuickSettingsAction()
@@ -2540,6 +2555,12 @@ extension GameViewController
     
     func performBlurBackgroundAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.backgroundBlurDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let enabled = !Settings.controllerFeatures.backgroundBlur.isEnabled
         self.blurScreenEnabled = enabled
         Settings.controllerFeatures.backgroundBlur.isEnabled = enabled
@@ -2592,6 +2613,12 @@ extension GameViewController
     
     func performAltRepresentationsAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.alternateSkinDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let enabled = !Settings.advancedFeatures.skinDebug.useAlt
         self.controllerView.isAltRepresentationsEnabled = enabled
         Settings.advancedFeatures.skinDebug.useAlt = enabled
@@ -2613,6 +2640,12 @@ extension GameViewController
     
     func performDebugModeAction()
     {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.debugModeDismisses
+        {
+            pauseView.dismiss()
+        }
+        
         let enabled = !Settings.advancedFeatures.skinDebug.isOn
         Settings.advancedFeatures.skinDebug.isOn = enabled
         self.controllerView.isDebugModeEnabled = enabled
@@ -3174,7 +3207,7 @@ private extension GameViewController
         case Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey:
             self.updateCoreSettings()
             
-        case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey:
+        case Settings.gameplayFeatures.gameAudio.$respectSilent.settingsKey, Settings.gameplayFeatures.gameAudio.$playOver.settingsKey, Settings.gameplayFeatures.gameAudio.$volume.settingsKey, Settings.gameplayFeatures.gameAudio.$fastForwardMutes.settingsKey:
             self.updateAudio()
             
         case Settings.touchFeedbackFeatures.touchAudio.$sound.settingsKey:
@@ -3434,7 +3467,8 @@ private extension GameViewController
             self.updateAutoSaveState(true)
             
             // Battery critical, quit emulation
-            if currentBatteryLevel < criticalBatteryLevel
+            if currentBatteryLevel < criticalBatteryLevel,
+               !Settings.advancedFeatures.lowBattery.disableCriticalBattery
             {
                 NotificationCenter.default.post(name: EmulatorCore.emulationDidQuitNotification, object: nil)
                 

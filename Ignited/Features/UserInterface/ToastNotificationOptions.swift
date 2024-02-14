@@ -12,19 +12,12 @@ import Features
 
 struct ToastNotificationOptions
 {
-    @Option(name: "Duration", description: "Change how long toasts should be shown.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Duration: \(value.wrappedValue, specifier: "%.1f")s")
-                Spacer()
-            }
-            HStack {
-                Text("0.5s")
-                Slider(value: value, in: 0.5...5.0, step: 0.5)
-                Text("5s")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Duration",
+            description: "Set your preferred fast forward speed.",
+            range: 0.5...5.0,
+            step: 0.1,
+            unit: "s",
+            decimals: 1)
     var duration: Double = 1.5
     
     @Option(name: "Game Restarted",

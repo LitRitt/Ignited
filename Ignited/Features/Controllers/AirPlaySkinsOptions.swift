@@ -55,7 +55,7 @@ struct AirPlaySkinsOptions
         case .nes: return self.nes
         case .snes: return self.snes
         case .n64: return self.n64
-        case .gb, .gbc: return self.gbc
+        case .gbc: return self.gbc
         case .gba: return self.gba
         case .ds: return self.ds
         case .genesis, .ms, .gg: return self.genesis

@@ -13,37 +13,23 @@ import Features
 struct RewindOptions
 {
     @Option(name: "Keep Save States",
-            description: "Enable to preserve save states beyond game exit, utilizing rewind as an alternative auto-save option. If disabled, rewind is purely for convenience, and save states are removed when quitting the game.")
+            description: "Enable to preserve save states beyond game exit, utilizing rewind as an alternative auto-save option. If disabled, rewind is purely for convenience, and save states are removed when quitting the game. Disabled for free users"
+            attributes: [.pro])
     var keepStates: Bool = true
     
-    @Option(name: "Interval", description: "Change how often the game state should be saved.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Interval: \(value.wrappedValue, specifier: "%.f")s")
-                Spacer()
-            }
-            HStack {
-                Text("3s")
-                Slider(value: value, in: 3...15, step: 1)
-                Text("15s")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Interval",
+            description: "Change how often the game state should be saved. Set to 15 seconds for free users.",
+            range: 3...15,
+            step: 1,
+            unit: "s",
+            attributes: [.pro])
     var interval: Double = 15
     
-    @Option(name: "Maximum States", description: "The maximum number of states to save before the oldest state gets deleted. Increasing this will allow you to rewind further back in time, at the cost of larger device storage usage.", detailView: { value in
-        VStack {
-            HStack {
-                Text("Maximum States: \(value.wrappedValue, specifier: "%.f")")
-                Spacer()
-            }
-            HStack {
-                Text("10")
-                Slider(value: value, in: 10...50, step: 1)
-                Text("50")
-            }
-        }.displayInline()
-    })
+    @Option(name: "Maximum States",
+            description: "The maximum number of states to save before the oldest state gets deleted. Increasing this will allow you to rewind further back in time, at the cost of larger device storage usage. Set to 4 states for free users.",
+            range: 10...50,
+            step: 1,
+            attributes: [.pro])
     var maxStates: Double = 30
     
     @Option(name: "Restore Defaults",

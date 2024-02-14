@@ -19,9 +19,12 @@ public final class Feature<Options>: _AnyFeature
 {
     public let name: LocalizedStringKey
     public let description: LocalizedStringKey?
+    public let attributes: [FeatureAttribute]
+    
+    public let pro: Bool
+    public let beta: Bool
     public let permanent: Bool
     public let hidden: Bool
-    public let pro: Bool
     
     // Assigned to property name.
     public internal(set) var key: String = ""
@@ -50,14 +53,17 @@ public final class Feature<Options>: _AnyFeature
     
     private var options: Options
     
-    public init(name: LocalizedStringKey, description: LocalizedStringKey? = nil, options: Options = EmptyOptions(), permanent: Bool = false, hidden: Bool = false, pro: Bool = false)
+    public init(name: LocalizedStringKey, description: LocalizedStringKey? = nil, options: Options = EmptyOptions(), attributes: [FeatureAttribute] = [])
     {
         self.name = name
         self.description = description
         self.options = options
-        self.permanent = permanent
-        self.hidden = hidden
-        self.pro = pro
+        self.attributes = attributes
+        
+        self.pro = self.attributes.contains(where: { $0 == .pro })
+        self.beta = self.attributes.contains(where: { $0 == .beta })
+        self.permanent = self.attributes.contains(where: { $0 == .permanent })
+        self.hidden = self.attributes.contains(where: { $0 == .hidden })
         
         self.prepareOptions()
     }

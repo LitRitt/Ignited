@@ -14,7 +14,7 @@ import Features
 enum FavoriteArtworkStyle: String, CaseIterable, CustomStringConvertible
 {
     case none = "Default"
-    case theme = "Theme"
+    case theme = "Complimentary"
     case custom = "Custom"
     
     var description: String {
@@ -31,7 +31,7 @@ enum FavoriteArtworkStyle: String, CaseIterable, CustomStringConvertible
     
     var borderColor: UIColor? {
         switch self {
-        case .none: return Settings.libraryFeatures.artwork.style.borderColor
+        case .none: return Settings.userInterfaceFeatures.theme.color.uiColor
         case .theme: return Settings.userInterfaceFeatures.theme.color.favoriteColor
         case .custom: return Settings.libraryFeatures.favorites.borderColorMode == .custom ? UIColor(Settings.libraryFeatures.favorites.borderColor) : Settings.userInterfaceFeatures.theme.color.favoriteColor
         }
@@ -103,138 +103,82 @@ struct FavoriteGamesOptions
     
     @Option(name: "Background Color Mode",
             description: "Choose which background color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var backgroundColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Background Color",
             description: "Choose the color to use for the custom background color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: true) {
-            Text("Custom Background Color").addProLabel()
-        }.displayInline()
-    })
+            transparency: true,
+            attributes: [.pro])
     var backgroundColor: Color = .orange
     
     @Option(name: "Border Color Mode",
             description: "Choose which border color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var borderColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Border Color",
             description: "Choose the color to use for the custom border color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Border Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var borderColor: Color = .orange
     
     @Option(name: "Text Color Mode",
             description: "Choose which text color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var textColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Text Color",
             description: "Choose the color to use for the custom text color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Text Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var textColor: Color = .black
     
     @Option(name: "Shadow Color Mode",
             description: "Choose which shadow color to use with the custom style option.",
-            pro: true,
-            values: ArtworkCustomColor.allCases)
+            values: ArtworkCustomColor.allCases,
+            attributes: [.pro])
     var shadowColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Shadow Color",
             description: "Choose the color to use for the custom shadow color mode.",
-            pro: true,
-            detailView: { value in
-        ColorPicker(selection: value, supportsOpacity: false) {
-            Text("Custom Shadow Color").addProLabel()
-        }.displayInline()
-    })
+            attributes: [.pro])
     var shadowColor: Color = .white
     
     @Option(name: "Custom Shadow Radius",
             description: "Change the shadow radius to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Radius: \(value.wrappedValue, specifier: "%.f")pt").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...10.0, step: 0.5)
-                Text("10pt")
-            }
-        }.displayInline()
-    })
+            range: 0.0...10.0,
+            step: 0.5,
+            unit: "pt",
+            attributes: [.pro])
     var shadowRadius: Double = 5
     
     @Option(name: "Custom Shadow Opacity",
             description: "Change the shadow opacity to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Shadow Opacity: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...1.0, step: 0.1)
-                Text("100%")
-            }
-        }.displayInline()
-    })
+            range: 0.0...1.0,
+            step: 0.1,
+            unit: "%",
+            isPercentage: true,
+            attributes: [.pro])
     var shadowOpacity: Double = 0.5
     
     @Option(name: "Custom Corner Radius",
             description: "Change the corner radius to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Corners Radius: \(value.wrappedValue * 100, specifier: "%.f")%").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0%")
-                Slider(value: value, in: 0.0...0.25, step: 0.01)
-                Text("25%")
-            }
-        }.displayInline()
-    })
+            range: 0.0...0.25,
+            step: 0.01,
+            unit: "%",
+            isPercentage: true,
+            attributes: [.pro])
     var cornerRadius: Double = 0.15
     
     @Option(name: "Custom Border Width",
             description: "Change the border witdh to use with the custom style option.",
-            pro: true,
-            detailView: { value in
-        VStack {
-            HStack {
-                Text("Custom Border Width: \(value.wrappedValue, specifier: "%.1f")pt").addProLabel()
-                Spacer()
-            }
-            HStack {
-                Text("0pt")
-                Slider(value: value, in: 0.0...3.0, step: 0.5)
-                Text("3pt")
-            }
-        }.displayInline()
-    })
+            range: 0.0...3.0,
+            step: 0.5,
+            unit: "pt",
+            decimals: 1,
+            attributes: [.pro])
     var borderWidth: Double = 2
     
     @Option(name: "Restore Defaults",

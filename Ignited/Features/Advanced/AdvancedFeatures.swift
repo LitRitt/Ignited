@@ -25,7 +25,7 @@ struct AdvancedFeatures: FeatureContainer
     @Feature(name: "Low Battery",
              description: "Choose when the app starts reacting to low device battery.",
              options: LowBatteryOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var lowBattery
     
     #if DEBUG
@@ -35,7 +35,7 @@ struct AdvancedFeatures: FeatureContainer
     #else
     @Feature(name: "Enable Pro",
              description: "For testing Ignited Pro features.",
-             hidden: true)
+             attributes: [.hidden])
     var proOverride
     #endif
     

@@ -360,9 +360,7 @@ extension PowerUserOptions
                 Settings.gameplayFeatures.quickSettings.fastForwardEnabled = true
                 Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled = false
                 Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedControllerSkinEnabled = false
                 Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedBackgroundBlurEnabled = false
                 Settings.gameplayFeatures.quickSettings.colorPalettesEnabled = true
                 
             case .skin:

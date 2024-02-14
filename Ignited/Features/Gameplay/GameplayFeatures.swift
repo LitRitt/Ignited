@@ -15,46 +15,46 @@ struct GameplayFeatures: FeatureContainer
     @Feature(name: "Pause Menu",
              description: "Change the order of button in the pause menu.",
              options: PauseMenuOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var pauseMenu
     
     @Feature(name: "Game Audio",
              description: "Change how and when audio is played.",
              options: GameAudioOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var gameAudio
     
     @Feature(name: "Game Screenshots",
              description: "Capture screenshots of gameplay to your files or photos.",
              options: GameScreenshotOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var screenshots
     
     @Feature(name: "Fast Forward",
              description: "Speed up gameplay to save time.",
              options: FastForwardOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var fastForward
     
     @Feature(name: "Rewind",
              description: "Automatically save state at a given interval on supported systems. Allows you to rewind to a recent game state to undo mistakes.",
              options: RewindOptions(),
-             pro: true)
+             attributes: [.beta])
     var rewind
     
     @Feature(name: "Quick Settings Menu",
              description: "Access common gameplay settings quickly from the pause menu or a controller/skin button.",
              options: QuickSettingsOptions(),
-             permanent: true)
+             attributes: [.permanent])
     var quickSettings
     
     @Feature(name: "Save States",
              options: SaveStatesOptions(),
-             hidden: true)
+             attributes: [.hidden])
     var saveStates
     
     @Feature(name: "Auto Sync",
-             hidden: true)
+             attributes: [.hidden])
     var autoSync
     
     @Feature(name: "Cheat Codes",
@@ -67,11 +67,11 @@ struct GameplayFeatures: FeatureContainer
     
     @Feature(name: "Sustain Buttons",
              options: SustainButtonsOptions(),
-             hidden: true)
+             attributes: [.hidden])
     var sustainButtons
     
     @Feature(name: "Mic Support",
-             hidden: true)
+             attributes: [.hidden])
     var micSupport
     
     private init()
