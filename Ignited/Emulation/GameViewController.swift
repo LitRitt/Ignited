@@ -127,6 +127,10 @@ class GameViewController: DeltaCore.GameViewController
             self.overscanEditorView.isHidden = true
             
             self.clearRewindSaveStates()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.updateBlurBackground()
+            }
         }
     }
     
@@ -790,8 +794,6 @@ extension GameViewController
             case .genesis?, .ms?, .gg?:
                 // GPGX core does not support cheats yet.
                 pauseViewController.cheatCodesItem = nil
-                // GPGX core does not support background blur yet.
-                pauseViewController.blurBackgroudItem = nil
                 
             case .gbc?:
                 // Rewind is disabled on GBC. Crashes gambette
@@ -1263,15 +1265,7 @@ private extension GameViewController
             self.blurScreenBrightness = intensity
         }
         
-        // Set enabled last as it's the property that triggers updateGameViews()
-        if let game = self.game
-        {
-            switch game.type
-            {
-            case .genesis, .ms, .gg: self.blurScreenEnabled = false //TODO: Fix background blur on genesis
-            default: self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && !self.isEditingOverscanInsets
-            }
-        }
+        self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && !self.isEditingOverscanInsets
     }
     
     func updateGameboyPalette()
