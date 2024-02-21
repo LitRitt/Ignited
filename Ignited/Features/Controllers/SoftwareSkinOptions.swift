@@ -67,6 +67,13 @@ struct SoftwareSkinOptions
             isPercentage: true)
     var shadowOpacity: Double = 0.7
     
+    @Option(name: "Extended Edges",
+            description: "Change the value to use for extended edges on inputs. Extended edges increase the area around an input that will activate that input when touched.",
+            range: 0...20,
+            step: 1,
+            unit: "pt")
+    var extendedEdges: Double = 10
+    
     @Option(name: "Translucent",
             description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")
     var translucentInputs: Bool = true

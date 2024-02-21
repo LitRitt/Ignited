@@ -39,10 +39,10 @@ public struct SoftwareControllerSkin
     
     static public var extendedEdges: [String: CGFloat]
     {[
-        "top": 10,
-        "bottom": 10,
-        "left": 10,
-        "right": 10,
+        "top": Settings.controllerFeatures.softwareSkin.extendedEdges,
+        "bottom": Settings.controllerFeatures.softwareSkin.extendedEdges,
+        "left": Settings.controllerFeatures.softwareSkin.extendedEdges,
+        "right": Settings.controllerFeatures.softwareSkin.extendedEdges
     ]}
 }
 
