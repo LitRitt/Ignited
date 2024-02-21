@@ -23,6 +23,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinStyle: SoftwareSkinStyle = Settings.controllerFeatures.softwareSkin.style
     @State private var softwareSkinColor: SoftwareSkinColor = Settings.controllerFeatures.softwareSkin.color
     @State private var softwareSkinCustomColor: Color = Settings.controllerFeatures.softwareSkin.customColor
+    @State private var softwareSkinCustomColorSecondary: Color = Settings.controllerFeatures.softwareSkin.customColorSecondary
     @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
@@ -239,6 +240,10 @@ struct QuickSettingsView: View
                             ColorPicker("Custom Color", selection: self.$softwareSkinCustomColor, supportsOpacity: false)
                                 .onChange(of: self.softwareSkinCustomColor) { value in
                                     Settings.controllerFeatures.softwareSkin.customColor = value
+                                }
+                            ColorPicker("Custom Secondary Color", selection: self.$softwareSkinCustomColorSecondary, supportsOpacity: false)
+                                .onChange(of: self.softwareSkinCustomColorSecondary) { value in
+                                    Settings.controllerFeatures.softwareSkin.customColorSecondary = value
                                 }
                             Toggle("Shadows", isOn: Settings.controllerFeatures.softwareSkin.$shadows.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))

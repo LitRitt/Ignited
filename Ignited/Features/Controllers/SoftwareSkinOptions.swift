@@ -13,6 +13,8 @@ import SwiftUI
 enum SoftwareSkinColor: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
     case white = "White"
+    case black = "Black"
+    case auto = "Auto"
     case theme = "Theme"
     case custom = "Custom"
     
@@ -23,12 +25,49 @@ enum SoftwareSkinColor: String, CaseIterable, CustomStringConvertible, Localized
     var localizedDescription: Text {
         Text(description)
     }
+    
+    var uiColor: UIColor {
+        switch self
+        {
+        case .auto:
+            switch UIScreen.main.traitCollection.userInterfaceStyle
+            {
+            case .light:
+                return UIColor.black
+            case .dark, .unspecified:
+                return UIColor.white
+            }
+        case .white: return UIColor.white
+        case .black: return UIColor.black
+        case .theme: return UIColor.themeColor
+        case .custom: return UIColor(Settings.controllerFeatures.softwareSkin.customColor)
+        }
+    }
+    
+    var uiColorSecondary: UIColor {
+        switch self
+        {
+        case .auto:
+            switch UIScreen.main.traitCollection.userInterfaceStyle
+            {
+            case .light:
+                return UIColor.white
+            case .dark, .unspecified:
+                return UIColor.black
+            }
+        case .white: return UIColor.black
+        case .black: return UIColor.white
+        case .theme: return UIColor.white
+        case .custom: return UIColor(Settings.controllerFeatures.softwareSkin.customColorSecondary)
+        }
+    }
 }
 
 enum SoftwareSkinStyle: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
     case filled = "Filled"
     case outline = "Outline"
+    case both = "Both"
     
     var description: String {
         return self.rawValue
@@ -54,6 +93,10 @@ struct SoftwareSkinOptions
     @Option(name: "Custom Color",
             description: "Choose the color to use for the custom color mode.")
     var customColor: Color = .orange
+    
+    @Option(name: "Custom Secondary Color",
+            description: "Choose the secondary color to use for the custom color mode. This color is used for the outlines on the Filled Outline style.")
+    var customColorSecondary: Color = .white
     
     @Option(name: "Shadows",
             description: "Enable to draw shadows underneath inputs.")

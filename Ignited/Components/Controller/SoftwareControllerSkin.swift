@@ -66,58 +66,47 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
         return renderer.image { (context) in
             let ctx = context.cgContext
             
-            if Settings.controllerFeatures.softwareSkin.shadows
-            {
-                let opacity = Settings.controllerFeatures.softwareSkin.shadowOpacity
-                ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
-            }
-            
             for input in self.softwareInputs()
             {
-                var imageName: String = ""
+                ctx.saveGState()
                 
-                switch input
+                if Settings.controllerFeatures.softwareSkin.shadows
                 {
-                case .dPad: imageName = "dpad"
-                case .a: imageName = "a.circle"
-                case .b: imageName = "b.circle"
-                case .c: imageName = "c.circle"
-                case .x: imageName = "x.circle"
-                case .y: imageName = "y.circle"
-                case .z: imageName = "z.circle"
-                case .l: imageName = "l.square"
-                case .r: imageName = "r.square"
-                case .cUp: imageName = "arrowtriangle.up.circle"
-                case .cDown: imageName = "arrowtriangle.down.circle"
-                case .cLeft: imageName = "arrowtriangle.left.circle"
-                case .cRight: imageName = "arrowtriangle.right.circle"
-                case .start: imageName = "plus.circle"
-                case .select: imageName = "minus.circle"
-                case .menu: imageName = "ellipsis.circle"
-                case .quickSettings: imageName = "gearshape.circle"
-                default: break
+                    let opacity = Settings.controllerFeatures.softwareSkin.shadowOpacity
+                    ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
                 }
                 
-                if Settings.controllerFeatures.softwareSkin.style == .filled
+                let color = Settings.controllerFeatures.softwareSkin.color.uiColor
+                let colorSecondary = Settings.controllerFeatures.softwareSkin.color.uiColorSecondary
+                
+                switch Settings.controllerFeatures.softwareSkin.style
                 {
-                    imageName += ".fill"
+                case .outline:
+                    let image = UIImage.symbolWithTemplate(name: input.assetName, pointSize: 150, accentColor: color)
+                    image.draw(in: input.frame(leftButtonArea: buttonAreas[0],
+                                               rightButtonArea: buttonAreas[1],
+                                               gameType: self.gameType))
+                    ctx.restoreGState()
+                    
+                case .filled:
+                    let image = UIImage.symbolWithTemplate(name: input.assetName + ".fill", pointSize: 150, accentColor: color)
+                    image.draw(in: input.frame(leftButtonArea: buttonAreas[0],
+                                               rightButtonArea: buttonAreas[1],
+                                               gameType: self.gameType))
+                    ctx.restoreGState()
+                    
+                case .both:
+                    let filledImage = UIImage.symbolWithTemplate(name: input.assetName + ".fill", pointSize: 150, accentColor: color)
+                    let outlineImage = UIImage.symbolWithTemplate(name: input.assetName, pointSize: 150, accentColor: colorSecondary)
+                    let frame = input.frame(leftButtonArea: buttonAreas[0],
+                                            rightButtonArea: buttonAreas[1],
+                                            gameType: self.gameType)
+                    
+                    filledImage.draw(in: frame)
+                    ctx.restoreGState()
+                    outlineImage.draw(in: frame)
                 }
-                
-                let color: UIColor
-                
-                switch Settings.controllerFeatures.softwareSkin.color
-                {
-                case .white: color = UIColor.white
-                case .theme: color = UIColor.themeColor
-                case .custom: color = UIColor(Settings.controllerFeatures.softwareSkin.customColor)
-                }
-                
-                let image = UIImage.symbolWithTemplate(name: imageName, pointSize: 150, accentColor: color)
-                image.draw(in: input.frame(leftButtonArea: buttonAreas[0],
-                                           rightButtonArea: buttonAreas[1],
-                                           gameType: self.gameType))
             }
-            
         }
     }
     
@@ -504,6 +493,31 @@ public enum SoftwareInput: String, CaseIterable
         {
         case .touchScreen: return [:]
         default: return SoftwareControllerSkin.extendedEdges
+        }
+    }
+    
+    var assetName: String
+    {
+        switch self
+        {
+        case .dPad: return "dpad"
+        case .a: return "a.circle"
+        case .b: return "b.circle"
+        case .c: return "c.circle"
+        case .x: return "x.circle"
+        case .y: return "y.circle"
+        case .z: return "z.circle"
+        case .l: return "l.square"
+        case .r: return "r.square"
+        case .cUp: return "arrowtriangle.up.circle"
+        case .cDown: return "arrowtriangle.down.circle"
+        case .cLeft: return "arrowtriangle.left.circle"
+        case .cRight: return "arrowtriangle.right.circle"
+        case .start: return "plus.circle"
+        case .select: return "minus.circle"
+        case .menu: return "ellipsis.circle"
+        case .quickSettings: return "gearshape.circle"
+        default: return ""
         }
     }
 }
