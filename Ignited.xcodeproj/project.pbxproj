@@ -82,6 +82,8 @@
 		AC84B57029FF102A0090F274 /* GameAudioOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84B56F29FF102A0090F274 /* GameAudioOptions.swift */; };
 		AC84B57229FF1A780090F274 /* RewindOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84B57129FF1A780090F274 /* RewindOptions.swift */; };
 		AC84B57429FF1BDA0090F274 /* FastForwardOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84B57329FF1BDA0090F274 /* FastForwardOptions.swift */; };
+		AC89AC172B8068C0000F65ED /* SoftwareControllerSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC89AC162B8068C0000F65ED /* SoftwareControllerSkin.swift */; };
+		AC89AC1B2B825EEB000F65ED /* SoftwareSkinOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC89AC1A2B825EEB000F65ED /* SoftwareSkinOptions.swift */; };
 		AC89DC992A4CACFC000DBD0C /* ControllerFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC89DC982A4CACFC000DBD0C /* ControllerFeatures.swift */; };
 		AC89DC9B2A4CADD6000DBD0C /* BackgroundBlurOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC89DC9A2A4CADD6000DBD0C /* BackgroundBlurOptions.swift */; };
 		AC8C212629FDAE100044748D /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C20F929FDAA640044748D /* Feature.swift */; };
@@ -379,6 +381,8 @@
 		AC84B56F29FF102A0090F274 /* GameAudioOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAudioOptions.swift; sourceTree = "<group>"; };
 		AC84B57129FF1A780090F274 /* RewindOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewindOptions.swift; sourceTree = "<group>"; };
 		AC84B57329FF1BDA0090F274 /* FastForwardOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastForwardOptions.swift; sourceTree = "<group>"; };
+		AC89AC162B8068C0000F65ED /* SoftwareControllerSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftwareControllerSkin.swift; sourceTree = "<group>"; };
+		AC89AC1A2B825EEB000F65ED /* SoftwareSkinOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftwareSkinOptions.swift; sourceTree = "<group>"; };
 		AC89DC982A4CACFC000DBD0C /* ControllerFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerFeatures.swift; sourceTree = "<group>"; };
 		AC89DC9A2A4CADD6000DBD0C /* BackgroundBlurOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundBlurOptions.swift; sourceTree = "<group>"; };
 		AC8C20F929FDAA640044748D /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
@@ -834,6 +838,14 @@
 			path = Gameplay;
 			sourceTree = "<group>";
 		};
+		AC89AC152B80683D000F65ED /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AC89AC162B8068C0000F65ED /* SoftwareControllerSkin.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		AC89DC972A4CACE6000DBD0C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -842,6 +854,7 @@
 				AC89DC9A2A4CADD6000DBD0C /* BackgroundBlurOptions.swift */,
 				AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */,
 				ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */,
+				AC89AC1A2B825EEB000F65ED /* SoftwareSkinOptions.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1094,6 +1107,7 @@
 				ACAB773A2B46926F001AB619 /* Keychain.swift */,
 				BF4828871F90290F00028B97 /* Action.swift */,
 				BF1F45BE21AF676F00EF9895 /* Box.swift */,
+				AC89AC152B80683D000F65ED /* Controller */,
 				BFE0229C1F5B56840052D888 /* Popover Menu */,
 				BF5942671E09BBB70051894B /* Collection View */,
 				BF71CF881FE90471001F1613 /* Table View */,
@@ -1809,6 +1823,7 @@
 				BFF6452E1F7CC5060056533E /* GameControllerInputMappingTransformer.swift in Sources */,
 				BF59427C1E09BC830051894B /* Cheat.swift in Sources */,
 				AC0076DC2B50655400EBC46C /* AttributedHeaderFooterView.swift in Sources */,
+				AC89AC1B2B825EEB000F65ED /* SoftwareSkinOptions.swift in Sources */,
 				BFBAB2E31EB685A2004E0B0E /* DeltaCoreProtocol+Delta.swift in Sources */,
 				AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */,
 				BF3540081C5DAFAD00C1184C /* PauseTransitionCoordinator.swift in Sources */,
@@ -1954,6 +1969,7 @@
 				BF6EE5EB1F7C5F8F0051AD6C /* GameControllerInputMapping.swift in Sources */,
 				BF8A333421A484A000A42FD4 /* BadgedTableViewCell.swift in Sources */,
 				BF3540021C5DA3D500C1184C /* PauseStoryboardSegue.swift in Sources */,
+				AC89AC172B8068C0000F65ED /* SoftwareControllerSkin.swift in Sources */,
 				AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */,
 				AC99B33D2B254B10001A2A1F /* PauseMenuOptions.swift in Sources */,
 				AC2059EA2A117B570098266B /* QuickSettingsOptions.swift in Sources */,

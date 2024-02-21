@@ -20,6 +20,11 @@ struct QuickSettingsView: View
     
     @State private var gameAudioVolume: Double = Settings.gameplayFeatures.gameAudio.volume
     
+    @State private var softwareSkinStyle: SoftwareSkinStyle = Settings.controllerFeatures.softwareSkin.style
+    @State private var softwareSkinColor: SoftwareSkinColor = Settings.controllerFeatures.softwareSkin.color
+    @State private var softwareSkinCustomColor: Color = Settings.controllerFeatures.softwareSkin.customColor
+    @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
+    
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
     @State private var controllerSkinBackgroundColor: Color = Settings.controllerFeatures.skin.backgroundColor
@@ -37,6 +42,7 @@ struct QuickSettingsView: View
     @State private var expandedFastForwardEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled
     @State private var gameAudioEnabled: Bool = Settings.gameplayFeatures.quickSettings.gameAudioEnabled
     @State private var expandedGameAudioEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled
+    @State private var softwareSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.softwareSkinEnabled
     @State private var controllerSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.controllerSkinEnabled
     @State private var backgroundBlurEnabled: Bool = Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled
     @State private var colorPalettesEnabled: Bool = Settings.gameplayFeatures.quickSettings.colorPalettesEnabled
@@ -207,6 +213,54 @@ struct QuickSettingsView: View
                         }
                     } header: {
                         Text("Game Audio")
+                    }.listStyle(.insetGrouped)
+                }
+                
+                if self.softwareSkinEnabled && Settings.controllerFeatures.softwareSkin.isEnabled
+                {
+                    Section() {
+                        VStack {
+                            Picker("Style", selection: self.$softwareSkinStyle) {
+                                ForEach(SoftwareSkinStyle.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinStyle) { value in
+                                    Settings.controllerFeatures.softwareSkin.style = value
+                                }
+                            Picker("Color", selection: self.$softwareSkinColor) {
+                                ForEach(SoftwareSkinColor.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinColor) { value in
+                                    Settings.controllerFeatures.softwareSkin.color = value
+                                }
+                            ColorPicker("Custom Color", selection: self.$softwareSkinCustomColor, supportsOpacity: false)
+                                .onChange(of: self.softwareSkinCustomColor) { value in
+                                    Settings.controllerFeatures.softwareSkin.customColor = value
+                                }
+                            Toggle("Shadows", isOn: Settings.controllerFeatures.softwareSkin.$shadows.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            HStack {
+                                Text("Shadow Opacity: \(self.softwareSkinShadowOpacity * 100, specifier: "%.f")%")
+                                Spacer()
+                                Button("Reset") {
+                                    self.softwareSkinShadowOpacity = 0.7
+                                    Settings.controllerFeatures.softwareSkin.shadowOpacity = self.softwareSkinShadowOpacity
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$softwareSkinShadowOpacity, in: 0.0...1.0, step: 0.05)
+                                .onChange(of: self.softwareSkinShadowOpacity) { value in
+                                    Settings.controllerFeatures.softwareSkin.shadowOpacity = value
+                                }
+                            Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            Toggle("Fullscreen Landscape", isOn: Settings.controllerFeatures.softwareSkin.$fullscreenLandscape.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                        }
+                    } header: {
+                        Text("Software Skin")
                     }.listStyle(.insetGrouped)
                 }
                 
@@ -390,6 +444,12 @@ struct QuickSettingsView: View
                             Toggle("Expanded Game Audio", isOn: self.$expandedGameAudioEnabled)
                                 .onChange(of: self.expandedGameAudioEnabled) { value in
                                     Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = value
+                                }
+                        }
+                        if Settings.controllerFeatures.softwareSkin.isEnabled {
+                            Toggle("Software Skin", isOn: self.$softwareSkinEnabled)
+                                .onChange(of: self.softwareSkinEnabled) { value in
+                                    Settings.gameplayFeatures.quickSettings.softwareSkinEnabled = value
                                 }
                         }
                         Toggle("Controller Skin", isOn: self.$controllerSkinEnabled)

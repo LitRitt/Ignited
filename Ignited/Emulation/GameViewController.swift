@@ -1170,8 +1170,17 @@ private extension GameViewController
         
         if Settings.localControllerPlayerIndex != nil
         {
-            let controllerSkin = Settings.preferredControllerSkin(for: game, traits: traits)
-            self.controllerView.controllerSkin = controllerSkin
+            if Settings.controllerFeatures.softwareSkin.isEnabled,
+               SoftwareControllerSkin.supportsGameType(game.type)
+            {
+                let softwareControllerSkin = SoftwareControllerSkin(gameType: game.type)
+                self.controllerView.controllerSkin = softwareControllerSkin
+            }
+            else
+            {
+                let controllerSkin = Settings.preferredControllerSkin(for: game, traits: traits)
+                self.controllerView.controllerSkin = controllerSkin
+            }
         }
         else if let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type), controllerSkin.hasTouchScreen(for: traits)
         {
@@ -1248,6 +1257,8 @@ private extension GameViewController
         self._isQuickSettingsOpen = false
         
         self.updateBlurBackground()
+        self.controllerView.invalidateImageCache()
+        self.updateControllerSkin()
     }
     
     func updateBlurBackground()
@@ -3246,6 +3257,9 @@ private extension GameViewController
         case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue):
             // Update whenever any of the AirPlay skins have changed.
             self.updateExternalDisplay()
+            
+        case Settings.controllerFeatures.softwareSkin.$color.settingsKey, Settings.controllerFeatures.softwareSkin.$style.settingsKey, Settings.controllerFeatures.softwareSkin.$shadows.settingsKey, Settings.controllerFeatures.softwareSkin.$customColor.settingsKey, Settings.controllerFeatures.softwareSkin.$shadowOpacity.settingsKey:
+            self.controllerView.invalidateImageCache()
             
         default: break
         }

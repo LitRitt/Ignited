@@ -85,6 +85,10 @@ struct QuickSettingsOptions
     @Option
     var fastForwardSpeed: Double = 1.0
     
+    @Option(name: "Software Skin",
+            description: "Enable to show software skin options in the quick settings.")
+    var softwareSkinEnabled: Bool = true
+    
     @Option(name: "Controller Skin",
             description: "Enable to show controller skin options in the quick settings.")
     var controllerSkinEnabled: Bool = true
