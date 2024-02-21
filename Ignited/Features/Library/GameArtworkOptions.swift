@@ -298,8 +298,8 @@ struct GameArtworkOptions
             attributes: [.pro])
     var shadowRadius: Double = 5
     
-    @Option(name: "Custom Speed",
-            description: "Set your preferred fast forward speed.",
+    @Option(name: "Custom Shadow Opacity",
+            description: "Change the shadow opacity to use with the custom style option.",
             range: 0.0...1.0,
             step: 0.1,
             unit: "%",
