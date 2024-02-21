@@ -25,6 +25,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinCustomColor: Color = Settings.controllerFeatures.softwareSkin.customColor
     @State private var softwareSkinCustomColorSecondary: Color = Settings.controllerFeatures.softwareSkin.customColorSecondary
     @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
+    @State private var softwareSkinSafeArea: Double = Settings.controllerFeatures.softwareSkin.safeArea
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
@@ -258,6 +259,18 @@ struct QuickSettingsView: View
                             Slider(value: self.$softwareSkinShadowOpacity, in: 0.0...1.0, step: 0.05)
                                 .onChange(of: self.softwareSkinShadowOpacity) { value in
                                     Settings.controllerFeatures.softwareSkin.shadowOpacity = value
+                                }
+                            HStack {
+                                Text("Notch/Island Safe Area: \(self.softwareSkinSafeArea, specifier: "%.f")pt")
+                                Spacer()
+                                Button("Reset") {
+                                    self.softwareSkinSafeArea = 0.7
+                                    Settings.controllerFeatures.softwareSkin.safeArea = self.softwareSkinSafeArea
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$softwareSkinSafeArea, in: 0...60, step: 1)
+                                .onChange(of: self.softwareSkinSafeArea) { value in
+                                    Settings.controllerFeatures.softwareSkin.safeArea = value
                                 }
                             Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))

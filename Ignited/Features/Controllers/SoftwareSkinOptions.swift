@@ -117,6 +117,13 @@ struct SoftwareSkinOptions
             unit: "pt")
     var extendedEdges: Double = 10
     
+    @Option(name: "Notch/Island Safe Area",
+            description: "Adjust the safe area to avoid screens being drawn underneath an iPhone's notch or dynamic island.",
+            range: 0...60,
+            step: 1,
+            unit: "pt")
+    var safeArea: Double = 40
+    
     @Option(name: "Translucent",
             description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")
     var translucentInputs: Bool = true

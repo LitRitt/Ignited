@@ -32,7 +32,7 @@ public struct SoftwareControllerSkin
     {
         switch gameType
         {
-        case .n64, .ds, .genesis, .ms, .gg: return false
+        case .n64, .genesis, .ms, .gg: return false
         default: return true
         }
     }
@@ -116,58 +116,105 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
         let scaleTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
         let buttonAreas = self.buttonAreas(for: traits)
         
-        return self.softwareInputs().map {
-            Skin.Item(id: $0.rawValue,
-                      kind: $0.kind,
-                      inputs: $0.inputs,
-                      frame: $0.frame(leftButtonArea: buttonAreas[0].applying(scaleTransform),
-                                      rightButtonArea: buttonAreas[1].applying(scaleTransform),
-                                      gameType: self.gameType),
-                      edges: $0.edges, mappingSize: mappingSize)
+        var items = [Skin.Item]()
+        
+        for input in self.softwareInputs() {
+            if input.kind == .touchScreen
+            {
+                if let screens = self.screens(for: traits, alt: alt),
+                   let screen = screens.first,
+                   let screenFrame = screen.outputFrame
+                {
+                    let touchScreenFrame = CGRect(x: screenFrame.minX, y: screenFrame.midY, width: screenFrame.width, height: screenFrame.height / 2)
+                    
+                    items.append(Skin.Item(id: input.rawValue,
+                                           kind: input.kind,
+                                           inputs: input.inputs,
+                                           frame: touchScreenFrame.applying(scaleTransform),
+                                           edges: input.edges,
+                                           mappingSize: mappingSize))
+                }
+            }
+            else
+            {
+                items.append(Skin.Item(id: input.rawValue,
+                                       kind: input.kind,
+                                       inputs: input.inputs,
+                                       frame: input.frame(leftButtonArea: buttonAreas[0].applying(scaleTransform),
+                                                       rightButtonArea: buttonAreas[1].applying(scaleTransform),
+                                                       gameType: self.gameType),
+                                       edges: input.edges,
+                                       mappingSize: mappingSize))
+            }
         }
+        
+        return items
     }
     
     public func screens(for traits: Skin.Traits, alt: Bool) -> [Skin.Screen]?
     {
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? CGSize()
-        let scaleTransform = CGAffineTransform(scaleX: 1.0 / mappingSize.width, y: 1.0 / mappingSize.height)
+        let scaleUpTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
+        let scaleDownTransform = CGAffineTransform(scaleX: 1.0 / mappingSize.width, y: 1.0 / mappingSize.height)
         
         let screenSize = self.screenSize()
-        let buttonAreas = self.buttonAreas(for: traits)
+        let safeArea = Settings.controllerFeatures.softwareSkin.safeArea
+        let buttonAreas = self.buttonAreas(for: traits).map({ $0.applying(scaleUpTransform) })
         
-        let screenFrame: CGRect
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+        var x: CGFloat = 0
+        var y: CGFloat = 0
         
         switch traits.orientation
         {
         case .portrait:
-            let screenHeight = mappingSize.width * (screenSize.height / screenSize.width)
-            let buttonArea = buttonAreas[0]
-            let screenAreaMaxY = buttonArea.minY * mappingSize.height
-            let screenY = (screenAreaMaxY - screenHeight) / 2
-            screenFrame = CGRect(x: 0, y: screenY, width: mappingSize.width, height: screenHeight)
+            let availableHeight = min(buttonAreas[0].minY, buttonAreas[1].minY)
+            height = mappingSize.width * (screenSize.height / screenSize.width)
+            
+            if (traits.device, traits.displayType) == (.iphone, .edgeToEdge),
+               height > (availableHeight - safeArea) * 0.95
+            {
+                height = (availableHeight - safeArea) * 0.95
+                width = height * (screenSize.width / screenSize.height)
+                x = (mappingSize.width - width) / 2
+                y = safeArea
+            }
+            else if height > availableHeight * 0.95
+            {
+                height = availableHeight * 0.95
+                width = height * (screenSize.width / screenSize.height)
+                x = (mappingSize.width - width) / 2
+            }
+            else
+            {
+                width = mappingSize.width
+                y = (availableHeight - height) / 2
+            }
             
         case .landscape:
             let leftButtonArea = buttonAreas[0]
             let rightButtonArea = buttonAreas[1]
-            let screenWidth = (rightButtonArea.minX - leftButtonArea.maxX) * mappingSize.width * 0.95
-            let screenHeight = screenWidth * (screenSize.height / screenSize.width)
-            let screenY = (mappingSize.height - screenHeight) / 2
-            let screenX = (mappingSize.width - screenWidth) / 2
-            screenFrame = CGRect(x: screenX, y: screenY, width: screenWidth, height: screenHeight)
+            
+            width = (rightButtonArea.minX - leftButtonArea.maxX) * mappingSize.width * 0.95
+            height = width * (screenSize.height / screenSize.width)
+            
+            if height > mappingSize.height || Settings.controllerFeatures.softwareSkin.fullscreenLandscape
+            {
+                height = mappingSize.height
+                width = height * (screenSize.width / screenSize.height)
+            }
+            else
+            {
+                y = (mappingSize.height - height) / 2
+            }
+            
+            x = (mappingSize.width - width) / 2
         }
         
-        var screens = [Skin.Screen]()
+        let screenFrame = CGRect(x: x, y: y, width: width, height: height)
         
-        screens.append(Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: screenFrame.applying(scaleTransform)))
-        // Add second screen for DS
-        
-        if traits.orientation == .landscape,
-           Settings.controllerFeatures.softwareSkin.fullscreenLandscape
-        {
-            return nil
-        }
-        
-        return screens
+        return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: screenFrame.applying(scaleDownTransform))]
     }
     
     public func thumbstick(for item: Skin.Item, traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> (UIImage, CGSize)?
