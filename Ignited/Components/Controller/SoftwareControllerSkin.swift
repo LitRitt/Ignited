@@ -182,7 +182,12 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     
     public func supports(_ traits: Skin.Traits, alt: Bool) -> Bool
     {
-        return true
+        switch (traits.device, traits.displayType, traits.orientation)
+        {
+        case (_, .splitView, _): return false
+        case (.tv, _, _): return false
+        default: return true
+        }
     }
     
     public func isTranslucent(for traits: Skin.Traits, alt: Bool) -> Bool?
@@ -224,8 +229,8 @@ extension SoftwareControllerSkin
         {
         case (.iphone, .standard, .portrait):
             return [
-                CGRect(x: 0.03, y: 0.6, width: 0.44, height: 0.4),
-                CGRect(x: 0.53, y: 0.6, width: 0.44, height: 0.4)
+                CGRect(x: 0.03, y: 0.55, width: 0.44, height: 0.4),
+                CGRect(x: 0.53, y: 0.55, width: 0.44, height: 0.4)
             ]
         case (.iphone, .edgeToEdge, .portrait):
             return [
@@ -234,15 +239,25 @@ extension SoftwareControllerSkin
             ]
         case (.iphone, .standard, .landscape):
             return [
-                CGRect(x: 0, y: 0.03, width: 0.2, height: 0.94),
-                CGRect(x: 0.8, y: 0.03, width: 0.2, height: 0.94)
+                CGRect(x: 0, y: 0.05, width: 0.2, height: 0.9),
+                CGRect(x: 0.8, y: 0.05, width: 0.2, height: 0.9)
             ]
         case (.iphone, .edgeToEdge, .landscape):
             return [
-                CGRect(x: 0.05, y: 0.03, width: 0.2, height: 0.94),
-                CGRect(x: 0.75, y: 0.03, width: 0.2, height: 0.94)
+                CGRect(x: 0.05, y: 0.05, width: 0.2, height: 0.9),
+                CGRect(x: 0.75, y: 0.05, width: 0.2, height: 0.9)
             ]
-        default: return []
+        case (.ipad, .standard, .portrait):
+            return [
+                CGRect(x: 0.05, y: 0.6, width: 0.28, height: 0.35),
+                CGRect(x: 0.67, y: 0.6, width: 0.28, height: 0.35)
+            ]
+        case (.ipad, .standard, .landscape):
+            return [
+                CGRect(x: 0.03, y: 0.4, width: 0.2, height: 0.55),
+                CGRect(x: 0.77, y: 0.4, width: 0.2, height: 0.55)
+            ]
+        default: return [.zero, .zero]
         }
     }
     
