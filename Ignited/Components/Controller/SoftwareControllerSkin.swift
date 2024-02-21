@@ -196,7 +196,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             let leftButtonArea = buttonAreas[0]
             let rightButtonArea = buttonAreas[1]
             
-            width = (rightButtonArea.minX - leftButtonArea.maxX) * mappingSize.width * 0.95
+            width = (rightButtonArea.minX - leftButtonArea.maxX) * 0.95
             height = width * (screenSize.height / screenSize.width)
             
             if height > mappingSize.height || Settings.controllerFeatures.softwareSkin.fullscreenLandscape
