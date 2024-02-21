@@ -47,7 +47,7 @@ struct SoftwareSkinOptions
     var style: SoftwareSkinStyle = .filled
     
     @Option(name: "Color",
-            description: "Choose which background color to use with the custom style option.",
+            description: "Choose which color to use for inputs.",
             values: SoftwareSkinColor.allCases)
     var color: SoftwareSkinColor = .white
     
