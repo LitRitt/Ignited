@@ -286,8 +286,8 @@ extension SoftwareControllerSkin
             ]
         case (.iphone, .standard, .landscape):
             return [
-                CGRect(x: 0, y: 0.05, width: 0.2, height: 0.9),
-                CGRect(x: 0.8, y: 0.05, width: 0.2, height: 0.9)
+                CGRect(x: 0.03, y: 0.05, width: 0.2, height: 0.9),
+                CGRect(x: 0.77, y: 0.05, width: 0.2, height: 0.9)
             ]
         case (.iphone, .edgeToEdge, .landscape):
             return [
