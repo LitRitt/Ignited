@@ -50,13 +50,12 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
 {
     public func image(for traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> UIImage?
     {
-        let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? CGSize()
-        let scaleTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
+        let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
         var buttonAreas = [CGRect]()
         
         for buttonArea in self.buttonAreas(for: traits)
         {
-            buttonAreas.append(buttonArea.applying(scaleTransform))
+            buttonAreas.append(self.getAbsolute(buttonArea))
         }
         
         let format = UIGraphicsImageRendererFormat()
@@ -68,6 +67,24 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             
             for input in self.softwareInputs()
             {
+                var assetName = input.assetName
+                
+                var color = Settings.controllerFeatures.softwareSkin.color.uiColor
+                var colorSecondary = Settings.controllerFeatures.softwareSkin.color.uiColorSecondary
+                
+                if self.gameType != .n64,
+                   input.kind == .dPad,
+                   Settings.controllerFeatures.softwareSkin.directionalInputType == .thumbstick
+                {
+                    assetName = SoftwareInput.thumbstick.assetName
+                    color = color.withAlphaComponent(0.5)
+                }
+                
+                if input.kind == .thumbstick
+                {
+                    color = color.withAlphaComponent(0.5)
+                }
+                
                 ctx.saveGState()
                 
                 if Settings.controllerFeatures.softwareSkin.shadows
@@ -76,28 +93,25 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                     ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
                 }
                 
-                let color = Settings.controllerFeatures.softwareSkin.color.uiColor
-                let colorSecondary = Settings.controllerFeatures.softwareSkin.color.uiColorSecondary
-                
                 switch Settings.controllerFeatures.softwareSkin.style
                 {
                 case .outline:
-                    let image = UIImage.symbolWithTemplate(name: input.assetName, pointSize: 150, accentColor: color)
+                    let image = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: color)
                     image.draw(in: input.frame(leftButtonArea: buttonAreas[0],
                                                rightButtonArea: buttonAreas[1],
                                                gameType: self.gameType))
                     ctx.restoreGState()
                     
                 case .filled:
-                    let image = UIImage.symbolWithTemplate(name: input.assetName + ".fill", pointSize: 150, accentColor: color)
+                    let image = UIImage.symbolWithTemplate(name: assetName + ".fill", pointSize: 150, accentColor: color)
                     image.draw(in: input.frame(leftButtonArea: buttonAreas[0],
                                                rightButtonArea: buttonAreas[1],
                                                gameType: self.gameType))
                     ctx.restoreGState()
                     
                 case .both:
-                    let filledImage = UIImage.symbolWithTemplate(name: input.assetName + ".fill", pointSize: 150, accentColor: color)
-                    let outlineImage = UIImage.symbolWithTemplate(name: input.assetName, pointSize: 150, accentColor: colorSecondary)
+                    let filledImage = UIImage.symbolWithTemplate(name: assetName + ".fill", pointSize: 150, accentColor: color)
+                    let outlineImage = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: colorSecondary)
                     let frame = input.frame(leftButtonArea: buttonAreas[0],
                                             rightButtonArea: buttonAreas[1],
                                             gameType: self.gameType)
@@ -113,14 +127,14 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     public func items(for traits: Skin.Traits, alt: Bool) -> [Skin.Item]?
     {
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
-        let scaleTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
         let buttonAreas = self.buttonAreas(for: traits)
         
         var items = [Skin.Item]()
         
         for input in self.softwareInputs() {
-            if input.kind == .touchScreen
+            switch input.kind
             {
+            case .touchScreen:
                 if let screens = self.screens(for: traits, alt: alt),
                    let screen = screens.first,
                    let screenFrame = screen.outputFrame
@@ -130,21 +144,49 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                     items.append(Skin.Item(id: input.rawValue,
                                            kind: input.kind,
                                            inputs: input.inputs,
-                                           frame: touchScreenFrame.applying(scaleTransform),
+                                           frame: self.getAbsolute(touchScreenFrame),
                                            edges: input.edges,
                                            mappingSize: mappingSize))
                 }
-            }
-            else
-            {
-                items.append(Skin.Item(id: input.rawValue,
-                                       kind: input.kind,
-                                       inputs: input.inputs,
-                                       frame: input.frame(leftButtonArea: buttonAreas[0].applying(scaleTransform),
-                                                       rightButtonArea: buttonAreas[1].applying(scaleTransform),
-                                                       gameType: self.gameType),
-                                       edges: input.edges,
-                                       mappingSize: mappingSize))
+                
+            default:
+                var kind = input.kind
+                
+                if self.gameType != .n64,
+                   kind == .dPad
+                {
+                    switch Settings.controllerFeatures.softwareSkin.directionalInputType
+                    {
+                    case .dPad: kind = .dPad
+                    case .thumbstick: kind = .thumbstick
+                    }
+                }
+                
+                let frame = input.frame(leftButtonArea: self.getAbsolute(buttonAreas[0]),
+                                        rightButtonArea: self.getAbsolute(buttonAreas[1]),
+                                        gameType: self.gameType)
+                
+                if kind == .thumbstick
+                {
+                    let thumbstickSize = CGSize(width: (frame.width / 2) + 24, height: (frame.height / 2) + 24)
+                    
+                    items.append(Skin.Item(id: input.rawValue,
+                                           kind: kind,
+                                           inputs: input.inputs,
+                                           frame: frame,
+                                           edges: input.edges,
+                                           mappingSize: mappingSize,
+                                           thumbstickSize: thumbstickSize))
+                }
+                else
+                {
+                    items.append(Skin.Item(id: input.rawValue,
+                                           kind: kind,
+                                           inputs: input.inputs,
+                                           frame: frame,
+                                           edges: input.edges,
+                                           mappingSize: mappingSize))
+                }
             }
         }
         
@@ -154,12 +196,10 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     public func screens(for traits: Skin.Traits, alt: Bool) -> [Skin.Screen]?
     {
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? CGSize()
-        let scaleUpTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
-        let scaleDownTransform = CGAffineTransform(scaleX: 1.0 / mappingSize.width, y: 1.0 / mappingSize.height)
         
         let screenSize = self.screenSize()
         let safeArea = Settings.controllerFeatures.softwareSkin.safeArea
-        let buttonAreas = self.buttonAreas(for: traits).map({ $0.applying(scaleUpTransform) })
+        let buttonAreas = self.buttonAreas(for: traits).map({ self.getAbsolute($0) })
         
         var width: CGFloat = 0
         var height: CGFloat = 0
@@ -214,12 +254,60 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
         
         let screenFrame = CGRect(x: x, y: y, width: width, height: height)
         
-        return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: screenFrame.applying(scaleDownTransform))]
+        return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: self.getRelative(screenFrame))]
     }
     
     public func thumbstick(for item: Skin.Item, traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> (UIImage, CGSize)?
     {
-        return nil
+        let frame = self.getAbsolute(item.frame)
+        let thumbstickSize = CGSize(width: frame.width / 2, height: frame.height / 2)
+        let thumbstickFrame = CGRect(origin: CGPoint(x: 12, y: 12), size: thumbstickSize)
+        let renderSize = CGSize(width: thumbstickSize.width + 24, height: thumbstickSize.height + 24)
+        let size = self.getRelative(renderSize)
+        
+        let assetName = "circle.circle"
+        
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = UIScreen.main.scale
+        let renderer = UIGraphicsImageRenderer(size: renderSize, format: format)
+        
+        let image = renderer.image { (context) in
+            let ctx = context.cgContext
+            
+            ctx.saveGState()
+                
+            if Settings.controllerFeatures.softwareSkin.shadows
+            {
+                let opacity = Settings.controllerFeatures.softwareSkin.shadowOpacity
+                ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
+            }
+            
+            let color = Settings.controllerFeatures.softwareSkin.color.uiColor
+            let colorSecondary = Settings.controllerFeatures.softwareSkin.color.uiColorSecondary
+            
+            switch Settings.controllerFeatures.softwareSkin.style
+            {
+            case .outline:
+                let image = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: color)
+                image.draw(in: thumbstickFrame)
+                ctx.restoreGState()
+                
+            case .filled:
+                let image = UIImage.symbolWithTemplate(name: assetName + ".fill", pointSize: 150, accentColor: color)
+                image.draw(in: thumbstickFrame)
+                ctx.restoreGState()
+                
+            case .both:
+                let filledImage = UIImage.symbolWithTemplate(name: assetName + ".fill", pointSize: 150, accentColor: color)
+                let outlineImage = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: colorSecondary)
+                
+                filledImage.draw(in: thumbstickFrame)
+                ctx.restoreGState()
+                outlineImage.draw(in: thumbstickFrame)
+            }
+        }
+        
+        return (image, size)
     }
     
     public func aspectRatio(for traits: Skin.Traits, alt: Bool) -> CGSize?
@@ -308,6 +396,19 @@ extension SoftwareControllerSkin
         }
     }
     
+    private func softwareInputs() -> [SoftwareInput]
+    {
+        switch self.gameType
+        {
+        case .gba: return [.dPad, .a, .b, .l, .r, .start, .select, .menu, .quickSettings]
+        case .gbc, .nes: return [.dPad, .a, .b, .start, .select, .menu, .quickSettings]
+        case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings]
+        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings]
+        case .n64: return [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu, .quickSettings]
+        default: return []
+        }
+    }
+    
     public static func deviceSize() -> CGSize
     {
         return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -321,18 +422,40 @@ extension SoftwareControllerSkin
         
         return deltaCore.videoFormat.dimensions
     }
-    
-    private func softwareInputs() -> [SoftwareInput]
+}
+
+private extension SoftwareControllerSkin
+{
+    func getAbsolute(_ size: CGSize) -> CGSize
     {
-        switch self.gameType
-        {
-        case .gba: return [.dPad, .a, .b, .l, .r, .start, .select, .menu, .quickSettings]
-        case .gbc, .nes: return [.dPad, .a, .b, .start, .select, .menu, .quickSettings]
-        case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings]
-        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings]
-        case .n64: return [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu, .quickSettings]
-        default: return []
-        }
+        let mappingSize = SoftwareControllerSkin.deviceSize()
+        let scaleTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
+        
+        return size.applying(scaleTransform)
+    }
+    
+    func getAbsolute(_ rect: CGRect) -> CGRect
+    {
+        let mappingSize = SoftwareControllerSkin.deviceSize()
+        let scaleTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
+        
+        return rect.applying(scaleTransform)
+    }
+    
+    func getRelative(_ size: CGSize) -> CGSize
+    {
+        let mappingSize = SoftwareControllerSkin.deviceSize()
+        let scaleTransform = CGAffineTransform(scaleX: 1 / mappingSize.width, y: 1 / mappingSize.height)
+        
+        return size.applying(scaleTransform)
+    }
+    
+    func getRelative(_ rect: CGRect) -> CGRect
+    {
+        let mappingSize = SoftwareControllerSkin.deviceSize()
+        let scaleTransform = CGAffineTransform(scaleX: 1 / mappingSize.width, y: 1 / mappingSize.height)
+        
+        return rect.applying(scaleTransform)
     }
 }
 
@@ -382,7 +505,10 @@ public enum SoftwareInput: String, CaseIterable
         case .touchScreen: return .touch(x: AnyInput(stringValue: "touchScreenX", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
                                          y: AnyInput(stringValue: "touchScreenY", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
             
-//        case .thumbstick: TODO: Thumbstick inputs
+        case .thumbstick: return .directional(up: AnyInput(stringValue: "up", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                              down: AnyInput(stringValue: "down", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                              left: AnyInput(stringValue: "left", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                              right: AnyInput(stringValue: "right", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
             
         default: return .standard([AnyInput(stringValue: self.rawValue, intValue: nil, type: .controller(.controllerSkin))])
         }
@@ -553,7 +679,7 @@ public enum SoftwareInput: String, CaseIterable
     {
         switch self
         {
-        case .touchScreen: return [:]
+        case .touchScreen, .thumbstick: return [:]
         default: return SoftwareControllerSkin.extendedEdges
         }
     }
@@ -571,6 +697,7 @@ public enum SoftwareInput: String, CaseIterable
         case .z: return "z.circle"
         case .l: return "l.square"
         case .r: return "r.square"
+        case .thumbstick: return "circle"
         case .cUp: return "arrowtriangle.up.circle"
         case .cDown: return "arrowtriangle.down.circle"
         case .cLeft: return "arrowtriangle.left.circle"

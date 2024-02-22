@@ -26,6 +26,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinCustomColorSecondary: Color = Settings.controllerFeatures.softwareSkin.customColorSecondary
     @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
     @State private var softwareSkinSafeArea: Double = Settings.controllerFeatures.softwareSkin.safeArea
+    @State private var softwareSkinDirectionalInputType: SoftwareSkinDirectionalInputType = Settings.controllerFeatures.softwareSkin.directionalInputType
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
@@ -271,6 +272,14 @@ struct QuickSettingsView: View
                             Slider(value: self.$softwareSkinSafeArea, in: 0...60, step: 1)
                                 .onChange(of: self.softwareSkinSafeArea) { value in
                                     Settings.controllerFeatures.softwareSkin.safeArea = value
+                                }
+                            Picker("Directional Input", selection: self.$softwareSkinDirectionalInputType) {
+                                ForEach(SoftwareSkinDirectionalInputType.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinDirectionalInputType) { value in
+                                    Settings.controllerFeatures.softwareSkin.directionalInputType = value
                                 }
                             Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))

@@ -78,6 +78,20 @@ enum SoftwareSkinStyle: String, CaseIterable, CustomStringConvertible, Localized
     }
 }
 
+enum SoftwareSkinDirectionalInputType: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case dPad = "D-Pad"
+    case thumbstick = "Thumbstick"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 struct SoftwareSkinOptions
 {
     @Option(name: "Style",
@@ -123,6 +137,11 @@ struct SoftwareSkinOptions
             step: 1,
             unit: "pt")
     var safeArea: Double = 40
+    
+    @Option(name: "Directional Input",
+            description: "Choose which input type to use for directional inputs. Does not affect N64 inputs.",
+            values: SoftwareSkinDirectionalInputType.allCases)
+    var directionalInputType: SoftwareSkinDirectionalInputType = .dPad
     
     @Option(name: "Translucent",
             description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")
