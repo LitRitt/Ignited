@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreGraphics
+import AVFoundation
 
 import DeltaCore
 
@@ -32,7 +33,7 @@ public struct SoftwareControllerSkin
     {
         switch gameType
         {
-        case .n64, .genesis, .ms, .gg: return false
+        case .genesis, .ms, .gg: return false
         default: return true
         }
     }
@@ -145,7 +146,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                     
                     items.append(Skin.Item(id: input.rawValue,
                                            kind: input.kind,
-                                           inputs: input.inputs,
+                                           inputs: input.inputs(self.gameType),
                                            frame: self.getAbsolute(touchScreenFrame),
                                            edges: input.edges,
                                            mappingSize: mappingSize))
@@ -174,7 +175,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                     
                     items.append(Skin.Item(id: input.rawValue,
                                            kind: kind,
-                                           inputs: input.inputs,
+                                           inputs: input.inputs(self.gameType),
                                            frame: frame,
                                            edges: input.edges,
                                            mappingSize: mappingSize,
@@ -184,7 +185,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                 {
                     items.append(Skin.Item(id: input.rawValue,
                                            kind: kind,
-                                           inputs: input.inputs,
+                                           inputs: input.inputs(self.gameType),
                                            frame: frame,
                                            edges: input.edges,
                                            mappingSize: mappingSize))
@@ -461,6 +462,80 @@ private extension SoftwareControllerSkin
     }
 }
 
+extension CGRect
+{
+    func getSubRect(sections: CGFloat, index: CGFloat, size: CGFloat) -> CGRect
+    {
+        guard (index - 1) + size <= sections else { return self }
+        
+        let width = self.width
+        let x = self.minX
+        
+        let sectionHeight = self.height / sections
+        
+        let height = sectionHeight * size
+        let y = self.minY + ((index - 1) * sectionHeight)
+        
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    func getInsetSquare(inset: CGFloat = 5) -> CGRect
+    {
+        let square = AVMakeRect(aspectRatio: CGSize(width: 1, height: 1), insideRect: self)
+        
+        return square.insetBy(dx: inset, dy: inset)
+    }
+    
+    func getFourButtons(inset: CGFloat = 5) -> (top: CGRect, bottom: CGRect, left: CGRect, right: CGRect)
+    {
+        let square = self.getInsetSquare(inset: inset)
+        
+        let sectionWidth = square.width / 3
+        let sectionHeight = square.height / 3
+        
+        let top = CGRect(x: square.minX + sectionWidth, y: square.minY, width: sectionWidth, height: sectionHeight)
+        let bottom = CGRect(x: square.minX + sectionWidth, y: square.maxY - sectionHeight, width: sectionWidth, height: sectionHeight)
+        let left = CGRect(x: square.minX, y: square.minY + sectionHeight, width: sectionWidth, height: sectionHeight)
+        let right = CGRect(x: square.maxX - sectionWidth, y: square.minY + sectionHeight, width: sectionWidth, height: sectionHeight)
+        
+        return (top, bottom, left, right)
+    }
+    
+    func getTwoButtons(inset: CGFloat = 5) -> (left: CGRect, right: CGRect)
+    {
+        let square = self.getInsetSquare(inset: inset)
+        
+        let sectionWidth = square.width * 0.45
+        let sectionHeight = square.height * 0.45
+        let midY = square.midY - (sectionHeight / 2)
+        
+        let left = CGRect(x: square.minX, y: midY + (sectionHeight * 0.3), width: sectionWidth, height: sectionHeight)
+        let right = CGRect(x: square.maxX - sectionWidth, y: midY - (sectionHeight * 0.3), width: sectionWidth, height: sectionHeight)
+        
+        return (left, right)
+    }
+    
+    func getTwoButtonsHorizontal() -> (left: CGRect, right: CGRect)
+    {
+        var width = self.width * 0.3
+        var height = width
+        
+        if width > self.height * 0.8
+        {
+            height = self.height * 0.8
+            width = height
+        }
+        
+        let midX = self.midX - (width / 2)
+        let y = self.minY + ((self.height - height) / 2)
+        
+        let left = CGRect(x: midX - (self.width / 4), y: y, width: width, height: height)
+        let right = CGRect(x: midX + (self.width / 4), y: y, width: width, height: height)
+        
+        return (left, right)
+    }
+}
+
 public enum SoftwareInput: String, CaseIterable
 {
     case dPad
@@ -495,22 +570,31 @@ public enum SoftwareInput: String, CaseIterable
         }
     }
     
-    var inputs: DeltaCore.ControllerSkin.Item.Inputs
+    func inputs(_ gameType: GameType) -> DeltaCore.ControllerSkin.Item.Inputs
     {
-        switch self.kind
+        switch (self.kind, gameType)
         {
-        case .dPad: return .directional(up: AnyInput(stringValue: "up", intValue: nil, type: .controller(.controllerSkin), isContinuous: false),
-                                        down: AnyInput(stringValue: "down", intValue: nil, type: .controller(.controllerSkin), isContinuous: false),
-                                        left: AnyInput(stringValue: "left", intValue: nil, type: .controller(.controllerSkin), isContinuous: false),
-                                        right: AnyInput(stringValue: "right", intValue: nil, type: .controller(.controllerSkin), isContinuous: false))
+        case (.dPad, _):
+            return .directional(up: AnyInput(stringValue: "up", intValue: nil, type: .controller(.controllerSkin), isContinuous: false),
+                                down: AnyInput(stringValue: "down", intValue: nil, type: .controller(.controllerSkin), isContinuous: false),
+                                left: AnyInput(stringValue: "left", intValue: nil, type: .controller(.controllerSkin), isContinuous: false),
+                                right: AnyInput(stringValue: "right", intValue: nil, type: .controller(.controllerSkin), isContinuous: false))
             
-        case .touchScreen: return .touch(x: AnyInput(stringValue: "touchScreenX", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
-                                         y: AnyInput(stringValue: "touchScreenY", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
+        case (.touchScreen, _):
+            return .touch(x: AnyInput(stringValue: "touchScreenX", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                          y: AnyInput(stringValue: "touchScreenY", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
             
-        case .thumbstick: return .directional(up: AnyInput(stringValue: "up", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
-                                              down: AnyInput(stringValue: "down", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
-                                              left: AnyInput(stringValue: "left", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
-                                              right: AnyInput(stringValue: "right", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
+        case (.thumbstick, .n64):
+            return .directional(up: AnyInput(stringValue: "analogStickUp", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                down: AnyInput(stringValue: "analogStickDown", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                left: AnyInput(stringValue: "analogStickLeft", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                right: AnyInput(stringValue: "analogStickRight", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
+              
+        case (.thumbstick, _):
+            return .directional(up: AnyInput(stringValue: "up", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                down: AnyInput(stringValue: "down", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                left: AnyInput(stringValue: "left", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
+                                right: AnyInput(stringValue: "right", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
             
         default: return .standard([AnyInput(stringValue: self.rawValue, intValue: nil, type: .controller(.controllerSkin))])
         }
@@ -518,11 +602,6 @@ public enum SoftwareInput: String, CaseIterable
     
     func frame(leftButtonArea: CGRect, rightButtonArea: CGRect, gameType: GameType) -> CGRect
     {
-        var width: CGFloat = 0
-        var height: CGFloat = 0
-        var x: CGFloat = 0
-        var y: CGFloat = 0
-        
         var input = self
         
         switch gameType
@@ -540,16 +619,27 @@ public enum SoftwareInput: String, CaseIterable
         default: break
         }
         
+        var frame = CGRect()
+        
         switch input
         {
         case .dPad:
             switch gameType
             {
-            case .gba, .gbc, .nes, .snes, .ds:
-                width = leftButtonArea.width
-                height = width
-                x = leftButtonArea.minX
-                y = leftButtonArea.midY - (height / 2)
+            case .gba, .gbc, .nes, .snes, .ds, .genesis, .ms, .gg:
+                frame = leftButtonArea.getSubRect(sections: 4, index: 2, size: 2).getInsetSquare()
+                
+            case .n64:
+                frame = leftButtonArea.getSubRect(sections: 7, index: 5, size: 3).getInsetSquare()
+                
+            default: break
+            }
+            
+        case .thumbstick:
+            switch gameType
+            {
+            case .n64:
+                frame = leftButtonArea.getSubRect(sections: 7, index: 2, size: 3).getInsetSquare(inset: 10)
                 
             default: break
             }
@@ -558,17 +648,13 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes:
-                width = rightButtonArea.width * 0.45
-                height = width
-                x = rightButtonArea.maxX - width
-                y = rightButtonArea.midY - (height / 2)
-                y -= (height * 0.3)
+                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
                 
             case .snes, .ds:
-                width = rightButtonArea.width * (1/3)
-                height = width
-                x = rightButtonArea.maxX - width
-                y = rightButtonArea.midY - (height / 2)
+                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
+                
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().right
                 
             default: break
             }
@@ -577,17 +663,13 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes:
-                width = rightButtonArea.width * 0.45
-                height = width
-                x = rightButtonArea.minX
-                y = rightButtonArea.midY - (height / 2)
-                y += (height * 0.3)
+                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().left
                 
             case .snes, .ds:
-                width = rightButtonArea.width * (1/3)
-                height = width
-                x = rightButtonArea.midX - (width / 2)
-                y = rightButtonArea.midY + (height / 2)
+                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().bottom
+                
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().bottom
                 
             default: break
             }
@@ -596,10 +678,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .snes, .ds:
-                width = rightButtonArea.width * (1/3)
-                height = width
-                x = rightButtonArea.midX - (width / 2)
-                y = rightButtonArea.midY - (height * 3 / 2)
+                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().top
                 
             default: break
             }
@@ -608,10 +687,16 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .snes, .ds:
-                width = rightButtonArea.width * (1/3)
-                height = width
-                x = rightButtonArea.minX
-                y = rightButtonArea.midY - (height / 2)
+                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().left
+                
+            default: break
+            }
+            
+        case .z:
+            switch gameType
+            {
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().top
                 
             default: break
             }
@@ -620,10 +705,10 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .snes, .ds:
-                width = leftButtonArea.width * 0.3
-                height = width
-                x = leftButtonArea.minX + (leftButtonArea.width * 0.2)
-                y = leftButtonArea.minY
+                frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
+                
+            case .n64:
+                frame = leftButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             default: break
             }
@@ -632,10 +717,46 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .snes, .ds:
-                width = rightButtonArea.width * 0.3
-                height = width
-                x = rightButtonArea.maxX - (leftButtonArea.width * 0.2) - width
-                y = rightButtonArea.minY
+                frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
+                
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().right
+                
+            default: break
+            }
+            
+        case .cUp:
+            switch gameType
+            {
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).top
+                
+            default: break
+            }
+            
+        case .cDown:
+            switch gameType
+            {
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).bottom
+                
+            default: break
+            }
+            
+        case .cLeft:
+            switch gameType
+            {
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).left
+                
+            default: break
+            }
+            
+        case .cRight:
+            switch gameType
+            {
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).right
                 
             default: break
             }
@@ -644,10 +765,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes, .snes, .ds:
-                width = leftButtonArea.width * 0.3
-                height = width
-                x = leftButtonArea.maxX - width - (leftButtonArea.width * 0.1)
-                y = leftButtonArea.maxY - height
+                frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -656,11 +774,11 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes, .snes, .ds:
-                width = rightButtonArea.width * 0.3
-                height = width
-                x = rightButtonArea.minX + (rightButtonArea.width * 0.1)
-                y = rightButtonArea.maxY - height
+                frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
                 
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().left
+
             default: break
             }
             
@@ -668,10 +786,10 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes, .snes, .ds:
-                width = rightButtonArea.width * 0.3
-                height = width
-                x = rightButtonArea.maxX - width - (rightButtonArea.width * 0.1)
-                y = rightButtonArea.maxY - height
+                frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
+                
+            case .n64:
+                frame = rightButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             default: break
             }
@@ -680,10 +798,10 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes, .snes, .ds:
-                width = leftButtonArea.width * 0.3
-                height = width
-                x = leftButtonArea.minX + (leftButtonArea.width * 0.1)
-                y = leftButtonArea.maxY - height
+                frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
+                
+            case .n64:
+                frame = leftButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -691,7 +809,7 @@ public enum SoftwareInput: String, CaseIterable
         default: break
         }
         
-        return CGRect(x: x, y: y, width: width, height: height)
+        return frame
     }
     
     var edges: [String: CGFloat]
