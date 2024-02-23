@@ -367,23 +367,23 @@ extension SoftwareControllerSkin
         {
         case (.iphone, .standard, .portrait):
             return [
-                CGRect(x: 0.03, y: 0.55, width: 0.44, height: 0.4),
-                CGRect(x: 0.53, y: 0.55, width: 0.44, height: 0.4)
+                CGRect(x: 0.02, y: 0.5, width: 0.46, height: 0.45),
+                CGRect(x: 0.52, y: 0.5, width: 0.46, height: 0.45)
             ]
         case (.iphone, .edgeToEdge, .portrait):
             return [
-                CGRect(x: 0.03, y: 0.55, width: 0.44, height: 0.4),
-                CGRect(x: 0.53, y: 0.55, width: 0.44, height: 0.4)
+                CGRect(x: 0.02, y: 0.5, width: 0.46, height: 0.45),
+                CGRect(x: 0.52, y: 0.5, width: 0.46, height: 0.45)
             ]
         case (.iphone, .standard, .landscape):
             return [
-                CGRect(x: 0.03, y: 0.05, width: 0.2, height: 0.9),
-                CGRect(x: 0.77, y: 0.05, width: 0.2, height: 0.9)
+                CGRect(x: 0.03, y: 0.02, width: 0.22, height: 0.96),
+                CGRect(x: 0.75, y: 0.02, width: 0.22, height: 0.96)
             ]
         case (.iphone, .edgeToEdge, .landscape):
             return [
-                CGRect(x: 0.05, y: 0.05, width: 0.2, height: 0.9),
-                CGRect(x: 0.75, y: 0.05, width: 0.2, height: 0.9)
+                CGRect(x: 0.05, y: 0.02, width: 0.2, height: 0.96),
+                CGRect(x: 0.75, y: 0.02, width: 0.2, height: 0.96)
             ]
         case (.ipad, .standard, .portrait):
             return [
@@ -630,7 +630,14 @@ public enum SoftwareInput: String, CaseIterable
                 frame = leftButtonArea.getSubRect(sections: 4, index: 2, size: 2).getInsetSquare()
                 
             case .n64:
-                frame = leftButtonArea.getSubRect(sections: 7, index: 5, size: 3).getInsetSquare()
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapLeft, .swapBoth:
+                    frame = leftButtonArea.getSubRect(sections: 8, index: 2, size: 3).getInsetSquare(inset: 10)
+                    
+                default:
+                    frame = leftButtonArea.getSubRect(sections: 8, index: 6, size: 3).getInsetSquare()
+                }
                 
             default: break
             }
@@ -639,7 +646,14 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                frame = leftButtonArea.getSubRect(sections: 7, index: 2, size: 3).getInsetSquare(inset: 10)
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapLeft, .swapBoth:
+                    frame = leftButtonArea.getSubRect(sections: 8, index: 5, size: 4).getInsetSquare()
+                    
+                default:
+                    frame = leftButtonArea.getSubRect(sections: 8, index: 2, size: 4).getInsetSquare(inset: 10)
+                }
                 
             default: break
             }
@@ -654,7 +668,14 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
                 
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().right
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().right
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 4).getFourButtons(inset: 10).right
+                }
                 
             default: break
             }
@@ -669,7 +690,14 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().bottom
                 
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().bottom
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().bottom
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 4).getFourButtons(inset: 10).bottom
+                }
                 
             default: break
             }
@@ -696,7 +724,14 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().top
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().top
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 4).getFourButtons(inset: 10).top
+                }
                 
             default: break
             }
@@ -708,7 +743,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
-                frame = leftButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().left
+                frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             default: break
             }
@@ -720,7 +755,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().right
+                frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -729,7 +764,14 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).top
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).top
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 6, size: 3).getFourButtons().top
+                }
                 
             default: break
             }
@@ -738,7 +780,14 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).bottom
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).bottom
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 6, size: 3).getFourButtons().bottom
+                }
                 
             default: break
             }
@@ -747,7 +796,14 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).left
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).left
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 6, size: 3).getFourButtons().left
+                }
                 
             default: break
             }
@@ -756,7 +812,14 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 5, size: 3).getFourButtons(inset: 10).right
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).right
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 6, size: 3).getFourButtons().right
+                }
                 
             default: break
             }
@@ -777,7 +840,14 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 2, size: 3).getFourButtons().left
+                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                {
+                case .swapRight, .swapBoth:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().left
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 4).getFourButtons(inset: 10).left
+                }
 
             default: break
             }
@@ -789,7 +859,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().left
+                frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             default: break
             }
@@ -801,7 +871,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
-                frame = leftButtonArea.getSubRect(sections: 7, index: 1, size: 1).getTwoButtonsHorizontal().right
+                frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }

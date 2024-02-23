@@ -29,6 +29,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinExtendedEdges: Double = Settings.controllerFeatures.softwareSkin.extendedEdges
     @State private var softwareSkinDirectionalInputType: SoftwareSkinDirectionalInputType = Settings.controllerFeatures.softwareSkin.directionalInputType
     @State private var softwareSkinABXYLayout: SoftwareSkinABXYLayout = Settings.controllerFeatures.softwareSkin.abxyLayout
+    @State private var softwareSkinN64Layout: SoftwareSkinN64Layout = Settings.controllerFeatures.softwareSkin.n64Layout
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
@@ -264,6 +265,14 @@ struct QuickSettingsView: View
                             }.pickerStyle(.menu)
                                 .onChange(of: self.softwareSkinABXYLayout) { value in
                                     Settings.controllerFeatures.softwareSkin.abxyLayout = value
+                                }
+                            Picker("N64 Layout", selection: self.$softwareSkinN64Layout) {
+                                ForEach(SoftwareSkinN64Layout.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinN64Layout) { value in
+                                    Settings.controllerFeatures.softwareSkin.n64Layout = value
                                 }
                             Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))

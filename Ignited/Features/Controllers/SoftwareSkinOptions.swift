@@ -108,6 +108,22 @@ enum SoftwareSkinABXYLayout: String, CaseIterable, CustomStringConvertible, Loca
     }
 }
 
+enum SoftwareSkinN64Layout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case none = "Default"
+    case swapLeft = "Swap Stick/D-Pad"
+    case swapRight = "Swap Buttons/C"
+    case swapBoth = "Swap Both"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 struct SoftwareSkinOptions
 {
     @Option(name: "Style",
@@ -137,6 +153,11 @@ struct SoftwareSkinOptions
             description: "Choose which layout to use for A, B, X, and Y inputs. Does not affect N64 or Sega systems.",
             values: SoftwareSkinABXYLayout.allCases)
     var abxyLayout: SoftwareSkinABXYLayout = .nintendo
+    
+    @Option(name: "N64 Layout",
+            description: "Choose which layout to use for N64 inputs. Swaps the top and bottom input groups on either or both sides.",
+            values: SoftwareSkinN64Layout.allCases)
+    var n64Layout: SoftwareSkinN64Layout = .none
     
     @Option(name: "Translucent",
             description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")
