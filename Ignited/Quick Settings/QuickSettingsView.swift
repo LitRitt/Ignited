@@ -26,6 +26,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinCustomColorSecondary: Color = Settings.controllerFeatures.softwareSkin.customColorSecondary
     @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
     @State private var softwareSkinSafeArea: Double = Settings.controllerFeatures.softwareSkin.safeArea
+    @State private var softwareSkinExtendedEdges: Double = Settings.controllerFeatures.softwareSkin.extendedEdges
     @State private var softwareSkinDirectionalInputType: SoftwareSkinDirectionalInputType = Settings.controllerFeatures.softwareSkin.directionalInputType
     @State private var softwareSkinABXYLayout: SoftwareSkinABXYLayout = Settings.controllerFeatures.softwareSkin.abxyLayout
     
@@ -283,10 +284,22 @@ struct QuickSettingsView: View
                                     Settings.controllerFeatures.softwareSkin.shadowOpacity = value
                                 }
                             HStack {
+                                Text("Extended Edges: \(self.softwareSkinExtendedEdges, specifier: "%.f")pt")
+                                Spacer()
+                                Button("Reset") {
+                                    self.softwareSkinExtendedEdges = 10
+                                    Settings.controllerFeatures.softwareSkin.extendedEdges = self.softwareSkinExtendedEdges
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$softwareSkinExtendedEdges, in: 0...20, step: 1)
+                                .onChange(of: self.softwareSkinExtendedEdges) { value in
+                                    Settings.controllerFeatures.softwareSkin.extendedEdges = value
+                                }
+                            HStack {
                                 Text("Notch/Island Safe Area: \(self.softwareSkinSafeArea, specifier: "%.f")pt")
                                 Spacer()
                                 Button("Reset") {
-                                    self.softwareSkinSafeArea = 0.7
+                                    self.softwareSkinSafeArea = 40
                                     Settings.controllerFeatures.softwareSkin.safeArea = self.softwareSkinSafeArea
                                 }.buttonStyle(.borderless)
                             }
