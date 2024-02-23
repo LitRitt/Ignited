@@ -523,7 +523,24 @@ public enum SoftwareInput: String, CaseIterable
         var x: CGFloat = 0
         var y: CGFloat = 0
         
-        switch self
+        var input = self
+        
+        switch gameType
+        {
+        case .nes, .snes, .gbc, .gba, .ds:
+            switch (Settings.controllerFeatures.softwareSkin.abxyLayout, input)
+            {
+            case (.xbox, .a), (.swapAB, .a): input = .b
+            case (.xbox, .b), (.swapAB, .b): input = .a
+            case (.xbox, .x), (.swapXY, .x): input = .y
+            case (.xbox, .y), (.swapXY, .y): input = .x
+            default: break
+            }
+            
+        default: break
+        }
+        
+        switch input
         {
         case .dPad:
             switch gameType

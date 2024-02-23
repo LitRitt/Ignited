@@ -27,6 +27,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
     @State private var softwareSkinSafeArea: Double = Settings.controllerFeatures.softwareSkin.safeArea
     @State private var softwareSkinDirectionalInputType: SoftwareSkinDirectionalInputType = Settings.controllerFeatures.softwareSkin.directionalInputType
+    @State private var softwareSkinABXYLayout: SoftwareSkinABXYLayout = Settings.controllerFeatures.softwareSkin.abxyLayout
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
@@ -247,6 +248,26 @@ struct QuickSettingsView: View
                                 .onChange(of: self.softwareSkinCustomColorSecondary) { value in
                                     Settings.controllerFeatures.softwareSkin.customColorSecondary = value
                                 }
+                            Picker("Directional Input", selection: self.$softwareSkinDirectionalInputType) {
+                                ForEach(SoftwareSkinDirectionalInputType.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinDirectionalInputType) { value in
+                                    Settings.controllerFeatures.softwareSkin.directionalInputType = value
+                                }
+                            Picker("A,B,X,Y Layout", selection: self.$softwareSkinABXYLayout) {
+                                ForEach(SoftwareSkinABXYLayout.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinABXYLayout) { value in
+                                    Settings.controllerFeatures.softwareSkin.abxyLayout = value
+                                }
+                            Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            Toggle("Fullscreen Landscape", isOn: Settings.controllerFeatures.softwareSkin.$fullscreenLandscape.valueBinding)
+                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             Toggle("Shadows", isOn: Settings.controllerFeatures.softwareSkin.$shadows.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             HStack {
@@ -273,18 +294,6 @@ struct QuickSettingsView: View
                                 .onChange(of: self.softwareSkinSafeArea) { value in
                                     Settings.controllerFeatures.softwareSkin.safeArea = value
                                 }
-                            Picker("Directional Input", selection: self.$softwareSkinDirectionalInputType) {
-                                ForEach(SoftwareSkinDirectionalInputType.allCases, id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinDirectionalInputType) { value in
-                                    Settings.controllerFeatures.softwareSkin.directionalInputType = value
-                                }
-                            Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
-                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                            Toggle("Fullscreen Landscape", isOn: Settings.controllerFeatures.softwareSkin.$fullscreenLandscape.valueBinding)
-                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         }
                     } header: {
                         Text("Software Skin")

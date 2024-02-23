@@ -92,6 +92,22 @@ enum SoftwareSkinDirectionalInputType: String, CaseIterable, CustomStringConvert
     }
 }
 
+enum SoftwareSkinABXYLayout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case nintendo = "Nintendo"
+    case xbox = "Xbox"
+    case swapAB = "Swap A/B"
+    case swapXY = "Swap X/Y"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 struct SoftwareSkinOptions
 {
     @Option(name: "Style",
@@ -111,6 +127,24 @@ struct SoftwareSkinOptions
     @Option(name: "Custom Secondary Color",
             description: "Choose the secondary color to use for the custom color mode. This color is used for the outlines on the Filled Outline style.")
     var customColorSecondary: Color = .white
+    
+    @Option(name: "Directional Input",
+            description: "Choose which input type to use for directional inputs. Does not affect N64.",
+            values: SoftwareSkinDirectionalInputType.allCases)
+    var directionalInputType: SoftwareSkinDirectionalInputType = .dPad
+    
+    @Option(name: "A,B,X,Y Layout",
+            description: "Choose which layout to use for A, B, X, and Y inputs. Does not affect N64 or Sega systems.",
+            values: SoftwareSkinABXYLayout.allCases)
+    var abxyLayout: SoftwareSkinABXYLayout = .nintendo
+    
+    @Option(name: "Translucent",
+            description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")
+    var translucentInputs: Bool = true
+    
+    @Option(name: "Fullscreen Landscape",
+            description: "Enable to maximize the screen size in landscape. This may cause inputs to cover parts of the screen. Disable to fit the screen between the left and right side input areas.")
+    var fullscreenLandscape: Bool = true
     
     @Option(name: "Shadows",
             description: "Enable to draw shadows underneath inputs.")
@@ -137,17 +171,4 @@ struct SoftwareSkinOptions
             step: 1,
             unit: "pt")
     var safeArea: Double = 40
-    
-    @Option(name: "Directional Input",
-            description: "Choose which input type to use for directional inputs. Does not affect N64 inputs.",
-            values: SoftwareSkinDirectionalInputType.allCases)
-    var directionalInputType: SoftwareSkinDirectionalInputType = .dPad
-    
-    @Option(name: "Translucent",
-            description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")
-    var translucentInputs: Bool = true
-    
-    @Option(name: "Fullscreen Landscape",
-            description: "Enable to maximize the screen size in landscape. This may cause inputs to cover parts of the screen. Disable to fit the screen between the left and right side input areas.")
-    var fullscreenLandscape: Bool = true
 }
