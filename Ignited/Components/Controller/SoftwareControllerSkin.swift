@@ -68,6 +68,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             for input in self.softwareInputs()
             {
                 var assetName = input.assetName
+                var kind = input.kind
                 
                 var color = Settings.controllerFeatures.softwareSkin.color.uiColor
                 var colorSecondary = Settings.controllerFeatures.softwareSkin.color.uiColorSecondary
@@ -77,17 +78,18 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                    Settings.controllerFeatures.softwareSkin.directionalInputType == .thumbstick
                 {
                     assetName = SoftwareInput.thumbstick.assetName
-                    color = color.withAlphaComponent(0.5)
+                    kind = SoftwareInput.thumbstick.kind
                 }
                 
-                if input.kind == .thumbstick
+                if kind == .thumbstick
                 {
                     color = color.withAlphaComponent(0.5)
                 }
                 
                 ctx.saveGState()
                 
-                if Settings.controllerFeatures.softwareSkin.shadows
+                if Settings.controllerFeatures.softwareSkin.shadows,
+                   kind != .thumbstick
                 {
                     let opacity = Settings.controllerFeatures.softwareSkin.shadowOpacity
                     ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
