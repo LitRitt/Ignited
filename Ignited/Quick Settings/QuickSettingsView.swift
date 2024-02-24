@@ -25,6 +25,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinCustomColor: Color = Settings.controllerFeatures.softwareSkin.customColor
     @State private var softwareSkinCustomColorSecondary: Color = Settings.controllerFeatures.softwareSkin.customColorSecondary
     @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
+    @State private var softwareSkinDSTopScreenSize: Double = Settings.controllerFeatures.softwareSkin.dsTopScreenSize
     @State private var softwareSkinSafeArea: Double = Settings.controllerFeatures.softwareSkin.safeArea
     @State private var softwareSkinExtendedEdges: Double = Settings.controllerFeatures.softwareSkin.extendedEdges
     @State private var softwareSkinDirectionalInputType: SoftwareSkinDirectionalInputType = Settings.controllerFeatures.softwareSkin.directionalInputType
@@ -300,6 +301,18 @@ struct QuickSettingsView: View
                             Slider(value: self.$softwareSkinShadowOpacity, in: 0.0...1.0, step: 0.05)
                                 .onChange(of: self.softwareSkinShadowOpacity) { value in
                                     Settings.controllerFeatures.softwareSkin.shadowOpacity = value
+                                }
+                            HStack {
+                                Text("DS Top Screen Size: \(self.softwareSkinDSTopScreenSize * 100, specifier: "%.f")%")
+                                Spacer()
+                                Button("Reset") {
+                                    self.softwareSkinDSTopScreenSize = 0.5
+                                    Settings.controllerFeatures.softwareSkin.dsTopScreenSize = self.softwareSkinDSTopScreenSize
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$softwareSkinDSTopScreenSize, in: 0.2...0.8, step: 0.05)
+                                .onChange(of: self.softwareSkinDSTopScreenSize) { value in
+                                    Settings.controllerFeatures.softwareSkin.dsTopScreenSize = value
                                 }
                             HStack {
                                 Text("Extended Edges: \(self.softwareSkinExtendedEdges, specifier: "%.f")pt")

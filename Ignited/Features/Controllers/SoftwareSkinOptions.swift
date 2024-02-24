@@ -199,6 +199,14 @@ struct SoftwareSkinOptions
             isPercentage: true)
     var shadowOpacity: Double = 0.7
     
+    @Option(name: "DS Top Screen Size",
+            description: "Change the size of the top screen on DS. A higher percentage makes the top screen bigger and the bottom screen smaller.",
+            range: 0.2...0.8,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var dsTopScreenSize: Double = 0.5
+    
     @Option(name: "Extended Edges",
             description: "Change the value to use for extended edges on inputs. Extended edges increase the area around an input that will activate that input when touched.",
             range: 0...20,

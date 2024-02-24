@@ -139,15 +139,13 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             {
             case .touchScreen:
                 if let screens = self.screens(for: traits, alt: alt),
-                   let screen = screens.first,
+                   let screen = screens.last,
                    let screenFrame = screen.outputFrame
                 {
-                    let touchScreenFrame = CGRect(x: screenFrame.minX, y: screenFrame.midY, width: screenFrame.width, height: screenFrame.height / 2)
-                    
                     items.append(Skin.Item(id: input.rawValue,
                                            kind: input.kind,
                                            inputs: input.inputs(self.gameType),
-                                           frame: self.getAbsolute(touchScreenFrame),
+                                           frame: self.getAbsolute(screenFrame),
                                            edges: input.edges,
                                            mappingSize: mappingSize))
                 }
@@ -236,9 +234,31 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             
         }
         
-        let screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
-        
-        return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: self.getRelative(screenFrame))]
+        switch self.gameType
+        {
+        case .ds:
+            let aspectRatio = CGSize(width: self.screenSize().width, height: self.screenSize().height / 2)
+            let topScreenInputFrame = CGRect(origin: .zero, size: aspectRatio)
+            let bottomScreenInputFrame = CGRect(origin: CGPoint(x: 0, y: aspectRatio.height), size: aspectRatio)
+            
+            let topScreenHeight = screenArea.height * Settings.controllerFeatures.softwareSkin.dsTopScreenSize
+            let topScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY, width: screenArea.width, height: topScreenHeight)
+            let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
+            
+            let bottomScreenHeight = screenArea.height - topScreenHeight
+            let bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
+            let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
+            
+            return [
+                Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(topScreenFrame)),
+                Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame))
+            ]
+            
+        default:
+            let screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
+            
+            return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: self.getRelative(screenFrame))]
+        }
     }
     
     public func thumbstick(for item: Skin.Item, traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> (UIImage, CGSize)?
