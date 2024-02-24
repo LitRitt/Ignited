@@ -624,7 +624,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = leftButtonArea.getSubRect(sections: 3, index: 1, size: 2).getInsetSquare()
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapLeft, .swapBoth:
                     frame = leftButtonArea.getSubRect(sections: 8, index: 2, size: 3).getInsetSquare(inset: 10)
@@ -640,7 +640,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapLeft, .swapBoth:
                     frame = leftButtonArea.getSubRect(sections: 8, index: 5, size: 4).getInsetSquare()
@@ -665,7 +665,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().right
@@ -690,7 +690,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().bottom
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().bottom
@@ -724,9 +724,15 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch (Settings.controllerFeatures.softwareSkin.n64ShoulderLayout, Settings.controllerFeatures.softwareSkin.n64FaceLayout)
                 {
-                case .swapRight, .swapBoth:
+                case (.swapZL, _):
+                    frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
+                    
+                case (.swapZR, _):
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
+                    
+                case (_, .swapRight), (_, .swapBoth):
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().top
                     
                 default:
@@ -743,7 +749,17 @@ public enum SoftwareInput: String, CaseIterable
                 frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
-                frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
+                switch (Settings.controllerFeatures.softwareSkin.n64ShoulderLayout, Settings.controllerFeatures.softwareSkin.n64FaceLayout)
+                {
+                case (.swapZL, .swapBoth), (.swapZL, .swapRight):
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().top
+                    
+                case (.swapZL, _):
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 4).getFourButtons(inset: 10).top
+                    
+                default:
+                    frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
+                }
                 
             default: break
             }
@@ -755,7 +771,17 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
-                frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
+                switch (Settings.controllerFeatures.softwareSkin.n64ShoulderLayout, Settings.controllerFeatures.softwareSkin.n64FaceLayout)
+                {
+                case (.swapZR, .swapBoth), (.swapZR, .swapRight):
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().top
+                    
+                case (.swapZR, _):
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 4).getFourButtons(inset: 10).top
+                    
+                default:
+                    frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
+                }
                 
             default: break
             }
@@ -764,7 +790,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).top
@@ -780,7 +806,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).bottom
@@ -796,7 +822,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).left
@@ -812,7 +838,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).right
@@ -846,7 +872,7 @@ public enum SoftwareInput: String, CaseIterable
                 frame = rightButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64Layout
+                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().left
@@ -913,9 +939,27 @@ public enum SoftwareInput: String, CaseIterable
         case .c: return "c.circle"
         case .x: return "x.circle"
         case .y: return "y.circle"
-        case .z: return "z.circle"
-        case .l: return "l.square"
-        case .r: return "r.square"
+        case .z:
+            switch Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
+            {
+            case .swapZL, .swapZR: return "z.square"
+            default: return "z.circle"
+            }
+            
+        case .l:
+            switch Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
+            {
+            case .swapZL: return "l.circle"
+            default: return "l.square"
+            }
+            
+        case .r:
+            switch Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
+            {
+            case .swapZR: return "r.circle"
+            default: return "r.square"
+            }
+            
         case .thumbstick: return "circle"
         case .cUp: return "arrowtriangle.up.circle"
         case .cDown: return "arrowtriangle.down.circle"

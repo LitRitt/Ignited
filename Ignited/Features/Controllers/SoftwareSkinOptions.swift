@@ -108,12 +108,27 @@ enum SoftwareSkinABXYLayout: String, CaseIterable, CustomStringConvertible, Loca
     }
 }
 
-enum SoftwareSkinN64Layout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+enum SoftwareSkinN64FaceLayout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
     case none = "Default"
     case swapLeft = "Swap Stick/D-Pad"
     case swapRight = "Swap Buttons/C"
     case swapBoth = "Swap Both"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
+enum SoftwareSkinN64ShoulderLayout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case none = "Default"
+    case swapZL = "Swap Z/L"
+    case swapZR = "Swap Z/R"
     
     var description: String {
         return self.rawValue
@@ -154,10 +169,15 @@ struct SoftwareSkinOptions
             values: SoftwareSkinABXYLayout.allCases)
     var abxyLayout: SoftwareSkinABXYLayout = .nintendo
     
-    @Option(name: "N64 Layout",
+    @Option(name: "N64 Face Layout",
             description: "Choose which layout to use for N64 inputs. Swaps the top and bottom input groups on either or both sides.",
-            values: SoftwareSkinN64Layout.allCases)
-    var n64Layout: SoftwareSkinN64Layout = .none
+            values: SoftwareSkinN64FaceLayout.allCases)
+    var n64FaceLayout: SoftwareSkinN64FaceLayout = .none
+    
+    @Option(name: "N64 Shoulder Layout",
+            description: "Choose which layout to use for N64 shoulder inputs. Swaps the Z button with either L or R.",
+            values: SoftwareSkinN64ShoulderLayout.allCases)
+    var n64ShoulderLayout: SoftwareSkinN64ShoulderLayout = .none
     
     @Option(name: "Translucent",
             description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")

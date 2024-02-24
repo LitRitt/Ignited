@@ -29,7 +29,8 @@ struct QuickSettingsView: View
     @State private var softwareSkinExtendedEdges: Double = Settings.controllerFeatures.softwareSkin.extendedEdges
     @State private var softwareSkinDirectionalInputType: SoftwareSkinDirectionalInputType = Settings.controllerFeatures.softwareSkin.directionalInputType
     @State private var softwareSkinABXYLayout: SoftwareSkinABXYLayout = Settings.controllerFeatures.softwareSkin.abxyLayout
-    @State private var softwareSkinN64Layout: SoftwareSkinN64Layout = Settings.controllerFeatures.softwareSkin.n64Layout
+    @State private var softwareSkinN64FaceLayout: SoftwareSkinN64FaceLayout = Settings.controllerFeatures.softwareSkin.n64FaceLayout
+    @State private var softwareSkinN64ShoulderLayout: SoftwareSkinN64ShoulderLayout = Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
@@ -266,13 +267,21 @@ struct QuickSettingsView: View
                                 .onChange(of: self.softwareSkinABXYLayout) { value in
                                     Settings.controllerFeatures.softwareSkin.abxyLayout = value
                                 }
-                            Picker("N64 Layout", selection: self.$softwareSkinN64Layout) {
-                                ForEach(SoftwareSkinN64Layout.allCases, id: \.self) { value in
+                            Picker("N64 Face Layout", selection: self.$softwareSkinN64FaceLayout) {
+                                ForEach(SoftwareSkinN64FaceLayout.allCases, id: \.self) { value in
                                     value.localizedDescription
                                 }
                             }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinN64Layout) { value in
-                                    Settings.controllerFeatures.softwareSkin.n64Layout = value
+                                .onChange(of: self.softwareSkinN64FaceLayout) { value in
+                                    Settings.controllerFeatures.softwareSkin.n64FaceLayout = value
+                                }
+                            Picker("N64 Shoulder Layout", selection: self.$softwareSkinN64ShoulderLayout) {
+                                ForEach(SoftwareSkinN64ShoulderLayout.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinN64ShoulderLayout) { value in
+                                    Settings.controllerFeatures.softwareSkin.n64ShoulderLayout = value
                                 }
                             Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
