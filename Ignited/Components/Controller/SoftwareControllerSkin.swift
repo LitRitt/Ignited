@@ -225,7 +225,14 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
         case .landscape:
             let screenAreaWidth = rightButtonArea.minX - leftButtonArea.maxX
             
-            screenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: screenAreaWidth, height: mappingSize.height)
+            if Settings.controllerFeatures.softwareSkin.fullscreenLandscape
+            {
+                screenArea = CGRect(origin: .zero, size: mappingSize)
+            }
+            else
+            {
+                screenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: screenAreaWidth, height: mappingSize.height)
+            }
             
         }
         
