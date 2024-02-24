@@ -32,6 +32,7 @@ struct QuickSettingsView: View
     @State private var softwareSkinABXYLayout: SoftwareSkinABXYLayout = Settings.controllerFeatures.softwareSkin.abxyLayout
     @State private var softwareSkinN64FaceLayout: SoftwareSkinN64FaceLayout = Settings.controllerFeatures.softwareSkin.n64FaceLayout
     @State private var softwareSkinN64ShoulderLayout: SoftwareSkinN64ShoulderLayout = Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
+    @State private var softwareSkinGenesisFaceLayout: SoftwareSkinGenesisFaceLayout = Settings.controllerFeatures.softwareSkin.genesisFaceLayout
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
@@ -283,6 +284,14 @@ struct QuickSettingsView: View
                             }.pickerStyle(.menu)
                                 .onChange(of: self.softwareSkinN64ShoulderLayout) { value in
                                     Settings.controllerFeatures.softwareSkin.n64ShoulderLayout = value
+                                }
+                            Picker("Genesis Face Layout", selection: self.$softwareSkinGenesisFaceLayout) {
+                                ForEach(SoftwareSkinGenesisFaceLayout.allCases, id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinGenesisFaceLayout) { value in
+                                    Settings.controllerFeatures.softwareSkin.genesisFaceLayout = value
                                 }
                             Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))

@@ -139,6 +139,20 @@ enum SoftwareSkinN64ShoulderLayout: String, CaseIterable, CustomStringConvertibl
     }
 }
 
+enum SoftwareSkinGenesisFaceLayout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case button3 = "3 Button"
+    case button6 = "6 Button"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 struct SoftwareSkinOptions
 {
     @Option(name: "Style",
@@ -170,7 +184,7 @@ struct SoftwareSkinOptions
     var abxyLayout: SoftwareSkinABXYLayout = .nintendo
     
     @Option(name: "N64 Face Layout",
-            description: "Choose which layout to use for N64 inputs. Swaps the top and bottom input groups on either or both sides.",
+            description: "Choose which layout to use for N64 face inputs. Swaps the top and bottom input groups on either or both sides.",
             values: SoftwareSkinN64FaceLayout.allCases)
     var n64FaceLayout: SoftwareSkinN64FaceLayout = .none
     
@@ -178,6 +192,11 @@ struct SoftwareSkinOptions
             description: "Choose which layout to use for N64 shoulder inputs. Swaps the Z button with either L or R.",
             values: SoftwareSkinN64ShoulderLayout.allCases)
     var n64ShoulderLayout: SoftwareSkinN64ShoulderLayout = .none
+    
+    @Option(name: "Genesis Face Layout",
+            description: "Choose which layout to use for Genesis face inputs. Change between the 3 button and 6 button layout.",
+            values: SoftwareSkinGenesisFaceLayout.allCases)
+    var genesisFaceLayout: SoftwareSkinGenesisFaceLayout = .button3
     
     @Option(name: "Translucent",
             description: "Enable to make the inputs able to be translucent. Disable to make the inputs fully opaque.")

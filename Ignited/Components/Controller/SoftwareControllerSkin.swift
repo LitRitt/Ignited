@@ -31,11 +31,7 @@ public struct SoftwareControllerSkin
     
     static public func supportsGameType(_ gameType: GameType) -> Bool
     {
-        switch gameType
-        {
-        case .genesis, .ms, .gg: return false
-        default: return true
-        }
+        return true
     }
     
     static public var extendedEdges: [String: CGFloat]
@@ -68,7 +64,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             
             for input in self.softwareInputs()
             {
-                var assetName = input.assetName
+                var assetName = input.assetName(self.gameType)
                 var kind = input.kind
                 
                 var color = Settings.controllerFeatures.softwareSkin.color.uiColor
@@ -78,7 +74,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                    input.kind == .dPad,
                    Settings.controllerFeatures.softwareSkin.directionalInputType == .thumbstick
                 {
-                    assetName = SoftwareInput.thumbstick.assetName
+                    assetName = SoftwareInput.thumbstick.assetName(self.gameType)
                     kind = SoftwareInput.thumbstick.kind
                 }
                 
@@ -403,7 +399,7 @@ extension SoftwareControllerSkin
         
         switch self.gameType
         {
-        case .gbc, .nes: buttonAreas = buttonAreas.map { $0.getSubRect(sections: 4, index: 2, size: 3) }
+        case .gbc, .nes, .genesis, .ms, .gg: buttonAreas = buttonAreas.map { $0.getSubRect(sections: 4, index: 2, size: 3) }
         default: break
         }
         
@@ -419,6 +415,9 @@ extension SoftwareControllerSkin
         case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings]
         case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings]
         case .n64: return [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu, .quickSettings]
+        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button3: return [.dPad, .a, .b, .c, .start, .mode, .menu, .quickSettings]
+        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button6: return [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu, .quickSettings]
+        case .ms, .gg: return [.dPad, .b, .c, .start, .menu, .quickSettings]
         default: return []
         }
     }
@@ -545,6 +544,27 @@ extension CGRect
         
         return (left, right)
     }
+    
+    func getThreeButton() -> (left: CGRect, middle: CGRect, right: CGRect)
+    {
+        var width = self.width * 0.3
+        var height = width
+        
+        if width > self.height * 0.6
+        {
+            height = self.height * 0.6
+            width = height
+        }
+        
+        let midX = self.midX - (width / 2)
+        let y = self.minY + ((self.height - height) / 2)
+        
+        let left = CGRect(x: midX - (self.width * 0.35), y: y + (self.height * 0.2), width: width, height: height)
+        let middle = CGRect(x: midX, y: y, width: width, height: height)
+        let right = CGRect(x: midX + (self.width * 0.35), y: y - (self.height * 0.2), width: width, height: height)
+        
+        return (left, middle, right)
+    }
 }
 
 public enum SoftwareInput: String, CaseIterable
@@ -637,10 +657,10 @@ public enum SoftwareInput: String, CaseIterable
         case .dPad:
             switch gameType
             {
-            case .gba, .snes, .ds, .genesis, .ms, .gg:
+            case .gba, .snes, .ds:
                 frame = leftButtonArea.getSubRect(sections: 4, index: 2, size: 2).getInsetSquare()
                 
-            case .gbc, .nes:
+            case .gbc, .nes, .genesis, .ms, .gg:
                 frame = leftButtonArea.getSubRect(sections: 3, index: 1, size: 2).getInsetSquare()
                 
             case .n64:
@@ -684,6 +704,16 @@ public enum SoftwareInput: String, CaseIterable
             case .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
                 
+            case .genesis:
+                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                {
+                case .button3:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().left
+                    
+                case .button6:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().left
+                }
+                
             case .n64:
                 switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
                 {
@@ -703,11 +733,21 @@ public enum SoftwareInput: String, CaseIterable
             case .gba:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().left
                 
-            case .gbc, .nes:
+            case .gbc, .nes, .ms, .gg:
                 frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().left
                 
             case .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().bottom
+                
+            case .genesis:
+                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                {
+                case .button3:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().middle
+                    
+                case .button6:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().middle
+                }
                 
             case .n64:
                 switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
@@ -722,11 +762,39 @@ public enum SoftwareInput: String, CaseIterable
             default: break
             }
             
+        case .c:
+            switch gameType
+            {
+            case .ms, .gg:
+                frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().right
+                
+            case .genesis:
+                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                {
+                case .button3:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().right
+                    
+                case .button6:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().right
+                }
+                
+            default: break
+            }
+            
         case .x:
             switch gameType
             {
             case .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().top
+                
+            case .genesis:
+                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                {
+                case .button3: break
+                    
+                case .button6:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().left
+                }
                 
             default: break
             }
@@ -736,6 +804,15 @@ public enum SoftwareInput: String, CaseIterable
             {
             case .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().left
+                
+            case .genesis:
+                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                {
+                case .button3: break
+                    
+                case .button6:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().middle
+                }
                 
             default: break
             }
@@ -757,6 +834,15 @@ public enum SoftwareInput: String, CaseIterable
                     
                 default:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 4).getFourButtons(inset: 10).top
+                }
+                
+            case .genesis:
+                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                {
+                case .button3: break
+                    
+                case .button6:
+                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().right
                 }
                 
             default: break
@@ -876,7 +962,7 @@ public enum SoftwareInput: String, CaseIterable
             case .gba, .snes, .ds:
                 frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
                 
-            case .gbc, .nes:
+            case .gbc, .nes, .genesis, .ms, .gg:
                 frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
@@ -888,7 +974,7 @@ public enum SoftwareInput: String, CaseIterable
             case .gba, .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
                 
-            case .gbc, .nes:
+            case .gbc, .nes, .genesis, .ms, .gg:
                 frame = rightButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
@@ -904,13 +990,22 @@ public enum SoftwareInput: String, CaseIterable
             default: break
             }
             
+        case .mode:
+            switch gameType
+            {
+            case .genesis:
+                frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
+                
+            default: break
+            }
+            
         case .quickSettings:
             switch gameType
             {
             case .gba, .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
                 
-            case .gbc, .nes:
+            case .gbc, .nes, .genesis, .ms, .gg:
                 frame = rightButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
@@ -925,7 +1020,7 @@ public enum SoftwareInput: String, CaseIterable
             case .gba, .snes, .ds:
                 frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
                 
-            case .gbc, .nes:
+            case .gbc, .nes, .genesis, .ms, .gg:
                 frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
@@ -949,14 +1044,26 @@ public enum SoftwareInput: String, CaseIterable
         }
     }
     
-    var assetName: String
+    func assetName(_ gameType: GameType) -> String
     {
         switch self
         {
         case .dPad: return "dpad"
         case .a: return "a.circle"
-        case .b: return "b.circle"
-        case .c: return "c.circle"
+        case .b:
+            switch gameType
+            {
+            case .ms, .gg: return "1.circle"
+            default: return "b.circle"
+            }
+            
+        case .c:
+            switch gameType
+            {
+            case .ms, .gg: return "2.circle"
+            default: return "c.circle"
+            }
+            
         case .x: return "x.circle"
         case .y: return "y.circle"
         case .z:
@@ -985,8 +1092,15 @@ public enum SoftwareInput: String, CaseIterable
         case .cDown: return "arrowtriangle.down.circle"
         case .cLeft: return "arrowtriangle.left.circle"
         case .cRight: return "arrowtriangle.right.circle"
-        case .start: return "plus.circle"
+        case .start:
+            switch gameType
+            {
+            case .ms, .gg, .genesis, .n64: return "s.circle"
+            default: return "plus.circle"
+            }
+            
         case .select: return "minus.circle"
+        case .mode: return "m.circle"
         case .menu: return "ellipsis.circle"
         case .quickSettings: return "gearshape.circle"
         default: return ""
