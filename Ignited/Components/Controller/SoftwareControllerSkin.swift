@@ -421,12 +421,6 @@ extension SoftwareControllerSkin
         default: break
         }
         
-        switch self.gameType
-        {
-        case .gbc, .nes, .genesis, .ms, .gg: buttonAreas = buttonAreas.map { $0.getSubRect(sections: 4, index: 2, size: 3) }
-        default: break
-        }
-        
         return buttonAreas
     }
     
@@ -434,14 +428,14 @@ extension SoftwareControllerSkin
     {
         switch self.gameType
         {
-        case .gba: return [.dPad, .a, .b, .l, .r, .start, .select, .menu, .quickSettings]
-        case .gbc, .nes: return [.dPad, .a, .b, .start, .select, .menu, .quickSettings]
-        case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings]
-        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings, .toggleAltRepresentations]
+        case .gba: return [.dPad, .a, .b, .l, .r, .start, .select, .menu, .quickSettings, .custom1, .custom2]
+        case .gbc, .nes: return [.dPad, .a, .b, .start, .select, .menu, .quickSettings, .custom1, .custom2]
+        case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings, .custom1, .custom2]
+        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings, .toggleAltRepresentations, .custom1, .custom2]
         case .n64: return [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu, .quickSettings]
-        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button3: return [.dPad, .a, .b, .c, .start, .mode, .menu, .quickSettings]
-        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button6: return [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu, .quickSettings]
-        case .ms, .gg: return [.dPad, .b, .c, .start, .menu, .quickSettings]
+        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button3: return [.dPad, .a, .b, .c, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
+        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button6: return [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
+        case .ms, .gg: return [.dPad, .b, .c, .start, .menu, .quickSettings, .custom1, .custom2]
         default: return []
         }
     }
@@ -622,10 +616,26 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         switch self
         {
         case .custom1:
-            return ""
+            switch Settings.controllerFeatures.softwareSkin.customButton1
+            {
+            case .fastForward: return "fastForward"
+            case .quickSave: return "quickSave"
+            case .quickLoad: return "quickLoad"
+            case .screenshot: return "screenshot"
+            case .restart: return "restart"
+            default: return ""
+            }
             
         case .custom2:
-            return ""
+            switch Settings.controllerFeatures.softwareSkin.customButton2
+            {
+            case .fastForward: return "fastForward"
+            case .quickSave: return "quickSave"
+            case .quickLoad: return "quickLoad"
+            case .screenshot: return "screenshot"
+            case .restart: return "restart"
+            default: return ""
+            }
             
         default: return self.rawValue
         }
@@ -668,7 +678,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                                 left: AnyInput(stringValue: "left", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
                                 right: AnyInput(stringValue: "right", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
             
-        default: return .standard([AnyInput(stringValue: self.rawValue, intValue: nil, type: .controller(.controllerSkin))])
+        default: return .standard([AnyInput(stringValue: self.description, intValue: nil, type: .controller(.controllerSkin))])
         }
     }
     
@@ -698,11 +708,8 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .dPad:
             switch gameType
             {
-            case .gba, .snes, .ds:
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
                 frame = leftButtonArea.getSubRect(sections: 4, index: 2, size: 2).getInsetSquare()
-                
-            case .gbc, .nes, .genesis, .ms, .gg:
-                frame = leftButtonArea.getSubRect(sections: 3, index: 1, size: 2).getInsetSquare()
                 
             case .n64:
                 switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
@@ -736,11 +743,8 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .a:
             switch gameType
             {
-            case .gba:
+            case .gba, .gbc, .nes:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
-                
-            case .gbc, .nes:
-                frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().right
                 
             case .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
@@ -749,10 +753,10 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
                 {
                 case .button3:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().left
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().left
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().left
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 3, size: 1).getThreeButton().left
                 }
                 
             case .n64:
@@ -771,11 +775,8 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .b:
             switch gameType
             {
-            case .gba:
+            case .gba, .gbc, .nes, .ms, .gg:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().left
-                
-            case .gbc, .nes, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().left
                 
             case .snes, .ds:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().bottom
@@ -784,10 +785,10 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
                 {
                 case .button3:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().middle
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().middle
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().middle
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 3, size: 1).getThreeButton().middle
                 }
                 
             case .n64:
@@ -807,16 +808,16 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().right
+                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
                 
             case .genesis:
                 switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
                 {
                 case .button3:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().right
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().right
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().right
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 3, size: 1).getThreeButton().right
                 }
                 
             default: break
@@ -834,7 +835,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 case .button3: break
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().left
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 1).getThreeButton().left
                 }
                 
             default: break
@@ -852,7 +853,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 case .button3: break
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().middle
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 1).getThreeButton().middle
                 }
                 
             default: break
@@ -883,7 +884,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 case .button3: break
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().right
+                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 1).getThreeButton().right
                 }
                 
             default: break
@@ -1003,7 +1004,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             case .gba, .snes, .ds:
                 frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
                 
-            case .gbc, .nes, .genesis, .ms, .gg:
+            case .gbc, .nes:
                 frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
@@ -1012,11 +1013,8 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .start:
             switch gameType
             {
-            case .gba, .snes, .ds:
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
-                
-            case .gbc, .nes, .genesis, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
                 switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
@@ -1035,7 +1033,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .genesis:
-                frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
+                frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1043,11 +1041,8 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .quickSettings:
             switch gameType
             {
-            case .gba, .snes, .ds:
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
                 frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
-                
-            case .gbc, .nes, .genesis, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
                 frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
@@ -1058,14 +1053,35 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .menu:
             switch gameType
             {
-            case .gba, .snes, .ds:
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
                 frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
-                
-            case .gbc, .nes, .genesis, .ms, .gg:
-                frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
                 frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
+                
+            default: break
+            }
+            
+        case .custom1:
+            switch gameType
+            {
+            case .gba, .snes, .ds:
+                frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
+                
+            case .gbc, .nes, .genesis, .ms, .gg:
+                frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
+                
+            default: break
+            }
+            
+        case .custom2:
+            switch gameType
+            {
+            case .gba, .snes, .ds:
+                frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
+                
+            case .gbc, .nes, .genesis, .ms, .gg:
+                frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1143,8 +1159,40 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .select: return "minus.circle"
         case .mode: return "m.circle"
         case .menu: return "ellipsis.circle"
-        case .quickSettings: return "gearshape.circle"
         case .toggleAltRepresentations: return "arrow.up.arrow.down.circle"
+        case .quickSettings:
+            switch Settings.gameplayFeatures.quickSettings.buttonReplacement
+            {
+            case .fastForward: return "forward.circle"
+            case .quickSave: return "arrow.down.to.line.circle"
+            case .quickLoad: return "arrow.up.to.line.circle"
+            case .screenshot: return "camera.circle"
+            case .restart: return "backward.end.circle"
+            default: return "gearshape.circle"
+            }
+            
+        case .custom1:
+            switch Settings.controllerFeatures.softwareSkin.customButton1
+            {
+            case .fastForward: return "forward.circle"
+            case .quickSave: return "arrow.down.to.line.circle"
+            case .quickLoad: return "arrow.up.to.line.circle"
+            case .screenshot: return "camera.circle"
+            case .restart: return "backward.end.circle"
+            default: return ""
+            }
+            
+        case .custom2:
+            switch Settings.controllerFeatures.softwareSkin.customButton2
+            {
+            case .fastForward: return "forward.circle"
+            case .quickSave: return "arrow.down.to.line.circle"
+            case .quickLoad: return "arrow.up.to.line.circle"
+            case .screenshot: return "camera.circle"
+            case .restart: return "backward.end.circle"
+            default: return ""
+            }
+            
         default: return ""
         }
     }

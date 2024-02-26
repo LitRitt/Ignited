@@ -33,6 +33,8 @@ struct QuickSettingsView: View
     @State private var softwareSkinN64FaceLayout: SoftwareSkinN64FaceLayout = Settings.controllerFeatures.softwareSkin.n64FaceLayout
     @State private var softwareSkinN64ShoulderLayout: SoftwareSkinN64ShoulderLayout = Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
     @State private var softwareSkinGenesisFaceLayout: SoftwareSkinGenesisFaceLayout = Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+    @State private var softwareSkinCustomButton1: ActionInput = Settings.controllerFeatures.softwareSkin.customButton1
+    @State private var softwareSkinCustomButton2: ActionInput = Settings.controllerFeatures.softwareSkin.customButton2
     
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
@@ -252,6 +254,22 @@ struct QuickSettingsView: View
                             ColorPicker("Custom Secondary Color", selection: self.$softwareSkinCustomColorSecondary, supportsOpacity: false)
                                 .onChange(of: self.softwareSkinCustomColorSecondary) { value in
                                     Settings.controllerFeatures.softwareSkin.customColorSecondary = value
+                                }
+                            Picker("Custom Button 1", selection: self.$softwareSkinCustomButton1) {
+                                ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinCustomButton1) { value in
+                                    Settings.controllerFeatures.softwareSkin.customButton1 = value
+                                }
+                            Picker("Custom Button 2", selection: self.$softwareSkinCustomButton2) {
+                                ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.softwareSkinCustomButton2) { value in
+                                    Settings.controllerFeatures.softwareSkin.customButton2 = value
                                 }
                             Picker("Directional Input", selection: self.$softwareSkinDirectionalInputType) {
                                 ForEach(SoftwareSkinDirectionalInputType.allCases, id: \.self) { value in

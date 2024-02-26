@@ -173,6 +173,16 @@ struct SoftwareSkinOptions
             description: "Choose the secondary color to use for the custom color mode. This color is used for the outlines on the Filled Outline style.")
     var customColorSecondary: Color = .white
     
+    @Option(name: "Custom Button 1",
+            description: "Choose an input to use for custom button 1. Not available on N64.",
+            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
+    var customButton1: ActionInput = .fastForward
+    
+    @Option(name: "Custom Button 2",
+            description: "Choose an input to use for custom button 2. Not available on N64.",
+            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
+    var customButton2: ActionInput = .quickSave
+    
     @Option(name: "Directional Input",
             description: "Choose which input type to use for directional inputs. Does not affect N64.",
             values: SoftwareSkinDirectionalInputType.allCases)
