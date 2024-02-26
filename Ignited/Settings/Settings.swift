@@ -74,7 +74,7 @@ struct Settings
             Settings.gameplayFeatures.rewind.settingsKey.rawValue: false,
             Settings.gameplayFeatures.quickSettings.settingsKey.rawValue: true,
             Settings.gameplayFeatures.micSupport.settingsKey.rawValue: false,
-            Settings.controllerFeatures.softwareSkin.settingsKey.rawValue, true,
+            Settings.controllerFeatures.softwareSkin.settingsKey.rawValue: true,
             Settings.controllerFeatures.skin.settingsKey.rawValue: true,
             Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue: true,
             Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue: false,

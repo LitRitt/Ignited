@@ -138,7 +138,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                    let screen = screens.last,
                    let screenFrame = screen.outputFrame
                 {
-                    items.append(Skin.Item(id: input.rawValue,
+                    items.append(Skin.Item(id: input.description,
                                            kind: input.kind,
                                            inputs: input.inputs(self.gameType),
                                            frame: self.getAbsolute(screenFrame),
@@ -159,15 +159,28 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                     }
                 }
                 
-                let frame = input.frame(leftButtonArea: self.getAbsolute(buttonAreas[0]),
-                                        rightButtonArea: self.getAbsolute(buttonAreas[1]),
-                                        gameType: self.gameType)
+                let frame: CGRect
+                
+                if input == .toggleAltRepresentations,
+                   let screens = self.screens(for: traits, alt: alt),
+                   let screen = screens.first,
+                   let screenFrame = screen.outputFrame
+                {
+                    frame = self.getAbsolute(screenFrame)
+                    
+                }
+                else
+                {
+                    frame = input.frame(leftButtonArea: self.getAbsolute(buttonAreas[0]),
+                                            rightButtonArea: self.getAbsolute(buttonAreas[1]),
+                                            gameType: self.gameType)
+                }
                 
                 if kind == .thumbstick
                 {
                     let thumbstickSize = CGSize(width: (frame.width / 2) + 24, height: (frame.height / 2) + 24)
                     
-                    items.append(Skin.Item(id: input.rawValue,
+                    items.append(Skin.Item(id: input.description,
                                            kind: kind,
                                            inputs: input.inputs(self.gameType),
                                            frame: frame,
@@ -177,7 +190,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                 }
                 else
                 {
-                    items.append(Skin.Item(id: input.rawValue,
+                    items.append(Skin.Item(id: input.description,
                                            kind: kind,
                                            inputs: input.inputs(self.gameType),
                                            frame: frame,
@@ -245,10 +258,21 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             let bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
             let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
             
-            return [
-                Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(topScreenFrame)),
-                Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame))
-            ]
+            if alt
+            {
+                return [
+                    
+                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame)),
+                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(topScreenFrame))
+                ]
+            }
+            else
+            {
+                return [
+                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(topScreenFrame)),
+                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame))
+                ]
+            }
             
         default:
             let screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
@@ -413,7 +437,7 @@ extension SoftwareControllerSkin
         case .gba: return [.dPad, .a, .b, .l, .r, .start, .select, .menu, .quickSettings]
         case .gbc, .nes: return [.dPad, .a, .b, .start, .select, .menu, .quickSettings]
         case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings]
-        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings]
+        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings, .toggleAltRepresentations]
         case .n64: return [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu, .quickSettings]
         case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button3: return [.dPad, .a, .b, .c, .start, .mode, .menu, .quickSettings]
         case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button6: return [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu, .quickSettings]
@@ -567,7 +591,7 @@ extension CGRect
     }
 }
 
-public enum SoftwareInput: String, CaseIterable
+public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
 {
     case dPad
     case a
@@ -589,6 +613,23 @@ public enum SoftwareInput: String, CaseIterable
     case touchScreen
     case menu
     case quickSettings
+    case toggleAltRepresentations
+    case custom1
+    case custom2
+    
+    public var description: String
+    {
+        switch self
+        {
+        case .custom1:
+            return ""
+            
+        case .custom2:
+            return ""
+            
+        default: return self.rawValue
+        }
+    }
     
     var kind: DeltaCore.ControllerSkin.Item.Kind
     {
@@ -1039,7 +1080,7 @@ public enum SoftwareInput: String, CaseIterable
     {
         switch self
         {
-        case .touchScreen, .thumbstick: return [:]
+        case .touchScreen, .toggleAltRepresentations, .thumbstick: return [:]
         default: return SoftwareControllerSkin.extendedEdges
         }
     }
@@ -1103,6 +1144,7 @@ public enum SoftwareInput: String, CaseIterable
         case .mode: return "m.circle"
         case .menu: return "ellipsis.circle"
         case .quickSettings: return "gearshape.circle"
+        case .toggleAltRepresentations: return "arrow.up.arrow.down.circle"
         default: return ""
         }
     }

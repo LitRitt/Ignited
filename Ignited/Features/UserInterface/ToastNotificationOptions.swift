@@ -70,7 +70,7 @@ struct ToastNotificationOptions
     
     @Option(name: "Alternate Skin Toggled",
             description: "Show toasts when toggling the controller alternate skin.")
-    var altSkin: Bool = true
+    var altSkin: Bool = false
     
     @Option(name: "Debug Mode",
             description: "Show toasts when performing debug actions.")
