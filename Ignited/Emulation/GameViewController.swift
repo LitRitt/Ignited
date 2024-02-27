@@ -1264,18 +1264,6 @@ private extension GameViewController
     func updateBlurBackground()
     {
         self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
-        self.blurScreenStrength = Settings.controllerFeatures.backgroundBlur.strength
-        switch traitCollection.userInterfaceStyle
-        {
-        case .light:
-            self.blurScreenBrightness = Settings.controllerFeatures.backgroundBlur.tintIntensity
-            
-        case .dark, .unspecified:
-            var intensity = Settings.controllerFeatures.backgroundBlur.tintIntensity
-            intensity.negate()
-            self.blurScreenBrightness = intensity
-        }
-        
         self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && !self.isEditingOverscanInsets
     }
     
@@ -1999,8 +1987,6 @@ private extension GameViewController
     
     func showAirPlayView()
     {
-        self.blurScreenInFront = true
-        
         let blurEffect = self.airPlayBlurView.effect
         self.airPlayBlurView.effect = nil
         
@@ -2023,11 +2009,6 @@ private extension GameViewController
             self.airPlayContentView.isHidden = true
             self.airPlayBlurView.effect = blurEffect
         }
-        
-        if !self.isSelectingSustainedButtons
-        {
-            self.blurScreenInFront = false
-        }
     }
 }
 
@@ -2038,8 +2019,6 @@ private extension GameViewController
     {
         guard let gameController = self.pausingGameController,
               let game = self.game as? Game else { return }
-        
-        self.blurScreenInFront = true
         
         self.isSelectingSustainedButtons = true
         
@@ -2102,13 +2081,6 @@ private extension GameViewController
         }) { (finished) in
             self.sustainButtonsContentView.isHidden = true
             self.sustainButtonsBlurView.effect = blurEffect
-        }
-        
-        if !UIApplication.shared.isExternalDisplayConnected
-        {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.blurScreenInFront = false
-            }
         }
         
         self.updateAirPlayView()

@@ -293,9 +293,6 @@ extension PatreonAPI
             Settings.gameplayFeatures.rewind.keepStates = false
             Settings.gameplayFeatures.rewind.maxStates = 4
             Settings.gameplayFeatures.rewind.interval = 15
-            // Background blur
-            Settings.controllerFeatures.backgroundBlur.tintIntensity = 0.1
-            Settings.controllerFeatures.backgroundBlur.strength = 1.0
             // Touch overlay
             if Settings.touchFeedbackFeatures.touchOverlay.style != .bubble {
                 Settings.touchFeedbackFeatures.touchOverlay.style = .bubble

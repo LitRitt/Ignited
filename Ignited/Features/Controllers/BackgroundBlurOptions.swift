@@ -12,24 +12,6 @@ import Features
 
 struct BackgroundBlurOptions
 {
-    @Option(name: "Blur Strength",
-            description: "Change the strength of the blur applied to the background. Set to 100% for free users.",
-            range: 0.5...2.0,
-            step: 0.1,
-            unit: "%",
-            isPercentage: true,
-            attributes: [.pro])
-    var strength: Double = 1
-    
-    @Option(name: "Tint Intensity",
-            description: "Change the intensity of the light/dark mode tint. Negative values invert the tint between light and dark. Set to 10% for free users.",
-            range: -0.5...0.5,
-            step: 0.05,
-            unit: "%",
-            isPercentage: true,
-            attributes: [.pro])
-    var tintIntensity: Double = 0.1
-     
     @Option(name: "Show During AirPlay",
              description: "Display the blurred background during AirPlay.")
     var showDuringAirPlay: Bool = true

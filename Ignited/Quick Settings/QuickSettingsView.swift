@@ -41,9 +41,6 @@ struct QuickSettingsView: View
     @State private var controllerSkinBackgroundColor: Color = Settings.controllerFeatures.skin.backgroundColor
     @State private var controllerSkinAirPlayKeepScreen: Bool = Settings.controllerFeatures.airPlayKeepScreen.isEnabled
     
-    @State private var backgroundBlurStrength: Double = Settings.controllerFeatures.backgroundBlur.strength
-    @State private var backgroundBlurTintIntensity: Double = Settings.controllerFeatures.backgroundBlur.tintIntensity
-    
     @State private var gameboyPalette: GameboyPalette = Settings.gbFeatures.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = Settings.gbFeatures.palettes.spritePalette1
     @State private var gameboySpritePalette2: GameboyPalette = Settings.gbFeatures.palettes.spritePalette2
@@ -418,32 +415,6 @@ struct QuickSettingsView: View
                 {
                     Section() {
                         VStack {
-                            if Settings.proFeaturesEnabled {
-                                HStack {
-                                    Text("Blur Strength: \(self.backgroundBlurStrength * 100, specifier: "%.f")%")
-                                    Spacer()
-                                    Button("Reset") {
-                                        self.backgroundBlurStrength = 1.0
-                                        Settings.controllerFeatures.backgroundBlur.strength = self.backgroundBlurStrength
-                                    }.buttonStyle(.borderless)
-                                }
-                                Slider(value: self.$backgroundBlurStrength, in: 0.5...2.0, step: 0.1)
-                                    .onChange(of: self.backgroundBlurStrength) { value in
-                                        Settings.controllerFeatures.backgroundBlur.strength = value
-                                    }
-                                HStack {
-                                    Text("Tint Intensity: \(self.backgroundBlurTintIntensity * 100, specifier: "%.f")%")
-                                    Spacer()
-                                    Button("Reset") {
-                                        self.backgroundBlurTintIntensity = 0.1
-                                        Settings.controllerFeatures.backgroundBlur.tintIntensity = self.backgroundBlurTintIntensity
-                                    }.buttonStyle(.borderless)
-                                }
-                                Slider(value: self.$backgroundBlurTintIntensity, in: -0.5...0.5, step: 0.05)
-                                    .onChange(of: self.backgroundBlurTintIntensity) { value in
-                                        Settings.controllerFeatures.backgroundBlur.tintIntensity = value
-                                    }
-                            }
                             Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$showDuringAirPlay.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$maintainAspect.valueBinding)

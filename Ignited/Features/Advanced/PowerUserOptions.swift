@@ -372,8 +372,6 @@ extension PowerUserOptions
             case .backgroundBlur:
                 Settings.controllerFeatures.backgroundBlur.showDuringAirPlay = true
                 Settings.controllerFeatures.backgroundBlur.maintainAspect = true
-                Settings.controllerFeatures.backgroundBlur.strength = 1.0
-                Settings.controllerFeatures.backgroundBlur.tintIntensity = 0.1
                 
             case .controller:
                 Settings.controllerFeatures.controller.triggerDeadzone = 0.15
