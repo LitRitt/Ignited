@@ -36,6 +36,11 @@ struct QuickSettingsView: View
     @State private var softwareSkinCustomButton1: ActionInput = Settings.controllerFeatures.softwareSkin.customButton1
     @State private var softwareSkinCustomButton2: ActionInput = Settings.controllerFeatures.softwareSkin.customButton2
     
+    @State private var backgroundBlurStyle: UIBlurEffect.Style = Settings.controllerFeatures.backgroundBlur.style
+    @State private var backgroundBlurTintColor: BackgroundBlurTintColor = Settings.controllerFeatures.backgroundBlur.tintColor
+    @State private var backgroundBlurTintCustomColor: Color = Settings.controllerFeatures.backgroundBlur.customColor
+    @State private var backgroundBlurTintOpacity: Double = Settings.controllerFeatures.backgroundBlur.tintOpacity
+    
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
     @State private var controllerSkinBackgroundColor: Color = Settings.controllerFeatures.skin.backgroundColor
@@ -415,6 +420,42 @@ struct QuickSettingsView: View
                 {
                     Section() {
                         VStack {
+                            if Settings.proFeaturesEnabled {
+                                Picker("Blur Style", selection: self.$backgroundBlurStyle) {
+                                    ForEach(UIBlurEffect.Style.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.backgroundBlurStyle) { value in
+                                        Settings.controllerFeatures.backgroundBlur.style = value
+                                    }
+                            }
+                            Picker("Tint Color", selection: self.$backgroundBlurTintColor) {
+                                ForEach(Settings.proFeaturesEnabled ? BackgroundBlurTintColor.allCases : [.none, .theme], id: \.self) { value in
+                                    value.localizedDescription
+                                }
+                            }.pickerStyle(.menu)
+                                .onChange(of: self.backgroundBlurTintColor) { value in
+                                    Settings.controllerFeatures.backgroundBlur.tintColor = value
+                                }
+                            if Settings.proFeaturesEnabled {
+                                ColorPicker("Custom Tint Color", selection: self.$backgroundBlurTintCustomColor, supportsOpacity: false)
+                                    .onChange(of: self.backgroundBlurTintCustomColor) { value in
+                                        Settings.controllerFeatures.backgroundBlur.customColor = value
+                                    }
+                            }
+                            HStack {
+                                Text("Tint Opacity: \(self.backgroundBlurTintOpacity * 100, specifier: "%.f")%")
+                                Spacer()
+                                Button("Reset") {
+                                    self.backgroundBlurTintOpacity = 0.5
+                                    Settings.controllerFeatures.backgroundBlur.tintOpacity = self.backgroundBlurTintOpacity
+                                }.buttonStyle(.borderless)
+                            }
+                            Slider(value: self.$backgroundBlurTintOpacity, in: 0.2...0.8, step: 0.05)
+                                .onChange(of: self.backgroundBlurTintOpacity) { value in
+                                    Settings.controllerFeatures.backgroundBlur.tintOpacity = value
+                                }
                             Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$showDuringAirPlay.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$maintainAspect.valueBinding)

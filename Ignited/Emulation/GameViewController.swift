@@ -1263,6 +1263,14 @@ private extension GameViewController
     
     func updateBlurBackground()
     {
+        switch Settings.controllerFeatures.backgroundBlur.tintColor
+        {
+        case .none: self.blurTintView.backgroundColor = Settings.controllerFeatures.backgroundBlur.tintColor.uiColor.withAlphaComponent(0)
+        default: self.blurTintView.backgroundColor = Settings.controllerFeatures.backgroundBlur.tintColor.uiColor.withAlphaComponent(Settings.controllerFeatures.backgroundBlur.tintOpacity)
+        }
+        
+        self.blurGameViewBlurView.effect = UIBlurEffect(style: Settings.controllerFeatures.backgroundBlur.style)
+        
         self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
         self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && !self.isEditingOverscanInsets
     }
@@ -3230,7 +3238,12 @@ private extension GameViewController
             // Update whenever any of the AirPlay skins have changed.
             self.updateExternalDisplay()
             
-        case Settings.controllerFeatures.softwareSkin.$color.settingsKey, Settings.controllerFeatures.softwareSkin.$style.settingsKey, Settings.controllerFeatures.softwareSkin.$shadows.settingsKey, Settings.controllerFeatures.softwareSkin.$customColor.settingsKey, Settings.controllerFeatures.softwareSkin.$shadowOpacity.settingsKey:
+        case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue):
+            // Update whenever any of the background blur settings have changed.
+            self.updateBlurBackground()
+            
+        case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.softwareSkin.settingsKey.rawValue):
+            // Update whenever any of the background blur settings have changed.
             self.controllerView.invalidateImageCache()
             
         default: break
