@@ -283,6 +283,7 @@ extension PowerUserOptions
         case fastForward
         case quickSettings
         // Controllers
+        case softwareSkin
         case skin
         case backgroundBlur
         case controller
@@ -362,6 +363,26 @@ extension PowerUserOptions
                 Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = true
                 Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = true
                 Settings.gameplayFeatures.quickSettings.colorPalettesEnabled = true
+                
+            case .softwareSkin:
+                Settings.controllerFeatures.softwareSkin.style = .filled
+                Settings.controllerFeatures.softwareSkin.color = .white
+                Settings.controllerFeatures.softwareSkin.customColor = .orange
+                Settings.controllerFeatures.softwareSkin.customColorSecondary = .white
+                Settings.controllerFeatures.softwareSkin.customButton1 = .fastForward
+                Settings.controllerFeatures.softwareSkin.customButton2 = .quickSave
+                Settings.controllerFeatures.softwareSkin.directionalInputType = .dPad
+                Settings.controllerFeatures.softwareSkin.abxyLayout = .nintendo
+                Settings.controllerFeatures.softwareSkin.n64FaceLayout = .none
+                Settings.controllerFeatures.softwareSkin.n64ShoulderLayout = .none
+                Settings.controllerFeatures.softwareSkin.genesisFaceLayout = .button3
+                Settings.controllerFeatures.softwareSkin.translucentInputs = true
+                Settings.controllerFeatures.softwareSkin.fullscreenLandscape = true
+                Settings.controllerFeatures.softwareSkin.shadows = true
+                Settings.controllerFeatures.softwareSkin.shadowOpacity = 0.7
+                Settings.controllerFeatures.softwareSkin.dsTopScreenSize = 0.5
+                Settings.controllerFeatures.softwareSkin.extendedEdges = 10
+                Settings.controllerFeatures.softwareSkin.safeArea = 40
                 
             case .skin:
                 Settings.controllerFeatures.skin.opacity = 0.7

@@ -249,4 +249,16 @@ struct SoftwareSkinOptions
             step: 1,
             unit: "pt")
     var safeArea: Double = 40
+    
+    @Option(name: "Restore Defaults",
+            description: "Reset all options to their default values.",
+            detailView: { _ in
+        Button("Restore Defaults") {
+            PowerUserOptions.resetFeature(.softwareSkin)
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.red)
+        .displayInline()
+    })
+    var reset: Bool = false
 }
