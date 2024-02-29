@@ -6,6 +6,8 @@
 //  Copyright © 2024 LitRitt. All rights reserved.
 //
 
+import DeltaCore
+
 import Features
 
 import SwiftUI
@@ -153,6 +155,17 @@ enum SoftwareSkinGenesisFaceLayout: String, CaseIterable, CustomStringConvertibl
     }
 }
 
+extension DeltaCore.GameViewStyle: CustomStringConvertible, LocalizedOptionValue
+{
+    public var description: String {
+        return self.rawValue
+    }
+    
+    public var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 struct SoftwareSkinOptions
 {
     @Option(name: "Style",
@@ -172,6 +185,11 @@ struct SoftwareSkinOptions
     @Option(name: "Custom Secondary Color",
             description: "Choose the secondary color to use for the custom color mode. This color is used for the outlines on the Filled Outline style.")
     var customColorSecondary: Color = .white
+    
+    @Option(name: "Screen Style",
+            description: "Choose the style to use for game screens.",
+            values: DeltaCore.GameViewStyle.allCases)
+    var screenStyle: DeltaCore.GameViewStyle = .floating
     
     @Option(name: "Custom Button 1",
             description: "Choose an input to use for custom button 1. Not available on N64.",

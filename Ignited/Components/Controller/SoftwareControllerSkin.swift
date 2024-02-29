@@ -252,32 +252,43 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             
             let topScreenHeight = screenArea.height * Settings.controllerFeatures.softwareSkin.dsTopScreenSize
             let topScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY, width: screenArea.width, height: topScreenHeight)
-            let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
+            var topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
             
             let bottomScreenHeight = screenArea.height - topScreenHeight
             let bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
-            let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
+            var bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
+            
+            if Settings.controllerFeatures.softwareSkin.screenStyle == DeltaCore.GameViewStyle.floating
+            {
+                topScreenFrame = topScreenFrame.insetBy(dx: 10, dy: 10)
+                bottomScreenFrame = bottomScreenFrame.insetBy(dx: 10, dy: 10)
+            }
             
             if alt
             {
                 return [
                     
-                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame)),
-                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(topScreenFrame))
+                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle),
+                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(topScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle)
                 ]
             }
             else
             {
                 return [
-                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(topScreenFrame)),
-                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame))
+                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(topScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle),
+                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle)
                 ]
             }
             
         default:
-            let screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
+            var screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
             
-            return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: self.getRelative(screenFrame))]
+            if Settings.controllerFeatures.softwareSkin.screenStyle == .floating
+            {
+                screenFrame = screenFrame.insetBy(dx: 10, dy: 10)
+            }
+            
+            return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: self.getRelative(screenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle)]
         }
     }
     
@@ -1001,11 +1012,8 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .select:
             switch gameType
             {
-            case .gba, .snes, .ds:
+            case .gba, .snes, .ds, .gbc, .nes:
                 frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
-                
-            case .gbc, .nes:
-                frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }

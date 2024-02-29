@@ -95,7 +95,7 @@ struct QuickSettingsOptions
     
     @Option(name: "Background Blur",
             description: "Enable to show background blur options in the quick settings.")
-    var backgroundBlurEnabled: Bool = false
+    var backgroundBlurEnabled: Bool = true
     
     @Option(name: "Color Palettes",
             description: "Enable to show color palette options in the quick settings.")
