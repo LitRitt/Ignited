@@ -267,7 +267,6 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             if alt
             {
                 return [
-                    
                     Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle),
                     Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(topScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle)
                 ]
