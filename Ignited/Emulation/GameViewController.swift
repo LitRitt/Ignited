@@ -1170,15 +1170,16 @@ private extension GameViewController
         
         if Settings.localControllerPlayerIndex != nil
         {
-            if Settings.controllerFeatures.softwareSkin.isEnabled,
-               SoftwareControllerSkin.supportsGameType(game.type)
+            let controllerSkin = Settings.preferredControllerSkin(for: game, traits: traits)
+            
+            if let controllerSkin = controllerSkin,
+               controllerSkin.isStandard
             {
                 let softwareControllerSkin = SoftwareControllerSkin(gameType: game.type)
                 self.controllerView.controllerSkin = softwareControllerSkin
             }
             else
             {
-                let controllerSkin = Settings.preferredControllerSkin(for: game, traits: traits)
                 self.controllerView.controllerSkin = controllerSkin
             }
         }

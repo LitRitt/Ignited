@@ -29,11 +29,6 @@ public struct SoftwareControllerSkin
         self.gameType = gameType
     }
     
-    static public func supportsGameType(_ gameType: GameType) -> Bool
-    {
-        return true
-    }
-    
     static public var extendedEdges: [String: CGFloat]
     {[
         "top": Settings.controllerFeatures.softwareSkin.extendedEdges,
@@ -372,7 +367,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     
     public func anyImage(for traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> UIImage?
     {
-        return nil
+        return self.image(for: traits, preferredSize: preferredSize, alt: alt)
     }
     
     public func contentSize(for traits: Skin.Traits, alt: Bool) -> CGSize?
@@ -382,12 +377,12 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     
     public func previewSize(for traits: Skin.Traits, alt: Bool) -> CGSize?
     {
-        return nil
+        return CGSize(width: 400, height: 200)
     }
     
     public func anyPreviewSize(for traits: Skin.Traits, alt: Bool) -> CGSize?
     {
-        return nil
+        return self.previewSize(for: traits, alt: alt)
     }
 }
 
