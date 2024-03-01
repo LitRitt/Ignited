@@ -40,6 +40,7 @@ private extension SettingsViewController
     enum FeaturesRow: Int, CaseIterable
     {
         case gameplay
+        case standardSkin
         case controllers
         case library
         case userInterface
@@ -379,6 +380,7 @@ extension SettingsViewController
             switch FeaturesRow.allCases[indexPath.row]
             {
             case .gameplay: self.showFeatures(featureGroup: .gameplay)
+            case .standardSkin: self.showFeatures(featureGroup: .standardSkin)
             case .controllers: self.showFeatures(featureGroup: .controllers)
             case .library: self.showFeatures(featureGroup: .library)
             case .userInterface: self.showFeatures(featureGroup: .userInterface)

@@ -15,6 +15,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
 {
     // Main Features
     case gameplay = "Gameplay"
+    case standardSkin = "Standard Skin"
     case controllers = "Controllers"
     case library = "Library"
     case userInterface = "User Interface"
@@ -33,6 +34,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
         switch self
         {
         case .gameplay: return Settings.gameplayFeatures
+        case .standardSkin: return Settings.standardSkinFeatures
         case .controllers: return Settings.controllerFeatures
         case .library: return Settings.libraryFeatures
         case .userInterface: return Settings.userInterfaceFeatures

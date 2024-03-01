@@ -1,5 +1,5 @@
 //
-//  SoftwareControllerSkin.swift
+//  StandardControllerSkin.swift
 //  Ignited
 //
 //  Created by Chris Rittenhouse on 2/16/24.
@@ -12,33 +12,35 @@ import AVFoundation
 
 import DeltaCore
 
-public struct SoftwareControllerSkin
+public struct StandardControllerSkin
 {
     public typealias Skin = DeltaCore.ControllerSkin
     
-    public var name: String { "SoftwareControllerSkin" }
+    public var name: String { "StandardControllerSkin" }
     public var identifier: String
     public var gameType: GameType
     
     public var isDebugModeEnabled: Bool { false }
-    public var hasAltRepresentations: Bool { false }
+    public var hasAltRepresentations: Bool {
+        return self.gameType == .ds
+    }
     
     public init(gameType: GameType)
     {
-        self.identifier = "com.ignited.SoftwareControllerSkin." + gameType.description
+        self.identifier = "com.ignited.StandardControllerSkin." + gameType.description
         self.gameType = gameType
     }
     
     static public var extendedEdges: [String: CGFloat]
     {[
-        "top": Settings.controllerFeatures.softwareSkin.extendedEdges,
-        "bottom": Settings.controllerFeatures.softwareSkin.extendedEdges,
-        "left": Settings.controllerFeatures.softwareSkin.extendedEdges,
-        "right": Settings.controllerFeatures.softwareSkin.extendedEdges
+        "top": Settings.standardSkinFeatures.inputsAndLayout.extendedEdges,
+        "bottom": Settings.standardSkinFeatures.inputsAndLayout.extendedEdges,
+        "left": Settings.standardSkinFeatures.inputsAndLayout.extendedEdges,
+        "right": Settings.standardSkinFeatures.inputsAndLayout.extendedEdges
     ]}
 }
 
-extension SoftwareControllerSkin: ControllerSkinProtocol
+extension StandardControllerSkin: ControllerSkinProtocol
 {
     public func image(for traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> UIImage?
     {
@@ -62,12 +64,12 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                 var assetName = input.assetName(self.gameType)
                 var kind = input.kind
                 
-                var color = Settings.controllerFeatures.softwareSkin.color.uiColor
-                var colorSecondary = Settings.controllerFeatures.softwareSkin.color.uiColorSecondary
+                var color = Settings.standardSkinFeatures.styleAndColor.color.uiColor
+                var colorSecondary = Settings.standardSkinFeatures.styleAndColor.color.uiColorSecondary
                 
                 if self.gameType != .n64,
                    input.kind == .dPad,
-                   Settings.controllerFeatures.softwareSkin.directionalInputType == .thumbstick
+                   Settings.standardSkinFeatures.inputsAndLayout.directionalInputType == .thumbstick
                 {
                     assetName = SoftwareInput.thumbstick.assetName(self.gameType)
                     kind = SoftwareInput.thumbstick.kind
@@ -80,14 +82,14 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                 
                 ctx.saveGState()
                 
-                if Settings.controllerFeatures.softwareSkin.shadows,
+                if Settings.standardSkinFeatures.styleAndColor.shadows,
                    kind != .thumbstick
                 {
-                    let opacity = Settings.controllerFeatures.softwareSkin.shadowOpacity
+                    let opacity = Settings.standardSkinFeatures.styleAndColor.shadowOpacity
                     ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
                 }
                 
-                switch Settings.controllerFeatures.softwareSkin.style
+                switch Settings.standardSkinFeatures.styleAndColor.style
                 {
                 case .outline:
                     let image = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: color)
@@ -147,7 +149,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                 if self.gameType != .n64,
                    kind == .dPad
                 {
-                    switch Settings.controllerFeatures.softwareSkin.directionalInputType
+                    switch Settings.standardSkinFeatures.inputsAndLayout.directionalInputType
                     {
                     case .dPad: kind = .dPad
                     case .thumbstick: kind = .thumbstick
@@ -205,7 +207,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
         let rightButtonArea = buttonAreas[1]
         
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
-        let safeArea = Settings.controllerFeatures.softwareSkin.safeArea
+        let safeArea = Settings.standardSkinFeatures.gameScreen.safeArea
         
         let screenArea: CGRect
         
@@ -227,7 +229,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
         case .landscape:
             let screenAreaWidth = rightButtonArea.minX - leftButtonArea.maxX
             
-            if Settings.controllerFeatures.softwareSkin.fullscreenLandscape
+            if Settings.standardSkinFeatures.gameScreen.fullscreenLandscape
             {
                 screenArea = CGRect(origin: .zero, size: mappingSize)
             }
@@ -245,13 +247,13 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             let topScreenInputFrame = CGRect(origin: .zero, size: aspectRatio)
             let bottomScreenInputFrame = CGRect(origin: CGPoint(x: 0, y: aspectRatio.height), size: aspectRatio)
             
-            let topScreenHeight = screenArea.height * Settings.controllerFeatures.softwareSkin.dsTopScreenSize
+            let topScreenHeight = screenArea.height * Settings.standardSkinFeatures.gameScreen.dsTopScreenSize
             var topScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY, width: screenArea.width, height: topScreenHeight)
             
             let bottomScreenHeight = screenArea.height - topScreenHeight
             var bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
             
-            if Settings.controllerFeatures.softwareSkin.screenStyle == DeltaCore.GameViewStyle.floating
+            if Settings.standardSkinFeatures.gameScreen.style == DeltaCore.GameViewStyle.floating
             {
                 topScreenArea = topScreenArea.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 5, right: 10))
                 bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 10, right: 10))
@@ -263,27 +265,27 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             if alt
             {
                 return [
-                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle),
-                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle)
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
                 ]
             }
             else
             {
                 return [
-                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle),
-                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle)
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
                 ]
             }
             
         default:
             var screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
             
-            if Settings.controllerFeatures.softwareSkin.screenStyle == .floating
+            if Settings.standardSkinFeatures.gameScreen.style == .floating
             {
                 screenFrame = screenFrame.insetBy(dx: 10, dy: 10).getRelative()
             }
             
-            return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: screenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle)]
+            return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: Settings.standardSkinFeatures.gameScreen.style)]
         }
     }
     
@@ -306,16 +308,16 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             
             ctx.saveGState()
                 
-            if Settings.controllerFeatures.softwareSkin.shadows
+            if Settings.standardSkinFeatures.styleAndColor.shadows
             {
-                let opacity = Settings.controllerFeatures.softwareSkin.shadowOpacity
+                let opacity = Settings.standardSkinFeatures.styleAndColor.shadowOpacity
                 ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
             }
             
-            let color = Settings.controllerFeatures.softwareSkin.color.uiColor
-            let colorSecondary = Settings.controllerFeatures.softwareSkin.color.uiColorSecondary
+            let color = Settings.standardSkinFeatures.styleAndColor.color.uiColor
+            let colorSecondary = Settings.standardSkinFeatures.styleAndColor.color.uiColorSecondary
             
-            switch Settings.controllerFeatures.softwareSkin.style
+            switch Settings.standardSkinFeatures.styleAndColor.style
             {
             case .outline:
                 let image = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: color)
@@ -342,7 +344,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     
     public func aspectRatio(for traits: Skin.Traits, alt: Bool) -> CGSize?
     {
-        return SoftwareControllerSkin.deviceSize()
+        return StandardControllerSkin.deviceSize()
     }
     
     public func supports(_ traits: Skin.Traits, alt: Bool) -> Bool
@@ -357,7 +359,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     
     public func isTranslucent(for traits: Skin.Traits, alt: Bool) -> Bool?
     {
-        return Settings.controllerFeatures.softwareSkin.translucentInputs
+        return Settings.standardSkinFeatures.styleAndColor.translucentInputs
     }
     
     public func backgroundBlur(for traits: Skin.Traits, alt: Bool) -> Bool?
@@ -386,7 +388,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     }
 }
 
-extension SoftwareControllerSkin
+extension StandardControllerSkin
 {
     private func buttonAreas(for traits: Skin.Traits) -> [CGRect]
     {
@@ -439,8 +441,8 @@ extension SoftwareControllerSkin
         case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings, .custom1, .custom2]
         case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings, .toggleAltRepresentations, .custom1, .custom2]
         case .n64: return [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu, .quickSettings]
-        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button3: return [.dPad, .a, .b, .c, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
-        case .genesis where Settings.controllerFeatures.softwareSkin.genesisFaceLayout == .button6: return [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
+        case .genesis where Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout == .button3: return [.dPad, .a, .b, .c, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
+        case .genesis where Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout == .button6: return [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
         case .ms, .gg: return [.dPad, .b, .c, .start, .menu, .quickSettings, .custom1, .custom2]
         default: return []
         }
@@ -492,7 +494,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         switch self
         {
         case .custom1:
-            switch Settings.controllerFeatures.softwareSkin.customButton1
+            switch Settings.standardSkinFeatures.inputsAndLayout.customButton1
             {
             case .fastForward: return "fastForward"
             case .quickSave: return "quickSave"
@@ -503,7 +505,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             }
             
         case .custom2:
-            switch Settings.controllerFeatures.softwareSkin.customButton2
+            switch Settings.standardSkinFeatures.inputsAndLayout.customButton2
             {
             case .fastForward: return "fastForward"
             case .quickSave: return "quickSave"
@@ -565,7 +567,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         switch gameType
         {
         case .nes, .snes, .gbc, .gba, .ds:
-            switch (Settings.controllerFeatures.softwareSkin.abxyLayout, input)
+            switch (Settings.standardSkinFeatures.inputsAndLayout.abxyLayout, input)
             {
             case (.xbox, .a), (.swapAB, .a): input = .b
             case (.xbox, .b), (.swapAB, .b): input = .a
@@ -588,7 +590,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = leftButtonArea.getSubRect(sections: 4, index: 2, size: 2).getInsetSquare()
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapLeft, .swapBoth:
                     frame = leftButtonArea.getSubRect(sections: 8, index: 2, size: 3).getInsetSquare(inset: 10)
@@ -604,7 +606,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapLeft, .swapBoth:
                     frame = leftButtonArea.getSubRect(sections: 8, index: 5, size: 4).getInsetSquare()
@@ -626,7 +628,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
                 
             case .genesis:
-                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
                     frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().left
@@ -636,7 +638,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 }
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().right
@@ -658,7 +660,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().bottom
                 
             case .genesis:
-                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
                     frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().middle
@@ -668,7 +670,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 }
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().bottom
@@ -687,7 +689,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
                 
             case .genesis:
-                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
                     frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().right
@@ -706,7 +708,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().top
                 
             case .genesis:
-                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3: break
                     
@@ -724,7 +726,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().left
                 
             case .genesis:
-                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3: break
                     
@@ -739,7 +741,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .n64:
-                switch (Settings.controllerFeatures.softwareSkin.n64ShoulderLayout, Settings.controllerFeatures.softwareSkin.n64FaceLayout)
+                switch (Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout, Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout)
                 {
                 case (.swapZL, _):
                     frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
@@ -755,7 +757,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 }
                 
             case .genesis:
-                switch Settings.controllerFeatures.softwareSkin.genesisFaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3: break
                     
@@ -773,7 +775,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
-                switch (Settings.controllerFeatures.softwareSkin.n64ShoulderLayout, Settings.controllerFeatures.softwareSkin.n64FaceLayout)
+                switch (Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout, Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout)
                 {
                 case (.swapZL, .swapBoth), (.swapZL, .swapRight):
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().top
@@ -795,7 +797,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
-                switch (Settings.controllerFeatures.softwareSkin.n64ShoulderLayout, Settings.controllerFeatures.softwareSkin.n64FaceLayout)
+                switch (Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout, Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout)
                 {
                 case (.swapZR, .swapBoth), (.swapZR, .swapRight):
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().top
@@ -814,7 +816,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).top
@@ -830,7 +832,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).bottom
@@ -846,7 +848,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).left
@@ -862,7 +864,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             switch gameType
             {
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 2, size: 3).getFourButtons(inset: 10).right
@@ -890,7 +892,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                 frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
-                switch Settings.controllerFeatures.softwareSkin.n64FaceLayout
+                switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
                 {
                 case .swapRight, .swapBoth:
                     frame = rightButtonArea.getSubRect(sections: 8, index: 5, size: 4).getFourButtons().left
@@ -970,7 +972,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         switch self
         {
         case .touchScreen, .toggleAltRepresentations, .thumbstick: return [:]
-        default: return SoftwareControllerSkin.extendedEdges
+        default: return StandardControllerSkin.extendedEdges
         }
     }
     
@@ -997,21 +999,21 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .x: return "x.circle"
         case .y: return "y.circle"
         case .z:
-            switch Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
+            switch Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
             {
             case .swapZL, .swapZR: return "z.square"
             default: return "z.circle"
             }
             
         case .l:
-            switch Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
+            switch Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
             {
             case .swapZL: return "l.circle"
             default: return "l.square"
             }
             
         case .r:
-            switch Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
+            switch Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
             {
             case .swapZR: return "r.circle"
             default: return "r.square"
@@ -1045,7 +1047,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             }
             
         case .custom1:
-            switch Settings.controllerFeatures.softwareSkin.customButton1
+            switch Settings.standardSkinFeatures.inputsAndLayout.customButton1
             {
             case .fastForward: return "forward.circle"
             case .quickSave: return "arrow.down.to.line.circle"
@@ -1056,7 +1058,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             }
             
         case .custom2:
-            switch Settings.controllerFeatures.softwareSkin.customButton2
+            switch Settings.standardSkinFeatures.inputsAndLayout.customButton2
             {
             case .fastForward: return "forward.circle"
             case .quickSave: return "arrow.down.to.line.circle"

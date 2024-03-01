@@ -50,6 +50,7 @@ struct Settings
     static let n64Features = N64Features.shared
     static let snesFeatures = SNESFeatures.shared
     static let gameplayFeatures =  GameplayFeatures.shared
+    static let standardSkinFeatures = StandardSkinFeatures.shared
     static let controllerFeatures = ControllerFeatures.shared
     static let libraryFeatures = LibraryFeatures.shared
     static let userInterfaceFeatures = UserInterfaceFeatures.shared
@@ -74,7 +75,9 @@ struct Settings
             Settings.gameplayFeatures.rewind.settingsKey.rawValue: false,
             Settings.gameplayFeatures.quickSettings.settingsKey.rawValue: true,
             Settings.gameplayFeatures.micSupport.settingsKey.rawValue: false,
-            Settings.controllerFeatures.softwareSkin.settingsKey.rawValue: true,
+            Settings.standardSkinFeatures.styleAndColor.settingsKey.rawValue: true,
+            Settings.standardSkinFeatures.gameScreen.settingsKey.rawValue: true,
+            Settings.standardSkinFeatures.inputsAndLayout.settingsKey.rawValue: true,
             Settings.controllerFeatures.skin.settingsKey.rawValue: true,
             Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue: true,
             Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue: false,

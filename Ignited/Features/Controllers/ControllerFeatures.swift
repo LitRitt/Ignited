@@ -12,12 +12,6 @@ struct ControllerFeatures: FeatureContainer
 {
     static let shared = ControllerFeatures()
     
-    @Feature(name: "Software Skins",
-             description: "Use a customizable software-based skin instead of a traditional file-based skin.",
-             options: SoftwareSkinOptions(),
-             attributes: [.beta])
-    var softwareSkin
-    
     @Feature(name: "Skin Options",
              description: "Change the look of controller skins.",
              options: SkinOptions(),

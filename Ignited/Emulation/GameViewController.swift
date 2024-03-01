@@ -1175,8 +1175,8 @@ private extension GameViewController
             if let controllerSkin = controllerSkin,
                controllerSkin.isStandard
             {
-                let softwareControllerSkin = SoftwareControllerSkin(gameType: game.type)
-                self.controllerView.controllerSkin = softwareControllerSkin
+                let standardControllerSkin = StandardControllerSkin(gameType: game.type)
+                self.controllerView.controllerSkin = standardControllerSkin
             }
             else
             {
@@ -3243,8 +3243,16 @@ private extension GameViewController
             // Update whenever any of the background blur settings have changed.
             self.updateBlurBackground()
             
-        case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.softwareSkin.settingsKey.rawValue):
-            // Update whenever any of the background blur settings have changed.
+        case _ where settingsName.rawValue.hasPrefix(Settings.standardSkinFeatures.styleAndColor.settingsKey.rawValue):
+            // Update whenever any of the standard skin settings have changed.
+            self.controllerView.invalidateImageCache()
+            
+        case _ where settingsName.rawValue.hasPrefix(Settings.standardSkinFeatures.gameScreen.settingsKey.rawValue):
+            // Update whenever any of the standard skin settings have changed.
+            self.controllerView.invalidateImageCache()
+            
+        case _ where settingsName.rawValue.hasPrefix(Settings.standardSkinFeatures.inputsAndLayout.settingsKey.rawValue):
+            // Update whenever any of the standard skin settings have changed.
             self.controllerView.invalidateImageCache()
             
         default: break

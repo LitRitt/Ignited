@@ -282,8 +282,11 @@ extension PowerUserOptions
         case saveStateRewind
         case fastForward
         case quickSettings
+        // Standard Skins
+        case styleAndColor
+        case gameScreen
+        case inputsAndLayout
         // Controllers
-        case softwareSkin
         case skin
         case backgroundBlur
         case controller
@@ -364,25 +367,30 @@ extension PowerUserOptions
                 Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = true
                 Settings.gameplayFeatures.quickSettings.colorPalettesEnabled = true
                 
-            case .softwareSkin:
-                Settings.controllerFeatures.softwareSkin.style = .filled
-                Settings.controllerFeatures.softwareSkin.color = .white
-                Settings.controllerFeatures.softwareSkin.customColor = .orange
-                Settings.controllerFeatures.softwareSkin.customColorSecondary = .white
-                Settings.controllerFeatures.softwareSkin.customButton1 = .fastForward
-                Settings.controllerFeatures.softwareSkin.customButton2 = .quickSave
-                Settings.controllerFeatures.softwareSkin.directionalInputType = .dPad
-                Settings.controllerFeatures.softwareSkin.abxyLayout = .nintendo
-                Settings.controllerFeatures.softwareSkin.n64FaceLayout = .none
-                Settings.controllerFeatures.softwareSkin.n64ShoulderLayout = .none
-                Settings.controllerFeatures.softwareSkin.genesisFaceLayout = .button3
-                Settings.controllerFeatures.softwareSkin.translucentInputs = true
-                Settings.controllerFeatures.softwareSkin.fullscreenLandscape = true
-                Settings.controllerFeatures.softwareSkin.shadows = true
-                Settings.controllerFeatures.softwareSkin.shadowOpacity = 0.7
-                Settings.controllerFeatures.softwareSkin.dsTopScreenSize = 0.5
-                Settings.controllerFeatures.softwareSkin.extendedEdges = 10
-                Settings.controllerFeatures.softwareSkin.safeArea = 40
+            case .styleAndColor:
+                Settings.standardSkinFeatures.styleAndColor.style = .filled
+                Settings.standardSkinFeatures.styleAndColor.color = .white
+                Settings.standardSkinFeatures.styleAndColor.customColor = .orange
+                Settings.standardSkinFeatures.styleAndColor.customColorSecondary = .white
+                Settings.standardSkinFeatures.styleAndColor.translucentInputs = true
+                Settings.standardSkinFeatures.styleAndColor.shadows = true
+                Settings.standardSkinFeatures.styleAndColor.shadowOpacity = 0.5
+                
+            case .gameScreen:
+                Settings.standardSkinFeatures.gameScreen.style = .floating
+                Settings.standardSkinFeatures.gameScreen.fullscreenLandscape = true
+                Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = 0.5
+                Settings.standardSkinFeatures.gameScreen.safeArea = 40
+                
+            case .inputsAndLayout:
+                Settings.standardSkinFeatures.inputsAndLayout.customButton1 = .fastForward
+                Settings.standardSkinFeatures.inputsAndLayout.customButton2 = .quickSave
+                Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = .dPad
+                Settings.standardSkinFeatures.inputsAndLayout.abxyLayout = .nintendo
+                Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout = .none
+                Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout = .none
+                Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout = .button3
+                Settings.standardSkinFeatures.inputsAndLayout.extendedEdges = 10
                 
             case .skin:
                 Settings.controllerFeatures.skin.opacity = 0.7

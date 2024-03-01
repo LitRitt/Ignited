@@ -20,21 +20,21 @@ struct QuickSettingsView: View
     
     @State private var gameAudioVolume: Double = Settings.gameplayFeatures.gameAudio.volume
     
-    @State private var softwareSkinStyle: SoftwareSkinStyle = Settings.controllerFeatures.softwareSkin.style
-    @State private var softwareSkinColor: SoftwareSkinColor = Settings.controllerFeatures.softwareSkin.color
-    @State private var softwareSkinCustomColor: Color = Settings.controllerFeatures.softwareSkin.customColor
-    @State private var softwareSkinCustomColorSecondary: Color = Settings.controllerFeatures.softwareSkin.customColorSecondary
-    @State private var softwareSkinShadowOpacity: Double = Settings.controllerFeatures.softwareSkin.shadowOpacity
-    @State private var softwareSkinDSTopScreenSize: Double = Settings.controllerFeatures.softwareSkin.dsTopScreenSize
-    @State private var softwareSkinSafeArea: Double = Settings.controllerFeatures.softwareSkin.safeArea
-    @State private var softwareSkinExtendedEdges: Double = Settings.controllerFeatures.softwareSkin.extendedEdges
-    @State private var softwareSkinDirectionalInputType: SoftwareSkinDirectionalInputType = Settings.controllerFeatures.softwareSkin.directionalInputType
-    @State private var softwareSkinABXYLayout: SoftwareSkinABXYLayout = Settings.controllerFeatures.softwareSkin.abxyLayout
-    @State private var softwareSkinN64FaceLayout: SoftwareSkinN64FaceLayout = Settings.controllerFeatures.softwareSkin.n64FaceLayout
-    @State private var softwareSkinN64ShoulderLayout: SoftwareSkinN64ShoulderLayout = Settings.controllerFeatures.softwareSkin.n64ShoulderLayout
-    @State private var softwareSkinGenesisFaceLayout: SoftwareSkinGenesisFaceLayout = Settings.controllerFeatures.softwareSkin.genesisFaceLayout
-    @State private var softwareSkinCustomButton1: ActionInput = Settings.controllerFeatures.softwareSkin.customButton1
-    @State private var softwareSkinCustomButton2: ActionInput = Settings.controllerFeatures.softwareSkin.customButton2
+    @State private var standardSkinStyle: StandardSkinStyle = Settings.standardSkinFeatures.styleAndColor.style
+    @State private var standardSkinColor: StandardSkinColor = Settings.standardSkinFeatures.styleAndColor.color
+    @State private var softwareSkinCustomColor: Color = Settings.standardSkinFeatures.styleAndColor.customColor
+    @State private var softwareSkinCustomColorSecondary: Color = Settings.standardSkinFeatures.styleAndColor.customColorSecondary
+    @State private var softwareSkinShadowOpacity: Double = Settings.standardSkinFeatures.styleAndColor.shadowOpacity
+    @State private var softwareSkinDSTopScreenSize: Double = Settings.standardSkinFeatures.gameScreen.dsTopScreenSize
+    @State private var softwareSkinSafeArea: Double = Settings.standardSkinFeatures.gameScreen.safeArea
+    @State private var softwareSkinExtendedEdges: Double = Settings.standardSkinFeatures.inputsAndLayout.extendedEdges
+    @State private var standardSkinDirectionalInputType: StandardSkinDirectionalInputType = Settings.standardSkinFeatures.inputsAndLayout.directionalInputType
+    @State private var standardSkinABXYLayout: StandardSkinABXYLayout = Settings.standardSkinFeatures.inputsAndLayout.abxyLayout
+    @State private var standardSkinN64FaceLayout: StandardSkinN64FaceLayout = Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
+    @State private var standardSkinN64ShoulderLayout: StandardSkinN64ShoulderLayout = Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
+    @State private var standardSkinGenesisFaceLayout: StandardSkinGenesisFaceLayout = Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
+    @State private var softwareSkinCustomButton1: ActionInput = Settings.standardSkinFeatures.inputsAndLayout.customButton1
+    @State private var softwareSkinCustomButton2: ActionInput = Settings.standardSkinFeatures.inputsAndLayout.customButton2
     
     @State private var backgroundBlurStyle: UIBlurEffect.Style = Settings.controllerFeatures.backgroundBlur.style
     @State private var backgroundBlurTintColor: BackgroundBlurTintColor = Settings.controllerFeatures.backgroundBlur.tintColor
@@ -55,7 +55,7 @@ struct QuickSettingsView: View
     @State private var expandedFastForwardEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled
     @State private var gameAudioEnabled: Bool = Settings.gameplayFeatures.quickSettings.gameAudioEnabled
     @State private var expandedGameAudioEnabled: Bool = Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled
-    @State private var softwareSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.softwareSkinEnabled
+    @State private var standardSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.standardSkinEnabled
     @State private var controllerSkinEnabled: Bool = Settings.gameplayFeatures.quickSettings.controllerSkinEnabled
     @State private var backgroundBlurEnabled: Bool = Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled
     @State private var colorPalettesEnabled: Bool = Settings.gameplayFeatures.quickSettings.colorPalettesEnabled
@@ -229,147 +229,165 @@ struct QuickSettingsView: View
                     }.listStyle(.insetGrouped)
                 }
                 
-                if self.softwareSkinEnabled && Settings.controllerFeatures.softwareSkin.isEnabled
+                if self.standardSkinEnabled
                 {
                     Section() {
                         VStack {
-                            Picker("Style", selection: self.$softwareSkinStyle) {
-                                ForEach(SoftwareSkinStyle.allCases, id: \.self) { value in
+                            Picker("Style", selection: self.$standardSkinStyle) {
+                                ForEach(StandardSkinStyle.allCases, id: \.self) { value in
                                     value.localizedDescription
                                 }
                             }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinStyle) { value in
-                                    Settings.controllerFeatures.softwareSkin.style = value
+                                .onChange(of: self.standardSkinStyle) { value in
+                                    Settings.standardSkinFeatures.styleAndColor.style = value
                                 }
-                            Picker("Color", selection: self.$softwareSkinColor) {
-                                ForEach(SoftwareSkinColor.allCases, id: \.self) { value in
+                            Picker("Color", selection: self.$standardSkinColor) {
+                                ForEach(StandardSkinColor.allCases, id: \.self) { value in
                                     value.localizedDescription
                                 }
                             }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinColor) { value in
-                                    Settings.controllerFeatures.softwareSkin.color = value
+                                .onChange(of: self.standardSkinColor) { value in
+                                    Settings.standardSkinFeatures.styleAndColor.color = value
                                 }
                             ColorPicker("Custom Color", selection: self.$softwareSkinCustomColor, supportsOpacity: false)
                                 .onChange(of: self.softwareSkinCustomColor) { value in
-                                    Settings.controllerFeatures.softwareSkin.customColor = value
+                                    Settings.standardSkinFeatures.styleAndColor.customColor = value
                                 }
                             ColorPicker("Custom Secondary Color", selection: self.$softwareSkinCustomColorSecondary, supportsOpacity: false)
                                 .onChange(of: self.softwareSkinCustomColorSecondary) { value in
-                                    Settings.controllerFeatures.softwareSkin.customColorSecondary = value
+                                    Settings.standardSkinFeatures.styleAndColor.customColorSecondary = value
                                 }
-                            Picker("Custom Button 1", selection: self.$softwareSkinCustomButton1) {
-                                ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinCustomButton1) { value in
-                                    Settings.controllerFeatures.softwareSkin.customButton1 = value
-                                }
-                            Picker("Custom Button 2", selection: self.$softwareSkinCustomButton2) {
-                                ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinCustomButton2) { value in
-                                    Settings.controllerFeatures.softwareSkin.customButton2 = value
-                                }
-                            Picker("Directional Input", selection: self.$softwareSkinDirectionalInputType) {
-                                ForEach(SoftwareSkinDirectionalInputType.allCases, id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinDirectionalInputType) { value in
-                                    Settings.controllerFeatures.softwareSkin.directionalInputType = value
-                                }
-                            Picker("A,B,X,Y Layout", selection: self.$softwareSkinABXYLayout) {
-                                ForEach(SoftwareSkinABXYLayout.allCases, id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinABXYLayout) { value in
-                                    Settings.controllerFeatures.softwareSkin.abxyLayout = value
-                                }
-                            Picker("N64 Face Layout", selection: self.$softwareSkinN64FaceLayout) {
-                                ForEach(SoftwareSkinN64FaceLayout.allCases, id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinN64FaceLayout) { value in
-                                    Settings.controllerFeatures.softwareSkin.n64FaceLayout = value
-                                }
-                            Picker("N64 Shoulder Layout", selection: self.$softwareSkinN64ShoulderLayout) {
-                                ForEach(SoftwareSkinN64ShoulderLayout.allCases, id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinN64ShoulderLayout) { value in
-                                    Settings.controllerFeatures.softwareSkin.n64ShoulderLayout = value
-                                }
-                            Picker("Genesis Face Layout", selection: self.$softwareSkinGenesisFaceLayout) {
-                                ForEach(SoftwareSkinGenesisFaceLayout.allCases, id: \.self) { value in
-                                    value.localizedDescription
-                                }
-                            }.pickerStyle(.menu)
-                                .onChange(of: self.softwareSkinGenesisFaceLayout) { value in
-                                    Settings.controllerFeatures.softwareSkin.genesisFaceLayout = value
-                                }
-                            Toggle("Translucent", isOn: Settings.controllerFeatures.softwareSkin.$translucentInputs.valueBinding)
+                            if self.system != System.n64.gameType.rawValue
+                            {
+                                Picker("Custom Button 1", selection: self.$softwareSkinCustomButton1) {
+                                    ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.softwareSkinCustomButton1) { value in
+                                        Settings.standardSkinFeatures.inputsAndLayout.customButton1 = value
+                                    }
+                                Picker("Custom Button 2", selection: self.$softwareSkinCustomButton2) {
+                                    ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.softwareSkinCustomButton2) { value in
+                                        Settings.standardSkinFeatures.inputsAndLayout.customButton2 = value
+                                    }
+                                Picker("Directional Input", selection: self.$standardSkinDirectionalInputType) {
+                                    ForEach(StandardSkinDirectionalInputType.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.standardSkinDirectionalInputType) { value in
+                                        Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = value
+                                    }
+                            }
+                            if self.system != System.n64.gameType.rawValue,
+                               self.system != System.genesis.gameType.rawValue,
+                               self.system != System.ms.gameType.rawValue,
+                               self.system != System.gg.gameType.rawValue
+                            {
+                                Picker("A,B,X,Y Layout", selection: self.$standardSkinABXYLayout) {
+                                    ForEach(StandardSkinABXYLayout.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.standardSkinABXYLayout) { value in
+                                        Settings.standardSkinFeatures.inputsAndLayout.abxyLayout = value
+                                    }
+                            }
+                            if self.system == System.n64.gameType.rawValue
+                            {
+                                Picker("N64 Face Layout", selection: self.$standardSkinN64FaceLayout) {
+                                    ForEach(StandardSkinN64FaceLayout.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.standardSkinN64FaceLayout) { value in
+                                        Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout = value
+                                    }
+                                Picker("N64 Shoulder Layout", selection: self.$standardSkinN64ShoulderLayout) {
+                                    ForEach(StandardSkinN64ShoulderLayout.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.standardSkinN64ShoulderLayout) { value in
+                                        Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout = value
+                                    }
+                            }
+                            if self.system == System.genesis.gameType.rawValue
+                            {
+                                Picker("Genesis Face Layout", selection: self.$standardSkinGenesisFaceLayout) {
+                                    ForEach(StandardSkinGenesisFaceLayout.allCases, id: \.self) { value in
+                                        value.localizedDescription
+                                    }
+                                }.pickerStyle(.menu)
+                                    .onChange(of: self.standardSkinGenesisFaceLayout) { value in
+                                        Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout = value
+                                    }
+                            }
+                            Toggle("Translucent", isOn: Settings.standardSkinFeatures.styleAndColor.$translucentInputs.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                            Toggle("Fullscreen Landscape", isOn: Settings.controllerFeatures.softwareSkin.$fullscreenLandscape.valueBinding)
+                            Toggle("Fullscreen Landscape", isOn: Settings.standardSkinFeatures.gameScreen.$fullscreenLandscape.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                            Toggle("Shadows", isOn: Settings.controllerFeatures.softwareSkin.$shadows.valueBinding)
+                            Toggle("Shadows", isOn: Settings.standardSkinFeatures.styleAndColor.$shadows.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             HStack {
                                 Text("Shadow Opacity: \(self.softwareSkinShadowOpacity * 100, specifier: "%.f")%")
                                 Spacer()
                                 Button("Reset") {
                                     self.softwareSkinShadowOpacity = 0.7
-                                    Settings.controllerFeatures.softwareSkin.shadowOpacity = self.softwareSkinShadowOpacity
+                                    Settings.standardSkinFeatures.styleAndColor.shadowOpacity = self.softwareSkinShadowOpacity
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$softwareSkinShadowOpacity, in: 0.0...1.0, step: 0.05)
                                 .onChange(of: self.softwareSkinShadowOpacity) { value in
-                                    Settings.controllerFeatures.softwareSkin.shadowOpacity = value
+                                    Settings.standardSkinFeatures.styleAndColor.shadowOpacity = value
                                 }
-                            HStack {
-                                Text("DS Top Screen Size: \(self.softwareSkinDSTopScreenSize * 100, specifier: "%.f")%")
-                                Spacer()
-                                Button("Reset") {
-                                    self.softwareSkinDSTopScreenSize = 0.5
-                                    Settings.controllerFeatures.softwareSkin.dsTopScreenSize = self.softwareSkinDSTopScreenSize
-                                }.buttonStyle(.borderless)
+                            if self.system == System.ds.gameType.rawValue
+                            {
+                                HStack {
+                                    Text("DS Top Screen Size: \(self.softwareSkinDSTopScreenSize * 100, specifier: "%.f")%")
+                                    Spacer()
+                                    Button("Reset") {
+                                        self.softwareSkinDSTopScreenSize = 0.5
+                                        Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = self.softwareSkinDSTopScreenSize
+                                    }.buttonStyle(.borderless)
+                                }
+                                Slider(value: self.$softwareSkinDSTopScreenSize, in: 0.2...0.8, step: 0.05)
+                                    .onChange(of: self.softwareSkinDSTopScreenSize) { value in
+                                        Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = value
+                                    }
                             }
-                            Slider(value: self.$softwareSkinDSTopScreenSize, in: 0.2...0.8, step: 0.05)
-                                .onChange(of: self.softwareSkinDSTopScreenSize) { value in
-                                    Settings.controllerFeatures.softwareSkin.dsTopScreenSize = value
-                                }
                             HStack {
                                 Text("Extended Edges: \(self.softwareSkinExtendedEdges, specifier: "%.f")pt")
                                 Spacer()
                                 Button("Reset") {
                                     self.softwareSkinExtendedEdges = 10
-                                    Settings.controllerFeatures.softwareSkin.extendedEdges = self.softwareSkinExtendedEdges
+                                    Settings.standardSkinFeatures.inputsAndLayout.extendedEdges = self.softwareSkinExtendedEdges
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$softwareSkinExtendedEdges, in: 0...20, step: 1)
                                 .onChange(of: self.softwareSkinExtendedEdges) { value in
-                                    Settings.controllerFeatures.softwareSkin.extendedEdges = value
+                                    Settings.standardSkinFeatures.inputsAndLayout.extendedEdges = value
                                 }
                             HStack {
                                 Text("Notch/Island Safe Area: \(self.softwareSkinSafeArea, specifier: "%.f")pt")
                                 Spacer()
                                 Button("Reset") {
                                     self.softwareSkinSafeArea = 40
-                                    Settings.controllerFeatures.softwareSkin.safeArea = self.softwareSkinSafeArea
+                                    Settings.standardSkinFeatures.gameScreen.safeArea = self.softwareSkinSafeArea
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$softwareSkinSafeArea, in: 0...60, step: 1)
                                 .onChange(of: self.softwareSkinSafeArea) { value in
-                                    Settings.controllerFeatures.softwareSkin.safeArea = value
+                                    Settings.standardSkinFeatures.gameScreen.safeArea = value
                                 }
                         }
                     } header: {
-                        Text("Software Skin")
+                        Text("Standard Skin")
                     }.listStyle(.insetGrouped)
                 }
                 
@@ -565,12 +583,10 @@ struct QuickSettingsView: View
                                     Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = value
                                 }
                         }
-                        if Settings.controllerFeatures.softwareSkin.isEnabled {
-                            Toggle("Software Skin", isOn: self.$softwareSkinEnabled)
-                                .onChange(of: self.softwareSkinEnabled) { value in
-                                    Settings.gameplayFeatures.quickSettings.softwareSkinEnabled = value
-                                }
-                        }
+                        Toggle("Standard Skin", isOn: self.$standardSkinEnabled)
+                            .onChange(of: self.standardSkinEnabled) { value in
+                                Settings.gameplayFeatures.quickSettings.standardSkinEnabled = value
+                            }
                         Toggle("Controller Skin", isOn: self.$controllerSkinEnabled)
                             .onChange(of: self.controllerSkinEnabled) { value in
                                 Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = value
