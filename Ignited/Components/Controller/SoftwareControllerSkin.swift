@@ -251,17 +251,24 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             let bottomScreenInputFrame = CGRect(origin: CGPoint(x: 0, y: aspectRatio.height), size: aspectRatio)
             
             let topScreenHeight = screenArea.height * Settings.controllerFeatures.softwareSkin.dsTopScreenSize
-            let topScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY, width: screenArea.width, height: topScreenHeight)
-            var topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
+            var topScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY, width: screenArea.width, height: topScreenHeight)
             
             let bottomScreenHeight = screenArea.height - topScreenHeight
-            let bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
+            var bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
+            
+            if Settings.controllerFeatures.softwareSkin.screenStyle == DeltaCore.GameViewStyle.floating
+            {
+                topScreenArea = topScreenArea.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5))
+                bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5))
+            }
+            
+            var topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
             var bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
             
             if Settings.controllerFeatures.softwareSkin.screenStyle == DeltaCore.GameViewStyle.floating
             {
-                topScreenFrame = topScreenFrame.insetBy(dx: 10, dy: 10)
-                bottomScreenFrame = bottomScreenFrame.insetBy(dx: 10, dy: 10)
+                topScreenFrame = topScreenFrame.insetBy(dx: 5, dy: 5)
+                bottomScreenFrame = bottomScreenFrame.insetBy(dx: 5, dy: 5)
             }
             
             if alt
