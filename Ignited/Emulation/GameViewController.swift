@@ -2353,6 +2353,8 @@ extension GameViewController
     {
         guard let game = self.game as? Game else { return }
         
+        self.dismissQuickSettings()
+        
         if let pauseView = self.pauseViewController { pauseView.dismiss() }
         
         let backgroundContext = DatabaseManager.shared.newBackgroundContext()
@@ -2390,6 +2392,8 @@ extension GameViewController
     func performQuickLoadAction()
     {
         guard let game = self.game as? Game else { return }
+        
+        self.dismissQuickSettings()
         
         let fetchRequest = SaveState.fetchRequest(for: game, type: .quick)
         
@@ -2486,7 +2490,7 @@ extension GameViewController
                 if let speed = self.emulatorCore?.rate,
                    let system = self.game?.type.rawValue
                 {
-                    let quickSettingsView = QuickSettingsView.makeViewController(system: system, speed: speed)
+                    let quickSettingsView = QuickSettingsView.makeViewController(gameViewController: self, system: system, speed: speed)
                     if let sheet = quickSettingsView.sheetPresentationController {
                         sheet.detents = [.medium(), .large()]
                         sheet.largestUndimmedDetentIdentifier = nil
@@ -3211,24 +3215,6 @@ private extension GameViewController
             
         case Settings.gameplayFeatures.quickSettings.$fastForwardSpeed.settingsKey:
             self.updateEmulationSpeed()
-            
-        case Settings.gameplayFeatures.quickSettings.$performQuickSave.settingsKey:
-            self.dismissQuickSettings()
-            self.performQuickSaveAction()
-            
-        case Settings.gameplayFeatures.quickSettings.$performQuickLoad.settingsKey:
-            self.dismissQuickSettings()
-            self.performQuickLoadAction()
-            
-        case Settings.gameplayFeatures.quickSettings.$performScreenshot.settingsKey:
-            self.dismissQuickSettings()
-            self.performScreenshotAction()
-            
-        case Settings.gameplayFeatures.quickSettings.$performPause.settingsKey:
-            self.performPauseAction()
-            
-        case Settings.gameplayFeatures.quickSettings.$performMainMenu.settingsKey:
-            self.performMainMenuAction()
             
         case Settings.dsFeatures.dsAirPlay.$topScreenOnly.settingsKey: fallthrough
         case Settings.dsFeatures.dsAirPlay.$layoutAxis.settingsKey:

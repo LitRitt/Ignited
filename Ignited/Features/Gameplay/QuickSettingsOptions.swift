@@ -51,21 +51,6 @@ struct QuickSettingsOptions
             description: "Enable to show common actions in the quick settings.")
     var quickActionsEnabled: Bool = true
     
-    @Option
-    var performQuickSave: Bool = false
-    
-    @Option
-    var performQuickLoad: Bool = false
-    
-    @Option
-    var performScreenshot: Bool = false
-    
-    @Option
-    var performPause: Bool = false
-    
-    @Option
-    var performMainMenu: Bool = false
-    
     @Option(name: "Game Audio",
             description: "Enable to show game audio options in the quick settings.")
     var gameAudioEnabled: Bool = true

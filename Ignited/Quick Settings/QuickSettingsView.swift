@@ -12,6 +12,7 @@ import Features
 
 struct QuickSettingsView: View
 {
+    private var gameViewController: GameViewController
     private var system: String
     private let systemsWithPalettes = [System.gbc.gameType.rawValue]
     
@@ -64,12 +65,12 @@ struct QuickSettingsView: View
         VStack {
             HStack {
                 Button("Main Menu") {
-                    self.performMainMenu()
+                    self.gameViewController.performMainMenuAction()
                 }.font(.system(size: 18, weight: .bold, design: .default))
                     .foregroundColor(.red)
                 Spacer()
                 Button("Pause Menu") {
-                    self.performPause()
+                    self.gameViewController.performPauseAction()
                 }.font(.system(size: 18, weight: .bold, design: .default))
             }.buttonStyle(.bordered)
                 .padding(.top, 16)
@@ -82,7 +83,7 @@ struct QuickSettingsView: View
                             HStack {
                                 VStack {
                                     Button {
-                                        self.performScreenshot()
+                                        self.gameViewController.performScreenshotAction()
                                     } label: {
                                         Image(systemName: "camera.fill")
                                             .font(.system(size: 30))
@@ -94,7 +95,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 VStack {
                                     Button {
-                                        self.performQuickSave()
+                                        self.gameViewController.performQuickSaveAction()
                                     } label: {
                                         Image(systemName: "tray.and.arrow.down.fill")
                                             .font(.system(size: 30))
@@ -106,7 +107,7 @@ struct QuickSettingsView: View
                                 Spacer()
                                 VStack {
                                     Button {
-                                        self.performQuickLoad()
+                                        self.gameViewController.performQuickLoadAction()
                                     } label: {
                                         Image(systemName: "tray.and.arrow.up.fill")
                                             .font(.system(size: 30))
@@ -613,38 +614,13 @@ struct QuickSettingsView: View
             NotificationCenter.default.post(name: .unwindFromSettings, object: nil, userInfo: [:])
         }
     }
-    
-    func performQuickSave()
-    {
-        Settings.gameplayFeatures.quickSettings.performQuickSave = true
-    }
-    
-    func performQuickLoad()
-    {
-        Settings.gameplayFeatures.quickSettings.performQuickLoad = true
-    }
-    
-    func performScreenshot()
-    {
-        Settings.gameplayFeatures.quickSettings.performScreenshot = true
-    }
-    
-    func performPause()
-    {
-        Settings.gameplayFeatures.quickSettings.performPause = true
-    }
-    
-    func performMainMenu()
-    {
-        Settings.gameplayFeatures.quickSettings.performMainMenu = true
-    }
 }
 
 extension QuickSettingsView
 {
-    static func makeViewController(system system: String, speed speed: Double) -> UIHostingController<some View>
+    static func makeViewController(gameViewController: GameViewController, system: String, speed: Double) -> UIHostingController<some View>
     {
-        let view = QuickSettingsView(system: system, fastForwardSpeed: speed)
+        let view = QuickSettingsView(gameViewController: gameViewController, system: system, fastForwardSpeed: speed)
         
         let hostingController = UIHostingController(rootView: view)
         
