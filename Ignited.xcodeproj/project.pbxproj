@@ -145,6 +145,9 @@
 		ACE43DC92B473C0E00AD9287 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DC82B473C0E00AD9287 /* ToastView.swift */; };
 		ACE43DCC2B47680700AD9287 /* contributors.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACE43DCA2B47680700AD9287 /* contributors.plist */; };
 		ACE43DD02B478EDD00AD9287 /* PatreonSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DCF2B478EDD00AD9287 /* PatreonSecrets.swift */; };
+		ACED6C2C2B9262670080BFD3 /* CGRect+ButtonLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACED6C2B2B9262670080BFD3 /* CGRect+ButtonLocations.swift */; };
+		ACED6C2E2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACED6C2D2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift */; };
+		ACED6C302B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACED6C2F2B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift */; };
 		ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */; };
 		ACFABEA82B4F050B00E24374 /* N64OpenGLES3Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFABEA72B4F050B00E24374 /* N64OpenGLES3Options.swift */; };
 		ACFFFB582B1BB92600273BB4 /* SustainButtonsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */; };
@@ -444,6 +447,9 @@
 		ACE43DC82B473C0E00AD9287 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		ACE43DCA2B47680700AD9287 /* contributors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contributors.plist; sourceTree = "<group>"; };
 		ACE43DCF2B478EDD00AD9287 /* PatreonSecrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatreonSecrets.swift; sourceTree = "<group>"; };
+		ACED6C2B2B9262670080BFD3 /* CGRect+ButtonLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+ButtonLocations.swift"; sourceTree = "<group>"; };
+		ACED6C2D2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+RelativeAndAbsolute.swift"; sourceTree = "<group>"; };
+		ACED6C2F2B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+RelativeAndAbsolute.swift"; sourceTree = "<group>"; };
 		ACF7E31E29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Authorization.swift"; sourceTree = "<group>"; };
 		ACFABEA72B4F050B00E24374 /* N64OpenGLES3Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64OpenGLES3Options.swift; sourceTree = "<group>"; };
 		ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SustainButtonsOptions.swift; sourceTree = "<group>"; };
@@ -738,6 +744,9 @@
 				ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */,
 				AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */,
 				ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */,
+				ACED6C2B2B9262670080BFD3 /* CGRect+ButtonLocations.swift */,
+				ACED6C2D2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift */,
+				ACED6C2F2B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -1817,6 +1826,7 @@
 			files = (
 				BFB3645823245A6000CD0EB1 /* LicensesViewController.swift in Sources */,
 				BFC6F7B81F435BC500221B96 /* Input+Display.swift in Sources */,
+				ACED6C302B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift in Sources */,
 				BF59426A1E09BBD00051894B /* GridCollectionViewCell.swift in Sources */,
 				BF6BF3181EB82111008E83CD /* iTunesImportOption.swift in Sources */,
 				BF647A6A22FB8FCE0061D76D /* Bundle+SwizzleBundleID.swift in Sources */,
@@ -1830,6 +1840,7 @@
 				ACBFE6D62A590CA5002DDD04 /* ControllerOptions.swift in Sources */,
 				BF525EEA1FF6CD12004AA849 /* DeepLink.swift in Sources */,
 				BF8A334621A4926F00A42FD4 /* GameSyncStatusViewController.swift in Sources */,
+				ACED6C2C2B9262670080BFD3 /* CGRect+ButtonLocations.swift in Sources */,
 				BF59427E1E09BC830051894B /* Game.swift in Sources */,
 				D5011C48281B6E8B00A0760B /* CharacterSet+Filename.swift in Sources */,
 				BFE593CC21F3F8C2003412A6 /* _GameSave.swift in Sources */,
@@ -2012,6 +2023,7 @@
 				BF00BEA625B758AA00C8607D /* SystemBIOS.swift in Sources */,
 				BF696B801D9B2B02009639E0 /* Theme.swift in Sources */,
 				BF7AE8081C2E858400B1B5BC /* GridMenuViewController.swift in Sources */,
+				ACED6C2E2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift in Sources */,
 				BF6BF31A1EB82146008E83CD /* ClipboardImportOption.swift in Sources */,
 				ACAB77242B468C81001AB619 /* Campaign.swift in Sources */,
 				BF59427F1E09BC830051894B /* GameCollection.swift in Sources */,

@@ -47,7 +47,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
         
         for buttonArea in self.buttonAreas(for: traits)
         {
-            buttonAreas.append(self.getAbsolute(buttonArea))
+            buttonAreas.append(buttonArea.getAbsolute())
         }
         
         let format = UIGraphicsImageRendererFormat()
@@ -136,7 +136,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                     items.append(Skin.Item(id: input.description,
                                            kind: input.kind,
                                            inputs: input.inputs(self.gameType),
-                                           frame: self.getAbsolute(screenFrame),
+                                           frame: screenFrame.getAbsolute(),
                                            edges: input.edges,
                                            mappingSize: mappingSize))
                 }
@@ -161,13 +161,13 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                    let screen = screens.first,
                    let screenFrame = screen.outputFrame
                 {
-                    frame = self.getAbsolute(screenFrame)
+                    frame = screenFrame.getAbsolute()
                     
                 }
                 else
                 {
-                    frame = input.frame(leftButtonArea: self.getAbsolute(buttonAreas[0]),
-                                            rightButtonArea: self.getAbsolute(buttonAreas[1]),
+                    frame = input.frame(leftButtonArea: buttonAreas[0].getAbsolute(),
+                                            rightButtonArea: buttonAreas[1].getAbsolute(),
                                             gameType: self.gameType)
                 }
                 
@@ -200,7 +200,7 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
     
     public func screens(for traits: Skin.Traits, alt: Bool) -> [Skin.Screen]?
     {
-        let buttonAreas = self.buttonAreas(for: traits).map({ self.getAbsolute($0) })
+        let buttonAreas = self.buttonAreas(for: traits).map({ $0.getAbsolute() })
         let leftButtonArea = buttonAreas[0]
         let rightButtonArea = buttonAreas[1]
         
@@ -257,21 +257,21 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
                 bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 10, right: 10))
             }
             
-            let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
-            let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
+            let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea).getRelative()
+            let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea).getRelative()
             
             if alt
             {
                 return [
-                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle),
-                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(topScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle)
+                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle),
+                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle)
                 ]
             }
             else
             {
                 return [
-                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: self.getRelative(topScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle),
-                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: self.getRelative(bottomScreenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle)
+                    Skin.Screen(id: "softwareControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle),
+                    Skin.Screen(id: "softwareControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle)
                 ]
             }
             
@@ -280,20 +280,20 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             
             if Settings.controllerFeatures.softwareSkin.screenStyle == .floating
             {
-                screenFrame = screenFrame.insetBy(dx: 10, dy: 10)
+                screenFrame = screenFrame.insetBy(dx: 10, dy: 10).getRelative()
             }
             
-            return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: self.getRelative(screenFrame), style: Settings.controllerFeatures.softwareSkin.screenStyle)]
+            return [Skin.Screen(id: "softwareControllerSkin.screen", outputFrame: screenFrame, style: Settings.controllerFeatures.softwareSkin.screenStyle)]
         }
     }
     
     public func thumbstick(for item: Skin.Item, traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> (UIImage, CGSize)?
     {
-        let frame = self.getAbsolute(item.frame)
+        let frame = item.frame.getAbsolute()
         let thumbstickSize = CGSize(width: frame.width / 2, height: frame.height / 2)
         let thumbstickFrame = CGRect(origin: CGPoint(x: 12, y: 12), size: thumbstickSize)
         let renderSize = CGSize(width: thumbstickSize.width + 24, height: thumbstickSize.height + 24)
-        let size = self.getRelative(renderSize)
+        let size = renderSize.getRelative()
         
         let assetName = "circle.circle"
         
@@ -458,136 +458,6 @@ extension SoftwareControllerSkin
         }
         
         return deltaCore.videoFormat.dimensions
-    }
-}
-
-private extension SoftwareControllerSkin
-{
-    func getAbsolute(_ size: CGSize) -> CGSize
-    {
-        let mappingSize = SoftwareControllerSkin.deviceSize()
-        let scaleTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
-        
-        return size.applying(scaleTransform)
-    }
-    
-    func getAbsolute(_ rect: CGRect) -> CGRect
-    {
-        let mappingSize = SoftwareControllerSkin.deviceSize()
-        let scaleTransform = CGAffineTransform(scaleX: mappingSize.width, y: mappingSize.height)
-        
-        return rect.applying(scaleTransform)
-    }
-    
-    func getRelative(_ size: CGSize) -> CGSize
-    {
-        let mappingSize = SoftwareControllerSkin.deviceSize()
-        let scaleTransform = CGAffineTransform(scaleX: 1 / mappingSize.width, y: 1 / mappingSize.height)
-        
-        return size.applying(scaleTransform)
-    }
-    
-    func getRelative(_ rect: CGRect) -> CGRect
-    {
-        let mappingSize = SoftwareControllerSkin.deviceSize()
-        let scaleTransform = CGAffineTransform(scaleX: 1 / mappingSize.width, y: 1 / mappingSize.height)
-        
-        return rect.applying(scaleTransform)
-    }
-}
-
-extension CGRect
-{
-    func getSubRect(sections: CGFloat, index: CGFloat, size: CGFloat) -> CGRect
-    {
-        guard (index - 1) + size <= sections else { return self }
-        
-        let width = self.width
-        let x = self.minX
-        
-        let sectionHeight = self.height / sections
-        
-        let height = sectionHeight * size
-        let y = self.minY + ((index - 1) * sectionHeight)
-        
-        return CGRect(x: x, y: y, width: width, height: height)
-    }
-    
-    func getInsetSquare(inset: CGFloat = 5) -> CGRect
-    {
-        let square = AVMakeRect(aspectRatio: CGSize(width: 1, height: 1), insideRect: self)
-        
-        return square.insetBy(dx: inset, dy: inset)
-    }
-    
-    func getFourButtons(inset: CGFloat = 5) -> (top: CGRect, bottom: CGRect, left: CGRect, right: CGRect)
-    {
-        let square = self.getInsetSquare(inset: inset)
-        
-        let sectionWidth = square.width / 3
-        let sectionHeight = square.height / 3
-        
-        let top = CGRect(x: square.minX + sectionWidth, y: square.minY, width: sectionWidth, height: sectionHeight)
-        let bottom = CGRect(x: square.minX + sectionWidth, y: square.maxY - sectionHeight, width: sectionWidth, height: sectionHeight)
-        let left = CGRect(x: square.minX, y: square.minY + sectionHeight, width: sectionWidth, height: sectionHeight)
-        let right = CGRect(x: square.maxX - sectionWidth, y: square.minY + sectionHeight, width: sectionWidth, height: sectionHeight)
-        
-        return (top, bottom, left, right)
-    }
-    
-    func getTwoButtons(inset: CGFloat = 5) -> (left: CGRect, right: CGRect)
-    {
-        let square = self.getInsetSquare(inset: inset)
-        
-        let sectionWidth = square.width * 0.45
-        let sectionHeight = square.height * 0.45
-        let midY = square.midY - (sectionHeight / 2)
-        
-        let left = CGRect(x: square.minX, y: midY + (sectionHeight * 0.3), width: sectionWidth, height: sectionHeight)
-        let right = CGRect(x: square.maxX - sectionWidth, y: midY - (sectionHeight * 0.3), width: sectionWidth, height: sectionHeight)
-        
-        return (left, right)
-    }
-    
-    func getTwoButtonsHorizontal() -> (left: CGRect, right: CGRect)
-    {
-        var width = self.width * 0.3
-        var height = width
-        
-        if width > self.height * 0.8
-        {
-            height = self.height * 0.8
-            width = height
-        }
-        
-        let midX = self.midX - (width / 2)
-        let y = self.minY + ((self.height - height) / 2)
-        
-        let left = CGRect(x: midX - (self.width / 4), y: y, width: width, height: height)
-        let right = CGRect(x: midX + (self.width / 4), y: y, width: width, height: height)
-        
-        return (left, right)
-    }
-    
-    func getThreeButton() -> (left: CGRect, middle: CGRect, right: CGRect)
-    {
-        var width = self.width * 0.3
-        var height = width
-        
-        if width > self.height * 0.6
-        {
-            height = self.height * 0.6
-            width = height
-        }
-        
-        let midX = self.midX - (width / 2)
-        let y = self.minY + ((self.height - height) / 2)
-        
-        let left = CGRect(x: midX - (self.width * 0.35), y: y + (self.height * 0.2), width: width, height: height)
-        let middle = CGRect(x: midX, y: y, width: width, height: height)
-        let right = CGRect(x: midX + (self.width * 0.35), y: y - (self.height * 0.2), width: width, height: height)
-        
-        return (left, middle, right)
     }
 }
 
