@@ -258,18 +258,12 @@ extension SoftwareControllerSkin: ControllerSkinProtocol
             
             if Settings.controllerFeatures.softwareSkin.screenStyle == DeltaCore.GameViewStyle.floating
             {
-                topScreenArea = topScreenArea.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5))
-                bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5))
+                topScreenArea = topScreenArea.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 5, right: 10))
+                bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 10, right: 10))
             }
             
-            var topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
-            var bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
-            
-            if Settings.controllerFeatures.softwareSkin.screenStyle == DeltaCore.GameViewStyle.floating
-            {
-                topScreenFrame = topScreenFrame.insetBy(dx: 5, dy: 5)
-                bottomScreenFrame = bottomScreenFrame.insetBy(dx: 5, dy: 5)
-            }
+            let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea)
+            let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea)
             
             if alt
             {
