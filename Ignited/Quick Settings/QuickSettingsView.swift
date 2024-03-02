@@ -23,19 +23,19 @@ struct QuickSettingsView: View
     
     @State private var standardSkinStyle: StandardSkinStyle = Settings.standardSkinFeatures.styleAndColor.style
     @State private var standardSkinColor: StandardSkinColor = Settings.standardSkinFeatures.styleAndColor.color
-    @State private var softwareSkinCustomColor: Color = Settings.standardSkinFeatures.styleAndColor.customColor
-    @State private var softwareSkinCustomColorSecondary: Color = Settings.standardSkinFeatures.styleAndColor.customColorSecondary
-    @State private var softwareSkinShadowOpacity: Double = Settings.standardSkinFeatures.styleAndColor.shadowOpacity
-    @State private var softwareSkinDSTopScreenSize: Double = Settings.standardSkinFeatures.gameScreen.dsTopScreenSize
-    @State private var softwareSkinSafeArea: Double = Settings.standardSkinFeatures.gameScreen.safeArea
-    @State private var softwareSkinExtendedEdges: Double = Settings.standardSkinFeatures.inputsAndLayout.extendedEdges
+    @State private var standardSkinCustomColor: Color = Settings.standardSkinFeatures.styleAndColor.customColor
+    @State private var standardSkinCustomColorSecondary: Color = Settings.standardSkinFeatures.styleAndColor.customColorSecondary
+    @State private var standardSkinShadowOpacity: Double = Settings.standardSkinFeatures.styleAndColor.shadowOpacity
+    @State private var standardSkinDSTopScreenSize: Double = Settings.standardSkinFeatures.gameScreen.dsTopScreenSize
+    @State private var standardSkinSafeArea: Double = Settings.standardSkinFeatures.gameScreen.safeArea
+    @State private var standardSkinExtendedEdges: Double = Settings.standardSkinFeatures.inputsAndLayout.extendedEdges
     @State private var standardSkinDirectionalInputType: StandardSkinDirectionalInputType = Settings.standardSkinFeatures.inputsAndLayout.directionalInputType
     @State private var standardSkinABXYLayout: StandardSkinABXYLayout = Settings.standardSkinFeatures.inputsAndLayout.abxyLayout
     @State private var standardSkinN64FaceLayout: StandardSkinN64FaceLayout = Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
     @State private var standardSkinN64ShoulderLayout: StandardSkinN64ShoulderLayout = Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
     @State private var standardSkinGenesisFaceLayout: StandardSkinGenesisFaceLayout = Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
-    @State private var softwareSkinCustomButton1: ActionInput = Settings.standardSkinFeatures.inputsAndLayout.customButton1
-    @State private var softwareSkinCustomButton2: ActionInput = Settings.standardSkinFeatures.inputsAndLayout.customButton2
+    @State private var standardSkinCustomButton1: ActionInput = Settings.standardSkinFeatures.inputsAndLayout.customButton1
+    @State private var standardSkinCustomButton2: ActionInput = Settings.standardSkinFeatures.inputsAndLayout.customButton2
     
     @State private var backgroundBlurStyle: UIBlurEffect.Style = Settings.controllerFeatures.backgroundBlur.style
     @State private var backgroundBlurTintColor: BackgroundBlurTintColor = Settings.controllerFeatures.backgroundBlur.tintColor
@@ -250,30 +250,30 @@ struct QuickSettingsView: View
                                 .onChange(of: self.standardSkinColor) { value in
                                     Settings.standardSkinFeatures.styleAndColor.color = value
                                 }
-                            ColorPicker("Custom Color", selection: self.$softwareSkinCustomColor, supportsOpacity: false)
-                                .onChange(of: self.softwareSkinCustomColor) { value in
+                            ColorPicker("Custom Color", selection: self.$standardSkinCustomColor, supportsOpacity: false)
+                                .onChange(of: self.standardSkinCustomColor) { value in
                                     Settings.standardSkinFeatures.styleAndColor.customColor = value
                                 }
-                            ColorPicker("Custom Secondary Color", selection: self.$softwareSkinCustomColorSecondary, supportsOpacity: false)
-                                .onChange(of: self.softwareSkinCustomColorSecondary) { value in
+                            ColorPicker("Custom Secondary Color", selection: self.$standardSkinCustomColorSecondary, supportsOpacity: false)
+                                .onChange(of: self.standardSkinCustomColorSecondary) { value in
                                     Settings.standardSkinFeatures.styleAndColor.customColorSecondary = value
                                 }
                             if self.system != System.n64.gameType.rawValue
                             {
-                                Picker("Custom Button 1", selection: self.$softwareSkinCustomButton1) {
+                                Picker("Custom Button 1", selection: self.$standardSkinCustomButton1) {
                                     ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
                                         value.localizedDescription
                                     }
                                 }.pickerStyle(.menu)
-                                    .onChange(of: self.softwareSkinCustomButton1) { value in
+                                    .onChange(of: self.standardSkinCustomButton1) { value in
                                         Settings.standardSkinFeatures.inputsAndLayout.customButton1 = value
                                     }
-                                Picker("Custom Button 2", selection: self.$softwareSkinCustomButton2) {
+                                Picker("Custom Button 2", selection: self.$standardSkinCustomButton2) {
                                     ForEach([ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart], id: \.self) { value in
                                         value.localizedDescription
                                     }
                                 }.pickerStyle(.menu)
-                                    .onChange(of: self.softwareSkinCustomButton2) { value in
+                                    .onChange(of: self.standardSkinCustomButton2) { value in
                                         Settings.standardSkinFeatures.inputsAndLayout.customButton2 = value
                                     }
                                 Picker("Directional Input", selection: self.$standardSkinDirectionalInputType) {
@@ -336,54 +336,54 @@ struct QuickSettingsView: View
                             Toggle("Shadows", isOn: Settings.standardSkinFeatures.styleAndColor.$shadows.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             HStack {
-                                Text("Shadow Opacity: \(self.softwareSkinShadowOpacity * 100, specifier: "%.f")%")
+                                Text("Shadow Opacity: \(self.standardSkinShadowOpacity * 100, specifier: "%.f")%")
                                 Spacer()
                                 Button("Reset") {
-                                    self.softwareSkinShadowOpacity = 0.7
-                                    Settings.standardSkinFeatures.styleAndColor.shadowOpacity = self.softwareSkinShadowOpacity
+                                    self.standardSkinShadowOpacity = 0.5
+                                    Settings.standardSkinFeatures.styleAndColor.shadowOpacity = self.standardSkinShadowOpacity
                                 }.buttonStyle(.borderless)
                             }
-                            Slider(value: self.$softwareSkinShadowOpacity, in: 0.0...1.0, step: 0.05)
-                                .onChange(of: self.softwareSkinShadowOpacity) { value in
+                            Slider(value: self.$standardSkinShadowOpacity, in: 0.0...1.0, step: 0.05)
+                                .onChange(of: self.standardSkinShadowOpacity) { value in
                                     Settings.standardSkinFeatures.styleAndColor.shadowOpacity = value
                                 }
                             if self.system == System.ds.gameType.rawValue
                             {
                                 HStack {
-                                    Text("DS Top Screen Size: \(self.softwareSkinDSTopScreenSize * 100, specifier: "%.f")%")
+                                    Text("DS Top Screen Size: \(self.standardSkinDSTopScreenSize * 100, specifier: "%.f")%")
                                     Spacer()
                                     Button("Reset") {
-                                        self.softwareSkinDSTopScreenSize = 0.5
-                                        Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = self.softwareSkinDSTopScreenSize
+                                        self.standardSkinDSTopScreenSize = 0.5
+                                        Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = self.standardSkinDSTopScreenSize
                                     }.buttonStyle(.borderless)
                                 }
-                                Slider(value: self.$softwareSkinDSTopScreenSize, in: 0.2...0.8, step: 0.05)
-                                    .onChange(of: self.softwareSkinDSTopScreenSize) { value in
+                                Slider(value: self.$standardSkinDSTopScreenSize, in: 0.2...0.8, step: 0.05)
+                                    .onChange(of: self.standardSkinDSTopScreenSize) { value in
                                         Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = value
                                     }
                             }
                             HStack {
-                                Text("Extended Edges: \(self.softwareSkinExtendedEdges, specifier: "%.f")pt")
+                                Text("Extended Edges: \(self.standardSkinExtendedEdges, specifier: "%.f")pt")
                                 Spacer()
                                 Button("Reset") {
-                                    self.softwareSkinExtendedEdges = 10
-                                    Settings.standardSkinFeatures.inputsAndLayout.extendedEdges = self.softwareSkinExtendedEdges
+                                    self.standardSkinExtendedEdges = 10
+                                    Settings.standardSkinFeatures.inputsAndLayout.extendedEdges = self.standardSkinExtendedEdges
                                 }.buttonStyle(.borderless)
                             }
-                            Slider(value: self.$softwareSkinExtendedEdges, in: 0...20, step: 1)
-                                .onChange(of: self.softwareSkinExtendedEdges) { value in
+                            Slider(value: self.$standardSkinExtendedEdges, in: 0...20, step: 1)
+                                .onChange(of: self.standardSkinExtendedEdges) { value in
                                     Settings.standardSkinFeatures.inputsAndLayout.extendedEdges = value
                                 }
                             HStack {
-                                Text("Notch/Island Safe Area: \(self.softwareSkinSafeArea, specifier: "%.f")pt")
+                                Text("Notch/Island Safe Area: \(self.standardSkinSafeArea, specifier: "%.f")pt")
                                 Spacer()
                                 Button("Reset") {
-                                    self.softwareSkinSafeArea = 40
-                                    Settings.standardSkinFeatures.gameScreen.safeArea = self.softwareSkinSafeArea
+                                    self.standardSkinSafeArea = 40
+                                    Settings.standardSkinFeatures.gameScreen.safeArea = self.standardSkinSafeArea
                                 }.buttonStyle(.borderless)
                             }
-                            Slider(value: self.$softwareSkinSafeArea, in: 0...60, step: 1)
-                                .onChange(of: self.softwareSkinSafeArea) { value in
+                            Slider(value: self.$standardSkinSafeArea, in: 0...60, step: 1)
+                                .onChange(of: self.standardSkinSafeArea) { value in
                                     Settings.standardSkinFeatures.gameScreen.safeArea = value
                                 }
                         }
