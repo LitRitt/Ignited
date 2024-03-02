@@ -97,6 +97,11 @@ struct InputsAndLayoutOptions
             values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
     var customButton2: ActionInput = .quickSave
     
+    @Option(name: "DS Screen Swap",
+            description: "Enable to replace Custom Button 2 with a button that will swap the DS screens")
+    var dsScreenSwap: Bool = true
+    
+    
     @Option(name: "Directional Input",
             description: "Choose which input type to use for directional inputs. Does not affect N64.",
             values: StandardSkinDirectionalInputType.allCases)
@@ -128,6 +133,22 @@ struct InputsAndLayoutOptions
             step: 1,
             unit: "pt")
     var extendedEdges: Double = 10
+    
+    @Option(name: "SplitView Portrait Size",
+            description: "Change the size of the SplitView inputs when in portrait.",
+            range: 0.1...0.5,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var splitViewPortraitSize: Double = 0.3
+    
+    @Option(name: "SplitView Landscape Size",
+            description: "Change the size of the SplitView inputs when in landscape.",
+            range: 0.2...0.6,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var splitViewLandscapeSize: Double = 0.4
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

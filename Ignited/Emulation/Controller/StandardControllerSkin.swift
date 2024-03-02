@@ -42,14 +42,192 @@ public struct StandardControllerSkin
 
 extension StandardControllerSkin: ControllerSkinProtocol
 {
+    public func items(for traits: Skin.Traits, alt: Bool) -> [Skin.Item]?
+    {
+        let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
+        let buttonAreas = self.buttonAreas(for: traits)
+        let isSplitView = traits.displayType == .splitView
+        
+        var items = [Skin.Item]()
+        
+        for input in self.softwareInputs() {
+            switch input.kind
+            {
+            case .touchScreen:
+                if let screens = self.screens(for: traits, alt: alt),
+                   let screen = screens.first,
+                   let screenFrame = screen.outputFrame
+                {
+                    items.append(Skin.Item(id: input.description(self.gameType, isSplitView: isSplitView),
+                                           kind: input.kind,
+                                           inputs: input.inputs(self.gameType, isSplitView: isSplitView),
+                                           frame: screenFrame.getAbsolute(for: traits),
+                                           edges: input.edges,
+                                           mappingSize: mappingSize))
+                }
+                
+            default:
+                var kind = input.kind
+                
+                if self.gameType != .n64,
+                   kind == .dPad
+                {
+                    switch Settings.standardSkinFeatures.inputsAndLayout.directionalInputType
+                    {
+                    case .dPad: kind = .dPad
+                    case .thumbstick: kind = .thumbstick
+                    }
+                }
+                
+                let frame = input.frame(leftButtonArea: buttonAreas[0].getAbsolute(for: traits),
+                                            rightButtonArea: buttonAreas[1].getAbsolute(for: traits),
+                                            gameType: self.gameType)
+                
+                if kind == .thumbstick
+                {
+                    let thumbstickSize = CGSize(width: (frame.width / 2) + 24, height: (frame.height / 2) + 24)
+                    
+                    items.append(Skin.Item(id: input.description(self.gameType, isSplitView: isSplitView),
+                                           kind: kind,
+                                           inputs: input.inputs(self.gameType, isSplitView: isSplitView),
+                                           frame: frame,
+                                           edges: input.edges,
+                                           mappingSize: mappingSize,
+                                           thumbstickSize: thumbstickSize))
+                }
+                else
+                {
+                    items.append(Skin.Item(id: input.description(self.gameType, isSplitView: isSplitView),
+                                           kind: kind,
+                                           inputs: input.inputs(self.gameType, isSplitView: isSplitView),
+                                           frame: frame,
+                                           edges: input.edges,
+                                           mappingSize: mappingSize))
+                }
+            }
+        }
+        
+        return items
+    }
+    
+    public func screens(for traits: Skin.Traits, alt: Bool) -> [Skin.Screen]?
+    {
+        let buttonAreas = self.buttonAreas(for: traits).map({ $0.getAbsolute(for: traits) })
+        let leftButtonArea = buttonAreas[0]
+        let rightButtonArea = buttonAreas[1]
+        
+        let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
+        let safeArea = Settings.standardSkinFeatures.gameScreen.safeArea
+        
+        var screenArea: CGRect
+        
+        switch (traits.displayType, traits.orientation)
+        {
+        case (.splitView, _):
+            let screenAreaWidth = rightButtonArea.minX - leftButtonArea.maxX
+            
+            screenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: screenAreaWidth, height: mappingSize.height)
+            
+        case (_, .portrait):
+            var screenAreaHeight = min(leftButtonArea.minY, rightButtonArea.minY)
+            var screenAreaY = 0.0
+            
+            if traits.device == .iphone,
+               traits.displayType == .edgeToEdge
+            {
+                screenAreaHeight -= safeArea
+                screenAreaY = safeArea
+            }
+            
+            screenArea = CGRect(x: 0, y: screenAreaY, width: mappingSize.width, height: screenAreaHeight)
+            
+        case (_, .landscape):
+            let screenAreaWidth = rightButtonArea.minX - leftButtonArea.maxX
+            
+            if Settings.standardSkinFeatures.gameScreen.fullscreenLandscape
+            {
+                screenArea = CGRect(origin: .zero, size: mappingSize)
+            }
+            else
+            {
+                screenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: screenAreaWidth, height: mappingSize.height)
+            }
+        }
+        
+        if Settings.standardSkinFeatures.gameScreen.style == .floating
+        {
+            screenArea = screenArea.insetBy(dx: 10, dy: 10)
+        }
+        
+        switch self.gameType
+        {
+        case .ds:
+            let aspectRatio = CGSize(width: self.screenSize().width, height: self.screenSize().height / 2)
+            let topScreenInputFrame = CGRect(origin: .zero, size: aspectRatio)
+            let bottomScreenInputFrame = CGRect(origin: CGPoint(x: 0, y: aspectRatio.height), size: aspectRatio)
+            
+            let topScreenHeight = screenArea.height * Settings.standardSkinFeatures.gameScreen.dsTopScreenSize
+            var topScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY, width: screenArea.width, height: topScreenHeight)
+            
+            let bottomScreenHeight = screenArea.height - topScreenHeight
+            var bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
+            
+            if Settings.standardSkinFeatures.gameScreen.style == DeltaCore.GameViewStyle.floating
+            {
+                topScreenArea = topScreenArea.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0))
+                bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0))
+            }
+            
+            let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea).getRelative(for: traits)
+            let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea).getRelative(for: traits)
+            
+            let bottomScreenSplitViewFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: screenArea).getRelative(for: traits)
+            
+            switch (traits.displayType, alt)
+            {
+            case (.splitView, _):
+                return [
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenSplitViewFrame, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, placement: .app, style: Settings.standardSkinFeatures.gameScreen.style)
+                ]
+                
+            case (_, false):
+                return [
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
+                ]
+                
+            case (_, true):
+                return [
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
+                ]
+                
+            }
+            
+        default:
+            let screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea).getRelative(for: traits)
+            
+            switch traits.displayType
+            {
+            case .splitView:
+                return [Skin.Screen(id: "standardControllerSkin.screen", placement: .app, style: Settings.standardSkinFeatures.gameScreen.style)]
+                
+            default:
+                return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: Settings.standardSkinFeatures.gameScreen.style)]
+            }
+        }
+    }
+    
     public func image(for traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> UIImage?
     {
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
         var buttonAreas = [CGRect]()
+        let isSplitView = traits.displayType == .splitView
         
         for buttonArea in self.buttonAreas(for: traits)
         {
-            buttonAreas.append(buttonArea.getAbsolute())
+            buttonAreas.append(buttonArea.getAbsolute(for: traits))
         }
         
         let format = UIGraphicsImageRendererFormat()
@@ -61,7 +239,7 @@ extension StandardControllerSkin: ControllerSkinProtocol
             
             for input in self.softwareInputs()
             {
-                var assetName = input.assetName(self.gameType)
+                var assetName = input.assetName(self.gameType, isSplitView: isSplitView)
                 var kind = input.kind
                 
                 var color = Settings.standardSkinFeatures.styleAndColor.color.uiColor
@@ -120,182 +298,13 @@ extension StandardControllerSkin: ControllerSkinProtocol
         }
     }
     
-    public func items(for traits: Skin.Traits, alt: Bool) -> [Skin.Item]?
-    {
-        let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
-        let buttonAreas = self.buttonAreas(for: traits)
-        
-        var items = [Skin.Item]()
-        
-        for input in self.softwareInputs() {
-            switch input.kind
-            {
-            case .touchScreen:
-                if let screens = self.screens(for: traits, alt: alt),
-                   let screen = screens.last,
-                   let screenFrame = screen.outputFrame
-                {
-                    items.append(Skin.Item(id: input.description,
-                                           kind: input.kind,
-                                           inputs: input.inputs(self.gameType),
-                                           frame: screenFrame.getAbsolute(),
-                                           edges: input.edges,
-                                           mappingSize: mappingSize))
-                }
-                
-            default:
-                var kind = input.kind
-                
-                if self.gameType != .n64,
-                   kind == .dPad
-                {
-                    switch Settings.standardSkinFeatures.inputsAndLayout.directionalInputType
-                    {
-                    case .dPad: kind = .dPad
-                    case .thumbstick: kind = .thumbstick
-                    }
-                }
-                
-                let frame: CGRect
-                
-                if input == .toggleAltRepresentations,
-                   let screens = self.screens(for: traits, alt: alt),
-                   let screen = screens.first,
-                   let screenFrame = screen.outputFrame
-                {
-                    frame = screenFrame.getAbsolute()
-                    
-                }
-                else
-                {
-                    frame = input.frame(leftButtonArea: buttonAreas[0].getAbsolute(),
-                                            rightButtonArea: buttonAreas[1].getAbsolute(),
-                                            gameType: self.gameType)
-                }
-                
-                if kind == .thumbstick
-                {
-                    let thumbstickSize = CGSize(width: (frame.width / 2) + 24, height: (frame.height / 2) + 24)
-                    
-                    items.append(Skin.Item(id: input.description,
-                                           kind: kind,
-                                           inputs: input.inputs(self.gameType),
-                                           frame: frame,
-                                           edges: input.edges,
-                                           mappingSize: mappingSize,
-                                           thumbstickSize: thumbstickSize))
-                }
-                else
-                {
-                    items.append(Skin.Item(id: input.description,
-                                           kind: kind,
-                                           inputs: input.inputs(self.gameType),
-                                           frame: frame,
-                                           edges: input.edges,
-                                           mappingSize: mappingSize))
-                }
-            }
-        }
-        
-        return items
-    }
-    
-    public func screens(for traits: Skin.Traits, alt: Bool) -> [Skin.Screen]?
-    {
-        let buttonAreas = self.buttonAreas(for: traits).map({ $0.getAbsolute() })
-        let leftButtonArea = buttonAreas[0]
-        let rightButtonArea = buttonAreas[1]
-        
-        let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
-        let safeArea = Settings.standardSkinFeatures.gameScreen.safeArea
-        
-        let screenArea: CGRect
-        
-        switch traits.orientation
-        {
-        case .portrait:
-            var screenAreaHeight = min(leftButtonArea.minY, rightButtonArea.minY)
-            var screenAreaY = 0.0
-            
-            if traits.device == .iphone,
-               traits.displayType == .edgeToEdge
-            {
-                screenAreaHeight -= safeArea
-                screenAreaY = safeArea
-            }
-            
-            screenArea = CGRect(x: 0, y: screenAreaY, width: mappingSize.width, height: screenAreaHeight)
-            
-        case .landscape:
-            let screenAreaWidth = rightButtonArea.minX - leftButtonArea.maxX
-            
-            if Settings.standardSkinFeatures.gameScreen.fullscreenLandscape
-            {
-                screenArea = CGRect(origin: .zero, size: mappingSize)
-            }
-            else
-            {
-                screenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: screenAreaWidth, height: mappingSize.height)
-            }
-            
-        }
-        
-        switch self.gameType
-        {
-        case .ds:
-            let aspectRatio = CGSize(width: self.screenSize().width, height: self.screenSize().height / 2)
-            let topScreenInputFrame = CGRect(origin: .zero, size: aspectRatio)
-            let bottomScreenInputFrame = CGRect(origin: CGPoint(x: 0, y: aspectRatio.height), size: aspectRatio)
-            
-            let topScreenHeight = screenArea.height * Settings.standardSkinFeatures.gameScreen.dsTopScreenSize
-            var topScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY, width: screenArea.width, height: topScreenHeight)
-            
-            let bottomScreenHeight = screenArea.height - topScreenHeight
-            var bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
-            
-            if Settings.standardSkinFeatures.gameScreen.style == DeltaCore.GameViewStyle.floating
-            {
-                topScreenArea = topScreenArea.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 5, right: 10))
-                bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 10, right: 10))
-            }
-            
-            let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea).getRelative()
-            let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea).getRelative()
-            
-            if alt
-            {
-                return [
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
-                ]
-            }
-            else
-            {
-                return [
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
-                ]
-            }
-            
-        default:
-            var screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
-            
-            if Settings.standardSkinFeatures.gameScreen.style == .floating
-            {
-                screenFrame = screenFrame.insetBy(dx: 10, dy: 10).getRelative()
-            }
-            
-            return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: Settings.standardSkinFeatures.gameScreen.style)]
-        }
-    }
-    
     public func thumbstick(for item: Skin.Item, traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> (UIImage, CGSize)?
     {
-        let frame = item.frame.getAbsolute()
+        let frame = item.frame.getAbsolute(for: traits)
         let thumbstickSize = CGSize(width: frame.width / 2, height: frame.height / 2)
         let thumbstickFrame = CGRect(origin: CGPoint(x: 12, y: 12), size: thumbstickSize)
         let renderSize = CGSize(width: thumbstickSize.width + 24, height: thumbstickSize.height + 24)
-        let size = renderSize.getRelative()
+        let size = renderSize.getRelative(for: traits)
         
         let assetName = "circle.circle"
         
@@ -344,17 +353,17 @@ extension StandardControllerSkin: ControllerSkinProtocol
     
     public func aspectRatio(for traits: Skin.Traits, alt: Bool) -> CGSize?
     {
-        return StandardControllerSkin.deviceSize()
+        switch (traits.displayType, traits.orientation)
+        {
+        case (.splitView, .portrait): return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewPortraitSize)
+        case (.splitView, .landscape): return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewLandscapeSize)
+        default: return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        }
     }
     
     public func supports(_ traits: Skin.Traits, alt: Bool) -> Bool
     {
-        switch (traits.device, traits.displayType, traits.orientation)
-        {
-        case (_, .splitView, _): return false
-        case (.tv, _, _): return false
-        default: return true
-        }
+        return true
     }
     
     public func isTranslucent(for traits: Skin.Traits, alt: Bool) -> Bool?
@@ -426,6 +435,16 @@ extension StandardControllerSkin
                 CGRect(x: 0.03, y: 0.4, width: 0.2, height: 0.55),
                 CGRect(x: 0.77, y: 0.4, width: 0.2, height: 0.55)
             ]
+        case (.ipad, .splitView, .portrait):
+            buttonAreas = [
+                CGRect(x: 0.02, y: 0.02, width: 0.25, height: 0.96),
+                CGRect(x: 0.73, y: 0.02, width: 0.25, height: 0.96)
+            ]
+        case (.ipad, .splitView, .landscape):
+            buttonAreas = [
+                CGRect(x: 0.02, y: 0.02, width: 0.2, height: 0.96),
+                CGRect(x: 0.78, y: 0.02, width: 0.2, height: 0.96)
+            ]
         default: break
         }
         
@@ -439,18 +458,13 @@ extension StandardControllerSkin
         case .gba: return [.dPad, .a, .b, .l, .r, .start, .select, .menu, .quickSettings, .custom1, .custom2]
         case .gbc, .nes: return [.dPad, .a, .b, .start, .select, .menu, .quickSettings, .custom1, .custom2]
         case .snes: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu, .quickSettings, .custom1, .custom2]
-        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings, .toggleAltRepresentations, .custom1, .custom2]
+        case .ds: return [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu, .quickSettings, .custom1, .custom2]
         case .n64: return [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu, .quickSettings]
         case .genesis where Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout == .button3: return [.dPad, .a, .b, .c, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
         case .genesis where Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout == .button6: return [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu, .quickSettings, .custom1, .custom2]
         case .ms, .gg: return [.dPad, .b, .c, .start, .menu, .quickSettings, .custom1, .custom2]
         default: return []
         }
-    }
-    
-    public static func deviceSize() -> CGSize
-    {
-        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     }
     
     private func screenSize() -> CGSize
@@ -463,7 +477,7 @@ extension StandardControllerSkin
     }
 }
 
-public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
+public enum SoftwareInput: String, CaseIterable
 {
     case dPad
     case a
@@ -489,7 +503,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
     case custom1
     case custom2
     
-    public var description: String
+    public func description(_ gameType: GameType, isSplitView: Bool = false) -> String
     {
         switch self
         {
@@ -505,14 +519,21 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             }
             
         case .custom2:
-            switch Settings.standardSkinFeatures.inputsAndLayout.customButton2
+            if Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap, gameType == .ds, !isSplitView
             {
-            case .fastForward: return "fastForward"
-            case .quickSave: return "quickSave"
-            case .quickLoad: return "quickLoad"
-            case .screenshot: return "screenshot"
-            case .restart: return "restart"
-            default: return ""
+                return "toggleAltRepresentations"
+            }
+            else
+            {
+                switch Settings.standardSkinFeatures.inputsAndLayout.customButton2
+                {
+                case .fastForward: return "fastForward"
+                case .quickSave: return "quickSave"
+                case .quickLoad: return "quickLoad"
+                case .screenshot: return "screenshot"
+                case .restart: return "restart"
+                default: return ""
+                }
             }
             
         default: return self.rawValue
@@ -530,7 +551,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         }
     }
     
-    func inputs(_ gameType: GameType) -> DeltaCore.ControllerSkin.Item.Inputs
+    func inputs(_ gameType: GameType, isSplitView: Bool = false) -> DeltaCore.ControllerSkin.Item.Inputs
     {
         switch (self.kind, gameType)
         {
@@ -556,7 +577,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
                                 left: AnyInput(stringValue: "left", intValue: nil, type: .controller(.controllerSkin), isContinuous: true),
                                 right: AnyInput(stringValue: "right", intValue: nil, type: .controller(.controllerSkin), isContinuous: true))
             
-        default: return .standard([AnyInput(stringValue: self.description, intValue: nil, type: .controller(.controllerSkin))])
+        default: return .standard([AnyInput(stringValue: self.description(gameType, isSplitView: isSplitView), intValue: nil, type: .controller(.controllerSkin))])
         }
     }
     
@@ -976,7 +997,7 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         }
     }
     
-    func assetName(_ gameType: GameType) -> String
+    func assetName(_ gameType: GameType, isSplitView: Bool = false) -> String
     {
         switch self
         {
@@ -1001,21 +1022,21 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
         case .z:
             switch Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
             {
-            case .swapZL, .swapZR: return "z.square"
+            case .swapZL where gameType == .n64, .swapZR where gameType == .n64: return "z.square"
             default: return "z.circle"
             }
             
         case .l:
             switch Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
             {
-            case .swapZL: return "l.circle"
+            case .swapZL where gameType == .n64: return "l.circle"
             default: return "l.square"
             }
             
         case .r:
             switch Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout
             {
-            case .swapZR: return "r.circle"
+            case .swapZR where gameType == .n64: return "r.circle"
             default: return "r.square"
             }
             
@@ -1058,14 +1079,21 @@ public enum SoftwareInput: String, CaseIterable, CustomStringConvertible
             }
             
         case .custom2:
-            switch Settings.standardSkinFeatures.inputsAndLayout.customButton2
+            if Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap, gameType == .ds, !isSplitView
             {
-            case .fastForward: return "forward.circle"
-            case .quickSave: return "arrow.down.to.line.circle"
-            case .quickLoad: return "arrow.up.to.line.circle"
-            case .screenshot: return "camera.circle"
-            case .restart: return "backward.end.circle"
-            default: return ""
+                return "arrow.up.arrow.down.circle"
+            }
+            else
+            {
+                switch Settings.standardSkinFeatures.inputsAndLayout.customButton2
+                {
+                case .fastForward: return "forward.circle"
+                case .quickSave: return "arrow.down.to.line.circle"
+                case .quickLoad: return "arrow.up.to.line.circle"
+                case .screenshot: return "camera.circle"
+                case .restart: return "backward.end.circle"
+                default: return ""
+                }
             }
             
         default: return ""

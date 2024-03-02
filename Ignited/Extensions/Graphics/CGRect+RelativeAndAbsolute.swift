@@ -9,15 +9,27 @@
 import CoreGraphics
 import UIKit
 
+import DeltaCore
+
 public extension CGRect
 {
-    func getAbsolute() -> CGRect
+    func getAbsolute(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
     {
-        return self.applying(CGAffineTransform(scaleX: UIScreen.main.bounds.width, y: UIScreen.main.bounds.height))
+        switch (traits.displayType, traits.orientation)
+        {
+        case (.splitView, .portrait): return self.applying(CGAffineTransform(scaleX: UIScreen.main.bounds.width, y: UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewPortraitSize))
+        case (.splitView, .landscape): return self.applying(CGAffineTransform(scaleX: UIScreen.main.bounds.width, y: UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewLandscapeSize))
+        default: return self.applying(CGAffineTransform(scaleX: UIScreen.main.bounds.width, y: UIScreen.main.bounds.height))
+        }
     }
     
-    func getRelative() -> CGRect
+    func getRelative(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
     {
-        return self.applying(CGAffineTransform(scaleX: 1 / UIScreen.main.bounds.width, y: 1 / UIScreen.main.bounds.height))
+        switch (traits.displayType, traits.orientation)
+        {
+        case (.splitView, .portrait): return self.applying(CGAffineTransform(scaleX: 1 / UIScreen.main.bounds.width, y: 1 / (UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewPortraitSize)))
+        case (.splitView, .landscape): return self.applying(CGAffineTransform(scaleX: 1 / UIScreen.main.bounds.width, y: 1 / (UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewLandscapeSize)))
+        default: return self.applying(CGAffineTransform(scaleX: 1 / UIScreen.main.bounds.width, y: 1 / UIScreen.main.bounds.height))
+        }
     }
 }

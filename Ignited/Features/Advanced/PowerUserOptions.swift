@@ -391,6 +391,8 @@ extension PowerUserOptions
                 Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout = .none
                 Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout = .button3
                 Settings.standardSkinFeatures.inputsAndLayout.extendedEdges = 10
+                Settings.standardSkinFeatures.inputsAndLayout.splitViewPortraitSize = 0.3
+                Settings.standardSkinFeatures.inputsAndLayout.splitViewLandscapeSize = 0.4
                 
             case .skin:
                 Settings.controllerFeatures.skin.opacity = 0.7

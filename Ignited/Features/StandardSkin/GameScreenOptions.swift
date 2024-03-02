@@ -31,7 +31,7 @@ struct GameScreenOptions
     
     @Option(name: "Fullscreen Landscape",
             description: "Enable to maximize the screen size in landscape. This may cause inputs to cover parts of the screen. Disable to fit the screen between the left and right side input areas.")
-    var fullscreenLandscape: Bool = true
+    var fullscreenLandscape: Bool = false
     
     @Option(name: "DS Top Screen Size",
             description: "Change the size of the top screen on DS. A higher percentage makes the top screen bigger and the bottom screen smaller.",
