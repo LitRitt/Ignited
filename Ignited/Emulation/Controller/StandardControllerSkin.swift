@@ -217,10 +217,13 @@ extension StandardControllerSkin: ControllerSkinProtocol
         default:
             let screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea).getRelative(for: traits, inputMappingMode: self.inputMappingMode)
             
-            switch traits.displayType
+            switch (traits.device, traits.displayType)
             {
-            case .splitView:
+            case (_, .splitView):
                 return [Skin.Screen(id: "standardControllerSkin.screen", placement: .app, style: self.screenStyle())]
+                
+            case (.tv, _):
+                return nil
                 
             default:
                 return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: self.screenStyle())]
