@@ -26,24 +26,6 @@ import AltKit
 
 private var kvoContext = 0
 
-private extension StandardControllerSkin
-{
-    func hasTouchScreen(for traits: DeltaCore.ControllerSkin.Traits) -> Bool
-    {
-        let hasTouchScreen = self.items(for: traits, alt: false)?.contains(where: { $0.kind == .touchScreen }) ?? false
-        return hasTouchScreen
-    }
-}
-
-private extension DeltaCore.ControllerSkin
-{
-    func hasTouchScreen(for traits: DeltaCore.ControllerSkin.Traits) -> Bool
-    {
-        let hasTouchScreen = self.items(for: traits)?.contains(where: { $0.kind == .touchScreen }) ?? false
-        return hasTouchScreen
-    }
-}
-
 private extension GameViewController
 {
     struct PausedSaveState: SaveStateProtocol
@@ -940,8 +922,8 @@ private extension GameViewController
         {
             if let game = self.game,
                let traits = self.controllerView.controllerSkinTraits,
-               let controllerSkin = StandardControllerSkin(for: game.type),
-               controllerSkin.hasTouchScreen(for: traits)
+               let standardSkin = StandardControllerSkin(for: game.type),
+               standardSkin.hasTouchScreen(for: traits)
             {
                 if !Settings.controllerFeatures.skin.alwaysShow
                 {
@@ -1148,17 +1130,17 @@ private extension GameViewController
             if let controllerSkin = controllerSkin,
                controllerSkin.isStandard
             {
-                let standardControllerSkin = StandardControllerSkin(for: game.type)
-                self.controllerView.controllerSkin = standardControllerSkin
+                let standardSkin = StandardControllerSkin(for: game.type)
+                self.controllerView.controllerSkin = standardSkin
             }
             else
             {
                 self.controllerView.controllerSkin = controllerSkin
             }
         }
-        else if let standardControllerSkin = StandardControllerSkin(for: game.type), standardControllerSkin.hasTouchScreen(for: traits)
+        else if let standardSkin = StandardControllerSkin(for: game.type), standardSkin.hasTouchScreen(for: traits)
         {
-            var touchControllerSkin = TouchControllerSkin(controllerSkin: standardControllerSkin)
+            var touchControllerSkin = TouchControllerSkin(controllerSkin: standardSkin)
             
             if UIApplication.shared.isExternalDisplayConnected
             {

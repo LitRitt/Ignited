@@ -525,6 +525,11 @@ extension StandardControllerSkin
         
         return Settings.standardSkinFeatures.gameScreen.style
     }
+    
+    public func hasTouchScreen(for traits: Skin.Traits) -> Bool
+    {
+        return self.gameType == .ds
+    }
 }
 
 public enum SoftwareInput: String, CaseIterable
