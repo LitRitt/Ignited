@@ -55,7 +55,7 @@ extension StandardControllerSkin: ControllerSkinProtocol
             {
             case .touchScreen:
                 if let screens = self.screens(for: traits, alt: alt),
-                   let screen = screens.first,
+                   let screen = screens.last,
                    let screenFrame = screen.outputFrame
                 {
                     items.append(Skin.Item(id: input.description(self.gameType, isSplitView: isSplitView),
@@ -187,20 +187,20 @@ extension StandardControllerSkin: ControllerSkinProtocol
             {
             case (.splitView, _):
                 return [
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenSplitViewFrame, style: Settings.standardSkinFeatures.gameScreen.style),
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, placement: .app, style: Settings.standardSkinFeatures.gameScreen.style)
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, placement: .app, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenSplitViewFrame, style: Settings.standardSkinFeatures.gameScreen.style)
                 ]
                 
             case (_, false):
                 return [
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
                 ]
                 
             case (_, true):
                 return [
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style),
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: Settings.standardSkinFeatures.gameScreen.style)
                 ]
                 
             }
