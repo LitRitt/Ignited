@@ -197,19 +197,19 @@ extension StandardControllerSkin: ControllerSkinProtocol
             case (.splitView, _):
                 return [
                     Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, placement: .app, style: self.screenStyle()),
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenSplitViewFrame, style: self.screenStyle())
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenSplitViewFrame, isTouchScreen: true, style: self.screenStyle())
                 ]
                 
             case (_, false):
                 return [
                     Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: self.screenStyle()),
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, style: self.screenStyle())
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, isTouchScreen: true, style: self.screenStyle())
                 ]
                 
             case (_, true):
                 return [
                     Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: self.screenStyle()),
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, style: self.screenStyle())
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, isTouchScreen: true, style: self.screenStyle())
                 ]
                 
             }
