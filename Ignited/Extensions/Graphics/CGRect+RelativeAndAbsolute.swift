@@ -13,8 +13,12 @@ import DeltaCore
 
 public extension CGRect
 {
-    func getAbsolute(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    func getAbsolute(for traits: DeltaCore.ControllerSkin.Traits, inputMappingMode: Bool = false) -> CGRect
     {
+        guard !inputMappingMode else {
+            return self.applying(CGAffineTransform(scaleX: 414, y: 736))
+        }
+        
         switch (traits.displayType, traits.orientation)
         {
         case (.splitView, .portrait): return self.applying(CGAffineTransform(scaleX: UIScreen.main.bounds.width, y: UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewPortraitSize))
@@ -23,8 +27,12 @@ public extension CGRect
         }
     }
     
-    func getRelative(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    func getRelative(for traits: DeltaCore.ControllerSkin.Traits, inputMappingMode: Bool = false) -> CGRect
     {
+        guard !inputMappingMode else {
+            return self.applying(CGAffineTransform(scaleX: 1 / 414, y: 1 / 736))
+        }
+        
         switch (traits.displayType, traits.orientation)
         {
         case (.splitView, .portrait): return self.applying(CGAffineTransform(scaleX: 1 / UIScreen.main.bounds.width, y: 1 / (UIScreen.main.bounds.height * Settings.standardSkinFeatures.inputsAndLayout.splitViewPortraitSize)))

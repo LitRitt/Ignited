@@ -180,8 +180,9 @@ private extension ControllerInputsViewController
         }
         
         // Update controller view's controller skin.
-        self.gameViewController.controllerView.controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: self.system.gameType)
+        self.gameViewController.controllerView.controllerSkin = StandardControllerSkin(for: self.system.gameType, inputMappingMode: true)
         self.gameViewController.view.setNeedsUpdateConstraints()
+        self.gameViewController.view.backgroundColor = UIColor.themeColor.dynamicBrightness(offset: -0.3)
         
         // Fetch input mapping if it hasn't already been fetched.
         if let gameController = self.gameController, self.inputMappings[self.system] == nil

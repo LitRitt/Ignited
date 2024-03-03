@@ -26,6 +26,15 @@ import AltKit
 
 private var kvoContext = 0
 
+private extension StandardControllerSkin
+{
+    func hasTouchScreen(for traits: DeltaCore.ControllerSkin.Traits) -> Bool
+    {
+        let hasTouchScreen = self.items(for: traits, alt: false)?.contains(where: { $0.kind == .touchScreen }) ?? false
+        return hasTouchScreen
+    }
+}
+
 private extension DeltaCore.ControllerSkin
 {
     func hasTouchScreen(for traits: DeltaCore.ControllerSkin.Traits) -> Bool
@@ -967,7 +976,7 @@ private extension GameViewController
         {
             if let game = self.game,
                let traits = self.controllerView.controllerSkinTraits,
-               let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
+               let controllerSkin = StandardControllerSkin(for: game.type),
                controllerSkin.hasTouchScreen(for: traits)
             {
                 if !Settings.controllerFeatures.skin.alwaysShow
@@ -1175,7 +1184,7 @@ private extension GameViewController
             if let controllerSkin = controllerSkin,
                controllerSkin.isStandard
             {
-                let standardControllerSkin = StandardControllerSkin(gameType: game.type)
+                let standardControllerSkin = StandardControllerSkin(for: game.type)
                 self.controllerView.controllerSkin = standardControllerSkin
             }
             else
@@ -1183,9 +1192,9 @@ private extension GameViewController
                 self.controllerView.controllerSkin = controllerSkin
             }
         }
-        else if let controllerSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type), controllerSkin.hasTouchScreen(for: traits)
+        else if let standardControllerSkin = StandardControllerSkin(for: game.type), standardControllerSkin.hasTouchScreen(for: traits)
         {
-            var touchControllerSkin = TouchControllerSkin(controllerSkin: controllerSkin)
+            var touchControllerSkin = TouchControllerSkin(controllerSkin: standardControllerSkin)
             
             if UIApplication.shared.isExternalDisplayConnected
             {
@@ -2966,8 +2975,8 @@ private extension GameViewController
                 // Use preferredControllerSkin directly.
                 controllerSkin = preferredControllerSkin
             }
-            else if let standardSkin = DeltaCore.ControllerSkin.standardControllerSkin(for: game.type),
-                    standardSkin.supports(traits)
+            else if let standardSkin = StandardControllerSkin(for: game.type),
+                    standardSkin.supports(traits, alt: false)
             {
                 if standardSkin.hasTouchScreen(for: traits)
                 {
