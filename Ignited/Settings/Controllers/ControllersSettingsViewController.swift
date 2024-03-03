@@ -190,7 +190,7 @@ private extension ControllersSettingsViewController
             
         case .customizeControls:
             cell.textLabel?.text = NSLocalizedString("Customize Controls…", comment: "")
-            cell.textLabel?.textColor = self.view.tintColor
+            cell.textLabel?.textColor = UIColor.themeColor
         }
     }
 }
