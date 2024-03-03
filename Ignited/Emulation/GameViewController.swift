@@ -1248,6 +1248,20 @@ private extension GameViewController
         
         self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
         self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && !self.isEditingOverscanInsets
+        
+        if let scene = UIApplication.shared.externalDisplayScene
+        {
+            switch Settings.controllerFeatures.backgroundBlur.tintColor
+            {
+            case .none: scene.gameViewController.blurTintView.backgroundColor = Settings.controllerFeatures.backgroundBlur.tintColor.uiColor.withAlphaComponent(0)
+            default: scene.gameViewController.blurTintView.backgroundColor = Settings.controllerFeatures.backgroundBlur.tintColor.uiColor.withAlphaComponent(Settings.controllerFeatures.backgroundBlur.tintOpacity)
+            }
+            
+            scene.gameViewController.blurGameViewBlurView.effect = UIBlurEffect(style: Settings.controllerFeatures.backgroundBlur.style)
+            
+            scene.gameViewController.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
+            scene.gameViewController.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled
+        }
     }
     
     func updateGameboyPalette()
@@ -2924,6 +2938,8 @@ private extension GameViewController
         {
             emulatorCore.add(gameView)
         }
+        
+        emulatorCore.add(scene.gameViewController.blurGameView)
     }
 
     func disconnectExternalDisplay(for scene: ExternalDisplayScene)
@@ -2934,6 +2950,8 @@ private extension GameViewController
         {
             self.emulatorCore?.remove(gameView)
         }
+        
+        self.emulatorCore?.remove(scene.gameViewController.blurGameView)
 
         self.updateControllerSkin() // Reset TouchControllerSkin + GameViews
         
