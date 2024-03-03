@@ -1189,7 +1189,10 @@ private extension GameViewController
                     if gameView == self.gameView
                     {
                         // Always show AirPlay indicator on self.gameView
-                        gameView.isAirPlaying = true
+                        if !gameView.isTouchScreen
+                        {
+                            gameView.isAirPlaying = true
+                        }
                         gameView.isHidden = false
                     }
                     else
@@ -1205,7 +1208,10 @@ private extension GameViewController
                      
                 self.gameView.isEnabled = false
                 self.gameView.isHidden = false
-                self.gameView.isAirPlaying = true
+                if !self.gameView.isTouchScreen
+                {
+                    self.gameView.isAirPlaying = true
+                }
             }
         }
         else
@@ -2848,7 +2854,10 @@ private extension GameViewController
         // Implicitly called from updateControllerSkin()
         // self.updateExternalDisplay()
         
-        self.gameView?.isAirPlaying = true
+        if let gameView = self.gameView
+        {
+            gameView.isAirPlaying = !gameView.isTouchScreen
+        }
     }
 
     func updateExternalDisplay()
@@ -2900,6 +2909,11 @@ private extension GameViewController
         // self.updateExternalDisplayGameViews()
         
         self.gameView?.updateAirPlayView()
+        
+        if let gameView = self.gameView
+        {
+            gameView.isAirPlaying = !gameView.isTouchScreen
+        }
     }
 
     func updateExternalDisplayGameViews()
