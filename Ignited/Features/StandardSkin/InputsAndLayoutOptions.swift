@@ -101,7 +101,6 @@ struct InputsAndLayoutOptions
             description: "Enable to replace Custom Button 2 with a button that will swap the DS screens")
     var dsScreenSwap: Bool = true
     
-    
     @Option(name: "Directional Input",
             description: "Choose which input type to use for directional inputs. Does not affect N64.",
             values: StandardSkinDirectionalInputType.allCases)

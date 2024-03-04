@@ -276,6 +276,8 @@ struct QuickSettingsView: View
                                     .onChange(of: self.standardSkinCustomButton2) { value in
                                         Settings.standardSkinFeatures.inputsAndLayout.customButton2 = value
                                     }
+                                Toggle("DS Screen Swap", isOn: Settings.standardSkinFeatures.inputsAndLayout.$dsScreenSwap.valueBinding)
+                                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                                 Picker("Directional Input", selection: self.$standardSkinDirectionalInputType) {
                                     ForEach(StandardSkinDirectionalInputType.allCases, id: \.self) { value in
                                         value.localizedDescription
