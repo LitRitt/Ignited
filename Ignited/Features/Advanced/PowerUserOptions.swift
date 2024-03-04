@@ -380,7 +380,7 @@ extension PowerUserOptions
                 Settings.standardSkinFeatures.gameScreen.style = .floating
                 Settings.standardSkinFeatures.gameScreen.fullscreenLandscape = true
                 Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = 0.5
-                Settings.standardSkinFeatures.gameScreen.safeArea = 40
+                Settings.standardSkinFeatures.gameScreen.unsafeArea = 40
                 
             case .inputsAndLayout:
                 Settings.standardSkinFeatures.inputsAndLayout.customButton1 = .fastForward

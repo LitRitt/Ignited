@@ -130,6 +130,11 @@ extension ControllerSkin: ControllerSkinProtocol
     {
         return self.controllerSkin?.anyPreviewSize(for: traits, alt: alt)
     }
+    
+    public func unsafeArea(for traits: DeltaCore.ControllerSkin.Traits, alt: Bool) -> CGFloat?
+    {
+        return self.controllerSkin?.unsafeArea(for: traits, alt: alt)
+    }
 }
 
 extension ControllerSkin: Syncable

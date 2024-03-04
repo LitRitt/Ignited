@@ -41,12 +41,12 @@ struct GameScreenOptions
             isPercentage: true)
     var dsTopScreenSize: Double = 0.5
     
-    @Option(name: "Notch/Island Safe Area",
-            description: "Adjust the safe area to avoid screens being drawn underneath an iPhone's notch or dynamic island.",
+    @Option(name: "Notch/Island Unsafe Area",
+            description: "Adjust the unsafe area to avoid screens being drawn underneath an iPhone's notch or dynamic island.",
             range: 0...60,
             step: 1,
             unit: "pt")
-    var safeArea: Double = 40
+    var unsafeArea: Double = 40
     
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",

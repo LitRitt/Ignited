@@ -27,7 +27,7 @@ struct QuickSettingsView: View
     @State private var standardSkinCustomColorSecondary: Color = Settings.standardSkinFeatures.styleAndColor.customColorSecondary
     @State private var standardSkinShadowOpacity: Double = Settings.standardSkinFeatures.styleAndColor.shadowOpacity
     @State private var standardSkinDSTopScreenSize: Double = Settings.standardSkinFeatures.gameScreen.dsTopScreenSize
-    @State private var standardSkinSafeArea: Double = Settings.standardSkinFeatures.gameScreen.safeArea
+    @State private var standardSkinSafeArea: Double = Settings.standardSkinFeatures.gameScreen.unsafeArea
     @State private var standardSkinExtendedEdges: Double = Settings.standardSkinFeatures.inputsAndLayout.extendedEdges
     @State private var standardSkinDirectionalInputType: StandardSkinDirectionalInputType = Settings.standardSkinFeatures.inputsAndLayout.directionalInputType
     @State private var standardSkinABXYLayout: StandardSkinABXYLayout = Settings.standardSkinFeatures.inputsAndLayout.abxyLayout
@@ -381,12 +381,12 @@ struct QuickSettingsView: View
                                 Spacer()
                                 Button("Reset") {
                                     self.standardSkinSafeArea = 40
-                                    Settings.standardSkinFeatures.gameScreen.safeArea = self.standardSkinSafeArea
+                                    Settings.standardSkinFeatures.gameScreen.unsafeArea = self.standardSkinSafeArea
                                 }.buttonStyle(.borderless)
                             }
                             Slider(value: self.$standardSkinSafeArea, in: 0...60, step: 1)
                                 .onChange(of: self.standardSkinSafeArea) { value in
-                                    Settings.standardSkinFeatures.gameScreen.safeArea = value
+                                    Settings.standardSkinFeatures.gameScreen.unsafeArea = value
                                 }
                         }
                     } header: {

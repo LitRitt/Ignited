@@ -126,7 +126,7 @@ extension StandardControllerSkin: ControllerSkinProtocol
         let rightButtonArea = buttonAreas[1]
         
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
-        let safeArea = Settings.standardSkinFeatures.gameScreen.safeArea
+        let safeArea = self.unsafeArea(for: traits, alt: alt) ?? 0
         
         var screenArea: CGRect
         
@@ -410,6 +410,16 @@ extension StandardControllerSkin: ControllerSkinProtocol
     public func anyPreviewSize(for traits: Skin.Traits, alt: Bool) -> CGSize?
     {
         return self.previewSize(for: traits, alt: alt)
+    }
+    
+    public func unsafeArea(for traits: Skin.Traits, alt: Bool) -> CGFloat?
+    {
+        guard traits.device == .iphone,
+              traits.displayType == .edgeToEdge else {
+            return 0
+        }
+        
+        return CGFloat(Settings.standardSkinFeatures.gameScreen.unsafeArea)
     }
 }
 
