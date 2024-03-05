@@ -16,6 +16,7 @@ enum StandardSkinColor: String, CaseIterable, CustomStringConvertible, Localized
     case black = "Black"
     case auto = "Auto"
     case theme = "Theme"
+    case battery = "Battery"
     case custom = "Custom"
     
     var description: String {
@@ -40,6 +41,7 @@ enum StandardSkinColor: String, CaseIterable, CustomStringConvertible, Localized
         case .white: return UIColor.white
         case .black: return UIColor.black
         case .theme: return UIColor.themeColor
+        case .battery: return UIColor.batteryColor
         case .custom: return UIColor(Settings.standardSkinFeatures.styleAndColor.customColor)
         }
     }
@@ -56,8 +58,7 @@ enum StandardSkinColor: String, CaseIterable, CustomStringConvertible, Localized
                 return UIColor.black
             }
         case .white: return UIColor.black
-        case .black: return UIColor.white
-        case .theme: return UIColor.white
+        case .black, .battery, .theme: return UIColor.white
         case .custom: return UIColor(Settings.standardSkinFeatures.styleAndColor.customColorSecondary)
         }
     }

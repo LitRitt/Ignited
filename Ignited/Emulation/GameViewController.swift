@@ -3413,6 +3413,12 @@ private extension GameViewController
         {
             self.updateBlurBackground()
         }
+        
+        if Settings.standardSkinFeatures.styleAndColor.color == .battery
+        {
+            self.controllerView.invalidateImageCache()
+            self.updateControllerSkin()
+        }
     }
     
     func showBatteryLowNotification()
