@@ -74,6 +74,7 @@ private extension SettingsViewController
     {
         case romPatcher
         case saveConverter
+        case vgMaps
     }
     
     enum OfficialLinksRow: Int, CaseIterable
@@ -393,6 +394,7 @@ extension SettingsViewController
             {
             case .romPatcher: UIApplication.shared.openWebpage(site: "https://www.marcrobledo.com/RomPatcher.js/")
             case .saveConverter: UIApplication.shared.openWebpage(site: "https://www.save-editor.com/tools/wse_ds_save_converter.html")
+            case .vgMaps: UIApplication.shared.openWebpage(site: "https://www.vgmaps.com")
             }
             
         case .officialLinks:
