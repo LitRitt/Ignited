@@ -3408,6 +3408,11 @@ private extension GameViewController
                 self.showBatteryLowNotification()
             }
         }
+        
+        if Settings.controllerFeatures.backgroundBlur.tintColor == .battery
+        {
+            self.updateBlurBackground()
+        }
     }
     
     func showBatteryLowNotification()

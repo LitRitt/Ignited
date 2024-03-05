@@ -14,6 +14,7 @@ enum BackgroundBlurTintColor: String, CaseIterable, CustomStringConvertible, Loc
 {
     case none = "None"
     case theme = "Theme"
+    case battery = "Battery"
     case custom = "Custom"
     
     var description: String {
@@ -29,6 +30,7 @@ enum BackgroundBlurTintColor: String, CaseIterable, CustomStringConvertible, Loc
         {
         case .none: return UIColor.clear
         case .theme: return UIColor.themeColor
+        case .battery: return UIColor.batteryColor
         case .custom: return UIColor(Settings.controllerFeatures.backgroundBlur.customColor)
         }
     }

@@ -125,6 +125,7 @@
 		ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlayOptions.swift */; };
 		ACBFE6D62A590CA5002DDD04 /* ControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */; };
 		ACC4430ADE09EB6F81ADBEE3 /* libPods-Ignited.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */; };
+		ACCD93EF2B978E9800BB4F6A /* UIColor+Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD93EE2B978E9800BB4F6A /* UIColor+Battery.swift */; };
 		ACCD9DB52A01A54200B235C4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB42A01A54200B235C4 /* ThemeOptions.swift */; };
 		ACCD9DB72A01AF9F00B235C4 /* Color+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */; };
 		ACCD9DB92A01BA5500B235C4 /* AppIconOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD9DB82A01BA5500B235C4 /* AppIconOptions.swift */; };
@@ -431,6 +432,7 @@
 		ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudioOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackAudioOptions.swift; sourceTree = "<group>"; };
 		ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlayOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackOverlayOptions.swift; sourceTree = "<group>"; };
 		ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerOptions.swift; sourceTree = "<group>"; };
+		ACCD93EE2B978E9800BB4F6A /* UIColor+Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Battery.swift"; sourceTree = "<group>"; };
 		ACCD9DB42A01A54200B235C4 /* ThemeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOptions.swift; sourceTree = "<group>"; };
 		ACCD9DB62A01AF9F00B235C4 /* Color+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+RawRepresentable.swift"; sourceTree = "<group>"; };
 		ACCD9DB82A01BA5500B235C4 /* AppIconOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconOptions.swift; sourceTree = "<group>"; };
@@ -748,6 +750,7 @@
 				AC23D2DE2AFE7B030056CC3F /* UIImage+SymbolTemplates.swift */,
 				AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */,
 				BF7AE8091C2E8C7600B1B5BC /* UIColor+Theme.swift */,
+				ACCD93EE2B978E9800BB4F6A /* UIColor+Battery.swift */,
 				AC8E5BC929CCF77700F32D19 /* UIColor+AdjustHSBA.swift */,
 				ACAAE2F92A0E337F004E0B3A /* CGColor+RGB.swift */,
 				AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */,
@@ -1895,6 +1898,7 @@
 				BF15AF841F54B43B009B6AAB /* ActionInput.swift in Sources */,
 				AC1EAE6B2A006CC30072C858 /* SkinDebugOptions.swift in Sources */,
 				ACE43DB62B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift in Sources */,
+				ACCD93EF2B978E9800BB4F6A /* UIColor+Battery.swift in Sources */,
 				BF4828841F9027B600028B97 /* Delta.xcdatamodeld in Sources */,
 				BF5942951E09BD1A0051894B /* NSManagedObjectContext+Conveniences.swift in Sources */,
 				ACAB771B2B468C6B001AB619 /* Fetchable.swift in Sources */,
