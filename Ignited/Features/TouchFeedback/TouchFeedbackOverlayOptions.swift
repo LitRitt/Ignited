@@ -18,15 +18,53 @@ extension ButtonOverlayStyle: LocalizedOptionValue
     }
 }
 
+enum TouchOverlayColor: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case white = "White"
+    case black = "Black"
+    case theme = "Theme"
+    case battery = "Battery"
+    case custom = "Custom"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+    
+    var uiColor: UIColor {
+        switch self
+        {
+        case .white: return UIColor.white
+        case .black: return UIColor.black
+        case .theme: return UIColor.themeColor
+        case .battery: return UIColor.batteryColor
+        case .custom: return UIColor(Settings.touchFeedbackFeatures.touchOverlay.customColor)
+        }
+    }
+    
+    var pro: Bool {
+        switch self
+        {
+        case .battery, .custom: return true
+        default: return false
+        }
+    }
+}
+
 struct TouchFeedbackOverlayOptions
 {
-    @Option(name: "Theme Color",
-            description: "Enable to use the app theme color for overlays. Disable to use the color specified below for overlays.")
-    var themed: Bool = true
+    @Option(name: "Color",
+            description: "Choose the color to use for overlays. Battery and custom colors require Ignited Pro.",
+            values: TouchOverlayColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
+    var color: TouchOverlayColor = .theme
     
     @Option(name: "Custom Color",
-            description: "Select a custom color to use for the overlays.")
-    var overlayColor: Color = .white
+            description: "Choose a custom color to use for overlays.",
+            attributes: [.pro])
+    var customColor: Color = .orange
     
     @Option(name: "Style",
             description: "Choose the style to use for overlays. Free users are limited to the default \"Bubble\" style.",

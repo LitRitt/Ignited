@@ -490,8 +490,8 @@ extension PowerUserOptions
                 Settings.touchFeedbackFeatures.touchAudio.buttonVolume = 1.0
                 
             case .touchOverlay:
-                Settings.touchFeedbackFeatures.touchOverlay.themed = true
-                Settings.touchFeedbackFeatures.touchOverlay.overlayColor = .white
+                Settings.touchFeedbackFeatures.touchOverlay.color = .theme
+                Settings.touchFeedbackFeatures.touchOverlay.customColor = .orange
                 Settings.touchFeedbackFeatures.touchOverlay.style = .bubble
                 Settings.touchFeedbackFeatures.touchOverlay.opacity = 1.0
                 Settings.touchFeedbackFeatures.touchOverlay.size = 1.0
