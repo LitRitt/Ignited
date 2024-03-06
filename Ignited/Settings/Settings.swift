@@ -52,6 +52,7 @@ struct Settings
     static let gameplayFeatures =  GameplayFeatures.shared
     static let standardSkinFeatures = StandardSkinFeatures.shared
     static let controllerFeatures = ControllerFeatures.shared
+    static let airplayFeatures = AirPlayFeatures.shared
     static let libraryFeatures = LibraryFeatures.shared
     static let userInterfaceFeatures = UserInterfaceFeatures.shared
     static let touchFeedbackFeatures = TouchFeedbackFeatures.shared
@@ -80,8 +81,6 @@ struct Settings
             Settings.standardSkinFeatures.inputsAndLayout.settingsKey.rawValue: true,
             Settings.controllerFeatures.skin.settingsKey.rawValue: true,
             Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue: true,
-            Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue: false,
-            Settings.controllerFeatures.airPlayKeepScreen.settingsKey.rawValue: false,
             Settings.controllerFeatures.controller.settingsKey.rawValue: true,
             Settings.libraryFeatures.artwork.settingsKey.rawValue: true,
             Settings.libraryFeatures.animation.settingsKey.rawValue: true,
@@ -101,7 +100,6 @@ struct Settings
             Settings.gbFeatures.palettes.settingsKey.rawValue: true,
             Settings.n64Features.openGLES3.settingsKey.rawValue: false,
             Settings.n64Features.overscan.settingsKey.rawValue: true,
-            Settings.dsFeatures.dsAirPlay.settingsKey.rawValue: true,
             Settings.dsFeatures.dsiSupport.settingsKey.rawValue: false
         ] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)

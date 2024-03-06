@@ -17,6 +17,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
     case gameplay = "Gameplay"
     case standardSkin = "Standard Skin"
     case controllers = "Controllers"
+    case airPlay = "AirPlay"
     case library = "Library"
     case userInterface = "User Interface"
     case touchFeedback = "Touch Feedback"
@@ -36,6 +37,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
         case .gameplay: return Settings.gameplayFeatures
         case .standardSkin: return Settings.standardSkinFeatures
         case .controllers: return Settings.controllerFeatures
+        case .airPlay: return Settings.airplayFeatures
         case .library: return Settings.libraryFeatures
         case .userInterface: return Settings.userInterfaceFeatures
         case .touchFeedback: return Settings.touchFeedbackFeatures

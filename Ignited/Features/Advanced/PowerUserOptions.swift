@@ -405,7 +405,6 @@ extension PowerUserOptions
                 Settings.controllerFeatures.backgroundBlur.tintColor = .none
                 Settings.controllerFeatures.backgroundBlur.customColor = .orange
                 Settings.controllerFeatures.backgroundBlur.tintOpacity = 0.5
-                Settings.controllerFeatures.backgroundBlur.showDuringAirPlay = true
                 Settings.controllerFeatures.backgroundBlur.maintainAspect = true
                 
             case .controller:

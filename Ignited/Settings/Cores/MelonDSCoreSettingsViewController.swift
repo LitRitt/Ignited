@@ -23,18 +23,11 @@ private extension MelonDSCoreSettingsViewController
     enum Section: Int
     {
         case general
-        case airPlay
         case performance
         case dsBIOS
         case dsiSupport
         case dsiBIOS
         case changeCore
-    }
-    
-    enum AirPlayRow: Int, CaseIterable
-    {
-        case topScreenOnly
-        case layoutHorizontally
     }
     
     enum BIOSError: LocalizedError
@@ -299,32 +292,6 @@ private extension MelonDSCoreSettingsViewController
         self.tableView.reloadData()
     }
     
-    @IBAction func toggleTopScreenOnly(_ sender: UISwitch)
-    {
-        Settings.dsFeatures.dsAirPlay.topScreenOnly = sender.isOn
-
-        self.tableView.performBatchUpdates({
-            let layoutHorizontallyIndexPath = IndexPath(row: AirPlayRow.layoutHorizontally.rawValue, section: Section.airPlay.rawValue)
-            if sender.isOn
-            {
-                self.tableView.deleteRows(at: [layoutHorizontallyIndexPath], with: .automatic)
-            }
-            else
-            {
-                self.tableView.insertRows(at: [layoutHorizontallyIndexPath], with: .automatic)
-            }
-        }) { _ in
-            self.tableView.reloadSections([Section.airPlay.rawValue], with: .none)
-        }
-    }
-
-    @IBAction func toggleLayoutHorizontally(_ sender: UISwitch)
-    {
-        Settings.dsFeatures.dsAirPlay.layoutAxis = sender.isOn ? .horizontal : .vertical
-
-        self.tableView.reloadSections([Section.airPlay.rawValue], with: .none)
-    }
-    
     @objc func willEnterForeground(_ notification: Notification)
     {
         self.tableView.reloadData()
@@ -346,7 +313,6 @@ extension MelonDSCoreSettingsViewController
              let validKeys = DeltaCoreMetadata.Key.allCases.filter { core.metadata?[$0] != nil }
              return validKeys.count
             
-        case .airPlay where Settings.dsFeatures.dsAirPlay.topScreenOnly: return 1 // Layout axis is irrelevant if only AirPlaying top screen.
         default: break
         }
         
@@ -378,16 +344,6 @@ extension MelonDSCoreSettingsViewController
             }
             
             cell.contentView.isHidden = (item == nil)
-            
-        case .airPlay:
-            let cell = cell as! SwitchTableViewCell
-
-            let row = AirPlayRow.allCases[indexPath.row]
-            switch row
-            {
-            case .topScreenOnly: cell.switchView.isOn = Settings.dsFeatures.dsAirPlay.topScreenOnly
-            case .layoutHorizontally: cell.switchView.isOn = (Settings.dsFeatures.dsAirPlay.layoutAxis == .horizontal)
-            }
             
         case .performance:
             let cell = cell as! SwitchTableViewCell
@@ -458,7 +414,7 @@ extension MelonDSCoreSettingsViewController
         case .changeCore:
             self.changeCore()
             
-        case .airPlay, .performance, .dsiSupport: break
+        case .performance, .dsiSupport: break
         }
     }
     
@@ -483,13 +439,6 @@ extension MelonDSCoreSettingsViewController
         switch section
         {
         case _ where isSectionHidden(section): return nil
-        case .airPlay:
-            switch (Settings.dsFeatures.dsAirPlay.topScreenOnly, Settings.dsFeatures.dsAirPlay.layoutAxis)
-            {
-            case (true, _): return NSLocalizedString("When AirPlaying DS games, only the top screen will appear on the external display.", comment: "")
-            case (false, .vertical): return NSLocalizedString("When AirPlaying DS games, both screens will be stacked vertically on the external display.", comment: "")
-            case (false, .horizontal): return NSLocalizedString("When AirPlaying DS games, both screens will be placed side-by-side on the external display.", comment: "")
-            }
             
         case .dsBIOS, .dsiBIOS:
             return nil

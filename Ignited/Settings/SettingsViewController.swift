@@ -42,6 +42,7 @@ private extension SettingsViewController
         case gameplay
         case standardSkin
         case controllers
+        case airPlay
         case library
         case userInterface
         case touchFeedback
@@ -383,6 +384,7 @@ extension SettingsViewController
             case .gameplay: self.showFeatures(featureGroup: .gameplay)
             case .standardSkin: self.showFeatures(featureGroup: .standardSkin)
             case .controllers: self.showFeatures(featureGroup: .controllers)
+            case .airPlay: self.showFeatures(featureGroup: .airPlay)
             case .library: self.showFeatures(featureGroup: .library)
             case .userInterface: self.showFeatures(featureGroup: .userInterface)
             case .touchFeedback: self.showFeatures(featureGroup: .touchFeedback)

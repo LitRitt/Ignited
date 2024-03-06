@@ -45,7 +45,6 @@ struct QuickSettingsView: View
     @State private var controllerSkinOpacity: Double = Settings.controllerFeatures.skin.opacity
     @State private var controllerSkinColorMode: SkinBackgroundColor = Settings.controllerFeatures.skin.colorMode
     @State private var controllerSkinBackgroundColor: Color = Settings.controllerFeatures.skin.backgroundColor
-    @State private var controllerSkinAirPlayKeepScreen: Bool = Settings.controllerFeatures.airPlayKeepScreen.isEnabled
     
     @State private var gameboyPalette: GameboyPalette = Settings.gbFeatures.palettes.palette
     @State private var gameboySpritePalette1: GameboyPalette = Settings.gbFeatures.palettes.spritePalette1
@@ -424,11 +423,6 @@ struct QuickSettingsView: View
                                         Settings.controllerFeatures.skin.backgroundColor = value
                                     }
                             }
-                            Toggle("Show Screen During AirPlay", isOn: self.$controllerSkinAirPlayKeepScreen)
-                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                .onChange(of: self.controllerSkinAirPlayKeepScreen) { value in
-                                    Settings.controllerFeatures.airPlayKeepScreen.isEnabled = value
-                                }
                             Toggle("Show Skin With Controller", isOn: Settings.controllerFeatures.skin.$alwaysShow.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             }
@@ -477,8 +471,6 @@ struct QuickSettingsView: View
                                 .onChange(of: self.backgroundBlurTintOpacity) { value in
                                     Settings.controllerFeatures.backgroundBlur.tintOpacity = value
                                 }
-                            Toggle("Show During AirPlay", isOn: Settings.controllerFeatures.backgroundBlur.$showDuringAirPlay.valueBinding)
-                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                             Toggle("Maintain Aspect Ratio", isOn: Settings.controllerFeatures.backgroundBlur.$maintainAspect.valueBinding)
                                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                         }

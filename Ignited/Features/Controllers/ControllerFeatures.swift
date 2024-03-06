@@ -29,16 +29,6 @@ struct ControllerFeatures: FeatureContainer
              options: BackgroundBlurOptions())
     var backgroundBlur
     
-    @Feature(name: "AirPlay Skins",
-             description: "Customize the appearance of games when AirPlaying to your TV.",
-             options: AirPlaySkinsOptions(),
-             attributes: [.hidden])
-    var airPlaySkins
-    
-    @Feature(name: "Show Screen During AirPlay",
-             description: "Enable to show the main game screen on your device while AirPlaying.")
-    var airPlayKeepScreen
-    
     private init()
     {
         self.prepareFeatures()

@@ -13,9 +13,6 @@ extension Settings
     struct DSFeatures: FeatureContainer
     {
         static let shared = DSFeatures()
-
-        @Feature(name: "DS AirPlay", options: DSAirPlayOptions())
-        var dsAirPlay
         
         @Feature(name: "DSi Support")
         var dsiSupport

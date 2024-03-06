@@ -757,12 +757,6 @@ extension GameViewController
             default: break
             }
             
-            if !Settings.controllerFeatures.backgroundBlur.showDuringAirPlay,
-               UIApplication.shared.isExternalDisplayConnected
-            {
-                pauseViewController.blurBackgroudItem = nil
-            }
-            
             if let url = self.game?.fileURL,
                let fileName = url.path.components(separatedBy: "/").last
             {
@@ -1142,7 +1136,8 @@ private extension GameViewController
         {
             var touchControllerSkin = TouchControllerSkin(controllerSkin: standardSkin)
             
-            if UIApplication.shared.isExternalDisplayConnected
+            if UIApplication.shared.isExternalDisplayConnected,
+               Settings.airplayFeatures.device.bottomScreenOnly
             {
                 // Only show touch screen if external display is connected.
                 touchControllerSkin.screenPredicate = { $0.isTouchScreen }
@@ -1171,7 +1166,7 @@ private extension GameViewController
     func updateGameViews()
     {
         if UIApplication.shared.isExternalDisplayConnected,
-           !Settings.controllerFeatures.airPlayKeepScreen.isEnabled
+           Settings.airplayFeatures.device.disableScreen
         {
             // AirPlaying, hide all screens except touchscreens and blur screens.
                  
@@ -1180,9 +1175,7 @@ private extension GameViewController
             {
                 for (screen, gameView) in zip(screens, self.gameViews)
                 {
-                    let enableBlurScreen = screen.id == "gameViewController.screen.blur" && Settings.controllerFeatures.backgroundBlur.showDuringAirPlay
-                    
-                    let enabled = screen.isTouchScreen || enableBlurScreen
+                    let enabled = screen.isTouchScreen
                     
                     gameView.isEnabled = enabled
                     
@@ -1210,7 +1203,7 @@ private extension GameViewController
                 self.gameView.isHidden = false
                 if !self.gameView.isTouchScreen
                 {
-                    self.gameView.isAirPlaying = true
+                    self.gameView.isAirPlaying = Settings.airplayFeatures.device.disableScreen
                 }
             }
         }
@@ -1260,7 +1253,7 @@ private extension GameViewController
             scene.gameViewController.blurGameViewBlurView.effect = UIBlurEffect(style: Settings.controllerFeatures.backgroundBlur.style)
             
             scene.gameViewController.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
-            scene.gameViewController.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled
+            scene.gameViewController.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.airplayFeatures.display.backgroundBlur
         }
     }
     
@@ -2870,7 +2863,7 @@ private extension GameViewController
         
         if let gameView = self.gameView
         {
-            gameView.isAirPlaying = !gameView.isTouchScreen
+            gameView.isAirPlaying = !gameView.isTouchScreen && Settings.airplayFeatures.device.disableScreen
         }
     }
 
@@ -2887,8 +2880,8 @@ private extension GameViewController
 
         if let game = self.game, let traits = scene.gameViewController.controllerView.controllerSkinTraits
         {
-            if Settings.controllerFeatures.airPlaySkins.isEnabled,
-               let preferredControllerSkin = Settings.controllerFeatures.airPlaySkins.preferredAirPlayControllerSkin(for: game.type), preferredControllerSkin.supports(traits, alt: Settings.advancedFeatures.skinDebug.useAlt)
+            if let preferredControllerSkin = Settings.airplayFeatures.skins.preferredAirPlayControllerSkin(for: game.type),
+               preferredControllerSkin.supports(traits, alt: Settings.advancedFeatures.skinDebug.useAlt)
             {
                 // Use preferredControllerSkin directly.
                 controllerSkin = preferredControllerSkin
@@ -2901,9 +2894,9 @@ private extension GameViewController
                     // Only use TouchControllerSkin for standard controller skins with touch screens.
                              
                     var touchControllerSkin = DeltaCore.TouchControllerSkin(controllerSkin: standardSkin)
-                    touchControllerSkin.screenLayoutAxis = Settings.dsFeatures.dsAirPlay.layoutAxis
+                    touchControllerSkin.screenLayoutAxis = Settings.airplayFeatures.display.layoutAxis
 
-                    if Settings.dsFeatures.dsAirPlay.topScreenOnly
+                    if Settings.airplayFeatures.display.topScreenOnly
                     {
                         touchControllerSkin.screenPredicate = { !$0.isTouchScreen }
                     }
@@ -2926,7 +2919,7 @@ private extension GameViewController
         
         if let gameView = self.gameView
         {
-            gameView.isAirPlaying = !gameView.isTouchScreen
+            gameView.isAirPlaying = !gameView.isTouchScreen && Settings.airplayFeatures.device.disableScreen
         }
     }
 
@@ -3097,7 +3090,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerFeatures.skin.$alwaysShow.settingsKey, Settings.controllerFeatures.airPlayKeepScreen.settingsKey, Settings.controllerFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.advancedFeatures.skinDebug.$displayType.settingsKey, Settings.advancedFeatures.skinDebug.$traitOverride.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
+        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerFeatures.skin.$alwaysShow.settingsKey, Settings.controllerFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.advancedFeatures.skinDebug.$displayType.settingsKey, Settings.advancedFeatures.skinDebug.$traitOverride.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
@@ -3154,12 +3147,17 @@ private extension GameViewController
         case Settings.gameplayFeatures.quickSettings.$fastForwardSpeed.settingsKey:
             self.updateEmulationSpeed()
             
-        case Settings.dsFeatures.dsAirPlay.$topScreenOnly.settingsKey: fallthrough
-        case Settings.dsFeatures.dsAirPlay.$layoutAxis.settingsKey:
+        case Settings.airplayFeatures.display.$topScreenOnly.settingsKey, Settings.airplayFeatures.display.$layoutAxis.settingsKey:
             self.updateExternalDisplay()
             
-        case Settings.controllerFeatures.airPlaySkins.settingsKey: fallthrough
-        case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.airPlaySkins.settingsKey.rawValue):
+        case Settings.airplayFeatures.display.$backgroundBlur.settingsKey:
+            self.updateBlurBackground()
+            
+        case _ where settingsName.rawValue.hasPrefix(Settings.airplayFeatures.device.settingsKey.rawValue):
+            // Update whenever any of the AirPlay device settings have changed.
+            self.updateControllerSkin()
+            
+        case _ where settingsName.rawValue.hasPrefix(Settings.airplayFeatures.skins.settingsKey.rawValue):
             // Update whenever any of the AirPlay skins have changed.
             self.updateExternalDisplay()
             
