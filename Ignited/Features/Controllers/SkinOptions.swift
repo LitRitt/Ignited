@@ -48,10 +48,6 @@ struct SkinOptions
             attributes: [.pro])
     var backgroundColor: Color = .black
     
-    @Option(name: "Show With Controller",
-            description: "Always show the controller skin, even if there's a physical controller connected.")
-    var alwaysShow: Bool = false
-    
     @Option(name: "Opacity",
             description: "Change the opacity of supported controller skins.",
             range: 0.0...1.00,

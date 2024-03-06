@@ -396,7 +396,6 @@ extension PowerUserOptions
                 
             case .skin:
                 Settings.controllerFeatures.skin.opacity = 0.7
-                Settings.controllerFeatures.skin.alwaysShow = false
                 Settings.controllerFeatures.skin.colorMode = .none
                 Settings.controllerFeatures.skin.backgroundColor = .black
                 
@@ -408,6 +407,7 @@ extension PowerUserOptions
                 Settings.controllerFeatures.backgroundBlur.maintainAspect = true
                 
             case .controller:
+                Settings.controllerFeatures.controller.hideSkin = true
                 Settings.controllerFeatures.controller.triggerDeadzone = 0.15
                 
             case .artworkCustomization:

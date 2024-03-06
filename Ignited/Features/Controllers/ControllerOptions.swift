@@ -12,6 +12,10 @@ import Features
 
 struct ControllerOptions
 {
+    @Option(name: "Hide Skin",
+            description: "Enable to hide the skin and only show game screens when a controller is connected.")
+    var hideSkin: Bool = true
+    
     @Option(name: "Trigger Deadzone",
             description: "Change how far triggers need to be pressed before activating an input.",
             range: 0.00...0.95,

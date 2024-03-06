@@ -39,12 +39,12 @@ private extension SettingsViewController
     
     enum FeaturesRow: Int, CaseIterable
     {
+        case userInterface
+        case library
         case gameplay
+        case airPlay
         case standardSkin
         case controllers
-        case airPlay
-        case library
-        case userInterface
         case touchFeedback
         case advanced
     }

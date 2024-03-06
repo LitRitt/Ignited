@@ -423,9 +423,7 @@ struct QuickSettingsView: View
                                         Settings.controllerFeatures.skin.backgroundColor = value
                                     }
                             }
-                            Toggle("Show Skin With Controller", isOn: Settings.controllerFeatures.skin.$alwaysShow.valueBinding)
-                                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                            }
+                        }
                     } header: {
                         Text("Controller Skin")
                     }.listStyle(.insetGrouped)

@@ -919,7 +919,7 @@ private extension GameViewController
                let standardSkin = StandardControllerSkin(for: game.type),
                standardSkin.hasTouchScreen(for: traits)
             {
-                if !Settings.controllerFeatures.skin.alwaysShow
+                if Settings.controllerFeatures.controller.hideSkin
                 {
                     Settings.localControllerPlayerIndex = nil
                 }
@@ -932,7 +932,7 @@ private extension GameViewController
             }
             else
             {
-                if !Settings.controllerFeatures.skin.alwaysShow || self.isEditingOverscanInsets
+                if Settings.controllerFeatures.controller.hideSkin || self.isEditingOverscanInsets
                 {
                     self.controllerView.isHidden = true
                     self.controllerView.playerIndex = nil // TODO: Does this need changed to 0?
@@ -3090,7 +3090,7 @@ private extension GameViewController
         
         switch settingsName
         {
-        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerFeatures.skin.$alwaysShow.settingsKey, Settings.controllerFeatures.controller.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.advancedFeatures.skinDebug.$displayType.settingsKey, Settings.advancedFeatures.skinDebug.$traitOverride.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
+        case .localControllerPlayerIndex, Settings.touchFeedbackFeatures.touchVibration.$buttonsEnabled.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$sticksEnabled.settingsKey, Settings.advancedFeatures.skinDebug.$useAlt.settingsKey, Settings.controllerFeatures.controller.$hideSkin.settingsKey, Settings.advancedFeatures.skinDebug.$isOn.settingsKey, Settings.advancedFeatures.skinDebug.$device.settingsKey, Settings.advancedFeatures.skinDebug.$displayType.settingsKey, Settings.advancedFeatures.skinDebug.$traitOverride.settingsKey, Settings.touchFeedbackFeatures.touchVibration.$releaseEnabled.settingsKey, Settings.touchFeedbackFeatures.touchOverlay.settingsKey:
             self.updateControllers()
 
         case .preferredControllerSkin:
