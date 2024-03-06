@@ -275,16 +275,22 @@ struct QuickSettingsView: View
                                     .onChange(of: self.standardSkinCustomButton2) { value in
                                         Settings.standardSkinFeatures.inputsAndLayout.customButton2 = value
                                     }
-                                Toggle("DS Screen Swap", isOn: Settings.standardSkinFeatures.inputsAndLayout.$dsScreenSwap.valueBinding)
+                                if self.system == System.ds.gameType.rawValue
+                                {
+                                    Toggle("DS Screen Swap", isOn: Settings.standardSkinFeatures.inputsAndLayout.$dsScreenSwap.valueBinding)
                                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                                Picker("Directional Input", selection: self.$standardSkinDirectionalInputType) {
-                                    ForEach(StandardSkinDirectionalInputType.allCases, id: \.self) { value in
-                                        value.localizedDescription
-                                    }
-                                }.pickerStyle(.menu)
-                                    .onChange(of: self.standardSkinDirectionalInputType) { value in
-                                        Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = value
-                                    }
+                                }
+                                if self.system != System.n64.gameType.rawValue
+                                {
+                                    Picker("Directional Input", selection: self.$standardSkinDirectionalInputType) {
+                                        ForEach(StandardSkinDirectionalInputType.allCases, id: \.self) { value in
+                                            value.localizedDescription
+                                        }
+                                    }.pickerStyle(.menu)
+                                        .onChange(of: self.standardSkinDirectionalInputType) { value in
+                                            Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = value
+                                        }
+                                }
                             }
                             if self.system != System.n64.gameType.rawValue,
                                self.system != System.genesis.gameType.rawValue,
