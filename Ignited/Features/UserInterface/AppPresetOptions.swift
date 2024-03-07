@@ -39,8 +39,8 @@ struct AppPresetOptions
     @Option(name: "Battery Preset",
             description: "Sets visual customization to use the battery color where possible.",
             detailView: { _ in
-        Button("Theme Preset") {
-            AppPresetOptions.setThemePreset()
+        Button("Battery Preset") {
+            AppPresetOptions.setBatteryPreset()
         }
         .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(Color(UIColor.batteryColor))
