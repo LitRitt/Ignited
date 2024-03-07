@@ -10,15 +10,16 @@ import SwiftUI
 import Combine
 
 import Features
+import DeltaCore
 
-enum FeatureGroup: String, CaseIterable, CustomStringConvertible
+enum FeatureGroup: String, CaseIterable, CustomStringConvertible, Identifiable
 {
     // Main Features
     case gameplay = "Gameplay"
-    case standardSkin = "Standard Skin"
-    case controllers = "Controllers"
+    case standardSkin = "Standard Skins"
+    case controllers = "Controllers and Skins"
     case airPlay = "AirPlay"
-    case library = "Library"
+    case library = "Game Library"
     case userInterface = "User Interface"
     case touchFeedback = "Touch Feedback"
     case advanced = "Advanced"
@@ -29,6 +30,10 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible
     
     var description: String {
         return self.rawValue
+    }
+    
+    var id: String {
+        return self.description
     }
     
     var container: FeatureContainer {

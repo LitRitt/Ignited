@@ -358,14 +358,8 @@ extension PowerUserOptions
                 Settings.gameplayFeatures.fastForward.mode = .toggle
                 
             case .quickSettings:
-                Settings.gameplayFeatures.quickSettings.quickActionsEnabled = true
-                Settings.gameplayFeatures.quickSettings.gameAudioEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedGameAudioEnabled = false
-                Settings.gameplayFeatures.quickSettings.fastForwardEnabled = true
-                Settings.gameplayFeatures.quickSettings.expandedFastForwardEnabled = false
-                Settings.gameplayFeatures.quickSettings.controllerSkinEnabled = true
-                Settings.gameplayFeatures.quickSettings.backgroundBlurEnabled = true
-                Settings.gameplayFeatures.quickSettings.colorPalettesEnabled = true
+                Settings.gameplayFeatures.quickSettings.shakeToOpen = false
+                Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
                 
             case .styleAndColor:
                 Settings.standardSkinFeatures.styleAndColor.style = .filled

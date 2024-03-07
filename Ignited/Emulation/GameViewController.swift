@@ -1309,13 +1309,6 @@ private extension GameViewController
         }
     }
     
-    func updateEmulationSpeed()
-    {
-        self.emulatorCore?.rate = Settings.gameplayFeatures.quickSettings.fastForwardSpeed
-        
-        self.updateAudio()
-    }
-    
     func updateControllerSkinCustomization()
     {
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
@@ -2404,21 +2397,18 @@ extension GameViewController
                     pauseView.dismiss()
                 }
                 
-                if let speed = self.emulatorCore?.rate,
-                   let system = self.game?.type.rawValue
-                {
-                    let quickSettingsView = QuickSettingsView.makeViewController(gameViewController: self, system: system, speed: speed)
-                    if let sheet = quickSettingsView.sheetPresentationController {
-                        sheet.detents = [.medium(), .large()]
-                        sheet.largestUndimmedDetentIdentifier = nil
-                        sheet.prefersScrollingExpandsWhenScrolledToEdge = true
-                        sheet.prefersEdgeAttachedInCompactHeight = true
-                        sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
-                        sheet.prefersGrabberVisible = true
-                    }
-                    
-                    self.present(quickSettingsView, animated: true, completion: nil)
+                let quickSettingsView = QuickSettingsView.makeViewController(gameViewController: self)
+                
+                if let sheet = quickSettingsView.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                    sheet.largestUndimmedDetentIdentifier = nil
+                    sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                    sheet.prefersEdgeAttachedInCompactHeight = true
+                    sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
+                    sheet.prefersGrabberVisible = true
                 }
+                
+                self.present(quickSettingsView, animated: true, completion: nil)
                 
                 self._isQuickSettingsOpen = true
                 
@@ -3104,6 +3094,10 @@ private extension GameViewController
                 self.updateControllerSkin()
             }
             
+        case Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey:
+            self.controllerView.invalidateImageCache()
+            self.updateControllerSkin()
+            
         case Settings.controllerFeatures.controller.$triggerDeadzone.settingsKey:
             self.updateControllerTriggerDeadzone()
             
@@ -3143,9 +3137,6 @@ private extension GameViewController
             
         case Settings.gbFeatures.palettes.$palette.settingsKey, Settings.gbFeatures.palettes.settingsKey, Settings.gbFeatures.palettes.$spritePalette1.settingsKey, Settings.gbFeatures.palettes.$spritePalette2.settingsKey, Settings.gbFeatures.palettes.$multiPalette.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color4.settingsKey:
             self.updateGameboyPalette()
-            
-        case Settings.gameplayFeatures.quickSettings.$fastForwardSpeed.settingsKey:
-            self.updateEmulationSpeed()
             
         case Settings.airplayFeatures.display.$topScreenOnly.settingsKey, Settings.airplayFeatures.display.$layoutAxis.settingsKey:
             self.updateExternalDisplay()

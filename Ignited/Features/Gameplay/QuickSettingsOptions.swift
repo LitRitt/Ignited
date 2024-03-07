@@ -47,45 +47,6 @@ struct QuickSettingsOptions
             values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
     var buttonReplacement: ActionInput? = nil
     
-    @Option(name: "Quick Actions",
-            description: "Enable to show common actions in the quick settings.")
-    var quickActionsEnabled: Bool = true
-    
-    @Option(name: "Game Audio",
-            description: "Enable to show game audio options in the quick settings.")
-    var gameAudioEnabled: Bool = true
-    
-    @Option(name: "Expanded Game Audio",
-            description: "Enable to show more game audio options in the quick settings.")
-    var expandedGameAudioEnabled: Bool = false
-    
-    @Option(name: "Fast Forward",
-            description: "Enable to show fast forward options in the quick settings.")
-    var fastForwardEnabled: Bool = true
-    
-    @Option(name: "Expanded Fast Forward",
-            description: "Enable to show more fast forward options in the quick settings.")
-    var expandedFastForwardEnabled: Bool = false
-    
-    @Option
-    var fastForwardSpeed: Double = 1.0
-    
-    @Option(name: "Standard Skin",
-            description: "Enable to show standard skin options in the quick settings.")
-    var standardSkinEnabled: Bool = true
-    
-    @Option(name: "Controller Skin",
-            description: "Enable to show controller skin options in the quick settings.")
-    var controllerSkinEnabled: Bool = true
-    
-    @Option(name: "Background Blur",
-            description: "Enable to show background blur options in the quick settings.")
-    var backgroundBlurEnabled: Bool = true
-    
-    @Option(name: "Color Palettes",
-            description: "Enable to show color palette options in the quick settings.")
-    var colorPalettesEnabled: Bool = true
-    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in
