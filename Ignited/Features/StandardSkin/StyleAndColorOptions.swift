@@ -62,13 +62,21 @@ enum StandardSkinColor: String, CaseIterable, CustomStringConvertible, Localized
         case .custom: return UIColor(Settings.standardSkinFeatures.styleAndColor.customColorSecondary)
         }
     }
+    
+    var pro: Bool {
+        switch self
+        {
+        case .battery, .custom: return true
+        default: return false
+        }
+    }
 }
 
 enum StandardSkinStyle: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
     case filled = "Filled"
     case outline = "Outline"
-    case both = "Both"
+    case both = "Filled + Outline"
     
     var description: String {
         return self.rawValue
@@ -77,27 +85,37 @@ enum StandardSkinStyle: String, CaseIterable, CustomStringConvertible, Localized
     var localizedDescription: Text {
         Text(description)
     }
+    
+    var pro: Bool {
+        switch self
+        {
+        case .outline, .both: return true
+        default: return false
+        }
+    }
 }
 
 struct StyleAndColorOptions
 {
     @Option(name: "Style",
-            description: "Choose the style to use for inputs.",
-            values: StandardSkinStyle.allCases)
+            description: "Choose the style to use for inputs. Pro users can access Outline and Filled + Outline styles.",
+            values: StandardSkinStyle.allCases,
+            attributes: [.pro])
     var style: StandardSkinStyle = .filled
     
     @Option(name: "Color",
-            description: "Choose which color to use for inputs.",
-            values: StandardSkinColor.allCases)
-    var color: StandardSkinColor = .white
+            description: "Choose which color to use for inputs. Pro users can access the Battery and Custom colors.",
+            values: StandardSkinColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
     var color: StandardSkinColor = .auto
     
     @Option(name: "Custom Color",
-            description: "Choose the color to use for the custom color mode.")
+            description: "Choose the color to use for the custom color mode.",
+            attributes: [.pro])
     var customColor: Color = .orange
     
     @Option(name: "Custom Secondary Color",
-            description: "Choose the secondary color to use for the custom color mode. This color is used for the outlines on the Filled Outline style.")
+            description: "Choose the secondary color to use for the custom color mode. This color is used for the outlines on the Filled + Outline style.",
+            attributes: [.pro])
     var customColorSecondary: Color = .white
     
     @Option(name: "Translucent",
@@ -108,7 +126,7 @@ struct StyleAndColorOptions
             description: "Enable to draw shadows underneath inputs.")
     var shadows: Bool = true
     
-    @Option(name: "Custom Shadow Opacity",
+    @Option(name: "Shadow Opacity",
             description: "Change the shadow opacity to use with the custom style option.",
             range: 0.0...1.0,
             step: 0.05,

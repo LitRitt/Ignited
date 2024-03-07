@@ -287,6 +287,15 @@ extension PatreonAPI
         // Reset all Pro settings if user isn't a Pro member
         if !Settings.proFeaturesEnabled
         {
+            // Standard Skin Style
+            Settings.standardSkinFeatures.styleAndColor.style = .filled
+            if Settings.standardSkinFeatures.styleAndColor.color.pro {
+                Settings.standardSkinFeatures.styleAndColor.color = .auto
+            }
+            //Standard Skin Layout
+            Settings.standardSkinFeatures.inputsAndLayout.customButton1 = .fastForward
+            Settings.standardSkinFeatures.inputsAndLayout.customButton2 = .quickSave
+            Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap = false
             // Background Blur
             Settings.controllerFeatures.backgroundBlur.style = .systemThin
             if Settings.controllerFeatures.backgroundBlur.tintColor.pro {

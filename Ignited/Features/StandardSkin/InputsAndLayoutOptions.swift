@@ -88,17 +88,20 @@ enum StandardSkinGenesisFaceLayout: String, CaseIterable, CustomStringConvertibl
 struct InputsAndLayoutOptions
 {
     @Option(name: "Custom Button 1",
-            description: "Choose an input to use for custom button 1. Not available on N64.",
-            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
+            description: "Choose an input to use for custom button 1. Not available on N64. Set to Fast Forward for Free users.",
+            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart],
+            attributes: [.pro])
     var customButton1: ActionInput = .fastForward
     
     @Option(name: "Custom Button 2",
-            description: "Choose an input to use for custom button 2. Not available on N64.",
-            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart])
+            description: "Choose an input to use for custom button 2. Not available on N64. Set to Quick Save for Free users.",
+            values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart],
+            attributes: [.pro])
     var customButton2: ActionInput = .quickSave
     
     @Option(name: "DS Screen Swap",
-            description: "Enable to replace Custom Button 2 with a button that will swap the DS screens")
+            description: "Enable to replace Custom Button 2 with a button that will swap the DS screens",
+            attributes: [.pro])
     var dsScreenSwap: Bool = true
     
     @Option(name: "Directional Input",
