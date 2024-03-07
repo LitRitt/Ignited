@@ -12,9 +12,9 @@ import SwiftUI
 
 enum StandardSkinColor: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
+    case auto = "Auto"
     case white = "White"
     case black = "Black"
-    case auto = "Auto"
     case theme = "Theme"
     case battery = "Battery"
     case custom = "Custom"
@@ -90,6 +90,7 @@ struct StyleAndColorOptions
             description: "Choose which color to use for inputs.",
             values: StandardSkinColor.allCases)
     var color: StandardSkinColor = .white
+    var color: StandardSkinColor = .auto
     
     @Option(name: "Custom Color",
             description: "Choose the color to use for the custom color mode.")
