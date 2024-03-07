@@ -350,8 +350,8 @@ extension PowerUserOptions
                 
             case .saveStateRewind:
                 Settings.gameplayFeatures.rewind.interval = 15
-                Settings.gameplayFeatures.rewind.maxStates = 30
-                Settings.gameplayFeatures.rewind.keepStates = true
+                Settings.gameplayFeatures.rewind.maxStates = Settings.proFeaturesEnabled ? 30 : 4
+                Settings.gameplayFeatures.rewind.keepStates = Settings.proFeaturesEnabled ? true : false
                 
             case .fastForward:
                 Settings.gameplayFeatures.fastForward.speed = 3.0
@@ -363,7 +363,7 @@ extension PowerUserOptions
                 
             case .styleAndColor:
                 Settings.standardSkinFeatures.styleAndColor.style = .filled
-                Settings.standardSkinFeatures.styleAndColor.color = .white
+                Settings.standardSkinFeatures.styleAndColor.color = .auto
                 Settings.standardSkinFeatures.styleAndColor.customColor = .orange
                 Settings.standardSkinFeatures.styleAndColor.customColorSecondary = .white
                 Settings.standardSkinFeatures.styleAndColor.translucentInputs = true
@@ -379,6 +379,7 @@ extension PowerUserOptions
             case .inputsAndLayout:
                 Settings.standardSkinFeatures.inputsAndLayout.customButton1 = .fastForward
                 Settings.standardSkinFeatures.inputsAndLayout.customButton2 = .quickSave
+                Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap = Settings.proFeaturesEnabled ? true : false
                 Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = .dPad
                 Settings.standardSkinFeatures.inputsAndLayout.abxyLayout = .nintendo
                 Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout = .none
@@ -455,7 +456,7 @@ extension PowerUserOptions
                 Settings.userInterfaceFeatures.toasts.rotationLock = true
                 Settings.userInterfaceFeatures.toasts.backgroundBlur = true
                 Settings.userInterfaceFeatures.toasts.palette = true
-                Settings.userInterfaceFeatures.toasts.altSkin = true
+                Settings.userInterfaceFeatures.toasts.altSkin = false
                 Settings.userInterfaceFeatures.toasts.debug = true
                 
             case .theme:
@@ -480,7 +481,7 @@ extension PowerUserOptions
                 Settings.touchFeedbackFeatures.touchVibration.releaseEnabled = true
                 
             case .touchAudio:
-                Settings.touchFeedbackFeatures.touchAudio.sound = .tock
+                Settings.touchFeedbackFeatures.touchAudio.sound = .snap
                 Settings.touchFeedbackFeatures.touchAudio.useGameVolume = true
                 Settings.touchFeedbackFeatures.touchAudio.buttonVolume = 1.0
                 

@@ -69,7 +69,7 @@ struct TouchFeedbackOverlayOptions
     @Option(name: "Color",
             description: "Choose the color to use for overlays. Battery and custom colors require Ignited Pro.",
             values: TouchOverlayColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
-    var color: TouchOverlayColor = .auto
+    var color: TouchOverlayColor = .theme
     
     @Option(name: "Custom Color",
             description: "Choose a custom color to use for overlays.",

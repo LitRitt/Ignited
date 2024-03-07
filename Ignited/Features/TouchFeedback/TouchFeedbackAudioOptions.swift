@@ -12,8 +12,8 @@ import Features
 
 enum TouchFeedbackSound: String, CaseIterable, CustomStringConvertible
 {
-    case tock = "Tock"
     case snap = "Snap"
+    case tock = "Tock"
     case click = "Click"
     case beep = "Beep"
     
@@ -29,8 +29,8 @@ extension TouchFeedbackSound
     {
         switch self
         {
-        case .tock: return "tock"
         case .snap: return "snap"
+        case .tock: return "tock"
         case .click: return "click"
         case .beep: return "beep"
         }
@@ -55,10 +55,10 @@ extension TouchFeedbackSound: LocalizedOptionValue
 struct TouchFeedbackAudioOptions
 {
     @Option(name: "Sound",
-            description: "Choose the sound to play. Free users are limited to the default \"Tock\" sound.",
+            description: "Choose the sound to play. Free users are limited to the default \"Snap\" sound.",
             values: TouchFeedbackSound.allCases,
             attributes: [.pro])
-    var sound: TouchFeedbackSound = .tock
+    var sound: TouchFeedbackSound = .snap
     
     @Option(name: "Use Game Volume",
             description: "When enabled, sounds will play at the same volume as gameplay. When disabled, sounds will play at the volume specified below.")
