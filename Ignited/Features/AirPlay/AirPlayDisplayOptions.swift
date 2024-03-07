@@ -29,7 +29,8 @@ extension TouchControllerSkin.LayoutAxis: LocalizedOptionValue, CustomStringConv
 struct AirPlayDisplayOptions
 {
     @Option(name: "Background Blur",
-            description: "Enable to show the background blur on the external display.")
+            description: "Enable to show the background blur on the external display.",
+            attributes: [.pro])
     var backgroundBlur: Bool = true
     
     @Option(name: "DS Top Screen Only",

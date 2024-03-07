@@ -292,6 +292,8 @@ extension PatreonAPI
             if Settings.controllerFeatures.backgroundBlur.tintColor.pro {
                 Settings.controllerFeatures.backgroundBlur.tintColor = .none
             }
+            // AirPlay
+            Settings.airplayFeatures.display.backgroundBlur = false
             // Live artwork
             Settings.libraryFeatures.artwork.useScreenshots = false
             // Rewind
