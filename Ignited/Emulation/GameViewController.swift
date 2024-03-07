@@ -254,7 +254,7 @@ class GameViewController: DeltaCore.GameViewController
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.controllerView.invalidateImageCache()
-        self.updateControllerSkin()
+        self.updateControllers()
         self.updateBlurBackground()
         self.updateStatusBar()
     }

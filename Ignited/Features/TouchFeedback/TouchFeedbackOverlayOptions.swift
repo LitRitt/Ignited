@@ -20,6 +20,7 @@ extension ButtonOverlayStyle: LocalizedOptionValue
 
 enum TouchOverlayColor: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
+    case auto = "Auto"
     case white = "White"
     case black = "Black"
     case theme = "Theme"
@@ -37,6 +38,15 @@ enum TouchOverlayColor: String, CaseIterable, CustomStringConvertible, Localized
     var uiColor: UIColor {
         switch self
         {
+        case .auto:
+            switch UIScreen.main.traitCollection.userInterfaceStyle
+            {
+            case .light:
+                return UIColor.white
+            case .dark, .unspecified:
+                return UIColor.black
+            }
+            
         case .white: return UIColor.white
         case .black: return UIColor.black
         case .theme: return UIColor.themeColor
@@ -59,7 +69,7 @@ struct TouchFeedbackOverlayOptions
     @Option(name: "Color",
             description: "Choose the color to use for overlays. Battery and custom colors require Ignited Pro.",
             values: TouchOverlayColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
-    var color: TouchOverlayColor = .theme
+    var color: TouchOverlayColor = .auto
     
     @Option(name: "Custom Color",
             description: "Choose a custom color to use for overlays.",
