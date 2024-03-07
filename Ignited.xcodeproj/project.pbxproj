@@ -37,6 +37,7 @@
 		AC0BF8182A8ECD7000C47A5A /* RandomGameOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */; };
 		AC0EC7932B9439C300C08D92 /* GameView+AirPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0EC7922B9439C300C08D92 /* GameView+AirPlay.swift */; };
 		AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384C2A4F67430099977F /* DSFeatures.swift */; };
+		AC1771D62B9A55FD009AEF4A /* AppPresetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1771D52B9A55FD009AEF4A /* AppPresetOptions.swift */; };
 		AC1E64AC2B0989D6009CFD67 /* UILabel+NewGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1E64AB2B0989D6009CFD67 /* UILabel+NewGame.swift */; };
 		AC1EAE652A005F6C0072C858 /* AdvancedFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */; };
 		AC1EAE672A0061910072C858 /* PowerUserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE662A0061910072C858 /* PowerUserOptions.swift */; };
@@ -346,6 +347,7 @@
 		AC0EC7922B9439C300C08D92 /* GameView+AirPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+AirPlay.swift"; sourceTree = "<group>"; };
 		AC11456529A444C4005E95A8 /* DeltaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DeltaCore; path = Cores/DeltaCore; sourceTree = "<group>"; };
 		AC14384C2A4F67430099977F /* DSFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSFeatures.swift; sourceTree = "<group>"; };
+		AC1771D52B9A55FD009AEF4A /* AppPresetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPresetOptions.swift; sourceTree = "<group>"; };
 		AC1E64AB2B0989D6009CFD67 /* UILabel+NewGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+NewGame.swift"; sourceTree = "<group>"; };
 		AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedFeatures.swift; sourceTree = "<group>"; };
 		AC1EAE662A0061910072C858 /* PowerUserOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerUserOptions.swift; sourceTree = "<group>"; };
@@ -712,6 +714,7 @@
 				ACCD9DB82A01BA5500B235C4 /* AppIconOptions.swift */,
 				AC0BF8172A8ECD7000C47A5A /* RandomGameOptions.swift */,
 				AC24C4262B1AB1CB0054278D /* StatusBarOptions.swift */,
+				AC1771D52B9A55FD009AEF4A /* AppPresetOptions.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -2024,6 +2027,7 @@
 				BF8A333421A484A000A42FD4 /* BadgedTableViewCell.swift in Sources */,
 				BF3540021C5DA3D500C1184C /* PauseStoryboardSegue.swift in Sources */,
 				AC89AC172B8068C0000F65ED /* StandardControllerSkin.swift in Sources */,
+				AC1771D62B9A55FD009AEF4A /* AppPresetOptions.swift in Sources */,
 				AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */,
 				AC99B33D2B254B10001A2A1F /* PauseMenuOptions.swift in Sources */,
 				AC2059EA2A117B570098266B /* QuickSettingsOptions.swift in Sources */,

@@ -24,6 +24,12 @@ struct UserInterfaceFeatures: FeatureContainer
              attributes: [.permanent])
     var appIcon
     
+    @Feature(name: "App Presets",
+             description: "Select an app preset to change many settings and options at once.",
+             options: AppPresetOptions(),
+             attributes: [.permanent])
+    var appPresets
+    
     @Feature(name: "Toast Notifications",
              description: "Show toast notifications for various in-game actions.",
              options: ToastNotificationOptions())
