@@ -82,6 +82,7 @@ struct Settings
             Settings.controllerFeatures.skin.settingsKey.rawValue: true,
             Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue: true,
             Settings.controllerFeatures.controller.settingsKey.rawValue: true,
+            Settings.airplayFeatures.skins.settingsKey.rawValue: false,
             Settings.libraryFeatures.artwork.settingsKey.rawValue: true,
             Settings.libraryFeatures.animation.settingsKey.rawValue: true,
             Settings.libraryFeatures.favorites.settingsKey.rawValue: true,
