@@ -10,30 +10,44 @@ import SwiftUI
 
 import Features
 
-enum StatusBarStyle: Int, CaseIterable, CustomStringConvertible
+enum StatusBarStyle: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
-    case light = 1
-    case dark = 3
+    case auto = "Auto"
+    case light = "Light"
+    case dark = "Dark"
+    case none = "None"
     
     var description: String {
-        switch self
-        {
-        case .light: return "Light Content"
-        case .dark: return "Dark Content"
-        }
+        return self.rawValue
     }
-}
-
-extension StatusBarStyle: LocalizedOptionValue
-{
+    
     var localizedDescription: Text {
         Text(self.description)
+    }
+    
+    var value: UIStatusBarStyle {
+        switch self
+        {
+        case .auto:
+            switch UIScreen.main.traitCollection.userInterfaceStyle
+            {
+            case .light:
+                return .darkContent
+            case .dark, .unspecified:
+                return .lightContent
+            }
+            
+        case .light: return .lightContent
+        case .dark: return .darkContent
+        case .none: return .default
+        }
     }
 }
 
 struct StatusBarOptions
 {
     @Option(name: "Status Bar Style",
+            description: "Choose the style for the status bar during gameplay.",
             values: StatusBarStyle.allCases)
-    var style: StatusBarStyle = .light
+    var style: StatusBarStyle = .auto
 }

@@ -248,7 +248,7 @@ class GameViewController: DeltaCore.GameViewController
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle(rawValue: Settings.userInterfaceFeatures.statusBar.style.rawValue) ?? .default
+        return Settings.userInterfaceFeatures.statusBar.style.value
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -256,6 +256,7 @@ class GameViewController: DeltaCore.GameViewController
         self.controllerView.invalidateImageCache()
         self.updateControllerSkin()
         self.updateBlurBackground()
+        self.updateStatusBar()
     }
     
     required init()
