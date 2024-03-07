@@ -1237,7 +1237,7 @@ private extension GameViewController
         default: self.blurTintView.backgroundColor = Settings.controllerFeatures.backgroundBlur.tintColor.uiColor.withAlphaComponent(Settings.controllerFeatures.backgroundBlur.tintOpacity)
         }
         
-        self.blurGameViewBlurView.effect = UIBlurEffect(style: Settings.controllerFeatures.backgroundBlur.style)
+        self.blurGameViewBlurView.effect = UIBlurEffect(style: Settings.controllerFeatures.backgroundBlur.style.blurStyle)
         
         self.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
         self.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && !self.isEditingOverscanInsets
@@ -1250,7 +1250,7 @@ private extension GameViewController
             default: scene.gameViewController.blurTintView.backgroundColor = Settings.controllerFeatures.backgroundBlur.tintColor.uiColor.withAlphaComponent(Settings.controllerFeatures.backgroundBlur.tintOpacity)
             }
             
-            scene.gameViewController.blurGameViewBlurView.effect = UIBlurEffect(style: Settings.controllerFeatures.backgroundBlur.style)
+            scene.gameViewController.blurGameViewBlurView.effect = UIBlurEffect(style: Settings.controllerFeatures.backgroundBlur.style.blurStyle)
             
             scene.gameViewController.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
             scene.gameViewController.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.airplayFeatures.display.backgroundBlur

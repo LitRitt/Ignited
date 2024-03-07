@@ -287,6 +287,11 @@ extension PatreonAPI
         // Reset all Pro settings if user isn't a Pro member
         if !Settings.proFeaturesEnabled
         {
+            // Background Blur
+            Settings.controllerFeatures.backgroundBlur.style = .systemThin
+            if Settings.controllerFeatures.backgroundBlur.tintColor.pro {
+                Settings.controllerFeatures.backgroundBlur.tintColor = .none
+            }
             // Live artwork
             Settings.libraryFeatures.artwork.useScreenshots = false
             // Rewind

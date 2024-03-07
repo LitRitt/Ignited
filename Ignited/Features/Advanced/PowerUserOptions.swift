@@ -394,7 +394,8 @@ extension PowerUserOptions
                 Settings.controllerFeatures.skin.backgroundColor = .black
                 
             case .backgroundBlur:
-                Settings.controllerFeatures.backgroundBlur.style = .systemThinMaterial
+                Settings.controllerFeatures.backgroundBlur.style = .systemThin
+                Settings.controllerFeatures.backgroundBlur.brightness = .auto
                 Settings.controllerFeatures.backgroundBlur.tintColor = .none
                 Settings.controllerFeatures.backgroundBlur.customColor = .orange
                 Settings.controllerFeatures.backgroundBlur.tintOpacity = 0.5

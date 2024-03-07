@@ -34,52 +34,82 @@ enum BackgroundBlurTintColor: String, CaseIterable, CustomStringConvertible, Loc
         case .custom: return UIColor(Settings.controllerFeatures.backgroundBlur.customColor)
         }
     }
-}
-
-extension UIBlurEffect.Style: CaseIterable, CustomStringConvertible, LocalizedOptionValue
-{
-    public var description: String {
+    
+    var pro: Bool {
         switch self
         {
-        case .dark: return "Dark"
-        case .light: return "Light"
-        case .prominent: return "Prominent"
-        case .regular: return "Regular"
-        case .systemChromeMaterial: return "Chrome"
-        case .systemChromeMaterialDark: return "Chrome Dark"
-        case .systemChromeMaterialLight: return "Chrome Light"
-        case .systemMaterial: return "System"
-        case .systemMaterialDark: return "System Dark"
-        case .systemMaterialLight: return "System Light"
-        case .systemThickMaterial: return "Thick"
-        case .systemThickMaterialDark: return "Thick Dark"
-        case .systemThickMaterialLight: return "Thick Light"
-        case .systemThinMaterial: return "Thin"
-        case .systemThinMaterialDark: return "Thin Dark"
-        case .systemThinMaterialLight: return "Thin Light"
-        case .systemUltraThinMaterial: return "Ultra Thin"
-        case .systemUltraThinMaterialDark: return "Ultra Thin Dark"
-        case .systemUltraThinMaterialLight: return "Ultra Thin Light"
-        default: return ""
+        case .battery, .custom: return true
+        default: return false
         }
     }
+}
+
+enum BackgroundBlurBrightness: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case auto = "Auto"
+    case light = "Light"
+    case dark = "Dark"
     
-    public var localizedDescription: Text {
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
+enum BackgroundBlurStyle: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case system = "System"
+    case systemThin = "Thin"
+    case systemUltraThin = "Ultra Thin"
+    case systemThick = "Thick"
+    case regular = "Regular"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
         return Text(description)
     }
     
-    static public var allCases: [UIBlurEffect.Style] {
-        return [.regular, .prominent, .light, .dark, .systemMaterial, .systemMaterialLight, .systemMaterialDark, .systemThickMaterial, .systemThickMaterialLight, .systemThickMaterialDark, .systemThinMaterial, .systemThinMaterialLight, .systemThinMaterialDark, .systemUltraThinMaterial, .systemUltraThinMaterialLight, .systemUltraThinMaterialDark, .systemChromeMaterial, .systemChromeMaterialLight, .systemChromeMaterialDark]
+    var blurStyle: UIBlurEffect.Style
+    {
+        switch (self, Settings.controllerFeatures.backgroundBlur.brightness)
+        {
+        case (.system, .auto): return .systemMaterial
+        case (.system, .light): return .systemMaterialLight
+        case (.system, .dark): return .systemMaterialDark
+        case (.systemThin, .auto): return .systemThinMaterial
+        case (.systemThin, .light): return .systemThinMaterialLight
+        case (.systemThin, .dark): return .systemThinMaterialDark
+        case (.systemUltraThin, .auto): return .systemUltraThinMaterial
+        case (.systemUltraThin, .light): return .systemUltraThinMaterialLight
+        case (.systemUltraThin, .dark): return .systemUltraThinMaterialDark
+        case (.systemThick, .auto): return .systemThickMaterial
+        case (.systemThick, .light): return .systemThickMaterialLight
+        case (.systemThick, .dark): return .systemThickMaterialDark
+        case (.regular, .auto): return .regular
+        case (.regular, .light): return .light
+        case (.regular, .dark): return .dark
+        }
     }
 }
 
 struct BackgroundBlurOptions
 {
     @Option(name: "Style",
-            description: "Choose the blur style to use.",
-            values: UIBlurEffect.Style.allCases,
+            description: "Choose the blur style to use. Free users use the System Thin style.",
+            values: BackgroundBlurStyle.allCases,
             attributes: [.pro])
-    var style: UIBlurEffect.Style = .systemThinMaterial
+    var style: BackgroundBlurStyle = .systemThin
+    
+    @Option(name: "Brightness",
+            description: "Choose the brightness the blur style should use.",
+            values: BackgroundBlurBrightness.allCases)
+    var brightness: BackgroundBlurBrightness = .auto
     
     @Option(name: "Tint Color",
             description: "Choose a color to tint the background blur. Custom color require Ignited Pro.",
