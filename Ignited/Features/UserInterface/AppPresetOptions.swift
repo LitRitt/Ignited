@@ -55,7 +55,7 @@ extension AppPresetOptions
     {
         Settings.standardSkinFeatures.styleAndColor.color = .auto
         Settings.controllerFeatures.backgroundBlur.tintColor = .none
-        Settings.touchFeedbackFeatures.touchOverlay.color = .auto
+        Settings.touchFeedbackFeatures.touchOverlay.color = .theme
         
         guard let topViewController = UIApplication.shared.topViewController() else { return }
         

@@ -293,8 +293,8 @@ extension PatreonAPI
                 Settings.standardSkinFeatures.styleAndColor.color = .auto
             }
             //Standard Skin Layout
-            Settings.standardSkinFeatures.inputsAndLayout.customButton1 = .fastForward
-            Settings.standardSkinFeatures.inputsAndLayout.customButton2 = .quickSave
+            Settings.standardSkinFeatures.inputsAndLayout.customButton1 = .null
+            Settings.standardSkinFeatures.inputsAndLayout.customButton2 = .null
             Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap = false
             // Background Blur
             Settings.controllerFeatures.backgroundBlur.style = .systemThin

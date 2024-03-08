@@ -486,8 +486,7 @@ extension StandardControllerSkin
     
     private func softwareInputs() -> [SoftwareInput]
     {
-        var inputs: [SoftwareInput] = []
-        let extraInputs: [SoftwareInput] = [.quickSettings, .custom1, .custom2]
+        var inputs = [SoftwareInput]()
         
         switch self.gameType
         {
@@ -506,13 +505,18 @@ extension StandardControllerSkin
             return inputs
         }
         
-        if self.gameType == .n64
+        inputs.append(.quickSettings)
+        
+        if self.gameType != .n64
         {
-            inputs.append(.quickSettings)
-        }
-        else
-        {
-            inputs += extraInputs
+            if Settings.standardSkinFeatures.inputsAndLayout.customButton1 != .null
+            {
+                inputs.append(.custom1)
+            }
+            if Settings.standardSkinFeatures.inputsAndLayout.customButton2 != .null
+            {
+                inputs.append(.custom2)
+            }
         }
         
         return inputs

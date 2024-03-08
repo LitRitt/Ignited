@@ -356,6 +356,7 @@ class GameViewController: DeltaCore.GameViewController
             
             switch actionInput
             {
+            case .null: break
             case .restart: self.performRestartAction()
             case .quickSave: self.performQuickSaveAction()
             case .quickLoad: self.performQuickLoadAction()
@@ -408,6 +409,7 @@ class GameViewController: DeltaCore.GameViewController
             
             switch actionInput
             {
+            case .null: break
             case .restart: break
             case .quickSave: break
             case .quickLoad: break

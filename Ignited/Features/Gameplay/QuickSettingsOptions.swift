@@ -20,6 +20,7 @@ extension ActionInput: CustomStringConvertible
         case .quickLoad: return "Quick Load"
         case .screenshot: return "Screenshot"
         case .restart: return "Restart"
+        case .null: return "None"
         default: return "Unsupported"
         }
     }

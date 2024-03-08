@@ -377,8 +377,8 @@ extension PowerUserOptions
                 Settings.standardSkinFeatures.gameScreen.unsafeArea = 40
                 
             case .inputsAndLayout:
-                Settings.standardSkinFeatures.inputsAndLayout.customButton1 = .fastForward
-                Settings.standardSkinFeatures.inputsAndLayout.customButton2 = .quickSave
+                Settings.standardSkinFeatures.inputsAndLayout.customButton1 = Settings.proFeaturesEnabled ? .fastForward : .null
+                Settings.standardSkinFeatures.inputsAndLayout.customButton2 = Settings.proFeaturesEnabled ? .quickSave : .null
                 Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap = Settings.proFeaturesEnabled ? true : false
                 Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = .dPad
                 Settings.standardSkinFeatures.inputsAndLayout.abxyLayout = .nintendo
@@ -486,7 +486,7 @@ extension PowerUserOptions
                 Settings.touchFeedbackFeatures.touchAudio.buttonVolume = 1.0
                 
             case .touchOverlay:
-                Settings.touchFeedbackFeatures.touchOverlay.color = .auto
+                Settings.touchFeedbackFeatures.touchOverlay.color = .theme
                 Settings.touchFeedbackFeatures.touchOverlay.customColor = .orange
                 Settings.touchFeedbackFeatures.touchOverlay.style = .bubble
                 Settings.touchFeedbackFeatures.touchOverlay.opacity = 1.0
