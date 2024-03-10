@@ -120,7 +120,7 @@ class GameViewController: DeltaCore.GameViewController
             self.clearRewindSaveStates()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.updateBlurBackground()
+                self.updateBackgroundBlur()
             }
         }
     }
@@ -255,7 +255,7 @@ class GameViewController: DeltaCore.GameViewController
         super.traitCollectionDidChange(previousTraitCollection)
         self.controllerView.invalidateImageCache()
         self.updateControllers()
-        self.updateBlurBackground()
+        self.updateBackgroundBlur()
         self.updateStatusBar()
     }
     
@@ -659,7 +659,7 @@ extension GameViewController
             
             pauseViewController.blurBackgroudItem?.isSelected = Settings.controllerFeatures.backgroundBlur.isEnabled
             pauseViewController.blurBackgroudItem?.action = { [unowned self] item in
-                self.performBlurBackgroundAction()
+                self.performBackgroundBlurAction()
             }
             
             pauseViewController.overscanEditorItem?.isSelected = self.isEditingOverscanInsets
@@ -1020,7 +1020,7 @@ private extension GameViewController
         
         self.updateButtonAudioFeedbackSound()
         self.updateGameboyPalette()
-        self.updateBlurBackground()
+        self.updateBackgroundBlur()
         self.updateControllerSkinCustomization()
         self.updateControllerTriggerDeadzone()
     }
@@ -1228,12 +1228,12 @@ private extension GameViewController
     {
         self._isQuickSettingsOpen = false
         
-        self.updateBlurBackground()
+        self.updateBackgroundBlur()
         self.controllerView.invalidateImageCache()
         self.updateControllerSkin()
     }
     
-    func updateBlurBackground()
+    func updateBackgroundBlur()
     {
         switch Settings.controllerFeatures.backgroundBlur.tintColor
         {
@@ -2454,7 +2454,7 @@ extension GameViewController
         }
     }
     
-    func performBlurBackgroundAction()
+    func performBackgroundBlurAction()
     {
         if let pauseView = self.pauseViewController,
            Settings.gameplayFeatures.pauseMenu.backgroundBlurDismisses
@@ -2851,6 +2851,7 @@ private extension GameViewController
         scene.gameViewController.delegate = self
         
         self.updateControllerSkin()
+        self.updateBackgroundBlur()
 
         // Implicitly called from updateControllerSkin()
         // self.updateExternalDisplay()
@@ -3146,7 +3147,7 @@ private extension GameViewController
             self.updateExternalDisplay()
             
         case Settings.airplayFeatures.display.$backgroundBlur.settingsKey:
-            self.updateBlurBackground()
+            self.updateBackgroundBlur()
             
         case _ where settingsName.rawValue.hasPrefix(Settings.airplayFeatures.device.settingsKey.rawValue):
             // Update whenever any of the AirPlay device settings have changed.
@@ -3158,7 +3159,7 @@ private extension GameViewController
             
         case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue):
             // Update whenever any of the background blur settings have changed.
-            self.updateBlurBackground()
+            self.updateBackgroundBlur()
             
         case _ where settingsName.rawValue.hasPrefix(Settings.standardSkinFeatures.styleAndColor.settingsKey.rawValue):
             // Update whenever any of the standard skin settings have changed.
@@ -3404,7 +3405,7 @@ private extension GameViewController
         
         if Settings.controllerFeatures.backgroundBlur.tintColor == .battery
         {
-            self.updateBlurBackground()
+            self.updateBackgroundBlur()
         }
         
         if Settings.standardSkinFeatures.styleAndColor.color == .battery
