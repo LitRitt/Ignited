@@ -387,11 +387,6 @@ extension StandardControllerSkin: ControllerSkinProtocol
         return Settings.standardSkinFeatures.styleAndColor.translucentInputs
     }
     
-    public func backgroundBlur(for traits: Skin.Traits, alt: Bool) -> Bool?
-    {
-        return true
-    }
-    
     public func anyImage(for traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> UIImage?
     {
         return self.image(for: traits, preferredSize: preferredSize, alt: alt)

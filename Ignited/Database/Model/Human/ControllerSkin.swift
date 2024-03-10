@@ -101,11 +101,6 @@ extension ControllerSkin: ControllerSkinProtocol
         return self.controllerSkin?.isTranslucent(for: traits, alt: alt)
     }
     
-    public func backgroundBlur(for traits: DeltaCore.ControllerSkin.Traits, alt: Bool) -> Bool?
-    {
-        return self.controllerSkin?.backgroundBlur(for: traits, alt: alt)
-    }
-    
     public func screens(for traits: DeltaCore.ControllerSkin.Traits, alt: Bool) -> [DeltaCore.ControllerSkin.Screen]?
     {
         return self.controllerSkin?.screens(for: traits, alt: alt)
