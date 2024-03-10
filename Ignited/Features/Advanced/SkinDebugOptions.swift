@@ -51,6 +51,10 @@ struct SkinDebugOptions
     @Option
     var skinEnabled: Bool = false
     
+    @Option(name: "Draw Input Boxes",
+            description: "Enable to draw the input boxes that determine where inputs are placed on standard skins.")
+    var inputBoxes: Bool = false
+    
     @Option(name: "Show Unsupported Skins",
             description: "Enable to show all controller skins, not just the ones that support your device.")
     var unsupportedSkins: Bool = false

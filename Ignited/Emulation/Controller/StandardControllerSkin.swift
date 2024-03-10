@@ -249,6 +249,21 @@ extension StandardControllerSkin: ControllerSkinProtocol
         return renderer.image { (context) in
             let ctx = context.cgContext
             
+            if Settings.advancedFeatures.skinDebug.inputBoxes
+            {
+                ctx.saveGState()
+                
+                let opacity = Settings.standardSkinFeatures.styleAndColor.shadowOpacity
+                ctx.setShadow(offset: CGSize(width: 0, height: 3), blur: 9, color: UIColor.black.withAlphaComponent(opacity).cgColor)
+                
+                ctx.setFillColor(gray: 0.5, alpha: 0.5)
+                
+                ctx.addPath(CGPath(roundedRect: buttonAreas[0], cornerWidth: 15, cornerHeight: 15, transform: nil).union(CGPath(roundedRect: buttonAreas[1], cornerWidth: 15, cornerHeight: 15, transform: nil)))
+                ctx.fillPath()
+                
+                ctx.restoreGState()
+            }
+            
             for input in self.softwareInputs()
             {
                 var assetName = input.assetName(self.gameType, isSplitView: isSplitView)
