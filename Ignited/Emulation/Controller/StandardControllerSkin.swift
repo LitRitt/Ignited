@@ -440,8 +440,8 @@ extension StandardControllerSkin
         {
         case (.iphone, .standard, .portrait):
             buttonAreas = [
-                CGRect(x: 0.02, y: 0.5, width: 0.46, height: 0.45),
-                CGRect(x: 0.52, y: 0.5, width: 0.46, height: 0.45)
+                CGRect(x: 0.02, y: 0.5, width: 0.46, height: 0.48),
+                CGRect(x: 0.52, y: 0.5, width: 0.46, height: 0.48)
             ]
         case (.iphone, .edgeToEdge, .portrait):
             buttonAreas = [
@@ -450,8 +450,8 @@ extension StandardControllerSkin
             ]
         case (.iphone, .standard, .landscape):
             buttonAreas = [
-                CGRect(x: 0.03, y: 0.02, width: 0.22, height: 0.96),
-                CGRect(x: 0.75, y: 0.02, width: 0.22, height: 0.96)
+                CGRect(x: 0.02, y: 0.02, width: 0.23, height: 0.96),
+                CGRect(x: 0.75, y: 0.02, width: 0.23, height: 0.96)
             ]
         case (.iphone, .edgeToEdge, .landscape):
             buttonAreas = [
