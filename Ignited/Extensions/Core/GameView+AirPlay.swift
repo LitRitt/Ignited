@@ -84,8 +84,8 @@ public extension GameView
     {
         switch self.style
         {
-        case .flat: self.airPlayView?.layer.cornerRadius = 0
-        case .floating: self.airPlayView?.layer.cornerRadius = 15
+        case .flat, .floating: self.airPlayView?.layer.cornerRadius = 0
+        case .flatRounded, .floatingRounded: self.airPlayView?.layer.cornerRadius = 15
         }
     }
 }

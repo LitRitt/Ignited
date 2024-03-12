@@ -27,7 +27,7 @@ struct GameScreenOptions
     @Option(name: "Screen Style",
             description: "Choose the style to use for game screens.",
             values: DeltaCore.GameViewStyle.allCases)
-    var style: DeltaCore.GameViewStyle = .floating
+    var style: DeltaCore.GameViewStyle = .floatingRounded
     
     @Option(name: "Fullscreen Landscape",
             description: "Enable to maximize the screen size in landscape. This may cause inputs to cover parts of the screen. Disable to fit the screen between the left and right side input areas.")

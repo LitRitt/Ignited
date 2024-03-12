@@ -118,7 +118,7 @@ extension StandardControllerSkin: ControllerSkinProtocol
         guard !self.inputMappingMode else {
             let screenFrame = CGRect(x: 0, y: 0.07, width: 1, height: 0.2)
             
-            return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: self.screenStyle())]
+            return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: self.screenStyle().style)]
         }
         
         let buttonAreas = self.buttonAreas(for: traits).map({ $0.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode) })
@@ -163,7 +163,7 @@ extension StandardControllerSkin: ControllerSkinProtocol
             }
         }
         
-        if self.screenStyle() == .floating
+        if self.screenStyle().isFloating
         {
             screenArea = screenArea.insetBy(dx: 10, dy: 10)
         }
@@ -181,7 +181,7 @@ extension StandardControllerSkin: ControllerSkinProtocol
             let bottomScreenHeight = screenArea.height - topScreenHeight
             var bottomScreenArea = CGRect(x: screenArea.minX, y: screenArea.minY + topScreenHeight, width: screenArea.width, height: bottomScreenHeight)
             
-            if self.screenStyle() == DeltaCore.GameViewStyle.floating
+            if self.screenStyle().isFloating
             {
                 topScreenArea = topScreenArea.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0))
                 bottomScreenArea = bottomScreenArea.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0))
@@ -196,20 +196,20 @@ extension StandardControllerSkin: ControllerSkinProtocol
             {
             case (.splitView, _):
                 return [
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, placement: .app, style: self.screenStyle()),
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenSplitViewFrame, isTouchScreen: true, style: self.screenStyle())
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, placement: .app, style: self.screenStyle().style),
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenSplitViewFrame, isTouchScreen: true, style: self.screenStyle().style)
                 ]
                 
             case (_, false):
                 return [
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: self.screenStyle()),
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, isTouchScreen: true, style: self.screenStyle())
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: self.screenStyle().style),
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, isTouchScreen: true, style: self.screenStyle().style)
                 ]
                 
             case (_, true):
                 return [
-                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: self.screenStyle()),
-                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, isTouchScreen: true, style: self.screenStyle())
+                    Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: self.screenStyle().style),
+                    Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, isTouchScreen: true, style: self.screenStyle().style)
                 ]
                 
             }
@@ -220,13 +220,13 @@ extension StandardControllerSkin: ControllerSkinProtocol
             switch (traits.device, traits.displayType)
             {
             case (_, .splitView):
-                return [Skin.Screen(id: "standardControllerSkin.screen", placement: .app, style: self.screenStyle())]
+                return [Skin.Screen(id: "standardControllerSkin.screen", placement: .app, style: self.screenStyle().style)]
                 
             case (.tv, _):
                 return nil
                 
             default:
-                return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: self.screenStyle())]
+                return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: self.screenStyle().style)]
             }
         }
     }
@@ -554,13 +554,16 @@ extension StandardControllerSkin
         return deltaCore.videoFormat.dimensions
     }
     
-    private func screenStyle() -> DeltaCore.GameViewStyle
+    private func screenStyle() -> (style: DeltaCore.GameViewStyle, isFloating: Bool)
     {
         guard !self.inputMappingMode else {
-            return .flat
+            return (.flat, false)
         }
         
-        return Settings.standardSkinFeatures.gameScreen.style
+        let style = Settings.standardSkinFeatures.gameScreen.style
+        let isFloating = style == .floating || style == .floatingRounded
+        
+        return (style, isFloating)
     }
     
     public func hasTouchScreen(for traits: Skin.Traits) -> Bool

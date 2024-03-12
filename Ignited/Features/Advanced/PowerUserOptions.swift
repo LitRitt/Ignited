@@ -371,7 +371,7 @@ extension PowerUserOptions
                 Settings.standardSkinFeatures.styleAndColor.shadowOpacity = 0.5
                 
             case .gameScreen:
-                Settings.standardSkinFeatures.gameScreen.style = .floating
+                Settings.standardSkinFeatures.gameScreen.style = .floatingRounded
                 Settings.standardSkinFeatures.gameScreen.fullscreenLandscape = true
                 Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = 0.5
                 Settings.standardSkinFeatures.gameScreen.unsafeArea = 40
