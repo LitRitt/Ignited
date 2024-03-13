@@ -153,13 +153,10 @@ extension StandardControllerSkin: ControllerSkinProtocol
         case (_, .landscape):
             let screenAreaWidth = rightButtonArea.minX - leftButtonArea.maxX
             
-            if Settings.standardSkinFeatures.gameScreen.fullscreenLandscape
+            switch Settings.standardSkinFeatures.gameScreen.landscapeSize
             {
-                screenArea = CGRect(origin: .zero, size: mappingSize)
-            }
-            else
-            {
-                screenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: screenAreaWidth, height: mappingSize.height)
+            case .fitDevice, .fillDevice: screenArea = CGRect(origin: .zero, size: mappingSize)
+            case .fitInputs: screenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: screenAreaWidth, height: mappingSize.height)
             }
         }
         
@@ -215,7 +212,22 @@ extension StandardControllerSkin: ControllerSkinProtocol
             }
             
         default:
-            let screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea).getRelative(for: traits, inputMappingMode: self.inputMappingMode)
+            var screenFrame: CGRect
+            
+            if Settings.standardSkinFeatures.gameScreen.landscapeSize == .fillDevice,
+               traits.orientation == .landscape
+            {
+                let unsafeArea = self.unsafeArea(for: traits, alt: alt) ?? 0
+                
+                screenFrame = CGRect(x: screenArea.minX + unsafeArea, y: screenArea.minY,
+                                     width: screenArea.width - (unsafeArea * 2), height: screenArea.height)
+            }
+            else
+            {
+                screenFrame = AVMakeRect(aspectRatio: self.screenSize(), insideRect: screenArea)
+            }
+            
+            screenFrame = screenFrame.getRelative(for: traits, inputMappingMode: self.inputMappingMode)
             
             switch (traits.device, traits.displayType)
             {

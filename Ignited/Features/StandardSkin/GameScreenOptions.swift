@@ -22,6 +22,21 @@ extension DeltaCore.GameViewStyle: CustomStringConvertible, LocalizedOptionValue
     }
 }
 
+enum GameScreenSize: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case fitInputs = "Fit Inputs"
+    case fitDevice = "Fit Device"
+    case fillDevice = "Fill Device"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 struct GameScreenOptions
 {
     @Option(name: "Screen Style",
@@ -29,9 +44,10 @@ struct GameScreenOptions
             values: DeltaCore.GameViewStyle.allCases)
     var style: DeltaCore.GameViewStyle = .floatingRounded
     
-    @Option(name: "Fullscreen Landscape",
-            description: "Enable to maximize the screen size in landscape. This may cause inputs to cover parts of the screen. Disable to fit the screen between the left and right side input areas.")
-    var fullscreenLandscape: Bool = false
+    @Option(name: "Landscape Screen Size",
+            description: "Choose the size to use for game screens in landscape.",
+            values: GameScreenSize.allCases)
+    var landscapeSize: GameScreenSize = .fitInputs
     
     @Option(name: "DS Top Screen Size",
             description: "Change the size of the top screen on DS. A higher percentage makes the top screen bigger and the bottom screen smaller.",

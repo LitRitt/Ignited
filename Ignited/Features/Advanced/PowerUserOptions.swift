@@ -372,7 +372,7 @@ extension PowerUserOptions
                 
             case .gameScreen:
                 Settings.standardSkinFeatures.gameScreen.style = .floatingRounded
-                Settings.standardSkinFeatures.gameScreen.fullscreenLandscape = true
+                Settings.standardSkinFeatures.gameScreen.landscapeSize = .fitInputs
                 Settings.standardSkinFeatures.gameScreen.dsTopScreenSize = 0.5
                 Settings.standardSkinFeatures.gameScreen.unsafeArea = 40
                 
