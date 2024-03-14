@@ -1317,6 +1317,8 @@ private extension GameViewController
     {
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
         
+        self.controllerView.isDiagonalDpadInputsEnabled = Settings.controllerFeatures.skin.diagonalDpad
+        
         self.backgroundColor = self.isEditingOverscanInsets ? UIColor.red : Settings.controllerFeatures.skin.colorMode.uiColor
     }
     
@@ -3106,7 +3108,7 @@ private extension GameViewController
         case Settings.controllerFeatures.controller.$triggerDeadzone.settingsKey:
             self.updateControllerTriggerDeadzone()
             
-        case Settings.controllerFeatures.skin.settingsKey, Settings.controllerFeatures.skin.$opacity.settingsKey, Settings.controllerFeatures.skin.$backgroundColor.settingsKey, Settings.controllerFeatures.skin.$colorMode.settingsKey:
+        case Settings.controllerFeatures.skin.settingsKey, Settings.controllerFeatures.skin.$opacity.settingsKey, Settings.controllerFeatures.skin.$backgroundColor.settingsKey, Settings.controllerFeatures.skin.$colorMode.settingsKey, Settings.controllerFeatures.skin.$diagonalDpad.settingsKey:
             self.updateControllerSkinCustomization()
             
         case Settings.touchFeedbackFeatures.touchVibration.$strength.settingsKey:

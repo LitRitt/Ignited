@@ -56,6 +56,10 @@ struct SkinOptions
             isPercentage: true)
     var opacity: Double = 0.7
     
+    @Option(name: "Diagonal D-Pad Inputs",
+            description: "Enable to allow diagonal inputs on the corners of the D-Pad.")
+    var diagonalDpad: Bool = true
+    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in

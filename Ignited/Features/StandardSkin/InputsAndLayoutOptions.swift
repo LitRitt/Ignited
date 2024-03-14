@@ -100,7 +100,7 @@ struct InputsAndLayoutOptions
     var customButton2: ActionInput = .quickSave
     
     @Option(name: "DS Screen Swap",
-            description: "Enable to replace Custom Button 2 with a button that will swap the DS screens",
+            description: "Enable to replace Custom Button 2 with a button that will swap the DS screens.",
             attributes: [.pro])
     var dsScreenSwap: Bool = true
     
