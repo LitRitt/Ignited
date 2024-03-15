@@ -48,7 +48,7 @@ public extension CGRect
         return (top, bottom, left, right)
     }
     
-    func getTwoButtons(inset: CGFloat = 5) -> (left: CGRect, right: CGRect)
+    func getTwoButtonsDiagonal(inset: CGFloat = 5) -> (left: CGRect, right: CGRect)
     {
         let square = self.getInsetSquare(inset: inset)
         
@@ -82,7 +82,27 @@ public extension CGRect
         return (left, right)
     }
     
-    func getThreeButton() -> (left: CGRect, middle: CGRect, right: CGRect)
+    func getTwoButtonsVertical() -> (top: CGRect, bottom: CGRect)
+    {
+        var height = self.height * 0.3
+        var width = height
+        
+        if height > self.width * 0.8
+        {
+            width = self.width * 0.8
+            height = width
+        }
+        
+        let midY = self.midY - (height / 2)
+        let x = self.minX + ((self.width - width) / 2)
+        
+        let top = CGRect(x: x, y: midY - (self.height / 4), width: width, height: height)
+        let bottom = CGRect(x: x, y: midY - (self.height / 4), width: width, height: height)
+        
+        return (top, bottom)
+    }
+    
+    func getThreeButtonsDiagonal() -> (left: CGRect, middle: CGRect, right: CGRect)
     {
         var width = self.width * 0.3
         var height = width
@@ -101,5 +121,47 @@ public extension CGRect
         let right = CGRect(x: midX + (self.width * 0.35), y: y - (self.height * 0.2), width: width, height: height)
         
         return (left, middle, right)
+    }
+    
+    func getThreeButtonsHorizontal() -> (left: CGRect, middle: CGRect, right: CGRect)
+    {
+        var width = self.width * 0.3
+        var height = width
+        
+        if width > self.height * 0.8
+        {
+            height = self.height * 0.8
+            width = height
+        }
+        
+        let midX = self.midX - (width / 2)
+        let y = self.minY + ((self.height - height) / 2)
+        
+        let left = CGRect(x: midX - (self.width * 0.35), y: y, width: width, height: height)
+        let middle = CGRect(x: midX, y: y, width: width, height: height)
+        let right = CGRect(x: midX + (self.width * 0.35), y: y, width: width, height: height)
+        
+        return (left, middle, right)
+    }
+    
+    func getThreeButtonsVertical() -> (top: CGRect, middle: CGRect, bottom: CGRect)
+    {
+        var height = self.height * 0.3
+        var width = height
+        
+        if height > self.width * 0.8
+        {
+            width = self.width * 0.8
+            height = width
+        }
+        
+        let midY = self.midY - (height / 2)
+        let x = self.minX + ((self.width - width) / 2)
+        
+        let top = CGRect(x: x, y: midY - (self.height * 0.35), width: width, height: height)
+        let middle = CGRect(x: x, y: midY, width: width, height: height)
+        let bottom = CGRect(x: x, y: midY + (self.height * 0.35), width: width, height: height)
+        
+        return (top, middle, bottom)
     }
 }

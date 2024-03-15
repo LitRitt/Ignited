@@ -53,7 +53,7 @@ extension StandardControllerSkin: ControllerSkinProtocol
         
         var items = [Skin.Item]()
         
-        for input in self.softwareInputs() {
+        for input in self.softwareInputs(for: traits) {
             switch input.kind
             {
             case .touchScreen:
@@ -82,9 +82,10 @@ extension StandardControllerSkin: ControllerSkinProtocol
                     }
                 }
                 
-                let frame = input.frame(leftButtonArea: buttonAreas[0].getAbsolute(for: traits, inputMappingMode: self.inputMappingMode),
-                                            rightButtonArea: buttonAreas[1].getAbsolute(for: traits, inputMappingMode: self.inputMappingMode),
-                                            gameType: self.gameType)
+                let frame = input.frame(leftButtonArea: buttonAreas.left.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode),
+                                        rightButtonArea: buttonAreas.right.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode),
+                                        gameType: self.gameType,
+                                        traits: traits)
                 
                 if kind == .thumbstick
                 {
@@ -121,9 +122,26 @@ extension StandardControllerSkin: ControllerSkinProtocol
             return [Skin.Screen(id: "standardControllerSkin.screen", outputFrame: screenFrame, style: self.screenStyle().style)]
         }
         
-        let buttonAreas = self.buttonAreas(for: traits).map({ $0.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode) })
-        let leftButtonArea = buttonAreas[0]
-        let rightButtonArea = buttonAreas[1]
+        guard !(self.gameType == .ds && Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless) else {
+            return self.dsButtonlessScreens(for: traits, alt: alt)
+        }
+        
+        let buttonAreas = self.buttonAreas(for: traits)
+        
+        var leftButtonArea = buttonAreas.left.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode)
+        var rightButtonArea = buttonAreas.right.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode)
+        
+        switch self.gameType
+        {
+        case .gbc, .nes, .genesis, .ms, .gg:
+            if !self.customButtonsEnabled()
+            {
+                leftButtonArea = leftButtonArea.getSubRect(sections: 4, index: 2, size: 3)
+                rightButtonArea = rightButtonArea.getSubRect(sections: 4, index: 2, size: 3)
+            }
+            
+        default: break
+        }
         
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
         let safeArea = self.unsafeArea(for: traits, alt: alt) ?? 0
@@ -243,16 +261,68 @@ extension StandardControllerSkin: ControllerSkinProtocol
         }
     }
     
+    public func dsButtonlessScreens(for traits: Skin.Traits, alt: Bool) -> [Skin.Screen]?
+    {
+        let buttonAreas = self.buttonAreas(for: traits)
+        
+        var leftButtonArea = buttonAreas.left.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode)
+        var rightButtonArea = buttonAreas.right.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode)
+        
+        let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
+        let safeArea = self.unsafeArea(for: traits, alt: alt) ?? 0
+        
+        var topScreenArea: CGRect = .zero
+        var bottomScreenArea: CGRect = .zero
+        
+        switch traits.orientation
+        {
+        case .portrait:
+            topScreenArea = CGRect(x: 0, y: safeArea, width: mappingSize.width, height: leftButtonArea.minY - safeArea)
+            bottomScreenArea = CGRect(x: 0, y: leftButtonArea.maxY, width: mappingSize.width, height: mappingSize.height - (leftButtonArea.maxY + safeArea))
+            
+        case .landscape:
+            topScreenArea = CGRect(x: safeArea, y: 0, width: leftButtonArea.minX - safeArea, height: mappingSize.height)
+            bottomScreenArea = CGRect(x: leftButtonArea.maxX, y: 0, width: mappingSize.width - (leftButtonArea.maxX + safeArea), height: mappingSize.height)
+        }
+        
+        if self.screenStyle().isFloating
+        {
+            topScreenArea = topScreenArea.insetBy(dx: 10, dy: 10)
+            bottomScreenArea = bottomScreenArea.insetBy(dx: 10, dy: 10)
+        }
+        
+        let aspectRatio = CGSize(width: self.screenSize().width, height: self.screenSize().height / 2)
+        let topScreenInputFrame = CGRect(origin: .zero, size: aspectRatio)
+        let bottomScreenInputFrame = CGRect(origin: CGPoint(x: 0, y: aspectRatio.height), size: aspectRatio)
+        
+        let topScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: topScreenArea).getRelative(for: traits, inputMappingMode: self.inputMappingMode)
+        let bottomScreenFrame = AVMakeRect(aspectRatio: aspectRatio, insideRect: bottomScreenArea).getRelative(for: traits, inputMappingMode: self.inputMappingMode)
+        
+        switch alt
+        {
+        case false:
+            return [
+                Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: topScreenFrame, style: self.screenStyle().style),
+                Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: bottomScreenFrame, isTouchScreen: true, style: self.screenStyle().style)
+            ]
+            
+        case true:
+            return [
+                Skin.Screen(id: "standardControllerSkin.topScreen", inputFrame: topScreenInputFrame, outputFrame: bottomScreenFrame, style: self.screenStyle().style),
+                Skin.Screen(id: "standardControllerSkin.bottomScreen", inputFrame: bottomScreenInputFrame, outputFrame: topScreenFrame, isTouchScreen: true, style: self.screenStyle().style)
+            ]
+            
+        }
+    }
+    
     public func image(for traits: Skin.Traits, preferredSize: Skin.Size, alt: Bool) -> UIImage?
     {
         let mappingSize = self.aspectRatio(for: traits, alt: alt) ?? .zero
-        var buttonAreas = [CGRect]()
+        let buttonAreas = self.buttonAreas(for: traits)
         let isSplitView = traits.displayType == .splitView
         
-        for buttonArea in self.buttonAreas(for: traits)
-        {
-            buttonAreas.append(buttonArea.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode))
-        }
+        let leftButtonArea = buttonAreas.left.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode)
+        let rightButtonArea = buttonAreas.right.getAbsolute(for: traits, inputMappingMode: self.inputMappingMode)
         
         let format = UIGraphicsImageRendererFormat()
         format.scale = UIScreen.main.scale
@@ -270,13 +340,13 @@ extension StandardControllerSkin: ControllerSkinProtocol
                 
                 ctx.setFillColor(gray: 0.5, alpha: 0.5)
                 
-                ctx.addPath(CGPath(roundedRect: buttonAreas[0], cornerWidth: 15, cornerHeight: 15, transform: nil).union(CGPath(roundedRect: buttonAreas[1], cornerWidth: 15, cornerHeight: 15, transform: nil)))
+                ctx.addPath(CGPath(roundedRect: leftButtonArea, cornerWidth: 15, cornerHeight: 15, transform: nil).union(CGPath(roundedRect: rightButtonArea, cornerWidth: 15, cornerHeight: 15, transform: nil)))
                 ctx.fillPath()
                 
                 ctx.restoreGState()
             }
             
-            for input in self.softwareInputs()
+            for input in self.softwareInputs(for: traits)
             {
                 var assetName = input.assetName(self.gameType, isSplitView: isSplitView)
                 var kind = input.kind
@@ -310,24 +380,27 @@ extension StandardControllerSkin: ControllerSkinProtocol
                 {
                 case .outline:
                     let image = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: color)
-                    image.draw(in: input.frame(leftButtonArea: buttonAreas[0],
-                                               rightButtonArea: buttonAreas[1],
-                                               gameType: self.gameType))
+                    image.draw(in: input.frame(leftButtonArea: leftButtonArea,
+                                               rightButtonArea: rightButtonArea,
+                                               gameType: self.gameType,
+                                               traits: traits))
                     ctx.restoreGState()
                     
                 case .filled:
                     let image = UIImage.symbolWithTemplate(name: assetName + ".fill", pointSize: 150, accentColor: color)
-                    image.draw(in: input.frame(leftButtonArea: buttonAreas[0],
-                                               rightButtonArea: buttonAreas[1],
-                                               gameType: self.gameType))
+                    image.draw(in: input.frame(leftButtonArea: leftButtonArea,
+                                               rightButtonArea: rightButtonArea,
+                                               gameType: self.gameType,
+                                               traits: traits))
                     ctx.restoreGState()
                     
                 case .both:
                     let filledImage = UIImage.symbolWithTemplate(name: assetName + ".fill", pointSize: 150, accentColor: color)
                     let outlineImage = UIImage.symbolWithTemplate(name: assetName, pointSize: 150, accentColor: colorSecondary)
-                    let frame = input.frame(leftButtonArea: buttonAreas[0],
-                                            rightButtonArea: buttonAreas[1],
-                                            gameType: self.gameType)
+                    let frame = input.frame(leftButtonArea: leftButtonArea,
+                                            rightButtonArea: rightButtonArea,
+                                            gameType: self.gameType,
+                                            traits: traits)
                     
                     filledImage.draw(in: frame)
                     ctx.restoreGState()
@@ -447,79 +520,126 @@ extension StandardControllerSkin: ControllerSkinProtocol
 
 extension StandardControllerSkin
 {
-    private func buttonAreas(for traits: Skin.Traits) -> [CGRect]
+    private func buttonAreas(for traits: Skin.Traits) -> (left: CGRect, right: CGRect)
     {
         guard !self.inputMappingMode else {
-            return [
+            return (
                 CGRect(x: 0.01, y: 0.35, width: 0.48, height: 0.65),
                 CGRect(x: 0.51, y: 0.35, width: 0.48, height: 0.65)
-            ]
+            )
         }
         
-        var buttonAreas: [CGRect] = [.zero, .zero]
+        var buttonAreas: (left: CGRect, right: CGRect) = (.zero, .zero)
         
         switch (traits.device, traits.displayType, traits.orientation)
         {
         case (.iphone, .standard, .portrait):
-            buttonAreas = [
-                CGRect(x: 0.02, y: 0.5, width: 0.46, height: 0.48),
-                CGRect(x: 0.52, y: 0.5, width: 0.46, height: 0.48)
-            ]
-        case (.iphone, .edgeToEdge, .portrait):
-            buttonAreas = [
-                CGRect(x: 0.02, y: 0.5, width: 0.46, height: 0.45),
-                CGRect(x: 0.52, y: 0.5, width: 0.46, height: 0.45)
-            ]
-        case (.iphone, .standard, .landscape):
-            buttonAreas = [
-                CGRect(x: 0.02, y: 0.02, width: 0.23, height: 0.96),
-                CGRect(x: 0.75, y: 0.02, width: 0.23, height: 0.96)
-            ]
-        case (.iphone, .edgeToEdge, .landscape):
-            buttonAreas = [
-                CGRect(x: 0.05, y: 0.02, width: 0.2, height: 0.96),
-                CGRect(x: 0.75, y: 0.02, width: 0.2, height: 0.96)
-            ]
-        case (.ipad, .standard, .portrait):
-            buttonAreas = [
-                CGRect(x: 0.05, y: 0.6, width: 0.28, height: 0.35),
-                CGRect(x: 0.67, y: 0.6, width: 0.28, height: 0.35)
-            ]
-        case (.ipad, .standard, .landscape):
-            buttonAreas = [
-                CGRect(x: 0.03, y: 0.4, width: 0.2, height: 0.55),
-                CGRect(x: 0.77, y: 0.4, width: 0.2, height: 0.55)
-            ]
-        case (.ipad, .splitView, .portrait):
-            buttonAreas = [
-                CGRect(x: 0.02, y: 0.02, width: 0.25, height: 0.96),
-                CGRect(x: 0.73, y: 0.02, width: 0.25, height: 0.96)
-            ]
-        case (.ipad, .splitView, .landscape):
-            buttonAreas = [
-                CGRect(x: 0.02, y: 0.02, width: 0.2, height: 0.96),
-                CGRect(x: 0.78, y: 0.02, width: 0.2, height: 0.96)
-            ]
-        default: break
-        }
-        
-        switch self.gameType
-        {
-        case .gbc, .nes, .genesis, .ms, .gg:
-            if !self.customButtonsEnabled()
+            if self.gameType == .n64
             {
-                buttonAreas = buttonAreas.map({
-                    $0.getSubRect(sections: 4, index: 2, size: 3)
-                })
+                buttonAreas.left =  CGRect(x: 0.02, y: 0.4, width: 0.46, height: 0.58)
+                buttonAreas.right = CGRect(x: 0.52, y: 0.4, width: 0.46, height: 0.58)
             }
+            else
+            {
+                buttonAreas.left =  CGRect(x: 0.02, y: 0.53, width: 0.46, height: 0.45)
+                buttonAreas.right = CGRect(x: 0.52, y: 0.53, width: 0.46, height: 0.45)
+            }
+            
+        case (.iphone, .standard, .landscape):
+            buttonAreas.left =  CGRect(x: 0.02, y: 0.02, width: 0.23, height: 0.96)
+            buttonAreas.right = CGRect(x: 0.75, y: 0.02, width: 0.23, height: 0.96)
+            
+        case (.iphone, .edgeToEdge, .portrait):
+            if self.gameType == .n64
+            {
+                buttonAreas.left =  CGRect(x: 0.02, y: 0.4, width: 0.46, height: 0.55)
+                buttonAreas.right = CGRect(x: 0.52, y: 0.4, width: 0.46, height: 0.55)
+            }
+            else
+            {
+                buttonAreas.left =  CGRect(x: 0.02, y: 0.53, width: 0.46, height: 0.42)
+                buttonAreas.right = CGRect(x: 0.52, y: 0.53, width: 0.46, height: 0.42)
+            }
+            
+        case (.iphone, .edgeToEdge, .landscape):
+            buttonAreas.left =  CGRect(x: 0.05, y: 0.02, width: 0.2, height: 0.96)
+            buttonAreas.right = CGRect(x: 0.75, y: 0.02, width: 0.2, height: 0.96)
+            
+        case (.ipad, .standard, .portrait):
+            if self.gameType == .n64
+            {
+                buttonAreas.left =  CGRect(x: 0.05, y: 0.55, width: 0.28, height: 0.43)
+                buttonAreas.right = CGRect(x: 0.67, y: 0.55, width: 0.28, height: 0.43)
+            }
+            else
+            {
+                buttonAreas.left =  CGRect(x: 0.05, y: 0.6, width: 0.28, height: 0.35)
+                buttonAreas.right = CGRect(x: 0.67, y: 0.6, width: 0.28, height: 0.35)
+            }
+            
+        case (.ipad, .standard, .landscape):
+            if self.gameType == .n64
+            {
+                buttonAreas.left =  CGRect(x: 0.03, y: 0.35, width: 0.2, height: 0.63)
+                buttonAreas.right = CGRect(x: 0.77, y: 0.35, width: 0.2, height: 0.63)
+            }
+            else
+            {
+                buttonAreas.left =  CGRect(x: 0.03, y: 0.4, width: 0.2, height: 0.55)
+                buttonAreas.right = CGRect(x: 0.77, y: 0.4, width: 0.2, height: 0.55)
+            }
+            
+        case (.ipad, .splitView, .portrait):
+            buttonAreas.left =  CGRect(x: 0.02, y: 0.02, width: 0.25, height: 0.96)
+            buttonAreas.right = CGRect(x: 0.73, y: 0.02, width: 0.25, height: 0.96)
+            
+        case (.ipad, .splitView, .landscape):
+            buttonAreas.left =  CGRect(x: 0.02, y: 0.02, width: 0.2, height: 0.96)
+            buttonAreas.right = CGRect(x: 0.78, y: 0.02, width: 0.2, height: 0.96)
             
         default: break
         }
         
-        return buttonAreas
+        if self.gameType == .ds
+        {
+            switch (Settings.standardSkinFeatures.inputsAndLayout.dsLayout, traits.device, traits.displayType, traits.orientation)
+            {
+            case (.compact, .iphone, .standard, .portrait):
+                buttonAreas.left = buttonAreas.left.getSubRect(sections: 4, index: 2, size: 3)
+                buttonAreas.right = buttonAreas.right.getSubRect(sections: 4, index: 2, size: 3)
+                
+            case (.compact, .iphone, .edgeToEdge, .portrait):
+                buttonAreas.left = buttonAreas.left.getSubRect(sections: 4, index: 2, size: 3)
+                buttonAreas.right = buttonAreas.right.getSubRect(sections: 4, index: 2, size: 3)
+                
+                if traits.displayType == .edgeToEdge
+                {
+                    buttonAreas.left = buttonAreas.left.offsetBy(dx: 0, dy: 0.03)
+                    buttonAreas.right = buttonAreas.right.offsetBy(dx: 0, dy: 0.03)
+                }
+                
+            case (.buttonless, _, .splitView, _): break
+                
+            case (.buttonless, _, _, _):
+                switch traits.orientation
+                {
+                case .portrait:
+                    buttonAreas.left =  CGRect(x: 0.03, y: 0.47, width: 0.44, height: 0.06)
+                    buttonAreas.right = CGRect(x: 0.53, y: 0.47, width: 0.44, height: 0.06)
+                    
+                case .landscape:
+                    buttonAreas.left =  CGRect(x: 0.47, y: 0.03, width: 0.06, height: 0.44)
+                    buttonAreas.right = CGRect(x: 0.47, y: 0.53, width: 0.06, height: 0.44)
+                }
+                
+            default: break
+            }
+        }
+        
+        return (buttonAreas.left, buttonAreas.right)
     }
     
-    private func softwareInputs() -> [SoftwareInput]
+    private func softwareInputs(for traits: Skin.Traits) -> [SoftwareInput]
     {
         var inputs = [SoftwareInput]()
         
@@ -530,14 +650,26 @@ extension StandardControllerSkin
         case .snes: inputs = [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .menu]
         case .ds: inputs = [.dPad, .a, .b, .x, .y, .l, .r, .start, .select, .touchScreen, .menu]
         case .n64: inputs = [.dPad, .thumbstick, .cUp, .cDown, .cLeft, .cRight, .a, .b, .l, .r, .z, .start, .menu]
-        case .genesis where Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout == .button3: inputs = [.dPad, .a, .b, .c, .start, .mode, .menu]
-        case .genesis where Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout == .button6: inputs = [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu]
+        case .genesis: inputs = [.dPad, .a, .b, .c, .x, .y, .z, .start, .mode, .menu]
         case .ms, .gg: inputs = [.dPad, .b, .c, .start, .menu]
         default: break
         }
         
         guard !self.inputMappingMode else {
             return inputs
+        }
+        
+        if self.gameType == .genesis,
+           Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout == .button3
+        {
+            inputs = [.dPad, .a, .b, .c, .start, .mode, .menu]
+        }
+        
+        if self.gameType == .ds,
+           Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless,
+           traits.displayType != .splitView
+        {
+            inputs = [.start, .select, .touchScreen, .menu]
         }
         
         inputs.append(.quickSettings)
@@ -693,7 +825,7 @@ public enum SoftwareInput: String, CaseIterable
         }
     }
     
-    func frame(leftButtonArea: CGRect, rightButtonArea: CGRect, gameType: GameType) -> CGRect
+    func frame(leftButtonArea: CGRect, rightButtonArea: CGRect, gameType: GameType, traits: DeltaCore.ControllerSkin.Traits) -> CGRect
     {
         var input = self
         
@@ -719,18 +851,8 @@ public enum SoftwareInput: String, CaseIterable
         case .dPad:
             switch gameType
             {
-            case .gbc, .nes, .genesis, .ms, .gg:
-                if self.customButtonsEnabled()
-                {
-                    frame = leftButtonArea.getSubRect(sections: 4, index: 2, size: 2).getInsetSquare()
-                }
-                else
-                {
-                    frame = leftButtonArea.getSubRect(sections: 3, index: 1, size: 2).getInsetSquare()
-                }
-                
-            case .gba, .snes, .ds:
-                frame = leftButtonArea.getSubRect(sections: 4, index: 2, size: 2).getInsetSquare()
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
+                frame = leftButtonArea.getSubRect(sections: 6, index: 2, size: 4).getInsetSquare()
                 
             case .n64:
                 switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
@@ -764,60 +886,20 @@ public enum SoftwareInput: String, CaseIterable
         case .a:
             switch gameType
             {
-            case .gbc, .nes:
-                if self.customButtonsEnabled()
-                {
-                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
-                }
-                else
-                {
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().right
-                }
-                
-            case .gba:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
-                
-            case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
-                
-            case .genesis:
-                switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
-                {
-                case .button3:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().left
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().left
-                    }
-                    
-                case .button6:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 3, size: 1).getThreeButton().left
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().left
-                    }
-                }
-                
             case .gba, .gbc, .nes:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
+                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getTwoButtonsDiagonal().right
                 
             case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().right
+                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().right
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
-                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().left
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getThreeButtonsDiagonal().left
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 4, index: 3, size: 1).getThreeButton().left
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 4, size: 2).getThreeButtonsDiagonal().left
                 }
                 
             case .n64:
@@ -836,44 +918,20 @@ public enum SoftwareInput: String, CaseIterable
         case .b:
             switch gameType
             {
-            case .gbc, .nes, .ms, .gg:
-                if self.customButtonsEnabled()
-                {
-                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().left
-                }
-                else
-                {
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().left
-                }
-                
-            case .gba:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().left
+            case .gba, .gbc, .nes, .ms, .gg:
+                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getTwoButtonsDiagonal().left
                 
             case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().bottom
+                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().bottom
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().middle
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().middle
-                    }
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getThreeButtonsDiagonal().middle
                     
                 case .button6:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 3, size: 1).getThreeButton().middle
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().middle
-                    }
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 4, size: 2).getThreeButtonsDiagonal().middle
                 }
                 
             case .n64:
@@ -893,37 +951,16 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .ms, .gg:
-                if self.customButtonsEnabled()
-                {
-                    frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getTwoButtons().right
-                }
-                else
-                {
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getTwoButtons().right
-                }
+                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getTwoButtonsDiagonal().right
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getThreeButton().right
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 2).getThreeButton().right
-                    }
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getThreeButtonsDiagonal().right
                     
                 case .button6:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 3, size: 1).getThreeButton().right
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 2, size: 1).getThreeButton().right
-                    }
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 4, size: 2).getThreeButtonsDiagonal().right
                 }
                 
             default: break
@@ -933,7 +970,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().top
+                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().top
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
@@ -941,14 +978,7 @@ public enum SoftwareInput: String, CaseIterable
                 case .button3: break
                     
                 case .button6:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 1).getThreeButton().left
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().left
-                    }
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 2).getThreeButtonsDiagonal().left
                 }
                 
             default: break
@@ -958,7 +988,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 2).getFourButtons().left
+                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().left
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
@@ -966,14 +996,7 @@ public enum SoftwareInput: String, CaseIterable
                 case .button3: break
                     
                 case .button6:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 1).getThreeButton().middle
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().middle
-                    }
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 2).getThreeButtonsDiagonal().middle
                 }
                 
             default: break
@@ -1004,14 +1027,7 @@ public enum SoftwareInput: String, CaseIterable
                 case .button3: break
                     
                 case .button6:
-                    if self.customButtonsEnabled()
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 4, index: 2, size: 1).getThreeButton().right
-                    }
-                    else
-                    {
-                        frame = rightButtonArea.getSubRect(sections: 3, index: 1, size: 1).getThreeButton().right
-                    }
+                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 2).getThreeButtonsDiagonal().right
                 }
                 
             default: break
@@ -1021,7 +1037,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .snes, .ds:
-                frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
+                frame = leftButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
                 switch (Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout, Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout)
@@ -1043,7 +1059,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
+                frame = rightButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
                 switch (Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout, Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout)
@@ -1128,18 +1144,17 @@ public enum SoftwareInput: String, CaseIterable
         case .select:
             switch gameType
             {
-            case .gbc, .nes:
-                if self.customButtonsEnabled()
+            case .ds where Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless && traits.displayType != .splitView:
+                switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.customButton1)
                 {
-                    frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
-                }
-                else
-                {
-                    frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
+                case (.portrait, .null): frame = leftButtonArea.getTwoButtonsHorizontal().right
+                case (.portrait, _): frame = leftButtonArea.getThreeButtonsHorizontal().middle
+                case (.landscape, .null): frame = leftButtonArea.getTwoButtonsVertical().bottom
+                case (.landscape, _): frame = leftButtonArea.getThreeButtonsVertical().middle
                 }
                 
-            case .gba, .snes, .ds:
-                frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
+            case .gba, .snes, .ds, .gbc, .nes:
+                frame = leftButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1147,18 +1162,17 @@ public enum SoftwareInput: String, CaseIterable
         case .start:
             switch gameType
             {
-            case .gbc, .nes, .genesis, .ms, .gg:
-                if self.customButtonsEnabled()
+            case .ds where Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless && traits.displayType != .splitView:
+                switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.customButton2)
                 {
-                    frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
-                }
-                else
-                {
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().left
+                case (.portrait, .null): frame = rightButtonArea.getTwoButtonsHorizontal().left
+                case (.portrait, _): frame = rightButtonArea.getThreeButtonsHorizontal().middle
+                case (.landscape, .null): frame = rightButtonArea.getTwoButtonsVertical().top
+                case (.landscape, _): frame = rightButtonArea.getThreeButtonsVertical().middle
                 }
                 
-            case .gba, .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
+                frame = rightButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
                 switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
@@ -1177,14 +1191,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .genesis:
-                if self.customButtonsEnabled()
-                {
-                    frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
-                }
-                else
-                {
-                    frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
-                }
+                frame = leftButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1192,18 +1199,17 @@ public enum SoftwareInput: String, CaseIterable
         case .quickSettings:
             switch gameType
             {
-            case .gbc, .nes, .genesis, .ms, .gg:
-                if self.customButtonsEnabled()
+            case .ds where Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless && traits.displayType != .splitView:
+                switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.customButton2)
                 {
-                    frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
-                }
-                else
-                {
-                    frame = rightButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().right
+                case (.portrait, .null): frame = rightButtonArea.getTwoButtonsHorizontal().right
+                case (.portrait, _): frame = rightButtonArea.getThreeButtonsHorizontal().right
+                case (.landscape, .null): frame = rightButtonArea.getTwoButtonsVertical().bottom
+                case (.landscape, _): frame = rightButtonArea.getThreeButtonsVertical().bottom
                 }
                 
-            case .gba, .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().right
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
+                frame = rightButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().right
                 
             case .n64:
                 frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
@@ -1214,18 +1220,17 @@ public enum SoftwareInput: String, CaseIterable
         case .menu:
             switch gameType
             {
-            case .gbc, .nes, .genesis, .ms, .gg:
-                if self.customButtonsEnabled()
+            case .ds where Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless && traits.displayType != .splitView:
+                switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.customButton1)
                 {
-                    frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
-                }
-                else
-                {
-                    frame = leftButtonArea.getSubRect(sections: 3, index: 3, size: 1).getTwoButtonsHorizontal().left
+                case (.portrait, .null): frame = leftButtonArea.getTwoButtonsHorizontal().left
+                case (.portrait, _): frame = leftButtonArea.getThreeButtonsHorizontal().left
+                case (.landscape, .null): frame = leftButtonArea.getTwoButtonsVertical().top
+                case (.landscape, _): frame = leftButtonArea.getThreeButtonsVertical().top
                 }
                 
-            case .gba, .snes, .ds:
-                frame = leftButtonArea.getSubRect(sections: 4, index: 4, size: 1).getTwoButtonsHorizontal().left
+            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
+                frame = leftButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().left
                 
             case .n64:
                 frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
@@ -1236,11 +1241,18 @@ public enum SoftwareInput: String, CaseIterable
         case .custom1:
             switch gameType
             {
+            case .ds where Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless && traits.displayType != .splitView:
+                switch traits.orientation
+                {
+                case .portrait: frame = leftButtonArea.getThreeButtonsHorizontal().right
+                case .landscape: frame = leftButtonArea.getThreeButtonsVertical().bottom
+                }
+                
             case .gba, .snes, .ds:
-                frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
+                frame = leftButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             case .gbc, .nes, .genesis, .ms, .gg:
-                frame = leftButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
+                frame = leftButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             default: break
             }
@@ -1248,11 +1260,18 @@ public enum SoftwareInput: String, CaseIterable
         case .custom2:
             switch gameType
             {
+            case .ds where Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .buttonless && traits.displayType != .splitView:
+                switch traits.orientation
+                {
+                case .portrait: frame = rightButtonArea.getThreeButtonsHorizontal().left
+                case .landscape: frame = rightButtonArea.getThreeButtonsVertical().top
+                }
+                
             case .gba, .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().left
+                frame = rightButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().left
                 
             case .gbc, .nes, .genesis, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 4, index: 1, size: 1).getTwoButtonsHorizontal().right
+                frame = rightButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1373,10 +1392,5 @@ public enum SoftwareInput: String, CaseIterable
             
         default: return ""
         }
-    }
-    
-    func customButtonsEnabled() -> Bool
-    {
-        return Settings.standardSkinFeatures.inputsAndLayout.customButton1 != .null || Settings.standardSkinFeatures.inputsAndLayout.customButton2 != .null
     }
 }

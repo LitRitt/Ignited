@@ -380,6 +380,7 @@ extension PowerUserOptions
                 Settings.standardSkinFeatures.inputsAndLayout.customButton1 = Settings.proFeaturesEnabled ? .fastForward : .null
                 Settings.standardSkinFeatures.inputsAndLayout.customButton2 = Settings.proFeaturesEnabled ? .quickSave : .null
                 Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap = Settings.proFeaturesEnabled ? true : false
+                Settings.standardSkinFeatures.inputsAndLayout.dsLayout = .comfortable
                 Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = .dPad
                 Settings.standardSkinFeatures.inputsAndLayout.abxyLayout = .nintendo
                 Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout = .none

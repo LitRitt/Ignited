@@ -10,6 +10,21 @@ import Features
 
 import SwiftUI
 
+enum StandardSkinDSLayout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case comfortable = "Comfortable"
+    case compact = "Compact"
+    case buttonless = "Buttonless"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 enum StandardSkinDirectionalInputType: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
     case dPad = "D-Pad"
@@ -103,6 +118,11 @@ struct InputsAndLayoutOptions
             description: "Enable to replace Custom Button 2 with a button that will swap the DS screens.",
             attributes: [.pro])
     var dsScreenSwap: Bool = true
+    
+    @Option(name: "DS Layout",
+            description: "Choose which layout to use for DS.",
+            values: StandardSkinDSLayout.allCases)
+    var dsLayout: StandardSkinDSLayout = .comfortable
     
     @Option(name: "Directional Input",
             description: "Choose which input type to use for directional inputs. Does not affect N64.",
