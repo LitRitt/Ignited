@@ -3162,6 +3162,7 @@ private extension GameViewController
         case _ where settingsName.rawValue.hasPrefix(Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue):
             // Update whenever any of the background blur settings have changed.
             self.updateBackgroundBlur()
+            self.updateControllerSkin()
             
         case _ where settingsName.rawValue.hasPrefix(Settings.standardSkinFeatures.styleAndColor.settingsKey.rawValue):
             // Update whenever any of the standard skin settings have changed.

@@ -33,10 +33,9 @@ enum StandardSkinColor: String, CaseIterable, CustomStringConvertible, Localized
         case .auto:
             switch UIScreen.main.traitCollection.userInterfaceStyle
             {
-            case .light:
-                return UIColor.black
-            case .dark, .unspecified:
-                return UIColor.white
+            case .light where Settings.controllerFeatures.backgroundBlur.isEnabled: return UIColor.black
+            case .light: return UIColor.white
+            case .dark, .unspecified: return UIColor.white
             }
         case .white: return UIColor.white
         case .black: return UIColor.black
