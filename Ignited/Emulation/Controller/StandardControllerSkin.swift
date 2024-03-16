@@ -851,8 +851,20 @@ public enum SoftwareInput: String, CaseIterable
         case .dPad:
             switch gameType
             {
-            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
-                frame = leftButtonArea.getSubRect(sections: 6, index: 2, size: 4).getInsetSquare()
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = leftButtonArea.getCompactFaceRect(for: traits).getInsetSquare()
+                }
+                else
+                {
+                    frame = leftButtonArea.getFaceRect(for: traits).getInsetSquare()
+                }
+                
+            case .gba, .snes, .gbc, .nes, .genesis, .ms, .gg:
+                frame = leftButtonArea.getFaceRect(for: traits).getInsetSquare()
                 
             case .n64:
                 switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
@@ -887,19 +899,31 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getTwoButtonsDiagonal().right
+                frame = rightButtonArea.getFaceRect(for: traits).getTwoButtonsDiagonal().right
                 
-            case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().right
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactFaceRect(for: traits).getFourButtons().right
+                }
+                else
+                {
+                    frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().right
+                }
+                
+            case .snes:
+                frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().right
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getThreeButtonsDiagonal().left
+                    frame = rightButtonArea.getFaceRect(for: traits).getThreeButtonsDiagonal().left
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 4, size: 2).getThreeButtonsDiagonal().left
+                    frame = rightButtonArea.getFaceSplitRect(for: traits).bottom.getThreeButtonsDiagonal().left
                 }
                 
             case .n64:
@@ -919,19 +943,31 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .gba, .gbc, .nes, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getTwoButtonsDiagonal().left
+                frame = rightButtonArea.getFaceRect(for: traits).getTwoButtonsDiagonal().left
                 
-            case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().bottom
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactFaceRect(for: traits).getFourButtons().bottom
+                }
+                else
+                {
+                    frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().bottom
+                }
+                
+            case .snes:
+                frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().bottom
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getThreeButtonsDiagonal().middle
+                    frame = rightButtonArea.getFaceRect(for: traits).getThreeButtonsDiagonal().middle
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 4, size: 2).getThreeButtonsDiagonal().middle
+                    frame = rightButtonArea.getFaceSplitRect(for: traits).bottom.getThreeButtonsDiagonal().middle
                 }
                 
             case .n64:
@@ -951,16 +987,16 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getTwoButtonsDiagonal().right
+                frame = rightButtonArea.getFaceRect(for: traits).getTwoButtonsDiagonal().right
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
                 {
                 case .button3:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getThreeButtonsDiagonal().right
+                    frame = rightButtonArea.getFaceRect(for: traits).getThreeButtonsDiagonal().right
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 4, size: 2).getThreeButtonsDiagonal().right
+                    frame = rightButtonArea.getFaceSplitRect(for: traits).bottom.getThreeButtonsDiagonal().right
                 }
                 
             default: break
@@ -969,8 +1005,20 @@ public enum SoftwareInput: String, CaseIterable
         case .x:
             switch gameType
             {
-            case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().top
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactFaceRect(for: traits).getFourButtons().top
+                }
+                else
+                {
+                    frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().top
+                }
+                
+            case .snes:
+                frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().top
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
@@ -978,7 +1026,7 @@ public enum SoftwareInput: String, CaseIterable
                 case .button3: break
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 2).getThreeButtonsDiagonal().left
+                    frame = rightButtonArea.getFaceSplitRect(for: traits).top.getThreeButtonsDiagonal().left
                 }
                 
             default: break
@@ -987,8 +1035,20 @@ public enum SoftwareInput: String, CaseIterable
         case .y:
             switch gameType
             {
-            case .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 4).getFourButtons().left
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactFaceRect(for: traits).getFourButtons().left
+                }
+                else
+                {
+                    frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().left
+                }
+                
+            case .snes:
+                frame = rightButtonArea.getFaceRect(for: traits).getFourButtons().left
                 
             case .genesis:
                 switch Settings.standardSkinFeatures.inputsAndLayout.genesisFaceLayout
@@ -996,7 +1056,7 @@ public enum SoftwareInput: String, CaseIterable
                 case .button3: break
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 2).getThreeButtonsDiagonal().middle
+                    frame = rightButtonArea.getFaceSplitRect(for: traits).top.getThreeButtonsDiagonal().middle
                 }
                 
             default: break
@@ -1027,7 +1087,7 @@ public enum SoftwareInput: String, CaseIterable
                 case .button3: break
                     
                 case .button6:
-                    frame = rightButtonArea.getSubRect(sections: 6, index: 2, size: 2).getThreeButtonsDiagonal().right
+                    frame = rightButtonArea.getFaceSplitRect(for: traits).top.getThreeButtonsDiagonal().right
                 }
                 
             default: break
@@ -1036,8 +1096,20 @@ public enum SoftwareInput: String, CaseIterable
         case .l:
             switch gameType
             {
-            case .gba, .snes, .ds:
-                frame = leftButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().left
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = leftButtonArea.getCompactShoulderRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                else
+                {
+                    frame = leftButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                
+            case .gba, .snes:
+                frame = leftButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().left
                 
             case .n64:
                 switch (Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout, Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout)
@@ -1058,8 +1130,20 @@ public enum SoftwareInput: String, CaseIterable
         case .r:
             switch gameType
             {
-            case .gba, .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().right
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactShoulderRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                else
+                {
+                    frame = rightButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                
+            case .gba, .snes:
+                frame = rightButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().right
                 
             case .n64:
                 switch (Settings.standardSkinFeatures.inputsAndLayout.n64ShoulderLayout, Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout)
@@ -1153,8 +1237,20 @@ public enum SoftwareInput: String, CaseIterable
                 case (.landscape, _): frame = leftButtonArea.getThreeButtonsVertical().middle
                 }
                 
-            case .gba, .snes, .ds, .gbc, .nes:
-                frame = leftButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().right
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = leftButtonArea.getCompactMenuRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                else
+                {
+                    frame = leftButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                
+            case .gba, .snes, .gbc, .nes:
+                frame = leftButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1171,8 +1267,20 @@ public enum SoftwareInput: String, CaseIterable
                 case (.landscape, _): frame = rightButtonArea.getThreeButtonsVertical().middle
                 }
                 
-            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().left
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactMenuRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                else
+                {
+                    frame = rightButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                
+            case .gba, .snes, .gbc, .nes, .genesis, .ms, .gg:
+                frame = rightButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().left
                 
             case .n64:
                 switch Settings.standardSkinFeatures.inputsAndLayout.n64FaceLayout
@@ -1191,7 +1299,7 @@ public enum SoftwareInput: String, CaseIterable
             switch gameType
             {
             case .genesis:
-                frame = leftButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().right
+                frame = leftButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1208,8 +1316,20 @@ public enum SoftwareInput: String, CaseIterable
                 case (.landscape, _): frame = rightButtonArea.getThreeButtonsVertical().bottom
                 }
                 
-            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().right
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactMenuRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                else
+                {
+                    frame = rightButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                
+            case .gba, .snes, .gbc, .nes, .genesis, .ms, .gg:
+                frame = rightButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().right
                 
             case .n64:
                 frame = rightButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().left
@@ -1229,8 +1349,20 @@ public enum SoftwareInput: String, CaseIterable
                 case (.landscape, _): frame = leftButtonArea.getThreeButtonsVertical().top
                 }
                 
-            case .gba, .snes, .ds, .gbc, .nes, .genesis, .ms, .gg:
-                frame = leftButtonArea.getSubRect(sections: 6, index: 6, size: 1).getTwoButtonsHorizontal().left
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = leftButtonArea.getCompactMenuRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                else
+                {
+                    frame = leftButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                
+            case .gba, .snes, .gbc, .nes, .genesis, .ms, .gg:
+                frame = leftButtonArea.getMenuRect(for: traits).getTwoButtonsHorizontal().left
                 
             case .n64:
                 frame = leftButtonArea.getSubRect(sections: 8, index: 1, size: 1).getTwoButtonsHorizontal().right
@@ -1248,11 +1380,23 @@ public enum SoftwareInput: String, CaseIterable
                 case .landscape: frame = leftButtonArea.getThreeButtonsVertical().bottom
                 }
                 
-            case .gba, .snes, .ds:
-                frame = leftButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().right
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = leftButtonArea.getCompactShoulderRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                else
+                {
+                    frame = leftButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().right
+                }
+                
+            case .gba, .snes:
+                frame = leftButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().right
                 
             case .gbc, .nes, .genesis, .ms, .gg:
-                frame = leftButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().left
+                frame = leftButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().left
                 
             default: break
             }
@@ -1267,11 +1411,23 @@ public enum SoftwareInput: String, CaseIterable
                 case .landscape: frame = rightButtonArea.getThreeButtonsVertical().top
                 }
                 
-            case .gba, .snes, .ds:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().left
+            case .ds:
+                if Settings.standardSkinFeatures.inputsAndLayout.dsLayout == .compact,
+                   traits.device == .iphone,
+                   traits.orientation == .portrait
+                {
+                    frame = rightButtonArea.getCompactShoulderRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                else
+                {
+                    frame = rightButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().left
+                }
+                
+            case .gba, .snes:
+                frame = rightButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().left
                 
             case .gbc, .nes, .genesis, .ms, .gg:
-                frame = rightButtonArea.getSubRect(sections: 6, index: 1, size: 1).getTwoButtonsHorizontal().right
+                frame = rightButtonArea.getShoulderRect(for: traits).getTwoButtonsHorizontal().right
                 
             default: break
             }
@@ -1391,6 +1547,75 @@ public enum SoftwareInput: String, CaseIterable
             }
             
         default: return ""
+        }
+    }
+}
+
+extension CGRect
+{
+    func getShoulderRect(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    {
+        switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.menuLocationPortrait, Settings.standardSkinFeatures.inputsAndLayout.menuLocationLandscape)
+        {
+        case (.portrait, .top, _), (.landscape, _, .top): return self.getSubRect(sections: 4, index: 2, size: 1)
+        case (.portrait, .bottom, _), (.landscape, _, .bottom): return self.getSubRect(sections: 4, index: 1, size: 1)
+        }
+    }
+    
+    func getCompactShoulderRect(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    {
+        switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.menuLocationPortrait, Settings.standardSkinFeatures.inputsAndLayout.menuLocationLandscape)
+        {
+        case (.portrait, .top, _), (.landscape, _, .top): return self.getSubRect(sections: 5, index: 2, size: 1)
+        case (.portrait, .bottom, _), (.landscape, _, .bottom): return self.getSubRect(sections: 5, index: 1, size: 1)
+        }
+    }
+    
+    func getFaceRect(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    {
+        switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.menuLocationPortrait, Settings.standardSkinFeatures.inputsAndLayout.menuLocationLandscape)
+        {
+        case (.portrait, .top, _), (.landscape, _, .top): return self.getSubRect(sections: 4, index: 3, size: 2)
+        case (.portrait, .bottom, _), (.landscape, _, .bottom): return self.getSubRect(sections: 4, index: 2, size: 2)
+        }
+    }
+    
+    func getCompactFaceRect(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    {
+        switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.menuLocationPortrait, Settings.standardSkinFeatures.inputsAndLayout.menuLocationLandscape)
+        {
+        case (.portrait, .top, _), (.landscape, _, .top): return self.getSubRect(sections: 5, index: 3, size: 3)
+        case (.portrait, .bottom, _), (.landscape, _, .bottom): return self.getSubRect(sections: 5, index: 2, size: 3)
+        }
+    }
+    
+    func getFaceSplitRect(for traits: DeltaCore.ControllerSkin.Traits) -> (top: CGRect, bottom: CGRect)
+    {
+        switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.menuLocationPortrait, Settings.standardSkinFeatures.inputsAndLayout.menuLocationLandscape)
+        {
+        case (.portrait, .top, _), (.landscape, _, .top):
+            return (self.getSubRect(sections: 4, index: 3, size: 1), self.getSubRect(sections: 4, index: 4, size: 1))
+            
+        case (.portrait, .bottom, _), (.landscape, _, .bottom):
+            return (self.getSubRect(sections: 4, index: 2, size: 1), self.getSubRect(sections: 4, index: 3, size: 1))
+        }
+    }
+    
+    func getMenuRect(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    {
+        switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.menuLocationPortrait, Settings.standardSkinFeatures.inputsAndLayout.menuLocationLandscape)
+        {
+        case (.portrait, .top, _), (.landscape, _, .top): return self.getSubRect(sections: 4, index: 1, size: 1)
+        case (.portrait, .bottom, _), (.landscape, _, .bottom): return self.getSubRect(sections: 4, index: 4, size: 1)
+        }
+    }
+    
+    func getCompactMenuRect(for traits: DeltaCore.ControllerSkin.Traits) -> CGRect
+    {
+        switch (traits.orientation, Settings.standardSkinFeatures.inputsAndLayout.menuLocationPortrait, Settings.standardSkinFeatures.inputsAndLayout.menuLocationLandscape)
+        {
+        case (.portrait, .top, _), (.landscape, _, .top): return self.getSubRect(sections: 5, index: 1, size: 1)
+        case (.portrait, .bottom, _), (.landscape, _, .bottom): return self.getSubRect(sections: 5, index: 5, size: 1)
         }
     }
 }

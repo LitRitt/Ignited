@@ -10,6 +10,20 @@ import Features
 
 import SwiftUI
 
+enum StandardSkinMenuLocation: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case bottom = "Bottom"
+    case top = "Top"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 enum StandardSkinDSLayout: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
     case comfortable = "Comfortable"
@@ -120,9 +134,19 @@ struct InputsAndLayoutOptions
     var dsScreenSwap: Bool = true
     
     @Option(name: "DS Layout",
-            description: "Choose which layout to use for DS.",
+            description: "Choose which layout to use for DS. Compact only affects iPhones in portrait.",
             values: StandardSkinDSLayout.allCases)
     var dsLayout: StandardSkinDSLayout = .comfortable
+    
+    @Option(name: "Portrait Menu Location",
+            description: "Choose the location of the menu inputs when in portrait. (Pause, Select, Start, Mode, and Quick Settings)",
+            values: StandardSkinMenuLocation.allCases)
+    var menuLocationPortrait: StandardSkinMenuLocation = .bottom
+    
+    @Option(name: "Landscape Menu Location",
+            description: "Choose the location of the menu inputs when in landscape. (Pause, Select, Start, Mode, and Quick Settings)",
+            values: StandardSkinMenuLocation.allCases)
+    var menuLocationLandscape: StandardSkinMenuLocation = .bottom
     
     @Option(name: "Directional Input",
             description: "Choose which input type to use for directional inputs. Does not affect N64.",
