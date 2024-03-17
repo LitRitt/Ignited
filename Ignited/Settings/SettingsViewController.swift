@@ -97,6 +97,7 @@ private extension SettingsViewController
         case snes
         case n64
         case gbc
+//        case gba
         case ds
     }
 }
@@ -415,6 +416,8 @@ extension SettingsViewController
                 self.showFeatures(featureGroup: .snes)
             case .gbc:
                 self.showFeatures(featureGroup: .gbc)
+//            case .gba:
+//                self.showFeatures(featureGroup: .gba)
             case .n64:
                 self.showFeatures(featureGroup: .n64)
             case .ds:

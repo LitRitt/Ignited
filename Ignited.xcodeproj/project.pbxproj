@@ -74,6 +74,8 @@
 		AC5A40762B2106470049B755 /* MappingGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A40752B2106470049B755 /* MappingGameViewController.swift */; };
 		AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */; };
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
+		AC64A1DA2BA7553200438491 /* GBAFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64A1D92BA7553200438491 /* GBAFeatures.swift */; };
+		AC64A1DC2BA7557B00438491 /* GBACoreFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */; };
 		AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */; };
 		AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */; };
 		AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */; };
@@ -384,6 +386,8 @@
 		AC5A40752B2106470049B755 /* MappingGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingGameViewController.swift; sourceTree = "<group>"; };
 		AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
+		AC64A1D92BA7553200438491 /* GBAFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBAFeatures.swift; sourceTree = "<group>"; };
+		AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBACoreFeatures.swift; sourceTree = "<group>"; };
 		AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
@@ -794,6 +798,7 @@
 		AC3CE7FD2A2C2E74008A8C43 /* Cores */ = {
 			isa = PBXGroup;
 			children = (
+				AC64A1D82BA754F600438491 /* GBA */,
 				ACADE4C72B4DA8250001B050 /* SNES */,
 				AC1438492A4F66D40099977F /* DS */,
 				AC56DDEE2A35F327007C8372 /* N64 */,
@@ -847,6 +852,15 @@
 				AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		AC64A1D82BA754F600438491 /* GBA */ = {
+			isa = PBXGroup;
+			children = (
+				AC64A1D92BA7553200438491 /* GBAFeatures.swift */,
+				AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */,
+			);
+			path = GBA;
 			sourceTree = "<group>";
 		};
 		AC84B56A29FEF5130090F274 /* Gameplay */ = {
@@ -1961,6 +1975,7 @@
 				AC84B57429FF1BDA0090F274 /* FastForwardOptions.swift in Sources */,
 				BFFA4C091E8A24D600D87934 /* GameTableViewCell.swift in Sources */,
 				AC1E64AC2B0989D6009CFD67 /* UILabel+NewGame.swift in Sources */,
+				AC64A1DA2BA7553200438491 /* GBAFeatures.swift in Sources */,
 				BFFC46231D5984A000AF2CC6 /* LaunchViewController.swift in Sources */,
 				D5864970297734280081477E /* CheatMetadata.swift in Sources */,
 				AC84B57029FF102A0090F274 /* GameAudioOptions.swift in Sources */,
@@ -2044,6 +2059,7 @@
 				BF59427D1E09BC830051894B /* ControllerSkin.swift in Sources */,
 				ACAAE2FA2A0E337F004E0B3A /* CGColor+RGB.swift in Sources */,
 				BFAB9F7D219A43380080EC7D /* SyncManager.swift in Sources */,
+				AC64A1DC2BA7557B00438491 /* GBACoreFeatures.swift in Sources */,
 				AC0EC7932B9439C300C08D92 /* GameView+AirPlay.swift in Sources */,
 				ACAB77262B468C81001AB619 /* Tier.swift in Sources */,
 				ACE43DC62B4733B000AD9287 /* PatreonViewController.swift in Sources */,

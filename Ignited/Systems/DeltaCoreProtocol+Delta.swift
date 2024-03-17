@@ -93,6 +93,16 @@ extension DeltaCoreProtocol
                                       .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/Arisotura/melonDS")),
                                       .donate: .init(value: NSLocalizedString("Patreon", comment: ""), url: URL(string: "https://www.patreon.com/staplebutter"))])
             
+        case GBA.core:
+            return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("VBA-M", comment: ""), url: URL(string: "https://visualboyadvance.org")),
+                                      .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/visualboyadvance-m/visualboyadvance-m"))])
+            
+        case mGBA.core:
+            return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("mGBA", comment: ""), url: URL(string: "https://mgba.io")),
+                                      .developer: .init(value: NSLocalizedString("endrift", comment: ""), url: URL(string: "http://endrift.com")),
+                                      .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/mgba-emu/mgba")),
+                                      .donate: .init(value: NSLocalizedString("Patreon", comment: ""), url: URL(string: "https://www.patreon.com/mgba"))])
+            
         default: return nil
         }
     }

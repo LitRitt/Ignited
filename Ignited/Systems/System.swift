@@ -101,7 +101,7 @@ extension System
         case .snes: return SNES.core
         case .n64: return N64.core
         case .gbc: return GBC.core
-        case .gba: return mGBA.core
+        case .gba: return Settings.preferredCore(for: .gba) ?? mGBA.core
         case .ds: return Settings.preferredCore(for: .ds) ?? MelonDS.core
         }
     }

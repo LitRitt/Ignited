@@ -11,6 +11,7 @@ import Foundation
 import DeltaCore
 import Features
 import MelonDSDeltaCore
+import mGBADeltaCore
 
 import Roxas
 
@@ -47,6 +48,7 @@ struct Settings
 {
     static let dsFeatures = DSFeatures.shared
     static let gbFeatures = GBFeatures.shared
+    static let gbaFeatures = GBAFeatures.shared
     static let n64Features = N64Features.shared
     static let snesFeatures = SNESFeatures.shared
     static let gameplayFeatures =  GameplayFeatures.shared
@@ -66,6 +68,7 @@ struct Settings
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             #keyPath(UserDefaults.isAltJITEnabled): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
+            Settings.preferredCoreSettingsKey(for: .gba): mGBA.core.identifier,
             Settings.gameplayFeatures.saveStates.settingsKey.rawValue: true,
             Settings.gameplayFeatures.autoSync.settingsKey.rawValue: true,
             Settings.gameplayFeatures.cheats.settingsKey.rawValue: true,

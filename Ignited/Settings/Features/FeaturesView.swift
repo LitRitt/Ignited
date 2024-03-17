@@ -27,6 +27,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible, Identifiable
     case snes = "Super Nintendo"
     case n64 = "Nintendo 64"
     case gbc = "Game Boy Color"
+    case gba = "Game Boy Advance"
     
     var description: String {
         return self.rawValue
@@ -50,6 +51,7 @@ enum FeatureGroup: String, CaseIterable, CustomStringConvertible, Identifiable
         case .snes: return Settings.snesFeatures
         case .n64: return Settings.n64Features
         case .gbc: return Settings.gbFeatures
+        case .gba: return Settings.gbaFeatures
         }
     }
 }
