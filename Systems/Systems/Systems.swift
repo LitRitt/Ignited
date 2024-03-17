@@ -7,3 +7,4 @@
 //
 
 @_exported import GPGXDeltaCore
+@_exported import mGBADeltaCore

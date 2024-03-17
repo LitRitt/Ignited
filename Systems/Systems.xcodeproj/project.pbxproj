@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC3EAF932BA627A800BCC594 /* mGBADeltaCore in Frameworks */ = {isa = PBXBuildFile; productRef = AC3EAF922BA627A800BCC594 /* mGBADeltaCore */; };
 		BF08DC0625CDF690007A9CF4 /* Systems.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF08DC0525CDF690007A9CF4 /* Systems.swift */; };
 		BF08DC4B25CE10A7007A9CF4 /* GPGXDeltaCore in Frameworks */ = {isa = PBXBuildFile; productRef = BF08DC4A25CE10A7007A9CF4 /* GPGXDeltaCore */; };
 		BF2EF87625D308F1005EA349 /* GPGXDeltaCore_GPGXDeltaCore.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF2EF87525D308DD005EA349 /* GPGXDeltaCore_GPGXDeltaCore.bundle */; };
+		BF2EF87625D308F2005EA349 /* mGBADeltaCore_mGBADeltaCore.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF2EF87525D308EE005EA349 /* mGBADeltaCore_mGBADeltaCore.bundle */; };
 		BF2EF87825D30922005EA349 /* DeltaCore_DeltaCore.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF2EF87725D30922005EA349 /* DeltaCore_DeltaCore.bundle */; };
 		BF639C3D25CDD88000B53517 /* Systems.h in Headers */ = {isa = PBXBuildFile; fileRef = BF639C3B25CDD88000B53517 /* Systems.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BF6E70B125D210B400E41CD1 /* DeltaCore in Frameworks */ = {isa = PBXBuildFile; productRef = BF6E70B025D210B400E41CD1 /* DeltaCore */; };
@@ -32,6 +34,7 @@
 		B5AEF9EA2A9895CB00D9ADE3 /* Build.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Build.xcconfig; sourceTree = "<group>"; };
 		BF08DC0525CDF690007A9CF4 /* Systems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Systems.swift; sourceTree = "<group>"; };
 		BF2EF87525D308DD005EA349 /* GPGXDeltaCore_GPGXDeltaCore.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GPGXDeltaCore_GPGXDeltaCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF2EF87525D308EE005EA349 /* mGBADeltaCore_mGBADeltaCore.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mGBADeltaCore_mGBADeltaCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF2EF87725D30922005EA349 /* DeltaCore_DeltaCore.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DeltaCore_DeltaCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF639C3825CDD88000B53517 /* Systems.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Systems.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF639C3B25CDD88000B53517 /* Systems.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Systems.h; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 			files = (
 				BF6E70B125D210B400E41CD1 /* DeltaCore in Frameworks */,
 				BF08DC4B25CE10A7007A9CF4 /* GPGXDeltaCore in Frameworks */,
+				AC3EAF932BA627A800BCC594 /* mGBADeltaCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				BF2EF87725D30922005EA349 /* DeltaCore_DeltaCore.bundle */,
+				BF2EF87525D308EE005EA349 /* mGBADeltaCore_mGBADeltaCore.bundle */,
 				BF2EF87525D308DD005EA349 /* GPGXDeltaCore_GPGXDeltaCore.bundle */,
 			);
 			name = Bundles;
@@ -128,6 +133,7 @@
 			packageProductDependencies = (
 				BF08DC4A25CE10A7007A9CF4 /* GPGXDeltaCore */,
 				BF6E70B025D210B400E41CD1 /* DeltaCore */,
+				AC3EAF922BA627A800BCC594 /* mGBADeltaCore */,
 			);
 			productName = Systems;
 			productReference = BF639C3825CDD88000B53517 /* Systems.framework */;
@@ -156,6 +162,8 @@
 				Base,
 			);
 			mainGroup = BF639C2E25CDD88000B53517;
+			packageReferences = (
+			);
 			productRefGroup = BF639C3925CDD88000B53517 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -171,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF2EF87625D308F1005EA349 /* GPGXDeltaCore_GPGXDeltaCore.bundle in Resources */,
+				BF2EF87625D308F2005EA349 /* mGBADeltaCore_mGBADeltaCore.bundle in Resources */,
 				BF2EF87825D30922005EA349 /* DeltaCore_DeltaCore.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,12 +338,14 @@
 				);
 				INFOPLIST_FILE = Systems/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
@@ -359,12 +370,14 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "SWIFT_PACKAGE=1";
 				INFOPLIST_FILE = Systems/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
@@ -397,6 +410,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AC3EAF922BA627A800BCC594 /* mGBADeltaCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = mGBADeltaCore;
+		};
 		BF08DC4A25CE10A7007A9CF4 /* GPGXDeltaCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GPGXDeltaCore;

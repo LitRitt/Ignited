@@ -37,7 +37,7 @@ enum System: CaseIterable
     }
     
     static var allCores: [DeltaCoreProtocol] {
-        return [GPGX.core, MS.core, GG.core, NES.core, SNES.core, N64.core, GBC.core, GBA.core, DS.core, MelonDS.core]
+        return [GPGX.core, MS.core, GG.core, NES.core, SNES.core, N64.core, GBC.core, GBA.core, mGBA.core, DS.core, MelonDS.core]
     }
 }
 
@@ -101,7 +101,7 @@ extension System
         case .snes: return SNES.core
         case .n64: return N64.core
         case .gbc: return GBC.core
-        case .gba: return GBA.core
+        case .gba: return mGBA.core
         case .ds: return Settings.preferredCore(for: .ds) ?? MelonDS.core
         }
     }
