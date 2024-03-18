@@ -97,7 +97,7 @@ private extension SettingsViewController
         case snes
         case n64
         case gbc
-//        case gba
+        case gba
         case ds
     }
 }
@@ -351,8 +351,18 @@ extension SettingsViewController
             }
             
         case .cores:
-            let preferredCore = Settings.preferredCore(for: .ds)
-            cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
+            switch CoresRow.allCases[indexPath.row]
+            {
+            case .gba:
+                let preferredCore = Settings.preferredCore(for: .gba)
+                cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
+                
+            case .ds:
+                let preferredCore = Settings.preferredCore(for: .ds)
+                cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
+                
+            default: break
+            }
             
         default: break
         }
@@ -416,8 +426,8 @@ extension SettingsViewController
                 self.showFeatures(featureGroup: .snes)
             case .gbc:
                 self.showFeatures(featureGroup: .gbc)
-//            case .gba:
-//                self.showFeatures(featureGroup: .gba)
+            case .gba:
+                self.showFeatures(featureGroup: .gba)
             case .n64:
                 self.showFeatures(featureGroup: .n64)
             case .ds:

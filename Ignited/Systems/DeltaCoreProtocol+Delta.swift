@@ -94,7 +94,7 @@ extension DeltaCoreProtocol
                                       .donate: .init(value: NSLocalizedString("Patreon", comment: ""), url: URL(string: "https://www.patreon.com/staplebutter"))])
             
         case GBA.core:
-            return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("VBA-M", comment: ""), url: URL(string: "https://visualboyadvance.org")),
+            return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("VBA-M (Legacy)", comment: ""), url: URL(string: "https://visualboyadvance.org")),
                                       .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/visualboyadvance-m/visualboyadvance-m"))])
             
         case mGBA.core:

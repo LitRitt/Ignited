@@ -39,7 +39,7 @@ extension GBACoreOptions
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }
         
-        let alertController = UIAlertController(title: NSLocalizedString("Change Emulator Core", comment: ""), message: NSLocalizedString("Save states are not compatible between different emulator cores. Make sure to use in-game saves in order to keep using your save data.\n\nYour existing save states will not be deleted and will be available whenever you switch cores again.", comment: ""), preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: NSLocalizedString("Change Emulator Core", comment: ""), message: NSLocalizedString("Save states are not compatible between different emulator cores. Make sure to use in-game saves in order to keep using your save data.\n\nYour existing save states will not be deleted and will be available whenever you switch cores again.\n\nWARNING\n\nIn-game saves should remain compatible between cores, but there is a risk that VBA-M won't read the save properly and overwrite it. Backup mGBA saves if you need to switch to VBA-M to access save states.", comment: ""), preferredStyle: .actionSheet)
         alertController.preparePopoverPresentationController(topViewController.view)
         
         var vbamActionTitle = GBA.core.metadata?.name.value ?? GBA.core.name
