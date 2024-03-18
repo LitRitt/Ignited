@@ -24,7 +24,7 @@ Ignited is a multi-core emulator front-end for iOS devices. It provides a beauti
     - SNES: [Snes9x](https://github.com/snes9xgit/snes9x)
     - N64: [mupen64plus](https://github.com/mupen64plus/mupen64plus-core)
     - GB/GBC: [Gambatte](https://github.com/sinamas/gambatte)
-    - GBA: [visualboyadvance-m](https://github.com/visualboyadvance-m/visualboyadvance-m)
+    - GBA: [mGBA](https://github.com/mgba-emu/mgba)
     - DS: [melonDS](https://github.com/Arisotura/melonDS)
     - GEN/SMS/GG: [Genesis Plus GX](https://github.com/ekeeke/Genesis-Plus-GX)
 - Beautiful, native UI.
@@ -118,7 +118,7 @@ Each system in Ignited is implemented as its own "Delta Core", which serves as a
 - [SNESDeltaCore](https://github.com/LitRitt/SNESDeltaCore)
 - [N64DeltaCore](https://github.com/LitRitt/N64DeltaCore)
 - [GBCDeltaCore](https://github.com/LitRitt/GBCDeltaCore)
-- [GBADeltaCore](https://github.com/LitRitt/GBADeltaCore)
+- [mGBADeltaCore](https://github.com/LitRitt/mGBADeltaCore)
 - [MelonDSDeltaCore](https://github.com/LitRitt/MelonDSDeltaCore)
 - [GPGXDeltaCore](https://github.com/LitRitt/GPGXDeltaCore)
 
