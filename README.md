@@ -24,8 +24,10 @@ Ignited is a multi-core emulator front-end for iOS devices. It provides a beauti
     - SNES: [Snes9x](https://github.com/snes9xgit/snes9x)
     - N64: [mupen64plus](https://github.com/mupen64plus/mupen64plus-core)
     - GB/GBC: [Gambatte](https://github.com/sinamas/gambatte)
-    - GBA: [visualboyadvance-m](https://github.com/visualboyadvance-m/visualboyadvance-m)
+    - GBA: [mGBA](https://github.com/mgba-emu/mgba)
+    - GBA: [visualboyadvance-m](https://github.com/visualboyadvance-m/visualboyadvance-m) **Legacy*
     - DS: [melonDS](https://github.com/Arisotura/melonDS)
+    - DS: [DeSmuME](https://github.com/TASEmulators/desmume) **Legacy*
     - GEN/SMS/GG: [Genesis Plus GX](https://github.com/ekeeke/Genesis-Plus-GX)
 - Beautiful, native UI.
     - Browse and play your favorite games with a UI designed from the ground up for iOS.
@@ -114,12 +116,15 @@ Harmony is [Riley Testut](https://github.com/rileytestut)'s personal syncing fra
 
 **Delta Cores**  
 Each system in Ignited is implemented as its own "Delta Core", which serves as a standard emulation API Ignited can understand regardless of the underlying core. For the most part, you don't interact directly with specific Delta Cores, but rather indirectly through `DeltaCore`.
+
 - [NESDeltaCore](https://github.com/LitRitt/NESDeltaCore)
 - [SNESDeltaCore](https://github.com/LitRitt/SNESDeltaCore)
 - [N64DeltaCore](https://github.com/LitRitt/N64DeltaCore)
 - [GBCDeltaCore](https://github.com/LitRitt/GBCDeltaCore)
-- [GBADeltaCore](https://github.com/LitRitt/GBADeltaCore)
+- [mGBADeltaCore](https://github.com/LitRitt/mGBADeltaCore)
+- [GBADeltaCore](https://github.com/LitRitt/GBADeltaCore) **Legacy*
 - [MelonDSDeltaCore](https://github.com/LitRitt/MelonDSDeltaCore)
+- [DSDeltaCore](https://github.com/LitRitt/DSDeltaCore) **Legacy*
 - [GPGXDeltaCore](https://github.com/LitRitt/GPGXDeltaCore)
 
 ## Project Requirements
