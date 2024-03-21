@@ -51,6 +51,7 @@
 		AC27347E29FE933400B4CB2E /* UserInterfaceFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */; };
 		AC27348029FE950E00B4CB2E /* GameArtworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */; };
 		AC31535C2AFC094C004EB51E /* UIApplication+Webpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */; };
+		AC39C7632BAC66F400C8F07D /* GBCoreFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39C7622BAC66F400C8F07D /* GBCoreFeatures.swift */; };
 		AC3BC8E72B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */; };
 		AC3CE7F62A2BA822008A8C43 /* LibraryFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */; };
 		AC3CE7F82A2BB485008A8C43 /* AnimatedArtworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */; };
@@ -363,6 +364,7 @@
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtworkOptions.swift; sourceTree = "<group>"; };
 		AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Webpage.swift"; sourceTree = "<group>"; };
+		AC39C7622BAC66F400C8F07D /* GBCoreFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCoreFeatures.swift; sourceTree = "<group>"; };
 		AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ArtworkIndicators.swift"; sourceTree = "<group>"; };
 		AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryFeatures.swift; sourceTree = "<group>"; };
 		AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedArtworkOptions.swift; sourceTree = "<group>"; };
@@ -1055,6 +1057,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */,
+				AC39C7622BAC66F400C8F07D /* GBCoreFeatures.swift */,
 				ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */,
 			);
 			path = GB;
@@ -2014,6 +2017,7 @@
 				ACADE4CB2B4DB8680001B050 /* SNESInvalidVRAMOptions.swift in Sources */,
 				AC41385D2B526A5F008653D4 /* OverscanEditorView.swift in Sources */,
 				BFC9B7391CEFCD34008629BB /* CheatsViewController.swift in Sources */,
+				AC39C7632BAC66F400C8F07D /* GBCoreFeatures.swift in Sources */,
 				D5864978297756CE0081477E /* CheatBaseView.swift in Sources */,
 				ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */,
 				ACAB77252B468C81001AB619 /* Patron.swift in Sources */,

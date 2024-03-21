@@ -12,8 +12,14 @@ struct GBFeatures: FeatureContainer
 {
     static let shared = GBFeatures()
     
+    @Feature(name: "Emulation Core",
+             description: "Change the emulator core to use for GB games.",
+             options: GBCoreOptions(),
+             attributes: [.permanent])
+    var core
+    
     @Feature(name: "Color Palettes",
-             description: "Change the color palette used for GB games.",
+             description: "Change the color palette to use for GB games.",
              options: GBPaletteOptions(),
              attributes: [.permanent])
     var palettes

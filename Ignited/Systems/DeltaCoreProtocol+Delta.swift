@@ -23,12 +23,16 @@ import struct DSDeltaCore.DS
 @dynamicMemberLookup
 struct DeltaCoreMetadata
 {
-    enum Key: CaseIterable
+    enum Key: String, CaseIterable, Identifiable
     {
-        case name
-        case developer
-        case source
-        case donate
+        case name = "Name"
+        case developer = "Developer"
+        case source = "Source"
+        case donate = "Donate"
+        
+        var id: String {
+            return self.rawValue
+        }
     }
     
     struct Item
@@ -56,6 +60,21 @@ struct DeltaCoreMetadata
     {
         let item = self.items[key]
         return item
+    }
+    
+    var sortedKeys: [Key]?
+    {
+        var keys = [Key]()
+        
+        for key in Key.allCases
+        {
+            if let _ = self.items[key]
+            {
+                keys.append(key)
+            }
+        }
+        
+        return keys.count > 0 ? keys : nil
     }
 }
 
@@ -98,6 +117,17 @@ extension DeltaCoreProtocol
                                       .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/visualboyadvance-m/visualboyadvance-m"))])
             
         case mGBA.core:
+            return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("mGBA", comment: ""), url: URL(string: "https://mgba.io")),
+                                      .developer: .init(value: NSLocalizedString("endrift", comment: ""), url: URL(string: "http://endrift.com")),
+                                      .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/mgba-emu/mgba")),
+                                      .donate: .init(value: NSLocalizedString("Patreon", comment: ""), url: URL(string: "https://www.patreon.com/mgba"))])
+            
+        case GBC.core:
+            return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("Gambatte", comment: ""), url: URL(string: "https://sourceforge.net/projects/gambatte/")),
+                                      .developer: .init(value: NSLocalizedString("sinamas", comment: ""), url: URL(string: "https://sourceforge.net/u/sinamas/profile/")),
+                                      .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/libretro/gambatte-libretro"))])
+            
+        case mGBC.core:
             return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("mGBA", comment: ""), url: URL(string: "https://mgba.io")),
                                       .developer: .init(value: NSLocalizedString("endrift", comment: ""), url: URL(string: "http://endrift.com")),
                                       .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/mgba-emu/mgba")),

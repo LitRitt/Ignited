@@ -69,6 +69,7 @@ struct Settings
             #keyPath(UserDefaults.isAltJITEnabled): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
             Settings.preferredCoreSettingsKey(for: .gba): mGBA.core.identifier,
+            Settings.preferredCoreSettingsKey(for: .gbc): mGBC.core.identifier,
             Settings.gameplayFeatures.saveStates.settingsKey.rawValue: true,
             Settings.gameplayFeatures.autoSync.settingsKey.rawValue: true,
             Settings.gameplayFeatures.cheats.settingsKey.rawValue: true,

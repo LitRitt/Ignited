@@ -353,6 +353,10 @@ extension SettingsViewController
         case .cores:
             switch CoresRow.allCases[indexPath.row]
             {
+            case .gbc:
+                let preferredCore = Settings.preferredCore(for: .gbc)
+                cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")
+                
             case .gba:
                 let preferredCore = Settings.preferredCore(for: .gba)
                 cell.detailTextLabel?.text = preferredCore?.metadata?.name.value ?? preferredCore?.name ?? NSLocalizedString("Unknown", comment: "")

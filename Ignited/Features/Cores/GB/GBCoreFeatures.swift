@@ -1,25 +1,25 @@
 //
-//  GBACoreFeatures.swift
+//  GBCoreFeatures.swift
 //  Ignited
 //
-//  Created by Chris Rittenhouse on 3/17/24.
+//  Created by Chris Rittenhouse on 3/21/24.
 //  Copyright © 2024 LitRitt. All rights reserved.
 //
 
 import SwiftUI
 
-import GBADeltaCore
+import GBCDeltaCore
 import mGBADeltaCore
 
 import Features
 
-struct GBACoreOptions
+struct GBCoreOptions
 {
     @Option(name: "Core Info",
             description: "Information about the current core",
             detailView: { _ in
-        ForEach(Settings.preferredCore(for: .gba)?.metadata?.sortedKeys ?? []) { key in
-            if let item = Settings.preferredCore(for: .gba)?.metadata?[key]
+        ForEach(Settings.preferredCore(for: .gbc)?.metadata?.sortedKeys ?? []) { key in
+            if let item = Settings.preferredCore(for: .gbc)?.metadata?[key]
             {
                 VStack {
                     if let url = item.url
@@ -47,7 +47,7 @@ struct GBACoreOptions
                         }
                     }
                     
-                    if let lastKey = Settings.preferredCore(for: .gba)?.metadata?.sortedKeys?.last,
+                    if let lastKey = Settings.preferredCore(for: .gbc)?.metadata?.sortedKeys?.last,
                        key != lastKey
                     {
                         Divider()
@@ -60,22 +60,22 @@ struct GBACoreOptions
     var coreInfo: String = ""
     
     @Option(name: "Change Core",
-            description: "Choose the core to use for GBA games.",
+            description: "Choose the core to use for GBC games.",
             detailView: { value in
         HStack {
             Spacer()
             Button("Choose Core") {
-                GBACoreOptions.changeCore()
+                GBCoreOptions.changeCore()
             }
             .foregroundColor(.red)
             Spacer()
         }
         .displayInline()
     })
-    var coreName: String = Settings.preferredCore(for: .gba)?.metadata?.name.value ?? mGBA.core.name
+    var coreName: String = Settings.preferredCore(for: .gbc)?.metadata?.name.value ?? mGBC.core.name
 }
 
-extension GBACoreOptions
+extension GBCoreOptions
 {
     static func changeCore()
     {
@@ -84,26 +84,26 @@ extension GBACoreOptions
         let alertController = UIAlertController(title: NSLocalizedString("Change Emulator Core", comment: ""), message: NSLocalizedString("Save states are not compatible between different emulator cores. Make sure to use in-game saves in order to keep using your save data.\n\nYour existing save states will not be deleted and will be available whenever you switch cores again.", comment: ""), preferredStyle: .actionSheet)
         alertController.preparePopoverPresentationController(topViewController.view)
         
-        var vbamActionTitle = GBA.core.metadata?.name.value ?? GBA.core.name
-        var mgbaActionTitle = mGBA.core.metadata?.name.value ?? mGBA.core.name
+        var gambatteActionTitle = GBC.core.metadata?.name.value ?? GBC.core.name
+        var mgbcActionTitle = mGBC.core.metadata?.name.value ?? mGBC.core.name
         
-        if Settings.preferredCore(for: .gba) == GBA.core
+        if Settings.preferredCore(for: .gbc) == GBC.core
         {
-            vbamActionTitle += " ✓"
+            gambatteActionTitle += " ✓"
         }
         else
         {
-            mgbaActionTitle += " ✓"
+            mgbcActionTitle += " ✓"
         }
         
-        alertController.addAction(UIAlertAction(title: vbamActionTitle, style: .default, handler: { (action) in
-            Settings.setPreferredCore(GBA.core, for: .gba)
-            Settings.gbaFeatures.core.coreName = GBA.core.metadata?.name.value ?? GBA.core.name
+        alertController.addAction(UIAlertAction(title: gambatteActionTitle, style: .default, handler: { (action) in
+            Settings.setPreferredCore(GBC.core, for: .gbc)
+            Settings.gbFeatures.core.coreName = GBC.core.metadata?.name.value ?? GBC.core.name
         }))
         
-        alertController.addAction(UIAlertAction(title: mgbaActionTitle, style: .default, handler: { (action) in
-            Settings.setPreferredCore(mGBA.core, for: .gba)
-            Settings.gbaFeatures.core.coreName = mGBA.core.metadata?.name.value ?? mGBA.core.name
+        alertController.addAction(UIAlertAction(title: mgbcActionTitle, style: .default, handler: { (action) in
+            Settings.setPreferredCore(mGBC.core, for: .gbc)
+            Settings.gbFeatures.core.coreName = mGBC.core.metadata?.name.value ?? mGBC.core.name
         }))
         alertController.addAction(.cancel)
         topViewController.present(alertController, animated: true, completion: nil)
