@@ -55,9 +55,8 @@ extension TouchFeedbackSound: LocalizedOptionValue
 struct TouchFeedbackAudioOptions
 {
     @Option(name: "Sound",
-            description: "Choose the sound to play. Free users are limited to the default \"Snap\" sound.",
-            values: TouchFeedbackSound.allCases,
-            attributes: [.pro])
+            description: "Choose the sound to play.",
+            values: TouchFeedbackSound.allCases)
     var sound: TouchFeedbackSound = .snap
     
     @Option(name: "Use Game Volume",

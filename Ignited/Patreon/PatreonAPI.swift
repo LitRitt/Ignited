@@ -310,9 +310,8 @@ extension PatreonAPI
             Settings.gameplayFeatures.rewind.maxStates = 4
             Settings.gameplayFeatures.rewind.interval = 15
             // Touch overlay
-            // Touch audio
-            if Settings.touchFeedbackFeatures.touchAudio.sound != .tock {
-                Settings.touchFeedbackFeatures.touchAudio.sound = .tock
+            if Settings.touchFeedbackFeatures.touchOverlay.color.pro {
+                Settings.touchFeedbackFeatures.touchOverlay.color = .theme
             }
             // Skin color
             if Settings.controllerFeatures.skin.colorMode == .custom {
