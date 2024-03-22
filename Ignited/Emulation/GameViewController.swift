@@ -12,6 +12,7 @@ import Photos
 
 import DeltaCore
 import GBADeltaCore
+import mGBADeltaCore
 import GBCDeltaCore
 import N64DeltaCore
 import MelonDSDeltaCore
@@ -1019,7 +1020,6 @@ private extension GameViewController
         self.updateControllerSkin()
         
         self.updateButtonAudioFeedbackSound()
-        self.updateGameboyPalette()
         self.updateBackgroundBlur()
         self.updateControllerSkinCustomization()
         self.updateControllerTriggerDeadzone()
@@ -1258,58 +1258,6 @@ private extension GameViewController
             
             scene.gameViewController.blurScreenKeepAspect = Settings.controllerFeatures.backgroundBlur.maintainAspect
             scene.gameViewController.blurScreenEnabled = Settings.controllerFeatures.backgroundBlur.isEnabled && Settings.airplayFeatures.display.backgroundBlur
-        }
-    }
-    
-    func updateGameboyPalette()
-    {
-        if let bridge = self.emulatorCore?.deltaCore.emulatorBridge as? GBCEmulatorBridge
-        {
-            if Settings.gbFeatures.palettes.multiPalette
-            {
-                setMultiPalette(palette1: Settings.gbFeatures.palettes.palette.colors,
-                                palette2: Settings.gbFeatures.palettes.spritePalette1.colors,
-                                palette3: Settings.gbFeatures.palettes.spritePalette2.colors)
-            }
-            else
-            {
-                setSinglePalette(palette: Settings.gbFeatures.palettes.palette.colors)
-            }
-            
-            bridge.updatePalette()
-            
-            
-            func setSinglePalette(palette: [UInt32])
-            {
-                bridge.palette0color0 = palette[0]
-                bridge.palette0color1 = palette[1]
-                bridge.palette0color2 = palette[2]
-                bridge.palette0color3 = palette[3]
-                bridge.palette1color0 = palette[0]
-                bridge.palette1color1 = palette[1]
-                bridge.palette1color2 = palette[2]
-                bridge.palette1color3 = palette[3]
-                bridge.palette2color0 = palette[0]
-                bridge.palette2color1 = palette[1]
-                bridge.palette2color2 = palette[2]
-                bridge.palette2color3 = palette[3]
-            }
-            
-            func setMultiPalette(palette1: [UInt32], palette2: [UInt32], palette3: [UInt32])
-            {
-                bridge.palette0color0 = palette1[0]
-                bridge.palette0color1 = palette1[1]
-                bridge.palette0color2 = palette1[2]
-                bridge.palette0color3 = palette1[3]
-                bridge.palette1color0 = palette2[0]
-                bridge.palette1color1 = palette2[1]
-                bridge.palette1color2 = palette2[2]
-                bridge.palette1color3 = palette2[3]
-                bridge.palette2color0 = palette3[0]
-                bridge.palette2color1 = palette3[1]
-                bridge.palette2color2 = palette3[2]
-                bridge.palette2color3 = palette3[3]
-            }
         }
     }
     
@@ -1731,8 +1679,121 @@ private extension GameViewController
             
             emulatorBridge.updateOverscanConfig()
         }
+        else if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? GBCEmulatorBridge
+        {
+            if Settings.gbFeatures.palettes.multiPalette
+            {
+                setMultiPalette(for: emulatorBridge,
+                                palette1: Settings.gbFeatures.palettes.palette.colors,
+                                palette2: Settings.gbFeatures.palettes.spritePalette1.colors,
+                                palette3: Settings.gbFeatures.palettes.spritePalette2.colors)
+            }
+            else
+            {
+                setSinglePalette(for: emulatorBridge,
+                                 palette: Settings.gbFeatures.palettes.palette.colors)
+            }
+            
+            emulatorBridge.updatePalette()
+        }
+        else if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? mGBCEmulatorBridge
+        {
+            if Settings.gbFeatures.palettes.multiPalette
+            {
+                setMultiPalette(for: emulatorBridge,
+                                palette1: Settings.gbFeatures.palettes.palette.colors,
+                                palette2: Settings.gbFeatures.palettes.spritePalette1.colors,
+                                palette3: Settings.gbFeatures.palettes.spritePalette2.colors)
+            }
+            else
+            {
+                setSinglePalette(for: emulatorBridge,
+                                 palette: Settings.gbFeatures.palettes.palette.colors)
+            }
+            
+            emulatorBridge.gbModel = Settings.gbFeatures.mGBA.model.rawValue
+            emulatorBridge.paletteLookup = Settings.gbFeatures.mGBA.paletteLookup.rawValue
+            emulatorBridge.sgbBorders = Settings.gbFeatures.mGBA.sgbBorders
+            emulatorBridge.idleOptimization = Settings.gbFeatures.mGBA.idleOptimization.rawValue
+            
+            emulatorBridge.updateSettings()
+        }
+    }
+}
+
+//MARK: - Palettes -
+/// Palettes
+private extension GameViewController
+{
+    func setSinglePalette(for emulatorBridge: GBCEmulatorBridge, palette: [UInt32])
+    {
+        emulatorBridge.palette0color0 = palette[0]
+        emulatorBridge.palette0color1 = palette[1]
+        emulatorBridge.palette0color2 = palette[2]
+        emulatorBridge.palette0color3 = palette[3]
+        emulatorBridge.palette1color0 = palette[0]
+        emulatorBridge.palette1color1 = palette[1]
+        emulatorBridge.palette1color2 = palette[2]
+        emulatorBridge.palette1color3 = palette[3]
+        emulatorBridge.palette2color0 = palette[0]
+        emulatorBridge.palette2color1 = palette[1]
+        emulatorBridge.palette2color2 = palette[2]
+        emulatorBridge.palette2color3 = palette[3]
     }
     
+    func setMultiPalette(for emulatorBridge: GBCEmulatorBridge, palette1: [UInt32], palette2: [UInt32], palette3: [UInt32])
+    {
+        emulatorBridge.palette0color0 = palette1[0]
+        emulatorBridge.palette0color1 = palette1[1]
+        emulatorBridge.palette0color2 = palette1[2]
+        emulatorBridge.palette0color3 = palette1[3]
+        emulatorBridge.palette1color0 = palette2[0]
+        emulatorBridge.palette1color1 = palette2[1]
+        emulatorBridge.palette1color2 = palette2[2]
+        emulatorBridge.palette1color3 = palette2[3]
+        emulatorBridge.palette2color0 = palette3[0]
+        emulatorBridge.palette2color1 = palette3[1]
+        emulatorBridge.palette2color2 = palette3[2]
+        emulatorBridge.palette2color3 = palette3[3]
+    }
+    
+    func setSinglePalette(for emulatorBridge: mGBCEmulatorBridge, palette: [UInt32])
+    {
+        emulatorBridge.palette0color0 = palette[0]
+        emulatorBridge.palette0color1 = palette[1]
+        emulatorBridge.palette0color2 = palette[2]
+        emulatorBridge.palette0color3 = palette[3]
+        emulatorBridge.palette1color0 = palette[0]
+        emulatorBridge.palette1color1 = palette[1]
+        emulatorBridge.palette1color2 = palette[2]
+        emulatorBridge.palette1color3 = palette[3]
+        emulatorBridge.palette2color0 = palette[0]
+        emulatorBridge.palette2color1 = palette[1]
+        emulatorBridge.palette2color2 = palette[2]
+        emulatorBridge.palette2color3 = palette[3]
+    }
+    
+    func setMultiPalette(for emulatorBridge: mGBCEmulatorBridge, palette1: [UInt32], palette2: [UInt32], palette3: [UInt32])
+    {
+        emulatorBridge.palette0color0 = palette1[0]
+        emulatorBridge.palette0color1 = palette1[1]
+        emulatorBridge.palette0color2 = palette1[2]
+        emulatorBridge.palette0color3 = palette1[3]
+        emulatorBridge.palette1color0 = palette2[0]
+        emulatorBridge.palette1color1 = palette2[1]
+        emulatorBridge.palette1color2 = palette2[2]
+        emulatorBridge.palette1color3 = palette2[3]
+        emulatorBridge.palette2color0 = palette3[0]
+        emulatorBridge.palette2color1 = palette3[1]
+        emulatorBridge.palette2color2 = palette3[2]
+        emulatorBridge.palette2color3 = palette3[3]
+    }
+}
+
+//MARK: - Overscan Editor -
+/// Overscan Editor
+private extension GameViewController
+{
     func updateOverscanInset(for edge: OverscanInsetEdge, increase: Bool)
     {
         guard let game = self.game as? Game else { return }
@@ -3143,7 +3204,10 @@ private extension GameViewController
             self.updateStatusBar()
             
         case Settings.gbFeatures.palettes.$palette.settingsKey, Settings.gbFeatures.palettes.settingsKey, Settings.gbFeatures.palettes.$spritePalette1.settingsKey, Settings.gbFeatures.palettes.$spritePalette2.settingsKey, Settings.gbFeatures.palettes.$multiPalette.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color4.settingsKey:
-            self.updateGameboyPalette()
+            self.updateCoreSettings()
+            
+        case _ where settingsName.rawValue.hasPrefix(Settings.gbFeatures.mGBA.settingsKey.rawValue):
+            self.updateCoreSettings()
             
         case Settings.airplayFeatures.display.$topScreenOnly.settingsKey, Settings.airplayFeatures.display.$layoutAxis.settingsKey:
             self.updateExternalDisplay()

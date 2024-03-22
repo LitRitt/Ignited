@@ -127,6 +127,7 @@
 		ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudioOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudioOptions.swift */; };
 		ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlayOptions.swift */; };
 		ACBFE6D62A590CA5002DDD04 /* ControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */; };
+		ACC385BC2BACDD5600FD71AC /* MGBCOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC385BB2BACDD5600FD71AC /* MGBCOptions.swift */; };
 		ACC4430ADE09EB6F81ADBEE3 /* libPods-Ignited.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */; };
 		ACCD93EF2B978E9800BB4F6A /* UIColor+Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD93EE2B978E9800BB4F6A /* UIColor+Battery.swift */; };
 		ACCD93F22B97A95500BB4F6A /* AirPlayFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD93F12B97A95500BB4F6A /* AirPlayFeatures.swift */; };
@@ -441,6 +442,7 @@
 		ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudioOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackAudioOptions.swift; sourceTree = "<group>"; };
 		ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlayOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackOverlayOptions.swift; sourceTree = "<group>"; };
 		ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerOptions.swift; sourceTree = "<group>"; };
+		ACC385BB2BACDD5600FD71AC /* MGBCOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MGBCOptions.swift; sourceTree = "<group>"; };
 		ACCD93EE2B978E9800BB4F6A /* UIColor+Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Battery.swift"; sourceTree = "<group>"; };
 		ACCD93F12B97A95500BB4F6A /* AirPlayFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayFeatures.swift; sourceTree = "<group>"; };
 		ACCD93F32B97A9CA00BB4F6A /* AirPlayDeviceOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayDeviceOptions.swift; sourceTree = "<group>"; };
@@ -1057,6 +1059,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */,
+				ACC385BB2BACDD5600FD71AC /* MGBCOptions.swift */,
 				AC39C7622BAC66F400C8F07D /* GBCoreFeatures.swift */,
 				ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */,
 			);
@@ -1943,6 +1946,7 @@
 				AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */,
 				BFC3628021ADE2BA00EF2BE6 /* UIAlertController+Error.swift in Sources */,
 				BF353FF91C5D870B00C1184C /* MenuItem.swift in Sources */,
+				ACC385BC2BACDD5600FD71AC /* MGBCOptions.swift in Sources */,
 				D5D797E6298D946200738869 /* Contributor.swift in Sources */,
 				ACED6C392B927A6C0080BFD3 /* InputsAndLayoutOptions.swift in Sources */,
 				BFDB3418219E4B1700595A62 /* SyncStatusViewController.swift in Sources */,

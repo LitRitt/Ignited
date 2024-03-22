@@ -24,6 +24,12 @@ struct GBFeatures: FeatureContainer
              attributes: [.permanent])
     var palettes
     
+    @Feature(name: "mGBA Settings",
+             description: "Change the settings for the mGBA core.",
+             options: MGBCOptions(),
+             attributes: [.permanent])
+    var mGBA
+    
     private init()
     {
         self.prepareFeatures()
