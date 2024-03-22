@@ -75,9 +75,14 @@ private struct FeatureDetailView<Feature: AnyFeature>: View
     @ObservedObject
     var feature: Feature
     
+    @State
+    var reload: Bool = false
+    
+    let settingsPublisher = NotificationCenter.default.publisher(for: .settingsDidChange)
+    
     var body: some View {
         Form {
-            ForEach(feature.allOptions, id: \.key) { option in
+            ForEach(feature.allOptions.filter { !$0.hidden() }, id: \.key) { option in
                 if let optionView = optionView(option)
                 {
                     Section {
@@ -91,6 +96,9 @@ private struct FeatureDetailView<Feature: AnyFeature>: View
                 }
             }
         }
+        .onReceive(settingsPublisher, perform: { _ in
+            reload.toggle()
+        })
     }
     
     // Cannot open existential if return type uses concrete type T in non-covariant position (e.g. Box<T>).

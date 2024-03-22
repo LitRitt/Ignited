@@ -8,12 +8,49 @@
 
 import SwiftUI
 
-public enum FeatureAttribute: String, CaseIterable
+public typealias HiddenPredicate = () -> Bool
+
+public enum FeatureAttribute: CaseIterable, Comparable, CustomStringConvertible
 {
-    case permanent = "Permanent"
-    case hidden = "Hidden"
-    case pro = "Pro"
-    case beta = "Beta"
+    case permanent
+    case hidden(when: HiddenPredicate)
+    case pro
+    case beta
+    
+    public var description: String
+    {
+        switch self
+        {
+        case .permanent: return "Permanent"
+        case .hidden: return "Hidden"
+        case .pro: return "Pro"
+        case .beta: return "Beta"
+        }
+    }
+    
+    public var predicate: HiddenPredicate
+    {
+        switch self
+        {
+        case .hidden(let predicate): return predicate
+        default: return {false}
+        }
+    }
+    
+    public static var allCases: [FeatureAttribute]
+    {
+        return [.permanent, .hidden(when: {false}), .pro, .beta]
+    }
+    
+    public static func < (lhs: FeatureAttribute, rhs: FeatureAttribute) -> Bool
+    {
+        return lhs.description < rhs.description
+    }
+    
+    public static func == (lhs: FeatureAttribute, rhs: FeatureAttribute) -> Bool
+    {
+        return lhs.description == rhs.description
+    }
 }
 
 @dynamicMemberLookup
@@ -28,7 +65,7 @@ public protocol AnyFeature<Options>: ObservableObject, Identifiable
     var pro: Bool { get }
     var beta: Bool { get }
     var permanent: Bool { get }
-    var hidden: Bool { get }
+    var hidden: HiddenPredicate { get }
     
     var key: String  { get }
     var settingsKey: SettingsName { get }

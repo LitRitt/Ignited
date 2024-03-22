@@ -127,7 +127,7 @@ extension QuickFeaturesView
         
         init(featureContainer: FeatureContainer)
         {
-            self.sortedFeatures = featureContainer.allFeatures.filter { !$0.hidden }
+            self.sortedFeatures = featureContainer.allFeatures.filter { !$0.hidden() }
         }
     }
 }

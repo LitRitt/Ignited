@@ -19,6 +19,7 @@ public class Option<Value: OptionValue, DetailView: View>: _AnyOption
     
     public let pro: Bool
     public let beta: Bool
+    public let hidden: HiddenPredicate
     
     public let values: (() -> [Value])?
     public private(set) var detailView: () -> DetailView? = { nil }
@@ -90,6 +91,16 @@ public class Option<Value: OptionValue, DetailView: View>: _AnyOption
         
         self.pro = self.attributes.contains(where: { $0 == .pro })
         self.beta = self.attributes.contains(where: { $0 == .beta })
+        
+        if self.attributes.contains(where: { $0 == .hidden(when: {false}) }),
+           let hiddenAttribute = self.attributes.filter({ $0 == .hidden(when: {false}) }).first
+        {
+            self.hidden = hiddenAttribute.predicate
+        }
+        else
+        {
+            self.hidden = {false}
+        }
         
         if let values
         {

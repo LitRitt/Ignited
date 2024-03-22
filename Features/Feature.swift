@@ -24,7 +24,7 @@ public final class Feature<Options>: _AnyFeature
     public let pro: Bool
     public let beta: Bool
     public let permanent: Bool
-    public let hidden: Bool
+    public let hidden: HiddenPredicate
     
     // Assigned to property name.
     public internal(set) var key: String = ""
@@ -63,7 +63,16 @@ public final class Feature<Options>: _AnyFeature
         self.pro = self.attributes.contains(where: { $0 == .pro })
         self.beta = self.attributes.contains(where: { $0 == .beta })
         self.permanent = self.attributes.contains(where: { $0 == .permanent })
-        self.hidden = self.attributes.contains(where: { $0 == .hidden })
+        
+        if self.attributes.contains(where: { $0 == .hidden(when: {false}) }),
+           let hiddenAttribute = self.attributes.filter({ $0 == .hidden(when: {false}) }).first
+        {
+            self.hidden = hiddenAttribute.predicate
+        }
+        else
+        {
+            self.hidden = {false}
+        }
         
         self.prepareOptions()
     }

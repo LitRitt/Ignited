@@ -19,6 +19,7 @@ public protocol AnyOption<Value>: AnyObject, Identifiable
     
     var pro: Bool { get }
     var beta: Bool { get }
+    var hidden: HiddenPredicate { get }
     
     var key: String { get }
     var settingsKey: SettingsName { get }

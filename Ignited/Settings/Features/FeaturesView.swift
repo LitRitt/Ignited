@@ -60,12 +60,20 @@ extension FeaturesView
 {
     private class ViewModel: ObservableObject
     {
+        private var featureContainer: FeatureContainer
+        
         @Published
         var sortedFeatures: [any AnyFeature]
         
         init(featureContainer: FeatureContainer)
         {
-            self.sortedFeatures = featureContainer.allFeatures.filter { !$0.hidden }
+            self.featureContainer = featureContainer
+            self.sortedFeatures = featureContainer.allFeatures.filter { !$0.hidden() }
+        }
+        
+        func updateSortedFeatures()
+        {
+            self.sortedFeatures = featureContainer.allFeatures.filter { !$0.hidden() }
         }
     }
 }
@@ -75,6 +83,8 @@ struct FeaturesView: View
     @StateObject
     private var viewModel: ViewModel
     
+    let settingsPublisher = NotificationCenter.default.publisher(for: .settingsDidChange)
+    
     var body: some View {
         Form {
             ForEach(viewModel.sortedFeatures, id: \.key) { feature in
@@ -82,6 +92,9 @@ struct FeaturesView: View
             }
         }
         .listStyle(.insetGrouped)
+        .onReceive(settingsPublisher, perform: { _ in
+            self.viewModel.updateSortedFeatures()
+        })
     }
 
     // Cannot open existential if return type uses concrete type T in non-covariant position (e.g. Box<T>).
@@ -99,7 +112,7 @@ extension FeaturesView
     {
         let featuresViewModel = ViewModel(featureContainer: featureGroup.container)
         
-        let featuresView = FeaturesView(viewModel: featuresViewModel)
+        var featuresView = FeaturesView(viewModel: featuresViewModel)
         
         let hostingController = UIHostingController(rootView: featuresView)
         hostingController.title = NSLocalizedString(featureGroup.description, comment: "")
