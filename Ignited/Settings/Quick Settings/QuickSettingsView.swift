@@ -108,10 +108,16 @@ extension QuickSettingsView
     {
         var features: [FeatureGroup] = [.gameplay, .standardSkin, .controllers, .touchFeedback, .airPlay, .userInterface]
         
-        if let gameType = gameType,
-           gameType == System.gbc.gameType
+        if let gameType = gameType
         {
-            features.append(.gbc)
+            if gameType == System.gbc.gameType
+            {
+                features.append(.gbc)
+            }
+            else if gameType == System.gba.gameType
+            {
+                features.append(.gba)
+            }
         }
         
         return features

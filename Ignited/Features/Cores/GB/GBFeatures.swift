@@ -30,7 +30,7 @@ struct GBFeatures: FeatureContainer
              description: "Change the settings for the mGBA core.",
              options: MGBCOptions(),
              attributes: [.permanent, .hidden(when: {Settings.preferredCore(for: .gbc) != mGBC.core})])
-    var mGBA
+    var mGBASettings
     
     private init()
     {

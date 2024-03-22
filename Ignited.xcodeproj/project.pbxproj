@@ -69,6 +69,7 @@
 		AC4D519E2B09F881008B245B /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC4D519D2B09F881008B245B /* Settings.storyboard */; };
 		AC4D51A02B09F899008B245B /* GamesDatabase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC4D519F2B09F899008B245B /* GamesDatabase.storyboard */; };
 		AC4D51A22B09F8B2008B245B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC4D51A12B09F8B2008B245B /* LaunchScreen.storyboard */; };
+		AC51F1842BAE3A9E003A41D5 /* MGBAOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC51F1832BAE3A9E003A41D5 /* MGBAOptions.swift */; };
 		AC52A7F22B67739200261267 /* OptionColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52A7F12B67739200261267 /* OptionColorPickerView.swift */; };
 		AC52A7F42B6773BB00261267 /* OptionSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52A7F32B6773BB00261267 /* OptionSliderView.swift */; };
 		AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEF2A35F38D007C8372 /* N64Features.swift */; };
@@ -383,6 +384,7 @@
 		AC4D519D2B09F881008B245B /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		AC4D519F2B09F899008B245B /* GamesDatabase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GamesDatabase.storyboard; sourceTree = "<group>"; };
 		AC4D51A12B09F8B2008B245B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AC51F1832BAE3A9E003A41D5 /* MGBAOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MGBAOptions.swift; sourceTree = "<group>"; };
 		AC52A7F12B67739200261267 /* OptionColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionColorPickerView.swift; sourceTree = "<group>"; };
 		AC52A7F32B6773BB00261267 /* OptionSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSliderView.swift; sourceTree = "<group>"; };
 		AC56DDEF2A35F38D007C8372 /* N64Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64Features.swift; sourceTree = "<group>"; };
@@ -863,6 +865,7 @@
 			children = (
 				AC64A1D92BA7553200438491 /* GBAFeatures.swift */,
 				AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */,
+				AC51F1832BAE3A9E003A41D5 /* MGBAOptions.swift */,
 			);
 			path = GBA;
 			sourceTree = "<group>";
@@ -1963,6 +1966,7 @@
 				AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */,
 				BF59426B1E09BBD00051894B /* GridCollectionViewLayout.swift in Sources */,
 				BF6424851F5CBDC900D6AB44 /* UIView+ParentViewController.swift in Sources */,
+				AC51F1842BAE3A9E003A41D5 /* MGBAOptions.swift in Sources */,
 				BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */,
 				D53415A5298C782A00FD67B1 /* ContributorsView.swift in Sources */,
 				BF5942891E09BC8B0051894B /* _GameCollection.swift in Sources */,

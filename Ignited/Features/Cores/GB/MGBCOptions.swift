@@ -78,4 +78,9 @@ struct MGBCOptions
             description: "Optimizes game performance by driving the GBA's CPU less hard. Use this on low-powered hardware if its struggling with game performance.",
             values: GBIdleOptimization.allCases)
     var idleOptimization: GBIdleOptimization = .remove
+    
+    @Option(name: "Frameskip",
+            description: "Choose how much frames should be skipped to improve performance at the expense of visual smoothness.",
+            values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    var frameskip: Int32 = 0
 }

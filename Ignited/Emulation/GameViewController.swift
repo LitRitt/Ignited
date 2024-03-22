@@ -1711,10 +1711,18 @@ private extension GameViewController
                                  palette: Settings.gbFeatures.palettes.palette.colors)
             }
             
-            emulatorBridge.gbModel = Settings.gbFeatures.mGBA.model.rawValue
-            emulatorBridge.paletteLookup = Settings.gbFeatures.mGBA.paletteLookup.rawValue
-            emulatorBridge.sgbBorders = Settings.gbFeatures.mGBA.sgbBorders
-            emulatorBridge.idleOptimization = Settings.gbFeatures.mGBA.idleOptimization.rawValue
+            emulatorBridge.gbModel = Settings.gbFeatures.mGBASettings.model.rawValue
+            emulatorBridge.paletteLookup = Settings.gbFeatures.mGBASettings.paletteLookup.rawValue
+            emulatorBridge.sgbBorders = Settings.gbFeatures.mGBASettings.sgbBorders
+            emulatorBridge.idleOptimization = Settings.gbFeatures.mGBASettings.idleOptimization.rawValue
+            emulatorBridge.frameskip = Settings.gbFeatures.mGBASettings.frameskip
+            
+            emulatorBridge.updateSettings()
+        }
+        else if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? mGBAEmulatorBridge
+        {
+            emulatorBridge.forceGBP = Settings.gbaFeatures.mGBASettings.forceGBP
+            emulatorBridge.frameskip = Settings.gbaFeatures.mGBASettings.frameskip
             
             emulatorBridge.updateSettings()
         }
@@ -3206,7 +3214,10 @@ private extension GameViewController
         case Settings.gbFeatures.palettes.$palette.settingsKey, Settings.gbFeatures.palettes.settingsKey, Settings.gbFeatures.palettes.$spritePalette1.settingsKey, Settings.gbFeatures.palettes.$spritePalette2.settingsKey, Settings.gbFeatures.palettes.$multiPalette.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette1Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette2Color4.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color1.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color2.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color3.settingsKey, Settings.gbFeatures.palettes.$customPalette3Color4.settingsKey:
             self.updateCoreSettings()
             
-        case _ where settingsName.rawValue.hasPrefix(Settings.gbFeatures.mGBA.settingsKey.rawValue):
+        case _ where settingsName.rawValue.hasPrefix(Settings.gbFeatures.mGBASettings.settingsKey.rawValue):
+            self.updateCoreSettings()
+            
+        case _ where settingsName.rawValue.hasPrefix(Settings.gbaFeatures.mGBASettings.settingsKey.rawValue):
             self.updateCoreSettings()
             
         case Settings.airplayFeatures.display.$topScreenOnly.settingsKey, Settings.airplayFeatures.display.$layoutAxis.settingsKey:
