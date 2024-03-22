@@ -42,11 +42,11 @@ struct UserInterfaceFeatures: FeatureContainer
     
     @Feature(name: "Random Game",
              options: RandomGameOptions(),
-             attributes: [.hidden])
+             attributes: [.hidden(when: {true})])
     var randomGame
     
     @Feature(name: "Game Previews",
-             attributes: [.hidden])
+             attributes: [.hidden(when: {true})])
     var previews
     
     private init()

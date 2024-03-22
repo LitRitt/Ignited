@@ -50,11 +50,11 @@ struct GameplayFeatures: FeatureContainer
     
     @Feature(name: "Save States",
              options: SaveStatesOptions(),
-             attributes: [.hidden])
+             attributes: [.hidden(when: {true})])
     var saveStates
     
     @Feature(name: "Auto Sync",
-             attributes: [.hidden])
+             attributes: [.hidden(when: {true})])
     var autoSync
     
     @Feature(name: "Cheat Codes",
@@ -67,11 +67,11 @@ struct GameplayFeatures: FeatureContainer
     
     @Feature(name: "Sustain Buttons",
              options: SustainButtonsOptions(),
-             attributes: [.hidden])
+             attributes: [.hidden(when: {true})])
     var sustainButtons
     
     @Feature(name: "Mic Support",
-             attributes: [.hidden])
+             attributes: [.hidden(when: {true})])
     var micSupport
     
     private init()

@@ -35,7 +35,7 @@ struct AdvancedFeatures: FeatureContainer
     #else
     @Feature(name: "Enable Pro",
              description: "For testing Ignited Pro features.",
-             attributes: [.hidden])
+             attributes: [.hidden(when: {true})])
     var proOverride
     #endif
     

@@ -6,6 +6,8 @@
 //  Copyright © 2023 LitRitt. All rights reserved.
 //
 
+import mGBADeltaCore
+
 import Features
 
 struct GBFeatures: FeatureContainer
@@ -27,7 +29,7 @@ struct GBFeatures: FeatureContainer
     @Feature(name: "mGBA Settings",
              description: "Change the settings for the mGBA core.",
              options: MGBCOptions(),
-             attributes: [.permanent])
+             attributes: [.permanent, .hidden(when: {Settings.preferredCore(for: .gbc) != mGBC.core})])
     var mGBA
     
     private init()
