@@ -61,7 +61,8 @@ struct GameScreenOptions
             description: "Adjust the unsafe area to avoid screens being drawn underneath an iPhone's notch or dynamic island.",
             range: 0...60,
             step: 1,
-            unit: "pt")
+            unit: "pt",
+            attributes: [.hidden(when: {hideUnsafeArea})])
     var unsafeArea: Double = 40
     
     @Option(name: "Restore Defaults",
@@ -75,4 +76,20 @@ struct GameScreenOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension GameScreenOptions
+{
+    static var hideUnsafeArea: Bool
+    {
+        guard let topViewController = UIApplication.shared.topViewController(),
+              let window = topViewController.view.window else
+        {
+            return false
+        }
+        
+        let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+        
+        return !(traits.device == .iphone && traits.displayType == .edgeToEdge)
+    }
 }

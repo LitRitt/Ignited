@@ -112,13 +112,13 @@ struct BackgroundBlurOptions
     var brightness: BackgroundBlurBrightness = .auto
     
     @Option(name: "Tint Color",
-            description: "Choose a color to tint the background blur. Custom color require Ignited Pro.",
+            description: "Choose a color to tint the background blur. Pro user can use both a custom color and a dynamic battery color.",
             values: Settings.proFeaturesEnabled ? BackgroundBlurTintColor.allCases : [.none, .theme])
     var tintColor: BackgroundBlurTintColor = .none
     
     @Option(name: "Custom Tint Color",
             description: "Choose the color to use for the custom tint color.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentTintColor != .custom})])
     var customColor: Color = .orange
     
     @Option(name: "Tint Opacity",
@@ -144,4 +144,12 @@ struct BackgroundBlurOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension BackgroundBlurOptions
+{
+    static var currentTintColor: BackgroundBlurTintColor
+    {
+        return Settings.controllerFeatures.backgroundBlur.tintColor
+    }
 }

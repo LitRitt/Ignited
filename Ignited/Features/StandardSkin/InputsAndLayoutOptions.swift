@@ -6,6 +6,7 @@
 //  Copyright © 2024 LitRitt. All rights reserved.
 //
 
+import DeltaCore
 import Features
 
 import SwiftUI
@@ -185,7 +186,8 @@ struct InputsAndLayoutOptions
             range: 0.1...0.5,
             step: 0.05,
             unit: "%",
-            isPercentage: true)
+            isPercentage: true,
+            attributes: [.hidden(when: {hideSplitView})])
     var splitViewPortraitSize: Double = 0.3
     
     @Option(name: "SplitView Landscape Size",
@@ -193,7 +195,8 @@ struct InputsAndLayoutOptions
             range: 0.2...0.6,
             step: 0.05,
             unit: "%",
-            isPercentage: true)
+            isPercentage: true,
+            attributes: [.hidden(when: {hideSplitView})])
     var splitViewLandscapeSize: Double = 0.4
     
     @Option(name: "Restore Defaults",
@@ -207,5 +210,21 @@ struct InputsAndLayoutOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension InputsAndLayoutOptions
+{
+    static var hideSplitView: Bool
+    {
+        guard let topViewController = UIApplication.shared.topViewController(),
+              let window = topViewController.view.window else
+        {
+            return false
+        }
+        
+        let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+        
+        return !(traits.device == .ipad)
+    }
 }
 

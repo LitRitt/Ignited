@@ -68,7 +68,8 @@ struct TouchFeedbackAudioOptions
             range: 0.0...1.0,
             step: 0.05,
             unit: "%",
-            isPercentage: true)
+            isPercentage: true,
+            attributes: [.hidden(when: {currentUseGameVolume})])
     var buttonVolume: Double = 1.0
     
     @Option(name: "Restore Defaults",
@@ -82,4 +83,12 @@ struct TouchFeedbackAudioOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension TouchFeedbackAudioOptions
+{
+    static var currentUseGameVolume: Bool
+    {
+        return Settings.touchFeedbackFeatures.touchAudio.useGameVolume
+    }
 }

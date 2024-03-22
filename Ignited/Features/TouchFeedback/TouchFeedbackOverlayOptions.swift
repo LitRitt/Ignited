@@ -67,13 +67,13 @@ enum TouchOverlayColor: String, CaseIterable, CustomStringConvertible, Localized
 struct TouchFeedbackOverlayOptions
 {
     @Option(name: "Color",
-            description: "Choose the color to use for overlays. Battery and custom colors require Ignited Pro.",
+            description: "Choose the color to use for overlays. Pro users can use both a custom color and a dynamic battery color.",
             values: TouchOverlayColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
     var color: TouchOverlayColor = .theme
     
     @Option(name: "Custom Color",
             description: "Choose a custom color to use for overlays.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColor != .custom})])
     var customColor: Color = .orange
     
     @Option(name: "Style",
@@ -108,4 +108,12 @@ struct TouchFeedbackOverlayOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension TouchFeedbackOverlayOptions
+{
+    static var currentColor: TouchOverlayColor
+    {
+        return Settings.touchFeedbackFeatures.touchOverlay.color
+    }
 }

@@ -39,7 +39,8 @@ struct AirPlayDisplayOptions
 
     @Option(name: "DS Screen Layout",
             description: "Choose the layout for DS screens when Top Screen Only is disabled.",
-            values: TouchControllerSkin.LayoutAxis.allCases)
+            values: TouchControllerSkin.LayoutAxis.allCases,
+            attributes: [.hidden(when: {currentTopScreenOnly})])
     var layoutAxis: TouchControllerSkin.LayoutAxis = .vertical
     
     @Option(name: "Restore Defaults",
@@ -53,4 +54,12 @@ struct AirPlayDisplayOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension AirPlayDisplayOptions
+{
+    static var currentTopScreenOnly: Bool
+    {
+        return Settings.airplayFeatures.display.topScreenOnly
+    }
 }

@@ -30,6 +30,14 @@ enum ThemeColor: String, CaseIterable, CustomStringConvertible, Identifiable
         return self.rawValue
     }
     
+    var pro: Bool {
+        switch self
+        {
+        case .custom: return true
+        default: return false
+        }
+    }
+    
     var uiColor: UIColor {
         switch self
         {
@@ -145,10 +153,10 @@ struct ThemeOptions
     var style: ThemeStyle = .auto
     
     @Option(name: "Color",
-            description: "Choose an accent color for the app. Custom options require Ignited Pro.",
+            description: "Choose an accent color for the app. Pro users can use custom colors.",
             detailView: { value in
         Picker("Color", selection: value) {
-            ForEach(ThemeColor.allCases.filter { Settings.proFeaturesEnabled || $0 != .custom }, id: \.self) { color in
+            ForEach(ThemeColor.allCases.filter { Settings.proFeaturesEnabled || !$0.pro }, id: \.self) { color in
                 color.localizedDescription
             }
         }.pickerStyle(.menu)
@@ -161,22 +169,22 @@ struct ThemeOptions
     
     @Option(name: "Custom Light Color",
             description: "Select a custom color to use with the light style.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColor != .custom})])
     var lightColor: Color = .orange
     
     @Option(name: "Custom Dark Color",
             description: "Select a custom color to use with the dark style.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColor != .custom})])
     var darkColor: Color = .orange
     
     @Option(name: "Custom Favorite Light Color",
             description: "Select a custom favorite color to use with the light style.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColor != .custom})])
     var lightFavoriteColor: Color = .yellow
     
     @Option(name: "Custom Favorite Dark Color",
             description: "Select a custom favorite color to use with the dark style.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColor != .custom})])
     var darkFavoriteColor: Color = .yellow
     
     @Option(name: "Restore Defaults",
@@ -190,4 +198,12 @@ struct ThemeOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension ThemeOptions
+{
+    static var currentColor: ThemeColor
+    {
+        return Settings.userInterfaceFeatures.theme.color
+    }
 }

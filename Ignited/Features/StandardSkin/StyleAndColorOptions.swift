@@ -103,18 +103,18 @@ struct StyleAndColorOptions
     var style: StandardSkinStyle = .filled
     
     @Option(name: "Color",
-            description: "Choose which color to use for inputs. Pro users can access the Battery and Custom colors.",
+            description: "Choose which color to use for inputs. Pro users can use both a custom color and a dynamic battery color.",
             values: StandardSkinColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
     var color: StandardSkinColor = .auto
     
     @Option(name: "Custom Color",
             description: "Choose the color to use for the custom color mode.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColor != .custom})])
     var customColor: Color = .orange
     
     @Option(name: "Custom Secondary Color",
             description: "Choose the secondary color to use for the custom color mode. This color is used for the outlines on the Filled + Outline style.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColor != .custom})])
     var customColorSecondary: Color = .white
     
     @Option(name: "Translucent",
@@ -130,7 +130,8 @@ struct StyleAndColorOptions
             range: 0.0...1.0,
             step: 0.05,
             unit: "%",
-            isPercentage: true)
+            isPercentage: true,
+            attributes: [.hidden(when: {!currentShadows})])
     var shadowOpacity: Double = 0.5
     
     @Option(name: "Restore Defaults",
@@ -146,3 +147,15 @@ struct StyleAndColorOptions
     var reset: Bool = false
 }
 
+extension StyleAndColorOptions
+{
+    static var currentColor: StandardSkinColor
+    {
+        return Settings.standardSkinFeatures.styleAndColor.color
+    }
+    
+    static var currentShadows: Bool
+    {
+        return Settings.standardSkinFeatures.styleAndColor.shadows
+    }
+}

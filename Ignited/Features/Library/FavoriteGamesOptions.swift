@@ -97,53 +97,53 @@ struct FavoriteGamesOptions
     var showStarIcon: Bool = true
     
     @Option(name: "Style",
-            description: "Choose the style to use for favorite game artwork. Custom options require Ignited Pro.",
+            description: "Choose the style to use for favorite game artwork. Pro users can use a customizable style.",
             values: Settings.proFeaturesEnabled ? FavoriteArtworkStyle.allCases : [.theme, .themeComplimentary])
     var style: FavoriteArtworkStyle = .theme
     
     @Option(name: "Background Color Mode",
             description: "Choose which background color to use with the custom style option.",
             values: ArtworkCustomColor.allCases,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var backgroundColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Background Color",
             description: "Choose the color to use for the custom background color mode.",
             transparency: true,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var backgroundColor: Color = .orange
     
     @Option(name: "Border Color Mode",
             description: "Choose which border color to use with the custom style option.",
             values: ArtworkCustomColor.allCases,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var borderColorMode: ArtworkCustomColor = .custom
     
     @Option(name: "Custom Border Color",
             description: "Choose the color to use for the custom border color mode.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var borderColor: Color = .orange
     
     @Option(name: "Text Color Mode",
             description: "Choose which text color to use with the custom style option.",
             values: ArtworkCustomColor.allCases,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var textColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Text Color",
             description: "Choose the color to use for the custom text color mode.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var textColor: Color = .black
     
     @Option(name: "Shadow Color Mode",
             description: "Choose which shadow color to use with the custom style option.",
             values: ArtworkCustomColor.allCases,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var shadowColorMode: ArtworkCustomColor = .theme
     
     @Option(name: "Custom Shadow Color",
             description: "Choose the color to use for the custom shadow color mode.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var shadowColor: Color = .white
     
     @Option(name: "Custom Shadow Radius",
@@ -151,7 +151,7 @@ struct FavoriteGamesOptions
             range: 0.0...10.0,
             step: 0.5,
             unit: "pt",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var shadowRadius: Double = 5
     
     @Option(name: "Custom Shadow Opacity",
@@ -160,7 +160,7 @@ struct FavoriteGamesOptions
             step: 0.1,
             unit: "%",
             isPercentage: true,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var shadowOpacity: Double = 0.5
     
     @Option(name: "Custom Corner Radius",
@@ -169,7 +169,7 @@ struct FavoriteGamesOptions
             step: 0.01,
             unit: "%",
             isPercentage: true,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var cornerRadius: Double = 0.15
     
     @Option(name: "Custom Border Width",
@@ -178,7 +178,7 @@ struct FavoriteGamesOptions
             step: 0.5,
             unit: "pt",
             decimals: 1,
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentStyle != .custom})])
     var borderWidth: Double = 2
     
     @Option(name: "Restore Defaults",
@@ -192,4 +192,12 @@ struct FavoriteGamesOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension FavoriteGamesOptions
+{
+    static var currentStyle: FavoriteArtworkStyle
+    {
+        return Settings.libraryFeatures.favorites.style
+    }
 }
