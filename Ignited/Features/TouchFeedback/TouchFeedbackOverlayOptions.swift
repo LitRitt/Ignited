@@ -77,9 +77,8 @@ struct TouchFeedbackOverlayOptions
     var customColor: Color = .orange
     
     @Option(name: "Style",
-            description: "Choose the style to use for overlays. Free users are limited to the default \"Bubble\" style.",
-            values: ButtonOverlayStyle.allCases.filter { $0 == .bubble || Settings.proFeaturesEnabled },
-            attributes: [.pro])
+            description: "Choose the style to use for overlays.",
+            values: ButtonOverlayStyle.allCases)
     var style: ButtonOverlayStyle = .bubble
     
     @Option(name: "Opacity",
