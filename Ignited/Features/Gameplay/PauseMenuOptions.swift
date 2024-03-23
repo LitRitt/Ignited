@@ -28,13 +28,6 @@ extension ShakeToPauseMode: LocalizedOptionValue
     }
 }
 
-extension [String]: LocalizedOptionValue
-{
-    public var localizedDescription: Text {
-        return Text("Edit")
-    }
-}
-
 struct PauseMenuOptions
 {
     @Option(name: "Button Order",

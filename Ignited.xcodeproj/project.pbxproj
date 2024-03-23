@@ -80,6 +80,7 @@
 		AC64A1DC2BA7557B00438491 /* GBACoreFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */; };
 		AC6997062AF16479005AF83C /* UIDevice+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */; };
 		AC6997082AF1653A005AF83C /* UIWindow+DeviceShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */; };
+		AC6BDBE22BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6BDBE12BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift */; };
 		AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
 		AC7D55702A07F7A900B66BF1 /* ImageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */; };
@@ -395,6 +396,7 @@
 		AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBACoreFeatures.swift; sourceTree = "<group>"; };
 		AC6997052AF16479005AF83C /* UIDevice+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+DeviceShake.swift"; sourceTree = "<group>"; };
+		AC6BDBE12BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+LocalizedOptionValue.swift"; sourceTree = "<group>"; };
 		AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
 		AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
 		AC7F1C842B535CB700A8CCBB /* Delta 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Delta 7.xcdatamodel"; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 		AC3C7A682B07D2C90027F07B /* System */ = {
 			isa = PBXGroup;
 			children = (
+				AC6BDBE12BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift */,
 				ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */,
 				ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */,
 				AC4C1A7D29E4B15D0031B0AD /* Bundle+BuildNumber.swift */,
@@ -1985,6 +1988,7 @@
 				ACE43DC92B473C0E00AD9287 /* ToastView.swift in Sources */,
 				AC84B57429FF1BDA0090F274 /* FastForwardOptions.swift in Sources */,
 				BFFA4C091E8A24D600D87934 /* GameTableViewCell.swift in Sources */,
+				AC6BDBE22BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift in Sources */,
 				AC1E64AC2B0989D6009CFD67 /* UILabel+NewGame.swift in Sources */,
 				AC64A1DA2BA7553200438491 /* GBAFeatures.swift in Sources */,
 				BFFC46231D5984A000AF2CC6 /* LaunchViewController.swift in Sources */,

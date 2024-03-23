@@ -352,6 +352,9 @@ class GameViewController: DeltaCore.GameViewController
                     
                 case .hold:
                     self.performFastForwardAction(activate: true)
+                    
+                case .cycle:
+                    self.performFastForwardCycleAction()
                 }
             }
             
@@ -2422,6 +2425,61 @@ extension GameViewController
         
         if Settings.userInterfaceFeatures.toasts.fastForward,
            Settings.gameplayFeatures.fastForward.mode == .toggle
+        {
+            self.presentToastView(text: text)
+        }
+        
+        self.updateAudio()
+    }
+    
+    func performFastForwardCycleAction()
+    {
+        if let pauseView = self.pauseViewController,
+           Settings.gameplayFeatures.pauseMenu.fastForwardDismisses
+        {
+            pauseView.dismiss()
+        }
+        
+        guard let emulatorCore = self.emulatorCore else { return }
+        var text: String = ""
+        
+        var speeds = Settings.gameplayFeatures.fastForward.cycleModes
+        speeds.append(1)
+        speeds.sort()
+        
+        for speed in speeds {
+            if emulatorCore.rate == speed,
+               let index = speeds.firstIndex(of: speed)
+            {
+                var newIndex = index + 1
+                
+                if newIndex >= speeds.count
+                {
+                    newIndex = 0
+                }
+                
+                let newSpeed = speeds[newIndex]
+                
+                emulatorCore.rate = newSpeed
+                
+                if newSpeed < 1.0
+                {
+                    text = NSLocalizedString("Slow Motion: " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+                }
+                else if newSpeed > 1.0
+                {
+                    text = NSLocalizedString("Fast Forward: " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+                }
+                else
+                {
+                    text = NSLocalizedString("Fast Forward Disabled", comment: "")
+                }
+                
+                break
+            }
+        }
+        
+        if Settings.userInterfaceFeatures.toasts.fastForward
         {
             self.presentToastView(text: text)
         }
