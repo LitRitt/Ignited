@@ -83,4 +83,12 @@ struct MGBCOptions
             description: "Choose how much frames should be skipped to improve performance at the expense of visual smoothness.",
             values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     var frameskip: Int32 = 0
+    
+    @Option(name: "Accelerometer Sensitivity",
+            description: "Adjust the sensitivity of the accelerometer used in some GBC games.",
+            range: 0.70...1.30,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var accelerometerSensitivity: Double = 1.0
 }

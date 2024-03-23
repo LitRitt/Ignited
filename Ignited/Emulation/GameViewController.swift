@@ -1716,6 +1716,7 @@ private extension GameViewController
             emulatorBridge.sgbBorders = Settings.gbFeatures.mGBASettings.sgbBorders
             emulatorBridge.idleOptimization = Settings.gbFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbFeatures.mGBASettings.frameskip
+            emulatorBridge.accelerometerSensitivity = Settings.gbFeatures.mGBASettings.accelerometerSensitivity
             
             emulatorBridge.updateSettings()
         }
