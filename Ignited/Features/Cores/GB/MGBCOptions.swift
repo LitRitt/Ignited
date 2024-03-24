@@ -60,25 +60,6 @@ enum GBColorOverride: String, CaseIterable, CustomStringConvertible, LocalizedOp
 
 struct MGBCOptions
 {
-    @Option(name: "Game Boy Model",
-            description: "Choose which Game Boy model to use. Autodetect will select the most appropriate model for the current game. Requires restarting the game.",
-            values: GBModel.allCases)
-    var model: GBModel = .auto
-    
-    @Option(name: "Palette Lookup",
-            description: "Choose which method to use to determine the color palette. Fallback looks for SGB palettes first, then GBC palettes if none are found. Choose None use the custom palette colors.",
-            values: GBColorOverride.allCases)
-    var paletteLookup: GBColorOverride = .fallback
-    
-    @Option(name: "Use SGB Borders",
-            description: "Display Super Game Boy borders for Super Game Boy enhanced games.")
-    var sgbBorders: Bool = true
-    
-    @Option(name: "Idle Loop Removal",
-            description: "Optimizes game performance by driving the GBA's CPU less hard. Use this on low-powered hardware if its struggling with game performance.",
-            values: GBIdleOptimization.allCases)
-    var idleOptimization: GBIdleOptimization = .remove
-    
     @Option(name: "Frameskip",
             description: "Choose how much frames should be skipped to improve performance at the expense of visual smoothness.",
             values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
@@ -91,4 +72,31 @@ struct MGBCOptions
             unit: "%",
             isPercentage: true)
     var accelerometerSensitivity: Double = 1.0
+    
+    @Option(name: "Rumble Intensity",
+            description: "Adjust the intensity of the rumble used in some GBA games.",
+            range: 0.0...1.0,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var rumbleIntensity: Double = 1.0
+    
+    @Option(name: "Use SGB Borders",
+            description: "Display Super Game Boy borders for Super Game Boy enhanced games.")
+    var sgbBorders: Bool = true
+    
+    @Option(name: "Game Boy Model",
+            description: "Choose which Game Boy model to use. Autodetect will select the most appropriate model for the current game. Requires restarting the game.",
+            values: GBModel.allCases)
+    var model: GBModel = .auto
+    
+    @Option(name: "Palette Lookup",
+            description: "Choose which method to use to determine the color palette. Fallback looks for SGB palettes first, then GBC palettes if none are found. Choose None use the custom palette colors.",
+            values: GBColorOverride.allCases)
+    var paletteLookup: GBColorOverride = .fallback
+    
+    @Option(name: "Idle Loop Removal",
+            description: "Optimizes game performance by driving the GBA's CPU less hard. Use this on low-powered hardware if its struggling with game performance.",
+            values: GBIdleOptimization.allCases)
+    var idleOptimization: GBIdleOptimization = .remove
 }

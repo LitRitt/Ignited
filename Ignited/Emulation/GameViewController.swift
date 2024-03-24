@@ -1720,6 +1720,7 @@ private extension GameViewController
             emulatorBridge.idleOptimization = Settings.gbFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbFeatures.mGBASettings.frameskip
             emulatorBridge.accelerometerSensitivity = Settings.gbFeatures.mGBASettings.accelerometerSensitivity
+            emulatorBridge.rumbleIntensity = Settings.gbFeatures.mGBASettings.rumbleIntensity
             
             emulatorBridge.updateSettings()
         }
@@ -1729,6 +1730,7 @@ private extension GameViewController
             emulatorBridge.idleOptimization = Settings.gbaFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbaFeatures.mGBASettings.frameskip
             emulatorBridge.accelerometerSensitivity = Settings.gbaFeatures.mGBASettings.accelerometerSensitivity
+            emulatorBridge.rumbleIntensity = Settings.gbaFeatures.mGBASettings.rumbleIntensity
             
             emulatorBridge.updateSettings()
         }

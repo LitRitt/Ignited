@@ -30,6 +30,15 @@ struct MGBAOptions
             unit: "%",
             isPercentage: true)
     var accelerometerSensitivity: Double = 1.0
+    
+    @Option(name: "Rumble Intensity",
+            description: "Adjust the intensity of the rumble used in some GBA games.",
+            range: 0.0...1.0,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var rumbleIntensity: Double = 1.0
+    
     @Option(name: "Idle Loop Removal",
             description: "Optimizes game performance by driving the GBA's CPU less hard. Use this on low-powered hardware if its struggling with game performance.",
             values: GBIdleOptimization.allCases)
