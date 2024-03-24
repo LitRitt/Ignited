@@ -1727,6 +1727,7 @@ private extension GameViewController
         else if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? mGBAEmulatorBridge
         {
             emulatorBridge.forceGBP = Settings.gbaFeatures.mGBASettings.forceGBP
+            emulatorBridge.luxLevel = Settings.gbaFeatures.mGBASettings.lightLevel
             emulatorBridge.idleOptimization = Settings.gbaFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbaFeatures.mGBASettings.frameskip
             emulatorBridge.accelerometerSensitivity = Settings.gbaFeatures.mGBASettings.accelerometerSensitivity

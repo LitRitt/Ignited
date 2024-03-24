@@ -22,6 +22,10 @@ struct MGBAOptions
             values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     var frameskip: Int32 = 0
     
+    @Option(name: "Light Level",
+            description: "Choose the light level for games that use a light sensor.",
+            values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    var lightLevel: Int32 = 0
     
     @Option(name: "Accelerometer Sensitivity",
             description: "Adjust the sensitivity of the accelerometer used in some GBA games.",
