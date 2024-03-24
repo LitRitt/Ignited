@@ -528,6 +528,8 @@ extension GameViewController
     {
         super.viewWillTransition(to: size, with: coordinator)
         
+        self.updateCoreSettings()
+        
         guard UIApplication.shared.applicationState != .background else { return }
                 
         coordinator.animate(alongsideTransition: { (context) in
@@ -1720,6 +1722,7 @@ private extension GameViewController
             emulatorBridge.idleOptimization = Settings.gbFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbFeatures.mGBASettings.frameskip
             emulatorBridge.accelerometerSensitivity = Settings.gbFeatures.mGBASettings.accelerometerSensitivity
+            emulatorBridge.orientation = self.getOrientation()
             emulatorBridge.rumbleIntensity = Settings.gbFeatures.mGBASettings.rumbleIntensity
             
             emulatorBridge.updateSettings()
@@ -1731,9 +1734,21 @@ private extension GameViewController
             emulatorBridge.idleOptimization = Settings.gbaFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbaFeatures.mGBASettings.frameskip
             emulatorBridge.accelerometerSensitivity = Settings.gbaFeatures.mGBASettings.accelerometerSensitivity
+            emulatorBridge.orientation = self.getOrientation()
             emulatorBridge.rumbleIntensity = Settings.gbaFeatures.mGBASettings.rumbleIntensity
             
             emulatorBridge.updateSettings()
+        }
+    }
+    
+    func getOrientation() -> Int32
+    {
+        switch UIApplication.shared.statusBarOrientation
+        {
+        case .landscapeLeft: return 1
+        case .landscapeRight: return 2
+        case .portraitUpsideDown: return 3
+        default: return 0
         }
     }
 }
@@ -2209,21 +2224,23 @@ extension GameViewController
         {
             self.presentToastView(text: text)
         }
-        
-        self.setNeedsUpdateOfSupportedInterfaceOrientations()
     }
     
     func lockOrientation()
     {
         guard self.lockedOrientation == nil else { return }
         
-        switch UIDevice.current.orientation
-        {
-        case .portrait: self.lockedOrientation = .portrait
-        case .landscapeLeft: self.lockedOrientation = .landscapeRight
-        case .landscapeRight: self.lockedOrientation = .landscapeLeft
-        case .portraitUpsideDown: self.lockedOrientation = .portraitUpsideDown
-        default: self.lockedOrientation = .portrait
+        DispatchQueue.main.async {
+            switch UIApplication.shared.statusBarOrientation
+            {
+            case .portrait: self.lockedOrientation = .portrait
+            case .landscapeLeft: self.lockedOrientation = .landscapeLeft
+            case .landscapeRight: self.lockedOrientation = .landscapeRight
+            case .portraitUpsideDown: self.lockedOrientation = .portraitUpsideDown
+            default: self.lockedOrientation = .portrait
+            }
+            
+            self.setNeedsUpdateOfSupportedInterfaceOrientations()
         }
     }
     
@@ -2232,6 +2249,10 @@ extension GameViewController
         guard !self.isOrientationLocked else { return }
         
         self.lockedOrientation = nil
+        
+        DispatchQueue.main.async {
+            self.setNeedsUpdateOfSupportedInterfaceOrientations()
+        }
     }
     
     func performScreenshotAction(hold: Bool = false)
@@ -3389,11 +3410,6 @@ private extension GameViewController
         self.isGyroActive = true
         self.lockOrientation()
         
-        // Needs called on main thread
-        DispatchQueue.main.async{
-            self.setNeedsUpdateOfSupportedInterfaceOrientations()
-        }
-        
         guard !self.presentedGyroAlert else { return }
         
         self.presentedGyroAlert = true
@@ -3421,11 +3437,6 @@ private extension GameViewController
     {
         self.isGyroActive = false
         self.unlockOrientation()
-        
-        // Needs called on main thread
-        DispatchQueue.main.async{
-            self.setNeedsUpdateOfSupportedInterfaceOrientations()
-        }
     }
     
     @objc func didEnableJIT(with notification: Notification)
