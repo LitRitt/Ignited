@@ -22,6 +22,14 @@ struct MGBAOptions
             values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     var frameskip: Int32 = 0
     
+    
+    @Option(name: "Accelerometer Sensitivity",
+            description: "Adjust the sensitivity of the accelerometer used in some GBA games.",
+            range: 0.80...1.50,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var accelerometerSensitivity: Double = 1.0
     @Option(name: "Idle Loop Removal",
             description: "Optimizes game performance by driving the GBA's CPU less hard. Use this on low-powered hardware if its struggling with game performance.",
             values: GBIdleOptimization.allCases)

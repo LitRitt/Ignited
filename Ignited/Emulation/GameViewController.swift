@@ -1728,6 +1728,7 @@ private extension GameViewController
             emulatorBridge.forceGBP = Settings.gbaFeatures.mGBASettings.forceGBP
             emulatorBridge.idleOptimization = Settings.gbaFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbaFeatures.mGBASettings.frameskip
+            emulatorBridge.accelerometerSensitivity = Settings.gbaFeatures.mGBASettings.accelerometerSensitivity
             
             emulatorBridge.updateSettings()
         }
