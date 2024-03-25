@@ -37,6 +37,14 @@ struct MGBAOptions
             values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     var lightLevel: Int32 = 0
     
+    @Option(name: "Gyroscope Sensitivity",
+            description: "Adjust the sensitivity of the gyroscope used in some GBA games.",
+            range: 1.0...3.0,
+            step: 0.05,
+            unit: "%",
+            isPercentage: true)
+    var gyroscopeSensitivity: Double = 1.0
+    
     @Option(name: "Accelerometer Sensitivity",
             description: "Adjust the sensitivity of the accelerometer used in some GBA games.",
             range: 0.80...1.50,

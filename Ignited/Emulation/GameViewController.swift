@@ -1732,6 +1732,7 @@ private extension GameViewController
             emulatorBridge.luxLevel = Settings.gbaFeatures.mGBASettings.lightLevel
             emulatorBridge.idleOptimization = Settings.gbaFeatures.mGBASettings.idleOptimization.rawValue
             emulatorBridge.frameskip = Settings.gbaFeatures.mGBASettings.frameskip
+            emulatorBridge.gyroscopeSensitivity = Settings.gbaFeatures.mGBASettings.gyroscopeSensitivity
             emulatorBridge.accelerometerSensitivity = Settings.gbaFeatures.mGBASettings.accelerometerSensitivity
             emulatorBridge.orientation = self.getOrientation()
             emulatorBridge.rumbleIntensity = Settings.gbaFeatures.mGBASettings.rumbleIntensity
