@@ -10,13 +10,23 @@ import SwiftUI
 
 import Features
 
+enum GBAIdleOptimization: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
+{
+    case remove = "Remove Known"
+    case detect = "Detect and Remove"
+    case none = "Don't Remove"
+    
+    var description: String {
+        return self.rawValue
+    }
+    
+    var localizedDescription: Text {
+        return Text(description)
+    }
+}
+
 struct MGBAOptions
 {
-    @Option(name: "Game Boy Player",
-            description: "Forces the core to use the Game Boy Player.",
-            attributes: [.hidden(when: {true})])
-    var forceGBP: Bool = false
-    
     @Option(name: "Frameskip",
             description: "Choose how much frames should be skipped to improve performance at the expense of visual smoothness.",
             values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
@@ -43,8 +53,12 @@ struct MGBAOptions
             isPercentage: true)
     var rumbleIntensity: Double = 1.0
     
+    @Option(name: "Game Boy Player",
+            description: "Enable Game Boy Player support. This will add rumble to certain games at the cost of causing performance issues.")
+    var forceGBP: Bool = false
+    
     @Option(name: "Idle Loop Removal",
             description: "Optimizes game performance by driving the GBA's CPU less hard. Use this on low-powered hardware if its struggling with game performance.",
-            values: GBIdleOptimization.allCases)
-    var idleOptimization: GBIdleOptimization = .remove
+            values: GBAIdleOptimization.allCases)
+    var idleOptimization: GBAIdleOptimization = .remove
 }

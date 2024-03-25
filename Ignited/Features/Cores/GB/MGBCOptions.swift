@@ -27,21 +27,6 @@ enum GBModel: String, CaseIterable, CustomStringConvertible, LocalizedOptionValu
     }
 }
 
-enum GBIdleOptimization: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
-{
-    case remove = "Remove Known"
-    case detect = "Detect and Remove"
-    case none = "Don't Remove"
-    
-    var description: String {
-        return self.rawValue
-    }
-    
-    var localizedDescription: Text {
-        return Text(description)
-    }
-}
-
 enum GBColorOverride: String, CaseIterable, CustomStringConvertible, LocalizedOptionValue
 {
     case fallback = "Fallback"
@@ -67,7 +52,7 @@ struct MGBCOptions
     
     @Option(name: "Accelerometer Sensitivity",
             description: "Adjust the sensitivity of the accelerometer used in some GBC games.",
-            range: 0.70...1.30,
+            range: 0.80...1.50,
             step: 0.05,
             unit: "%",
             isPercentage: true)
@@ -94,9 +79,4 @@ struct MGBCOptions
             description: "Choose which method to use to determine the color palette. Fallback looks for SGB palettes first, then GBC palettes if none are found. Choose None use the custom palette colors.",
             values: GBColorOverride.allCases)
     var paletteLookup: GBColorOverride = .fallback
-    
-    @Option(name: "Idle Loop Removal",
-            description: "Optimizes game performance by driving the GBA's CPU less hard. Use this on low-powered hardware if its struggling with game performance.",
-            values: GBIdleOptimization.allCases)
-    var idleOptimization: GBIdleOptimization = .remove
 }
