@@ -39,13 +39,13 @@ extension SkinBackgroundColor: LocalizedOptionValue
 struct SkinOptions
 {
     @Option(name: "Background Color Mode",
-            description: "Choose which color to use for the controller skin background. Custom color requires Ignited Pro.",
+            description: "Choose which color to use for the controller skin background. Pro users can select a custom oolor.",
             values: Settings.proFeaturesEnabled ? SkinBackgroundColor.allCases : [.none, .theme])
     var colorMode: SkinBackgroundColor = .none
     
     @Option(name: "Custom Background Color",
             description: "Select a custom color to use as the controller skin background.",
-            attributes: [.pro])
+            attributes: [.pro, .hidden(when: {currentColorMode != .custom})])
     var backgroundColor: Color = .black
     
     @Option(name: "Opacity",
@@ -71,4 +71,12 @@ struct SkinOptions
         .displayInline()
     })
     var reset: Bool = false
+}
+
+extension SkinOptions
+{
+    static var currentColorMode: SkinBackgroundColor
+    {
+        return Settings.controllerFeatures.skin.colorMode
+    }
 }
