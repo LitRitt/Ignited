@@ -60,6 +60,10 @@ struct SkinOptions
             description: "Enable to allow diagonal inputs on the corners of the D-Pad.")
     var diagonalDpad: Bool = true
     
+    @Option(name: "Ignore Input Frames",
+            description: "Enable to ignore the inputFrame provided by skins. Fixes improper cropping on legacy skins. Does not affect DS skins.")
+    var ignoreInputFrames: Bool = true
+    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in

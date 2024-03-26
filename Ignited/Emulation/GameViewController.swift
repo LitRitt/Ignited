@@ -1268,10 +1268,11 @@ private extension GameViewController
     
     func updateControllerSkinCustomization()
     {
+        guard let emulatorCore = self.emulatorCore else { return }
+        
         self.controllerView.translucentControllerSkinOpacity = Settings.controllerFeatures.skin.opacity
-        
         self.controllerView.isDiagonalDpadInputsEnabled = Settings.controllerFeatures.skin.diagonalDpad
-        
+        self.ignoreInputFrames = Settings.controllerFeatures.skin.ignoreInputFrames && emulatorCore.deltaCore.gameType != .ds
         self.backgroundColor = self.isEditingOverscanInsets ? UIColor.red : Settings.controllerFeatures.skin.colorMode.uiColor
     }
     
