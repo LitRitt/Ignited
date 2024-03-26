@@ -112,11 +112,11 @@ extension QuickSettingsView
         {
             if gameType == System.gbc.gameType
             {
-                features.append(.gbc)
+                features.insert(.gbc, at: 0)
             }
             else if gameType == System.gba.gameType
             {
-                features.append(.gba)
+                features.insert(.gba, at: 0)
             }
         }
         
