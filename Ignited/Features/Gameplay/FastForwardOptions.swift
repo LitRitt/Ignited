@@ -164,7 +164,14 @@ extension FastForwardOptions
             .foregroundColor(.accentColor)
             .contentShape(Rectangle())
             .onTapGesture {
-                selectedSpeeds.wrappedValue.removeAll(where: {$0 == speed.rawValue})
+                if selectedSpeeds.wrappedValue.count > 1
+                {
+                    selectedSpeeds.wrappedValue.removeAll(where: {$0 == speed.rawValue})
+                }
+                else
+                {
+                    ToastView.show(NSLocalizedString("There must be at least 1 selected speed", comment: ""))
+                }
             }
         }
         else

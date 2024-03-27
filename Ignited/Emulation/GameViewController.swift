@@ -646,7 +646,11 @@ extension GameViewController
             
             pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
             pauseViewController.fastForwardItem?.action = { [unowned self] item in
-                self.performFastForwardAction(activate: item.isSelected)
+                switch Settings.gameplayFeatures.fastForward.mode
+                {
+                case .cycle: self.performFastForwardCycleAction()
+                default: self.performFastForwardAction(activate: item.isSelected)
+                }
             }
             pauseViewController.fastForwardItem?.menu = makeFastForwardSpeedMenu()
             
@@ -2468,42 +2472,63 @@ extension GameViewController
         }
         
         guard let emulatorCore = self.emulatorCore else { return }
+        
         var text: String = ""
+        var validSpeedFound: Bool = false
+        var newSpeed: Double = 0
         
         var speeds = Settings.gameplayFeatures.fastForward.cycleModes
         speeds.append(1)
         speeds.sort()
         
         for speed in speeds {
-            if emulatorCore.rate == speed,
+            if emulatorCore.rate <= speed,
                let index = speeds.firstIndex(of: speed)
             {
+                validSpeedFound = true
                 var newIndex = index + 1
+                
+                if emulatorCore.rate < speed
+                {
+                    newIndex = index
+                }
                 
                 if newIndex >= speeds.count
                 {
                     newIndex = 0
                 }
                 
-                let newSpeed = speeds[newIndex]
-                
-                emulatorCore.rate = newSpeed
-                
-                if newSpeed < 1.0
-                {
-                    text = NSLocalizedString("Slow Motion: " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
-                }
-                else if newSpeed > 1.0
-                {
-                    text = NSLocalizedString("Fast Forward: " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
-                }
-                else
-                {
-                    text = NSLocalizedString("Fast Forward Disabled", comment: "")
-                }
+                newSpeed = speeds[newIndex] ?? 1
                 
                 break
             }
+        }
+        
+        if !validSpeedFound
+        {
+            if speeds[0] == 1
+            {
+                newSpeed = speeds[1]
+            }
+            else
+            {
+                newSpeed = speeds[0]
+            }
+        }
+        
+        emulatorCore.rate = newSpeed
+        
+        if newSpeed < 1.0
+        {
+            text = NSLocalizedString("Slow Motion: " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+        }
+        else if newSpeed > 1.0
+        {
+            text = NSLocalizedString("Fast Forward: " + String(format: "%.f", emulatorCore.rate * 100) + "%", comment: "")
+        }
+        else
+        {
+            text = NSLocalizedString("Fast Forward Disabled", comment: "")
         }
         
         if Settings.userInterfaceFeatures.toasts.fastForward
