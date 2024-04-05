@@ -54,10 +54,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case black = "Space Black"
     case silver = "Silver"
     case gold = "Gold"
-    // Scott Pro
-    case sword = "Master Sword"
-    case shield = "Hylian Shield"
-    case mario = "Many Marios"
     
     var description: String {
         return self.rawValue
@@ -81,9 +77,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
             
         case .ablaze:
             return .salty
-            
-        case .sword, .shield, .mario:
-            return .scott
         }
     }
     
@@ -129,9 +122,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .black: return "IconBlack"
         case .silver: return "IconSilver"
         case .gold: return "IconGold"
-        case .shield: return "IconShield"
-        case .sword: return "IconSword"
-        case .mario: return "IconMario"
         }
     }
     
@@ -176,7 +166,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case _ where self.themed: return .themed
         case _ where self.author == .litritt: return .litPro
         case _ where self.author == .kongo: return .kongPro
-        case _ where self.author == .scott: return .scottPro
         default: return .basic
         }
     }
@@ -203,7 +192,6 @@ enum AppIconCategory: String, CaseIterable, Identifiable
     case themed = "Dynamic Theme Icons"
     case litPro = "Lit Pro Icons"
     case kongPro = "Kongo Pro Icons"
-    case scottPro = "Scott Pro Icons"
     
     var id: String {
         return self.rawValue
@@ -214,7 +202,6 @@ enum AppIconAuthor: String, CaseIterable, Identifiable
 {
     case litritt = "LitRitt"
     case kongo = "Kongolabongo"
-    case scott = "Scott the Rizzler"
     case epicpal = "epicpal"
     case salty = "Salty"
     
