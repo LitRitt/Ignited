@@ -14,6 +14,10 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
 {
     // Lit Pro
     case normal = "Default"
+    case standard = "Standard"
+    case standardDark = "Standard Dark"
+    case inverted = "Inverted"
+    case invertedDark = "Inverted Dark"
     case tribute = "Tribute"
     case neon = "Neon"
     case connect = "Connect"
@@ -21,8 +25,18 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case smash = "Super Ignited Bros"
     case plumberRed = "Red Plumber"
     case plumberGreen = "Green Plumber"
+    case mushroom = "Mushroom"
+    case mushroomSuper = "Super Mushroom"
+    case mushroom1Up = "1-Up Mushroom"
+    case mushroomPoison = "Poison Mushroom"
+    case mushroomMega = "Mega Mushroom"
     case goomba = "Stomp Bait"
     case pikachu = "Sparky"
+    case pokeballCapture = "Capture Ball"
+    case pokeball = "Poké Ball"
+    case pokeballGreat = "Great Ball"
+    case pokeballUltra = "Ultra Ball"
+    case pokeballMaster = "Master Ball"
     case kirby = "Puffball"
     case sealing = "Sword That Seals"
     case sealingAlt = "Sword That Seals Alt"
@@ -56,7 +70,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: AppIconAuthor {
         switch self
         {
-        case .normal, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu:
+        case .normal, .standard, .standardDark, .inverted, .invertedDark, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu, .mushroom, .mushroomSuper, .mushroom1Up, .mushroomPoison, .mushroomMega, .pokeball, .pokeballCapture, .pokeballGreat, .pokeballUltra, .pokeballMaster:
             return .litritt
             
         case .classic, .ball, .kong, .kongFlame, .black, .silver, .gold:
@@ -73,10 +87,14 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         }
     }
     
-    var assetName: String {
+    var baseAssetName: String {
         switch self
         {
-        case .normal: return "IconOrange"
+        case .normal: return "IconStandardOrange"
+        case .standard: return "IconStandard"
+        case .standardDark: return "IconStandardDark"
+        case .inverted: return "IconInverted"
+        case .invertedDark: return "IconInvertedDark"
         case .connect: return "IconConnect"
         case .tribute: return "IconTribute"
         case .cartridge: return "IconCartridge"
@@ -84,8 +102,18 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .plumberRed: return "IconPlumberRed"
         case .plumberGreen: return "IconPlumberGreen"
         case .goomba: return "IconGoomba"
+        case .mushroom: return "IconMushroom"
+        case .mushroomSuper: return "IconSuperMushroom"
+        case .mushroom1Up: return "Icon1UpMushroom"
+        case .mushroomPoison: return "IconPoisonMushroom"
+        case .mushroomMega: return "IconMegaMushroom"
         case .smash: return "IconSmash"
         case .pikachu: return "IconPikachu"
+        case .pokeballCapture: return "IconCaptureBall"
+        case .pokeball: return "IconPokeBall"
+        case .pokeballGreat: return "IconGreatBall"
+        case .pokeballUltra: return "IconUltraBall"
+        case .pokeballMaster: return "IconMasterBall"
         case .kirby: return "IconKirby"
         case .sealing: return "IconSealing"
         case .igniting: return "IconIgniting"
@@ -107,6 +135,24 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         }
     }
     
+    var assetName: String {
+        if self.themed
+        {
+            if Settings.userInterfaceFeatures.theme.color != .custom
+            {
+                return self.baseAssetName + Settings.userInterfaceFeatures.theme.color.description
+            }
+            else
+            {
+                return self.baseAssetName + ThemeColor.orange.description
+            }
+        }
+        else
+        {
+            return self.baseAssetName
+        }
+    }
+    
     var pro: Bool {
         switch self
         {
@@ -115,10 +161,19 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         }
     }
     
+    var themed: Bool {
+        switch self
+        {
+        case .standard, .standardDark, .inverted, .invertedDark, .mushroom, .pokeballCapture: return true
+        default: return false
+        }
+    }
+    
     var category: AppIconCategory {
         switch self
         {
         case _ where !self.pro: return .basic
+        case _ where self.themed: return .themed
         case _ where self.author == .litritt: return .litPro
         case _ where self.author == .kongo: return .kongPro
         case _ where self.author == .scott: return .scottPro
@@ -145,6 +200,7 @@ extension AppIcon: Equatable
 enum AppIconCategory: String, CaseIterable, Identifiable
 {
     case basic = "Basic Icons"
+    case themed = "Dynamic Theme Icons"
     case litPro = "Lit Pro Icons"
     case kongPro = "Kongo Pro Icons"
     case scottPro = "Scott Pro Icons"
