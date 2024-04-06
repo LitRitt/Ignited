@@ -80,7 +80,6 @@ private extension SettingsViewController
     
     enum OfficialLinksRow: Int, CaseIterable
     {
-        case github
         case discord
         case docs
         case changelog
@@ -425,7 +424,6 @@ extension SettingsViewController
         case .officialLinks:
             switch OfficialLinksRow.allCases[indexPath.row]
             {
-            case .github: UIApplication.shared.openAppOrWebpage(site: "https://github.com/LitRitt/Ignited")
             case .discord: UIApplication.shared.openAppOrWebpage(site: "https://discord.gg/qEtKFJt5dR")
             case .docs: UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
             case .changelog: UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
