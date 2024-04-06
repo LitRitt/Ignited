@@ -156,7 +156,7 @@ struct ThemeOptions
             description: "Choose an accent color for the app. Pro users can use custom colors.",
             detailView: { value in
         Picker("Color", selection: value) {
-            ForEach(ThemeColor.allCases.filter { Settings.proFeaturesEnabled || !$0.pro }, id: \.self) { color in
+            ForEach(ThemeColor.allCases.filter { PurchaseManager.shared.hasUnlockedPro || !$0.pro }, id: \.self) { color in
                 color.localizedDescription
             }
         }.pickerStyle(.menu)

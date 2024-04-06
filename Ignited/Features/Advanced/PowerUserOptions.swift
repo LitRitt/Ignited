@@ -350,8 +350,8 @@ extension PowerUserOptions
                 
             case .saveStateRewind:
                 Settings.gameplayFeatures.rewind.interval = 15
-                Settings.gameplayFeatures.rewind.maxStates = Settings.proFeaturesEnabled ? 30 : 4
-                Settings.gameplayFeatures.rewind.keepStates = Settings.proFeaturesEnabled ? true : false
+                Settings.gameplayFeatures.rewind.maxStates = PurchaseManager.shared.hasUnlockedPro ? 30 : 4
+                Settings.gameplayFeatures.rewind.keepStates = PurchaseManager.shared.hasUnlockedPro ? true : false
                 
             case .fastForward:
                 Settings.gameplayFeatures.fastForward.speed = 3.0
@@ -377,9 +377,9 @@ extension PowerUserOptions
                 Settings.standardSkinFeatures.gameScreen.unsafeArea = 40
                 
             case .inputsAndLayout:
-                Settings.standardSkinFeatures.inputsAndLayout.customButton1 = Settings.proFeaturesEnabled ? .fastForward : .null
-                Settings.standardSkinFeatures.inputsAndLayout.customButton2 = Settings.proFeaturesEnabled ? .quickSave : .null
-                Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap = Settings.proFeaturesEnabled ? true : false
+                Settings.standardSkinFeatures.inputsAndLayout.customButton1 = PurchaseManager.shared.hasUnlockedPro ? .fastForward : .null
+                Settings.standardSkinFeatures.inputsAndLayout.customButton2 = PurchaseManager.shared.hasUnlockedPro ? .quickSave : .null
+                Settings.standardSkinFeatures.inputsAndLayout.dsScreenSwap = PurchaseManager.shared.hasUnlockedPro ? true : false
                 Settings.standardSkinFeatures.inputsAndLayout.dsLayout = .comfortable
                 Settings.standardSkinFeatures.inputsAndLayout.directionalInputType = .dPad
                 Settings.standardSkinFeatures.inputsAndLayout.abxyLayout = .nintendo

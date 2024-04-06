@@ -738,15 +738,6 @@ extension DatabaseManager
     }
 }
 
-extension DatabaseManager
-{
-    func patreonAccount(in context: NSManagedObjectContext = DatabaseManager.shared.viewContext) -> PatreonAccount?
-    {
-        let patronAccount = PatreonAccount.first(in: context)
-        return patronAccount
-    }
-}
-
 //MARK: - File URLs -
 /// File URLs
 extension DatabaseManager

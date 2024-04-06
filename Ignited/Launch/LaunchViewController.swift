@@ -110,9 +110,8 @@ extension LaunchViewController
         
         guard !self.presentedGameViewController else { return }
         
-        PatreonAPI.shared.refreshPatreonAccount()
-        PatreonAPI.shared.refreshCreatorAccessToken()
-        PatreonAPI.shared.updateProFeatures()
+        PurchaseManager.shared.loadProducts()
+        PurchaseManager.shared.updatePurchasedProducts()
         
         self.presentedGameViewController = true
         

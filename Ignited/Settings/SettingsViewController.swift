@@ -17,7 +17,7 @@ private extension SettingsViewController
 {
     enum Section: Int, CaseIterable
     {
-        case patreon
+        case pro
         case syncing
         case features
         case cores
@@ -84,12 +84,6 @@ private extension SettingsViewController
         case discord
         case docs
         case changelog
-    }
-    
-    enum PatreonRow: Int, CaseIterable
-    {
-        case patreonPro
-        case patreonPremium
     }
     
     enum CoresRow: Int, CaseIterable
@@ -233,16 +227,30 @@ private extension SettingsViewController
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
-    func showPremiumPatrons()
-    {
-        let hostingController = PremiumPatronsView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
     func showFeatures(featureGroup: FeatureGroup)
     {
         let hostingController = FeaturesView.makeViewController(featureGroup: featureGroup)
         self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showProPurchases()
+    {
+        let alertController = UIAlertController(title: NSLocalizedString("Ignited Pro", comment: ""), message: NSLocalizedString("Show your support and gain access to more icons, colors, and customization options.", comment: ""), preferredStyle: .alert)
+        
+        for product in PurchaseManager.shared.products
+        {
+            alertController.addAction(UIAlertAction(title: (product.displayName + " - " + product.displayPrice), style: .default, handler: {(action) in
+                PurchaseManager.shared.purchase(product)
+            }))
+        }
+        
+        alertController.addAction(UIAlertAction(title: "Restore Purchases", style: .default, handler: {(action) in
+            PurchaseManager.shared.restorePurchases()
+        }))
+        
+        alertController.addAction(.cancel)
+        
+        self.present(alertController, animated: true)
     }
 }
 
@@ -438,13 +446,15 @@ extension SettingsViewController
                 self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
             }
             
-        case .patreon:
-            switch PatreonRow.allCases[indexPath.row]
+        case .pro:
+            if PurchaseManager.shared.hasUnlockedPro
             {
-            case .patreonPro: break
-            case .patreonPremium: self.showPremiumPatrons()
+                ToastView.show("You've already joined Ignited Pro", detailText: "Thanks for your support", duration: 3)
             }
-            
+            else
+            {
+                self.showProPurchases()
+            }
             tableView.deselectRow(at: indexPath, animated: true)
             
         case .credits:
@@ -453,6 +463,22 @@ extension SettingsViewController
             case .developer: UIApplication.shared.openAppOrWebpage(site: "https://github.com/LitRitt")
             case .contributors: self.showContributors()
             case .softwareLicenses: break
+            }
+            
+        default: break
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        let section = Section(rawValue: indexPath.section)!
+
+        switch section
+        {
+        case .pro:
+            if PurchaseManager.shared.hasUnlockedPro
+            {
+                cell.textLabel?.text = NSLocalizedString("Ignited Pro Unlocked", comment: "")
             }
             
         default: break

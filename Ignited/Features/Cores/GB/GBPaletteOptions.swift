@@ -135,7 +135,7 @@ struct GBPaletteOptions
     
     @Option(name: "Main Palette",
             description: "Choose the color palette for everything other than sprites.",
-            values: GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
+            values: GameboyPalette.allCases.filter { !$0.pro || PurchaseManager.shared.hasUnlockedPro })
     var palette: GameboyPalette = .studio
     
     @Option(name: "Multiple Palettes",
@@ -144,12 +144,12 @@ struct GBPaletteOptions
     
     @Option(name: "Sprite Palette 1",
             description: "Choose the color palette to use for sprite layer 1.",
-            values: GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
+            values: GameboyPalette.allCases.filter { !$0.pro || PurchaseManager.shared.hasUnlockedPro })
     var spritePalette1: GameboyPalette = .studio
     
     @Option(name: "Sprite Palette 2",
             description: "Choose which color palette to use for sprite layer 2.",
-            values: GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
+            values: GameboyPalette.allCases.filter { !$0.pro || PurchaseManager.shared.hasUnlockedPro })
     var spritePalette2: GameboyPalette = .studio
     
     @Option(name: "Custom Palette 1",

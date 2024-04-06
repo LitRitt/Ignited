@@ -268,7 +268,7 @@ extension AppIconOptions
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    if Settings.proFeaturesEnabled || category == .basic {
+                    if PurchaseManager.shared.hasUnlockedPro || category == .basic {
                         currentIcon.wrappedValue = icon
                     } else {
                         ToastView.show(NSLocalizedString("Ignited Pro is required to use this icon", comment: ""), onEdge: .bottom)

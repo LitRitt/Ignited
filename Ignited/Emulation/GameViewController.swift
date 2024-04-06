@@ -372,7 +372,7 @@ class GameViewController: DeltaCore.GameViewController
                 
             case .quickSettings:
                 if let action = Settings.gameplayFeatures.quickSettings.buttonReplacement,
-                   Settings.proFeaturesEnabled
+                   PurchaseManager.shared.hasUnlockedPro
                 {
                     switch action
                     {
@@ -2990,7 +2990,7 @@ extension GameViewController
             let alertController = UIAlertController(title: NSLocalizedString("Choose Color Palette", comment: ""), message: nil, preferredStyle: .actionSheet)
             alertController.preparePopoverPresentationController(self.view)
             
-            for palette in GameboyPalette.allCases.filter { !$0.pro || Settings.proFeaturesEnabled }
+            for palette in GameboyPalette.allCases.filter { !$0.pro || PurchaseManager.shared.hasUnlockedPro }
             {
                 let text = (Settings.gbFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                 alertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in

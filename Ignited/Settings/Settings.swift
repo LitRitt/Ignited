@@ -349,16 +349,6 @@ extension Settings
             NotificationCenter.default.post(name: Settings.didChangeNotification, object: controllerSkin, userInfo: [NotificationUserInfoKey.name: Name.preferredControllerSkin, NotificationUserInfoKey.system: system, NotificationUserInfoKey.traits: traits])
         }
     }
-    
-    static var proFeaturesEnabled: Bool {
-        get {
-            if Settings.advancedFeatures.proOverride.isEnabled { return true }
-            
-            guard let patreonAccount = DatabaseManager.shared.patreonAccount() else { return false }
-            
-            return (patreonAccount.isPatron && PatreonAPI.shared.isAuthenticated)
-        }
-    }
 }
 
 extension Settings

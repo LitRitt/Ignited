@@ -38,7 +38,7 @@ struct AppPresetOptions
     
     @Option(name: "Battery Preset",
             description: "Sets visual customization to use the battery color where possible.",
-            attributes: [.hidden(when: { !Settings.proFeaturesEnabled })],
+            attributes: [.hidden(when: { !PurchaseManager.shared.hasUnlockedPro })],
             detailView: { _ in
         Button("Battery Preset") {
             AppPresetOptions.setBatteryPreset()
