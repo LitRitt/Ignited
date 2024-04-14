@@ -81,7 +81,7 @@ extension GamesStoryboardSegue: UIViewControllerAnimatedTransitioning
         transitionContext.destinationView.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
         transitionContext.containerView.addSubview(transitionContext.destinationView)
         
-        let snapshotView = transitionContext.sourceView.snapshotView(afterScreenUpdates: false)!
+        guard let snapshotView = transitionContext.sourceView.snapshotView(afterScreenUpdates: false) else { return }
         snapshotView.frame = transitionContext.sourceViewInitialFrame!
         snapshotView.alpha = 1.0
         transitionContext.containerView.addSubview(snapshotView)

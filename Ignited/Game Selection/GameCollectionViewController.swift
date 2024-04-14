@@ -384,8 +384,9 @@ private extension GameCollectionViewController
         self.dataSource.prefetchCompletionHandler = { (cell, image, indexPath, error) in
             guard let image = image else { return }
             
-            let cell = cell as! GridCollectionViewGameCell
-            let game = self.dataSource.item(at: indexPath) as! Game
+            guard let cell = cell as? GridCollectionViewGameCell,
+                  let game = self.dataSource.item(at: indexPath) as? Game else { return }
+            
             var gameType = game.type
             
             cell.imageView.image = image
