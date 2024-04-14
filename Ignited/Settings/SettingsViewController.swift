@@ -213,6 +213,7 @@ private extension SettingsViewController
     {
         switch section
         {
+        case .syncing: return true
         default: return false
         }
     }
@@ -297,19 +298,19 @@ extension SettingsViewController
     override func tableView(_ tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int
     {
         let section = Section(rawValue: sectionIndex)!
-        switch section
+        
+        if isSectionHidden(section)
         {
-        case .controllers: return 4 // Temporarily hide other controller indexes until controller logic is finalized
-        case .controllerSkins: return System.registeredSystems.count + 1
-        case .syncing: return SyncManager.shared.coordinator?.account == nil ? 1 : super.tableView(tableView, numberOfRowsInSection: sectionIndex)
-        default:
-            if isSectionHidden(section)
+            return 0
+        }
+        else
+        {
+            switch section
             {
-                return 0
-            }
-            else
-            {
-                return super.tableView(tableView, numberOfRowsInSection: sectionIndex)
+            case .controllers: return 4 // Temporarily hide other controller indexes until controller logic is finalized
+            case .controllerSkins: return System.registeredSystems.count + 1
+            case .syncing: return SyncManager.shared.coordinator?.account == nil ? 1 : super.tableView(tableView, numberOfRowsInSection: sectionIndex)
+            default: return super.tableView(tableView, numberOfRowsInSection: sectionIndex)
             }
         }
     }
