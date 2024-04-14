@@ -26,15 +26,12 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case connect = "Connect"
     case cartridge = "Cartridge"
     case smash = "Super Ignited Bros"
-    case plumberRed = "Red Plumber"
-    case plumberGreen = "Green Plumber"
     case mushroom = "Mushroom"
     case mushroomSuper = "Super Mushroom"
     case mushroom1Up = "1-Up Mushroom"
     case mushroomPoison = "Poison Mushroom"
     case mushroomMega = "Mega Mushroom"
     case goomba = "Stomp Bait"
-    case pikachu = "Sparky"
     case pokeballCapture = "Capture Ball"
     case pokeball = "Poké Ball"
     case pokeballGreat = "Great Ball"
@@ -68,7 +65,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: AppIconAuthor {
         switch self
         {
-        case .normal, .standard, .standardDark, .inverted, .invertedDark, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu, .mushroom, .mushroomSuper, .mushroom1Up, .mushroomPoison, .mushroomMega, .pokeball, .pokeballCapture, .pokeballGreat, .pokeballUltra, .pokeballMaster, .joystick, .joystickThemed:
+        case .normal, .standard, .standardDark, .inverted, .invertedDark, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .goomba, .mushroom, .mushroomSuper, .mushroom1Up, .mushroomPoison, .mushroomMega, .pokeball, .pokeballCapture, .pokeballGreat, .pokeballUltra, .pokeballMaster, .joystick, .joystickThemed:
             return .litritt
             
         case .classic, .ball, .kong, .kongFlame, .black, .silver, .gold:
@@ -95,8 +92,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .joystick, .joystickThemed: return "IconJoystick"
         case .cartridge: return "IconCartridge"
         case .neon: return "IconNeon"
-        case .plumberRed: return "IconPlumberRed"
-        case .plumberGreen: return "IconPlumberGreen"
         case .goomba: return "IconGoomba"
         case .mushroom: return "IconMushroom"
         case .mushroomSuper: return "IconSuperMushroom"
@@ -104,7 +99,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .mushroomPoison: return "IconPoisonMushroom"
         case .mushroomMega: return "IconMegaMushroom"
         case .smash: return "IconSmash"
-        case .pikachu: return "IconPikachu"
         case .pokeballCapture: return "IconCaptureBall"
         case .pokeball: return "IconPokeBall"
         case .pokeballGreat: return "IconGreatBall"
