@@ -20,6 +20,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case invertedDark = "Inverted Dark"
     case tribute = "Tribute"
     case neon = "Neon"
+    case joystick = "Joystick"
     case connect = "Connect"
     case cartridge = "Cartridge"
     case smash = "Super Ignited Bros"
@@ -66,7 +67,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: AppIconAuthor {
         switch self
         {
-        case .normal, .standard, .standardDark, .inverted, .invertedDark, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu, .mushroom, .mushroomSuper, .mushroom1Up, .mushroomPoison, .mushroomMega, .pokeball, .pokeballCapture, .pokeballGreat, .pokeballUltra, .pokeballMaster:
+        case .normal, .standard, .standardDark, .inverted, .invertedDark, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu, .mushroom, .mushroomSuper, .mushroom1Up, .mushroomPoison, .mushroomMega, .pokeball, .pokeballCapture, .pokeballGreat, .pokeballUltra, .pokeballMaster, .joystick:
             return .litritt
             
         case .classic, .ball, .kong, .kongFlame, .black, .silver, .gold:
@@ -90,6 +91,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .invertedDark: return "IconInvertedDark"
         case .connect: return "IconConnect"
         case .tribute: return "IconTribute"
+        case .joystick: return "IconJoystick"
         case .cartridge: return "IconCartridge"
         case .neon: return "IconNeon"
         case .plumberRed: return "IconPlumberRed"
@@ -190,8 +192,8 @@ enum AppIconCategory: String, CaseIterable, Identifiable
 {
     case basic = "Basic Icons"
     case themed = "Dynamic Theme Icons"
-    case litPro = "Lit Pro Icons"
-    case kongPro = "Kongo Pro Icons"
+    case litPro = "Pro Icons"
+    case kongPro = "Kongolabongo Icons"
     
     var id: String {
         return self.rawValue
