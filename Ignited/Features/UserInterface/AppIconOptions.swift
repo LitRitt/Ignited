@@ -18,9 +18,11 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case standardDark = "Standard Dark"
     case inverted = "Inverted"
     case invertedDark = "Inverted Dark"
+    case classic = "Classic"
     case tribute = "Tribute"
     case neon = "Neon"
-    case joystick = "Joystick"
+    case joystickThemed = "Joystick"
+    case joystick = "Lit Joystick"
     case connect = "Connect"
     case cartridge = "Cartridge"
     case smash = "Super Ignited Bros"
@@ -47,7 +49,6 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     case simple = "Simple"
     case glass = "Glass"
     case ablaze = "Ablaze"
-    case classic = "Classic"
     // Kong Pro
     case ball = "Firé Ball"
     case kong = "Barrel of Kong"
@@ -67,7 +68,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var author: AppIconAuthor {
         switch self
         {
-        case .normal, .standard, .standardDark, .inverted, .invertedDark, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu, .mushroom, .mushroomSuper, .mushroom1Up, .mushroomPoison, .mushroomMega, .pokeball, .pokeballCapture, .pokeballGreat, .pokeballUltra, .pokeballMaster, .joystick:
+        case .normal, .standard, .standardDark, .inverted, .invertedDark, .connect, .tribute, .cartridge, .neon, .sealing, .igniting, .sealingAlt, .ignitingAlt, .smash, .kirby, .plumberRed, .plumberGreen, .goomba, .pikachu, .mushroom, .mushroomSuper, .mushroom1Up, .mushroomPoison, .mushroomMega, .pokeball, .pokeballCapture, .pokeballGreat, .pokeballUltra, .pokeballMaster, .joystick, .joystickThemed:
             return .litritt
             
         case .classic, .ball, .kong, .kongFlame, .black, .silver, .gold:
@@ -91,7 +92,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
         case .invertedDark: return "IconInvertedDark"
         case .connect: return "IconConnect"
         case .tribute: return "IconTribute"
-        case .joystick: return "IconJoystick"
+        case .joystick, .joystickThemed: return "IconJoystick"
         case .cartridge: return "IconCartridge"
         case .neon: return "IconNeon"
         case .plumberRed: return "IconPlumberRed"
@@ -148,7 +149,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var pro: Bool {
         switch self
         {
-        case .normal, .tribute, .neon, .simple, .glass, .ablaze, .classic: return false
+        case .normal, .tribute, .neon, .simple, .glass, .ablaze: return false
         default: return true
         }
     }
@@ -156,7 +157,7 @@ enum AppIcon: String, CaseIterable, CustomStringConvertible, Identifiable
     var themed: Bool {
         switch self
         {
-        case .standard, .standardDark, .inverted, .invertedDark, .mushroom, .pokeballCapture: return true
+        case .standard, .standardDark, .inverted, .invertedDark, .mushroom, .pokeballCapture, .joystickThemed, .classic: return true
         default: return false
         }
     }
