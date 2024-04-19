@@ -41,13 +41,11 @@ extension SyncManager
     
     enum Service: String, CaseIterable
     {
-        case googleDrive = "com.rileytestut.Harmony.Drive"
         case dropbox = "com.rileytestut.Harmony.Dropbox"
         
         var localizedName: String {
             switch self
             {
-            case .googleDrive: return NSLocalizedString("Google Drive", comment: "")
             case .dropbox: return NSLocalizedString("Dropbox", comment: "")
             }
         }
@@ -55,7 +53,6 @@ extension SyncManager
         var service: Harmony.Service {
             switch self
             {
-            case .googleDrive: return DriveService.shared
             case .dropbox: return DropboxService.shared
             }
         }
@@ -103,8 +100,6 @@ final class SyncManager
     
     private init()
     {
-        DriveService.shared.clientID = "457607414709-7oc45nq59frd7rre6okq22fafftd55g1.apps.googleusercontent.com"
-        
         DropboxService.shared.clientID = "vlgnzbaslomxe4p"
         DropboxService.shared.preferredDirectoryName = "Ignited Emulator"
         

@@ -8,7 +8,7 @@
     "ios": "14.0"
   },
   "source": {
-    "git": "https://github.com/rileytestut/Harmony.git"
+    "git": "https://github.com/litritt/Harmony.git"
   },
   "authors": {
     "Riley Testut": "riley@rileytestut.com"
@@ -33,18 +33,6 @@
       "dependencies": {
         "SwiftyDropbox": [
           "~> 5.0.0"
-        ]
-      }
-    },
-    {
-      "name": "Harmony-Drive",
-      "source_files": "Backends/Drive/Harmony-Drive/**/*.swift",
-      "dependencies": {
-        "GoogleAPIClientForREST/Drive": [
-          "~> 1.3.0"
-        ],
-        "GoogleSignIn": [
-          "~> 5.0"
         ]
       }
     }

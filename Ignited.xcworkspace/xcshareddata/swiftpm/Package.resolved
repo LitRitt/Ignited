@@ -2,21 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "AltKit",
-        "repositoryURL": "https://github.com/rileytestut/AltKit.git",
-        "state": {
-          "branch": null,
-          "revision": "2fd376df1c79ec06a5c80cc8933da027f65b3148",
-          "version": null
-        }
-      },
-      {
         "package": "ZIPFoundation",
         "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
         "state": {
           "branch": null,
-          "revision": "a3f5c2bae0f04b0bce9ef3c4ba6bd1031a0564c4",
-          "version": "0.9.17"
+          "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+          "version": "0.9.19"
         }
       }
     ]

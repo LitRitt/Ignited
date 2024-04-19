@@ -5,7 +5,7 @@
   "description": "iOS framework that wraps Gambatte to allow playing GBC games with Delta emulator.",
   "homepage": "https://github.com/LitRitt/GBCDeltaCore",
   "platforms": {
-    "ios": "14.0"
+    "ios": "16.0"
   },
   "source": {
     "git": "https://github.com/LitRitt/GBCDeltaCore.git"
@@ -28,9 +28,7 @@
   "resource_bundles": {
     "GBCDeltaCore": [
       "GBCDeltaCore/**/*.deltamapping",
-      "GBCDeltaCore/**/*-com.rileytestut.GBDeltaCore.deltamapping",
-      "GBCDeltaCore/**/*.ignitedskin",
-      "GBCDeltaCore/**/*-com.rileytestut.GBDeltaCore.ignitedskin"
+      "GBCDeltaCore/**/*.ignitedskin"
     ]
   },
   "dependencies": {

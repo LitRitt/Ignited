@@ -1,11 +1,5 @@
 PODS:
   - Alamofire (4.7.3)
-  - AppAuth (1.6.2):
-    - AppAuth/Core (= 1.6.2)
-    - AppAuth/ExternalUserAgent (= 1.6.2)
-  - AppAuth/Core (1.6.2)
-  - AppAuth/ExternalUserAgent (1.6.2):
-    - AppAuth/Core
   - DeltaCore (0.1):
     - ZIPFoundation
   - DSDeltaCore (0.1):
@@ -14,30 +8,8 @@ PODS:
     - DeltaCore
   - GBCDeltaCore (0.1):
     - DeltaCore
-  - GoogleAPIClientForREST/Core (1.3.11):
-    - GTMSessionFetcher (>= 1.1.7)
-  - GoogleAPIClientForREST/Drive (1.3.11):
-    - GoogleAPIClientForREST/Core
-    - GTMSessionFetcher (>= 1.1.7)
-  - GoogleSignIn (5.0.2):
-    - AppAuth (~> 1.2)
-    - GTMAppAuth (~> 1.0)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - GTMAppAuth (1.3.1):
-    - AppAuth/Core (~> 1.6)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.5)
-  - GTMSessionFetcher (1.7.2):
-    - GTMSessionFetcher/Full (= 1.7.2)
-  - GTMSessionFetcher/Core (1.7.2)
-  - GTMSessionFetcher/Full (1.7.2):
-    - GTMSessionFetcher/Core (= 1.7.2)
   - Harmony (0.1):
-    - Harmony/Harmony-Drive (= 0.1)
     - Harmony/Harmony-Dropbox (= 0.1)
-    - Roxas
-  - Harmony/Harmony-Drive (0.1):
-    - GoogleAPIClientForREST/Drive (~> 1.3.0)
-    - GoogleSignIn (~> 5.0)
     - Roxas
   - Harmony/Harmony-Dropbox (0.1):
     - Roxas
@@ -67,7 +39,7 @@ PODS:
   - SQLite.swift/standard (0.12.2)
   - SwiftyDropbox (5.0.0):
     - Alamofire (~> 4.7.3)
-  - ZIPFoundation (0.9.16)
+  - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
   - DeltaCore (from `Cores/DeltaCore`)
@@ -88,11 +60,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - AppAuth
-    - GoogleAPIClientForREST
-    - GoogleSignIn
-    - GTMAppAuth
-    - GTMSessionFetcher
     - KeychainAccess
     - SDWebImage
     - SMCalloutView
@@ -124,28 +91,23 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
-  DeltaCore: 329e85231fce470483ad584ef951365218f36749
-  DSDeltaCore: 9ba93bc99754a7aa037128e5540d11e9fd01f4c4
-  GBADeltaCore: 7f49475784f9f685e2fd6b52e64f96072740e97a
-  GBCDeltaCore: 1a99f34bde4803d8636c70f91c6fbb3d998e9ef6
-  GoogleAPIClientForREST: 0f19a8280dfe6471f76016645d26eb5dae305101
-  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
-  GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
-  GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  Harmony: 1d8166b6168eec8cce046c4366765d15f7e3b9fc
+  DeltaCore: ec83cab4816b9c35142d942a4571a34c9151e92b
+  DSDeltaCore: 6f8265f23945120bbc9abdf1b0a3757c2d9c0c01
+  GBADeltaCore: ce848d2288fbfbac1d9e31720a35de5e37d50b1b
+  GBCDeltaCore: 40d84ca955e09135555e05755e5cc00a4b04ff8e
+  Harmony: e695fd3f9b7680a967fa4a96c811e8525fbc93bf
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  MelonDSDeltaCore: 54593845eeccdfb343caaebcd4bfd48e4107aca1
-  N64DeltaCore: c7a389b6cd3fe97a22395f0bfe9b26952798b3ef
-  NESDeltaCore: ba4a55665370807587a4ce2df43febb9adc11cbd
+  MelonDSDeltaCore: 144cdd2082c4bacbc080f32ce5152c4be5f53ffe
+  N64DeltaCore: f6ad296b412947def255b0c25fffd1a262de8cd9
+  NESDeltaCore: 342f01a0a039855254a3aeb8d65001f1c25a95ef
   Roxas: 1990039f843f5dc284918dc82375feb80020ef62
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
   SMCalloutView: 5c0ee363dc8e7204b2fda17dfad38c93e9e23481
-  SNESDeltaCore: dd234d9bab44a42295ae06245718ca0c074ef8d2
+  SNESDeltaCore: 66ffe3a572e5e2f5c0bb99fc3efcc8e179eafb7c
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   SwiftyDropbox: 378b4425a2e8d0cb24c7b0f2e3af72bfbaaf1e73
-  ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
+  ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 982ad188a8fe31a628d0036a6787a5e2d3eabcb0
+PODFILE CHECKSUM: 894b1d65b404f297769143034b7aadb10ef63ac9
 
 COCOAPODS: 1.14.3

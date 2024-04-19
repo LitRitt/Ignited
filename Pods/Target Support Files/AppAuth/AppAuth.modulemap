@@ -1,6 +1,0 @@
-module AppAuth {
-  umbrella header "AppAuth-umbrella.h"
-
-  export *
-  module * { export * }
-}
