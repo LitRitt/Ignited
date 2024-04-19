@@ -38,8 +38,7 @@ struct GameplayFeatures: FeatureContainer
     
     @Feature(name: "Rewind",
              description: "Automatically save state at a given interval on supported systems. Allows you to rewind to a recent game state to undo mistakes.",
-             options: RewindOptions(),
-             attributes: [.beta])
+             options: RewindOptions())
     var rewind
     
     @Feature(name: "Quick Settings Menu",

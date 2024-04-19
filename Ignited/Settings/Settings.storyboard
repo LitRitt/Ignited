@@ -2228,7 +2228,7 @@ Licensed under Apache 2 license.</mutableString>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="DSi Support (BETA)" footerTitle="Enable to supply DSi BIOS files and enable the DSi Home Screen." id="s5D-ei-m0I" userLabel="DSi Support">
+                            <tableViewSection headerTitle="DSi Support" footerTitle="Enable to supply DSi BIOS files and enable the DSi Home Screen." id="s5D-ei-m0I" userLabel="DSi Support">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SwitchCell" id="YUi-MQ-egb" customClass="SwitchTableViewCell">
                                         <rect key="frame" x="20" y="673.33332443237305" width="335" height="44"/>
