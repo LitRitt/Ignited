@@ -10,7 +10,7 @@ import UIKit
 
 extension UIActivity.ActivityType
 {
-    static let copyDeepLink = UIActivity.ActivityType("com.rileytestut.Delta.CopyDeepLink")
+    static let copyDeepLink = UIActivity.ActivityType("com.litritt.Delta.CopyDeepLink")
 }
 
 class CopyDeepLinkActivity: UIActivity

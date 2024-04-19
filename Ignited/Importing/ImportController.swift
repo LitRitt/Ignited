@@ -54,10 +54,10 @@ class ImportController: NSObject
     {
         self.documentTypes = documentTypes
         
-        let dispatchQueue = DispatchQueue(label: "com.rileytestut.Delta.ImportController.dispatchQueue", qos: .userInitiated, attributes: .concurrent)
+        let dispatchQueue = DispatchQueue(label: "com.litritt.Ignited.ImportController.dispatchQueue", qos: .userInitiated, attributes: .concurrent)
         
         self.importQueue = OperationQueue()
-        self.importQueue.name = "com.rileytestut.Delta.ImportController.importQueue"
+        self.importQueue.name = "com.litritt.Ignited.ImportController.importQueue"
         self.importQueue.underlyingQueue = dispatchQueue
         
         self.fileCoordinator = NSFileCoordinator(filePresenter: nil)

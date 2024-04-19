@@ -10,7 +10,7 @@ import DeltaCore
 
 public extension GameControllerInputType
 {
-    static let action = GameControllerInputType("com.rileytestut.Delta.input.action")
+    static let action = GameControllerInputType("com.litritt.Ignited.input.action")
 }
 
 enum ActionInput: String

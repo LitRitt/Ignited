@@ -29,7 +29,7 @@ class PreviewGameViewController: DeltaCore.GameViewController
     
     var isLivePreview: Bool = true
     
-    private var emulatorCoreQueue = DispatchQueue(label: "com.rileytestut.Delta.PreviewGameViewController.emulatorCoreQueue", qos: .userInitiated)
+    private var emulatorCoreQueue = DispatchQueue(label: "com.litritt.Ignited.PreviewGameViewController.emulatorCoreQueue", qos: .userInitiated)
     private var copiedSaveFiles = [(originalURL: URL, copyURL: URL)]()
     
     private lazy var temporaryDirectoryURL: URL = {

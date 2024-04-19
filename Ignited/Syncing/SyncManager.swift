@@ -41,7 +41,7 @@ extension SyncManager
     
     enum Service: String, CaseIterable
     {
-        case dropbox = "com.rileytestut.Harmony.Dropbox"
+        case dropbox = "com.litritt.Harmony.Dropbox"
         
         var localizedName: String {
             switch self
