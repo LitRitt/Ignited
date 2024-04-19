@@ -105,7 +105,7 @@ final class SyncManager
     {
         DriveService.shared.clientID = "457607414709-7oc45nq59frd7rre6okq22fafftd55g1.apps.googleusercontent.com"
         
-        DropboxService.shared.clientID = "zoqdoffoxyfwj60"
+        DropboxService.shared.clientID = "vlgnzbaslomxe4p"
         DropboxService.shared.preferredDirectoryName = "Ignited Emulator"
         
         NotificationCenter.default.addObserver(self, selector: #selector(SyncManager.syncingDidFinish(_:)), name: SyncCoordinator.didFinishSyncingNotification, object: nil)
