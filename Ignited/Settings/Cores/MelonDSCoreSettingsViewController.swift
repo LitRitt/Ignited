@@ -23,7 +23,6 @@ private extension MelonDSCoreSettingsViewController
     enum Section: Int
     {
         case general
-        case performance
         case dsBIOS
         case dsiSupport
         case dsiBIOS
@@ -146,10 +145,6 @@ private extension MelonDSCoreSettingsViewController
     {
         switch section
         {
-        case .performance:
-            guard Settings.preferredCore(for: .ds) == MelonDS.core else { return true }
-            return !UIDevice.current.supportsJIT
-            
         case .dsBIOS where Settings.preferredCore(for: .ds) == DS.core:
             // Using DeSmuME core, which doesn't require BIOS.
             return true
@@ -253,11 +248,6 @@ private extension MelonDSCoreSettingsViewController
         }
     }
     
-    @IBAction func toggleAltJITEnabled(_ sender: UISwitch)
-    {
-        Settings.isAltJITEnabled = sender.isOn
-    }
-    
     @IBAction func toggleDSiSupportEnabled(_ sender: UISwitch)
     {
         Settings.dsFeatures.dsiSupport.isEnabled = sender.isOn
@@ -345,10 +335,6 @@ extension MelonDSCoreSettingsViewController
             
             cell.contentView.isHidden = (item == nil)
             
-        case .performance:
-            let cell = cell as! SwitchTableViewCell
-            cell.switchView.isOn = Settings.isAltJITEnabled
-            
         case .dsBIOS:
             let bios = DSBIOS.allCases[indexPath.row]
             
@@ -414,7 +400,7 @@ extension MelonDSCoreSettingsViewController
         case .changeCore:
             self.changeCore()
             
-        case .performance, .dsiSupport: break
+        case .dsiSupport: break
         }
     }
     

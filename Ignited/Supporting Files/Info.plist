@@ -4,8 +4,6 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>ALTDeviceID</key>
-	<string>00008110-000A68390A82801E</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
@@ -231,12 +229,6 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<false/>
-	<key>NSBonjourServices</key>
-	<array>
-		<string>_altserver._tcp</string>
-	</array>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Ignited uses the local network to communicate with AltServer and enable JIT.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Ignited uses your microphone to emulate the Nintendo DS microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

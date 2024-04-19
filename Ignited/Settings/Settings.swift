@@ -27,7 +27,6 @@ extension Settings.Name
     static let localControllerPlayerIndex: Settings.Name = "localControllerPlayerIndex"
     static let preferredControllerSkin: Settings.Name = "preferredControllerSkin"
     static let syncingService: Settings.Name = "syncingService"
-    static let isAltJITEnabled: Settings.Name = "isAltJITEnabled"
 }
 
 extension Settings
@@ -66,7 +65,6 @@ struct Settings
             #keyPath(UserDefaults.lastUpdateShown): 1,
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
-            #keyPath(UserDefaults.isAltJITEnabled): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
             Settings.preferredCoreSettingsKey(for: .gba): mGBA.core.identifier,
             Settings.preferredCoreSettingsKey(for: .gbc): mGBC.core.identifier,
@@ -203,17 +201,6 @@ extension Settings
         get {
             let sortByOldestFirst = UserDefaults.standard.sortSaveStatesByOldestFirst
             return sortByOldestFirst
-        }
-    }
-    
-    static var isAltJITEnabled: Bool {
-        get {
-            let isAltJITEnabled = UserDefaults.standard.isAltJITEnabled
-            return isAltJITEnabled
-        }
-        set {
-            UserDefaults.standard.isAltJITEnabled = newValue
-            NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: Name.isAltJITEnabled])
         }
     }
     
@@ -413,6 +400,4 @@ private extension UserDefaults
     @NSManaged var syncingService: String?
     
     @NSManaged var sortSaveStatesByOldestFirst: Bool
-    
-    @NSManaged var isAltJITEnabled: Bool
 }

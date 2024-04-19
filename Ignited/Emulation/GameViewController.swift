@@ -23,7 +23,6 @@ import Systems
 import struct DSDeltaCore.DS
 
 import Roxas
-import AltKit
 
 private var kvoContext = 0
 
@@ -206,8 +205,6 @@ class GameViewController: DeltaCore.GameViewController
     private var isOrientationLocked = false
     private var lockedOrientation: UIInterfaceOrientationMask? = nil
     
-    private var presentedJITAlert = false
-    
     private var overrideToastNotification = false
     
     public var deepLinkSaveState: SaveState? {
@@ -293,8 +290,6 @@ class GameViewController: DeltaCore.GameViewController
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.emulationDidQuit(with:)), name: EmulatorCore.emulationDidQuitNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnableJIT(with:)), name: ServerManager.didEnableJITNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.sceneWillConnect(with:)), name: UIScene.willConnectNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.sceneDidDisconnect(with:)), name: UIScene.didDisconnectNotification, object: nil)
         
@@ -347,7 +342,7 @@ class GameViewController: DeltaCore.GameViewController
             {
                 switch Settings.gameplayFeatures.fastForward.mode {
                 case .toggle:
-                    let isFastForwarding = (emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound)
+                    let isFastForwarding = (emulatorCore.rate != 1)
                     self.performFastForwardAction(activate: !isFastForwarding)
                     
                 case .hold:
@@ -516,10 +511,6 @@ extension GameViewController
             
             UserDefaults.standard.desmumeDeprecatedAlertCount += 1
         }
-        else if self.emulatorCore?.deltaCore == MelonDS.core, ProcessInfo.processInfo.isJITAvailable
-        {
-            self.showJITEnabledAlert()
-        }
         
         self.activateRewindTimer()
     }
@@ -644,7 +635,7 @@ extension GameViewController
                               children: fastForwardOptions)
             }
             
-            pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound)
+            pauseViewController.fastForwardItem?.isSelected = (self.emulatorCore?.rate != 1)
             pauseViewController.fastForwardItem?.action = { [unowned self] item in
                 switch Settings.gameplayFeatures.fastForward.mode
                 {
@@ -835,13 +826,6 @@ extension GameViewController
                 }
                 
                 self._isLoadingSaveState = false
-                
-                if self.emulatorCore?.deltaCore == MelonDS.core, ProcessInfo.processInfo.isJITAvailable
-                {
-                    self.transitionCoordinator?.animate(alongsideTransition: nil, completion: { (context) in
-                        self.showJITEnabledAlert()
-                    })
-                }
             }
             
         case "unwindToGames":
@@ -2032,7 +2016,7 @@ private extension GameViewController
             self.emulatorCore?.audioManager.playWithOtherMedia = Settings.gameplayFeatures.gameAudio.playOver
         }
         
-        let isFastForwarding = self.emulatorCore?.rate != self.emulatorCore?.deltaCore.supportedRates.lowerBound
+        let isFastForwarding = self.emulatorCore?.rate != 1
         let mutedByFastForward = Settings.gameplayFeatures.gameAudio.fastForwardMutes && isFastForwarding
         
         if self.emulatorCore?.audioManager.mutedByFastForward != mutedByFastForward {
@@ -2450,7 +2434,7 @@ extension GameViewController
         }
         else
         {
-            emulatorCore.rate = emulatorCore.deltaCore.supportedRates.lowerBound
+            emulatorCore.rate = 1
             text = NSLocalizedString("Fast Forward: Disabled", comment: "")
         }
         
@@ -2545,7 +2529,7 @@ extension GameViewController
         
         Settings.gameplayFeatures.fastForward.speed = speed
         
-        if emulatorCore.rate != emulatorCore.deltaCore.supportedRates.lowerBound
+        if emulatorCore.rate != 1
         {
             emulatorCore.rate = speed
         }
@@ -3189,49 +3173,6 @@ extension GameViewController: GameViewControllerDelegate
     }
 }
 
-private extension GameViewController
-{
-    func showJITEnabledAlert()
-    {
-        guard !self.presentedJITAlert, self.presentedViewController == nil, self.game != nil else { return }
-        self.presentedJITAlert = true
-        
-        func presentToastView()
-        {
-            let detailText: String?
-            let duration: TimeInterval
-            
-            if UserDefaults.standard.jitEnabledAlertCount < 3
-            {
-                detailText = NSLocalizedString("You can now Fast Forward DS games up to 3x speed.", comment: "")
-                duration = 5.0
-            }
-            else
-            {
-                detailText = nil
-                duration = 2.0
-            }
-            
-            ToastView.show(NSLocalizedString("JIT Compilation Enabled", comment: ""), in: self.view, detailText: detailText, duration: duration)
-            
-            UserDefaults.standard.jitEnabledAlertCount += 1
-        }
-        
-        DispatchQueue.main.async {
-            if let transitionCoordinator = self.transitionCoordinator
-            {
-                transitionCoordinator.animate(alongsideTransition: nil) { (context) in
-                    presentToastView()
-                }
-            }
-            else
-            {
-                presentToastView()
-            }
-        }
-    }
-}
-
 //MARK: - Notifications -
 private extension GameViewController
 {
@@ -3465,60 +3406,6 @@ private extension GameViewController
         self.unlockOrientation()
     }
     
-    @objc func didEnableJIT(with notification: Notification)
-    {
-        DispatchQueue.main.async {
-            self.showJITEnabledAlert()
-        }
-        
-        DispatchQueue.global(qos: .utility).async {
-            guard let emulatorCore = self.emulatorCore, let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? MelonDSEmulatorBridge, !emulatorBridge.isJITEnabled
-            else { return }
-            
-            guard emulatorCore.state != .stopped else {
-                // Emulator core is not running, which means we can set
-                // isJITEnabled to true without resetting the core.
-                emulatorBridge.isJITEnabled = true
-                return
-            }
-            
-            let isVideoEnabled = emulatorCore.videoManager.isEnabled
-            emulatorCore.videoManager.isEnabled = false
-            
-            let isRunning = (emulatorCore.state == .running)
-            if isRunning
-            {
-                self.pauseEmulation()
-            }
-            
-            let temporaryFileURL = FileManager.default.uniqueTemporaryURL()
-            
-            let saveState = emulatorCore.saveSaveState(to: temporaryFileURL)
-            emulatorCore.stop()
-            
-            emulatorBridge.isJITEnabled = true
-            
-            emulatorCore.start()
-            emulatorCore.pause()
-            
-            do
-            {
-                try emulatorCore.load(saveState)
-            }
-            catch
-            {
-                print("Failed to load save state after enabling JIT.", error)
-            }
-            
-            if isRunning
-            {
-                self.resumeEmulation()
-            }
-            
-            emulatorCore.videoManager.isEnabled = isVideoEnabled
-        }
-    }
-    
     @objc func emulationDidQuit(with notification: Notification)
     {
         DispatchQueue.main.async {
@@ -3672,8 +3559,6 @@ private extension GameViewController
 private extension UserDefaults
 {
     @NSManaged var desmumeDeprecatedAlertCount: Int
-    
-    @NSManaged var jitEnabledAlertCount: Int
 }
 
 //MARK: - Timer -
