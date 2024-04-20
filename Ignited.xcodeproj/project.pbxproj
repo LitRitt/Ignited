@@ -955,13 +955,6 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		ACA97B722BD40BE8005AF0DA /* Pro */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pro;
-			sourceTree = "<group>";
-		};
 		ACAB77192B468C50001AB619 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -1368,7 +1361,6 @@
 		BFAA1FEB1B8AA4E800495943 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				ACA97B722BD40BE8005AF0DA /* Pro */,
 				AC4D519D2B09F881008B245B /* Settings.storyboard */,
 				BFAA1FEC1B8AA4FA00495943 /* Settings.swift */,
 				BF5E7F431B9A650B00AE44F8 /* SettingsViewController.swift */,
