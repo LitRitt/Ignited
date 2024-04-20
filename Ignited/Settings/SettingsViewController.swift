@@ -101,6 +101,8 @@ class SettingsViewController: UITableViewController
     
     @IBOutlet private var syncingServiceLabel: UILabel!
     
+    @IBOutlet private var purchaseLabel: UILabel!
+    
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
     
     private var previousSelectedRowIndexPath: IndexPath?
@@ -115,6 +117,7 @@ class SettingsViewController: UITableViewController
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.externalGameControllerDidConnect(_:)), name: .externalGameControllerDidConnect, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.externalGameControllerDidDisconnect(_:)), name: .externalGameControllerDidDisconnect, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.shouldDismissViewController(_:)), name: .dismissSettings, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.purchasesUpdated(_:)), name: PurchaseManager.purchasesUpdatedNotification, object: nil)
     }
     
     override func viewDidLoad()
@@ -194,6 +197,8 @@ private extension SettingsViewController
     {
         self.syncingServiceLabel.text = Settings.syncingService?.localizedName
         
+        self.purchaseLabel.text = PurchaseManager.shared.hasUnlockedPro ? NSLocalizedString("Ignited Pro Unlocked", comment: ""): NSLocalizedString("Join Ignited Pro", comment: "")
+        
         do
         {
             let records = try SyncManager.shared.recordController?.fetchConflictedRecords() ?? []
@@ -235,22 +240,8 @@ private extension SettingsViewController
     
     func showProPurchases()
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Ignited Pro", comment: ""), message: NSLocalizedString("Show your support and gain access to more icons, colors, and customization options.", comment: ""), preferredStyle: .alert)
-        
-        for product in PurchaseManager.shared.products
-        {
-            alertController.addAction(UIAlertAction(title: (product.displayName + " - " + product.displayPrice), style: .default, handler: {(action) in
-                PurchaseManager.shared.purchase(product)
-            }))
-        }
-        
-        alertController.addAction(UIAlertAction(title: "Restore Purchases", style: .default, handler: {(action) in
-            PurchaseManager.shared.restorePurchases()
-        }))
-        
-        alertController.addAction(.cancel)
-        
-        self.present(alertController, animated: true)
+        let hostingController = PurchaseView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
     }
 }
 
@@ -290,6 +281,11 @@ private extension SettingsViewController
     @objc func shouldDismissViewController(_ notification: Notification)
     {
         self.dismiss(animated: true)
+    }
+    
+    @objc func purchasesUpdated(_ notification: Notification)
+    {
+        self.update()
     }
 }
 
@@ -446,14 +442,8 @@ extension SettingsViewController
             }
             
         case .pro:
-            if PurchaseManager.shared.hasUnlockedPro
-            {
-                ToastView.show("You've already joined Ignited Pro", detailText: "Thanks for your support", duration: 3)
-            }
-            else
-            {
-                self.showProPurchases()
-            }
+            self.showProPurchases()
+            
             tableView.deselectRow(at: indexPath, animated: true)
             
         case .credits:
@@ -462,22 +452,6 @@ extension SettingsViewController
             case .developer: UIApplication.shared.openAppOrWebpage(site: "https://github.com/LitRitt")
             case .contributors: self.showContributors()
             case .softwareLicenses: break
-            }
-            
-        default: break
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
-    {
-        let section = Section(rawValue: indexPath.section)!
-
-        switch section
-        {
-        case .pro:
-            if PurchaseManager.shared.hasUnlockedPro
-            {
-                cell.textLabel?.text = NSLocalizedString("Ignited Pro Unlocked", comment: "")
             }
             
         default: break

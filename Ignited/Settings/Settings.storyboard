@@ -897,6 +897,7 @@
                     </navigationItem>
                     <size key="freeformSize" width="375" height="2500"/>
                     <connections>
+                        <outlet property="purchaseLabel" destination="faT-qa-JP0" id="j3P-MU-pm9"/>
                         <outlet property="syncingServiceLabel" destination="kLY-5g-v8n" id="zzx-qM-q1g"/>
                         <outlet property="versionLabel" destination="Str-BY-agW" id="gU2-L0-pYt"/>
                         <segue destination="uBz-mm-mXr" kind="show" identifier="controllersSegue" id="MLY-hF-UB8"/>
@@ -1890,7 +1891,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lw6-5a-pvQ">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <edgeInsets key="layoutMargins" top="8" left="30" bottom="8" right="30"/>
-                                <mutableString key="text">Ignited and Lit Apps are in no way affiliated with Nintendo Co., Ltd.
+                                <string key="text">Ignited and Lit Apps are in no way affiliated with Nintendo Co., Ltd.
 
 Riley Testut (Delta)
 Licensed under the AGPLv3 license.
@@ -1989,7 +1990,7 @@ Google (Google API Objective-C Client)
 Licensed under Apache 2 license.
 
 Nick Farina (SMCalloutView)
-Licensed under Apache 2 license.</mutableString>
+Licensed under Apache 2 license.</string>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
