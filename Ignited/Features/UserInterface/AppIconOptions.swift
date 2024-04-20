@@ -280,7 +280,7 @@ extension AppIconOptions
     @ViewBuilder
     static func appIconImage(_ name: String) -> some View
     {
-        return Image(uiImage: UIImage(named: name) ?? UIImage())
+        Image(uiImage: UIImage(named: name) ?? UIImage())
             .resizable()
             .frame(width: 57, height: 57)
             .cornerRadius(13)
@@ -289,7 +289,7 @@ extension AppIconOptions
     @ViewBuilder
     static func appIconSectionHeader(_ title: String) -> some View
     {
-        return ZStack {
+        ZStack {
             Color.accentColor
                 .frame(maxWidth: .infinity, idealHeight: 30, alignment: .center)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -301,13 +301,15 @@ extension AppIconOptions
     
     static func updateAppIcon()
     {
-        let currentIcon = UIApplication.shared.alternateIconName
-        let altIcon = Settings.userInterfaceFeatures.appIcon.alternateIcon
-        
-        switch altIcon
-        {
-        case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
-        default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
+        DispatchQueue.main.async {
+            let currentIcon = UIApplication.shared.alternateIconName
+            let altIcon = Settings.userInterfaceFeatures.appIcon.alternateIcon
+            
+            switch altIcon
+            {
+            case .normal: if currentIcon != nil { UIApplication.shared.setAlternateIconName(nil) }
+            default: if currentIcon != altIcon.assetName { UIApplication.shared.setAlternateIconName(altIcon.assetName) }
+            }
         }
     }
 }
