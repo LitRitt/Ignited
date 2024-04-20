@@ -13,7 +13,7 @@ extension PurchaseManager
     static let purchasesUpdatedNotification: Notification.Name = Notification.Name("PurchaseManager.purchasesUpdatedNotification")
 }
 
-public enum PurchaseTypes: String, CaseIterable
+public enum PurchaseType: String, CaseIterable
 {
     case monthly = "IgnitedPro"
     case yearly = "IgnitedProYearly"
@@ -31,6 +31,22 @@ public enum PurchaseTypes: String, CaseIterable
         case .monthly: return "Monthly"
         case .yearly: return "Yearly"
         case .lifetime: return "Lifetime"
+        }
+    }
+    
+    var available: Bool
+    {
+        let purchasedIDs = PurchaseManager.shared.purchasedProductIDs
+        
+        let purchasedMonthly = purchasedIDs.contains(PurchaseType.monthly.productID)
+        let purchasedYearly = purchasedIDs.contains(PurchaseType.yearly.productID)
+        let purchasedLifetime = purchasedIDs.contains(PurchaseType.lifetime.productID)
+        
+        switch self
+        {
+        case .monthly: return !purchasedMonthly && !purchasedYearly && !purchasedLifetime
+        case .yearly: return !purchasedYearly && !purchasedLifetime
+        case .lifetime: return !purchasedLifetime
         }
     }
 }
@@ -55,7 +71,7 @@ class PurchaseManager: ObservableObject
 {
     static let shared = PurchaseManager()
     
-    private let productIds = PurchaseTypes.allCases.map { $0.productID }
+    private let productIds = PurchaseType.allCases.map { $0.productID }
     
     @Published
     private(set) var products: [Product] = []
@@ -90,6 +106,8 @@ class PurchaseManager: ObservableObject
     
     func purchase(_ product: Product)
     {
+        guard !self.purchasedProductIDs.contains(PurchaseType.lifetime.productID) else { return }
+        
         Task
         {
             let result = try await product.purchase()

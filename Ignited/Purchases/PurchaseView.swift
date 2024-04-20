@@ -17,8 +17,8 @@ struct PurchaseView: View {
         HStack(alignment: .center, spacing: 10) {
             Image("LitRitt")
                 .resizable()
-                .frame(width: 60, height: 60)
-                .cornerRadius(30)
+                .frame(width: 70, height: 70)
+                .cornerRadius(35)
             
             VStack(alignment: .leading, spacing: 10) {
                 Text("LitRitt")
@@ -35,15 +35,20 @@ struct PurchaseView: View {
         HStack(spacing: 16) {
             ForEach(purchaseManager.products, id: \.self) { product in
                 Button(action: {
-                    purchaseManager.purchase(product)
+                    if PurchaseType(rawValue: product.id)?.available ?? true {
+                        purchaseManager.purchase(product)
+                    } else {
+                        ToastView.show("You're already a Pro member", onEdge: .bottom, duration: 3.0)
+                    }
                 }, label: {
                     VStack {
-                        Text(PurchaseTypes(rawValue: product.id)?.description ?? "Pro")
+                        Text(PurchaseType(rawValue: product.id)?.description ?? "Pro")
                             .font(.system(size: 24, weight: .semibold))
                         Text(product.displayPrice)
                             .font(.caption)
                     }
                 }).buttonStyle(.bordered)
+                    .disabled(!(PurchaseType(rawValue: product.id)?.available ?? true))
             }
         }
         .padding(.horizontal, 8)
@@ -69,6 +74,16 @@ struct PurchaseView: View {
                 }
             }
         }
+        
+        HStack {
+            Button(action: {
+                purchaseManager.restorePurchases()
+            }, label: {
+                Text("Restore Purchases")
+                    .font(.system(size: 20, weight: .semibold))
+            }).buttonStyle(.borderless)
+        }
+        .padding(.horizontal, 16)
     }
 }
 
