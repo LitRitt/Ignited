@@ -35,11 +35,7 @@ struct PurchaseView: View {
         HStack(spacing: 16) {
             ForEach(purchaseManager.products, id: \.self) { product in
                 Button(action: {
-                    if PurchaseType(rawValue: product.id)?.available ?? true {
-                        purchaseManager.purchase(product)
-                    } else {
-                        ToastView.show("You're already a Pro member", onEdge: .bottom, duration: 3.0)
-                    }
+                    purchaseManager.purchase(product)
                 }, label: {
                     VStack {
                         Text(PurchaseType(rawValue: product.id)?.description ?? "Pro")
@@ -54,23 +50,22 @@ struct PurchaseView: View {
         .padding(.horizontal, 8)
         
         List {
-            Section {
-                if purchaseManager.hasUnlockedPro {
-                    Text("Thanks for joining Ignited Pro! ❤️‍🔥\n\nYou now have access to the Pro features of Ignited.\n\nYour support means the world to me, and helps me support my family. I hope I can keep making Ignited better and that it will continue to be worth your investment.").font(.caption)
-                } else {
-                    Text("Thanks for using Ignited! 🔥\n\nIf you'd like to support me and the development of this app, consider becoming a pro member.").font(.caption)
-                }
-            }
-            
             Section(header: Text("Pro Benefits")) {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(PurchaseManager.benefits, id: \.self) { benefit in
                         HStack {
                             Text("• " + benefit)
-                                .foregroundStyle(.secondary)
+                                .font(.system(size: 15, weight: .semibold))
                         }
-                        .font(.system(size: 15, weight: .semibold))
                     }
+                }
+            }
+            
+            Section(header: Text("Message From the Dev")) {
+                if purchaseManager.hasUnlockedPro {
+                    Text("Thanks for joining Ignited Pro! ❤️‍🔥\n\nYou now have access to the Pro features of Ignited.\n\nYour support means the world to me, and helps me support my family. I hope I can keep making Ignited better and that it will continue to be worth your investment.").font(.caption)
+                } else {
+                    Text("Thanks for using Ignited! 🔥\n\nIf you'd like to support me and the development of this app, consider becoming a pro member.").font(.caption)
                 }
             }
         }
