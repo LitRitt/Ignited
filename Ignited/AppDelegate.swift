@@ -120,8 +120,24 @@ private extension AppDelegate
         
         if Settings.lastUpdateShown < buildNumber
         {
-            // Put update launch code here
-            
+            // Sign out all sync accounts before App Store release
+            if Settings.lastUpdateShown < 226
+            {
+                SyncManager.shared.deauthenticate { (result) in
+                    DispatchQueue.main.async {
+                        do
+                        {
+                            try result.get()
+                            
+                            Settings.syncingService = nil
+                        }
+                        catch
+                        {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+            }
         }
         
         Settings.lastUpdateShown = buildNumber
