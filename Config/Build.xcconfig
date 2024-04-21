@@ -4,8 +4,8 @@
 #include "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.debug.xcconfig"
 #include "CodeSigning.xcconfig"
 
-MARKETING_VERSION = 1.10
-CURRENT_PROJECT_VERSION = 226
+MARKETING_VERSION = 1.10.1
+CURRENT_PROJECT_VERSION = 227
 
 ORG_PREFIX = $(ORG_IDENTIFIER)
 
