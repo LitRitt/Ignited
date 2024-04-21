@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         Settings.registerDefaults()
         self.registerCores()
         self.configureAppearance()
-        self.updateBuildCounter()
         
         // Controllers
         ExternalGameControllerManager.shared.startMonitoring()
@@ -112,35 +111,6 @@ private extension AppDelegate
     func configureAppearance()
     {
         self.window?.tintColor = UIColor.themeColor
-    }
-    
-    func updateBuildCounter()
-    {
-        guard let buildNumber = Bundle.main.buildNumber else { return }
-        
-        if Settings.lastUpdateShown < buildNumber
-        {
-            // Sign out all sync accounts before App Store release
-            if Settings.lastUpdateShown < 226
-            {
-                SyncManager.shared.deauthenticate { (result) in
-                    DispatchQueue.main.async {
-                        do
-                        {
-                            try result.get()
-                            
-                            Settings.syncingService = nil
-                        }
-                        catch
-                        {
-                            print(error.localizedDescription)
-                        }
-                    }
-                }
-            }
-        }
-        
-        Settings.lastUpdateShown = buildNumber
     }
 }
 

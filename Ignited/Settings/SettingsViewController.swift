@@ -218,7 +218,7 @@ private extension SettingsViewController
     {
         switch section
         {
-//        case .syncing: return true
+        case .syncing: return true
         default: return false
         }
     }
@@ -429,16 +429,11 @@ extension SettingsViewController
         case .cores:
             switch CoresRow.allCases[indexPath.row]
             {
-            case .snes:
-                self.showFeatures(featureGroup: .snes)
-            case .gbc:
-                self.showFeatures(featureGroup: .gbc)
-            case .gba:
-                self.showFeatures(featureGroup: .gba)
-            case .n64:
-                self.showFeatures(featureGroup: .n64)
-            case .ds:
-                self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
+            case .snes: self.showFeatures(featureGroup: .snes)
+            case .gbc: self.showFeatures(featureGroup: .gbc)
+            case .gba: self.showFeatures(featureGroup: .gba)
+            case .n64: self.showFeatures(featureGroup: .n64)
+            case .ds: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
             }
             
         case .pro:
