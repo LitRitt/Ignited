@@ -1478,6 +1478,7 @@
 		BFFA71D91AAC406100EE9DD1 /* Ignited */ = {
 			isa = PBXGroup;
 			children = (
+				ACA97B7B2BD5A624005AF0DA /* Ignited.entitlements */,
 				AC4D51962B09F816008B245B /* Main.storyboard */,
 				BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */,
 				BFFC46211D59848000AF2CC6 /* Launch */,
@@ -1506,7 +1507,6 @@
 			isa = PBXGroup;
 			children = (
 				BF090CF11B490D8300DCAB45 /* Ignited-Bridging-Header.h */,
-				ACA97B7B2BD5A624005AF0DA /* Ignited.entitlements */,
 				BFFA71DB1AAC406100EE9DD1 /* Info.plist */,
 			);
 			path = "Supporting Files";
