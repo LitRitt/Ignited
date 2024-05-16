@@ -1,30 +1,30 @@
 {
-  "identifier" : "7A711381",
+  "identifier" : "5C857D9F",
   "nonRenewingSubscriptions" : [
 
   ],
   "products" : [
     {
       "displayPrice" : "39.99",
-      "familyShareable" : true,
-      "internalID" : "6482661183",
+      "familyShareable" : false,
+      "internalID" : "6502785325",
       "localizations" : [
         {
-          "description" : "Access more customization options",
-          "displayName" : "Ignited Pro (Lifetime)",
+          "description" : "Unlock more icons and customization",
+          "displayName" : "Ignited Pro Lifetime",
           "locale" : "en_US"
         }
       ],
-      "productID" : "IgnitedProLifetime",
+      "productID" : "proLifetime",
       "referenceName" : "Ignited Pro Lifetime",
       "type" : "NonConsumable"
     }
   ],
   "settings" : {
-    "_applicationInternalID" : "6450822643",
+    "_applicationInternalID" : "6502784695",
     "_developerTeamID" : "AQKFQ7V9C4",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 734060638.77866697,
+    "_lastSynchronizedDate" : 737576339.94675899,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -77,7 +77,7 @@
   },
   "subscriptionGroups" : [
     {
-      "id" : "21472760",
+      "id" : "21488716",
       "localizations" : [
 
       ],
@@ -90,22 +90,22 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "2.99",
-          "familyShareable" : true,
-          "groupNumber" : 1,
-          "internalID" : "6482661175",
+          "displayPrice" : "24.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6502785650",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Access more customization options",
-              "displayName" : "Ignited Pro (Monthly)",
+              "description" : "Unlock more icons and customization",
+              "displayName" : "Ignited Pro Annual",
               "locale" : "en_US"
             }
           ],
-          "productID" : "IgnitedPro",
-          "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Ignited Pro Monthly",
-          "subscriptionGroupID" : "21472760",
+          "productID" : "proAnnual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Ignited Pro Annual",
+          "subscriptionGroupID" : "21488716",
           "type" : "RecurringSubscription"
         },
         {
@@ -115,22 +115,22 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "24.99",
+          "displayPrice" : "2.99",
           "familyShareable" : true,
-          "groupNumber" : 2,
-          "internalID" : "6482661295",
+          "groupNumber" : 1,
+          "internalID" : "6502785629",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Access more customization options",
-              "displayName" : "Ignited Pro (Yearly)",
+              "description" : "Unlock more icons and customization",
+              "displayName" : "Ignited Pro Monthly",
               "locale" : "en_US"
             }
           ],
-          "productID" : "IgnitedProYearly",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Ignited Pro Yearly",
-          "subscriptionGroupID" : "21472760",
+          "productID" : "proMonthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Ignited Pro Monthly",
+          "subscriptionGroupID" : "21488716",
           "type" : "RecurringSubscription"
         }
       ]

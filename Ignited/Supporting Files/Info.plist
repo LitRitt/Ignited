@@ -15,7 +15,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.snes</string>
+				<string>com.litritt.ignited.game.snes</string>
 			</array>
 		</dict>
 		<dict>
@@ -29,7 +29,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.gba</string>
+				<string>com.litritt.ignited.game.gba</string>
 			</array>
 		</dict>
 		<dict>
@@ -43,7 +43,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.skin</string>
+				<string>com.litritt.ignited.skin</string>
 			</array>
 		</dict>
 		<dict>
@@ -64,20 +64,6 @@
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
-			<string>GB Game</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.rileytestut.delta.game.gb</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFiles</key>
-			<array/>
-			<key>CFBundleTypeName</key>
 			<string>GBC Game</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
@@ -85,7 +71,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.gbc</string>
+				<string>com.litritt.ignited.game.gbc</string>
 			</array>
 		</dict>
 		<dict>
@@ -99,7 +85,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.nes</string>
+				<string>com.litritt.ignited.game.nes</string>
 			</array>
 		</dict>
 		<dict>
@@ -113,7 +99,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.n64</string>
+				<string>com.litritt.ignited.game.n64</string>
 			</array>
 		</dict>
 		<dict>
@@ -127,7 +113,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.ds</string>
+				<string>com.litritt.ignited.game.ds</string>
 			</array>
 		</dict>
 		<dict>
@@ -141,7 +127,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.genesis</string>
+				<string>com.litritt.ignited.game.genesis</string>
 			</array>
 		</dict>
 		<dict>
@@ -155,7 +141,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.ms</string>
+				<string>com.litritt.ignited.game.ms</string>
 			</array>
 		</dict>
 		<dict>
@@ -169,7 +155,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.rileytestut.delta.game.gg</string>
+				<string>com.litritt.ignited.game.gg</string>
 			</array>
 		</dict>
 	</array>
@@ -232,7 +218,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Ignited uses your microphone to emulate the Nintendo DS microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Press "OK" to allow Ignited to use images from your Photo Library as game artwork.</string>
+	<string>Press &quot;OK&quot; to allow Ignited to use images from your Photo Library as game artwork.</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.com.litritt.ignited</key>
@@ -322,7 +308,7 @@
 			<key>UTTypeDescription</key>
 			<string>Ignited Game</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game</string>
+			<string>com.litritt.ignited.game</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -332,14 +318,14 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>SNES Game</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.snes</string>
+			<string>com.litritt.ignited.game.snes</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -352,14 +338,14 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>GBA Game</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.gba</string>
+			<string>com.litritt.ignited.game.gba</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -379,7 +365,7 @@
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.skin</string>
+			<string>com.litritt.ignited.skin</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -392,16 +378,17 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>GB Game</string>
+			<string>GBC Game</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.gb</string>
+			<string>com.litritt.ignited.game.gbc</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
+					<string>gbc</string>
 					<string>gb</string>
 				</array>
 			</dict>
@@ -409,29 +396,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>GBC Game</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.gbc</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>gbc</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>NES Game</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.nes</string>
+			<string>com.litritt.ignited.game.nes</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -443,14 +413,14 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>N64 Game</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.n64</string>
+			<string>com.litritt.ignited.game.n64</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -463,14 +433,14 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>DS Game</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.ds</string>
+			<string>com.litritt.ignited.game.ds</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -483,14 +453,14 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Genesis Game</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.genesis</string>
+			<string>com.litritt.ignited.game.genesis</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -506,14 +476,14 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>MS Game</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.ms</string>
+			<string>com.litritt.ignited.game.ms</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -525,14 +495,14 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.rileytestut.delta.game</string>
+				<string>com.litritt.ignited.game</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>GG Game</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.rileytestut.delta.game.gg</string>
+			<string>com.litritt.ignited.game.gg</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

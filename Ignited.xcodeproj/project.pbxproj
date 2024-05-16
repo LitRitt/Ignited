@@ -352,7 +352,6 @@
 		AC24C4262B1AB1CB0054278D /* StatusBarOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarOptions.swift; sourceTree = "<group>"; };
 		AC27347D29FE933400B4CB2E /* UserInterfaceFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceFeatures.swift; sourceTree = "<group>"; };
 		AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameArtworkOptions.swift; sourceTree = "<group>"; };
-		AC2D372F2BC0B68E0085E5D0 /* IgnitedPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IgnitedPro.storekit; sourceTree = "<group>"; };
 		AC31535B2AFC094C004EB51E /* UIApplication+Webpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Webpage.swift"; sourceTree = "<group>"; };
 		AC39C7622BAC66F400C8F07D /* GBCoreFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBCoreFeatures.swift; sourceTree = "<group>"; };
 		AC3BC8E62B0BCF5900E75B27 /* UIImage+ArtworkIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ArtworkIndicators.swift"; sourceTree = "<group>"; };
@@ -362,6 +361,7 @@
 		AC4138572B524C76008653D4 /* N64OverscanOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64OverscanOptions.swift; sourceTree = "<group>"; };
 		AC4138592B5264B4008653D4 /* OverscanEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverscanEditorView.xib; sourceTree = "<group>"; };
 		AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverscanEditorView.swift; sourceTree = "<group>"; };
+		AC417D952BF6858F00A540EA /* IgnitedPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IgnitedPro.storekit; sourceTree = "<group>"; };
 		AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlaySkinsOptions.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4BB76C2B094A9A0097E908 /* FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesView.swift; sourceTree = "<group>"; };
@@ -1015,7 +1015,7 @@
 			children = (
 				B57FE4EE2A98930B00C5E989 /* Build.xcconfig */,
 				B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */,
-				AC2D372F2BC0B68E0085E5D0 /* IgnitedPro.storekit */,
+				AC417D952BF6858F00A540EA /* IgnitedPro.storekit */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1478,7 +1478,6 @@
 		BFFA71D91AAC406100EE9DD1 /* Ignited */ = {
 			isa = PBXGroup;
 			children = (
-				ACA97B7B2BD5A624005AF0DA /* Ignited.entitlements */,
 				AC4D51962B09F816008B245B /* Main.storyboard */,
 				BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */,
 				BFFC46211D59848000AF2CC6 /* Launch */,
@@ -1506,6 +1505,7 @@
 		BFFA71DA1AAC406100EE9DD1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ACA97B7B2BD5A624005AF0DA /* Ignited.entitlements */,
 				BF090CF11B490D8300DCAB45 /* Ignited-Bridging-Header.h */,
 				BFFA71DB1AAC406100EE9DD1 /* Info.plist */,
 			);
@@ -2265,7 +2265,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_MODULES_AUTOLINK = NO;
-				CODE_SIGN_ENTITLEMENTS = Ignited/Ignited.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Ignited/Supporting Files/Ignited.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -2306,7 +2306,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_MODULES_AUTOLINK = NO;
-				CODE_SIGN_ENTITLEMENTS = Ignited/Ignited.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Ignited/Supporting Files/Ignited.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";

@@ -15,9 +15,9 @@ extension PurchaseManager
 
 public enum PurchaseType: String, CaseIterable
 {
-    case monthly = "IgnitedPro"
-    case yearly = "IgnitedProYearly"
-    case lifetime = "IgnitedProLifetime"
+    case monthly = "proMonthly"
+    case annual = "proAnnual"
+    case lifetime = "proLifetime"
     
     var productID: String
     {
@@ -29,7 +29,7 @@ public enum PurchaseType: String, CaseIterable
         switch self
         {
         case .monthly: return "Monthly"
-        case .yearly: return "Yearly"
+        case .annual: return "Annual"
         case .lifetime: return "Lifetime"
         }
     }
@@ -39,13 +39,13 @@ public enum PurchaseType: String, CaseIterable
         let purchasedIDs = PurchaseManager.shared.purchasedProductIDs
         
         let purchasedMonthly = purchasedIDs.contains(PurchaseType.monthly.productID)
-        let purchasedYearly = purchasedIDs.contains(PurchaseType.yearly.productID)
+        let purchasedYearly = purchasedIDs.contains(PurchaseType.annual.productID)
         let purchasedLifetime = purchasedIDs.contains(PurchaseType.lifetime.productID)
         
         switch self
         {
         case .monthly: return !purchasedMonthly && !purchasedYearly && !purchasedLifetime
-        case .yearly: return !purchasedYearly && !purchasedLifetime
+        case .annual: return !purchasedYearly && !purchasedLifetime
         case .lifetime: return !purchasedLifetime
         }
     }

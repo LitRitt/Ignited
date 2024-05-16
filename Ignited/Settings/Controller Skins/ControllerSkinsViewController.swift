@@ -205,7 +205,7 @@ private extension ControllerSkinsViewController
     
     @IBAction private func importControllerSkin()
     {
-        let importController = ImportController(documentTypes: ["com.rileytestut.delta.skin"])
+        let importController = ImportController(documentTypes: ["com.litritt.ignited.skin"])
         importController.delegate = self
         self.present(importController, animated: true, completion: nil)
     }

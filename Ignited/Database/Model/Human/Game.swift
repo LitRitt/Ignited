@@ -15,8 +15,8 @@ import Harmony
 
 public extension Game
 {
-    static let melonDSBIOSIdentifier = "com.rileytestut.MelonDSDeltaCore.BIOS"
-    static let melonDSDSiBIOSIdentifier = "com.rileytestut.MelonDSDeltaCore.DSiBIOS"
+    static let melonDSBIOSIdentifier = "com.litritt.MelonDSDeltaCore.BIOS"
+    static let melonDSDSiBIOSIdentifier = "com.litritt.MelonDSDeltaCore.DSiBIOS"
 }
 
 @objc(Game)

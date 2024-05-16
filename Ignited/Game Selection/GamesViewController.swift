@@ -440,7 +440,7 @@ extension GamesViewController: ImportControllerDelegate
     {
         var documentTypes = Set(System.registeredSystems.map { $0.gameType.rawValue })
         documentTypes.insert(kUTTypeZipArchive as String)
-        documentTypes.insert("com.rileytestut.delta.skin")
+        documentTypes.insert("com.litritt.ignited.skin")
         
         // .bin files (Genesis ROMs)
         documentTypes.insert("com.apple.macbinary-archive")
