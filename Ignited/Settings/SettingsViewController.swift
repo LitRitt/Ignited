@@ -17,16 +17,14 @@ private extension SettingsViewController
 {
     enum Section: Int, CaseIterable
     {
-        case pro
-        case syncing
         case features
         case cores
         case controllers
         case controllerSkins
+        case pro
+        case syncing
         case shortcuts
         case skinDownloads
-        case resourceLinks
-        case officialLinks
         case credits
     }
     
@@ -67,22 +65,7 @@ private extension SettingsViewController
     enum CreditsRow: Int, CaseIterable
     {
         case developer
-        case contributors
         case softwareLicenses
-    }
-    
-    enum ResourceLinksRow: Int, CaseIterable
-    {
-        case romPatcher
-        case saveConverter
-        case vgMaps
-    }
-    
-    enum OfficialLinksRow: Int, CaseIterable
-    {
-        case discord
-        case docs
-        case changelog
     }
     
     enum CoresRow: Int, CaseIterable
@@ -225,12 +208,6 @@ private extension SettingsViewController
 
 private extension SettingsViewController
 {
-    func showContributors()
-    {
-        let hostingController = ContributorsView.makeViewController()
-        self.navigationController?.pushViewController(hostingController, animated: true)
-    }
-    
     func showFeatures(featureGroup: FeatureGroup)
     {
         let hostingController = FeaturesView.makeViewController(featureGroup: featureGroup)
@@ -409,22 +386,6 @@ extension SettingsViewController
             case .advanced: self.showFeatures(featureGroup: .advanced)
             }
             
-        case .resourceLinks:
-            switch ResourceLinksRow.allCases[indexPath.row]
-            {
-            case .romPatcher: UIApplication.shared.openWebpage(site: "https://www.marcrobledo.com/RomPatcher.js/")
-            case .saveConverter: UIApplication.shared.openWebpage(site: "https://www.save-editor.com/tools/wse_ds_save_converter.html")
-            case .vgMaps: UIApplication.shared.openWebpage(site: "https://www.vgmaps.com")
-            }
-            
-        case .officialLinks:
-            switch OfficialLinksRow.allCases[indexPath.row]
-            {
-            case .discord: UIApplication.shared.openAppOrWebpage(site: "https://discord.gg/qEtKFJt5dR")
-            case .docs: UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
-            case .changelog: UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
-            }
-            
         case .cores:
             switch CoresRow.allCases[indexPath.row]
             {
@@ -444,7 +405,6 @@ extension SettingsViewController
             switch CreditsRow.allCases[indexPath.row]
             {
             case .developer: UIApplication.shared.openAppOrWebpage(site: "https://github.com/LitRitt")
-            case .contributors: self.showContributors()
             case .softwareLicenses: break
             }
             

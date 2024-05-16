@@ -145,7 +145,6 @@
 		ACE43DB62B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */; };
 		ACE43DB82B4695A200AD9287 /* Result+Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */; };
 		ACE43DC92B473C0E00AD9287 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE43DC82B473C0E00AD9287 /* ToastView.swift */; };
-		ACE43DCC2B47680700AD9287 /* contributors.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACE43DCA2B47680700AD9287 /* contributors.plist */; };
 		ACED6C2C2B9262670080BFD3 /* CGRect+ButtonLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACED6C2B2B9262670080BFD3 /* CGRect+ButtonLocations.swift */; };
 		ACED6C2E2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACED6C2D2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift */; };
 		ACED6C302B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACED6C2F2B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift */; };
@@ -279,13 +278,11 @@
 		BFFDF03F23E3C28A00931B96 /* libGambatte.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFDF03D23E3C0F000931B96 /* libGambatte.a */; };
 		BFFDF04623E3D3A600931B96 /* libMupen64Plus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFDF04523E3D3A600931B96 /* libMupen64Plus.a */; };
 		D5011C48281B6E8B00A0760B /* CharacterSet+Filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5011C47281B6E8B00A0760B /* CharacterSet+Filename.swift */; };
-		D53415A5298C782A00FD67B1 /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53415A4298C782A00FD67B1 /* ContributorsView.swift */; };
 		D5864970297734280081477E /* CheatMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586496F297734280081477E /* CheatMetadata.swift */; };
 		D586497229774ABD0081477E /* CheatBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586497129774ABD0081477E /* CheatBase.swift */; };
 		D5864978297756CE0081477E /* CheatBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5864977297756CE0081477E /* CheatBaseView.swift */; };
 		D5A98CE2284EF14B00E023E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A98CE1284EF14B00E023E5 /* SceneDelegate.swift */; };
 		D5AAF27729884F8600F21ACF /* CheatDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAF27629884F8600F21ACF /* CheatDevice.swift */; };
-		D5D797E6298D946200738869 /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D797E5298D946200738869 /* Contributor.swift */; };
 		D5D797E9298DCC7300738869 /* cheatbase.zip in Resources */ = {isa = PBXBuildFile; fileRef = D5D797E7298DC9E200738869 /* cheatbase.zip */; };
 /* End PBXBuildFile section */
 
@@ -449,7 +446,6 @@
 		ACE43DB52B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+ManagedObjectContext.swift"; sourceTree = "<group>"; };
 		ACE43DB72B4695A200AD9287 /* Result+Conveniences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Conveniences.swift"; sourceTree = "<group>"; };
 		ACE43DC82B473C0E00AD9287 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
-		ACE43DCA2B47680700AD9287 /* contributors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contributors.plist; sourceTree = "<group>"; };
 		ACED6C2B2B9262670080BFD3 /* CGRect+ButtonLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+ButtonLocations.swift"; sourceTree = "<group>"; };
 		ACED6C2D2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+RelativeAndAbsolute.swift"; sourceTree = "<group>"; };
 		ACED6C2F2B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+RelativeAndAbsolute.swift"; sourceTree = "<group>"; };
@@ -615,13 +611,11 @@
 		BFFDF03D23E3C0F000931B96 /* libGambatte.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGambatte.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFDF04523E3D3A600931B96 /* libMupen64Plus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMupen64Plus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5011C47281B6E8B00A0760B /* CharacterSet+Filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Filename.swift"; sourceTree = "<group>"; };
-		D53415A4298C782A00FD67B1 /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		D586496F297734280081477E /* CheatMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatMetadata.swift; sourceTree = "<group>"; };
 		D586497129774ABD0081477E /* CheatBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatBase.swift; sourceTree = "<group>"; };
 		D5864977297756CE0081477E /* CheatBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatBaseView.swift; sourceTree = "<group>"; };
 		D5A98CE1284EF14B00E023E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D5AAF27629884F8600F21ACF /* CheatDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatDevice.swift; sourceTree = "<group>"; };
-		D5D797E5298D946200738869 /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
 		D5D797E7298DC9E200738869 /* cheatbase.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = cheatbase.zip; sourceTree = "<group>"; };
 		DB395375D0B32B2C6B9B6D1E /* Pods-Ignited.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignited.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ignited/Pods-Ignited.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1372,7 +1366,6 @@
 				BF11734E1DA32CEC00047DF8 /* Controllers */,
 				BF1DAD5B1D9F574900E752A7 /* Controller Skins */,
 				BF48F74C219A16C100BC2FC1 /* Syncing */,
-				D5D797E4298D944C00738869 /* Contributors */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1425,7 +1418,6 @@
 				BF6BB2451BB73FE800CCF94A /* Assets.xcassets */,
 				BF02D5D91DDEBB3000A5E131 /* openvgdb.sqlite */,
 				D5D797E7298DC9E200738869 /* cheatbase.zip */,
-				ACE43DCA2B47680700AD9287 /* contributors.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1553,15 +1545,6 @@
 				D5864977297756CE0081477E /* CheatBaseView.swift */,
 			);
 			path = Cheats;
-			sourceTree = "<group>";
-		};
-		D5D797E4298D944C00738869 /* Contributors */ = {
-			isa = PBXGroup;
-			children = (
-				D5D797E5298D946200738869 /* Contributor.swift */,
-				D53415A4298C782A00FD67B1 /* ContributorsView.swift */,
-			);
-			path = Contributors;
 			sourceTree = "<group>";
 		};
 		FD1E8AE87FA2DB8793F7B937 /* Pods */ = {
@@ -1699,7 +1682,6 @@
 				BF1F45AB21AF4B5800EF9895 /* SyncResultsViewController.storyboard in Resources */,
 				AC4D51992B09F848008B245B /* PauseMenu.storyboard in Resources */,
 				AC4D519C2B09F871008B245B /* PausePresentationControllerContentView.xib in Resources */,
-				ACE43DCC2B47680700AD9287 /* contributors.plist in Resources */,
 				BF27CC8E1BC9FEA200A20D89 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1898,7 +1880,6 @@
 				BFC3628021ADE2BA00EF2BE6 /* UIAlertController+Error.swift in Sources */,
 				BF353FF91C5D870B00C1184C /* MenuItem.swift in Sources */,
 				ACC385BC2BACDD5600FD71AC /* MGBCOptions.swift in Sources */,
-				D5D797E6298D946200738869 /* Contributor.swift in Sources */,
 				ACED6C392B927A6C0080BFD3 /* InputsAndLayoutOptions.swift in Sources */,
 				BFDB3418219E4B1700595A62 /* SyncStatusViewController.swift in Sources */,
 				BF18B61F1E2985F900F70067 /* UIAlertController+Importing.swift in Sources */,
@@ -1916,7 +1897,6 @@
 				BF6424851F5CBDC900D6AB44 /* UIView+ParentViewController.swift in Sources */,
 				AC51F1842BAE3A9E003A41D5 /* MGBAOptions.swift in Sources */,
 				BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */,
-				D53415A5298C782A00FD67B1 /* ContributorsView.swift in Sources */,
 				BF5942891E09BC8B0051894B /* _GameCollection.swift in Sources */,
 				AC23D2D62AFDCD2A0056CC3F /* SaveStatesOptions.swift in Sources */,
 				BF34FA111CF1899D006624C7 /* CheatTextView.swift in Sources */,
