@@ -835,15 +835,20 @@ private extension GamesViewController
     func makeHelpMenu() -> UIMenu
     {
         let helpOptions: [UIAction] = [
-//            UIAction(title: NSLocalizedString("Documentation", comment: ""),
-//                     image: UIImage(systemName: "doc.richtext"),
-//                     handler: { action in
-//                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
-//            }),
+            UIAction(title: NSLocalizedString("Documentation", comment: ""),
+                     image: UIImage(systemName: "doc.richtext"),
+                     handler: { action in
+                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com")
+            }),
             UIAction(title: NSLocalizedString("Release Notes", comment: ""),
                      image: UIImage(systemName: "doc.badge.clock"),
                      handler: { action in
                          UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/release-notes")
+            }),
+            UIAction(title: NSLocalizedString("FAQ", comment: ""),
+                     image: UIImage(systemName: "person.fill.questionmark"),
+                     handler: { action in
+                         UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/help/faq")
             })
         ]
         
@@ -866,7 +871,15 @@ extension GamesViewController
     
     private func makePlayMenu() -> UIMenu
     {
-        let importActions = self.importController.makeActions().menuActions
+        var importActions = self.importController.makeActions().menuActions
+        
+        let homebrewAction = UIAction(title: NSLocalizedString("Homebrew", comment: ""),
+                                      image: UIImage(systemName: "house"),
+                                      handler: { action in
+            UIApplication.shared.openWebpage(site: "https://itch.io/games/free/tag-homebrew")
+        })
+        importActions.append(homebrewAction)
+        
         let importMenu = UIMenu(title: NSLocalizedString("Import", comment: ""),
                                 image: UIImage(systemName: "plus"),
                                 children: importActions)

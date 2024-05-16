@@ -84,11 +84,6 @@ class ImportController: NSObject
         }
         actions.append(filesAction)
         
-        let homebrewAction = Action(title: NSLocalizedString("Homebrew", comment: ""), style: .default, image: UIImage(systemName: "house")) { action in
-            UIApplication.shared.openWebpage(site: "https://hh.gbdev.io")
-        }
-        actions.append(homebrewAction)
-        
         return actions
     }
     
