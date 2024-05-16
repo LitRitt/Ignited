@@ -218,7 +218,6 @@ private extension SettingsViewController
     {
         switch section
         {
-        case .syncing: return true
         default: return false
         }
     }
