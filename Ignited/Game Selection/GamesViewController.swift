@@ -546,6 +546,7 @@ private extension GamesViewController
         var previewOptions: [UIAction] = [
             UIAction(title: NSLocalizedString("Context Menu", comment: ""),
                      image: UIImage(systemName: "text.below.photo"),
+                     attributes: [.keepsMenuPresented],
                      state: Settings.userInterfaceFeatures.previews.isEnabled ? .on : .off,
                      handler: { action in
                          Settings.userInterfaceFeatures.previews.isEnabled = !Settings.userInterfaceFeatures.previews.isEnabled
@@ -557,6 +558,7 @@ private extension GamesViewController
         {
             previewOptions.append(UIAction(title: NSLocalizedString("Live Artwork", comment: ""),
                                            image: UIImage(systemName: "photo"),
+                                           attributes: [.keepsMenuPresented],
                                            state: Settings.libraryFeatures.artwork.useScreenshots ? .on : .off,
                                            handler: { action in
                                                Settings.libraryFeatures.artwork.useScreenshots = !Settings.libraryFeatures.artwork.useScreenshots
@@ -575,6 +577,7 @@ private extension GamesViewController
         let saveStateOptions: [UIAction] = [
             UIAction(title: NSLocalizedString("Auto Save", comment: ""),
                      image: UIImage(systemName: "tray.and.arrow.down"),
+                     attributes: [.keepsMenuPresented],
                      state: Settings.gameplayFeatures.saveStates.autoSave ? .on : .off,
                      handler: { action in
                          if Settings.gameplayFeatures.saveStates.autoSave
@@ -590,6 +593,7 @@ private extension GamesViewController
                      }),
             UIAction(title: NSLocalizedString("Auto Load", comment: ""),
                      image: UIImage(systemName: "tray.and.arrow.up"),
+                     attributes: [.keepsMenuPresented],
                      state: Settings.gameplayFeatures.saveStates.autoLoad ? .on : .off,
                      handler: { action in
                          if Settings.gameplayFeatures.saveStates.autoLoad
@@ -616,6 +620,7 @@ private extension GamesViewController
         let syncOptions: [UIAction] = [
             UIAction(title: NSLocalizedString("Auto Sync", comment: ""),
                      image: UIImage(systemName: "arrow.triangle.2.circlepath.icloud"),
+                     attributes: [.keepsMenuPresented],
                      state: Settings.gameplayFeatures.autoSync.isEnabled ? .on : .off,
                      handler: { action in
                          Settings.gameplayFeatures.autoSync.isEnabled = !Settings.gameplayFeatures.autoSync.isEnabled
@@ -623,6 +628,7 @@ private extension GamesViewController
                      }),
             UIAction(title: NSLocalizedString("Sync Now", comment: ""),
                      image: UIImage(systemName: "checkmark.icloud"),
+                     attributes: [.keepsMenuPresented],
                      handler: { action in
                          self.forceNextSyncingToast = true
                          self.sync()
@@ -657,6 +663,7 @@ private extension GamesViewController
             themeStyleOptions.append(
                 UIAction(title: themeStyle.description,
                          image: UIImage(systemName: themeStyle.symbolName),
+                         attributes: [.keepsMenuPresented],
                          state: Settings.userInterfaceFeatures.theme.style == themeStyle ? .on : .off,
                          handler: { action in
                              Settings.userInterfaceFeatures.theme.style = themeStyle
@@ -678,6 +685,7 @@ private extension GamesViewController
         {
             themeColorOptions.append(
                 UIAction(title: themeColor.description,
+                         attributes: [.keepsMenuPresented],
                          state: Settings.userInterfaceFeatures.theme.color == themeColor ? .on : .off,
                          handler: { action in
                              Settings.userInterfaceFeatures.theme.color = themeColor
@@ -698,6 +706,7 @@ private extension GamesViewController
         ?
         UIAction(title: NSLocalizedString("Favorites First", comment: ""),
                  image: UIImage(systemName: "star"),
+                 attributes: [.keepsMenuPresented],
                  state: .on,
                  handler: { action in
             Settings.libraryFeatures.favorites.sortFirst = false
@@ -706,6 +715,7 @@ private extension GamesViewController
         :
         UIAction(title: NSLocalizedString("Favorites First", comment: ""),
                  image: UIImage(systemName: "star.slash"),
+                 attributes: [.keepsMenuPresented],
                  state: .off,
                  handler: { action in
             Settings.libraryFeatures.favorites.sortFirst = true
@@ -718,6 +728,7 @@ private extension GamesViewController
             sortOptions.append(
                 UIAction(title: sortOrder.description,
                          image: UIImage(systemName: sortOrder.symbolName),
+                         attributes: [.keepsMenuPresented],
                          state: Settings.libraryFeatures.artwork.sortOrder == sortOrder ? .on : .off,
                          handler: { action in
                              Settings.libraryFeatures.artwork.sortOrder = sortOrder
@@ -746,6 +757,7 @@ private extension GamesViewController
     {
         let forceAspectOption = UIAction(title: NSLocalizedString("Force Aspect Ratio", comment: ""),
                                          image: UIImage(systemName: "aspectratio"),
+                                         attributes: [.keepsMenuPresented],
                                          state: Settings.libraryFeatures.artwork.forceAspect ? .on : .off,
                                          handler: { action in
             Settings.libraryFeatures.artwork.forceAspect = !Settings.libraryFeatures.artwork.forceAspect
@@ -754,6 +766,7 @@ private extension GamesViewController
         
         let newGameIconOption = UIAction(title: NSLocalizedString("New Game Icon", comment: ""),
                                          image: UIImage(systemName: "circle.fill"),
+                                         attributes: [.keepsMenuPresented],
                                          state: Settings.libraryFeatures.artwork.showNewGames ? .on : .off,
                                          handler: { action in
             Settings.libraryFeatures.artwork.showNewGames = !Settings.libraryFeatures.artwork.showNewGames
@@ -761,17 +774,19 @@ private extension GamesViewController
         })
         
         let pauseIconOption = UIAction(title: NSLocalizedString("Pause Icon", comment: ""),
-                                         image: UIImage(systemName: "pause.fill"),
-                                         state: Settings.libraryFeatures.artwork.showPauseIcon ? .on : .off,
-                                         handler: { action in
+                                       image: UIImage(systemName: "pause.fill"),
+                                       attributes: [.keepsMenuPresented],
+                                       state: Settings.libraryFeatures.artwork.showPauseIcon ? .on : .off,
+                                       handler: { action in
             Settings.libraryFeatures.artwork.showPauseIcon = !Settings.libraryFeatures.artwork.showPauseIcon
             self.updateOptionsMenu()
         })
         
         let favoritesIconOption = UIAction(title: NSLocalizedString("Favorites Icon", comment: ""),
-                                         image: UIImage(systemName: "star.circle.fill"),
+                                           image: UIImage(systemName: "star.circle.fill"),
+                                           attributes: [.keepsMenuPresented],
                                            state: Settings.libraryFeatures.favorites.showStarIcon ? .on : .off,
-                                         handler: { action in
+                                           handler: { action in
             Settings.libraryFeatures.favorites.showStarIcon = !Settings.libraryFeatures.favorites.showStarIcon
             self.updateOptionsMenu()
         })
@@ -790,6 +805,7 @@ private extension GamesViewController
             artworkStyleOptions.append(
                 UIAction(title: artworkStyle.description,
                          image: UIImage(systemName: artworkStyle.symbolName),
+                         attributes: [.keepsMenuPresented],
                          state: Settings.libraryFeatures.artwork.style == artworkStyle ? .on : .off,
                          handler: { action in
                              Settings.libraryFeatures.artwork.style = artworkStyle
@@ -812,6 +828,7 @@ private extension GamesViewController
             artworkSizeOptions.append(
                 UIAction(title: artworkSize.description,
                          image: UIImage(systemName: artworkSize.symbolName),
+                         attributes: [.keepsMenuPresented],
                          state: Settings.libraryFeatures.artwork.size == artworkSize ? .on : .off,
                          handler: { action in
                              Settings.libraryFeatures.artwork.size = artworkSize
