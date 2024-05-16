@@ -62,7 +62,7 @@ struct Settings
     static func registerDefaults()
     {
         let defaults = [
-            #keyPath(UserDefaults.lastUpdateShown): 1,
+            #keyPath(UserDefaults.buildNumber): 1,
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
@@ -111,10 +111,10 @@ struct Settings
 
 extension Settings
 {
-    /// Update
-    static var lastUpdateShown: Int {
-        set { UserDefaults.standard.lastUpdateShown = newValue }
-        get { return UserDefaults.standard.lastUpdateShown }
+    /// Build Number
+    static var buildNumber: Int {
+        set { UserDefaults.standard.buildNumber = newValue }
+        get { return UserDefaults.standard.buildNumber }
     }
     
     /// OpenGLES
@@ -390,7 +390,7 @@ private extension Settings
 
 private extension UserDefaults
 {
-    @NSManaged var lastUpdateShown: Int
+    @NSManaged var buildNumber: Int
     
     @NSManaged var previousGameCollectionIdentifier: String?
     

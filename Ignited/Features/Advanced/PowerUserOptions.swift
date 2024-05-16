@@ -68,7 +68,7 @@ struct PowerUserOptions
             description: "This will force update actions, such as repairs, to be taken next app launch.",
             detailView: { _ in
         Button("Reset Build Counter") {
-            Settings.lastUpdateShown = 1
+            Settings.buildNumber = 1
         }
         .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(.red)
@@ -86,7 +86,7 @@ extension PowerUserOptions
             return
         }
         
-        Settings.lastUpdateShown = 1
+        Settings.buildNumber = 1
         
         ToastView.show(NSLocalizedString("Successfully Reset Build Counter", comment: ""), onEdge: .bottom, duration: 3.0)
     }

@@ -113,7 +113,7 @@ extension LaunchViewController
         PurchaseManager.shared.loadProducts()
         PurchaseManager.shared.updatePurchasedProducts()
         
-        self.updateBuildCounter()
+        self.updateBuildNumber()
         
         self.presentedGameViewController = true
         
@@ -164,33 +164,15 @@ extension LaunchViewController
         }
     }
     
-    func updateBuildCounter()
+    func updateBuildNumber()
     {
-        guard let buildNumber = Bundle.main.buildNumber else { return }
+        guard let buildNumber = Bundle.main.buildNumber,
+              buildNumber <= Settings.buildNumber else { return }
         
-        if Settings.lastUpdateShown < buildNumber
-        {
-            // Sign out all sync accounts before App Store release
-            if Settings.lastUpdateShown < 226
-            {
-                SyncManager.shared.deauthenticate { (result) in
-                    DispatchQueue.main.async {
-                        do
-                        {
-                            try result.get()
-                            
-                            Settings.syncingService = nil
-                        }
-                        catch
-                        {
-                            print(error.localizedDescription)
-                        }
-                    }
-                }
-            }
-        }
+        let previousBuildNumber = Settings.buildNumber
+        Settings.buildNumber = buildNumber
         
-        Settings.lastUpdateShown = buildNumber
+        // Do any version update work here
     }
 }
 
