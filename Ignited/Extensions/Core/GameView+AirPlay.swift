@@ -52,6 +52,7 @@ private extension GameView
         placeholderView.textLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         placeholderView.textLabel.text = NSLocalizedString("AirPlaying", comment: "")
         placeholderView.textLabel.textColor = .systemGray
+        placeholderView.textLabel.numberOfLines = 1 // Enforce single line
         
         placeholderView.detailTextLabel.isHidden = true
 
@@ -62,6 +63,12 @@ private extension GameView
         placeholderView.imageView.tintColor = .systemGray
 
         self.addSubview(placeholderView, pinningEdgesWith: .zero)
+        
+        // Ensure label goes to edge before wrapping to new line.
+        NSLayoutConstraint.activate([
+            placeholderView.detailTextLabel.leadingAnchor.constraint(equalTo: placeholderView.layoutMarginsGuide.leadingAnchor),
+            placeholderView.detailTextLabel.trailingAnchor.constraint(equalTo: placeholderView.layoutMarginsGuide.trailingAnchor),
+        ])
 
         self.airPlayView = placeholderView
         
