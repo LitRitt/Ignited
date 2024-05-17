@@ -61,6 +61,7 @@
 		AC41385D2B526A5F008653D4 /* OverscanEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */; };
 		AC417DA92BF708D400A540EA /* ProcessInfo+visionOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC417DA82BF708D400A540EA /* ProcessInfo+visionOS.swift */; };
 		AC417DAB2BF7090200A540EA /* LocalDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC417DAA2BF7090200A540EA /* LocalDeviceController.swift */; };
+		AC417DAD2BF71DCD00A540EA /* SwipeGestureOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC417DAC2BF71DCD00A540EA /* SwipeGestureOptions.swift */; };
 		AC432A362A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4BB76C2B094A9A0097E908 /* FeaturesView.swift */; };
@@ -363,6 +364,7 @@
 		AC417D952BF6858F00A540EA /* IgnitedPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IgnitedPro.storekit; sourceTree = "<group>"; };
 		AC417DA82BF708D400A540EA /* ProcessInfo+visionOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+visionOS.swift"; sourceTree = "<group>"; };
 		AC417DAA2BF7090200A540EA /* LocalDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDeviceController.swift; sourceTree = "<group>"; };
+		AC417DAC2BF71DCD00A540EA /* SwipeGestureOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGestureOptions.swift; sourceTree = "<group>"; };
 		AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlaySkinsOptions.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4BB76C2B094A9A0097E908 /* FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesView.swift; sourceTree = "<group>"; };
@@ -863,6 +865,7 @@
 				AC23D2D52AFDCD2A0056CC3F /* SaveStatesOptions.swift */,
 				ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */,
 				AC99B33C2B254B10001A2A1F /* PauseMenuOptions.swift */,
+				AC417DAC2BF71DCD00A540EA /* SwipeGestureOptions.swift */,
 			);
 			path = Gameplay;
 			sourceTree = "<group>";
@@ -1982,6 +1985,7 @@
 				BF6EE5EB1F7C5F8F0051AD6C /* GameControllerInputMapping.swift in Sources */,
 				BF8A333421A484A000A42FD4 /* BadgedTableViewCell.swift in Sources */,
 				AC7FCC9B2BC113370072BF7C /* PurchaseManager.swift in Sources */,
+				AC417DAD2BF71DCD00A540EA /* SwipeGestureOptions.swift in Sources */,
 				BF3540021C5DA3D500C1184C /* PauseStoryboardSegue.swift in Sources */,
 				AC89AC172B8068C0000F65ED /* StandardControllerSkin.swift in Sources */,
 				AC1771D62B9A55FD009AEF4A /* AppPresetOptions.swift in Sources */,

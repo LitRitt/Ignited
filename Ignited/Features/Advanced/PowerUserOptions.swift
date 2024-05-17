@@ -282,6 +282,7 @@ extension PowerUserOptions
         case saveStateRewind
         case fastForward
         case quickSettings
+        case swipeGestures
         // Standard Skins
         case styleAndColor
         case gameScreen
@@ -360,6 +361,12 @@ extension PowerUserOptions
             case .quickSettings:
                 Settings.gameplayFeatures.quickSettings.shakeToOpen = false
                 Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
+                
+            case .swipeGestures:
+                Settings.gameplayFeatures.swipeGestures.up = ActionInput.statusBar
+                Settings.gameplayFeatures.swipeGestures.down = ActionInput.quickSave
+                Settings.gameplayFeatures.swipeGestures.left = ActionInput.screenshot
+                Settings.gameplayFeatures.swipeGestures.right = ActionInput.fastForward
                 
             case .styleAndColor:
                 Settings.standardSkinFeatures.styleAndColor.style = .filled

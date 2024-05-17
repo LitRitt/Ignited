@@ -164,6 +164,14 @@ class GameViewController: DeltaCore.GameViewController
     
     private var _isLoadingSaveState = false
     private var _isQuickSettingsOpen = false
+    
+    private var rightSwipeGestureRecognizer: UISwipeGestureRecognizer!
+    private var leftSwipeGestureRecognizer: UISwipeGestureRecognizer!
+    private var upSwipeGestureRecognizer: UISwipeGestureRecognizer!
+    private var downSwipeGestureRecognizer: UISwipeGestureRecognizer!
+    
+    private var isMenuButtonHeldDown = false
+    private var ignoreNextMenuInput = false
         
     // Sustain Buttons
     private var isSelectingSustainedButtons = false
@@ -334,10 +342,15 @@ class GameViewController: DeltaCore.GameViewController
                 self.performQuickSettingsAction()
             }
         }
-        else if let emulatorCore = self.emulatorCore, emulatorCore.state == .running
+        else if let standardInput = StandardGameControllerInput(input: input), standardInput == .menu
         {
-            guard let actionInput = ActionInput(input: input) else { return }
-            
+            self.isMenuButtonHeldDown = true
+
+            let sustainInputsMapping = SustainInputsMapping(gameController: gameController)
+            gameController.addReceiver(self, inputMapping: sustainInputsMapping)
+        }
+        else if let actionInput = ActionInput(input: input), let emulatorCore = self.emulatorCore, emulatorCore.state == .running
+        {
             func fastForwardInput()
             {
                 switch Settings.gameplayFeatures.fastForward.mode {
@@ -386,6 +399,23 @@ class GameViewController: DeltaCore.GameViewController
                 
             }
         }
+        else if self.isMenuButtonHeldDown
+        {
+            self.ignoreNextMenuInput = true
+
+            if gameController.sustainedInputs.keys.contains(AnyInput(input))
+            {
+                DispatchQueue.main.async {
+                    gameController.unsustain(input)
+                }
+                ToastView.show("Released \(input.stringValue.uppercased())", in: self.view, onEdge: .top, duration: 1.5)
+            }
+            else
+            {
+                gameController.sustain(input, value: value)
+                ToastView.show("Holding \(input.stringValue.uppercased())", in: self.view, onEdge: .top, duration: 1.5)
+            }
+        }
     }
     
     override func gameController(_ gameController: GameController, didDeactivate input: Input)
@@ -402,10 +432,15 @@ class GameViewController: DeltaCore.GameViewController
                 Settings.gameplayFeatures.sustainButtons.heldInputs[game.identifier] = inputsToSustain
             }
         }
-        else
+        else if let standardInput = StandardGameControllerInput(input: input), standardInput == .menu
         {
-            guard let actionInput = ActionInput(input: input) else { return }
-            
+            self.isMenuButtonHeldDown = false
+
+            // Reset controller mapping back to what it should be.
+            self.updateControllers()
+        }
+        else if let actionInput = ActionInput(input: input)
+        {
             switch actionInput
             {
             case .null: break
@@ -485,6 +520,27 @@ extension GameViewController
         self.sustainButtonsBackgroundView.detailTextLabel.text = NSLocalizedString("Press the Menu button or Quick Settings button when finished.", comment: "")
         self.sustainButtonsBackgroundView.alpha = 0.0
         sustainButtonsVibrancyView.contentView.addSubview(self.sustainButtonsBackgroundView)
+        
+        // Gestures
+        self.rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameViewController.handleRightSwipeGesture(_:)))
+        self.rightSwipeGestureRecognizer.delegate = self
+        self.rightSwipeGestureRecognizer.direction = [.right]
+        self.view.addGestureRecognizer(self.rightSwipeGestureRecognizer)
+        
+        self.leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameViewController.handleLeftSwipeGesture(_:)))
+        self.leftSwipeGestureRecognizer.delegate = self
+        self.leftSwipeGestureRecognizer.direction = [.left]
+        self.view.addGestureRecognizer(self.leftSwipeGestureRecognizer)
+        
+        self.upSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameViewController.handleUpSwipeGesture(_:)))
+        self.upSwipeGestureRecognizer.delegate = self
+        self.upSwipeGestureRecognizer.direction = [.up]
+        self.view.addGestureRecognizer(self.upSwipeGestureRecognizer)
+        
+        self.downSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameViewController.handleDownSwipeGesture(_:)))
+        self.downSwipeGestureRecognizer.delegate = self
+        self.downSwipeGestureRecognizer.direction = [.down]
+        self.view.addGestureRecognizer(self.downSwipeGestureRecognizer)
         
         // Auto Layout
         self.overscanEditorView.translatesAutoresizingMaskIntoConstraints = false
@@ -3121,6 +3177,11 @@ extension GameViewController: GameViewControllerDelegate
     {
         guard gameViewController == self else { return }
         
+        guard !self.ignoreNextMenuInput else {
+            self.ignoreNextMenuInput = false
+            return
+        }
+        
         if let pausingGameController = self.pausingGameController
         {
             guard pausingGameController == gameController else { return }
@@ -3169,6 +3230,90 @@ extension GameViewController: GameViewControllerDelegate
         else
         {
             self.updateExternalDisplayGameViews()
+        }
+    }
+}
+
+//MARK: - UIGestureRecognizerDelegate -
+/// UIGestureRecognizerDelegate
+extension GameViewController
+{
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
+    {
+        guard super.gestureRecognizer(gestureRecognizer, shouldReceive: touch) else { return false }
+        guard gestureRecognizer == self.rightSwipeGestureRecognizer || gestureRecognizer == self.leftSwipeGestureRecognizer || gestureRecognizer == self.upSwipeGestureRecognizer || gestureRecognizer == self.downSwipeGestureRecognizer else { return true }
+
+        let shouldBegin = self.isMenuButtonHeldDown
+        return shouldBegin
+    }
+
+    @objc private func handleRightSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
+    {
+        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        
+        let input = Settings.gameplayFeatures.swipeGestures.right
+        self.handleSwipeGestureActionInput(input)
+
+        self.ignoreNextMenuInput = true
+    }
+    
+    @objc private func handleLeftSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
+    {
+        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        
+        let input = Settings.gameplayFeatures.swipeGestures.left
+        self.handleSwipeGestureActionInput(input)
+
+        self.ignoreNextMenuInput = true
+    }
+    
+    @objc private func handleUpSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
+    {
+        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        
+        let input = Settings.gameplayFeatures.swipeGestures.up
+        self.handleSwipeGestureActionInput(input)
+
+        self.ignoreNextMenuInput = true
+    }
+    
+    @objc private func handleDownSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
+    {
+        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        
+        let input = Settings.gameplayFeatures.swipeGestures.down
+        self.handleSwipeGestureActionInput(input)
+
+        self.ignoreNextMenuInput = true
+    }
+    
+    func handleSwipeGestureActionInput(_ input: ActionInput?)
+    {
+        guard let emulatorCore = self.emulatorCore,
+              let input = input else { return }
+        
+        func fastForwardAction()
+        {
+            switch Settings.gameplayFeatures.fastForward.mode {
+            case .toggle, .hold:
+                let isFastForwarding = (emulatorCore.rate != 1)
+                self.performFastForwardAction(activate: !isFastForwarding)
+                
+            case .cycle:
+                self.performFastForwardCycleAction()
+            }
+        }
+        
+        switch input
+        {
+        case .fastForward: fastForwardAction()
+        case .quickLoad: self.performQuickLoadAction()
+        case .quickSave: self.performQuickSaveAction()
+        case .quickSettings: self.performQuickSettingsAction()
+        case .screenshot: self.performScreenshotAction()
+        case .statusBar: self.performStatusBarAction()
+        case .toggleAltRepresentations: self.performAltRepresentationsAction()
+        default: break
         }
     }
 }

@@ -73,6 +73,7 @@ struct Settings
             Settings.gameplayFeatures.cheats.settingsKey.rawValue: true,
             Settings.gameplayFeatures.rotationLock.settingsKey.rawValue: true,
             Settings.gameplayFeatures.fastForward.settingsKey.rawValue: true,
+            Settings.gameplayFeatures.swipeGestures.settingsKey.rawValue: true,
             Settings.gameplayFeatures.gameAudio.settingsKey.rawValue: true,
             Settings.gameplayFeatures.screenshots.settingsKey.rawValue: true,
             Settings.gameplayFeatures.rewind.settingsKey.rawValue: false,

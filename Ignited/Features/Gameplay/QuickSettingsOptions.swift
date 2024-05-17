@@ -19,7 +19,10 @@ extension ActionInput: CustomStringConvertible
         case .quickSave: return "Quick Save"
         case .quickLoad: return "Quick Load"
         case .screenshot: return "Screenshot"
+        case .statusBar: return "Status Bar"
         case .restart: return "Restart"
+        case .quickSettings: return "Quick Settings"
+        case .toggleAltRepresentations: return "Toggle AltSkin"
         case .null: return "None"
         default: return "Unsupported"
         }
@@ -33,7 +36,7 @@ extension ActionInput: LocalizedOptionValue
     }
     
     static var localizedNilDescription: Text {
-        Text("Don't Replace")
+        Text("None")
     }
 }
 
