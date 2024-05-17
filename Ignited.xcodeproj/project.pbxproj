@@ -59,6 +59,8 @@
 		AC4138582B524C76008653D4 /* N64OverscanOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4138572B524C76008653D4 /* N64OverscanOptions.swift */; };
 		AC41385A2B5264B4008653D4 /* OverscanEditorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC4138592B5264B4008653D4 /* OverscanEditorView.xib */; };
 		AC41385D2B526A5F008653D4 /* OverscanEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */; };
+		AC417DA92BF708D400A540EA /* ProcessInfo+visionOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC417DA82BF708D400A540EA /* ProcessInfo+visionOS.swift */; };
+		AC417DAB2BF7090200A540EA /* LocalDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC417DAA2BF7090200A540EA /* LocalDeviceController.swift */; };
 		AC432A362A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */; };
 		AC448A0B2A0E694F003F6C1A /* Color+FromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */; };
 		AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4BB76C2B094A9A0097E908 /* FeaturesView.swift */; };
@@ -359,6 +361,8 @@
 		AC4138592B5264B4008653D4 /* OverscanEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverscanEditorView.xib; sourceTree = "<group>"; };
 		AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverscanEditorView.swift; sourceTree = "<group>"; };
 		AC417D952BF6858F00A540EA /* IgnitedPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IgnitedPro.storekit; sourceTree = "<group>"; };
+		AC417DA82BF708D400A540EA /* ProcessInfo+visionOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+visionOS.swift"; sourceTree = "<group>"; };
+		AC417DAA2BF7090200A540EA /* LocalDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDeviceController.swift; sourceTree = "<group>"; };
 		AC432A352A4F6DB1001E1A06 /* AirPlaySkinsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlaySkinsOptions.swift; sourceTree = "<group>"; };
 		AC448A0A2A0E694F003F6C1A /* Color+FromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+FromRGB.swift"; sourceTree = "<group>"; };
 		AC4BB76C2B094A9A0097E908 /* FeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesView.swift; sourceTree = "<group>"; };
@@ -721,6 +725,7 @@
 				BF5942921E09BD1A0051894B /* NSManagedObjectContext+Conveniences.swift */,
 				BF5942901E09BD1A0051894B /* NSFetchedResultsController+Conveniences.m */,
 				BF59428F1E09BD1A0051894B /* NSFetchedResultsController+Conveniences.h */,
+				AC417DA82BF708D400A540EA /* ProcessInfo+visionOS.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1053,6 +1058,7 @@
 				BF11734F1DA32CF600047DF8 /* ControllersSettingsViewController.swift */,
 				BF616A121F08184A0077F8B2 /* ControllerInputsViewController.swift */,
 				BF8DDD231F4F6C880088A21B /* InputCalloutView.swift */,
+				AC417DAA2BF7090200A540EA /* LocalDeviceController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1902,6 +1908,7 @@
 				BF34FA111CF1899D006624C7 /* CheatTextView.swift in Sources */,
 				D5AAF27729884F8600F21ACF /* CheatDevice.swift in Sources */,
 				ACCD93F42B97A9CA00BB4F6A /* AirPlayDeviceOptions.swift in Sources */,
+				AC417DA92BF708D400A540EA /* ProcessInfo+visionOS.swift in Sources */,
 				BF1F45AD21AF57BA00EF9895 /* HarmonyMetadataKey+Keys.swift in Sources */,
 				BF71CF871FE90006001F1613 /* AppIconShortcutsViewController.swift in Sources */,
 				BF1DAD5D1D9F576000E752A7 /* PreferredControllerSkinsViewController.swift in Sources */,
@@ -1962,6 +1969,7 @@
 				BF797A2D1C2D339F00F1A000 /* UILabel+FontSize.swift in Sources */,
 				BF80E1D21F13117000847008 /* ControllerInputsViewController.swift in Sources */,
 				BF5942641E09BBB10051894B /* LoadControllerSkinImageOperation.swift in Sources */,
+				AC417DAB2BF7090200A540EA /* LocalDeviceController.swift in Sources */,
 				D5A98CE2284EF14B00E023E5 /* SceneDelegate.swift in Sources */,
 				AC0BF8182A8ECD7000C47A5A /* RandomGameOptions.swift in Sources */,
 				BF6EE5E91F7C5F860051AD6C /* _GameControllerInputMapping.swift in Sources */,
