@@ -144,6 +144,7 @@
 		ACCDD4872A6386020034A6C0 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4832A6386020034A6C0 /* click.mp3 */; };
 		ACCDD4882A6386020034A6C0 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD4842A6386020034A6C0 /* beep.mp3 */; };
 		ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ACCDD48A2A63864E0034A6C0 /* tock.mp3 */; };
+		ACD473B32BF9616D00A2A7F2 /* OSLog+Ignited.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD473B22BF9616D00A2A7F2 /* OSLog+Ignited.swift */; };
 		ACD5C7692B4A7868008B28AC /* View+Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5C7672B4A605B008B28AC /* View+Labels.swift */; };
 		ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */; };
 		ACD5FA052A0C4D58005CDCF1 /* GBPaletteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */; };
@@ -450,6 +451,7 @@
 		ACCDD4832A6386020034A6C0 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		ACCDD4842A6386020034A6C0 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 		ACCDD48A2A63864E0034A6C0 /* tock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tock.mp3; sourceTree = "<group>"; };
+		ACD473B22BF9616D00A2A7F2 /* OSLog+Ignited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Ignited.swift"; sourceTree = "<group>"; };
 		ACD5C7672B4A605B008B28AC /* View+Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Labels.swift"; sourceTree = "<group>"; };
 		ACD5FA022A0C4C84005CDCF1 /* GBFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFeatures.swift; sourceTree = "<group>"; };
 		ACD5FA042A0C4D58005CDCF1 /* GBPaletteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPaletteOptions.swift; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 				BF5942901E09BD1A0051894B /* NSFetchedResultsController+Conveniences.m */,
 				BF59428F1E09BD1A0051894B /* NSFetchedResultsController+Conveniences.h */,
 				AC417DA82BF708D400A540EA /* ProcessInfo+visionOS.swift */,
+				ACD473B22BF9616D00A2A7F2 /* OSLog+Ignited.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1956,6 +1959,7 @@
 				ACAEA77F2B50FA0A008A7D45 /* UIAlertController+PreparePopover.swift in Sources */,
 				BF95E2771E4977BF0030E7AD /* GameMetadata.swift in Sources */,
 				BFFC461F1D59823500AF2CC6 /* GamesStoryboardSegue.swift in Sources */,
+				ACD473B32BF9616D00A2A7F2 /* OSLog+Ignited.swift in Sources */,
 				AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */,
 				AC84B57229FF1A780090F274 /* RewindOptions.swift in Sources */,
 				ACCD9DB92A01BA5500B235C4 /* AppIconOptions.swift in Sources */,

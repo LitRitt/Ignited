@@ -8,10 +8,13 @@
 
 import UIKit
 import SwiftUI
+import QuickLook
+import MessageUI
 
 import DeltaCore
 
 import Roxas
+import Harmony
 
 private extension SettingsViewController
 {
@@ -26,6 +29,7 @@ private extension SettingsViewController
         case shortcuts
         case skinDownloads
         case credits
+        case support
     }
     
     enum Segue: String
@@ -45,6 +49,15 @@ private extension SettingsViewController
         case controllers
         case touchFeedback
         case advanced
+    }
+    
+    enum CoresRow: Int, CaseIterable
+    {
+        case snes
+        case n64
+        case gbc
+        case gba
+        case ds
     }
     
     enum SkinDownloadsRow: Int, CaseIterable
@@ -68,19 +81,18 @@ private extension SettingsViewController
         case softwareLicenses
     }
     
-    enum CoresRow: Int, CaseIterable
+    enum SupportRow: Int, CaseIterable
     {
-        case snes
-        case n64
-        case gbc
-        case gba
-        case ds
+        case contact
+        case errorLog
     }
 }
 
 class SettingsViewController: UITableViewController
 {
     @IBOutlet private var versionLabel: UILabel!
+    
+    @IBOutlet private var exportLogActivityIndicatorView: UIActivityIndicatorView!
     
     @IBOutlet private var syncingServiceLabel: UILabel!
     
@@ -91,6 +103,8 @@ class SettingsViewController: UITableViewController
     private var previousSelectedRowIndexPath: IndexPath?
     
     private var syncingConflictsCount = 0
+    
+    private var _exportedLogURL: URL?
     
     required init?(coder aDecoder: NSCoder)
     {
@@ -218,6 +232,54 @@ private extension SettingsViewController
     {
         let hostingController = PurchaseView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func exportErrorLog()
+    {
+        self.exportLogActivityIndicatorView.startAnimating()
+
+        if let indexPath = self.tableView.indexPathForSelectedRow
+        {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+
+        Task<Void, Never>.detached(priority: .userInitiated) {
+            do
+            {
+                let store = try OSLogStore(scope: .currentProcessIdentifier)
+
+                // All logs since the app launched.
+                let position = store.position(timeIntervalSinceLatestBoot: 0)
+                let predicate = NSPredicate(format: "subsystem IN %@", [Logger.ignitedSubsystem, Logger.harmonySubsystem])
+
+                let entries = try store.getEntries(at: position, matching: predicate)
+                    .compactMap { $0 as? OSLogEntryLog }
+                    .map { "[\($0.date.formatted())] [\($0.category)] [\($0.level.localizedName)] \($0.composedMessage)" }
+
+                let outputText = entries.joined(separator: "\n")
+
+                let outputDirectory = FileManager.default.uniqueTemporaryURL()
+                try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
+
+                let outputURL = outputDirectory.appendingPathComponent("Ignited-Errors.log")
+                try outputText.write(to: outputURL, atomically: true, encoding: .utf8)
+
+                await MainActor.run {
+                    self._exportedLogURL = outputURL
+
+                    let previewController = QLPreviewController()
+                    previewController.delegate = self
+                    previewController.dataSource = self
+                    self.present(previewController, animated: true)
+                }
+            }
+            catch
+            {
+                print("Failed to export Harmony logs.", error)
+            }
+
+            await self.exportLogActivityIndicatorView.stopAnimating()
+        }
     }
 }
 
@@ -408,6 +470,39 @@ extension SettingsViewController
             case .softwareLicenses: break
             }
             
+        case .support:
+            let row = SupportRow(rawValue: indexPath.row)!
+            switch row
+            {
+            case .errorLog:
+                self.exportErrorLog()
+
+            case .contact:
+                if MFMailComposeViewController.canSendMail()
+                {
+                    let mailViewController = MFMailComposeViewController()
+                    mailViewController.mailComposeDelegate = self
+                    mailViewController.setToRecipients(["support@ignitedemulator.com"])
+
+                    if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+                    {
+                        mailViewController.setSubject("Ignited \(version) Feedback")
+                    }
+                    else
+                    {
+                        mailViewController.setSubject("Ignited Feedback")
+                    }
+
+                    self.present(mailViewController, animated: true, completion: nil)
+                }
+                else
+                {
+                    ToastView.show(NSLocalizedString("Cannot Send Mail", comment: ""), in: self.navigationController?.view ?? self.view, onEdge: .bottom, duration: 4.0)
+                }
+                
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+            
         default: break
         }
     }
@@ -493,5 +588,42 @@ extension SettingsViewController
         case .controllerSkins: return 30
         default: return UITableView.automaticDimension
         }
+    }
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate
+{
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?)
+    {
+        if let error = error
+        {
+            let toastView = RSTToastView(error: error)
+            toastView.show(in: self.navigationController?.view ?? self.view, duration: 4.0)
+        }
+
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SettingsViewController: QLPreviewControllerDataSource, QLPreviewControllerDelegate
+{
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int
+    {
+        return 1
+    }
+
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem
+    {
+        return (_exportedLogURL as? NSURL) ?? NSURL()
+    }
+
+    func previewControllerDidDismiss(_ controller: QLPreviewController)
+    {
+        guard let exportedLogURL = _exportedLogURL else { return }
+
+        let parentDirectory = exportedLogURL.deletingLastPathComponent()
+        try? FileManager.default.removeItem(at: parentDirectory)
+
+        _exportedLogURL = nil
     }
 }
