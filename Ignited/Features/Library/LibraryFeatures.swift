@@ -14,7 +14,8 @@ struct LibraryFeatures: FeatureContainer
     
     @Feature(name: "Import Options",
              description: "Change how files should be handled when importing them.",
-             options: ImportOptions())
+             options: ImportOptions(),
+             attributes: [.permanent])
     var importing
     
     @Feature(name: "Artwork Options",
