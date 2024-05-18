@@ -951,108 +951,143 @@ private extension GameCollectionViewController
 //MARK: - Game Actions -
 private extension GameCollectionViewController
 {
-    func actions(for game: Game) -> [Action]
+    func actions(for game: Game) -> [UIMenuElement]
     {
-        let cancelAction = Action(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, action: nil)
-        
-        let favoriteAction: Action
-        
-        if game.isFavorite
-        {
-            favoriteAction = Action(title: NSLocalizedString("Remove Favorite", comment: ""), style: .default, image: UIImage(systemName: "star.slash"), action: { [unowned self] action in
-                self.favoriteGame(for: game, isFavorite: false)
-            })
-        }
-        else
-        {
-            favoriteAction = Action(title: NSLocalizedString("Add Favorite", comment: ""), style: .default, image: UIImage(systemName: "star"), action: { [unowned self] action in
-                self.favoriteGame(for: game, isFavorite: true)
-            })
-        }
-        
-        let renameAction = Action(title: NSLocalizedString("Rename", comment: ""), style: .default, image: UIImage(systemName: "pencil.and.ellipsis.rectangle"), action: { [unowned self] action in
-            self.rename(game)
-        })
-        
-        let changeArtworkAction = Action(title: NSLocalizedString("Change Artwork", comment: ""), style: .default, image: UIImage(systemName: "photo")) { [unowned self] action in
-            self.changeArtwork(for: game)
-        }
-        
-        let changeControllerSkinAction = Action(title: NSLocalizedString("Change Controller Skin", comment: ""), style: .default, image: UIImage(systemName: "gamecontroller")) { [unowned self] _ in
-            self.changePreferredControllerSkin(for: game)
-        }
-        
-        let shareAction = Action(title: NSLocalizedString("Share", comment: ""), style: .default, image: UIImage(systemName: "square.and.arrow.up"), action: { [unowned self] action in
+        // Share
+        let shareAction = UIAction(title: NSLocalizedString("Share", comment: ""),
+                                   image: UIImage(systemName: "square.and.arrow.up"),
+                                   handler: { [unowned self] action in
             self.share(game)
         })
         
-        let saveStatesAction = Action(title: NSLocalizedString("Save States", comment: ""), style: .default, image: UIImage(systemName: "doc.on.doc"), action: { [unowned self] action in
-            self.viewSaveStates(for: game)
+        // Favorite
+        let isFavorite = game.isFavorite
+        
+        let favoriteAction = UIAction(title: isFavorite ? NSLocalizedString("Remove Favorite", comment: "") : NSLocalizedString("Add Favorite", comment: ""),
+                                  image: isFavorite ? UIImage(systemName: "star.slash") : UIImage(systemName: "star"),
+                                  state: isFavorite ? .on : .off,
+                                  handler: { [unowned self] action in
+            self.favoriteGame(for: game, isFavorite: !isFavorite)
         })
         
-        let importSaveFile = Action(title: NSLocalizedString("Import Save File", comment: ""), style: .default, image: UIImage(systemName: "tray.and.arrow.down")) { [unowned self] _ in
-            self.importSaveFile(for: game)
-        }
-        
-        let exportSaveFile = Action(title: NSLocalizedString("Export Save File", comment: ""), style: .default, image: UIImage(systemName: "tray.and.arrow.up")) { [unowned self] _ in
-            self.exportSaveFile(for: game)
-        }
-        
-        let deleteAction = Action(title: NSLocalizedString("Delete", comment: ""), style: .destructive, image: UIImage(systemName: "trash"), action: { [unowned self] action in
-            self.delete(game)
+        // Renaming
+        let renameAction = UIAction(title: NSLocalizedString("Change Name", comment: ""),
+                                    image: UIImage(systemName: "keyboard"),
+                                    handler: { [unowned self] action in
+            self.rename(game)
+        })
+        let sanitizeAction = UIAction(title: NSLocalizedString("Sanitize Name", comment: ""),
+                                      image: UIImage(systemName: "scissors"),
+                                      handler: { [unowned self] action in
+            self.rename(game, with: game.sanitizedName)
         })
         
-        let resetArtworkAction = Action(title: NSLocalizedString("Reset Artwork", comment: ""), style: .destructive, image: UIImage(systemName: "arrow.counterclockwise"), action: { [unowned self] action in
+        let renameMenu = UIMenu(title: NSLocalizedString("Rename", comment: ""),
+                                image: UIImage(systemName: "pencil.and.ellipsis.rectangle"),
+                                children: [renameAction, sanitizeAction])
+        
+        // Artwork
+        let changeArtworkAction = UIAction(title: NSLocalizedString("Change Artwork", comment: ""),
+                                           image: UIImage(systemName: "photo.on.rectangle.angled"),
+                                           handler: { [unowned self] action in
+            self.changeArtwork(for: game)
+        })
+        let resetArtworkAction = UIAction(title: NSLocalizedString("Reset Artwork", comment: ""),
+                                          image: UIImage(systemName: "photo.badge.arrow.down"),
+                                          attributes: [.destructive],
+                                          handler: { action in
             DatabaseManager.shared.resetArtwork(for: game)
         })
         
-        let invalidVRAMAccessAction: Action
+        let artworkMenu = UIMenu(title: NSLocalizedString("Artwork", comment: ""),
+                                image: UIImage(systemName: "photo"),
+                                children: [changeArtworkAction, resetArtworkAction])
         
-        if Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
+        // Game Settings
+        let changeControllerSkinAction = UIAction(title: NSLocalizedString("Change Controller Skin", comment: ""),
+                                                  image: UIImage(systemName: "gamecontroller"),
+                                                  handler: { [unowned self] action in
+            self.changePreferredControllerSkin(for: game)
+        })
+        
+        let invalidVRAMEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
+        
+        let invalidVRAMAccessAction = UIAction(title: invalidVRAMEnabled ? NSLocalizedString("Disable Invalid VRAM", comment: "") : NSLocalizedString("Enable Invalid VRAM", comment: ""),
+                                               image: invalidVRAMEnabled ? UIImage(systemName: "memorychip") : UIImage(systemName: "memorychip.fill"),
+                                               state: invalidVRAMEnabled ? .on : .off,
+                                               handler: { [unowned self] action in
+            self.toggleInvalidVRAM(for: game, enable: !invalidVRAMEnabled)
+        })
+        
+        let openGLES3Enabled = Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier })
+        
+        let openGLES3Action = UIAction(title: openGLES3Enabled ? NSLocalizedString("Disable OpenGLES 3", comment: "") : NSLocalizedString("Enable OpenGLES 3", comment: ""),
+                                   image: openGLES3Enabled ? UIImage(systemName: "3.circle") : UIImage(systemName: "3.circle.fill"),
+                                   state: openGLES3Enabled ? .on : .off,
+                                   handler: { [unowned self] action in
+            self.toggleOpenGLES3(for: game, enable: !openGLES3Enabled)
+        })
+        
+        var gameSettingsActions = [changeControllerSkinAction]
+        
+        switch game.type
         {
-            invalidVRAMAccessAction = Action(title: NSLocalizedString("Disable Invalid VRAM", comment: ""), style: .default, image: UIImage(systemName: "memorychip"), action: { [unowned self] action in
-                self.toggleInvalidVRAM(for: game, enable: false)
-            })
-        }
-        else
-        {
-            invalidVRAMAccessAction = Action(title: NSLocalizedString("Enable Invalid VRAM", comment: ""), style: .default, image: UIImage(systemName: "memorychip.fill"), action: { [unowned self] action in
-                self.toggleInvalidVRAM(for: game, enable: true)
-            })
+        case .snes where Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled: gameSettingsActions.append(invalidVRAMAccessAction)
+        case .n64 where Settings.n64Features.openGLES3.isEnabled: gameSettingsActions.append(openGLES3Action)
+        default: break
         }
         
-        let openGLES3Action: Action
+        let gameSettingsMenu = UIMenu(title: NSLocalizedString("Game Settings", comment: ""),
+                                      image: UIImage(systemName: "gearshape"),
+                                      children: gameSettingsActions)
         
-        if Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier })
-        {
-            openGLES3Action = Action(title: NSLocalizedString("Disable OpenGLES 3", comment: ""), style: .default, image: UIImage(systemName: "3.circle"), action: { [unowned self] action in
-                self.toggleOpenGLES3(for: game, enable: false)
-            })
-        }
-        else
-        {
-            openGLES3Action = Action(title: NSLocalizedString("Enable OpenGLES 3", comment: ""), style: .default, image: UIImage(systemName: "3.circle.fill"), action: { [unowned self] action in
-                self.toggleOpenGLES3(for: game, enable: true)
-            })
-        }
+        // Saves
+        let saveStatesAction = UIAction(title: NSLocalizedString("View Save States", comment: ""),
+                                        image: UIImage(systemName: "doc.on.doc"),
+                                        handler: { [unowned self] action in
+            self.viewSaveStates(for: game)
+        })
         
-        var actions: [Action] = []
+        let importSaveFileAction = UIAction(title: NSLocalizedString("Import Save File", comment: ""),
+                                      image: UIImage(systemName: "tray.and.arrow.down"),
+                                      handler: { [unowned self] action in
+            self.importSaveFile(for: game)
+        })
+        
+        let exportSaveFileAction = UIAction(title: NSLocalizedString("Export Save File", comment: ""),
+                                      image: UIImage(systemName: "tray.and.arrow.up"),
+                                      handler: { [unowned self] action in
+            self.exportSaveFile(for: game)
+        })
+        
+        let saveFileMenu = UIMenu(title: NSLocalizedString("Manage Save File", comment: ""),
+                                  image: UIImage(systemName: "doc"),
+                                  children: [importSaveFileAction, exportSaveFileAction])
+        
+        let saveMenu = UIMenu(options: [.displayInline],
+                              children: [saveStatesAction, saveFileMenu])
+        
+        // Delete
+        let deleteAction = UIAction(title: NSLocalizedString("Delete", comment: ""),
+                                    image: UIImage(systemName: "trash"),
+                                    attributes: [.destructive],
+                                    handler: { [unowned self] action in
+            self.delete(game)
+        })
+        
+        let menuActions: [UIMenuElement]
         
         switch game.type
         {
         case GameType.unknown:
-            actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, shareAction, resetArtworkAction, deleteAction]
+            menuActions = [shareAction, artworkMenu, renameMenu, gameSettingsMenu, deleteAction]
         case .ds where game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier:
-            actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, saveStatesAction, resetArtworkAction]
-        case .snes where Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled:
-            actions = [cancelAction, favoriteAction, invalidVRAMAccessAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
-        case .n64 where Settings.n64Features.openGLES3.isEnabled:
-            actions = [cancelAction, favoriteAction, openGLES3Action, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
+            menuActions = [artworkMenu, renameMenu, gameSettingsMenu, favoriteAction, saveStatesAction]
         default:
-            actions = [cancelAction, favoriteAction, renameAction, changeArtworkAction, changeControllerSkinAction, shareAction, saveStatesAction, importSaveFile, exportSaveFile, resetArtworkAction, deleteAction]
+            menuActions = [shareAction, artworkMenu, renameMenu, gameSettingsMenu, favoriteAction, saveMenu, deleteAction]
         }
         
-        return actions
+        return menuActions
     }
     
     func delete(_ game: Game)
@@ -1556,8 +1591,8 @@ extension GameCollectionViewController: UIViewControllerPreviewingDelegate
             }
         }
         
-        let actions = self.actions(for: game).previewActions
-        gameViewController.overridePreviewActionItems = actions
+//        let actions = self.actions(for: game)
+//        gameViewController.overridePreviewActionItems = actions
         
         return gameViewController
     }
@@ -1707,7 +1742,7 @@ extension GameCollectionViewController
             
             return previewViewController
         }) { suggestedActions in
-            return UIMenu(title: game.name, children: actions.menuActions)
+            return UIMenu(title: game.name, children: actions)
         }
     }
     
