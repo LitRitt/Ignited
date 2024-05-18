@@ -30,6 +30,11 @@ extension GameCollectionViewController
         case openGLESVersionMismatch
         case criticalBatteryLevel
     }
+    
+    private enum ExportError: Error
+    {
+        case noMatchingCoreFound
+    }
 }
 
 class GameCollectionViewController: UICollectionViewController
@@ -1379,9 +1384,11 @@ private extension GameCollectionViewController
     {
         do
         {
+            guard let deltaCore = Delta.core(for: game.type) else { throw ExportError.noMatchingCoreFound }
+            
             let sanitizedFilename = game.name.components(separatedBy: .urlFilenameAllowed.inverted).joined()
             
-            let temporaryURL = FileManager.default.temporaryDirectory.appendingPathComponent(sanitizedFilename)
+            let temporaryURL = FileManager.default.temporaryDirectory.appendingPathComponent(sanitizedFilename).appendingPathExtension(deltaCore.gameSaveFileExtension)
             try FileManager.default.copyItem(at: game.gameSaveURL, to: temporaryURL, shouldReplace: true)
             
             self._exportedSaveFileURL = temporaryURL
