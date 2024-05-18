@@ -963,8 +963,8 @@ private extension GameCollectionViewController
         // Favorite
         let isFavorite = game.isFavorite
         
-        let favoriteAction = UIAction(title: isFavorite ? NSLocalizedString("Remove Favorite", comment: "") : NSLocalizedString("Add Favorite", comment: ""),
-                                  image: isFavorite ? UIImage(systemName: "star.slash") : UIImage(systemName: "star"),
+        let favoriteAction = UIAction(title: NSLocalizedString("Favorite", comment: ""),
+                                  image: isFavorite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star"),
                                   state: isFavorite ? .on : .off,
                                   handler: { [unowned self] action in
             self.favoriteGame(for: game, isFavorite: !isFavorite)
@@ -978,6 +978,7 @@ private extension GameCollectionViewController
         })
         let sanitizeAction = UIAction(title: NSLocalizedString("Sanitize Name", comment: ""),
                                       image: UIImage(systemName: "scissors"),
+                                      attributes: [.destructive],
                                       handler: { [unowned self] action in
             self.rename(game, with: game.sanitizedName)
         })
@@ -1003,7 +1004,7 @@ private extension GameCollectionViewController
                                 image: UIImage(systemName: "photo"),
                                 children: [changeArtworkAction, resetArtworkAction])
         
-        // Game Settings
+        // Settings
         let changeControllerSkinAction = UIAction(title: NSLocalizedString("Change Controller Skin", comment: ""),
                                                   image: UIImage(systemName: "gamecontroller"),
                                                   handler: { [unowned self] action in
@@ -1037,7 +1038,7 @@ private extension GameCollectionViewController
         default: break
         }
         
-        let gameSettingsMenu = UIMenu(title: NSLocalizedString("Game Settings", comment: ""),
+        let gameSettingsMenu = UIMenu(title: NSLocalizedString("Settings", comment: ""),
                                       image: UIImage(systemName: "gearshape"),
                                       children: gameSettingsActions)
         
@@ -1082,9 +1083,9 @@ private extension GameCollectionViewController
         case GameType.unknown:
             menuActions = [shareAction, artworkMenu, renameMenu, gameSettingsMenu, deleteAction]
         case .ds where game.identifier == Game.melonDSBIOSIdentifier || game.identifier == Game.melonDSDSiBIOSIdentifier:
-            menuActions = [artworkMenu, renameMenu, gameSettingsMenu, favoriteAction, saveStatesAction]
+            menuActions = [favoriteAction, artworkMenu, renameMenu, gameSettingsMenu, saveStatesAction]
         default:
-            menuActions = [shareAction, artworkMenu, renameMenu, gameSettingsMenu, favoriteAction, saveMenu, deleteAction]
+            menuActions = [shareAction, favoriteAction, artworkMenu, renameMenu, gameSettingsMenu, saveMenu, deleteAction]
         }
         
         return menuActions
