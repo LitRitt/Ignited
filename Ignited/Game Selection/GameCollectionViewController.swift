@@ -1449,20 +1449,6 @@ private extension GameCollectionViewController
         self._renameAction?.isEnabled = text.count > 0
     }
     
-    //TODO: Use this code to add long press gestures to pause menu
-    @objc func handleLongPressGesture(_ gestureRecognizer: UILongPressGestureRecognizer)
-    {
-        guard gestureRecognizer.state == .began else { return }
-        
-        guard let indexPath = self.collectionView?.indexPathForItem(at: gestureRecognizer.location(in: self.collectionView)) else { return }
-        
-        let game = self.dataSource.item(at: indexPath)
-        let actions = self.actions(for: game)
-        
-        let alertController = UIAlertController(actions: actions)
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     @objc func settingsDidChange(_ notification: Notification)
     {
         guard let settingsName = notification.userInfo?[Settings.NotificationUserInfoKey.name] as? Settings.Name else { return }

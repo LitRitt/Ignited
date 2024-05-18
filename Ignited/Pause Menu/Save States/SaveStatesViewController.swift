@@ -317,24 +317,7 @@ private extension SaveStatesViewController
         }
     }
     
-    //MARK: - Gestures -
-    
-    @objc func handleLongPressGesture(_ gestureRecognizer: UILongPressGestureRecognizer)
-    {
-        guard gestureRecognizer.state == .began else { return }
-        
-        guard let indexPath = self.collectionView?.indexPathForItem(at: gestureRecognizer.location(in: self.collectionView)) else { return }
-        
-        let saveState = self.dataSource.item(at: indexPath)
-        
-        guard let actions = self.actionsForSaveState(saveState) else { return }
-        
-        let alertController = UIAlertController(actions: actions)
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     //MARK: - Save States -
-    
     @IBAction func addSaveState()
     {
         var saveState: SaveState!
