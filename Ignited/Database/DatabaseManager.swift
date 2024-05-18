@@ -364,8 +364,15 @@ extension DatabaseManager
                 game.type = gameType
                 game.filename = filename
                 
+                var gameName = url.deletingPathExtension().lastPathComponent
+                if Settings.libraryFeatures.importing.sanitize
+                {
+                    gameName = gameName.sanitize(with: .parenthesis)
+                }
+                
                 let databaseMetadata = self.gamesDatabase?.metadata(for: game)
-                game.name = databaseMetadata?.name ?? url.deletingPathExtension().lastPathComponent
+                
+                game.name = databaseMetadata?.name ?? gameName
                 
                 if let artworkURL = databaseMetadata?.artworkURL
                 {

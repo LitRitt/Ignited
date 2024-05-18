@@ -507,13 +507,16 @@ extension GamesViewController: ImportControllerDelegate
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + min(0.1 + (Double(urls.count) * 0.1), 5)) {
-            if let window = self.view.window
-            {
-                let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
-                
-                let alertController = UIAlertController.alertController(games: importedGames, controllerSkins: importedControllerSkins, traits: traits)
-                self.present(alertController, animated: true, completion: nil)
+        if Settings.libraryFeatures.importing.popup
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + min(0.1 + (Double(urls.count) * 0.1), 5)) {
+                if let window = self.view.window
+                {
+                    let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+                    
+                    let alertController = UIAlertController.alertController(games: importedGames, controllerSkins: importedControllerSkins, traits: traits)
+                    self.present(alertController, animated: true, completion: nil)
+                }
             }
         }
     }

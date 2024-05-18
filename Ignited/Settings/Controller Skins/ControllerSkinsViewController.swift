@@ -343,7 +343,8 @@ extension ControllerSkinsViewController: ImportControllerDelegate
             }
             
             if controllerSkins.count > 0,
-               let window = self.view.window
+               let window = self.view.window,
+               Settings.libraryFeatures.importing.popup
             {
                 let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
                 

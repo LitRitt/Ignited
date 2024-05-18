@@ -155,7 +155,8 @@ extension AppDelegate
                 self.present(alertController)
             }
             
-            if games.count > 0
+            if games.count > 0,
+               Settings.libraryFeatures.importing.popup
             {
                 let alertController = UIAlertController.alertController(games: games, controllerSkins: nil, traits: nil)
                 self.present(alertController)
@@ -175,7 +176,8 @@ extension AppDelegate
             }
             
             if controllerSkins.count > 0,
-               let window = self.window
+               let window = self.window,
+               Settings.libraryFeatures.importing.popup
             {
                 let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
                 

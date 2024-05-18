@@ -12,6 +12,11 @@ struct LibraryFeatures: FeatureContainer
 {
     static let shared = LibraryFeatures()
     
+    @Feature(name: "Import Options",
+             description: "Change how files should be handled when importing them.",
+             options: ImportOptions())
+    var importing
+    
     @Feature(name: "Artwork Options",
              description: "Customize the look of your game artwork.",
              options: GameArtworkOptions(),

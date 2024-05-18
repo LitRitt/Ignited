@@ -14,17 +14,36 @@ extension Game
 {
     var sanitizedName: String
     {
-        var sanitizedGameName = self.name
+        return self.name.sanitize(with: .parenthesis)
+    }
+}
+
+extension String
+{
+    public enum SanitizationStyle
+    {
+        case parenthesis
         
-        let regex = Regex {
-            "("
-            OneOrMore(.anyNonNewline)
-            ")"
+        var expression: any RegexComponent {
+            switch self
+            {
+            case .parenthesis:
+                return Regex {
+                    "("
+                    OneOrMore(.anyNonNewline)
+                    ")"
+                }
+            }
         }
+    }
+    
+    func sanitize(with style: SanitizationStyle) -> String
+    {
+        var sanitizedString = self
         
-        sanitizedGameName = sanitizedGameName.replacing(regex, with: "")
-        sanitizedGameName = sanitizedGameName.trimmingCharacters(in: .whitespacesAndNewlines)
+        sanitizedString = sanitizedString.replacing(style.expression, with: "")
+        sanitizedString = sanitizedString.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        return sanitizedGameName
+        return sanitizedString
     }
 }

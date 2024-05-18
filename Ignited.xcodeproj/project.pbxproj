@@ -128,6 +128,7 @@
 		ACB3CB9329FDD601002B53DE /* TouchFeedbackVibrationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9229FDD601002B53DE /* TouchFeedbackVibrationOptions.swift */; };
 		ACB3CB9529FDE70B002B53DE /* TouchFeedbackAudioOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudioOptions.swift */; };
 		ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlayOptions.swift */; };
+		ACBAB9022BF91CCF00B796FC /* ImportOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBAB9012BF91CCF00B796FC /* ImportOptions.swift */; };
 		ACBFE6D62A590CA5002DDD04 /* ControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */; };
 		ACC385BC2BACDD5600FD71AC /* MGBCOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC385BB2BACDD5600FD71AC /* MGBCOptions.swift */; };
 		ACC4430ADE09EB6F81ADBEE3 /* libPods-Ignited.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */; };
@@ -434,6 +435,7 @@
 		ACB3CB9229FDD601002B53DE /* TouchFeedbackVibrationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackVibrationOptions.swift; sourceTree = "<group>"; };
 		ACB3CB9429FDE70B002B53DE /* TouchFeedbackAudioOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackAudioOptions.swift; sourceTree = "<group>"; };
 		ACB3CB9829FDE741002B53DE /* TouchFeedbackOverlayOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchFeedbackOverlayOptions.swift; sourceTree = "<group>"; };
+		ACBAB9012BF91CCF00B796FC /* ImportOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOptions.swift; sourceTree = "<group>"; };
 		ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerOptions.swift; sourceTree = "<group>"; };
 		ACC385BB2BACDD5600FD71AC /* MGBCOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MGBCOptions.swift; sourceTree = "<group>"; };
 		ACCD93EE2B978E9800BB4F6A /* UIColor+Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Battery.swift"; sourceTree = "<group>"; };
@@ -771,9 +773,10 @@
 			isa = PBXGroup;
 			children = (
 				AC3CE7F52A2BA822008A8C43 /* LibraryFeatures.swift */,
+				ACBAB9012BF91CCF00B796FC /* ImportOptions.swift */,
 				AC27347F29FE950E00B4CB2E /* GameArtworkOptions.swift */,
-				AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */,
 				AC3CE7F92A2BB496008A8C43 /* FavoriteGamesOptions.swift */,
+				AC3CE7F72A2BB485008A8C43 /* AnimatedArtworkOptions.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -2036,6 +2039,7 @@
 				ACED6C2E2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift in Sources */,
 				BF6BF31A1EB82146008E83CD /* ClipboardImportOption.swift in Sources */,
 				BF59427F1E09BC830051894B /* GameCollection.swift in Sources */,
+				ACBAB9022BF91CCF00B796FC /* ImportOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

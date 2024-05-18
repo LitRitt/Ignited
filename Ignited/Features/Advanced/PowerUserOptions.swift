@@ -292,6 +292,7 @@ extension PowerUserOptions
         case backgroundBlur
         case controller
         // Library
+        case importOptions
         case artworkCustomization
         case animatedArtwork
         case favoriteGames
@@ -413,6 +414,10 @@ extension PowerUserOptions
             case .controller:
                 Settings.controllerFeatures.controller.hideSkin = true
                 Settings.controllerFeatures.controller.triggerDeadzone = 0.15
+                
+            case .importOptions:
+                Settings.libraryFeatures.importing.sanitize = false
+                Settings.libraryFeatures.importing.popup = true
                 
             case .artworkCustomization:
                 Settings.libraryFeatures.artwork.sortOrder = .alphabeticalAZ
