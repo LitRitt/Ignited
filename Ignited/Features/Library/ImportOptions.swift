@@ -14,7 +14,7 @@ struct ImportOptions
 {
     @Option(name: "Sanitize Game Names",
             description: "Enable to remove region and revision tags from game file names when importing them.")
-    var sanitize: Bool = false
+    var sanitize: Bool = true
     
     @Option(name: "Confirmation Popup",
             description: "Enable to show a popup detailing what was and wasn't successfully imported.")

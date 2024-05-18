@@ -416,7 +416,7 @@ extension PowerUserOptions
                 Settings.controllerFeatures.controller.triggerDeadzone = 0.15
                 
             case .importOptions:
-                Settings.libraryFeatures.importing.sanitize = false
+                Settings.libraryFeatures.importing.sanitize = true
                 Settings.libraryFeatures.importing.popup = true
                 
             case .artworkCustomization:
