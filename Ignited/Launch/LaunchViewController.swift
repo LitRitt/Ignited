@@ -66,6 +66,8 @@ extension LaunchViewController
     override var launchConditions: [RSTLaunchCondition] {
         let isDatabaseManagerStarted = RSTLaunchCondition(condition: { DatabaseManager.shared.isStarted }) { (completionHandler) in
             DatabaseManager.shared.start(completionHandler: completionHandler)
+            
+            WidgetManager.refresh()
         }
         
         let isSyncingManagerStarted = RSTLaunchCondition(condition: { self.didAttemptStartingSyncManager }) { (completionHandler) in

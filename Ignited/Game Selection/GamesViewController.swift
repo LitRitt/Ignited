@@ -490,6 +490,8 @@ extension GamesViewController: ImportControllerDelegate
                 self.preparePopoverMenuController()
                 
                 if self.noGamesImported { self.updateSections(animated: true, resetPages: true) }
+                
+                WidgetManager.refresh()
             }
         }
         

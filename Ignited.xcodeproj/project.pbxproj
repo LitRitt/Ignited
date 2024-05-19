@@ -39,6 +39,15 @@
 		AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC14384C2A4F67430099977F /* DSFeatures.swift */; };
 		AC1771D62B9A55FD009AEF4A /* AppPresetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1771D52B9A55FD009AEF4A /* AppPresetOptions.swift */; };
 		AC1B65F22BF8ED4D00A2CD94 /* Game+SanitizedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1B65F12BF8ED4D00A2CD94 /* Game+SanitizedName.swift */; };
+		AC1C22252BFA3A13008B40EF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C22242BFA3A13008B40EF /* WidgetKit.framework */; };
+		AC1C22272BFA3A13008B40EF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C22262BFA3A13008B40EF /* SwiftUI.framework */; };
+		AC1C222A2BFA3A13008B40EF /* LitWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C22292BFA3A13008B40EF /* LitWidgetBundle.swift */; };
+		AC1C222C2BFA3A13008B40EF /* LitWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C222B2BFA3A13008B40EF /* LitWidget.swift */; };
+		AC1C222E2BFA3A13008B40EF /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C222D2BFA3A13008B40EF /* AppIntent.swift */; };
+		AC1C22302BFA3A15008B40EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC1C222F2BFA3A15008B40EF /* Assets.xcassets */; };
+		AC1C22342BFA3A15008B40EF /* LitWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AC1C22232BFA3A13008B40EF /* LitWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AC1C223E2BFA41B7008B40EF /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C223D2BFA41B7008B40EF /* WidgetManager.swift */; };
+		AC1C22412BFA6FBD008B40EF /* GamesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C223F2BFA6BEE008B40EF /* GamesWidget.swift */; };
 		AC1E64AC2B0989D6009CFD67 /* UILabel+NewGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1E64AB2B0989D6009CFD67 /* UILabel+NewGame.swift */; };
 		AC1EAE652A005F6C0072C858 /* AdvancedFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */; };
 		AC1EAE672A0061910072C858 /* PowerUserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1EAE662A0061910072C858 /* PowerUserOptions.swift */; };
@@ -293,6 +302,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AC1C22322BFA3A15008B40EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFFA71CF1AAC406100EE9DD1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC1C22222BFA3A13008B40EF;
+			remoteInfo = LitWidgetExtension;
+		};
 		AC720C0B29FDC0A800483B47 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFFA71CF1AAC406100EE9DD1 /* Project object */;
@@ -310,6 +326,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AC1C22352BFA3A15008B40EF /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AC1C22342BFA3A15008B40EF /* LitWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AC8C211D29FDAD970044748D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -344,6 +371,17 @@
 		AC14384C2A4F67430099977F /* DSFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSFeatures.swift; sourceTree = "<group>"; };
 		AC1771D52B9A55FD009AEF4A /* AppPresetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPresetOptions.swift; sourceTree = "<group>"; };
 		AC1B65F12BF8ED4D00A2CD94 /* Game+SanitizedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Game+SanitizedName.swift"; sourceTree = "<group>"; };
+		AC1C22232BFA3A13008B40EF /* LitWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LitWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC1C22242BFA3A13008B40EF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		AC1C22262BFA3A13008B40EF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		AC1C22292BFA3A13008B40EF /* LitWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitWidgetBundle.swift; sourceTree = "<group>"; };
+		AC1C222B2BFA3A13008B40EF /* LitWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitWidget.swift; sourceTree = "<group>"; };
+		AC1C222D2BFA3A13008B40EF /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		AC1C222F2BFA3A15008B40EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AC1C22312BFA3A15008B40EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC1C223B2BFA4119008B40EF /* LitWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LitWidgetExtension.entitlements; sourceTree = "<group>"; };
+		AC1C223D2BFA41B7008B40EF /* WidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetManager.swift; sourceTree = "<group>"; };
+		AC1C223F2BFA6BEE008B40EF /* GamesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesWidget.swift; sourceTree = "<group>"; };
 		AC1E64AB2B0989D6009CFD67 /* UILabel+NewGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+NewGame.swift"; sourceTree = "<group>"; };
 		AC1EAE642A005F6C0072C858 /* AdvancedFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedFeatures.swift; sourceTree = "<group>"; };
 		AC1EAE662A0061910072C858 /* PowerUserOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerUserOptions.swift; sourceTree = "<group>"; };
@@ -611,7 +649,7 @@
 		BFEF24F21F7DD4FB00454C62 /* SaveStateMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStateMigrationPolicy.swift; sourceTree = "<group>"; };
 		BFF0742B1E9DC17500ACDF4A /* GBCDeltaCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBCDeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA4C081E8A24D600D87934 /* GameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
-		BFFA71D71AAC406100EE9DD1 /* Pre-Ignited.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pre-Ignited.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFA71D71AAC406100EE9DD1 /* Ignited.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ignited.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA71DB1AAC406100EE9DD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFFC461B1D59823500AF2CC6 /* GamesPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesPresentationController.swift; sourceTree = "<group>"; };
@@ -633,6 +671,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AC1C22202BFA3A13008B40EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1C22272BFA3A13008B40EF /* SwiftUI.framework in Frameworks */,
+				AC1C22252BFA3A13008B40EF /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AC8C211C29FDAD970044748D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -675,6 +722,28 @@
 				AC14384C2A4F67430099977F /* DSFeatures.swift */,
 			);
 			path = DS;
+			sourceTree = "<group>";
+		};
+		AC1C22282BFA3A13008B40EF /* LitWidget */ = {
+			isa = PBXGroup;
+			children = (
+				AC1C22292BFA3A13008B40EF /* LitWidgetBundle.swift */,
+				AC1C223F2BFA6BEE008B40EF /* GamesWidget.swift */,
+				AC1C222B2BFA3A13008B40EF /* LitWidget.swift */,
+				AC1C222D2BFA3A13008B40EF /* AppIntent.swift */,
+				AC1C222F2BFA3A15008B40EF /* Assets.xcassets */,
+				AC1C22312BFA3A15008B40EF /* Info.plist */,
+				AC1C223B2BFA4119008B40EF /* LitWidgetExtension.entitlements */,
+			);
+			path = LitWidget;
+			sourceTree = "<group>";
+		};
+		AC1C223C2BFA4191008B40EF /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				AC1C223D2BFA41B7008B40EF /* WidgetManager.swift */,
+			);
+			path = Widgets;
 			sourceTree = "<group>";
 		};
 		AC1EAE632A005F590072C858 /* Advanced */ = {
@@ -1366,6 +1435,8 @@
 				BFC134E01AAD82460087AD7B /* SNESDeltaCore.framework */,
 				22506DA00971C4300AF90A35 /* Pods.framework */,
 				7F8A7B5E1B1B30C00367AD4D /* libPods-Ignited.a */,
+				AC1C22242BFA3A13008B40EF /* WidgetKit.framework */,
+				AC1C22262BFA3A13008B40EF /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1469,6 +1540,7 @@
 				AC11456429A444C4005E95A8 /* Packages */,
 				BFFA71D91AAC406100EE9DD1 /* Ignited */,
 				AC8C212029FDAD980044748D /* Features */,
+				AC1C22282BFA3A13008B40EF /* LitWidget */,
 				BF9F4FCD1AAD7B25004C9500 /* Frameworks */,
 				BFEC732F1AAECCBD00650035 /* Resources */,
 				BFFA71D81AAC406100EE9DD1 /* Products */,
@@ -1479,8 +1551,9 @@
 		BFFA71D81AAC406100EE9DD1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFFA71D71AAC406100EE9DD1 /* Pre-Ignited.app */,
+				BFFA71D71AAC406100EE9DD1 /* Ignited.app */,
 				AC8C211F29FDAD970044748D /* libFeatures.a */,
+				AC1C22232BFA3A13008B40EF /* LitWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1503,6 +1576,7 @@
 				BF930FFB1EB6D6EC00E8DBA0 /* Systems */,
 				BF525EE61FF5F355004AA849 /* Deep Linking */,
 				AC7FCC992BC113090072BF7C /* Purchases */,
+				AC1C223C2BFA4191008B40EF /* Widgets */,
 				ACAB77192B468C50001AB619 /* Protocols */,
 				BF5942571E09BB5D0051894B /* Components */,
 				BF696B7E1D9B2AE6009639E0 /* Theming */,
@@ -1577,6 +1651,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AC1C22222BFA3A13008B40EF /* LitWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC1C22382BFA3A15008B40EF /* Build configuration list for PBXNativeTarget "LitWidgetExtension" */;
+			buildPhases = (
+				AC1C221F2BFA3A13008B40EF /* Sources */,
+				AC1C22202BFA3A13008B40EF /* Frameworks */,
+				AC1C22212BFA3A13008B40EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LitWidgetExtension;
+			productName = LitWidgetExtension;
+			productReference = AC1C22232BFA3A13008B40EF /* LitWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AC8C211E29FDAD970044748D /* Features */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC8C212329FDAD980044748D /* Build configuration list for PBXNativeTarget "Features" */;
@@ -1604,18 +1695,20 @@
 				BFFA71D51AAC406100EE9DD1 /* Resources */,
 				0E0279E4F38215820BB0C9A0 /* [CP] Copy Pods Resources */,
 				BF08DC3325CE07C3007A9CF4 /* Embed Frameworks */,
+				AC1C22352BFA3A15008B40EF /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				AC720C0C29FDC0A800483B47 /* PBXTargetDependency */,
 				BFEBE58325D3388F00222319 /* PBXTargetDependency */,
+				AC1C22332BFA3A15008B40EF /* PBXTargetDependency */,
 			);
 			name = Ignited;
 			packageProductDependencies = (
 			);
 			productName = Delta;
-			productReference = BFFA71D71AAC406100EE9DD1 /* Pre-Ignited.app */;
+			productReference = BFFA71D71AAC406100EE9DD1 /* Ignited.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1625,10 +1718,15 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = LitRitt;
 				TargetAttributes = {
+					AC1C22222BFA3A13008B40EF = {
+						CreatedOnToolsVersion = 15.4;
+						DevelopmentTeam = AQKFQ7V9C4;
+						ProvisioningStyle = Automatic;
+					};
 					AC8C211E29FDAD970044748D = {
 						CreatedOnToolsVersion = 14.3;
 						DevelopmentTeam = AQKFQ7V9C4;
@@ -1676,11 +1774,20 @@
 				BF14D8941DE7A512002CA1BE /* mogenerator */,
 				BF6E70B925D2187800E41CD1 /* Systems */,
 				AC8C211E29FDAD970044748D /* Features */,
+				AC1C22222BFA3A13008B40EF /* LitWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AC1C22212BFA3A13008B40EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1C22302BFA3A15008B40EF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BFFA71D51AAC406100EE9DD1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1803,6 +1910,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AC1C221F2BFA3A13008B40EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1C222A2BFA3A13008B40EF /* LitWidgetBundle.swift in Sources */,
+				AC1C22412BFA6FBD008B40EF /* GamesWidget.swift in Sources */,
+				AC1C222C2BFA3A13008B40EF /* LitWidget.swift in Sources */,
+				AC1C222E2BFA3A13008B40EF /* AppIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AC8C211B29FDAD970044748D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1868,6 +1986,7 @@
 				ACB3CB9929FDE741002B53DE /* TouchFeedbackOverlayOptions.swift in Sources */,
 				BF13A7581D5D2FD9000BB055 /* EmulatorCore+Cheats.swift in Sources */,
 				ACCD9DBB2A01E48B00B235C4 /* SkinOptions.swift in Sources */,
+				AC1C223E2BFA41B7008B40EF /* WidgetManager.swift in Sources */,
 				BF48F74E219A16DA00BC2FC1 /* SyncingServicesViewController.swift in Sources */,
 				AC8E5BCA29CCF77700F32D19 /* UIColor+AdjustHSBA.swift in Sources */,
 				AC3CE7F62A2BA822008A8C43 /* LibraryFeatures.swift in Sources */,
@@ -2050,6 +2169,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AC1C22332BFA3A15008B40EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC1C22222BFA3A13008B40EF /* LitWidgetExtension */;
+			targetProxy = AC1C22322BFA3A15008B40EF /* PBXContainerItemProxy */;
+		};
 		AC720C0C29FDC0A800483B47 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AC8C211E29FDAD970044748D /* Features */;
@@ -2063,6 +2187,84 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		AC1C22362BFA3A15008B40EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = LitWidget/LitWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LitWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LitWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 LitRitt. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.litritt.ignitedemulator.LitWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AC1C22372BFA3A15008B40EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = LitWidget/LitWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AQKFQ7V9C4;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LitWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LitWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 LitRitt. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.litritt.ignitedemulator.LitWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AC8C212429FDAD980044748D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2264,6 +2466,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B57FE4EE2A98930B00C5E989 /* Build.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = IconOrange;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
@@ -2305,6 +2508,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B57FE4EE2A98930B00C5E989 /* Build.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = IconOrange;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
@@ -2343,6 +2547,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AC1C22382BFA3A15008B40EF /* Build configuration list for PBXNativeTarget "LitWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC1C22362BFA3A15008B40EF /* Debug */,
+				AC1C22372BFA3A15008B40EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AC8C212329FDAD980044748D /* Build configuration list for PBXNativeTarget "Features" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

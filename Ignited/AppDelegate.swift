@@ -155,11 +155,15 @@ extension AppDelegate
                 self.present(alertController)
             }
             
-            if games.count > 0,
-               Settings.libraryFeatures.importing.popup
+            if games.count > 0
             {
-                let alertController = UIAlertController.alertController(games: games, controllerSkins: nil, traits: nil)
-                self.present(alertController)
+                WidgetManager.refresh()
+                
+                if Settings.libraryFeatures.importing.popup
+                {
+                    let alertController = UIAlertController.alertController(games: games, controllerSkins: nil, traits: nil)
+                    self.present(alertController)
+                }
             }
         }
         

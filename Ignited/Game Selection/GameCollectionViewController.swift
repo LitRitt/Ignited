@@ -1103,6 +1103,8 @@ private extension GameCollectionViewController
                 context.delete(temporaryGame)
                 
                 context.saveWithErrorLogging()
+                
+                WidgetManager.refresh()
             }
             
         }))
