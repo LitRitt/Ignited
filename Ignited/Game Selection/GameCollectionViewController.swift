@@ -895,13 +895,12 @@ private extension GameCollectionViewController
         {
             let requestedOpenGLESVersion: Int
             
-            if Settings.n64Features.openGLES3.isEnabled,
-               Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier }) {
-                requestedOpenGLESVersion = 3
+            if Settings.n64Features.openGLES2.enabledGames.contains(where: { $0 == game.identifier }) {
+                requestedOpenGLESVersion = 2
             }
             else
             {
-                requestedOpenGLESVersion = 2
+                requestedOpenGLESVersion = 3
             }
             
             guard currentOpenGLESVersion == requestedOpenGLESVersion else { return false }
@@ -1013,28 +1012,28 @@ private extension GameCollectionViewController
         
         let invalidVRAMEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
         
-        let invalidVRAMAccessAction = UIAction(title: invalidVRAMEnabled ? NSLocalizedString("Disable Invalid VRAM", comment: "") : NSLocalizedString("Enable Invalid VRAM", comment: ""),
-                                               image: invalidVRAMEnabled ? UIImage(systemName: "memorychip") : UIImage(systemName: "memorychip.fill"),
+        let invalidVRAMAccessAction = UIAction(title: NSLocalizedString("Invalid VRAM Access", comment: ""),
+                                               image: UIImage(systemName: "memorychip"),
                                                state: invalidVRAMEnabled ? .on : .off,
                                                handler: { [unowned self] action in
             self.toggleInvalidVRAM(for: game, enable: !invalidVRAMEnabled)
         })
         
-        let openGLES3Enabled = Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier })
+        let openGLES2Enabled = Settings.n64Features.openGLES2.enabledGames.contains(where: { $0 == game.identifier })
         
-        let openGLES3Action = UIAction(title: openGLES3Enabled ? NSLocalizedString("Disable OpenGLES 3", comment: "") : NSLocalizedString("Enable OpenGLES 3", comment: ""),
-                                   image: openGLES3Enabled ? UIImage(systemName: "3.circle") : UIImage(systemName: "3.circle.fill"),
-                                   state: openGLES3Enabled ? .on : .off,
+        let openGLES2Action = UIAction(title: NSLocalizedString("OpenGLES 2", comment: ""),
+                                   image: UIImage(systemName: "2.circle"),
+                                   state: openGLES2Enabled ? .on : .off,
                                    handler: { [unowned self] action in
-            self.toggleOpenGLES3(for: game, enable: !openGLES3Enabled)
+            self.toggleOpenGLES3(for: game, enable: !openGLES2Enabled)
         })
         
         var gameSettingsActions = [changeControllerSkinAction]
         
         switch game.type
         {
-        case .snes where Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled: gameSettingsActions.append(invalidVRAMAccessAction)
-        case .n64 where Settings.n64Features.openGLES3.isEnabled: gameSettingsActions.append(openGLES3Action)
+        case .snes: gameSettingsActions.append(invalidVRAMAccessAction)
+        case .n64: gameSettingsActions.append(openGLES2Action)
         default: break
         }
         
@@ -1459,9 +1458,9 @@ private extension GameCollectionViewController
     func toggleOpenGLES3(for game: Game, enable: Bool)
     {
         if enable {
-            Settings.n64Features.openGLES3.enabledGames.append(game.identifier)
+            Settings.n64Features.openGLES2.enabledGames.append(game.identifier)
         } else {
-            Settings.n64Features.openGLES3.enabledGames.removeAll(where: { $0 == game.identifier })
+            Settings.n64Features.openGLES2.enabledGames.removeAll(where: { $0 == game.identifier })
         }
     }
     

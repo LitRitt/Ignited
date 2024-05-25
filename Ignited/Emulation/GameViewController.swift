@@ -1714,8 +1714,7 @@ private extension GameViewController
         
         if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? SNESEmulatorBridge
         {
-            let gameEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
-            emulatorBridge.isInvalidVRAMAccessEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.isEnabled && gameEnabled
+            emulatorBridge.isInvalidVRAMAccessEnabled = Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames.contains(where: { $0 == game.identifier })
         }
         else if let emulatorBridge = emulatorCore.deltaCore.emulatorBridge as? N64EmulatorBridge
         {
@@ -2037,15 +2036,14 @@ private extension GameViewController
         
         guard game.type == .n64 else { return }
         
-        if Settings.n64Features.openGLES3.isEnabled,
-           Settings.n64Features.openGLES3.enabledGames.contains(where: { $0 == game.identifier }) {
-            self.emulatorCore?.videoManager.renderingAPI = .openGLES3
-            Settings.currentOpenGLESVersion = 3
+        if Settings.n64Features.openGLES2.enabledGames.contains(where: { $0 == game.identifier }) {
+            self.emulatorCore?.videoManager.renderingAPI = .openGLES2
+            Settings.currentOpenGLESVersion = 2
         }
         else
         {
-            self.emulatorCore?.videoManager.renderingAPI = .openGLES2
-            Settings.currentOpenGLESVersion = 2
+            self.emulatorCore?.videoManager.renderingAPI = .openGLES3
+            Settings.currentOpenGLESVersion = 3
         }
     }
 }

@@ -100,9 +100,9 @@ struct Settings
             Settings.touchFeedbackFeatures.touchVibration.settingsKey.rawValue: true,
             Settings.advancedFeatures.skinDebug.settingsKey.rawValue: false,
             Settings.advancedFeatures.powerUser.settingsKey.rawValue: false,
-            Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey.rawValue: false,
+            Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey.rawValue: true,
             Settings.gbFeatures.palettes.settingsKey.rawValue: true,
-            Settings.n64Features.openGLES3.settingsKey.rawValue: false,
+            Settings.n64Features.openGLES2.settingsKey.rawValue: true,
             Settings.n64Features.overscan.settingsKey.rawValue: true,
             Settings.dsFeatures.dsiSupport.settingsKey.rawValue: false
         ] as [String : Any]

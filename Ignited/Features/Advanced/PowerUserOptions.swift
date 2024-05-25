@@ -336,7 +336,7 @@ extension PowerUserOptions
                 Settings.snesFeatures.allowInvalidVRAMAccess.enabledGames = []
                 
             case .n64OpenGLES3:
-                Settings.n64Features.openGLES3.enabledGames = []
+                Settings.n64Features.openGLES2.enabledGames = []
                 
             case .pauseMenu:
                 Settings.gameplayFeatures.pauseMenu.buttonOrder = ["Save State", "Load State", "Restart", "Screenshot", "Status Bar", "Sustain Buttons", "Rewind", "Fast Forward", "Microphone", "Rotation Lock", "Palettes", "Quick Settings", "Backgroud Blur", "Overscan Editor", "Cheat Codes", "Alt Skin", "Debug Mode"]

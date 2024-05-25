@@ -20,14 +20,13 @@ private extension SettingsViewController
 {
     enum Section: Int, CaseIterable
     {
+        case syncing
         case features
         case cores
         case controllers
         case controllerSkins
-        case pro
-        case syncing
         case shortcuts
-        case skinDownloads
+        case pro
         case credits
         case support
     }
@@ -53,8 +52,6 @@ private extension SettingsViewController
     
     enum CoresRow: Int, CaseIterable
     {
-        case snes
-        case n64
         case gbc
         case gba
         case ds
@@ -194,7 +191,7 @@ private extension SettingsViewController
     {
         self.syncingServiceLabel.text = Settings.syncingService?.localizedName
         
-        self.purchaseLabel.text = PurchaseManager.shared.hasUnlockedPro ? NSLocalizedString("Ignited Pro Unlocked", comment: ""): NSLocalizedString("Join Ignited Pro", comment: "")
+        self.purchaseLabel.text = PurchaseManager.shared.hasUnlockedPro ? NSLocalizedString("View Membership", comment: ""): NSLocalizedString("Become a Member", comment: "")
         
         do
         {
@@ -425,16 +422,6 @@ extension SettingsViewController
         {
         case .controllers: self.performSegue(withIdentifier: Segue.controllers.rawValue, sender: cell)
         case .controllerSkins: self.performSegue(withIdentifier: Segue.controllerSkins.rawValue, sender: cell)
-        case .skinDownloads:
-            switch SkinDownloadsRow.allCases[indexPath.row]
-            {
-            case .classicSkins: UIApplication.shared.openWebpage(site: "https://litritt.com/ignited/classic-skins")
-            case .litDesign: UIApplication.shared.openWebpage(site: "https://design.litritt.com")
-            case .skinGenerator: UIApplication.shared.openWebpage(site: "https://generator.skins4delta.com")
-            case .deltaSkins: UIApplication.shared.openWebpage(site: "https://delta-skins.github.io")
-            case .skins4Delta: UIApplication.shared.openWebpage(site: "https://skins4delta.com")
-            }
-            
         case .features:
             switch FeaturesRow.allCases[indexPath.row]
             {
@@ -451,10 +438,8 @@ extension SettingsViewController
         case .cores:
             switch CoresRow.allCases[indexPath.row]
             {
-            case .snes: self.showFeatures(featureGroup: .snes)
             case .gbc: self.showFeatures(featureGroup: .gbc)
             case .gba: self.showFeatures(featureGroup: .gba)
-            case .n64: self.showFeatures(featureGroup: .n64)
             case .ds: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
             }
             

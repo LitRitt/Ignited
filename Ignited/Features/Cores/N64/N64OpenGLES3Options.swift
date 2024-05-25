@@ -42,7 +42,7 @@ extension N64OpenGLES3Options
 {
     static func removeGame(at offsets: IndexSet)
     {
-        Settings.n64Features.openGLES3.enabledGames.remove(atOffsets: offsets)
+        Settings.n64Features.openGLES2.enabledGames.remove(atOffsets: offsets)
     }
     
     static func getEnabledGames() -> [String]
@@ -50,7 +50,7 @@ extension N64OpenGLES3Options
         var games: [String] = []
         
         let gameFetchRequest = Game.rst_fetchRequest() as! NSFetchRequest<Game>
-        gameFetchRequest.predicate = NSPredicate(format: "%K IN %@", #keyPath(Game.identifier), Settings.n64Features.openGLES3.enabledGames)
+        gameFetchRequest.predicate = NSPredicate(format: "%K IN %@", #keyPath(Game.identifier), Settings.n64Features.openGLES2.enabledGames)
         
         do
         {

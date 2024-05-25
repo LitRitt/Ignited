@@ -15,7 +15,7 @@ struct N64Features: FeatureContainer
     @Feature(name: "OpenGLES 3",
              description: "Enable to allow OpenGLES 3. This fixes graphical issues in some games, but may cause others to crash. After enabling the feature here, you must also enable it for individual games from the game's context menu.",
              options: N64OpenGLES3Options())
-    var openGLES3
+    var openGLES2
     
     @Feature(name: "Overscan",
              description: "Enable to allow Overscan settings. Overscan allows you to reduce the black borders in N64 games. Use the Overscan option in the pause menu to edit the values for that game.",
