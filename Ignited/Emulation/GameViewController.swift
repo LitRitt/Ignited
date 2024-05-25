@@ -944,6 +944,8 @@ extension GameViewController
                 backgroundGame.playedDate = Date()
                 
                 context.saveWithErrorLogging()
+                
+                WidgetManager.refresh()
             }
         }
     }

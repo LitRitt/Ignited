@@ -7,23 +7,12 @@
 //
 
 import Foundation
+import WidgetKit
 
-enum WidgetError: Error {
-    case update
-}
-
-class WidgetManager {
+struct WidgetManager {
     static let shared = WidgetManager()
     
-    private let suiteName: String = "group.com.litritt.ignitedemulator"
-    
-    private let keyNumberOfGames: String = "LitWidget.totalNumberOfGames"
-    
-    init() {}
-    
-    func updateWidgetData() throws {
-        guard let userDefaults = UserDefaults(suiteName: self.suiteName) else { throw WidgetError.update }
-        
+    func updateWidgetData() {
         let gamesFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
         gamesFetchRequest.returnsObjectsAsFaults = false
         
@@ -32,22 +21,34 @@ class WidgetManager {
         do {
             games = try DatabaseManager.shared.viewContext.fetch(gamesFetchRequest)
         } catch {
-            throw error
+            print(error)
         }
         
-        userDefaults.set(games.count, forKey: self.keyNumberOfGames)
+        SharedSettings.numberOfGames = games.count
+        
+        gamesFetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Game.playedDate), ascending: false)]
+        
+        var recentGames: [Game] = []
+        
+        do {
+            recentGames = try DatabaseManager.shared.viewContext.fetch(gamesFetchRequest)
+        } catch {
+            print(error)
+        }
+        
+        if let mostRecentGame = recentGames.first {
+            SharedSettings.lastPlayedGameName = mostRecentGame.name
+            SharedSettings.lastPlayedGameArtworkUrl = mostRecentGame.artworkURL
+            SharedSettings.lastPlayedGameDate = mostRecentGame.playedDate ?? Date()
+        }
     }
 }
 
 extension WidgetManager {
     static func refresh() {
         DispatchQueue.main.async {
-            let manager = WidgetManager.shared
-            do {
-                try manager.updateWidgetData()
-            } catch {
-                print(error)
-            }
+            WidgetManager.shared.updateWidgetData()
         }
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }

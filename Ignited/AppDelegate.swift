@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
         Settings.registerDefaults()
+        SharedSettings.registerDefaults()
         self.registerCores()
         self.configureAppearance()
         

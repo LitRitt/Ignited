@@ -12,7 +12,7 @@ import SwiftUI
 @main
 struct LitWidgetBundle: WidgetBundle {
     var body: some Widget {
-        GameNumberWidget()
-//        LitWidget()
+        RecentlyPlayedWidget()
+        GameCountWidget()
     }
 }
