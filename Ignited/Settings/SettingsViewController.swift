@@ -261,7 +261,7 @@ private extension SettingsViewController
                 let outputDirectory = FileManager.default.uniqueTemporaryURL()
                 try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
 
-                let outputURL = outputDirectory.appendingPathComponent("Ignited-Errors.log")
+                let outputURL = outputDirectory.appendingPathComponent("System Log.log")
                 try outputText.write(to: outputURL, atomically: true, encoding: .utf8)
 
                 await MainActor.run {
