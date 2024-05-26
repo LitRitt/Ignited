@@ -90,6 +90,7 @@
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC64A1DA2BA7553200438491 /* GBAFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64A1D92BA7553200438491 /* GBAFeatures.swift */; };
 		AC64A1DC2BA7557B00438491 /* GBACoreFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */; };
+		AC65B4D02C02F8100060D568 /* IgnitedPro.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AC65B4CF2C02F80D0060D568 /* IgnitedPro.storekit */; };
 		AC6868F22BFFEE580091B693 /* SharedSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD53AD72BFE6A94001AD74A /* SharedSettings.swift */; };
 		AC6869092C00EFF00091B693 /* Previews.h in Headers */ = {isa = PBXBuildFile; fileRef = AC6869082C00EFF00091B693 /* Previews.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC68690C2C00EFF10091B693 /* Previews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC6869062C00EFF00091B693 /* Previews.framework */; };
@@ -409,7 +410,6 @@
 		AC4138572B524C76008653D4 /* N64OverscanOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64OverscanOptions.swift; sourceTree = "<group>"; };
 		AC4138592B5264B4008653D4 /* OverscanEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverscanEditorView.xib; sourceTree = "<group>"; };
 		AC41385C2B526A5F008653D4 /* OverscanEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverscanEditorView.swift; sourceTree = "<group>"; };
-		AC417D952BF6858F00A540EA /* IgnitedPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IgnitedPro.storekit; sourceTree = "<group>"; };
 		AC417DA82BF708D400A540EA /* ProcessInfo+visionOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+visionOS.swift"; sourceTree = "<group>"; };
 		AC417DAA2BF7090200A540EA /* LocalDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDeviceController.swift; sourceTree = "<group>"; };
 		AC417DAC2BF71DCD00A540EA /* SwipeGestureOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGestureOptions.swift; sourceTree = "<group>"; };
@@ -433,6 +433,7 @@
 		AC64A1D92BA7553200438491 /* GBAFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBAFeatures.swift; sourceTree = "<group>"; };
 		AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBACoreFeatures.swift; sourceTree = "<group>"; };
 		AC65B4CE2C02E0A50060D568 /* Ignited.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ignited.xcdatamodel; sourceTree = "<group>"; };
+		AC65B4CF2C02F80D0060D568 /* IgnitedPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IgnitedPro.storekit; sourceTree = "<group>"; };
 		AC6869062C00EFF00091B693 /* Previews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Previews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC6869082C00EFF00091B693 /* Previews.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Previews.h; sourceTree = "<group>"; };
 		AC6869112C00F0310091B693 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1117,7 +1118,7 @@
 			children = (
 				B57FE4EE2A98930B00C5E989 /* Build.xcconfig */,
 				B57FE4ED2A98930B00C5E989 /* CodeSigning.xcconfig */,
-				AC417D952BF6858F00A540EA /* IgnitedPro.storekit */,
+				AC65B4CF2C02F80D0060D568 /* IgnitedPro.storekit */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1849,6 +1850,7 @@
 			files = (
 				D5D797E9298DCC7300738869 /* cheatbase.zip in Resources */,
 				AC41385A2B5264B4008653D4 /* OverscanEditorView.xib in Resources */,
+				AC65B4D02C02F8100060D568 /* IgnitedPro.storekit in Resources */,
 				BF02D5DA1DDEBB3000A5E131 /* openvgdb.sqlite in Resources */,
 				ACCDD4862A6386020034A6C0 /* snap.mp3 in Resources */,
 				ACCDD48B2A63864E0034A6C0 /* tock.mp3 in Resources */,

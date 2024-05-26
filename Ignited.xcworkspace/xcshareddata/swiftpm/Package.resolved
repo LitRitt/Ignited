@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "DeltaCore",
-        "repositoryURL": "https://github.com/LitRitt/DeltaCore.git",
-        "state": {
-          "branch": "main",
-          "revision": "bb805c4ded9d6fd201aa40de2d27ab547c252788",
-          "version": null
-        }
-      },
-      {
         "package": "ZIPFoundation",
         "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
         "state": {
