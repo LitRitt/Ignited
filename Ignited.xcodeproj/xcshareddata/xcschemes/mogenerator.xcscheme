@@ -17,7 +17,7 @@
                BlueprintIdentifier = "BF14D8941DE7A512002CA1BE"
                BuildableName = "mogenerator"
                BlueprintName = "mogenerator"
-               ReferencedContainer = "container:Delta.xcodeproj">
+               ReferencedContainer = "container:Ignited.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -52,7 +52,7 @@
             BlueprintIdentifier = "BF14D8941DE7A512002CA1BE"
             BuildableName = "mogenerator"
             BlueprintName = "mogenerator"
-            ReferencedContainer = "container:Delta.xcodeproj">
+            ReferencedContainer = "container:Ignited.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

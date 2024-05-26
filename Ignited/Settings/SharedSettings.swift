@@ -9,7 +9,7 @@
 import UIKit
 
 extension FileManager {
-    static let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.litritt.ignitedemulator")!
+    static let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.litritt.ignited")!
     static let recentGameArtworkURL = FileManager.sharedContainerURL.appending(component: "recentGameArtwork").appendingPathExtension("png")
 }
 
@@ -20,7 +20,7 @@ extension URLSession {
 }
 
 extension UserDefaults {
-    static let shared = UserDefaults(suiteName: "group.com.litritt.ignitedemulator")!
+    static let shared = UserDefaults(suiteName: "group.com.litritt.ignited")!
 }
 
 extension UserDefaults {
