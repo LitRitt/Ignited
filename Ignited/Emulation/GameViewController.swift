@@ -188,6 +188,10 @@ class GameViewController: DeltaCore.GameViewController
     
     private var rewindTimer: Timer?
     
+    private var playTimeTimer: Timer?
+    private var playTimePausedTimer: Timer?
+    private var playTimeTimerRemaining: TimeInterval = 0
+    
     private var buttonSoundFile: AVAudioFile?
     private var buttonSoundPlayer: AVAudioPlayer?
     
@@ -861,7 +865,7 @@ extension GameViewController
                 {
                     // If loading save state, resume emulation immediately (since the game view needs to be updated ASAP)
                     
-                    if self.resumeEmulation()
+                    if self.resumeGameplay()
                     {
                         // Temporarily disable audioManager to prevent delayed audio bug when using 3D Touch Peek & Pop
                         self.emulatorCore?.audioManager.isEnabled = false
@@ -877,7 +881,7 @@ extension GameViewController
                 {
                     // Otherwise, wait for the transition to complete before resuming emulation
                     self.transitionCoordinator?.animate(alongsideTransition: nil, completion: { (context) in
-                        self.resumeEmulation()
+                        self.resumeGameplay()
                     })
                 }
                 
@@ -1347,6 +1351,21 @@ private extension GameViewController
     }
 }
 
+private extension GameViewController
+{
+    @discardableResult func pauseGameplay() -> Bool
+    {
+        self.pausePlaytimeTracker()
+        return self.pauseEmulation()
+    }
+    
+    @discardableResult func resumeGameplay() -> Bool
+    {
+        self.resumePlaytimeTracker()
+        return self.resumeEmulation()
+    }
+}
+
 //MARK: - Game Saves -
 /// Game Saves
 private extension GameViewController
@@ -1505,7 +1524,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
         
         if isRunning && shouldSuspendEmulation
         {
-            self.pauseEmulation()
+            self.pauseGameplay()
         }
         
         if let replacementSaveState = replacementSaveState
@@ -1563,7 +1582,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
         
         if isRunning && shouldSuspendEmulation
         {
-            self.resumeEmulation()
+            self.resumeGameplay()
         }
     }
     
@@ -1573,7 +1592,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
         
         if isRunning
         {
-            self.pauseEmulation()
+            self.pauseGameplay()
         }
         
         // If we're loading the auto save state, we need to create a temporary copy of saveState.
@@ -1654,7 +1673,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
         
         if isRunning
         {
-            self.resumeEmulation()
+            self.resumeGameplay()
         }
     }
     
@@ -2160,14 +2179,14 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Restart", comment: ""), style: .destructive, handler: { (action) in
             self.updateAutoSaveState(true)
             self.game = self.game
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.restart
             {
                 self.presentToastView(text: NSLocalizedString("Game Restarted", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
-            self.resumeEmulation()
+            self.resumeGameplay()
         }))
         
         if let pauseView = self.pauseViewController
@@ -2599,7 +2618,7 @@ extension GameViewController
         {
             if self.presentedViewController == nil
             {
-                self.pauseEmulation()
+                self.pauseGameplay()
                 self.controllerView.resignFirstResponder()
                 self._isQuickSettingsOpen = false
                 
@@ -2638,7 +2657,7 @@ extension GameViewController
                 
                 self._isQuickSettingsOpen = true
                 
-                self.resumeEmulation()
+                self.resumeGameplay()
             }
         }
     }
@@ -2654,7 +2673,7 @@ extension GameViewController
     func performPauseAction()
     {
         self.dismissQuickSettings()
-        self.pauseEmulation()
+        self.pauseGameplay()
         self.controllerView.resignFirstResponder()
         self._isQuickSettingsOpen = false
         
@@ -2665,7 +2684,7 @@ extension GameViewController
     {
         self.dismissQuickSettings()
         self.updateAutoSaveState()
-        self.pauseEmulation()
+        self.pauseGameplay()
         self.controllerView.resignFirstResponder()
         self._isQuickSettingsOpen = false
         
@@ -2800,7 +2819,7 @@ extension GameViewController
         
         alertController.addAction(UIAlertAction(title: "iPhone", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .iphone
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Device Override set to iPhone", comment: ""))
@@ -2808,7 +2827,7 @@ extension GameViewController
         }))
         alertController.addAction(UIAlertAction(title: "iPad", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .ipad
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Device Override set to iPad", comment: ""))
@@ -2816,7 +2835,7 @@ extension GameViewController
         }))
         alertController.addAction(UIAlertAction(title: "AirPlay TV", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .tv
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Device Override set to AirPlay TV", comment: ""))
@@ -2824,14 +2843,14 @@ extension GameViewController
         }))
         alertController.addAction(UIAlertAction(title: "Reset Device", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = Settings.advancedFeatures.skinDebug.defaultDevice
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Device Override has been reset", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            self.resumeEmulation()
+            self.resumeGameplay()
         }))
         self.present(alertController, animated: true, completion: nil)
     }
@@ -2848,7 +2867,7 @@ extension GameViewController
         
         alertController.addAction(UIAlertAction(title: "Standard", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.displayType = .standard
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Display Type Override set to Standard", comment: ""))
@@ -2856,7 +2875,7 @@ extension GameViewController
         }))
         alertController.addAction(UIAlertAction(title: "EdgeToEdge", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.displayType = .edgeToEdge
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Display Type Override set to EdgeToEdge", comment: ""))
@@ -2864,7 +2883,7 @@ extension GameViewController
         }))
         alertController.addAction(UIAlertAction(title: "SplitView", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.displayType = .splitView
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Display Type Override set to SplitView", comment: ""))
@@ -2872,14 +2891,14 @@ extension GameViewController
         }))
         alertController.addAction(UIAlertAction(title: "Reset Device", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.displayType = Settings.advancedFeatures.skinDebug.defaultDisplayType
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Display Type Override has been reset", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            self.resumeEmulation()
+            self.resumeGameplay()
         }))
         self.present(alertController, animated: true, completion: nil)
     }
@@ -2897,7 +2916,7 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "Standard iPhone", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .iphone
             Settings.advancedFeatures.skinDebug.displayType = .standard
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Override Traits set to Standard iPhone", comment: ""))
@@ -2906,7 +2925,7 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "EdgeToEdge iPhone", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .iphone
             Settings.advancedFeatures.skinDebug.displayType = .edgeToEdge
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Override Traits set to EdgeToEdge iPhone", comment: ""))
@@ -2915,7 +2934,7 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "Standard iPad", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .ipad
             Settings.advancedFeatures.skinDebug.displayType = .standard
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Override Traits set to Standard iPad", comment: ""))
@@ -2924,7 +2943,7 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "SplitView iPad", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .ipad
             Settings.advancedFeatures.skinDebug.displayType = .splitView
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Override Traits set to SplitView iPad", comment: ""))
@@ -2933,14 +2952,14 @@ extension GameViewController
         alertController.addAction(UIAlertAction(title: "AirPlay TV", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = .tv
             Settings.advancedFeatures.skinDebug.displayType = .standard
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Override Traits set to AirPlay TV", comment: ""))
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            self.resumeEmulation()
+            self.resumeGameplay()
         }))
         self.present(alertController, animated: true, completion: nil)
     }
@@ -2966,7 +2985,7 @@ extension GameViewController
                     let text = (Settings.gbFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
                         Settings.gbFeatures.palettes.palette = palette
-                        self.resumeEmulation()
+                        self.resumeGameplay()
                         if Settings.userInterfaceFeatures.toasts.palette
                         {
                             self.presentToastView(text: NSLocalizedString("Changed Main Palette to \(palette.description)", comment: ""))
@@ -2986,7 +3005,7 @@ extension GameViewController
                     let text = (Settings.gbFeatures.palettes.spritePalette1.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
                         Settings.gbFeatures.palettes.spritePalette1 = palette
-                        self.resumeEmulation()
+                        self.resumeGameplay()
                         if Settings.userInterfaceFeatures.toasts.palette
                         {
                             self.presentToastView(text: NSLocalizedString("Changed Sprite Palette 1 to \(palette.description)", comment: ""))
@@ -3006,7 +3025,7 @@ extension GameViewController
                     let text = (Settings.gbFeatures.palettes.spritePalette2.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                     paletteAlertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
                         Settings.gbFeatures.palettes.spritePalette2 = palette
-                        self.resumeEmulation()
+                        self.resumeGameplay()
                         if Settings.userInterfaceFeatures.toasts.palette
                         {
                             self.presentToastView(text: NSLocalizedString("Changed Sprite Palette 2 to \(palette.description)", comment: ""))
@@ -3015,13 +3034,13 @@ extension GameViewController
                 }
                 
                 paletteAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                    self.resumeEmulation()
+                    self.resumeGameplay()
                 }))
                 self.present(paletteAlertController, animated: true, completion: nil)
             }))
             
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                self.resumeEmulation()
+                self.resumeGameplay()
             }))
             self.present(alertController, animated: true, completion: nil)
         }
@@ -3035,7 +3054,7 @@ extension GameViewController
                 let text = (Settings.gbFeatures.palettes.palette.rawValue == palette.rawValue) ? ("✓ " + palette.description) : palette.description
                 alertController.addAction(UIAlertAction(title: text, style: .default, handler: { (action) in
                     Settings.gbFeatures.palettes.palette = palette
-                    self.resumeEmulation()
+                    self.resumeGameplay()
                     if Settings.userInterfaceFeatures.toasts.palette
                     {
                         self.presentToastView(text: NSLocalizedString("Changed Palette to \(palette.description)", comment: ""))
@@ -3044,7 +3063,7 @@ extension GameViewController
             }
             
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                self.resumeEmulation()
+                self.resumeGameplay()
             }))
             self.present(alertController, animated: true, completion: nil)
         }
@@ -3193,7 +3212,7 @@ extension GameViewController: GameViewControllerDelegate
         }
         else if self.presentedViewController == nil
         {
-            self.pauseEmulation()
+            self.pauseGameplay()
             self.controllerView.resignFirstResponder()
             self._isQuickSettingsOpen = false
             
@@ -3631,7 +3650,7 @@ private extension GameViewController
         let lowBatteryLevel = Settings.advancedFeatures.lowBattery.lowLevel
         let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
         
-        self.pauseEmulation()
+        self.pauseGameplay()
         
         let alertController = UIAlertController(title: NSLocalizedString(String(format: "Battery At %.f%!", lowBatteryLevel * 100), comment: ""), message: NSLocalizedString(String(format: "Ignited will begin creating auto save states in case your device suddenly powers off. At %.f% battery your game session will end and you won't be able to launch a game until you charge your device.", criticalBatteryLevel * 100), comment: ""), preferredStyle: .alert)
         alertController.popoverPresentationController?.sourceView = self.view
@@ -3639,7 +3658,7 @@ private extension GameViewController
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
-            self.resumeEmulation()
+            self.resumeGameplay()
         }))
         self.present(alertController, animated: true, completion: nil)
         
@@ -3668,7 +3687,7 @@ private extension GameViewController
             return
         }
         
-        self.pauseEmulation()
+        self.pauseGameplay()
         
         let alertController = UIAlertController(title: NSLocalizedString("Override Traits Menu", comment: ""), message: NSLocalizedString("This popup was activated by shaking your device while using the Override Traits feature. You can use it to change or reset your override traits, or to recover from situations where you can't access the main menu.", comment: ""), preferredStyle: .actionSheet)
         alertController.preparePopoverPresentationController(self.view)
@@ -3685,7 +3704,7 @@ private extension GameViewController
         alertController.addAction(UIAlertAction(title: "Reset Traits", style: .default, handler: { (action) in
             Settings.advancedFeatures.skinDebug.device = Settings.advancedFeatures.skinDebug.defaultDevice
             Settings.advancedFeatures.skinDebug.displayType = Settings.advancedFeatures.skinDebug.defaultDisplayType
-            self.resumeEmulation()
+            self.resumeGameplay()
             if Settings.userInterfaceFeatures.toasts.debug
             {
                 self.presentToastView(text: NSLocalizedString("Trait Overrides have been reset", comment: ""))
@@ -3695,7 +3714,7 @@ private extension GameViewController
             self.performPauseAction()
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            self.resumeEmulation()
+            self.resumeGameplay()
         }))
         self.present(alertController, animated: true, completion: nil)
     }
@@ -3729,7 +3748,9 @@ private extension GameViewController
               let game = self.game as? Game else { return }
         
         // disable on GBC. saving state without pausing emulation crashes gambette
-        guard self.game?.type != .gbc else { return }
+        if let _ = self.emulatorCore?.deltaCore.emulatorBridge as? GBCEmulatorBridge {
+            return
+        }
         
         let fetchRequest: NSFetchRequest<SaveState> = SaveState.fetchRequest()
         fetchRequest.returnsObjectsAsFaults = false
@@ -3776,6 +3797,79 @@ private extension GameViewController
             saveState.game = game
             
             self.update(saveState, shouldSuspendEmulation: false)
+            
+            backgroundContext.saveWithErrorLogging()
+        }
+    }
+}
+
+//MARK: - Playtime -
+private extension GameViewController
+{
+    func activatePlaytimeTracker()
+    {
+        if self.playTimeTimer == nil
+        {
+            self.playTimeTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+                self.updatePlayTime()
+            }
+            NSLog("Playtime tracker activated!")
+        }
+    }
+    
+    func resumePlaytimeTracker()
+    {
+        if self.playTimeTimer == nil
+        {
+            if self.playTimeTimerRemaining > 0
+            {
+                self.playTimePausedTimer = Timer.scheduledTimer(withTimeInterval: self.playTimeTimerRemaining, repeats: false) { _ in
+                    self.updatePlayTime()
+                    self.playTimePausedTimer = nil
+                    self.playTimeTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+                        self.updatePlayTime()
+                    }
+                }
+            }
+            else
+            {
+                self.playTimeTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+                    self.updatePlayTime()
+                }
+            }
+            NSLog("Playtime tracker resumed!")
+        }
+    }
+    
+    func pausePlaytimeTracker()
+    {
+        if self.playTimePausedTimer == nil
+        {
+            self.playTimeTimerRemaining = self.playTimeTimer?.fireDate.timeIntervalSinceNow ?? 0
+        }
+        else
+        {
+            self.playTimeTimerRemaining = self.playTimePausedTimer?.fireDate.timeIntervalSinceNow ?? 0
+            self.playTimePausedTimer!.invalidate()
+            self.playTimeTimer = nil
+        }
+        self.playTimeTimer?.invalidate()
+        self.playTimeTimer = nil
+        NSLog("Playtime paused!")
+    }
+    
+    func updatePlayTime()
+    {
+        guard let game = self.game as? Game else { return }
+        
+        let backgroundContext = DatabaseManager.shared.newBackgroundContext()
+        backgroundContext.perform {
+            let game = backgroundContext.object(with: game.objectID) as! Game
+            
+            let playTime = game.playTime + 1
+            game.playTime = playTime
+            
+            NSLog("Playtime: \(playTime)")
             
             backgroundContext.saveWithErrorLogging()
         }

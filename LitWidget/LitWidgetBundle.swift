@@ -12,6 +12,7 @@ import SwiftUI
 @main
 struct LitWidgetBundle: WidgetBundle {
     var body: some Widget {
+        MostPlayedWidget()
         RecentlyPlayedWidget()
         GameCountWidget()
     }

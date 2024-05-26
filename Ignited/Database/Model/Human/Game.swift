@@ -92,6 +92,15 @@ extension Game
         
         return fetchRequest
     }
+    
+    class var mostPlayedFetchRequest: NSFetchRequest<Game> {
+        let fetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "%K >= 0", #keyPath(Game.playTime))
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Game.playTime, ascending: false), NSSortDescriptor(keyPath: \Game.name, ascending: true)]
+        fetchRequest.fetchLimit = 4
+        
+        return fetchRequest
+    }
 }
 
 extension Game
@@ -152,7 +161,7 @@ extension Game: Syncable
     }
     
     public var syncableKeys: Set<AnyKeyPath> {
-        return [\Game.artworkURL, \Game.filename, \Game.name, \Game.type, \Game.isFavorite, \Game.overscanTop, \Game.overscanBottom, \Game.overscanLeft, \Game.overscanRight]
+        return [\Game.artworkURL, \Game.filename, \Game.name, \Game.type, \Game.isFavorite, \Game.overscanTop, \Game.overscanBottom, \Game.overscanLeft, \Game.overscanRight, \Game.playTime]
     }
     
     public var syncableFiles: Set<File> {

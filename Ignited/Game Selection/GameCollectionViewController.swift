@@ -1064,7 +1064,8 @@ private extension GameCollectionViewController
                                   image: UIImage(systemName: "doc"),
                                   children: [importSaveFileAction, exportSaveFileAction])
         
-        let saveMenu = UIMenu(options: [.displayInline],
+        let saveMenu = UIMenu(title: NSLocalizedString("Played for \(game.playTime.formattedString(for: .minute))", comment: ""),
+                              options: [.displayInline],
                               children: [saveStatesAction, saveFileMenu])
         
         // Delete

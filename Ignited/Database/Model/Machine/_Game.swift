@@ -12,16 +12,9 @@ public class _Game: NSManagedObject
         return NSFetchRequest<Game>(entityName: "Game")
     }
     
-    public override func awakeFromInsert() {
-        super.awakeFromInsert()
-        
-        setPrimitiveValue(false, forKey: #keyPath(Game.isFavorite))
-        
-        setPrimitiveValue(0, forKey: #keyPath(Game.overscanTop))
-        setPrimitiveValue(0, forKey: #keyPath(Game.overscanBottom))
-        setPrimitiveValue(0, forKey: #keyPath(Game.overscanLeft))
-        setPrimitiveValue(0, forKey: #keyPath(Game.overscanRight))
-    }
+//    public override func awakeFromInsert() {
+//        super.awakeFromInsert()
+//    }
 
     // MARK: - Properties
 
@@ -34,6 +27,8 @@ public class _Game: NSManagedObject
     @NSManaged public var name: String
 
     @NSManaged public var playedDate: Date?
+    
+    @NSManaged public var playTime: UInt32
 
     @NSManaged public var type: GameType
     
