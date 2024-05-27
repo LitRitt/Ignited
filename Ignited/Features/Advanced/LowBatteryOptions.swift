@@ -28,10 +28,6 @@ struct LowBatteryOptions
             isPercentage: true)
     var criticalLevel: Double = 0.05
     
-    @Option(name: "Disable Critical Battery",
-            description: "Enable to launch and play games even when if your device battery reaches a critically low level.")
-    var disableCriticalBattery: Bool = false
-    
     @Option(name: "Restore Defaults",
             description: "Reset all options to their default values.",
             detailView: { _ in

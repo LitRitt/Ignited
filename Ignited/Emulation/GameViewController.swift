@@ -3607,6 +3607,8 @@ private extension GameViewController
         guard let emulatorCore = self.emulatorCore,
               let game = self.game else { return }
         
+        guard Settings.advancedFeatures.lowBattery.isEnabled else { return }
+        
         let currentBatteryLevel = Double(UIDevice.current.batteryLevel)
         let lowBatteryLevel = Settings.advancedFeatures.lowBattery.lowLevel
         let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
@@ -3617,8 +3619,7 @@ private extension GameViewController
             self.updateAutoSaveState(true)
             
             // Battery critical, quit emulation
-            if currentBatteryLevel < criticalBatteryLevel,
-               !Settings.advancedFeatures.lowBattery.disableCriticalBattery
+            if currentBatteryLevel < criticalBatteryLevel
             {
                 NotificationCenter.default.post(name: EmulatorCore.emulationDidQuitNotification, object: nil)
                 
@@ -3652,7 +3653,7 @@ private extension GameViewController
         
         self.pauseGameplay()
         
-        let alertController = UIAlertController(title: NSLocalizedString(String(format: "Battery At %.f%!", lowBatteryLevel * 100), comment: ""), message: NSLocalizedString(String(format: "Ignited will begin creating auto save states in case your device suddenly powers off. At %.f% battery your game session will end and you won't be able to launch a game until you charge your device.", criticalBatteryLevel * 100), comment: ""), preferredStyle: .alert)
+        let alertController = UIAlertController(title: NSLocalizedString("Battery At \(Int(lowBatteryLevel * 100))%!", comment: ""), message: NSLocalizedString("Ignited will begin creating auto save states in case your device suddenly powers off. At \(Int(criticalBatteryLevel * 100))% battery your game session will end and you won't be able to launch a game until you charge your device.", comment: ""), preferredStyle: .alert)
         alertController.popoverPresentationController?.sourceView = self.view
         alertController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.maxY, width: 0, height: 0)
         alertController.popoverPresentationController?.permittedArrowDirections = []

@@ -930,18 +930,12 @@ private extension GameCollectionViewController
         let currentBatteryLevel = Double(UIDevice.current.batteryLevel)
         let criticalBatteryLevel = Settings.advancedFeatures.lowBattery.criticalLevel
         
-        if currentBatteryLevel < criticalBatteryLevel,
-           !Settings.advancedFeatures.lowBattery.disableCriticalBattery
-        {
-            return true
-        }
-        
-        return false
+        return currentBatteryLevel < criticalBatteryLevel
     }
     
     func showCriticalBatteryError()
     {
-        let alertController = UIAlertController(title: NSLocalizedString("Critical Battery!", comment: ""), message: NSLocalizedString(String(format: "You cannot launch any games while your device is below %.f/% battery.", Settings.advancedFeatures.lowBattery.criticalLevel * 100), comment: ""), preferredStyle: .alert) //TODO: Fix % in text
+        let alertController = UIAlertController(title: NSLocalizedString("Critical Battery!", comment: ""), message: NSLocalizedString("You cannot launch any games while your device is below \(Int(Settings.advancedFeatures.lowBattery.criticalLevel * 100))% battery.", comment: ""), preferredStyle: .alert)
         alertController.addAction(.ok)
         self.present(alertController, animated: true, completion: nil)
     }

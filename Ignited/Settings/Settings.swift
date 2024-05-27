@@ -101,6 +101,7 @@ struct Settings
             Settings.touchFeedbackFeatures.touchVibration.settingsKey.rawValue: true,
             Settings.advancedFeatures.skinDebug.settingsKey.rawValue: false,
             Settings.advancedFeatures.powerUser.settingsKey.rawValue: false,
+            Settings.advancedFeatures.lowBattery.settingsKey.rawValue: true,
             Settings.snesFeatures.allowInvalidVRAMAccess.settingsKey.rawValue: true,
             Settings.gbFeatures.palettes.settingsKey.rawValue: true,
             Settings.n64Features.openGLES2.settingsKey.rawValue: true,

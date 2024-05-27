@@ -24,8 +24,7 @@ struct AdvancedFeatures: FeatureContainer
     
     @Feature(name: "Low Battery",
              description: "Choose when the app starts reacting to low device battery.",
-             options: LowBatteryOptions(),
-             attributes: [.permanent])
+             options: LowBatteryOptions())
     var lowBattery
     
     private init()
