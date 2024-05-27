@@ -67,6 +67,7 @@ struct PowerUserOptions
     
     @Option(name: "Fix Game Collection Associations",
             description: "This will fix any games that are associated with the wrong collections.",
+            attributes: [.hidden(when: {true})],
             detailView: { _ in
         Button("Fix Game Collection Associations") {
             fixGameCollections()
@@ -79,6 +80,7 @@ struct PowerUserOptions
     
     @Option(name: "Reset Build Counter",
             description: "This will force update actions, such as repairs, to be taken next app launch.",
+            attributes: [.hidden(when: {true})],
             detailView: { _ in
         Button("Reset Build Counter") {
             Settings.buildNumber = 1

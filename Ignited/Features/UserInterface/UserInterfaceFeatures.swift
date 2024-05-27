@@ -27,7 +27,7 @@ struct UserInterfaceFeatures: FeatureContainer
     @Feature(name: "App Presets",
              description: "Select an app preset to change many settings and options at once.",
              options: AppPresetOptions(),
-             attributes: [.permanent])
+             attributes: [.hidden(when: {true}), .permanent])
     var appPresets
     
     @Feature(name: "Toast Notifications",

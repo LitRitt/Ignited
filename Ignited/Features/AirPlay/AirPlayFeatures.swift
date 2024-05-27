@@ -26,7 +26,8 @@ struct AirPlayFeatures: FeatureContainer
     
     @Feature(name: "Skins",
              description: "Customize the appearance of games when AirPlaying.",
-             options: AirPlaySkinsOptions())
+             options: AirPlaySkinsOptions(),
+             attributes: [.hidden(when: {true})])
     var skins
     
     private init()

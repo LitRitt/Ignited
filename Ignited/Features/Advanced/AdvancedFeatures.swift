@@ -28,17 +28,6 @@ struct AdvancedFeatures: FeatureContainer
              attributes: [.permanent])
     var lowBattery
     
-    #if DEBUG
-    @Feature(name: "Enable Pro",
-             description: "For testing Ignited Pro features.")
-    var proOverride
-    #else
-    @Feature(name: "Enable Pro",
-             description: "For testing Ignited Pro features.",
-             attributes: [.hidden(when: {true})])
-    var proOverride
-    #endif
-    
     private init()
     {
         self.prepareFeatures()

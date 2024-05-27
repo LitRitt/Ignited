@@ -117,6 +117,28 @@ enum StandardSkinGenesisFaceLayout: String, CaseIterable, CustomStringConvertibl
 
 struct InputsAndLayoutOptions
 {
+    @Option(name: "Directional Input",
+            description: "Choose which input type to use for directional inputs. Does not affect N64.",
+            values: StandardSkinDirectionalInputType.allCases)
+    var directionalInputType: StandardSkinDirectionalInputType = .dPad
+    
+    @Option(name: "A,B,X,Y Layout",
+            description: "Choose which layout to use for A, B, X, and Y inputs. Does not affect N64 or Sega systems.",
+            values: StandardSkinABXYLayout.allCases)
+    var abxyLayout: StandardSkinABXYLayout = .nintendo
+    
+    @Option(name: "DS Layout",
+            description: "Choose which layout to use for DS. Compact only affects iPhones in portrait.",
+            values: StandardSkinDSLayout.allCases)
+    var dsLayout: StandardSkinDSLayout = .comfortable
+    
+    @Option(name: "Extended Edges",
+            description: "Change the value to use for extended edges on inputs. Extended edges increase the area around an input that will activate that input when touched.",
+            range: 0...20,
+            step: 1,
+            unit: "pt")
+    var extendedEdges: Double = 10
+    
     @Option(name: "Custom Button 1",
             description: "Choose an input to use for custom button 1. Not available on N64.",
             values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.restart, ActionInput.null],
@@ -134,11 +156,6 @@ struct InputsAndLayoutOptions
             attributes: [.pro])
     var dsScreenSwap: Bool = true
     
-    @Option(name: "DS Layout",
-            description: "Choose which layout to use for DS. Compact only affects iPhones in portrait.",
-            values: StandardSkinDSLayout.allCases)
-    var dsLayout: StandardSkinDSLayout = .comfortable
-    
     @Option(name: "Portrait Menu Location",
             description: "Choose the location of the menu inputs when in portrait. (Pause, Select, Start, Mode, and Quick Settings)",
             values: StandardSkinMenuLocation.allCases)
@@ -148,16 +165,6 @@ struct InputsAndLayoutOptions
             description: "Choose the location of the menu inputs when in landscape. (Pause, Select, Start, Mode, and Quick Settings)",
             values: StandardSkinMenuLocation.allCases)
     var menuLocationLandscape: StandardSkinMenuLocation = .bottom
-    
-    @Option(name: "Directional Input",
-            description: "Choose which input type to use for directional inputs. Does not affect N64.",
-            values: StandardSkinDirectionalInputType.allCases)
-    var directionalInputType: StandardSkinDirectionalInputType = .dPad
-    
-    @Option(name: "A,B,X,Y Layout",
-            description: "Choose which layout to use for A, B, X, and Y inputs. Does not affect N64 or Sega systems.",
-            values: StandardSkinABXYLayout.allCases)
-    var abxyLayout: StandardSkinABXYLayout = .nintendo
     
     @Option(name: "N64 Face Layout",
             description: "Choose which layout to use for N64 face inputs. Swaps the top and bottom input groups on either or both sides.",
@@ -173,13 +180,6 @@ struct InputsAndLayoutOptions
             description: "Choose which layout to use for Genesis face inputs. Change between the 3 button and 6 button layout.",
             values: StandardSkinGenesisFaceLayout.allCases)
     var genesisFaceLayout: StandardSkinGenesisFaceLayout = .button3
-    
-    @Option(name: "Extended Edges",
-            description: "Change the value to use for extended edges on inputs. Extended edges increase the area around an input that will activate that input when touched.",
-            range: 0...20,
-            step: 1,
-            unit: "pt")
-    var extendedEdges: Double = 10
     
     @Option(name: "SplitView Portrait Size",
             description: "Change the size of the SplitView inputs when in portrait.",
