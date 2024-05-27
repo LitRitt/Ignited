@@ -149,9 +149,8 @@ extension GamesViewController
     
     override func viewDidAppear(_ animated: Bool)
     {
-        guard !Settings.legacyDatabaseHasBeenImported else { return }
-        
-        if FileManager.default.fileExists(atPath: DatabaseManager.legacyDatabaseURL.path())
+        if !Settings.legacyDatabaseHasBeenImported,
+           FileManager.default.fileExists(atPath: DatabaseManager.legacyDatabaseURL.path())
         {
             PowerUserOptions.importLegacyDatabase(skipPowerUserCheck: true)
         }

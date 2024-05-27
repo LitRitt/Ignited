@@ -104,65 +104,6 @@ extension PowerUserOptions
         ToastView.show(NSLocalizedString("Successfully Reset Build Counter", comment: ""), onEdge: .bottom, duration: 3.0)
     }
     
-    static func importLegacyDatabase(skipPowerUserCheck: Bool = false)
-    {
-        guard let topViewController = UIApplication.shared.topViewController() else { return }
-        
-        guard Settings.advancedFeatures.powerUser.isEnabled || skipPowerUserCheck else {
-            self.showFeatureDisabledToast()
-            return
-        }
-        
-        let alertController = UIAlertController(title: NSLocalizedString("Import Legacy Database?", comment: ""), message: NSLocalizedString("This will backup the current database files for the app and replace them with legacy database files if they're available from a previous beta installation.", comment: ""), preferredStyle: .alert)
-        alertController.popoverPresentationController?.sourceView = topViewController.view
-        alertController.popoverPresentationController?.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.maxY, width: 0, height: 0)
-        alertController.popoverPresentationController?.permittedArrowDirections = []
-        
-        alertController.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { (action) in
-            let databaseExtensions = ["sqlite", "sqlite-wal", "sqlite-shm"]
-            
-            // Backup current database
-            for ext in databaseExtensions {
-                let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext)
-                let backupURL = DatabaseManager.backupDirectoryURL.appending(component: "Ignited").appendingPathExtension(ext)
-                if FileManager.default.fileExists(atPath: fileURL.path()) {
-                    do {
-                        let data = try Data(contentsOf: fileURL)
-                        try data.write(to: backupURL)
-                    } catch {
-                        print("Failed to backup current database", error)
-                        ToastView.show(NSLocalizedString("Failed to backup current database", comment: ""), onEdge: .bottom, duration: 5.0)
-                        return
-                    }
-                }
-            }
-            
-            // Import legacy database
-            for ext in databaseExtensions {
-                let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Delta").appendingPathExtension(ext)
-                let newURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext)
-                if FileManager.default.fileExists(atPath: fileURL.path()) {
-                    do {
-                        let data = try Data(contentsOf: fileURL)
-                        try data.write(to: newURL)
-                        try FileManager.default.removeItem(at: fileURL)
-                    } catch {
-                        print("Failed to import legacy database", error)
-                        ToastView.show(NSLocalizedString("Failed to import legacy database", comment: ""), onEdge: .bottom, duration: 5.0)
-                        return
-                    }
-                }
-            }
-            
-            ToastView.show(NSLocalizedString("Successfully imported legacy database", comment: ""), detailText: NSLocalizedString("Restart the app for changes to take effect", comment: ""), onEdge: .bottom, duration: 5.0)
-            Settings.legacyDatabaseHasBeenImported = true
-        }))
-        
-        alertController.addAction(.cancel)
-        
-        topViewController.present(alertController, animated: true, completion: nil)
-    }
-    
     static func fixGameCollections()
     {
         guard Settings.advancedFeatures.powerUser.isEnabled else {
@@ -334,6 +275,87 @@ extension PowerUserOptions
     static func showFeatureDisabledToast()
     {
         ToastView.show(NSLocalizedString("Enable Power User Tools to use this feature", comment: ""), onEdge: .bottom)
+    }
+}
+
+extension PowerUserOptions
+{
+    enum DatabaseFile: String, CaseIterable
+    {
+        case db = "sqlite"
+        case wal = "sqlite-wal"
+        case shm = "sqlite-smh"
+        
+        var fileExtension: String {
+            return self.rawValue
+        }
+    }
+    
+    static func importLegacyDatabase(skipPowerUserCheck: Bool = false)
+    {
+        guard let topViewController = UIApplication.shared.topViewController() else { return }
+        
+        guard Settings.advancedFeatures.powerUser.isEnabled || skipPowerUserCheck else {
+            self.showFeatureDisabledToast()
+            return
+        }
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Import Legacy Database?", comment: ""), message: NSLocalizedString("This will backup the current database files for the app and replace them with legacy database files if they're available from a previous beta installation.", comment: ""), preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = topViewController.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(x: topViewController.view.bounds.midX, y: topViewController.view.bounds.maxY, width: 0, height: 0)
+        alertController.popoverPresentationController?.permittedArrowDirections = []
+        
+        alertController.addAction(UIAlertAction(title: "Import", style: .destructive, handler: { (action) in
+            
+            // Backup current database
+            for ext in DatabaseFile.allCases {
+                let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
+                let backupURL = DatabaseManager.backupDirectoryURL.appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
+                if FileManager.default.fileExists(atPath: fileURL.path()) {
+                    do {
+                        let data = try Data(contentsOf: fileURL)
+                        try data.write(to: backupURL)
+                    } catch {
+                        if ext == .shm {
+                            continue
+                        } else {
+                            Logger.database.error("Failed to import legacy database. Could not backup the current database's .\(ext.fileExtension, privacy: .public) file.")
+                            ToastView.show(NSLocalizedString("Failed to import legacy database", comment: ""), onEdge: .bottom, duration: 5.0)
+                            return
+                        }
+                    }
+                }
+            }
+            
+            // Import legacy database
+            for ext in DatabaseFile.allCases {
+                let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Delta").appendingPathExtension(ext.fileExtension)
+                let newURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
+                if FileManager.default.fileExists(atPath: fileURL.path()) {
+                    do {
+                        let data = try Data(contentsOf: fileURL)
+                        try data.write(to: newURL)
+                        try FileManager.default.removeItem(at: fileURL)
+                    } catch {
+                        if ext == .shm {
+                            continue
+                        } else {
+                            Logger.database.error("Failed to import legacy database. Could not import the legacy database's .\(ext.fileExtension, privacy: .public) file.")
+                            ToastView.show(NSLocalizedString("Failed to import legacy database", comment: ""), onEdge: .bottom, duration: 5.0)
+                            return
+                        }
+                    }
+                }
+            }
+            
+            Logger.database.info("Successfully imported legacy database.")
+            ToastView.show(NSLocalizedString("Successfully imported legacy database", comment: ""), detailText: NSLocalizedString("Restart the app for changes to take effect", comment: ""), onEdge: .bottom, duration: 10.0)
+            Settings.legacyDatabaseHasBeenImported = true
+        }))
+        
+        alertController.addAction(.cancel)
+        
+        topViewController.present(alertController, animated: true, completion: nil)
     }
 }
     
