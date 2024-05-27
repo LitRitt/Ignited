@@ -220,7 +220,7 @@ private extension AppDelegate
 {
     @objc func databaseManagerDidStart(_ notification: Notification)
     {
-        DatabaseManager.shared.repairGameCollections(repairAll: true)
+        DatabaseManager.shared.repairGameCollections()
         
         guard let deepLink = self.appLaunchDeepLink else { return }
         

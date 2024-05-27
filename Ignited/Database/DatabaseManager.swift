@@ -712,7 +712,15 @@ extension DatabaseManager
                 for game in games
                 {
                     guard let gameType = GameType(fileExtension: game.fileURL.pathExtension),
-                          (gameType.rawValue != game.type.rawValue) || repairAll else { continue }
+                          (gameType.rawValue != game.type.rawValue) || repairAll else
+                    {
+                        if game.type.rawValue.hasPrefix("com.rileytestut.delta.game")
+                        {
+                            let temporaryGame = context.object(with: game.objectID) as! Game
+                            context.delete(temporaryGame)
+                        }
+                        continue
+                    }
                     
                     let gameCollection = GameCollection(context: context)
                     gameCollection.identifier = gameType.rawValue
@@ -766,6 +774,20 @@ extension DatabaseManager
         self.createDirectory(at: databaseDirectoryURL)
         
         return databaseDirectoryURL
+    }
+    
+    class var backupDirectoryURL: URL
+    {
+        let backupDirectoryURL = DatabaseManager.defaultDirectoryURL().appendingPathComponent("Backup")
+        self.createDirectory(at: backupDirectoryURL)
+        
+        return backupDirectoryURL
+    }
+    
+    class var legacyDatabaseURL: URL
+    {
+        let backupDirectoryURL = DatabaseManager.defaultDirectoryURL().appendingPathComponent("Delta.sqlite")
+        return backupDirectoryURL
     }
     
     class var gamesDatabaseURL: URL

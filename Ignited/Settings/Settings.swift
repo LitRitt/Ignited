@@ -63,6 +63,7 @@ struct Settings
     {
         let defaults = [
             #keyPath(UserDefaults.buildNumber): 1,
+            #keyPath(UserDefaults.legacyDatabaseHasBeenImported): false,
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
@@ -116,6 +117,14 @@ extension Settings
     static var buildNumber: Int {
         set { UserDefaults.standard.buildNumber = newValue }
         get { return UserDefaults.standard.buildNumber }
+    }
+    
+    static var sortSaveStatesByOldestFirst: Bool {
+        set { UserDefaults.standard.sortSaveStatesByOldestFirst = newValue }
+        get {
+            let sortByOldestFirst = UserDefaults.standard.sortSaveStatesByOldestFirst
+            return sortByOldestFirst
+        }
     }
     
     /// OpenGLES
@@ -197,11 +206,11 @@ extension Settings
         }
     }
     
-    static var sortSaveStatesByOldestFirst: Bool {
-        set { UserDefaults.standard.sortSaveStatesByOldestFirst = newValue }
+    static var legacyDatabaseHasBeenImported: Bool {
+        set { UserDefaults.standard.legacyDatabaseHasBeenImported = newValue }
         get {
-            let sortByOldestFirst = UserDefaults.standard.sortSaveStatesByOldestFirst
-            return sortByOldestFirst
+            let legacyDatabaseHasBeenImported = UserDefaults.standard.legacyDatabaseHasBeenImported
+            return legacyDatabaseHasBeenImported
         }
     }
     
@@ -401,4 +410,6 @@ private extension UserDefaults
     @NSManaged var syncingService: String?
     
     @NSManaged var sortSaveStatesByOldestFirst: Bool
+    
+    @NSManaged var legacyDatabaseHasBeenImported: Bool
 }
