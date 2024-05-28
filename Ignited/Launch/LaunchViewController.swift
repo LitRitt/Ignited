@@ -71,6 +71,12 @@ extension LaunchViewController
         let isSyncingManagerStarted = RSTLaunchCondition(condition: { self.didAttemptStartingSyncManager }) { (completionHandler) in
             self.didAttemptStartingSyncManager = true
             
+            if Settings.buildNumber < 230
+            {
+                DropboxService.shared.deauthenticate()
+                Settings.syncingService = nil
+            }
+            
             SyncManager.shared.start(service: Settings.syncingService) { (result) in
                 switch result
                 {

@@ -10,7 +10,7 @@ import Harmony
 
 private extension UserDefaults
 {
-    @NSManaged var didValidateHarmonyBetaDatabase: Bool
+    @NSManaged var didValidateLitHarmonyBetaDatabase: Bool
 }
 
 extension SyncManager
@@ -117,9 +117,9 @@ extension SyncManager
         
         let coordinator = SyncCoordinator(service: service.service, persistentContainer: DatabaseManager.shared)
         
-        if !UserDefaults.standard.didValidateHarmonyBetaDatabase
+        if !UserDefaults.standard.didValidateLitHarmonyBetaDatabase
         {
-            UserDefaults.standard.didValidateHarmonyBetaDatabase = true
+            UserDefaults.standard.didValidateLitHarmonyBetaDatabase = true
             
             coordinator.deauthenticate { (result) in
                 do
