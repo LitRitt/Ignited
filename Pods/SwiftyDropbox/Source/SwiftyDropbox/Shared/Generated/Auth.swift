@@ -73,6 +73,10 @@ open class Auth {
         case userSuspended
         /// The access token has expired.
         case expiredAccessToken
+        /// The access token does not have the required scope to access the route.
+        case missingScope(Auth.TokenScopeError)
+        /// The route is not available to public.
+        case routeAccessDenied
         /// An unspecified error.
         case other
 
@@ -104,6 +108,14 @@ open class Auth {
                     var d = [String: JSON]()
                     d[".tag"] = .str("expired_access_token")
                     return .dictionary(d)
+                case .missingScope(let arg):
+                    var d = Serialization.getFields(Auth.TokenScopeErrorSerializer().serialize(arg))
+                    d[".tag"] = .str("missing_scope")
+                    return .dictionary(d)
+                case .routeAccessDenied:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("route_access_denied")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -125,6 +137,11 @@ open class Auth {
                             return AuthError.userSuspended
                         case "expired_access_token":
                             return AuthError.expiredAccessToken
+                        case "missing_scope":
+                            let v = Auth.TokenScopeErrorSerializer().deserialize(json)
+                            return AuthError.missingScope(v)
+                        case "route_access_denied":
+                            return AuthError.routeAccessDenied
                         case "other":
                             return AuthError.other
                         default:
@@ -444,6 +461,37 @@ open class Auth {
         }
     }
 
+    /// The TokenScopeError struct
+    open class TokenScopeError: CustomStringConvertible {
+        /// The required scope to access the route.
+        public let requiredScope: String
+        public init(requiredScope: String) {
+            stringValidator()(requiredScope)
+            self.requiredScope = requiredScope
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(TokenScopeErrorSerializer().serialize(self)))"
+        }
+    }
+    open class TokenScopeErrorSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: TokenScopeError) -> JSON {
+            let output = [ 
+            "required_scope": Serialization._StringSerializer.serialize(value.requiredScope),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> TokenScopeError {
+            switch json {
+                case .dictionary(let dict):
+                    let requiredScope = Serialization._StringSerializer.deserialize(dict["required_scope"] ?? .null)
+                    return TokenScopeError(requiredScope: requiredScope)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
 
     /// Stone Route Objects
 
@@ -455,7 +503,8 @@ open class Auth {
         argSerializer: Auth.TokenFromOAuth1ArgSerializer(),
         responseSerializer: Auth.TokenFromOAuth1ResultSerializer(),
         errorSerializer: Auth.TokenFromOAuth1ErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "app",
+                "host": "api",
                 "style": "rpc"]
     )
     static let tokenRevoke = Route(
@@ -466,7 +515,8 @@ open class Auth {
         argSerializer: Serialization._VoidSerializer,
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
 }

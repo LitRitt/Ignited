@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "DBChunkInputStream.h"
 #import "SwiftyDropbox.h"
 
 FOUNDATION_EXPORT double SwiftyDropboxVersionNumber;

@@ -5,6 +5,6 @@
 import Foundation
 
 struct Constants {
-    static let versionSDK = "5.0.0"
-    static let kCSERFKey = "kCSERFKeySwiftSDK"
+    static let versionSDK = "6.0.3"
+    static let kCSRFKey = "kCSRFKeySwiftSDK"
 }

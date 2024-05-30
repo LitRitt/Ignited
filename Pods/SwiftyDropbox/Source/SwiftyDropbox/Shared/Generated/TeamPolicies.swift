@@ -118,6 +118,57 @@ open class TeamPolicies {
         }
     }
 
+    /// The FileLockingPolicyState union
+    public enum FileLockingPolicyState: CustomStringConvertible {
+        /// File locking feature is disabled.
+        case disabled
+        /// File locking feature is allowed.
+        case enabled
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(FileLockingPolicyStateSerializer().serialize(self)))"
+        }
+    }
+    open class FileLockingPolicyStateSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: FileLockingPolicyState) -> JSON {
+            switch value {
+                case .disabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("disabled")
+                    return .dictionary(d)
+                case .enabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("enabled")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> FileLockingPolicyState {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "disabled":
+                            return FileLockingPolicyState.disabled
+                        case "enabled":
+                            return FileLockingPolicyState.enabled
+                        case "other":
+                            return FileLockingPolicyState.other
+                        default:
+                            return FileLockingPolicyState.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
     /// The GroupCreation union
     public enum GroupCreation: CustomStringConvertible {
         /// Team admins and members can create groups.
@@ -212,6 +263,57 @@ open class TeamPolicies {
         }
     }
 
+    /// The PaperDefaultFolderPolicy union
+    public enum PaperDefaultFolderPolicy: CustomStringConvertible {
+        /// Everyone in team will be the default option when creating a folder in Paper.
+        case everyoneInTeam
+        /// Invite only will be the default option when creating a folder in Paper.
+        case inviteOnly
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(PaperDefaultFolderPolicySerializer().serialize(self)))"
+        }
+    }
+    open class PaperDefaultFolderPolicySerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: PaperDefaultFolderPolicy) -> JSON {
+            switch value {
+                case .everyoneInTeam:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("everyone_in_team")
+                    return .dictionary(d)
+                case .inviteOnly:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("invite_only")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> PaperDefaultFolderPolicy {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "everyone_in_team":
+                            return PaperDefaultFolderPolicy.everyoneInTeam
+                        case "invite_only":
+                            return PaperDefaultFolderPolicy.inviteOnly
+                        case "other":
+                            return PaperDefaultFolderPolicy.other
+                        default:
+                            return PaperDefaultFolderPolicy.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
     /// The PaperDeploymentPolicy union
     public enum PaperDeploymentPolicy: CustomStringConvertible {
         /// All team members have access to Paper.
@@ -257,6 +359,57 @@ open class TeamPolicies {
                             return PaperDeploymentPolicy.other
                         default:
                             return PaperDeploymentPolicy.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The PaperDesktopPolicy union
+    public enum PaperDesktopPolicy: CustomStringConvertible {
+        /// Do not allow team members to use Paper Desktop.
+        case disabled
+        /// Allow team members to use Paper Desktop.
+        case enabled
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(PaperDesktopPolicySerializer().serialize(self)))"
+        }
+    }
+    open class PaperDesktopPolicySerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: PaperDesktopPolicy) -> JSON {
+            switch value {
+                case .disabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("disabled")
+                    return .dictionary(d)
+                case .enabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("enabled")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> PaperDesktopPolicy {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "disabled":
+                            return PaperDesktopPolicy.disabled
+                        case "enabled":
+                            return PaperDesktopPolicy.enabled
+                        case "other":
+                            return PaperDesktopPolicy.other
+                        default:
+                            return PaperDesktopPolicy.other
                     }
                 default:
                     fatalError("Failed to deserialize")
@@ -316,6 +469,57 @@ open class TeamPolicies {
                             return PaperEnabledPolicy.other
                         default:
                             return PaperEnabledPolicy.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The PasswordControlMode union
+    public enum PasswordControlMode: CustomStringConvertible {
+        /// Password is disabled.
+        case disabled
+        /// Password is enabled.
+        case enabled
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(PasswordControlModeSerializer().serialize(self)))"
+        }
+    }
+    open class PasswordControlModeSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: PasswordControlMode) -> JSON {
+            switch value {
+                case .disabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("disabled")
+                    return .dictionary(d)
+                case .enabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("enabled")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> PasswordControlMode {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "disabled":
+                            return PasswordControlMode.disabled
+                        case "enabled":
+                            return PasswordControlMode.enabled
+                        case "other":
+                            return PasswordControlMode.other
+                        default:
+                            return PasswordControlMode.other
                     }
                 default:
                     fatalError("Failed to deserialize")
@@ -802,6 +1006,57 @@ open class TeamPolicies {
         }
     }
 
+    /// The SmarterSmartSyncPolicyState union
+    public enum SmarterSmartSyncPolicyState: CustomStringConvertible {
+        /// Smarter Smart Sync feature is disabled.
+        case disabled
+        /// Smarter Smart Sync feature is enabled.
+        case enabled
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SmarterSmartSyncPolicyStateSerializer().serialize(self)))"
+        }
+    }
+    open class SmarterSmartSyncPolicyStateSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SmarterSmartSyncPolicyState) -> JSON {
+            switch value {
+                case .disabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("disabled")
+                    return .dictionary(d)
+                case .enabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("enabled")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> SmarterSmartSyncPolicyState {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "disabled":
+                            return SmarterSmartSyncPolicyState.disabled
+                        case "enabled":
+                            return SmarterSmartSyncPolicyState.enabled
+                        case "other":
+                            return SmarterSmartSyncPolicyState.other
+                        default:
+                            return SmarterSmartSyncPolicyState.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
     /// The SsoPolicy union
     public enum SsoPolicy: CustomStringConvertible {
         /// Users will be able to sign in with their Dropbox credentials.
@@ -988,6 +1243,65 @@ open class TeamPolicies {
                             return TwoStepVerificationPolicy.other
                         default:
                             return TwoStepVerificationPolicy.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The TwoStepVerificationState union
+    public enum TwoStepVerificationState: CustomStringConvertible {
+        /// Enabled require two factor authorization.
+        case required
+        /// Optional require two factor authorization.
+        case optional
+        /// Disabled require two factor authorization.
+        case disabled
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(TwoStepVerificationStateSerializer().serialize(self)))"
+        }
+    }
+    open class TwoStepVerificationStateSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: TwoStepVerificationState) -> JSON {
+            switch value {
+                case .required:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("required")
+                    return .dictionary(d)
+                case .optional:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("optional")
+                    return .dictionary(d)
+                case .disabled:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("disabled")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> TwoStepVerificationState {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "required":
+                            return TwoStepVerificationState.required
+                        case "optional":
+                            return TwoStepVerificationState.optional
+                        case "disabled":
+                            return TwoStepVerificationState.disabled
+                        case "other":
+                            return TwoStepVerificationState.other
+                        default:
+                            return TwoStepVerificationState.other
                     }
                 default:
                     fatalError("Failed to deserialize")

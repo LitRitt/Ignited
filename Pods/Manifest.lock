@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.7.3)
+  - Alamofire (4.8.2)
   - DeltaCore (0.1):
     - ZIPFoundation
   - DSDeltaCore (0.1):
@@ -13,7 +13,7 @@ PODS:
     - Roxas
   - Harmony/Harmony-Dropbox (0.1):
     - Roxas
-    - SwiftyDropbox (~> 5.0.0)
+    - SwiftyDropbox (~> 6.0.0)
   - KeychainAccess (4.2.2)
   - MelonDSDeltaCore (0.1):
     - DeltaCore
@@ -37,8 +37,8 @@ PODS:
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
-  - SwiftyDropbox (5.0.0):
-    - Alamofire (~> 4.7.3)
+  - SwiftyDropbox (6.0.3):
+    - Alamofire (~> 4.8.2)
   - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
@@ -90,12 +90,12 @@ EXTERNAL SOURCES:
     :path: Cores/SNESDeltaCore
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   DeltaCore: ec83cab4816b9c35142d942a4571a34c9151e92b
   DSDeltaCore: 6f8265f23945120bbc9abdf1b0a3757c2d9c0c01
   GBADeltaCore: ce848d2288fbfbac1d9e31720a35de5e37d50b1b
   GBCDeltaCore: 40d84ca955e09135555e05755e5cc00a4b04ff8e
-  Harmony: e695fd3f9b7680a967fa4a96c811e8525fbc93bf
+  Harmony: 519a8eb6dd06f5ee8c35ad2ca75d908923329f53
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   MelonDSDeltaCore: 144cdd2082c4bacbc080f32ce5152c4be5f53ffe
   N64DeltaCore: f6ad296b412947def255b0c25fffd1a262de8cd9
@@ -105,7 +105,7 @@ SPEC CHECKSUMS:
   SMCalloutView: 5c0ee363dc8e7204b2fda17dfad38c93e9e23481
   SNESDeltaCore: 66ffe3a572e5e2f5c0bb99fc3efcc8e179eafb7c
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  SwiftyDropbox: 378b4425a2e8d0cb24c7b0f2e3af72bfbaaf1e73
+  SwiftyDropbox: 7e864f1e826bfc1b9b53a5edccef6c8d5fbe9e3b
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
 PODFILE CHECKSUM: 894b1d65b404f297769143034b7aadb10ef63ac9

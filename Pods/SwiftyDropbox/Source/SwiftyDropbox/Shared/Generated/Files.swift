@@ -1461,6 +1461,8 @@ open class Files {
     public enum DownloadError: CustomStringConvertible {
         /// An unspecified error.
         case path(Files.LookupError)
+        /// This file type cannot be downloaded directly; use export instead.
+        case unsupportedFile
         /// An unspecified error.
         case other
 
@@ -1476,6 +1478,10 @@ open class Files {
                     var d = ["path": Files.LookupErrorSerializer().serialize(arg)]
                     d[".tag"] = .str("path")
                     return .dictionary(d)
+                case .unsupportedFile:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("unsupported_file")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -1490,6 +1496,8 @@ open class Files {
                         case "path":
                             let v = Files.LookupErrorSerializer().deserialize(d["path"] ?? .null)
                             return DownloadError.path(v)
+                        case "unsupported_file":
+                            return DownloadError.unsupportedFile
                         case "other":
                             return DownloadError.other
                         default:
@@ -1622,6 +1630,452 @@ open class Files {
         }
     }
 
+    /// The ExportArg struct
+    open class ExportArg: CustomStringConvertible {
+        /// The path of the file to be exported.
+        public let path: String
+        public init(path: String) {
+            stringValidator(pattern: "(/(.|[\\r\\n])*|id:.*)|(rev:[0-9a-f]{9,})|(ns:[0-9]+(/.*)?)")(path)
+            self.path = path
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(ExportArgSerializer().serialize(self)))"
+        }
+    }
+    open class ExportArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: ExportArg) -> JSON {
+            let output = [ 
+            "path": Serialization._StringSerializer.serialize(value.path),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> ExportArg {
+            switch json {
+                case .dictionary(let dict):
+                    let path = Serialization._StringSerializer.deserialize(dict["path"] ?? .null)
+                    return ExportArg(path: path)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The ExportError union
+    public enum ExportError: CustomStringConvertible {
+        /// An unspecified error.
+        case path(Files.LookupError)
+        /// This file type cannot be exported. Use download instead.
+        case nonExportable
+        /// The exportable content is not yet available. Please retry later.
+        case retryError
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(ExportErrorSerializer().serialize(self)))"
+        }
+    }
+    open class ExportErrorSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: ExportError) -> JSON {
+            switch value {
+                case .path(let arg):
+                    var d = ["path": Files.LookupErrorSerializer().serialize(arg)]
+                    d[".tag"] = .str("path")
+                    return .dictionary(d)
+                case .nonExportable:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("non_exportable")
+                    return .dictionary(d)
+                case .retryError:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("retry_error")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> ExportError {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "path":
+                            let v = Files.LookupErrorSerializer().deserialize(d["path"] ?? .null)
+                            return ExportError.path(v)
+                        case "non_exportable":
+                            return ExportError.nonExportable
+                        case "retry_error":
+                            return ExportError.retryError
+                        case "other":
+                            return ExportError.other
+                        default:
+                            return ExportError.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// Export information for a file.
+    open class ExportInfo: CustomStringConvertible {
+        /// Format to which the file can be exported to.
+        public let exportAs: String?
+        public init(exportAs: String? = nil) {
+            nullableValidator(stringValidator())(exportAs)
+            self.exportAs = exportAs
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(ExportInfoSerializer().serialize(self)))"
+        }
+    }
+    open class ExportInfoSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: ExportInfo) -> JSON {
+            let output = [ 
+            "export_as": NullableSerializer(Serialization._StringSerializer).serialize(value.exportAs),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> ExportInfo {
+            switch json {
+                case .dictionary(let dict):
+                    let exportAs = NullableSerializer(Serialization._StringSerializer).deserialize(dict["export_as"] ?? .null)
+                    return ExportInfo(exportAs: exportAs)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The ExportMetadata struct
+    open class ExportMetadata: CustomStringConvertible {
+        /// The last component of the path (including extension). This never contains a slash.
+        public let name: String
+        /// The file size in bytes.
+        public let size: UInt64
+        /// A hash based on the exported file content. This field can be used to verify data integrity. Similar to
+        /// content hash. For more information see our Content hash
+        /// https://www.dropbox.com/developers/reference/content-hash page.
+        public let exportHash: String?
+        public init(name: String, size: UInt64, exportHash: String? = nil) {
+            stringValidator()(name)
+            self.name = name
+            comparableValidator()(size)
+            self.size = size
+            nullableValidator(stringValidator(minLength: 64, maxLength: 64))(exportHash)
+            self.exportHash = exportHash
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(ExportMetadataSerializer().serialize(self)))"
+        }
+    }
+    open class ExportMetadataSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: ExportMetadata) -> JSON {
+            let output = [ 
+            "name": Serialization._StringSerializer.serialize(value.name),
+            "size": Serialization._UInt64Serializer.serialize(value.size),
+            "export_hash": NullableSerializer(Serialization._StringSerializer).serialize(value.exportHash),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> ExportMetadata {
+            switch json {
+                case .dictionary(let dict):
+                    let name = Serialization._StringSerializer.deserialize(dict["name"] ?? .null)
+                    let size = Serialization._UInt64Serializer.deserialize(dict["size"] ?? .null)
+                    let exportHash = NullableSerializer(Serialization._StringSerializer).deserialize(dict["export_hash"] ?? .null)
+                    return ExportMetadata(name: name, size: size, exportHash: exportHash)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The ExportResult struct
+    open class ExportResult: CustomStringConvertible {
+        /// Metadata for the exported version of the file.
+        public let exportMetadata: Files.ExportMetadata
+        /// Metadata for the original file.
+        public let fileMetadata: Files.FileMetadata
+        public init(exportMetadata: Files.ExportMetadata, fileMetadata: Files.FileMetadata) {
+            self.exportMetadata = exportMetadata
+            self.fileMetadata = fileMetadata
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(ExportResultSerializer().serialize(self)))"
+        }
+    }
+    open class ExportResultSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: ExportResult) -> JSON {
+            let output = [ 
+            "export_metadata": Files.ExportMetadataSerializer().serialize(value.exportMetadata),
+            "file_metadata": Files.FileMetadataSerializer().serialize(value.fileMetadata),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> ExportResult {
+            switch json {
+                case .dictionary(let dict):
+                    let exportMetadata = Files.ExportMetadataSerializer().deserialize(dict["export_metadata"] ?? .null)
+                    let fileMetadata = Files.FileMetadataSerializer().deserialize(dict["file_metadata"] ?? .null)
+                    return ExportResult(exportMetadata: exportMetadata, fileMetadata: fileMetadata)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The FileCategory union
+    public enum FileCategory: CustomStringConvertible {
+        /// jpg, png, gif, and more.
+        case image
+        /// doc, docx, txt, and more.
+        case document
+        /// pdf.
+        case pdf
+        /// xlsx, xls, csv, and more.
+        case spreadsheet
+        /// ppt, pptx, key, and more.
+        case presentation
+        /// mp3, wav, mid, and more.
+        case audio
+        /// mov, wmv, mp4, and more.
+        case video
+        /// dropbox folder.
+        case folder
+        /// dropbox paper doc.
+        case paper
+        /// any file not in one of the categories above.
+        case others
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(FileCategorySerializer().serialize(self)))"
+        }
+    }
+    open class FileCategorySerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: FileCategory) -> JSON {
+            switch value {
+                case .image:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("image")
+                    return .dictionary(d)
+                case .document:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("document")
+                    return .dictionary(d)
+                case .pdf:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("pdf")
+                    return .dictionary(d)
+                case .spreadsheet:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("spreadsheet")
+                    return .dictionary(d)
+                case .presentation:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("presentation")
+                    return .dictionary(d)
+                case .audio:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("audio")
+                    return .dictionary(d)
+                case .video:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("video")
+                    return .dictionary(d)
+                case .folder:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("folder")
+                    return .dictionary(d)
+                case .paper:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("paper")
+                    return .dictionary(d)
+                case .others:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("others")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> FileCategory {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "image":
+                            return FileCategory.image
+                        case "document":
+                            return FileCategory.document
+                        case "pdf":
+                            return FileCategory.pdf
+                        case "spreadsheet":
+                            return FileCategory.spreadsheet
+                        case "presentation":
+                            return FileCategory.presentation
+                        case "audio":
+                            return FileCategory.audio
+                        case "video":
+                            return FileCategory.video
+                        case "folder":
+                            return FileCategory.folder
+                        case "paper":
+                            return FileCategory.paper
+                        case "others":
+                            return FileCategory.others
+                        case "other":
+                            return FileCategory.other
+                        default:
+                            return FileCategory.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The FileLock struct
+    open class FileLock: CustomStringConvertible {
+        /// The lock description.
+        public let content: Files.FileLockContent
+        public init(content: Files.FileLockContent) {
+            self.content = content
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(FileLockSerializer().serialize(self)))"
+        }
+    }
+    open class FileLockSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: FileLock) -> JSON {
+            let output = [ 
+            "content": Files.FileLockContentSerializer().serialize(value.content),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> FileLock {
+            switch json {
+                case .dictionary(let dict):
+                    let content = Files.FileLockContentSerializer().deserialize(dict["content"] ?? .null)
+                    return FileLock(content: content)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The FileLockContent union
+    public enum FileLockContent: CustomStringConvertible {
+        /// Empty type to indicate no lock.
+        case unlocked
+        /// A lock held by a single user.
+        case singleUser(Files.SingleUserLock)
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(FileLockContentSerializer().serialize(self)))"
+        }
+    }
+    open class FileLockContentSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: FileLockContent) -> JSON {
+            switch value {
+                case .unlocked:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("unlocked")
+                    return .dictionary(d)
+                case .singleUser(let arg):
+                    var d = Serialization.getFields(Files.SingleUserLockSerializer().serialize(arg))
+                    d[".tag"] = .str("single_user")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> FileLockContent {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "unlocked":
+                            return FileLockContent.unlocked
+                        case "single_user":
+                            let v = Files.SingleUserLockSerializer().deserialize(json)
+                            return FileLockContent.singleUser(v)
+                        case "other":
+                            return FileLockContent.other
+                        default:
+                            return FileLockContent.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The FileLockMetadata struct
+    open class FileLockMetadata: CustomStringConvertible {
+        /// True if caller holds the file lock.
+        public let isLockholder: Bool?
+        /// The display name of the lock holder.
+        public let lockholderName: String?
+        /// The account ID of the lock holder if known.
+        public let lockholderAccountId: String?
+        /// The timestamp of the lock was created.
+        public let created: Date?
+        public init(isLockholder: Bool? = nil, lockholderName: String? = nil, lockholderAccountId: String? = nil, created: Date? = nil) {
+            self.isLockholder = isLockholder
+            nullableValidator(stringValidator())(lockholderName)
+            self.lockholderName = lockholderName
+            nullableValidator(stringValidator(minLength: 40, maxLength: 40))(lockholderAccountId)
+            self.lockholderAccountId = lockholderAccountId
+            self.created = created
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(FileLockMetadataSerializer().serialize(self)))"
+        }
+    }
+    open class FileLockMetadataSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: FileLockMetadata) -> JSON {
+            let output = [ 
+            "is_lockholder": NullableSerializer(Serialization._BoolSerializer).serialize(value.isLockholder),
+            "lockholder_name": NullableSerializer(Serialization._StringSerializer).serialize(value.lockholderName),
+            "lockholder_account_id": NullableSerializer(Serialization._StringSerializer).serialize(value.lockholderAccountId),
+            "created": NullableSerializer(NSDateSerializer("%Y-%m-%dT%H:%M:%SZ")).serialize(value.created),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> FileLockMetadata {
+            switch json {
+                case .dictionary(let dict):
+                    let isLockholder = NullableSerializer(Serialization._BoolSerializer).deserialize(dict["is_lockholder"] ?? .null)
+                    let lockholderName = NullableSerializer(Serialization._StringSerializer).deserialize(dict["lockholder_name"] ?? .null)
+                    let lockholderAccountId = NullableSerializer(Serialization._StringSerializer).deserialize(dict["lockholder_account_id"] ?? .null)
+                    let created = NullableSerializer(NSDateSerializer("%Y-%m-%dT%H:%M:%SZ")).deserialize(dict["created"] ?? .null)
+                    return FileLockMetadata(isLockholder: isLockholder, lockholderName: lockholderName, lockholderAccountId: lockholderAccountId, created: created)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
     /// The FileMetadata struct
     open class FileMetadata: Files.Metadata {
         /// A unique identifier for the file.
@@ -1638,12 +2092,18 @@ open class Files {
         public let rev: String
         /// The file size in bytes.
         public let size: UInt64
-        /// Additional information if the file is a photo or video.
+        /// Additional information if the file is a photo or video. This field will not be set on entries returned by
+        /// listFolder, listFolderContinue, or getThumbnailBatch, starting December 2, 2019.
         public let mediaInfo: Files.MediaInfo?
         /// Set if this file is a symlink.
         public let symlinkInfo: Files.SymlinkInfo?
         /// Set if this file is contained in a shared folder.
         public let sharingInfo: Files.FileSharingInfo?
+        /// If true, file can be downloaded directly; else the file must be exported.
+        public let isDownloadable: Bool
+        /// Information about format this file can be exported to. This filed must be set if isDownloadable is set to
+        /// false.
+        public let exportInfo: Files.ExportInfo?
         /// Additional information if the file has custom properties with the property template specified.
         public let propertyGroups: Array<FileProperties.PropertyGroup>?
         /// This flag will only be present if include_has_explicit_shared_members  is true in listFolder or getMetadata.
@@ -1654,7 +2114,9 @@ open class Files {
         /// A hash of the file content. This field can be used to verify data integrity. For more information see our
         /// Content hash https://www.dropbox.com/developers/reference/content-hash page.
         public let contentHash: String?
-        public init(name: String, id: String, clientModified: Date, serverModified: Date, rev: String, size: UInt64, pathLower: String? = nil, pathDisplay: String? = nil, parentSharedFolderId: String? = nil, mediaInfo: Files.MediaInfo? = nil, symlinkInfo: Files.SymlinkInfo? = nil, sharingInfo: Files.FileSharingInfo? = nil, propertyGroups: Array<FileProperties.PropertyGroup>? = nil, hasExplicitSharedMembers: Bool? = nil, contentHash: String? = nil) {
+        /// If present, the metadata associated with the file's current lock.
+        public let fileLockInfo: Files.FileLockMetadata?
+        public init(name: String, id: String, clientModified: Date, serverModified: Date, rev: String, size: UInt64, pathLower: String? = nil, pathDisplay: String? = nil, parentSharedFolderId: String? = nil, mediaInfo: Files.MediaInfo? = nil, symlinkInfo: Files.SymlinkInfo? = nil, sharingInfo: Files.FileSharingInfo? = nil, isDownloadable: Bool = true, exportInfo: Files.ExportInfo? = nil, propertyGroups: Array<FileProperties.PropertyGroup>? = nil, hasExplicitSharedMembers: Bool? = nil, contentHash: String? = nil, fileLockInfo: Files.FileLockMetadata? = nil) {
             stringValidator(minLength: 1)(id)
             self.id = id
             self.clientModified = clientModified
@@ -1666,10 +2128,13 @@ open class Files {
             self.mediaInfo = mediaInfo
             self.symlinkInfo = symlinkInfo
             self.sharingInfo = sharingInfo
+            self.isDownloadable = isDownloadable
+            self.exportInfo = exportInfo
             self.propertyGroups = propertyGroups
             self.hasExplicitSharedMembers = hasExplicitSharedMembers
             nullableValidator(stringValidator(minLength: 64, maxLength: 64))(contentHash)
             self.contentHash = contentHash
+            self.fileLockInfo = fileLockInfo
             super.init(name: name, pathLower: pathLower, pathDisplay: pathDisplay, parentSharedFolderId: parentSharedFolderId)
         }
         open override var description: String {
@@ -1692,9 +2157,12 @@ open class Files {
             "media_info": NullableSerializer(Files.MediaInfoSerializer()).serialize(value.mediaInfo),
             "symlink_info": NullableSerializer(Files.SymlinkInfoSerializer()).serialize(value.symlinkInfo),
             "sharing_info": NullableSerializer(Files.FileSharingInfoSerializer()).serialize(value.sharingInfo),
+            "is_downloadable": Serialization._BoolSerializer.serialize(value.isDownloadable),
+            "export_info": NullableSerializer(Files.ExportInfoSerializer()).serialize(value.exportInfo),
             "property_groups": NullableSerializer(ArraySerializer(FileProperties.PropertyGroupSerializer())).serialize(value.propertyGroups),
             "has_explicit_shared_members": NullableSerializer(Serialization._BoolSerializer).serialize(value.hasExplicitSharedMembers),
             "content_hash": NullableSerializer(Serialization._StringSerializer).serialize(value.contentHash),
+            "file_lock_info": NullableSerializer(Files.FileLockMetadataSerializer()).serialize(value.fileLockInfo),
             ]
             return .dictionary(output)
         }
@@ -1713,10 +2181,13 @@ open class Files {
                     let mediaInfo = NullableSerializer(Files.MediaInfoSerializer()).deserialize(dict["media_info"] ?? .null)
                     let symlinkInfo = NullableSerializer(Files.SymlinkInfoSerializer()).deserialize(dict["symlink_info"] ?? .null)
                     let sharingInfo = NullableSerializer(Files.FileSharingInfoSerializer()).deserialize(dict["sharing_info"] ?? .null)
+                    let isDownloadable = Serialization._BoolSerializer.deserialize(dict["is_downloadable"] ?? .number(1))
+                    let exportInfo = NullableSerializer(Files.ExportInfoSerializer()).deserialize(dict["export_info"] ?? .null)
                     let propertyGroups = NullableSerializer(ArraySerializer(FileProperties.PropertyGroupSerializer())).deserialize(dict["property_groups"] ?? .null)
                     let hasExplicitSharedMembers = NullableSerializer(Serialization._BoolSerializer).deserialize(dict["has_explicit_shared_members"] ?? .null)
                     let contentHash = NullableSerializer(Serialization._StringSerializer).deserialize(dict["content_hash"] ?? .null)
-                    return FileMetadata(name: name, id: id, clientModified: clientModified, serverModified: serverModified, rev: rev, size: size, pathLower: pathLower, pathDisplay: pathDisplay, parentSharedFolderId: parentSharedFolderId, mediaInfo: mediaInfo, symlinkInfo: symlinkInfo, sharingInfo: sharingInfo, propertyGroups: propertyGroups, hasExplicitSharedMembers: hasExplicitSharedMembers, contentHash: contentHash)
+                    let fileLockInfo = NullableSerializer(Files.FileLockMetadataSerializer()).deserialize(dict["file_lock_info"] ?? .null)
+                    return FileMetadata(name: name, id: id, clientModified: clientModified, serverModified: serverModified, rev: rev, size: size, pathLower: pathLower, pathDisplay: pathDisplay, parentSharedFolderId: parentSharedFolderId, mediaInfo: mediaInfo, symlinkInfo: symlinkInfo, sharingInfo: sharingInfo, isDownloadable: isDownloadable, exportInfo: exportInfo, propertyGroups: propertyGroups, hasExplicitSharedMembers: hasExplicitSharedMembers, contentHash: contentHash, fileLockInfo: fileLockInfo)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -1789,6 +2260,57 @@ open class Files {
                     return FileSharingInfo(readOnly: readOnly, parentSharedFolderId: parentSharedFolderId, modifiedBy: modifiedBy)
                 default:
                     fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The FileStatus union
+    public enum FileStatus: CustomStringConvertible {
+        /// An unspecified error.
+        case active
+        /// An unspecified error.
+        case deleted
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(FileStatusSerializer().serialize(self)))"
+        }
+    }
+    open class FileStatusSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: FileStatus) -> JSON {
+            switch value {
+                case .active:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("active")
+                    return .dictionary(d)
+                case .deleted:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("deleted")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> FileStatus {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "active":
+                            return FileStatus.active
+                        case "deleted":
+                            return FileStatus.deleted
+                        case "other":
+                            return FileStatus.other
+                        default:
+                            return FileStatus.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
             }
         }
     }
@@ -2054,6 +2576,10 @@ open class Files {
     public enum GetTemporaryLinkError: CustomStringConvertible {
         /// An unspecified error.
         case path(Files.LookupError)
+        /// The user's email address needs to be verified to use this functionality.
+        case emailNotVerified
+        /// Cannot get temporary link to this file type; use export instead.
+        case unsupportedFile
         /// An unspecified error.
         case other
 
@@ -2069,6 +2595,14 @@ open class Files {
                     var d = ["path": Files.LookupErrorSerializer().serialize(arg)]
                     d[".tag"] = .str("path")
                     return .dictionary(d)
+                case .emailNotVerified:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("email_not_verified")
+                    return .dictionary(d)
+                case .unsupportedFile:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("unsupported_file")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -2083,6 +2617,10 @@ open class Files {
                         case "path":
                             let v = Files.LookupErrorSerializer().deserialize(d["path"] ?? .null)
                             return GetTemporaryLinkError.path(v)
+                        case "email_not_verified":
+                            return GetTemporaryLinkError.emailNotVerified
+                        case "unsupported_file":
+                            return GetTemporaryLinkError.unsupportedFile
                         case "other":
                             return GetTemporaryLinkError.other
                         default:
@@ -2428,6 +2966,42 @@ open class Files {
         }
     }
 
+    /// The HighlightSpan struct
+    open class HighlightSpan: CustomStringConvertible {
+        /// String to be determined whether it should be highlighted or not.
+        public let highlightStr: String
+        /// The string should be highlighted or not.
+        public let isHighlighted: Bool
+        public init(highlightStr: String, isHighlighted: Bool) {
+            stringValidator()(highlightStr)
+            self.highlightStr = highlightStr
+            self.isHighlighted = isHighlighted
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(HighlightSpanSerializer().serialize(self)))"
+        }
+    }
+    open class HighlightSpanSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: HighlightSpan) -> JSON {
+            let output = [ 
+            "highlight_str": Serialization._StringSerializer.serialize(value.highlightStr),
+            "is_highlighted": Serialization._BoolSerializer.serialize(value.isHighlighted),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> HighlightSpan {
+            switch json {
+                case .dictionary(let dict):
+                    let highlightStr = Serialization._StringSerializer.deserialize(dict["highlight_str"] ?? .null)
+                    let isHighlighted = Serialization._BoolSerializer.deserialize(dict["is_highlighted"] ?? .null)
+                    return HighlightSpan(highlightStr: highlightStr, isHighlighted: isHighlighted)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
     /// The ListFolderArg struct
     open class ListFolderArg: CustomStringConvertible {
         /// A unique identifier for the file.
@@ -2435,7 +3009,8 @@ open class Files {
         /// If true, the list folder operation will be applied recursively to all subfolders and the response will
         /// contain contents of all subfolders.
         public let recursive: Bool
-        /// If true, mediaInfo in FileMetadata is set for photo and video.
+        /// If true, mediaInfo in FileMetadata is set for photo and video. This parameter will no longer have an effect
+        /// starting December 2, 2019.
         public let includeMediaInfo: Bool
         /// If true, the results will include entries for files and folders that used to exist but were deleted.
         public let includeDeleted: Bool
@@ -2455,7 +3030,9 @@ open class Files {
         /// If set to a valid list of template IDs, propertyGroups in FileMetadata is set if there exists property data
         /// associated with the file and each of the listed templates.
         public let includePropertyGroups: FileProperties.TemplateFilterBase?
-        public init(path: String, recursive: Bool = false, includeMediaInfo: Bool = false, includeDeleted: Bool = false, includeHasExplicitSharedMembers: Bool = false, includeMountedFolders: Bool = true, limit: UInt32? = nil, sharedLink: Files.SharedLink? = nil, includePropertyGroups: FileProperties.TemplateFilterBase? = nil) {
+        /// If true, include files that are not downloadable, i.e. Google Docs.
+        public let includeNonDownloadableFiles: Bool
+        public init(path: String, recursive: Bool = false, includeMediaInfo: Bool = false, includeDeleted: Bool = false, includeHasExplicitSharedMembers: Bool = false, includeMountedFolders: Bool = true, limit: UInt32? = nil, sharedLink: Files.SharedLink? = nil, includePropertyGroups: FileProperties.TemplateFilterBase? = nil, includeNonDownloadableFiles: Bool = true) {
             stringValidator(pattern: "(/(.|[\\r\\n])*)?|id:.*|(ns:[0-9]+(/.*)?)")(path)
             self.path = path
             self.recursive = recursive
@@ -2467,6 +3044,7 @@ open class Files {
             self.limit = limit
             self.sharedLink = sharedLink
             self.includePropertyGroups = includePropertyGroups
+            self.includeNonDownloadableFiles = includeNonDownloadableFiles
         }
         open var description: String {
             return "\(SerializeUtil.prepareJSONForSerialization(ListFolderArgSerializer().serialize(self)))"
@@ -2485,6 +3063,7 @@ open class Files {
             "limit": NullableSerializer(Serialization._UInt32Serializer).serialize(value.limit),
             "shared_link": NullableSerializer(Files.SharedLinkSerializer()).serialize(value.sharedLink),
             "include_property_groups": NullableSerializer(FileProperties.TemplateFilterBaseSerializer()).serialize(value.includePropertyGroups),
+            "include_non_downloadable_files": Serialization._BoolSerializer.serialize(value.includeNonDownloadableFiles),
             ]
             return .dictionary(output)
         }
@@ -2500,7 +3079,8 @@ open class Files {
                     let limit = NullableSerializer(Serialization._UInt32Serializer).deserialize(dict["limit"] ?? .null)
                     let sharedLink = NullableSerializer(Files.SharedLinkSerializer()).deserialize(dict["shared_link"] ?? .null)
                     let includePropertyGroups = NullableSerializer(FileProperties.TemplateFilterBaseSerializer()).deserialize(dict["include_property_groups"] ?? .null)
-                    return ListFolderArg(path: path, recursive: recursive, includeMediaInfo: includeMediaInfo, includeDeleted: includeDeleted, includeHasExplicitSharedMembers: includeHasExplicitSharedMembers, includeMountedFolders: includeMountedFolders, limit: limit, sharedLink: sharedLink, includePropertyGroups: includePropertyGroups)
+                    let includeNonDownloadableFiles = Serialization._BoolSerializer.deserialize(dict["include_non_downloadable_files"] ?? .number(1))
+                    return ListFolderArg(path: path, recursive: recursive, includeMediaInfo: includeMediaInfo, includeDeleted: includeDeleted, includeHasExplicitSharedMembers: includeHasExplicitSharedMembers, includeMountedFolders: includeMountedFolders, limit: limit, sharedLink: sharedLink, includePropertyGroups: includePropertyGroups, includeNonDownloadableFiles: includeNonDownloadableFiles)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -2595,6 +3175,8 @@ open class Files {
         /// An unspecified error.
         case path(Files.LookupError)
         /// An unspecified error.
+        case templateError(FileProperties.TemplateError)
+        /// An unspecified error.
         case other
 
         public var description: String {
@@ -2608,6 +3190,10 @@ open class Files {
                 case .path(let arg):
                     var d = ["path": Files.LookupErrorSerializer().serialize(arg)]
                     d[".tag"] = .str("path")
+                    return .dictionary(d)
+                case .templateError(let arg):
+                    var d = ["template_error": FileProperties.TemplateErrorSerializer().serialize(arg)]
+                    d[".tag"] = .str("template_error")
                     return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
@@ -2623,6 +3209,9 @@ open class Files {
                         case "path":
                             let v = Files.LookupErrorSerializer().deserialize(d["path"] ?? .null)
                             return ListFolderError.path(v)
+                        case "template_error":
+                            let v = FileProperties.TemplateErrorSerializer().deserialize(d["template_error"] ?? .null)
+                            return ListFolderError.templateError(v)
                         case "other":
                             return ListFolderError.other
                         default:
@@ -3003,6 +3592,312 @@ open class Files {
         }
     }
 
+    /// The LockConflictError struct
+    open class LockConflictError: CustomStringConvertible {
+        /// The lock that caused the conflict.
+        public let lock: Files.FileLock
+        public init(lock: Files.FileLock) {
+            self.lock = lock
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LockConflictErrorSerializer().serialize(self)))"
+        }
+    }
+    open class LockConflictErrorSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LockConflictError) -> JSON {
+            let output = [ 
+            "lock": Files.FileLockSerializer().serialize(value.lock),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> LockConflictError {
+            switch json {
+                case .dictionary(let dict):
+                    let lock = Files.FileLockSerializer().deserialize(dict["lock"] ?? .null)
+                    return LockConflictError(lock: lock)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The LockFileArg struct
+    open class LockFileArg: CustomStringConvertible {
+        /// Path in the user's Dropbox to a file.
+        public let path: String
+        public init(path: String) {
+            stringValidator(pattern: "(/(.|[\\r\\n])*)|(ns:[0-9]+(/.*)?)|(id:.*)")(path)
+            self.path = path
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LockFileArgSerializer().serialize(self)))"
+        }
+    }
+    open class LockFileArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LockFileArg) -> JSON {
+            let output = [ 
+            "path": Serialization._StringSerializer.serialize(value.path),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> LockFileArg {
+            switch json {
+                case .dictionary(let dict):
+                    let path = Serialization._StringSerializer.deserialize(dict["path"] ?? .null)
+                    return LockFileArg(path: path)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The LockFileBatchArg struct
+    open class LockFileBatchArg: CustomStringConvertible {
+        /// List of 'entries'. Each 'entry' contains a path of the file which will be locked or queried. Duplicate path
+        /// arguments in the batch are considered only once.
+        public let entries: Array<Files.LockFileArg>
+        public init(entries: Array<Files.LockFileArg>) {
+            self.entries = entries
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LockFileBatchArgSerializer().serialize(self)))"
+        }
+    }
+    open class LockFileBatchArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LockFileBatchArg) -> JSON {
+            let output = [ 
+            "entries": ArraySerializer(Files.LockFileArgSerializer()).serialize(value.entries),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> LockFileBatchArg {
+            switch json {
+                case .dictionary(let dict):
+                    let entries = ArraySerializer(Files.LockFileArgSerializer()).deserialize(dict["entries"] ?? .null)
+                    return LockFileBatchArg(entries: entries)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The LockFileBatchResult struct
+    open class LockFileBatchResult: Files.FileOpsResult {
+        /// Each Entry in the 'entries' will have '.tag' with the operation status (e.g. success), the metadata for the
+        /// file and the lock state after the operation.
+        public let entries: Array<Files.LockFileResultEntry>
+        public init(entries: Array<Files.LockFileResultEntry>) {
+            self.entries = entries
+            super.init()
+        }
+        open override var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LockFileBatchResultSerializer().serialize(self)))"
+        }
+    }
+    open class LockFileBatchResultSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LockFileBatchResult) -> JSON {
+            let output = [ 
+            "entries": ArraySerializer(Files.LockFileResultEntrySerializer()).serialize(value.entries),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> LockFileBatchResult {
+            switch json {
+                case .dictionary(let dict):
+                    let entries = ArraySerializer(Files.LockFileResultEntrySerializer()).deserialize(dict["entries"] ?? .null)
+                    return LockFileBatchResult(entries: entries)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The LockFileError union
+    public enum LockFileError: CustomStringConvertible {
+        /// Could not find the specified resource.
+        case pathLookup(Files.LookupError)
+        /// There are too many write operations in user's Dropbox. Please retry this request.
+        case tooManyWriteOperations
+        /// There are too many files in one request. Please retry with fewer files.
+        case tooManyFiles
+        /// The user does not have permissions to change the lock state or access the file.
+        case noWritePermission
+        /// Item is a type that cannot be locked.
+        case cannotBeLocked
+        /// Requested file is not currently shared.
+        case fileNotShared
+        /// The user action conflicts with an existing lock on the file.
+        case lockConflict(Files.LockConflictError)
+        /// Something went wrong with the job on Dropbox's end. You'll need to verify that the action you were taking
+        /// succeeded, and if not, try again. This should happen very rarely.
+        case internalError
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LockFileErrorSerializer().serialize(self)))"
+        }
+    }
+    open class LockFileErrorSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LockFileError) -> JSON {
+            switch value {
+                case .pathLookup(let arg):
+                    var d = ["path_lookup": Files.LookupErrorSerializer().serialize(arg)]
+                    d[".tag"] = .str("path_lookup")
+                    return .dictionary(d)
+                case .tooManyWriteOperations:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("too_many_write_operations")
+                    return .dictionary(d)
+                case .tooManyFiles:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("too_many_files")
+                    return .dictionary(d)
+                case .noWritePermission:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("no_write_permission")
+                    return .dictionary(d)
+                case .cannotBeLocked:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("cannot_be_locked")
+                    return .dictionary(d)
+                case .fileNotShared:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("file_not_shared")
+                    return .dictionary(d)
+                case .lockConflict(let arg):
+                    var d = Serialization.getFields(Files.LockConflictErrorSerializer().serialize(arg))
+                    d[".tag"] = .str("lock_conflict")
+                    return .dictionary(d)
+                case .internalError:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("internal_error")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> LockFileError {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "path_lookup":
+                            let v = Files.LookupErrorSerializer().deserialize(d["path_lookup"] ?? .null)
+                            return LockFileError.pathLookup(v)
+                        case "too_many_write_operations":
+                            return LockFileError.tooManyWriteOperations
+                        case "too_many_files":
+                            return LockFileError.tooManyFiles
+                        case "no_write_permission":
+                            return LockFileError.noWritePermission
+                        case "cannot_be_locked":
+                            return LockFileError.cannotBeLocked
+                        case "file_not_shared":
+                            return LockFileError.fileNotShared
+                        case "lock_conflict":
+                            let v = Files.LockConflictErrorSerializer().deserialize(json)
+                            return LockFileError.lockConflict(v)
+                        case "internal_error":
+                            return LockFileError.internalError
+                        case "other":
+                            return LockFileError.other
+                        default:
+                            return LockFileError.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The LockFileResult struct
+    open class LockFileResult: CustomStringConvertible {
+        /// Metadata of the file.
+        public let metadata: Files.Metadata
+        /// The file lock state after the operation.
+        public let lock: Files.FileLock
+        public init(metadata: Files.Metadata, lock: Files.FileLock) {
+            self.metadata = metadata
+            self.lock = lock
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LockFileResultSerializer().serialize(self)))"
+        }
+    }
+    open class LockFileResultSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LockFileResult) -> JSON {
+            let output = [ 
+            "metadata": Files.MetadataSerializer().serialize(value.metadata),
+            "lock": Files.FileLockSerializer().serialize(value.lock),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> LockFileResult {
+            switch json {
+                case .dictionary(let dict):
+                    let metadata = Files.MetadataSerializer().deserialize(dict["metadata"] ?? .null)
+                    let lock = Files.FileLockSerializer().deserialize(dict["lock"] ?? .null)
+                    return LockFileResult(metadata: metadata, lock: lock)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The LockFileResultEntry union
+    public enum LockFileResultEntry: CustomStringConvertible {
+        /// An unspecified error.
+        case success(Files.LockFileResult)
+        /// An unspecified error.
+        case failure(Files.LockFileError)
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LockFileResultEntrySerializer().serialize(self)))"
+        }
+    }
+    open class LockFileResultEntrySerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LockFileResultEntry) -> JSON {
+            switch value {
+                case .success(let arg):
+                    var d = Serialization.getFields(Files.LockFileResultSerializer().serialize(arg))
+                    d[".tag"] = .str("success")
+                    return .dictionary(d)
+                case .failure(let arg):
+                    var d = ["failure": Files.LockFileErrorSerializer().serialize(arg)]
+                    d[".tag"] = .str("failure")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> LockFileResultEntry {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "success":
+                            let v = Files.LockFileResultSerializer().deserialize(json)
+                            return LockFileResultEntry.success(v)
+                        case "failure":
+                            let v = Files.LockFileErrorSerializer().deserialize(d["failure"] ?? .null)
+                            return LockFileResultEntry.failure(v)
+                        default:
+                            fatalError("Unknown tag \(tag)")
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
     /// The LookupError union
     public enum LookupError: CustomStringConvertible {
         /// The given path does not satisfy the required path format. Please refer to the Path formats documentation
@@ -3017,6 +3912,10 @@ open class Files {
         /// The file cannot be transferred because the content is restricted.  For example, sometimes there are legal
         /// restrictions due to copyright claims.
         case restrictedContent
+        /// This operation is not supported for this content type.
+        case unsupportedContentType
+        /// The given path is locked.
+        case locked
         /// An unspecified error.
         case other
 
@@ -3048,6 +3947,14 @@ open class Files {
                     var d = [String: JSON]()
                     d[".tag"] = .str("restricted_content")
                     return .dictionary(d)
+                case .unsupportedContentType:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("unsupported_content_type")
+                    return .dictionary(d)
+                case .locked:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("locked")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -3070,6 +3977,10 @@ open class Files {
                             return LookupError.notFolder
                         case "restricted_content":
                             return LookupError.restrictedContent
+                        case "unsupported_content_type":
+                            return LookupError.unsupportedContentType
+                        case "locked":
+                            return LookupError.locked
                         case "other":
                             return LookupError.other
                         default:
@@ -3183,6 +4094,101 @@ open class Files {
         }
     }
 
+    /// Metadata for a file, folder or other resource types.
+    public enum MetadataV2: CustomStringConvertible {
+        /// An unspecified error.
+        case metadata(Files.Metadata)
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(MetadataV2Serializer().serialize(self)))"
+        }
+    }
+    open class MetadataV2Serializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: MetadataV2) -> JSON {
+            switch value {
+                case .metadata(let arg):
+                    var d = ["metadata": Files.MetadataSerializer().serialize(arg)]
+                    d[".tag"] = .str("metadata")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> MetadataV2 {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "metadata":
+                            let v = Files.MetadataSerializer().deserialize(d["metadata"] ?? .null)
+                            return MetadataV2.metadata(v)
+                        case "other":
+                            return MetadataV2.other
+                        default:
+                            return MetadataV2.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The MinimalFileLinkMetadata struct
+    open class MinimalFileLinkMetadata: CustomStringConvertible {
+        /// URL of the shared link.
+        public let url: String
+        /// Unique identifier for the linked file.
+        public let id: String?
+        /// Full path in the user's Dropbox. This always starts with a slash. This field will only be present only if
+        /// the linked file is in the authenticated user's Dropbox.
+        public let path: String?
+        /// A unique identifier for the current revision of a file. This field is the same rev as elsewhere in the API
+        /// and can be used to detect changes and avoid conflicts.
+        public let rev: String
+        public init(url: String, rev: String, id: String? = nil, path: String? = nil) {
+            stringValidator()(url)
+            self.url = url
+            nullableValidator(stringValidator(minLength: 1))(id)
+            self.id = id
+            nullableValidator(stringValidator())(path)
+            self.path = path
+            stringValidator(minLength: 9, pattern: "[0-9a-f]+")(rev)
+            self.rev = rev
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(MinimalFileLinkMetadataSerializer().serialize(self)))"
+        }
+    }
+    open class MinimalFileLinkMetadataSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: MinimalFileLinkMetadata) -> JSON {
+            let output = [ 
+            "url": Serialization._StringSerializer.serialize(value.url),
+            "rev": Serialization._StringSerializer.serialize(value.rev),
+            "id": NullableSerializer(Serialization._StringSerializer).serialize(value.id),
+            "path": NullableSerializer(Serialization._StringSerializer).serialize(value.path),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> MinimalFileLinkMetadata {
+            switch json {
+                case .dictionary(let dict):
+                    let url = Serialization._StringSerializer.deserialize(dict["url"] ?? .null)
+                    let rev = Serialization._StringSerializer.deserialize(dict["rev"] ?? .null)
+                    let id = NullableSerializer(Serialization._StringSerializer).deserialize(dict["id"] ?? .null)
+                    let path = NullableSerializer(Serialization._StringSerializer).deserialize(dict["path"] ?? .null)
+                    return MinimalFileLinkMetadata(url: url, rev: rev, id: id, path: path)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
     /// The RelocationBatchArgBase struct
     open class RelocationBatchArgBase: CustomStringConvertible {
         /// List of entries to be moved or copied. Each entry is RelocationPath.
@@ -3251,6 +4257,102 @@ open class Files {
                     return MoveBatchArg(entries: entries, autorename: autorename, allowOwnershipTransfer: allowOwnershipTransfer)
                 default:
                     fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The MoveIntoVaultError union
+    public enum MoveIntoVaultError: CustomStringConvertible {
+        /// Moving shared folder into Vault is not allowed.
+        case isSharedFolder
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(MoveIntoVaultErrorSerializer().serialize(self)))"
+        }
+    }
+    open class MoveIntoVaultErrorSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: MoveIntoVaultError) -> JSON {
+            switch value {
+                case .isSharedFolder:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("is_shared_folder")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> MoveIntoVaultError {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "is_shared_folder":
+                            return MoveIntoVaultError.isSharedFolder
+                        case "other":
+                            return MoveIntoVaultError.other
+                        default:
+                            return MoveIntoVaultError.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The PathOrLink union
+    public enum PathOrLink: CustomStringConvertible {
+        /// An unspecified error.
+        case path(String)
+        /// An unspecified error.
+        case link(Files.SharedLinkFileInfo)
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(PathOrLinkSerializer().serialize(self)))"
+        }
+    }
+    open class PathOrLinkSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: PathOrLink) -> JSON {
+            switch value {
+                case .path(let arg):
+                    var d = ["path": Serialization._StringSerializer.serialize(arg)]
+                    d[".tag"] = .str("path")
+                    return .dictionary(d)
+                case .link(let arg):
+                    var d = Serialization.getFields(Files.SharedLinkFileInfoSerializer().serialize(arg))
+                    d[".tag"] = .str("link")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> PathOrLink {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "path":
+                            let v = Serialization._StringSerializer.deserialize(d["path"] ?? .null)
+                            return PathOrLink.path(v)
+                        case "link":
+                            let v = Files.SharedLinkFileInfoSerializer().deserialize(json)
+                            return PathOrLink.link(v)
+                        case "other":
+                            return PathOrLink.other
+                        default:
+                            return PathOrLink.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
             }
         }
     }
@@ -3377,6 +4479,43 @@ open class Files {
                     }
                 default:
                     fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The PreviewResult struct
+    open class PreviewResult: CustomStringConvertible {
+        /// Metadata corresponding to the file received as an argument. Will be populated if the endpoint is called with
+        /// a path (ReadPath).
+        public let fileMetadata: Files.FileMetadata?
+        /// Minimal metadata corresponding to the file received as an argument. Will be populated if the endpoint is
+        /// called using a shared link (SharedLinkFileInfo).
+        public let linkMetadata: Files.MinimalFileLinkMetadata?
+        public init(fileMetadata: Files.FileMetadata? = nil, linkMetadata: Files.MinimalFileLinkMetadata? = nil) {
+            self.fileMetadata = fileMetadata
+            self.linkMetadata = linkMetadata
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(PreviewResultSerializer().serialize(self)))"
+        }
+    }
+    open class PreviewResultSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: PreviewResult) -> JSON {
+            let output = [ 
+            "file_metadata": NullableSerializer(Files.FileMetadataSerializer()).serialize(value.fileMetadata),
+            "link_metadata": NullableSerializer(Files.MinimalFileLinkMetadataSerializer()).serialize(value.linkMetadata),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> PreviewResult {
+            switch json {
+                case .dictionary(let dict):
+                    let fileMetadata = NullableSerializer(Files.FileMetadataSerializer()).deserialize(dict["file_metadata"] ?? .null)
+                    let linkMetadata = NullableSerializer(Files.MinimalFileLinkMetadataSerializer()).deserialize(dict["link_metadata"] ?? .null)
+                    return PreviewResult(fileMetadata: fileMetadata, linkMetadata: linkMetadata)
+                default:
+                    fatalError("Type error deserializing")
             }
         }
     }
@@ -3534,6 +4673,10 @@ open class Files {
         /// Something went wrong with the job on Dropbox's end. You'll need to verify that the action you were taking
         /// succeeded, and if not, try again. This should happen very rarely.
         case internalError
+        /// Can't move the shared folder to the given destination.
+        case cantMoveSharedFolder
+        /// Some content cannot be moved into Vault under certain circumstances, see detailed error.
+        case cantMoveIntoVault(Files.MoveIntoVaultError)
         /// An unspecified error.
         case other
 
@@ -3589,6 +4732,14 @@ open class Files {
                     var d = [String: JSON]()
                     d[".tag"] = .str("internal_error")
                     return .dictionary(d)
+                case .cantMoveSharedFolder:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("cant_move_shared_folder")
+                    return .dictionary(d)
+                case .cantMoveIntoVault(let arg):
+                    var d = ["cant_move_into_vault": Files.MoveIntoVaultErrorSerializer().serialize(arg)]
+                    d[".tag"] = .str("cant_move_into_vault")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -3625,6 +4776,11 @@ open class Files {
                             return RelocationError.insufficientQuota
                         case "internal_error":
                             return RelocationError.internalError
+                        case "cant_move_shared_folder":
+                            return RelocationError.cantMoveSharedFolder
+                        case "cant_move_into_vault":
+                            let v = Files.MoveIntoVaultErrorSerializer().deserialize(d["cant_move_into_vault"] ?? .null)
+                            return RelocationError.cantMoveIntoVault(v)
                         case "other":
                             return RelocationError.other
                         default:
@@ -3662,6 +4818,10 @@ open class Files {
         /// Something went wrong with the job on Dropbox's end. You'll need to verify that the action you were taking
         /// succeeded, and if not, try again. This should happen very rarely.
         case internalError
+        /// Can't move the shared folder to the given destination.
+        case cantMoveSharedFolder
+        /// Some content cannot be moved into Vault under certain circumstances, see detailed error.
+        case cantMoveIntoVault(Files.MoveIntoVaultError)
         /// An unspecified error.
         case other
         /// There are too many write operations in user's Dropbox. Please retry this request.
@@ -3719,6 +4879,14 @@ open class Files {
                     var d = [String: JSON]()
                     d[".tag"] = .str("internal_error")
                     return .dictionary(d)
+                case .cantMoveSharedFolder:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("cant_move_shared_folder")
+                    return .dictionary(d)
+                case .cantMoveIntoVault(let arg):
+                    var d = ["cant_move_into_vault": Files.MoveIntoVaultErrorSerializer().serialize(arg)]
+                    d[".tag"] = .str("cant_move_into_vault")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -3759,6 +4927,11 @@ open class Files {
                             return RelocationBatchError.insufficientQuota
                         case "internal_error":
                             return RelocationBatchError.internalError
+                        case "cant_move_shared_folder":
+                            return RelocationBatchError.cantMoveSharedFolder
+                        case "cant_move_into_vault":
+                            let v = Files.MoveIntoVaultErrorSerializer().deserialize(d["cant_move_into_vault"] ?? .null)
+                            return RelocationBatchError.cantMoveIntoVault(v)
                         case "other":
                             return RelocationBatchError.other
                         case "too_many_write_operations":
@@ -4054,8 +5227,8 @@ open class Files {
         }
     }
 
-    /// Result returned by copyBatchV2 or moveBatchV2 that may either launch an asynchronous job or complete
-    /// synchronously.
+    /// Result returned by copyBatchCheckV2 or moveBatchCheckV2 that may either be in progress or completed with result
+    /// for each entry.
     public enum RelocationBatchV2JobStatus: CustomStringConvertible {
         /// The asynchronous job is still in progress.
         case inProgress
@@ -4492,7 +5665,8 @@ open class Files {
     public enum SaveUrlError: CustomStringConvertible {
         /// An unspecified error.
         case path(Files.WriteError)
-        /// Failed downloading the given URL.
+        /// Failed downloading the given URL. The URL may be  password-protected and the password provided was
+        /// incorrect,  or the link may be disabled.
         case downloadFailed
         /// The given URL is invalid.
         case invalidUrl
@@ -4659,9 +5833,9 @@ open class Files {
     open class SearchArg: CustomStringConvertible {
         /// The path in the user's Dropbox to search. Should probably be a folder.
         public let path: String
-        /// The string to search for. The search string is split on spaces into multiple tokens. For file name
-        /// searching, the last token is used for prefix matching (i.e. "bat c" matches "bat cave" but not "batman
-        /// car").
+        /// The string to search for. Query string may be rewritten to improve relevance of results. The string is split
+        /// on spaces into multiple tokens. For file name searching, the last token is used for prefix matching (i.e.
+        /// "bat c" matches "bat cave" but not "batman car").
         public let query: String
         /// The starting index within the search results (used for paging).
         public let start: UInt64
@@ -4675,7 +5849,7 @@ open class Files {
             self.path = path
             stringValidator()(query)
             self.query = query
-            comparableValidator()(start)
+            comparableValidator(maxValue: 9999)(start)
             self.start = start
             comparableValidator(minValue: 1, maxValue: 1000)(maxResults)
             self.maxResults = maxResults
@@ -4717,6 +5891,10 @@ open class Files {
         /// An unspecified error.
         case path(Files.LookupError)
         /// An unspecified error.
+        case invalidArgument(String?)
+        /// Something went wrong, please try again.
+        case internalError
+        /// An unspecified error.
         case other
 
         public var description: String {
@@ -4730,6 +5908,14 @@ open class Files {
                 case .path(let arg):
                     var d = ["path": Files.LookupErrorSerializer().serialize(arg)]
                     d[".tag"] = .str("path")
+                    return .dictionary(d)
+                case .invalidArgument(let arg):
+                    var d = ["invalid_argument": NullableSerializer(Serialization._StringSerializer).serialize(arg)]
+                    d[".tag"] = .str("invalid_argument")
+                    return .dictionary(d)
+                case .internalError:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("internal_error")
                     return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
@@ -4745,6 +5931,11 @@ open class Files {
                         case "path":
                             let v = Files.LookupErrorSerializer().deserialize(d["path"] ?? .null)
                             return SearchError.path(v)
+                        case "invalid_argument":
+                            let v = NullableSerializer(Serialization._StringSerializer).deserialize(d["invalid_argument"] ?? .null)
+                            return SearchError.invalidArgument(v)
+                        case "internal_error":
+                            return SearchError.internalError
                         case "other":
                             return SearchError.other
                         default:
@@ -4785,6 +5976,36 @@ open class Files {
                     let matchType = Files.SearchMatchTypeSerializer().deserialize(dict["match_type"] ?? .null)
                     let metadata = Files.MetadataSerializer().deserialize(dict["metadata"] ?? .null)
                     return SearchMatch(matchType: matchType, metadata: metadata)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The SearchMatchFieldOptions struct
+    open class SearchMatchFieldOptions: CustomStringConvertible {
+        /// Whether to include highlight span from file title.
+        public let includeHighlights: Bool
+        public init(includeHighlights: Bool = false) {
+            self.includeHighlights = includeHighlights
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SearchMatchFieldOptionsSerializer().serialize(self)))"
+        }
+    }
+    open class SearchMatchFieldOptionsSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SearchMatchFieldOptions) -> JSON {
+            let output = [ 
+            "include_highlights": Serialization._BoolSerializer.serialize(value.includeHighlights),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SearchMatchFieldOptions {
+            switch json {
+                case .dictionary(let dict):
+                    let includeHighlights = Serialization._BoolSerializer.deserialize(dict["include_highlights"] ?? .number(0))
+                    return SearchMatchFieldOptions(includeHighlights: includeHighlights)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -4842,6 +6063,41 @@ open class Files {
         }
     }
 
+    /// The SearchMatchV2 struct
+    open class SearchMatchV2: CustomStringConvertible {
+        /// The metadata for the matched file or folder.
+        public let metadata: Files.MetadataV2
+        /// The list of HighlightSpan determines which parts of the file title should be highlighted.
+        public let highlightSpans: Array<Files.HighlightSpan>?
+        public init(metadata: Files.MetadataV2, highlightSpans: Array<Files.HighlightSpan>? = nil) {
+            self.metadata = metadata
+            self.highlightSpans = highlightSpans
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SearchMatchV2Serializer().serialize(self)))"
+        }
+    }
+    open class SearchMatchV2Serializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SearchMatchV2) -> JSON {
+            let output = [ 
+            "metadata": Files.MetadataV2Serializer().serialize(value.metadata),
+            "highlight_spans": NullableSerializer(ArraySerializer(Files.HighlightSpanSerializer())).serialize(value.highlightSpans),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SearchMatchV2 {
+            switch json {
+                case .dictionary(let dict):
+                    let metadata = Files.MetadataV2Serializer().deserialize(dict["metadata"] ?? .null)
+                    let highlightSpans = NullableSerializer(ArraySerializer(Files.HighlightSpanSerializer())).deserialize(dict["highlight_spans"] ?? .null)
+                    return SearchMatchV2(metadata: metadata, highlightSpans: highlightSpans)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
     /// The SearchMode union
     public enum SearchMode: CustomStringConvertible {
         /// Search file and folder names.
@@ -4893,6 +6149,64 @@ open class Files {
         }
     }
 
+    /// The SearchOptions struct
+    open class SearchOptions: CustomStringConvertible {
+        /// Scopes the search to a path in the user's Dropbox. Searches the entire Dropbox if not specified.
+        public let path: String?
+        /// The maximum number of search results to return.
+        public let maxResults: UInt64
+        /// Restricts search to the given file status.
+        public let fileStatus: Files.FileStatus
+        /// Restricts search to only match on filenames.
+        public let filenameOnly: Bool
+        /// Restricts search to only the extensions specified. Only supported for active file search.
+        public let fileExtensions: Array<String>?
+        /// Restricts search to only the file categories specified. Only supported for active file search.
+        public let fileCategories: Array<Files.FileCategory>?
+        public init(path: String? = nil, maxResults: UInt64 = 100, fileStatus: Files.FileStatus = .active, filenameOnly: Bool = false, fileExtensions: Array<String>? = nil, fileCategories: Array<Files.FileCategory>? = nil) {
+            nullableValidator(stringValidator(pattern: "(/(.|[\\r\\n])*)?|id:.*|(ns:[0-9]+(/.*)?)"))(path)
+            self.path = path
+            comparableValidator(minValue: 1, maxValue: 1000)(maxResults)
+            self.maxResults = maxResults
+            self.fileStatus = fileStatus
+            self.filenameOnly = filenameOnly
+            nullableValidator(arrayValidator(itemValidator: stringValidator()))(fileExtensions)
+            self.fileExtensions = fileExtensions
+            self.fileCategories = fileCategories
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SearchOptionsSerializer().serialize(self)))"
+        }
+    }
+    open class SearchOptionsSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SearchOptions) -> JSON {
+            let output = [ 
+            "path": NullableSerializer(Serialization._StringSerializer).serialize(value.path),
+            "max_results": Serialization._UInt64Serializer.serialize(value.maxResults),
+            "file_status": Files.FileStatusSerializer().serialize(value.fileStatus),
+            "filename_only": Serialization._BoolSerializer.serialize(value.filenameOnly),
+            "file_extensions": NullableSerializer(ArraySerializer(Serialization._StringSerializer)).serialize(value.fileExtensions),
+            "file_categories": NullableSerializer(ArraySerializer(Files.FileCategorySerializer())).serialize(value.fileCategories),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SearchOptions {
+            switch json {
+                case .dictionary(let dict):
+                    let path = NullableSerializer(Serialization._StringSerializer).deserialize(dict["path"] ?? .null)
+                    let maxResults = Serialization._UInt64Serializer.deserialize(dict["max_results"] ?? .number(100))
+                    let fileStatus = Files.FileStatusSerializer().deserialize(dict["file_status"] ?? Files.FileStatusSerializer().serialize(.active))
+                    let filenameOnly = Serialization._BoolSerializer.deserialize(dict["filename_only"] ?? .number(0))
+                    let fileExtensions = NullableSerializer(ArraySerializer(Serialization._StringSerializer)).deserialize(dict["file_extensions"] ?? .null)
+                    let fileCategories = NullableSerializer(ArraySerializer(Files.FileCategorySerializer())).deserialize(dict["file_categories"] ?? .null)
+                    return SearchOptions(path: path, maxResults: maxResults, fileStatus: fileStatus, filenameOnly: filenameOnly, fileExtensions: fileExtensions, fileCategories: fileCategories)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
     /// The SearchResult struct
     open class SearchResult: CustomStringConvertible {
         /// A list (possibly empty) of matches for the query.
@@ -4935,6 +6249,126 @@ open class Files {
         }
     }
 
+    /// The SearchV2Arg struct
+    open class SearchV2Arg: CustomStringConvertible {
+        /// The string to search for. May match across multiple fields based on the request arguments. Query string may
+        /// be rewritten to improve relevance of results.
+        public let query: String
+        /// Options for more targeted search results.
+        public let options: Files.SearchOptions?
+        /// Options for search results match fields.
+        public let matchFieldOptions: Files.SearchMatchFieldOptions?
+        /// Deprecated and moved this option to SearchMatchFieldOptions.
+        public let includeHighlights: Bool
+        public init(query: String, options: Files.SearchOptions? = nil, matchFieldOptions: Files.SearchMatchFieldOptions? = nil, includeHighlights: Bool = false) {
+            stringValidator()(query)
+            self.query = query
+            self.options = options
+            self.matchFieldOptions = matchFieldOptions
+            self.includeHighlights = includeHighlights
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SearchV2ArgSerializer().serialize(self)))"
+        }
+    }
+    open class SearchV2ArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SearchV2Arg) -> JSON {
+            let output = [ 
+            "query": Serialization._StringSerializer.serialize(value.query),
+            "options": NullableSerializer(Files.SearchOptionsSerializer()).serialize(value.options),
+            "match_field_options": NullableSerializer(Files.SearchMatchFieldOptionsSerializer()).serialize(value.matchFieldOptions),
+            "include_highlights": Serialization._BoolSerializer.serialize(value.includeHighlights),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SearchV2Arg {
+            switch json {
+                case .dictionary(let dict):
+                    let query = Serialization._StringSerializer.deserialize(dict["query"] ?? .null)
+                    let options = NullableSerializer(Files.SearchOptionsSerializer()).deserialize(dict["options"] ?? .null)
+                    let matchFieldOptions = NullableSerializer(Files.SearchMatchFieldOptionsSerializer()).deserialize(dict["match_field_options"] ?? .null)
+                    let includeHighlights = Serialization._BoolSerializer.deserialize(dict["include_highlights"] ?? .number(0))
+                    return SearchV2Arg(query: query, options: options, matchFieldOptions: matchFieldOptions, includeHighlights: includeHighlights)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The SearchV2ContinueArg struct
+    open class SearchV2ContinueArg: CustomStringConvertible {
+        /// The cursor returned by your last call to searchV2. Used to fetch the next page of results.
+        public let cursor: String
+        public init(cursor: String) {
+            stringValidator(minLength: 1)(cursor)
+            self.cursor = cursor
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SearchV2ContinueArgSerializer().serialize(self)))"
+        }
+    }
+    open class SearchV2ContinueArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SearchV2ContinueArg) -> JSON {
+            let output = [ 
+            "cursor": Serialization._StringSerializer.serialize(value.cursor),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SearchV2ContinueArg {
+            switch json {
+                case .dictionary(let dict):
+                    let cursor = Serialization._StringSerializer.deserialize(dict["cursor"] ?? .null)
+                    return SearchV2ContinueArg(cursor: cursor)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The SearchV2Result struct
+    open class SearchV2Result: CustomStringConvertible {
+        /// A list (possibly empty) of matches for the query.
+        public let matches: Array<Files.SearchMatchV2>
+        /// Used for paging. If true, indicates there is another page of results available that can be fetched by
+        /// calling searchContinueV2 with the cursor.
+        public let hasMore: Bool
+        /// Pass the cursor into searchContinueV2 to fetch the next page of results.
+        public let cursor: String?
+        public init(matches: Array<Files.SearchMatchV2>, hasMore: Bool, cursor: String? = nil) {
+            self.matches = matches
+            self.hasMore = hasMore
+            nullableValidator(stringValidator(minLength: 1))(cursor)
+            self.cursor = cursor
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SearchV2ResultSerializer().serialize(self)))"
+        }
+    }
+    open class SearchV2ResultSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SearchV2Result) -> JSON {
+            let output = [ 
+            "matches": ArraySerializer(Files.SearchMatchV2Serializer()).serialize(value.matches),
+            "has_more": Serialization._BoolSerializer.serialize(value.hasMore),
+            "cursor": NullableSerializer(Serialization._StringSerializer).serialize(value.cursor),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SearchV2Result {
+            switch json {
+                case .dictionary(let dict):
+                    let matches = ArraySerializer(Files.SearchMatchV2Serializer()).deserialize(dict["matches"] ?? .null)
+                    let hasMore = Serialization._BoolSerializer.deserialize(dict["has_more"] ?? .null)
+                    let cursor = NullableSerializer(Serialization._StringSerializer).deserialize(dict["cursor"] ?? .null)
+                    return SearchV2Result(matches: matches, hasMore: hasMore, cursor: cursor)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
     /// The SharedLink struct
     open class SharedLink: CustomStringConvertible {
         /// Shared link url.
@@ -4966,6 +6400,93 @@ open class Files {
                     let url = Serialization._StringSerializer.deserialize(dict["url"] ?? .null)
                     let password = NullableSerializer(Serialization._StringSerializer).deserialize(dict["password"] ?? .null)
                     return SharedLink(url: url, password: password)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The SharedLinkFileInfo struct
+    open class SharedLinkFileInfo: CustomStringConvertible {
+        /// The shared link corresponding to either a file or shared link to a folder. If it is for a folder shared
+        /// link, we use the path param to determine for which file in the folder the view is for.
+        public let url: String
+        /// The path corresponding to a file in a shared link to a folder. Required for shared links to folders.
+        public let path: String?
+        /// Password for the shared link. Required for password-protected shared links to files  unless it can be read
+        /// from a cookie.
+        public let password: String?
+        public init(url: String, path: String? = nil, password: String? = nil) {
+            stringValidator()(url)
+            self.url = url
+            nullableValidator(stringValidator())(path)
+            self.path = path
+            nullableValidator(stringValidator())(password)
+            self.password = password
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SharedLinkFileInfoSerializer().serialize(self)))"
+        }
+    }
+    open class SharedLinkFileInfoSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SharedLinkFileInfo) -> JSON {
+            let output = [ 
+            "url": Serialization._StringSerializer.serialize(value.url),
+            "path": NullableSerializer(Serialization._StringSerializer).serialize(value.path),
+            "password": NullableSerializer(Serialization._StringSerializer).serialize(value.password),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SharedLinkFileInfo {
+            switch json {
+                case .dictionary(let dict):
+                    let url = Serialization._StringSerializer.deserialize(dict["url"] ?? .null)
+                    let path = NullableSerializer(Serialization._StringSerializer).deserialize(dict["path"] ?? .null)
+                    let password = NullableSerializer(Serialization._StringSerializer).deserialize(dict["password"] ?? .null)
+                    return SharedLinkFileInfo(url: url, path: path, password: password)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The SingleUserLock struct
+    open class SingleUserLock: CustomStringConvertible {
+        /// The time the lock was created.
+        public let created: Date
+        /// The account ID of the lock holder if known.
+        public let lockHolderAccountId: String
+        /// The id of the team of the account holder if it exists.
+        public let lockHolderTeamId: String?
+        public init(created: Date, lockHolderAccountId: String, lockHolderTeamId: String? = nil) {
+            self.created = created
+            stringValidator(minLength: 40, maxLength: 40)(lockHolderAccountId)
+            self.lockHolderAccountId = lockHolderAccountId
+            nullableValidator(stringValidator())(lockHolderTeamId)
+            self.lockHolderTeamId = lockHolderTeamId
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SingleUserLockSerializer().serialize(self)))"
+        }
+    }
+    open class SingleUserLockSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SingleUserLock) -> JSON {
+            let output = [ 
+            "created": NSDateSerializer("%Y-%m-%dT%H:%M:%SZ").serialize(value.created),
+            "lock_holder_account_id": Serialization._StringSerializer.serialize(value.lockHolderAccountId),
+            "lock_holder_team_id": NullableSerializer(Serialization._StringSerializer).serialize(value.lockHolderTeamId),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> SingleUserLock {
+            switch json {
+                case .dictionary(let dict):
+                    let created = NSDateSerializer("%Y-%m-%dT%H:%M:%SZ").deserialize(dict["created"] ?? .null)
+                    let lockHolderAccountId = Serialization._StringSerializer.deserialize(dict["lock_holder_account_id"] ?? .null)
+                    let lockHolderTeamId = NullableSerializer(Serialization._StringSerializer).deserialize(dict["lock_holder_team_id"] ?? .null)
+                    return SingleUserLock(created: created, lockHolderAccountId: lockHolderAccountId, lockHolderTeamId: lockHolderTeamId)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -5472,6 +6993,199 @@ open class Files {
                     }
                 default:
                     fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The ThumbnailV2Arg struct
+    open class ThumbnailV2Arg: CustomStringConvertible {
+        /// Information specifying which file to preview. This could be a path to a file, a shared link pointing to a
+        /// file, or a shared link pointing to a folder, with a relative path.
+        public let resource: Files.PathOrLink
+        /// The format for the thumbnail image, jpeg (default) or png. For  images that are photos, jpeg should be
+        /// preferred, while png is  better for screenshots and digital arts.
+        public let format: Files.ThumbnailFormat
+        /// The size for the thumbnail image.
+        public let size: Files.ThumbnailSize
+        /// How to resize and crop the image to achieve the desired size.
+        public let mode: Files.ThumbnailMode
+        public init(resource: Files.PathOrLink, format: Files.ThumbnailFormat = .jpeg, size: Files.ThumbnailSize = .w64h64, mode: Files.ThumbnailMode = .strict) {
+            self.resource = resource
+            self.format = format
+            self.size = size
+            self.mode = mode
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(ThumbnailV2ArgSerializer().serialize(self)))"
+        }
+    }
+    open class ThumbnailV2ArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: ThumbnailV2Arg) -> JSON {
+            let output = [ 
+            "resource": Files.PathOrLinkSerializer().serialize(value.resource),
+            "format": Files.ThumbnailFormatSerializer().serialize(value.format),
+            "size": Files.ThumbnailSizeSerializer().serialize(value.size),
+            "mode": Files.ThumbnailModeSerializer().serialize(value.mode),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> ThumbnailV2Arg {
+            switch json {
+                case .dictionary(let dict):
+                    let resource = Files.PathOrLinkSerializer().deserialize(dict["resource"] ?? .null)
+                    let format = Files.ThumbnailFormatSerializer().deserialize(dict["format"] ?? Files.ThumbnailFormatSerializer().serialize(.jpeg))
+                    let size = Files.ThumbnailSizeSerializer().deserialize(dict["size"] ?? Files.ThumbnailSizeSerializer().serialize(.w64h64))
+                    let mode = Files.ThumbnailModeSerializer().deserialize(dict["mode"] ?? Files.ThumbnailModeSerializer().serialize(.strict))
+                    return ThumbnailV2Arg(resource: resource, format: format, size: size, mode: mode)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The ThumbnailV2Error union
+    public enum ThumbnailV2Error: CustomStringConvertible {
+        /// An error occurred when downloading metadata for the image.
+        case path(Files.LookupError)
+        /// The file extension doesn't allow conversion to a thumbnail.
+        case unsupportedExtension
+        /// The image cannot be converted to a thumbnail.
+        case unsupportedImage
+        /// An error occurred during thumbnail conversion.
+        case conversionError
+        /// Access to this shared link is forbidden.
+        case accessDenied
+        /// The shared link does not exist.
+        case notFound
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(ThumbnailV2ErrorSerializer().serialize(self)))"
+        }
+    }
+    open class ThumbnailV2ErrorSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: ThumbnailV2Error) -> JSON {
+            switch value {
+                case .path(let arg):
+                    var d = ["path": Files.LookupErrorSerializer().serialize(arg)]
+                    d[".tag"] = .str("path")
+                    return .dictionary(d)
+                case .unsupportedExtension:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("unsupported_extension")
+                    return .dictionary(d)
+                case .unsupportedImage:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("unsupported_image")
+                    return .dictionary(d)
+                case .conversionError:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("conversion_error")
+                    return .dictionary(d)
+                case .accessDenied:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("access_denied")
+                    return .dictionary(d)
+                case .notFound:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("not_found")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> ThumbnailV2Error {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "path":
+                            let v = Files.LookupErrorSerializer().deserialize(d["path"] ?? .null)
+                            return ThumbnailV2Error.path(v)
+                        case "unsupported_extension":
+                            return ThumbnailV2Error.unsupportedExtension
+                        case "unsupported_image":
+                            return ThumbnailV2Error.unsupportedImage
+                        case "conversion_error":
+                            return ThumbnailV2Error.conversionError
+                        case "access_denied":
+                            return ThumbnailV2Error.accessDenied
+                        case "not_found":
+                            return ThumbnailV2Error.notFound
+                        case "other":
+                            return ThumbnailV2Error.other
+                        default:
+                            return ThumbnailV2Error.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
+    /// The UnlockFileArg struct
+    open class UnlockFileArg: CustomStringConvertible {
+        /// Path in the user's Dropbox to a file.
+        public let path: String
+        public init(path: String) {
+            stringValidator(pattern: "(/(.|[\\r\\n])*)|(ns:[0-9]+(/.*)?)|(id:.*)")(path)
+            self.path = path
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(UnlockFileArgSerializer().serialize(self)))"
+        }
+    }
+    open class UnlockFileArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: UnlockFileArg) -> JSON {
+            let output = [ 
+            "path": Serialization._StringSerializer.serialize(value.path),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> UnlockFileArg {
+            switch json {
+                case .dictionary(let dict):
+                    let path = Serialization._StringSerializer.deserialize(dict["path"] ?? .null)
+                    return UnlockFileArg(path: path)
+                default:
+                    fatalError("Type error deserializing")
+            }
+        }
+    }
+
+    /// The UnlockFileBatchArg struct
+    open class UnlockFileBatchArg: CustomStringConvertible {
+        /// List of 'entries'. Each 'entry' contains a path of the file which will be unlocked. Duplicate path arguments
+        /// in the batch are considered only once.
+        public let entries: Array<Files.UnlockFileArg>
+        public init(entries: Array<Files.UnlockFileArg>) {
+            self.entries = entries
+        }
+        open var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(UnlockFileBatchArgSerializer().serialize(self)))"
+        }
+    }
+    open class UnlockFileBatchArgSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: UnlockFileBatchArg) -> JSON {
+            let output = [ 
+            "entries": ArraySerializer(Files.UnlockFileArgSerializer()).serialize(value.entries),
+            ]
+            return .dictionary(output)
+        }
+        open func deserialize(_ json: JSON) -> UnlockFileBatchArg {
+            switch json {
+                case .dictionary(let dict):
+                    let entries = ArraySerializer(Files.UnlockFileArgSerializer()).deserialize(dict["entries"] ?? .null)
+                    return UnlockFileBatchArg(entries: entries)
+                default:
+                    fatalError("Type error deserializing")
             }
         }
     }
@@ -5984,7 +7698,7 @@ open class Files {
         /// previous request was received and processed successfully but the client did not receive the response, e.g.
         /// due to a network error.
         case incorrectOffset(Files.UploadSessionOffsetError)
-        /// You are attempting to append data to an upload session that has alread been closed (i.e. committed).
+        /// You are attempting to append data to an upload session that has already been closed (i.e. committed).
         case closed
         /// The session must be closed before calling upload_session/finish_batch.
         case notClosed
@@ -6447,7 +8161,8 @@ open class Files {
         argSerializer: Files.AlphaGetMetadataArgSerializer(),
         responseSerializer: Files.MetadataSerializer(),
         errorSerializer: Files.AlphaGetMetadataErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let alphaUpload = Route(
@@ -6458,7 +8173,8 @@ open class Files {
         argSerializer: Files.CommitInfoWithPropertiesSerializer(),
         responseSerializer: Files.FileMetadataSerializer(),
         errorSerializer: Files.UploadErrorWithPropertiesSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "upload"]
     )
     static let copyV2 = Route(
@@ -6469,7 +8185,8 @@ open class Files {
         argSerializer: Files.RelocationArgSerializer(),
         responseSerializer: Files.RelocationResultSerializer(),
         errorSerializer: Files.RelocationErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let copy = Route(
@@ -6480,7 +8197,8 @@ open class Files {
         argSerializer: Files.RelocationArgSerializer(),
         responseSerializer: Files.MetadataSerializer(),
         errorSerializer: Files.RelocationErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let copyBatchV2 = Route(
@@ -6491,7 +8209,8 @@ open class Files {
         argSerializer: Files.RelocationBatchArgBaseSerializer(),
         responseSerializer: Files.RelocationBatchV2LaunchSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let copyBatch = Route(
@@ -6502,7 +8221,8 @@ open class Files {
         argSerializer: Files.RelocationBatchArgSerializer(),
         responseSerializer: Files.RelocationBatchLaunchSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let copyBatchCheckV2 = Route(
@@ -6513,7 +8233,8 @@ open class Files {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.RelocationBatchV2JobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let copyBatchCheck = Route(
@@ -6524,7 +8245,8 @@ open class Files {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.RelocationBatchJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let copyReferenceGet = Route(
@@ -6535,7 +8257,8 @@ open class Files {
         argSerializer: Files.GetCopyReferenceArgSerializer(),
         responseSerializer: Files.GetCopyReferenceResultSerializer(),
         errorSerializer: Files.GetCopyReferenceErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let copyReferenceSave = Route(
@@ -6546,7 +8269,8 @@ open class Files {
         argSerializer: Files.SaveCopyReferenceArgSerializer(),
         responseSerializer: Files.SaveCopyReferenceResultSerializer(),
         errorSerializer: Files.SaveCopyReferenceErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let createFolderV2 = Route(
@@ -6557,7 +8281,8 @@ open class Files {
         argSerializer: Files.CreateFolderArgSerializer(),
         responseSerializer: Files.CreateFolderResultSerializer(),
         errorSerializer: Files.CreateFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let createFolder = Route(
@@ -6568,7 +8293,8 @@ open class Files {
         argSerializer: Files.CreateFolderArgSerializer(),
         responseSerializer: Files.FolderMetadataSerializer(),
         errorSerializer: Files.CreateFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let createFolderBatch = Route(
@@ -6579,7 +8305,8 @@ open class Files {
         argSerializer: Files.CreateFolderBatchArgSerializer(),
         responseSerializer: Files.CreateFolderBatchLaunchSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let createFolderBatchCheck = Route(
@@ -6590,7 +8317,8 @@ open class Files {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.CreateFolderBatchJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let deleteV2 = Route(
@@ -6601,7 +8329,8 @@ open class Files {
         argSerializer: Files.DeleteArgSerializer(),
         responseSerializer: Files.DeleteResultSerializer(),
         errorSerializer: Files.DeleteErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let delete = Route(
@@ -6612,7 +8341,8 @@ open class Files {
         argSerializer: Files.DeleteArgSerializer(),
         responseSerializer: Files.MetadataSerializer(),
         errorSerializer: Files.DeleteErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let deleteBatch = Route(
@@ -6623,7 +8353,8 @@ open class Files {
         argSerializer: Files.DeleteBatchArgSerializer(),
         responseSerializer: Files.DeleteBatchLaunchSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let deleteBatchCheck = Route(
@@ -6634,7 +8365,8 @@ open class Files {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.DeleteBatchJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let download = Route(
@@ -6645,7 +8377,8 @@ open class Files {
         argSerializer: Files.DownloadArgSerializer(),
         responseSerializer: Files.FileMetadataSerializer(),
         errorSerializer: Files.DownloadErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "download"]
     )
     static let downloadZip = Route(
@@ -6656,8 +8389,33 @@ open class Files {
         argSerializer: Files.DownloadZipArgSerializer(),
         responseSerializer: Files.DownloadZipResultSerializer(),
         errorSerializer: Files.DownloadZipErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "download"]
+    )
+    static let export = Route(
+        name: "export",
+        version: 1,
+        namespace: "files",
+        deprecated: false,
+        argSerializer: Files.ExportArgSerializer(),
+        responseSerializer: Files.ExportResultSerializer(),
+        errorSerializer: Files.ExportErrorSerializer(),
+        attrs: ["auth": "user",
+                "host": "content",
+                "style": "download"]
+    )
+    static let getFileLockBatch = Route(
+        name: "get_file_lock_batch",
+        version: 1,
+        namespace: "files",
+        deprecated: false,
+        argSerializer: Files.LockFileBatchArgSerializer(),
+        responseSerializer: Files.LockFileBatchResultSerializer(),
+        errorSerializer: Files.LockFileErrorSerializer(),
+        attrs: ["auth": "user",
+                "host": "api",
+                "style": "rpc"]
     )
     static let getMetadata = Route(
         name: "get_metadata",
@@ -6667,7 +8425,8 @@ open class Files {
         argSerializer: Files.GetMetadataArgSerializer(),
         responseSerializer: Files.MetadataSerializer(),
         errorSerializer: Files.GetMetadataErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getPreview = Route(
@@ -6678,7 +8437,8 @@ open class Files {
         argSerializer: Files.PreviewArgSerializer(),
         responseSerializer: Files.FileMetadataSerializer(),
         errorSerializer: Files.PreviewErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "download"]
     )
     static let getTemporaryLink = Route(
@@ -6689,7 +8449,8 @@ open class Files {
         argSerializer: Files.GetTemporaryLinkArgSerializer(),
         responseSerializer: Files.GetTemporaryLinkResultSerializer(),
         errorSerializer: Files.GetTemporaryLinkErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getTemporaryUploadLink = Route(
@@ -6700,7 +8461,8 @@ open class Files {
         argSerializer: Files.GetTemporaryUploadLinkArgSerializer(),
         responseSerializer: Files.GetTemporaryUploadLinkResultSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getThumbnail = Route(
@@ -6711,7 +8473,20 @@ open class Files {
         argSerializer: Files.ThumbnailArgSerializer(),
         responseSerializer: Files.FileMetadataSerializer(),
         errorSerializer: Files.ThumbnailErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
+                "style": "download"]
+    )
+    static let getThumbnailV2 = Route(
+        name: "get_thumbnail",
+        version: 2,
+        namespace: "files",
+        deprecated: false,
+        argSerializer: Files.ThumbnailV2ArgSerializer(),
+        responseSerializer: Files.PreviewResultSerializer(),
+        errorSerializer: Files.ThumbnailV2ErrorSerializer(),
+        attrs: ["auth": "app, user",
+                "host": "content",
                 "style": "download"]
     )
     static let getThumbnailBatch = Route(
@@ -6722,7 +8497,8 @@ open class Files {
         argSerializer: Files.GetThumbnailBatchArgSerializer(),
         responseSerializer: Files.GetThumbnailBatchResultSerializer(),
         errorSerializer: Files.GetThumbnailBatchErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "rpc"]
     )
     static let listFolder = Route(
@@ -6733,7 +8509,8 @@ open class Files {
         argSerializer: Files.ListFolderArgSerializer(),
         responseSerializer: Files.ListFolderResultSerializer(),
         errorSerializer: Files.ListFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFolderContinue = Route(
@@ -6744,7 +8521,8 @@ open class Files {
         argSerializer: Files.ListFolderContinueArgSerializer(),
         responseSerializer: Files.ListFolderResultSerializer(),
         errorSerializer: Files.ListFolderContinueErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFolderGetLatestCursor = Route(
@@ -6755,7 +8533,8 @@ open class Files {
         argSerializer: Files.ListFolderArgSerializer(),
         responseSerializer: Files.ListFolderGetLatestCursorResultSerializer(),
         errorSerializer: Files.ListFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFolderLongpoll = Route(
@@ -6766,7 +8545,8 @@ open class Files {
         argSerializer: Files.ListFolderLongpollArgSerializer(),
         responseSerializer: Files.ListFolderLongpollResultSerializer(),
         errorSerializer: Files.ListFolderLongpollErrorSerializer(),
-        attrs: ["host": "notify",
+        attrs: ["auth": "noauth",
+                "host": "notify",
                 "style": "rpc"]
     )
     static let listRevisions = Route(
@@ -6777,7 +8557,20 @@ open class Files {
         argSerializer: Files.ListRevisionsArgSerializer(),
         responseSerializer: Files.ListRevisionsResultSerializer(),
         errorSerializer: Files.ListRevisionsErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
+                "style": "rpc"]
+    )
+    static let lockFileBatch = Route(
+        name: "lock_file_batch",
+        version: 1,
+        namespace: "files",
+        deprecated: false,
+        argSerializer: Files.LockFileBatchArgSerializer(),
+        responseSerializer: Files.LockFileBatchResultSerializer(),
+        errorSerializer: Files.LockFileErrorSerializer(),
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let moveV2 = Route(
@@ -6788,7 +8581,8 @@ open class Files {
         argSerializer: Files.RelocationArgSerializer(),
         responseSerializer: Files.RelocationResultSerializer(),
         errorSerializer: Files.RelocationErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let move = Route(
@@ -6799,7 +8593,8 @@ open class Files {
         argSerializer: Files.RelocationArgSerializer(),
         responseSerializer: Files.MetadataSerializer(),
         errorSerializer: Files.RelocationErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let moveBatchV2 = Route(
@@ -6810,18 +8605,20 @@ open class Files {
         argSerializer: Files.MoveBatchArgSerializer(),
         responseSerializer: Files.RelocationBatchV2LaunchSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let moveBatch = Route(
         name: "move_batch",
         version: 1,
         namespace: "files",
-        deprecated: false,
+        deprecated: true,
         argSerializer: Files.RelocationBatchArgSerializer(),
         responseSerializer: Files.RelocationBatchLaunchSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let moveBatchCheckV2 = Route(
@@ -6832,18 +8629,20 @@ open class Files {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.RelocationBatchV2JobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let moveBatchCheck = Route(
         name: "move_batch/check",
         version: 1,
         namespace: "files",
-        deprecated: false,
+        deprecated: true,
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.RelocationBatchJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let permanentlyDelete = Route(
@@ -6854,7 +8653,8 @@ open class Files {
         argSerializer: Files.DeleteArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Files.DeleteErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let propertiesAdd = Route(
@@ -6865,7 +8665,8 @@ open class Files {
         argSerializer: FileProperties.AddPropertiesArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: FileProperties.AddPropertiesErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let propertiesOverwrite = Route(
@@ -6876,7 +8677,8 @@ open class Files {
         argSerializer: FileProperties.OverwritePropertyGroupArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: FileProperties.InvalidPropertyGroupErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let propertiesRemove = Route(
@@ -6887,7 +8689,8 @@ open class Files {
         argSerializer: FileProperties.RemovePropertiesArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: FileProperties.RemovePropertiesErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let propertiesTemplateGet = Route(
@@ -6898,7 +8701,8 @@ open class Files {
         argSerializer: FileProperties.GetTemplateArgSerializer(),
         responseSerializer: FileProperties.GetTemplateResultSerializer(),
         errorSerializer: FileProperties.TemplateErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let propertiesTemplateList = Route(
@@ -6909,7 +8713,8 @@ open class Files {
         argSerializer: Serialization._VoidSerializer,
         responseSerializer: FileProperties.ListTemplateResultSerializer(),
         errorSerializer: FileProperties.TemplateErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let propertiesUpdate = Route(
@@ -6920,7 +8725,8 @@ open class Files {
         argSerializer: FileProperties.UpdatePropertiesArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: FileProperties.UpdatePropertiesErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let restore = Route(
@@ -6931,7 +8737,8 @@ open class Files {
         argSerializer: Files.RestoreArgSerializer(),
         responseSerializer: Files.FileMetadataSerializer(),
         errorSerializer: Files.RestoreErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let saveUrl = Route(
@@ -6942,7 +8749,8 @@ open class Files {
         argSerializer: Files.SaveUrlArgSerializer(),
         responseSerializer: Files.SaveUrlResultSerializer(),
         errorSerializer: Files.SaveUrlErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let saveUrlCheckJobStatus = Route(
@@ -6953,18 +8761,56 @@ open class Files {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.SaveUrlJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let search = Route(
         name: "search",
         version: 1,
         namespace: "files",
-        deprecated: false,
+        deprecated: true,
         argSerializer: Files.SearchArgSerializer(),
         responseSerializer: Files.SearchResultSerializer(),
         errorSerializer: Files.SearchErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
+                "style": "rpc"]
+    )
+    static let searchV2 = Route(
+        name: "search",
+        version: 2,
+        namespace: "files",
+        deprecated: false,
+        argSerializer: Files.SearchV2ArgSerializer(),
+        responseSerializer: Files.SearchV2ResultSerializer(),
+        errorSerializer: Files.SearchErrorSerializer(),
+        attrs: ["auth": "user",
+                "host": "api",
+                "style": "rpc"]
+    )
+    static let searchContinueV2 = Route(
+        name: "search/continue",
+        version: 2,
+        namespace: "files",
+        deprecated: false,
+        argSerializer: Files.SearchV2ContinueArgSerializer(),
+        responseSerializer: Files.SearchV2ResultSerializer(),
+        errorSerializer: Files.SearchErrorSerializer(),
+        attrs: ["auth": "user",
+                "host": "api",
+                "style": "rpc"]
+    )
+    static let unlockFileBatch = Route(
+        name: "unlock_file_batch",
+        version: 1,
+        namespace: "files",
+        deprecated: false,
+        argSerializer: Files.UnlockFileBatchArgSerializer(),
+        responseSerializer: Files.LockFileBatchResultSerializer(),
+        errorSerializer: Files.LockFileErrorSerializer(),
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let upload = Route(
@@ -6975,7 +8821,8 @@ open class Files {
         argSerializer: Files.CommitInfoSerializer(),
         responseSerializer: Files.FileMetadataSerializer(),
         errorSerializer: Files.UploadErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "upload"]
     )
     static let uploadSessionAppendV2 = Route(
@@ -6986,7 +8833,8 @@ open class Files {
         argSerializer: Files.UploadSessionAppendArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Files.UploadSessionLookupErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "upload"]
     )
     static let uploadSessionAppend = Route(
@@ -6997,7 +8845,8 @@ open class Files {
         argSerializer: Files.UploadSessionCursorSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Files.UploadSessionLookupErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "upload"]
     )
     static let uploadSessionFinish = Route(
@@ -7008,7 +8857,8 @@ open class Files {
         argSerializer: Files.UploadSessionFinishArgSerializer(),
         responseSerializer: Files.FileMetadataSerializer(),
         errorSerializer: Files.UploadSessionFinishErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "upload"]
     )
     static let uploadSessionFinishBatch = Route(
@@ -7019,7 +8869,8 @@ open class Files {
         argSerializer: Files.UploadSessionFinishBatchArgSerializer(),
         responseSerializer: Files.UploadSessionFinishBatchLaunchSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let uploadSessionFinishBatchCheck = Route(
@@ -7030,7 +8881,8 @@ open class Files {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Files.UploadSessionFinishBatchJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let uploadSessionStart = Route(
@@ -7041,7 +8893,8 @@ open class Files {
         argSerializer: Files.UploadSessionStartArgSerializer(),
         responseSerializer: Files.UploadSessionStartResultSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "upload"]
     )
 }

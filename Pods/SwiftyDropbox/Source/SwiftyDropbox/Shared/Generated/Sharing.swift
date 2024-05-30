@@ -359,6 +359,8 @@ open class Sharing {
         case accessError(Sharing.SharedFolderAccessError)
         /// The current user's e-mail address is unverified.
         case emailUnverified
+        /// The current user has been banned.
+        case bannedMember
         /// members in AddFolderMemberArg contains a bad invitation recipient.
         case badMember(Sharing.AddMemberSelectorError)
         /// Your team policy does not allow sharing outside of the team.
@@ -378,6 +380,8 @@ open class Sharing {
         case teamFolder
         /// The current user does not have permission to perform this action.
         case noPermission
+        /// Invalid shared folder error will be returned as an access_error.
+        case invalidSharedFolder
         /// An unspecified error.
         case other
 
@@ -396,6 +400,10 @@ open class Sharing {
                 case .emailUnverified:
                     var d = [String: JSON]()
                     d[".tag"] = .str("email_unverified")
+                    return .dictionary(d)
+                case .bannedMember:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("banned_member")
                     return .dictionary(d)
                 case .badMember(let arg):
                     var d = ["bad_member": Sharing.AddMemberSelectorErrorSerializer().serialize(arg)]
@@ -433,6 +441,10 @@ open class Sharing {
                     var d = [String: JSON]()
                     d[".tag"] = .str("no_permission")
                     return .dictionary(d)
+                case .invalidSharedFolder:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("invalid_shared_folder")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -449,6 +461,8 @@ open class Sharing {
                             return AddFolderMemberError.accessError(v)
                         case "email_unverified":
                             return AddFolderMemberError.emailUnverified
+                        case "banned_member":
+                            return AddFolderMemberError.bannedMember
                         case "bad_member":
                             let v = Sharing.AddMemberSelectorErrorSerializer().deserialize(d["bad_member"] ?? .null)
                             return AddFolderMemberError.badMember(v)
@@ -470,6 +484,8 @@ open class Sharing {
                             return AddFolderMemberError.teamFolder
                         case "no_permission":
                             return AddFolderMemberError.noPermission
+                        case "invalid_shared_folder":
+                            return AddFolderMemberError.invalidSharedFolder
                         case "other":
                             return AddFolderMemberError.other
                         default:
@@ -974,8 +990,9 @@ open class Sharing {
         case path(Files.LookupError)
         /// User's email should be verified.
         case emailNotVerified
-        /// The shared link already exists. You can call listSharedLinks to get the existing link.
-        case sharedLinkAlreadyExists
+        /// The shared link already exists. You can call listSharedLinks to get the  existing link, or use the provided
+        /// metadata if it is returned.
+        case sharedLinkAlreadyExists(Sharing.SharedLinkAlreadyExistsMetadata?)
         /// There is an error with the given settings.
         case settingsError(Sharing.SharedLinkSettingsError)
         /// Access to the requested path is forbidden.
@@ -997,8 +1014,8 @@ open class Sharing {
                     var d = [String: JSON]()
                     d[".tag"] = .str("email_not_verified")
                     return .dictionary(d)
-                case .sharedLinkAlreadyExists:
-                    var d = [String: JSON]()
+                case .sharedLinkAlreadyExists(let arg):
+                    var d = ["shared_link_already_exists": NullableSerializer(Sharing.SharedLinkAlreadyExistsMetadataSerializer()).serialize(arg)]
                     d[".tag"] = .str("shared_link_already_exists")
                     return .dictionary(d)
                 case .settingsError(let arg):
@@ -1022,7 +1039,8 @@ open class Sharing {
                         case "email_not_verified":
                             return CreateSharedLinkWithSettingsError.emailNotVerified
                         case "shared_link_already_exists":
-                            return CreateSharedLinkWithSettingsError.sharedLinkAlreadyExists
+                            let v = NullableSerializer(Sharing.SharedLinkAlreadyExistsMetadataSerializer()).deserialize(d["shared_link_already_exists"] ?? .null)
+                            return CreateSharedLinkWithSettingsError.sharedLinkAlreadyExists(v)
                         case "settings_error":
                             let v = Sharing.SharedLinkSettingsErrorSerializer().deserialize(d["settings_error"] ?? .null)
                             return CreateSharedLinkWithSettingsError.settingsError(v)
@@ -1156,10 +1174,14 @@ open class Sharing {
         case unshare
         /// Relinquish one's own membership to the file.
         case relinquishMembership
-        /// Use create_link instead.
+        /// Use create_view_link and create_edit_link instead.
         case shareLink
-        /// Create a shared link to the file.
+        /// Use create_view_link and create_edit_link instead.
         case createLink
+        /// Create a shared link to a file that only allows users to view the content.
+        case createViewLink
+        /// Create a shared link to a file that allows users to edit the content.
+        case createEditLink
         /// An unspecified error.
         case other
 
@@ -1211,6 +1233,14 @@ open class Sharing {
                     var d = [String: JSON]()
                     d[".tag"] = .str("create_link")
                     return .dictionary(d)
+                case .createViewLink:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("create_view_link")
+                    return .dictionary(d)
+                case .createEditLink:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("create_edit_link")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -1242,6 +1272,10 @@ open class Sharing {
                             return FileAction.shareLink
                         case "create_link":
                             return FileAction.createLink
+                        case "create_view_link":
+                            return FileAction.createViewLink
+                        case "create_edit_link":
+                            return FileAction.createEditLink
                         case "other":
                             return FileAction.other
                         default:
@@ -2259,7 +2293,7 @@ open class Sharing {
         case sharedLinkNotFound
         /// The caller is not allowed to access this shared link.
         case sharedLinkAccessDenied
-        /// This type of link is not supported.
+        /// This type of link is not supported; use files instead.
         case unsupportedLinkType
         /// An unspecified error.
         case other
@@ -2318,7 +2352,7 @@ open class Sharing {
         case sharedLinkNotFound
         /// The caller is not allowed to access this shared link.
         case sharedLinkAccessDenied
-        /// This type of link is not supported.
+        /// This type of link is not supported; use files instead.
         case unsupportedLinkType
         /// An unspecified error.
         case other
@@ -2955,6 +2989,57 @@ open class Sharing {
         }
     }
 
+    /// The LinkAccessLevel union
+    public enum LinkAccessLevel: CustomStringConvertible {
+        /// Users who use the link can view and comment on the content.
+        case viewer
+        /// Users who use the link can edit, view and comment on the content.
+        case editor
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(LinkAccessLevelSerializer().serialize(self)))"
+        }
+    }
+    open class LinkAccessLevelSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: LinkAccessLevel) -> JSON {
+            switch value {
+                case .viewer:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("viewer")
+                    return .dictionary(d)
+                case .editor:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("editor")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> LinkAccessLevel {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "viewer":
+                            return LinkAccessLevel.viewer
+                        case "editor":
+                            return LinkAccessLevel.editor
+                        case "other":
+                            return LinkAccessLevel.other
+                        default:
+                            return LinkAccessLevel.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
     /// Actions that can be performed on a link.
     public enum LinkAction: CustomStringConvertible {
         /// Change the access level of the link.
@@ -3048,6 +3133,8 @@ open class Sharing {
         /// additional rights to the user. Members of the content who use this link can only access the content with
         /// their pre-existing access rights.
         case noOne
+        /// A link-specific password is required to access the link. Login is not required.
+        case password
         /// Link is accessible only by members of the content.
         case members
         /// An unspecified error.
@@ -3073,6 +3160,10 @@ open class Sharing {
                     var d = [String: JSON]()
                     d[".tag"] = .str("no_one")
                     return .dictionary(d)
+                case .password:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("password")
+                    return .dictionary(d)
                 case .members:
                     var d = [String: JSON]()
                     d[".tag"] = .str("members")
@@ -3094,6 +3185,8 @@ open class Sharing {
                             return LinkAudience.team
                         case "no_one":
                             return LinkAudience.noOne
+                        case "password":
+                            return LinkAudience.password
                         case "members":
                             return LinkAudience.members
                         case "other":
@@ -3256,21 +3349,31 @@ open class Sharing {
         /// The current visibility of the link after considering the shared links policies of the the team (in case the
         /// link's owner is part of a team) and the shared folder (in case the linked file is part of a shared folder).
         /// This field is shown only if the caller has access to this info (the link's owner always has access to this
-        /// data).
+        /// data). For some links, an effective_audience value is returned instead.
         public let resolvedVisibility: Sharing.ResolvedVisibility?
         /// The shared link's requested visibility. This can be overridden by the team and shared folder policies. The
         /// final visibility, after considering these policies, can be found in resolvedVisibility. This is shown only
-        /// if the caller is the link's owner.
+        /// if the caller is the link's owner and resolved_visibility is returned instead of effective_audience.
         public let requestedVisibility: Sharing.RequestedVisibility?
         /// Whether the caller can revoke the shared link.
         public let canRevoke: Bool
         /// The failure reason for revoking the link. This field will only be present if the canRevoke is false.
         public let revokeFailureReason: Sharing.SharedLinkAccessFailureReason?
-        public init(canRevoke: Bool, resolvedVisibility: Sharing.ResolvedVisibility? = nil, requestedVisibility: Sharing.RequestedVisibility? = nil, revokeFailureReason: Sharing.SharedLinkAccessFailureReason? = nil) {
+        /// The type of audience who can benefit from the access level specified by the `link_access_level` field.
+        public let effectiveAudience: Sharing.LinkAudience?
+        /// The access level that the link will grant to its users. A link can grant additional rights to a user beyond
+        /// their current access level. For example, if a user was invited as a viewer to a file, and then opens a link
+        /// with `link_access_level` set to `editor`, then they will gain editor privileges. The `link_access_level` is
+        /// a property of the link, and does not depend on who is calling this API. In particular, `link_access_level`
+        /// does not take into account the API caller's current permissions to the content.
+        public let linkAccessLevel: Sharing.LinkAccessLevel?
+        public init(canRevoke: Bool, resolvedVisibility: Sharing.ResolvedVisibility? = nil, requestedVisibility: Sharing.RequestedVisibility? = nil, revokeFailureReason: Sharing.SharedLinkAccessFailureReason? = nil, effectiveAudience: Sharing.LinkAudience? = nil, linkAccessLevel: Sharing.LinkAccessLevel? = nil) {
             self.resolvedVisibility = resolvedVisibility
             self.requestedVisibility = requestedVisibility
             self.canRevoke = canRevoke
             self.revokeFailureReason = revokeFailureReason
+            self.effectiveAudience = effectiveAudience
+            self.linkAccessLevel = linkAccessLevel
         }
         open var description: String {
             return "\(SerializeUtil.prepareJSONForSerialization(LinkPermissionsSerializer().serialize(self)))"
@@ -3284,6 +3387,8 @@ open class Sharing {
             "resolved_visibility": NullableSerializer(Sharing.ResolvedVisibilitySerializer()).serialize(value.resolvedVisibility),
             "requested_visibility": NullableSerializer(Sharing.RequestedVisibilitySerializer()).serialize(value.requestedVisibility),
             "revoke_failure_reason": NullableSerializer(Sharing.SharedLinkAccessFailureReasonSerializer()).serialize(value.revokeFailureReason),
+            "effective_audience": NullableSerializer(Sharing.LinkAudienceSerializer()).serialize(value.effectiveAudience),
+            "link_access_level": NullableSerializer(Sharing.LinkAccessLevelSerializer()).serialize(value.linkAccessLevel),
             ]
             return .dictionary(output)
         }
@@ -3294,7 +3399,9 @@ open class Sharing {
                     let resolvedVisibility = NullableSerializer(Sharing.ResolvedVisibilitySerializer()).deserialize(dict["resolved_visibility"] ?? .null)
                     let requestedVisibility = NullableSerializer(Sharing.RequestedVisibilitySerializer()).deserialize(dict["requested_visibility"] ?? .null)
                     let revokeFailureReason = NullableSerializer(Sharing.SharedLinkAccessFailureReasonSerializer()).deserialize(dict["revoke_failure_reason"] ?? .null)
-                    return LinkPermissions(canRevoke: canRevoke, resolvedVisibility: resolvedVisibility, requestedVisibility: requestedVisibility, revokeFailureReason: revokeFailureReason)
+                    let effectiveAudience = NullableSerializer(Sharing.LinkAudienceSerializer()).deserialize(dict["effective_audience"] ?? .null)
+                    let linkAccessLevel = NullableSerializer(Sharing.LinkAccessLevelSerializer()).deserialize(dict["link_access_level"] ?? .null)
+                    return LinkPermissions(canRevoke: canRevoke, resolvedVisibility: resolvedVisibility, requestedVisibility: requestedVisibility, revokeFailureReason: revokeFailureReason, effectiveAudience: effectiveAudience, linkAccessLevel: linkAccessLevel)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -4616,7 +4723,7 @@ open class Sharing {
         case sharedLinkNotFound
         /// The caller is not allowed to access this shared link.
         case sharedLinkAccessDenied
-        /// This type of link is not supported.
+        /// This type of link is not supported; use files instead.
         case unsupportedLinkType
         /// An unspecified error.
         case other
@@ -5602,6 +5709,66 @@ open class Sharing {
         }
     }
 
+    /// The RequestedLinkAccessLevel union
+    public enum RequestedLinkAccessLevel: CustomStringConvertible {
+        /// Users who use the link can view and comment on the content.
+        case viewer
+        /// Users who use the link can edit, view and comment on the content. Note not all file types support edit links
+        /// yet.
+        case editor
+        /// Request for the maximum access level you can set the link to.
+        case max
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(RequestedLinkAccessLevelSerializer().serialize(self)))"
+        }
+    }
+    open class RequestedLinkAccessLevelSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: RequestedLinkAccessLevel) -> JSON {
+            switch value {
+                case .viewer:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("viewer")
+                    return .dictionary(d)
+                case .editor:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("editor")
+                    return .dictionary(d)
+                case .max:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("max")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> RequestedLinkAccessLevel {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "viewer":
+                            return RequestedLinkAccessLevel.viewer
+                        case "editor":
+                            return RequestedLinkAccessLevel.editor
+                        case "max":
+                            return RequestedLinkAccessLevel.max
+                        case "other":
+                            return RequestedLinkAccessLevel.other
+                        default:
+                            return RequestedLinkAccessLevel.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
     /// The access permission that can be requested by the caller for the shared link. Note that the final resolved
     /// visibility of the shared link takes into account other aspects, such as team and shared folder settings. Check
     /// the ResolvedVisibility for more info on the possible resolved visibility values of shared links.
@@ -5769,7 +5936,7 @@ open class Sharing {
         case sharedLinkNotFound
         /// The caller is not allowed to access this shared link.
         case sharedLinkAccessDenied
-        /// This type of link is not supported.
+        /// This type of link is not supported; use files instead.
         case unsupportedLinkType
         /// An unspecified error.
         case other
@@ -6303,6 +6470,8 @@ open class Sharing {
         case isOsxPackage
         /// We do not support sharing a folder inside a Mac OS X package.
         case insideOsxPackage
+        /// We do not support sharing the Vault folder.
+        case isVault
         /// An unspecified error.
         case other
 
@@ -6366,6 +6535,10 @@ open class Sharing {
                     var d = [String: JSON]()
                     d[".tag"] = .str("inside_osx_package")
                     return .dictionary(d)
+                case .isVault:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("is_vault")
+                    return .dictionary(d)
                 case .other:
                     var d = [String: JSON]()
                     d[".tag"] = .str("other")
@@ -6404,6 +6577,8 @@ open class Sharing {
                             return SharePathError.isOsxPackage
                         case "inside_osx_package":
                             return SharePathError.insideOsxPackage
+                        case "is_vault":
+                            return SharePathError.isVault
                         case "other":
                             return SharePathError.other
                         default:
@@ -6818,7 +6993,9 @@ open class Sharing {
         public let parentSharedFolderId: String?
         /// The lower-cased full path of this shared folder. Absent for unmounted folders.
         public let pathLower: String?
-        public init(accessType: Sharing.AccessLevel, isInsideTeamFolder: Bool, isTeamFolder: Bool, ownerDisplayNames: Array<String>? = nil, ownerTeam: Users.Team? = nil, parentSharedFolderId: String? = nil, pathLower: String? = nil) {
+        /// Display name for the parent folder.
+        public let parentFolderName: String?
+        public init(accessType: Sharing.AccessLevel, isInsideTeamFolder: Bool, isTeamFolder: Bool, ownerDisplayNames: Array<String>? = nil, ownerTeam: Users.Team? = nil, parentSharedFolderId: String? = nil, pathLower: String? = nil, parentFolderName: String? = nil) {
             self.accessType = accessType
             self.isInsideTeamFolder = isInsideTeamFolder
             self.isTeamFolder = isTeamFolder
@@ -6829,6 +7006,8 @@ open class Sharing {
             self.parentSharedFolderId = parentSharedFolderId
             nullableValidator(stringValidator())(pathLower)
             self.pathLower = pathLower
+            nullableValidator(stringValidator())(parentFolderName)
+            self.parentFolderName = parentFolderName
         }
         open var description: String {
             return "\(SerializeUtil.prepareJSONForSerialization(SharedFolderMetadataBaseSerializer().serialize(self)))"
@@ -6845,6 +7024,7 @@ open class Sharing {
             "owner_team": NullableSerializer(Users.TeamSerializer()).serialize(value.ownerTeam),
             "parent_shared_folder_id": NullableSerializer(Serialization._StringSerializer).serialize(value.parentSharedFolderId),
             "path_lower": NullableSerializer(Serialization._StringSerializer).serialize(value.pathLower),
+            "parent_folder_name": NullableSerializer(Serialization._StringSerializer).serialize(value.parentFolderName),
             ]
             return .dictionary(output)
         }
@@ -6858,7 +7038,8 @@ open class Sharing {
                     let ownerTeam = NullableSerializer(Users.TeamSerializer()).deserialize(dict["owner_team"] ?? .null)
                     let parentSharedFolderId = NullableSerializer(Serialization._StringSerializer).deserialize(dict["parent_shared_folder_id"] ?? .null)
                     let pathLower = NullableSerializer(Serialization._StringSerializer).deserialize(dict["path_lower"] ?? .null)
-                    return SharedFolderMetadataBase(accessType: accessType, isInsideTeamFolder: isInsideTeamFolder, isTeamFolder: isTeamFolder, ownerDisplayNames: ownerDisplayNames, ownerTeam: ownerTeam, parentSharedFolderId: parentSharedFolderId, pathLower: pathLower)
+                    let parentFolderName = NullableSerializer(Serialization._StringSerializer).deserialize(dict["parent_folder_name"] ?? .null)
+                    return SharedFolderMetadataBase(accessType: accessType, isInsideTeamFolder: isInsideTeamFolder, isTeamFolder: isTeamFolder, ownerDisplayNames: ownerDisplayNames, ownerTeam: ownerTeam, parentSharedFolderId: parentSharedFolderId, pathLower: pathLower, parentFolderName: parentFolderName)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -6885,7 +7066,7 @@ open class Sharing {
         public let timeInvited: Date
         /// Whether the folder inherits its members from its parent.
         public let accessInheritance: Sharing.AccessInheritance
-        public init(accessType: Sharing.AccessLevel, isInsideTeamFolder: Bool, isTeamFolder: Bool, name: String, policy: Sharing.FolderPolicy, previewUrl: String, sharedFolderId: String, timeInvited: Date, ownerDisplayNames: Array<String>? = nil, ownerTeam: Users.Team? = nil, parentSharedFolderId: String? = nil, pathLower: String? = nil, linkMetadata: Sharing.SharedContentLinkMetadata? = nil, permissions: Array<Sharing.FolderPermission>? = nil, accessInheritance: Sharing.AccessInheritance = .inherit) {
+        public init(accessType: Sharing.AccessLevel, isInsideTeamFolder: Bool, isTeamFolder: Bool, name: String, policy: Sharing.FolderPolicy, previewUrl: String, sharedFolderId: String, timeInvited: Date, ownerDisplayNames: Array<String>? = nil, ownerTeam: Users.Team? = nil, parentSharedFolderId: String? = nil, pathLower: String? = nil, parentFolderName: String? = nil, linkMetadata: Sharing.SharedContentLinkMetadata? = nil, permissions: Array<Sharing.FolderPermission>? = nil, accessInheritance: Sharing.AccessInheritance = .inherit) {
             self.linkMetadata = linkMetadata
             stringValidator()(name)
             self.name = name
@@ -6897,7 +7078,7 @@ open class Sharing {
             self.sharedFolderId = sharedFolderId
             self.timeInvited = timeInvited
             self.accessInheritance = accessInheritance
-            super.init(accessType: accessType, isInsideTeamFolder: isInsideTeamFolder, isTeamFolder: isTeamFolder, ownerDisplayNames: ownerDisplayNames, ownerTeam: ownerTeam, parentSharedFolderId: parentSharedFolderId, pathLower: pathLower)
+            super.init(accessType: accessType, isInsideTeamFolder: isInsideTeamFolder, isTeamFolder: isTeamFolder, ownerDisplayNames: ownerDisplayNames, ownerTeam: ownerTeam, parentSharedFolderId: parentSharedFolderId, pathLower: pathLower, parentFolderName: parentFolderName)
         }
         open override var description: String {
             return "\(SerializeUtil.prepareJSONForSerialization(SharedFolderMetadataSerializer().serialize(self)))"
@@ -6919,6 +7100,7 @@ open class Sharing {
             "owner_team": NullableSerializer(Users.TeamSerializer()).serialize(value.ownerTeam),
             "parent_shared_folder_id": NullableSerializer(Serialization._StringSerializer).serialize(value.parentSharedFolderId),
             "path_lower": NullableSerializer(Serialization._StringSerializer).serialize(value.pathLower),
+            "parent_folder_name": NullableSerializer(Serialization._StringSerializer).serialize(value.parentFolderName),
             "link_metadata": NullableSerializer(Sharing.SharedContentLinkMetadataSerializer()).serialize(value.linkMetadata),
             "permissions": NullableSerializer(ArraySerializer(Sharing.FolderPermissionSerializer())).serialize(value.permissions),
             "access_inheritance": Sharing.AccessInheritanceSerializer().serialize(value.accessInheritance),
@@ -6940,10 +7122,11 @@ open class Sharing {
                     let ownerTeam = NullableSerializer(Users.TeamSerializer()).deserialize(dict["owner_team"] ?? .null)
                     let parentSharedFolderId = NullableSerializer(Serialization._StringSerializer).deserialize(dict["parent_shared_folder_id"] ?? .null)
                     let pathLower = NullableSerializer(Serialization._StringSerializer).deserialize(dict["path_lower"] ?? .null)
+                    let parentFolderName = NullableSerializer(Serialization._StringSerializer).deserialize(dict["parent_folder_name"] ?? .null)
                     let linkMetadata = NullableSerializer(Sharing.SharedContentLinkMetadataSerializer()).deserialize(dict["link_metadata"] ?? .null)
                     let permissions = NullableSerializer(ArraySerializer(Sharing.FolderPermissionSerializer())).deserialize(dict["permissions"] ?? .null)
                     let accessInheritance = Sharing.AccessInheritanceSerializer().deserialize(dict["access_inheritance"] ?? Sharing.AccessInheritanceSerializer().serialize(.inherit))
-                    return SharedFolderMetadata(accessType: accessType, isInsideTeamFolder: isInsideTeamFolder, isTeamFolder: isTeamFolder, name: name, policy: policy, previewUrl: previewUrl, sharedFolderId: sharedFolderId, timeInvited: timeInvited, ownerDisplayNames: ownerDisplayNames, ownerTeam: ownerTeam, parentSharedFolderId: parentSharedFolderId, pathLower: pathLower, linkMetadata: linkMetadata, permissions: permissions, accessInheritance: accessInheritance)
+                    return SharedFolderMetadata(accessType: accessType, isInsideTeamFolder: isInsideTeamFolder, isTeamFolder: isTeamFolder, name: name, policy: policy, previewUrl: previewUrl, sharedFolderId: sharedFolderId, timeInvited: timeInvited, ownerDisplayNames: ownerDisplayNames, ownerTeam: ownerTeam, parentSharedFolderId: parentSharedFolderId, pathLower: pathLower, parentFolderName: parentFolderName, linkMetadata: linkMetadata, permissions: permissions, accessInheritance: accessInheritance)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -7025,6 +7208,50 @@ open class Sharing {
         }
     }
 
+    /// The SharedLinkAlreadyExistsMetadata union
+    public enum SharedLinkAlreadyExistsMetadata: CustomStringConvertible {
+        /// Metadata of the shared link that already exists.
+        case metadata(Sharing.SharedLinkMetadata)
+        /// An unspecified error.
+        case other
+
+        public var description: String {
+            return "\(SerializeUtil.prepareJSONForSerialization(SharedLinkAlreadyExistsMetadataSerializer().serialize(self)))"
+        }
+    }
+    open class SharedLinkAlreadyExistsMetadataSerializer: JSONSerializer {
+        public init() { }
+        open func serialize(_ value: SharedLinkAlreadyExistsMetadata) -> JSON {
+            switch value {
+                case .metadata(let arg):
+                    var d = ["metadata": Sharing.SharedLinkMetadataSerializer().serialize(arg)]
+                    d[".tag"] = .str("metadata")
+                    return .dictionary(d)
+                case .other:
+                    var d = [String: JSON]()
+                    d[".tag"] = .str("other")
+                    return .dictionary(d)
+            }
+        }
+        open func deserialize(_ json: JSON) -> SharedLinkAlreadyExistsMetadata {
+            switch json {
+                case .dictionary(let d):
+                    let tag = Serialization.getTag(d)
+                    switch tag {
+                        case "metadata":
+                            let v = Sharing.SharedLinkMetadataSerializer().deserialize(d["metadata"] ?? .null)
+                            return SharedLinkAlreadyExistsMetadata.metadata(v)
+                        case "other":
+                            return SharedLinkAlreadyExistsMetadata.other
+                        default:
+                            return SharedLinkAlreadyExistsMetadata.other
+                    }
+                default:
+                    fatalError("Failed to deserialize")
+            }
+        }
+    }
+
     /// Who can view shared links in this folder.
     public enum SharedLinkPolicy: CustomStringConvertible {
         /// Links can be shared with anyone.
@@ -7093,11 +7320,21 @@ open class Sharing {
         public let linkPassword: String?
         /// Expiration time of the shared link. By default the link won't expire.
         public let expires: Date?
-        public init(requestedVisibility: Sharing.RequestedVisibility? = nil, linkPassword: String? = nil, expires: Date? = nil) {
+        /// The new audience who can benefit from the access level specified by the link's access level specified in the
+        /// `link_access_level` field of `LinkPermissions`. This is used in conjunction with team policies and shared
+        /// folder policies to determine the final effective audience type in the `effective_audience` field of
+        /// `LinkPermissions.
+        public let audience: Sharing.LinkAudience?
+        /// Requested access level you want the audience to gain from this link. Note, modifying access level for an
+        /// existing link is not supported.
+        public let access: Sharing.RequestedLinkAccessLevel?
+        public init(requestedVisibility: Sharing.RequestedVisibility? = nil, linkPassword: String? = nil, expires: Date? = nil, audience: Sharing.LinkAudience? = nil, access: Sharing.RequestedLinkAccessLevel? = nil) {
             self.requestedVisibility = requestedVisibility
             nullableValidator(stringValidator())(linkPassword)
             self.linkPassword = linkPassword
             self.expires = expires
+            self.audience = audience
+            self.access = access
         }
         open var description: String {
             return "\(SerializeUtil.prepareJSONForSerialization(SharedLinkSettingsSerializer().serialize(self)))"
@@ -7110,6 +7347,8 @@ open class Sharing {
             "requested_visibility": NullableSerializer(Sharing.RequestedVisibilitySerializer()).serialize(value.requestedVisibility),
             "link_password": NullableSerializer(Serialization._StringSerializer).serialize(value.linkPassword),
             "expires": NullableSerializer(NSDateSerializer("%Y-%m-%dT%H:%M:%SZ")).serialize(value.expires),
+            "audience": NullableSerializer(Sharing.LinkAudienceSerializer()).serialize(value.audience),
+            "access": NullableSerializer(Sharing.RequestedLinkAccessLevelSerializer()).serialize(value.access),
             ]
             return .dictionary(output)
         }
@@ -7119,7 +7358,9 @@ open class Sharing {
                     let requestedVisibility = NullableSerializer(Sharing.RequestedVisibilitySerializer()).deserialize(dict["requested_visibility"] ?? .null)
                     let linkPassword = NullableSerializer(Serialization._StringSerializer).deserialize(dict["link_password"] ?? .null)
                     let expires = NullableSerializer(NSDateSerializer("%Y-%m-%dT%H:%M:%SZ")).deserialize(dict["expires"] ?? .null)
-                    return SharedLinkSettings(requestedVisibility: requestedVisibility, linkPassword: linkPassword, expires: expires)
+                    let audience = NullableSerializer(Sharing.LinkAudienceSerializer()).deserialize(dict["audience"] ?? .null)
+                    let access = NullableSerializer(Sharing.RequestedLinkAccessLevelSerializer()).deserialize(dict["access"] ?? .null)
+                    return SharedLinkSettings(requestedVisibility: requestedVisibility, linkPassword: linkPassword, expires: expires, audience: audience, access: access)
                 default:
                     fatalError("Type error deserializing")
             }
@@ -8319,7 +8560,8 @@ open class Sharing {
         argSerializer: Sharing.AddFileMemberArgsSerializer(),
         responseSerializer: ArraySerializer(Sharing.FileMemberActionResultSerializer()),
         errorSerializer: Sharing.AddFileMemberErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let addFolderMember = Route(
@@ -8330,7 +8572,8 @@ open class Sharing {
         argSerializer: Sharing.AddFolderMemberArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Sharing.AddFolderMemberErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let changeFileMemberAccess = Route(
@@ -8341,7 +8584,8 @@ open class Sharing {
         argSerializer: Sharing.ChangeFileMemberAccessArgsSerializer(),
         responseSerializer: Sharing.FileMemberActionResultSerializer(),
         errorSerializer: Sharing.FileMemberActionErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let checkJobStatus = Route(
@@ -8352,7 +8596,8 @@ open class Sharing {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Sharing.JobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let checkRemoveMemberJobStatus = Route(
@@ -8363,7 +8608,8 @@ open class Sharing {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Sharing.RemoveMemberJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let checkShareJobStatus = Route(
@@ -8374,7 +8620,8 @@ open class Sharing {
         argSerializer: Async.PollArgSerializer(),
         responseSerializer: Sharing.ShareFolderJobStatusSerializer(),
         errorSerializer: Async.PollErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let createSharedLink = Route(
@@ -8385,7 +8632,8 @@ open class Sharing {
         argSerializer: Sharing.CreateSharedLinkArgSerializer(),
         responseSerializer: Sharing.PathLinkMetadataSerializer(),
         errorSerializer: Sharing.CreateSharedLinkErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let createSharedLinkWithSettings = Route(
@@ -8396,7 +8644,8 @@ open class Sharing {
         argSerializer: Sharing.CreateSharedLinkWithSettingsArgSerializer(),
         responseSerializer: Sharing.SharedLinkMetadataSerializer(),
         errorSerializer: Sharing.CreateSharedLinkWithSettingsErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getFileMetadata = Route(
@@ -8407,7 +8656,8 @@ open class Sharing {
         argSerializer: Sharing.GetFileMetadataArgSerializer(),
         responseSerializer: Sharing.SharedFileMetadataSerializer(),
         errorSerializer: Sharing.GetFileMetadataErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getFileMetadataBatch = Route(
@@ -8418,7 +8668,8 @@ open class Sharing {
         argSerializer: Sharing.GetFileMetadataBatchArgSerializer(),
         responseSerializer: ArraySerializer(Sharing.GetFileMetadataBatchResultSerializer()),
         errorSerializer: Sharing.SharingUserErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getFolderMetadata = Route(
@@ -8429,7 +8680,8 @@ open class Sharing {
         argSerializer: Sharing.GetMetadataArgsSerializer(),
         responseSerializer: Sharing.SharedFolderMetadataSerializer(),
         errorSerializer: Sharing.SharedFolderAccessErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getSharedLinkFile = Route(
@@ -8440,7 +8692,8 @@ open class Sharing {
         argSerializer: Sharing.GetSharedLinkMetadataArgSerializer(),
         responseSerializer: Sharing.SharedLinkMetadataSerializer(),
         errorSerializer: Sharing.GetSharedLinkFileErrorSerializer(),
-        attrs: ["host": "content",
+        attrs: ["auth": "user",
+                "host": "content",
                 "style": "download"]
     )
     static let getSharedLinkMetadata = Route(
@@ -8451,7 +8704,8 @@ open class Sharing {
         argSerializer: Sharing.GetSharedLinkMetadataArgSerializer(),
         responseSerializer: Sharing.SharedLinkMetadataSerializer(),
         errorSerializer: Sharing.SharedLinkErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let getSharedLinks = Route(
@@ -8462,7 +8716,8 @@ open class Sharing {
         argSerializer: Sharing.GetSharedLinksArgSerializer(),
         responseSerializer: Sharing.GetSharedLinksResultSerializer(),
         errorSerializer: Sharing.GetSharedLinksErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFileMembers = Route(
@@ -8473,7 +8728,8 @@ open class Sharing {
         argSerializer: Sharing.ListFileMembersArgSerializer(),
         responseSerializer: Sharing.SharedFileMembersSerializer(),
         errorSerializer: Sharing.ListFileMembersErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFileMembersBatch = Route(
@@ -8484,7 +8740,8 @@ open class Sharing {
         argSerializer: Sharing.ListFileMembersBatchArgSerializer(),
         responseSerializer: ArraySerializer(Sharing.ListFileMembersBatchResultSerializer()),
         errorSerializer: Sharing.SharingUserErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFileMembersContinue = Route(
@@ -8495,7 +8752,8 @@ open class Sharing {
         argSerializer: Sharing.ListFileMembersContinueArgSerializer(),
         responseSerializer: Sharing.SharedFileMembersSerializer(),
         errorSerializer: Sharing.ListFileMembersContinueErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFolderMembers = Route(
@@ -8506,7 +8764,8 @@ open class Sharing {
         argSerializer: Sharing.ListFolderMembersArgsSerializer(),
         responseSerializer: Sharing.SharedFolderMembersSerializer(),
         errorSerializer: Sharing.SharedFolderAccessErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFolderMembersContinue = Route(
@@ -8517,7 +8776,8 @@ open class Sharing {
         argSerializer: Sharing.ListFolderMembersContinueArgSerializer(),
         responseSerializer: Sharing.SharedFolderMembersSerializer(),
         errorSerializer: Sharing.ListFolderMembersContinueErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFolders = Route(
@@ -8528,7 +8788,8 @@ open class Sharing {
         argSerializer: Sharing.ListFoldersArgsSerializer(),
         responseSerializer: Sharing.ListFoldersResultSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listFoldersContinue = Route(
@@ -8539,7 +8800,8 @@ open class Sharing {
         argSerializer: Sharing.ListFoldersContinueArgSerializer(),
         responseSerializer: Sharing.ListFoldersResultSerializer(),
         errorSerializer: Sharing.ListFoldersContinueErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listMountableFolders = Route(
@@ -8550,7 +8812,8 @@ open class Sharing {
         argSerializer: Sharing.ListFoldersArgsSerializer(),
         responseSerializer: Sharing.ListFoldersResultSerializer(),
         errorSerializer: Serialization._VoidSerializer,
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listMountableFoldersContinue = Route(
@@ -8561,7 +8824,8 @@ open class Sharing {
         argSerializer: Sharing.ListFoldersContinueArgSerializer(),
         responseSerializer: Sharing.ListFoldersResultSerializer(),
         errorSerializer: Sharing.ListFoldersContinueErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listReceivedFiles = Route(
@@ -8572,7 +8836,8 @@ open class Sharing {
         argSerializer: Sharing.ListFilesArgSerializer(),
         responseSerializer: Sharing.ListFilesResultSerializer(),
         errorSerializer: Sharing.SharingUserErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listReceivedFilesContinue = Route(
@@ -8583,7 +8848,8 @@ open class Sharing {
         argSerializer: Sharing.ListFilesContinueArgSerializer(),
         responseSerializer: Sharing.ListFilesResultSerializer(),
         errorSerializer: Sharing.ListFilesContinueErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let listSharedLinks = Route(
@@ -8594,7 +8860,8 @@ open class Sharing {
         argSerializer: Sharing.ListSharedLinksArgSerializer(),
         responseSerializer: Sharing.ListSharedLinksResultSerializer(),
         errorSerializer: Sharing.ListSharedLinksErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let modifySharedLinkSettings = Route(
@@ -8605,7 +8872,8 @@ open class Sharing {
         argSerializer: Sharing.ModifySharedLinkSettingsArgsSerializer(),
         responseSerializer: Sharing.SharedLinkMetadataSerializer(),
         errorSerializer: Sharing.ModifySharedLinkSettingsErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let mountFolder = Route(
@@ -8616,7 +8884,8 @@ open class Sharing {
         argSerializer: Sharing.MountFolderArgSerializer(),
         responseSerializer: Sharing.SharedFolderMetadataSerializer(),
         errorSerializer: Sharing.MountFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let relinquishFileMembership = Route(
@@ -8627,7 +8896,8 @@ open class Sharing {
         argSerializer: Sharing.RelinquishFileMembershipArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Sharing.RelinquishFileMembershipErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let relinquishFolderMembership = Route(
@@ -8638,7 +8908,8 @@ open class Sharing {
         argSerializer: Sharing.RelinquishFolderMembershipArgSerializer(),
         responseSerializer: Async.LaunchEmptyResultSerializer(),
         errorSerializer: Sharing.RelinquishFolderMembershipErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let removeFileMember = Route(
@@ -8649,7 +8920,8 @@ open class Sharing {
         argSerializer: Sharing.RemoveFileMemberArgSerializer(),
         responseSerializer: Sharing.FileMemberActionIndividualResultSerializer(),
         errorSerializer: Sharing.RemoveFileMemberErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let removeFileMember2 = Route(
@@ -8660,7 +8932,8 @@ open class Sharing {
         argSerializer: Sharing.RemoveFileMemberArgSerializer(),
         responseSerializer: Sharing.FileMemberRemoveActionResultSerializer(),
         errorSerializer: Sharing.RemoveFileMemberErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let removeFolderMember = Route(
@@ -8671,7 +8944,8 @@ open class Sharing {
         argSerializer: Sharing.RemoveFolderMemberArgSerializer(),
         responseSerializer: Async.LaunchResultBaseSerializer(),
         errorSerializer: Sharing.RemoveFolderMemberErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let revokeSharedLink = Route(
@@ -8682,7 +8956,8 @@ open class Sharing {
         argSerializer: Sharing.RevokeSharedLinkArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Sharing.RevokeSharedLinkErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let setAccessInheritance = Route(
@@ -8693,7 +8968,8 @@ open class Sharing {
         argSerializer: Sharing.SetAccessInheritanceArgSerializer(),
         responseSerializer: Sharing.ShareFolderLaunchSerializer(),
         errorSerializer: Sharing.SetAccessInheritanceErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let shareFolder = Route(
@@ -8704,7 +8980,8 @@ open class Sharing {
         argSerializer: Sharing.ShareFolderArgSerializer(),
         responseSerializer: Sharing.ShareFolderLaunchSerializer(),
         errorSerializer: Sharing.ShareFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let transferFolder = Route(
@@ -8715,7 +8992,8 @@ open class Sharing {
         argSerializer: Sharing.TransferFolderArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Sharing.TransferFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let unmountFolder = Route(
@@ -8726,7 +9004,8 @@ open class Sharing {
         argSerializer: Sharing.UnmountFolderArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Sharing.UnmountFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let unshareFile = Route(
@@ -8737,7 +9016,8 @@ open class Sharing {
         argSerializer: Sharing.UnshareFileArgSerializer(),
         responseSerializer: Serialization._VoidSerializer,
         errorSerializer: Sharing.UnshareFileErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let unshareFolder = Route(
@@ -8748,7 +9028,8 @@ open class Sharing {
         argSerializer: Sharing.UnshareFolderArgSerializer(),
         responseSerializer: Async.LaunchEmptyResultSerializer(),
         errorSerializer: Sharing.UnshareFolderErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let updateFileMember = Route(
@@ -8759,7 +9040,8 @@ open class Sharing {
         argSerializer: Sharing.UpdateFileMemberArgsSerializer(),
         responseSerializer: Sharing.MemberAccessLevelResultSerializer(),
         errorSerializer: Sharing.FileMemberActionErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let updateFolderMember = Route(
@@ -8770,7 +9052,8 @@ open class Sharing {
         argSerializer: Sharing.UpdateFolderMemberArgSerializer(),
         responseSerializer: Sharing.MemberAccessLevelResultSerializer(),
         errorSerializer: Sharing.UpdateFolderMemberErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
     static let updateFolderPolicy = Route(
@@ -8781,7 +9064,8 @@ open class Sharing {
         argSerializer: Sharing.UpdateFolderPolicyArgSerializer(),
         responseSerializer: Sharing.SharedFolderMetadataSerializer(),
         errorSerializer: Sharing.UpdateFolderPolicyErrorSerializer(),
-        attrs: ["host": "api",
+        attrs: ["auth": "user",
+                "host": "api",
                 "style": "rpc"]
     )
 }
