@@ -533,7 +533,7 @@ extension PowerUserOptions
             case .backgroundBlur:
                 Settings.controllerFeatures.backgroundBlur.style = .systemThin
                 Settings.controllerFeatures.backgroundBlur.brightness = .auto
-                Settings.controllerFeatures.backgroundBlur.tintColor = .none
+                Settings.controllerFeatures.backgroundBlur.tintColor = .theme
                 Settings.controllerFeatures.backgroundBlur.customColor = .orange
                 Settings.controllerFeatures.backgroundBlur.tintOpacity = 0.5
                 Settings.controllerFeatures.backgroundBlur.maintainAspect = true
