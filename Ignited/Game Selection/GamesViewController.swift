@@ -147,15 +147,6 @@ extension GamesViewController
         }
     }
     
-    override func viewDidAppear(_ animated: Bool)
-    {
-        if !Settings.legacyDatabaseHasBeenImported,
-           FileManager.default.fileExists(atPath: DatabaseManager.legacyDatabaseURL.path())
-        {
-            PowerUserOptions.importLegacyDatabase(skipPowerUserCheck: true)
-        }
-    }
-    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

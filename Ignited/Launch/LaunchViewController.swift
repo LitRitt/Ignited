@@ -65,6 +65,12 @@ extension LaunchViewController
 {
     override var launchConditions: [RSTLaunchCondition] {
         let isDatabaseManagerStarted = RSTLaunchCondition(condition: { DatabaseManager.shared.isStarted }) { (completionHandler) in
+            if !Settings.legacyDatabaseHasBeenImported,
+               FileManager.default.fileExists(atPath: DatabaseManager.legacyDatabaseURL.path())
+            {
+                PowerUserOptions.importLegacyDatabase(skipBackup: true)
+            }
+            
             DatabaseManager.shared.start(completionHandler: completionHandler)
         }
         

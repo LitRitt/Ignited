@@ -293,11 +293,61 @@ extension PowerUserOptions
         }
     }
     
-    static func importLegacyDatabase(skipPowerUserCheck: Bool = false)
+    static func importLegacyDatabase(skipBackup: Bool = false)
+    {
+        // Backup current database
+        for ext in DatabaseFile.allCases {
+            let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
+            let backupURL = DatabaseManager.backupDirectoryURL.appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
+            if FileManager.default.fileExists(atPath: fileURL.path()) {
+                do {
+                    let data = try Data(contentsOf: fileURL)
+                    try data.write(to: backupURL)
+                } catch {
+                    if ext == .shm || skipBackup {
+                        continue
+                    } else {
+                        Logger.database.error("Failed to import legacy database. Could not backup the current database's .\(ext.fileExtension, privacy: .public) file.")
+                        return
+                    }
+                }
+            }
+        }
+        
+        // Import legacy database
+        for ext in DatabaseFile.allCases {
+            let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Delta").appendingPathExtension(ext.fileExtension)
+            let newURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
+            if FileManager.default.fileExists(atPath: fileURL.path()) {
+                do {
+                    let data = try Data(contentsOf: fileURL)
+                    try data.write(to: newURL)
+                    try FileManager.default.removeItem(at: fileURL)
+                } catch {
+                    if ext == .shm {
+                        continue
+                    } else {
+                        Logger.database.error("Failed to import legacy database. Could not import the legacy database's .\(ext.fileExtension, privacy: .public) file.")
+                        return
+                    }
+                }
+            }
+        }
+        
+        if !skipBackup
+        {
+            ToastView.show(NSLocalizedString("Successfully imported legacy database", comment: ""), detailText: NSLocalizedString("Restart the app for changes to take effect", comment: ""), onEdge: .bottom, duration: 10.0)
+        }
+        
+        Logger.database.info("Successfully imported legacy database.")
+        Settings.legacyDatabaseHasBeenImported = true
+    }
+    
+    static func importLegacyDatabasePrompt()
     {
         guard let topViewController = UIApplication.shared.topViewController() else { return }
         
-        guard Settings.advancedFeatures.powerUser.isEnabled || skipPowerUserCheck else {
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
             self.showFeatureDisabledToast()
             return
         }
@@ -308,51 +358,7 @@ extension PowerUserOptions
         alertController.popoverPresentationController?.permittedArrowDirections = []
         
         alertController.addAction(UIAlertAction(title: "Import", style: .destructive, handler: { (action) in
-            
-            // Backup current database
-            for ext in DatabaseFile.allCases {
-                let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
-                let backupURL = DatabaseManager.backupDirectoryURL.appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
-                if FileManager.default.fileExists(atPath: fileURL.path()) {
-                    do {
-                        let data = try Data(contentsOf: fileURL)
-                        try data.write(to: backupURL)
-                    } catch {
-                        if ext == .shm {
-                            continue
-                        } else {
-                            Logger.database.error("Failed to import legacy database. Could not backup the current database's .\(ext.fileExtension, privacy: .public) file.")
-                            ToastView.show(NSLocalizedString("Failed to import legacy database", comment: ""), onEdge: .bottom, duration: 5.0)
-                            return
-                        }
-                    }
-                }
-            }
-            
-            // Import legacy database
-            for ext in DatabaseFile.allCases {
-                let fileURL = DatabaseManager.defaultDirectoryURL().appending(component: "Delta").appendingPathExtension(ext.fileExtension)
-                let newURL = DatabaseManager.defaultDirectoryURL().appending(component: "Ignited").appendingPathExtension(ext.fileExtension)
-                if FileManager.default.fileExists(atPath: fileURL.path()) {
-                    do {
-                        let data = try Data(contentsOf: fileURL)
-                        try data.write(to: newURL)
-                        try FileManager.default.removeItem(at: fileURL)
-                    } catch {
-                        if ext == .shm {
-                            continue
-                        } else {
-                            Logger.database.error("Failed to import legacy database. Could not import the legacy database's .\(ext.fileExtension, privacy: .public) file.")
-                            ToastView.show(NSLocalizedString("Failed to import legacy database", comment: ""), onEdge: .bottom, duration: 5.0)
-                            return
-                        }
-                    }
-                }
-            }
-            
-            Logger.database.info("Successfully imported legacy database.")
-            ToastView.show(NSLocalizedString("Successfully imported legacy database", comment: ""), detailText: NSLocalizedString("Restart the app for changes to take effect", comment: ""), onEdge: .bottom, duration: 10.0)
-            Settings.legacyDatabaseHasBeenImported = true
+            importLegacyDatabase()
         }))
         
         alertController.addAction(.cancel)
