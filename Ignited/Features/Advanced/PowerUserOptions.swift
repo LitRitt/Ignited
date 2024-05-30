@@ -18,7 +18,7 @@ struct PowerUserOptions
 {
     @Option(name: "Import Legacy Database",
             description: "This imports a legacy Ignited games database. The current database will be backed up.",
-            attributes: [.hidden(when: {SharedSettings.numberOfGames > 2 || Settings.legacyDatabaseHasBeenImported})],
+            attributes: [.hidden(when: {SharedSettings.numberOfGames > 0 || Settings.legacyDatabaseHasBeenImported})],
             detailView: { _ in
         Button("Import Legacy Database") {
             importLegacyDatabase()
@@ -31,6 +31,7 @@ struct PowerUserOptions
     
     @Option(name: "Find Missing Games",
             description: "Attempts to find and repair any missing games in the app's database.",
+            attributes: [.hidden(when: {true})],
             detailView: { _ in
         Button("Find Missing Games") {
             fixGameCollections()
@@ -43,6 +44,7 @@ struct PowerUserOptions
     
     @Option(name: "Find Missing Delta Skins",
             description: "Attempts to find and repair any missing Delta skins.",
+            attributes: [.hidden(when: {true})],
             detailView: { _ in
         Button("Find Missing Delta Skins") {
             fixDeltaSkins()

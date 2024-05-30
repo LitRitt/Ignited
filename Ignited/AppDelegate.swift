@@ -223,6 +223,8 @@ private extension AppDelegate
         DatabaseManager.shared.repairGameCollections()
         DatabaseManager.shared.repairDeltaSkins()
         
+        WidgetManager.refresh()
+        
         guard let deepLink = self.appLaunchDeepLink else { return }
         
         DispatchQueue.main.async {

@@ -12,7 +12,14 @@ import WidgetKit
 struct WidgetManager {
     static let shared = WidgetManager()
     
-    func updateWidgetData() {
+    static func refresh() {
+        DispatchQueue.main.async {
+            WidgetManager.shared.updateWidgetData()
+        }
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+    
+    private func updateWidgetData() {
         let gamesFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
         gamesFetchRequest.returnsObjectsAsFaults = false
         
@@ -49,14 +56,5 @@ struct WidgetManager {
             SharedSettings.mostPlayedGameArtworkUrl = nil
             SharedSettings.mostPlayedGameTime = 0
         }
-    }
-}
-
-extension WidgetManager {
-    static func refresh() {
-        DispatchQueue.main.async {
-            WidgetManager.shared.updateWidgetData()
-        }
-        WidgetCenter.shared.reloadAllTimelines()
     }
 }
