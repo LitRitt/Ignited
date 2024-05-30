@@ -173,13 +173,9 @@ extension LaunchViewController
     
     func updateBuildNumber()
     {
-        guard let buildNumber = Bundle.main.buildNumber,
-              buildNumber <= Settings.buildNumber else { return }
+        guard let buildNumber = Bundle.main.buildNumber else { return }
         
-        let previousBuildNumber = Settings.buildNumber
         Settings.buildNumber = buildNumber
-        
-        // Do any version update work here
     }
 }
 
