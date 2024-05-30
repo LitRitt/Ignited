@@ -16,6 +16,43 @@ import Roxas
 
 struct PowerUserOptions
 {
+    @Option(name: "Import Legacy Database",
+            description: "This imports a legacy Ignited games database. The current database will be backed up.",
+            attributes: [.hidden(when: {SharedSettings.numberOfGames > 2 || Settings.legacyDatabaseHasBeenImported})],
+            detailView: { _ in
+        Button("Import Legacy Database") {
+            importLegacyDatabase()
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.accentColor)
+        .displayInline()
+    })
+    var importLegacyDatabase: String = ""
+    
+    @Option(name: "Find Missing Games",
+            description: "Attempts to find and repair any missing games in the app's database.",
+            detailView: { _ in
+        Button("Find Missing Games") {
+            fixGameCollections()
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.accentColor)
+        .displayInline()
+    })
+    var fixGameCollections: String = ""
+    
+    @Option(name: "Find Missing Delta Skins",
+            description: "Attempts to find and repair any missing Delta skins.",
+            detailView: { _ in
+        Button("Find Missing Delta Skins") {
+            fixDeltaSkins()
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.accentColor)
+        .displayInline()
+    })
+    var fixDeltaSkins: String = ""
+    
     @Option(name: "Clear Auto Save States",
             description: "This will delete all auto save states from every game. The auto-load save states feature relies on these auto save states to resume your game where you left off. Deleting them can be useful to reduce the size of your Sync backup.",
             detailView: { _ in
@@ -52,32 +89,6 @@ struct PowerUserOptions
     })
     var resetAllSettings: String = ""
     
-    @Option(name: "Import Legacy Database",
-            description: "This imports a legacy Ignited games database. The current database will be backed up.",
-            attributes: [.hidden(when: {SharedSettings.numberOfGames > 2})],
-            detailView: { _ in
-        Button("Import Legacy Database") {
-            importLegacyDatabase()
-        }
-        .font(.system(size: 17, weight: .bold, design: .default))
-        .foregroundColor(.red)
-        .displayInline()
-    })
-    var importLegacyDatabase: String = ""
-    
-    @Option(name: "Fix Game Collection Associations",
-            description: "This will fix any games that are associated with the wrong collections.",
-            attributes: [.hidden(when: {true})],
-            detailView: { _ in
-        Button("Fix Game Collection Associations") {
-            fixGameCollections()
-        }
-        .font(.system(size: 17, weight: .bold, design: .default))
-        .foregroundColor(.red)
-        .displayInline()
-    })
-    var fixGameCollections: String = ""
-    
     @Option(name: "Reset Build Counter",
             description: "This will force update actions, such as repairs, to be taken next app launch.",
             attributes: [.hidden(when: {true})],
@@ -103,7 +114,7 @@ extension PowerUserOptions
         
         Settings.buildNumber = 1
         
-        ToastView.show(NSLocalizedString("Successfully Reset Build Counter", comment: ""), onEdge: .bottom, duration: 3.0)
+        ToastView.show(NSLocalizedString("Successfully reset build counter", comment: ""), onEdge: .bottom, duration: 3.0)
     }
     
     static func fixGameCollections()
@@ -115,7 +126,19 @@ extension PowerUserOptions
         
         DatabaseManager.shared.repairGameCollections(repairAll: true)
         
-        ToastView.show(NSLocalizedString("Successfully Fixed Game Collections", comment: ""), onEdge: .bottom, duration: 3.0)
+        ToastView.show(NSLocalizedString("Successfully repaired missing games", comment: ""), onEdge: .bottom, duration: 3.0)
+    }
+    
+    static func fixDeltaSkins()
+    {
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
+            self.showFeatureDisabledToast()
+            return
+        }
+        
+        DatabaseManager.shared.repairDeltaSkins()
+        
+        ToastView.show(NSLocalizedString("Successfully repaired missing delta skins", comment: ""), onEdge: .bottom, duration: 3.0)
     }
 
     static func clearAutoSaveStates()

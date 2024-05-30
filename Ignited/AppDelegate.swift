@@ -221,6 +221,7 @@ private extension AppDelegate
     @objc func databaseManagerDidStart(_ notification: Notification)
     {
         DatabaseManager.shared.repairGameCollections()
+        DatabaseManager.shared.repairDeltaSkins()
         
         guard let deepLink = self.appLaunchDeepLink else { return }
         

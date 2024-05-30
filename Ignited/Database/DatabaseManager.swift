@@ -714,11 +714,6 @@ extension DatabaseManager
                     guard let gameType = GameType(fileExtension: game.fileURL.pathExtension),
                           (gameType.rawValue != game.type.rawValue) || repairAll else
                     {
-                        if game.type.rawValue.hasPrefix("com.rileytestut.delta.game")
-                        {
-                            let temporaryGame = context.object(with: game.objectID) as! Game
-                            context.delete(temporaryGame)
-                        }
                         continue
                     }
                     
@@ -748,6 +743,49 @@ extension DatabaseManager
             catch
             {
                 print("Failed to fix game collections.")
+            }
+        }
+    }
+    
+    func repairDeltaSkins()
+    {
+        let skinFetchRequest: NSFetchRequest<ControllerSkin> = ControllerSkin.fetchRequest()
+        skinFetchRequest.returnsObjectsAsFaults = false
+        
+        self.performBackgroundTask { (context) in
+            var skinsToRepair = Set<URL>()
+            
+            do
+            {
+                let skins: [ControllerSkin] = try skinFetchRequest.execute()
+                
+                for skin in skins
+                {
+                    if skin.gameType.rawValue.hasPrefix("com.rileytestut")
+                    {
+                        if skin.isStandard
+                        {
+                            let temporarySkin = context.object(with: skin.objectID) as! ControllerSkin
+                            context.delete(temporarySkin)
+                        }
+                        else
+                        {
+                            skinsToRepair.insert(skin.fileURL)
+                        }
+                    }
+                }
+                
+                context.saveWithErrorLogging()
+            }
+            catch
+            {
+                print("Failed to fix Delta skins.")
+            }
+            
+            self.importControllerSkins(at: skinsToRepair, completion: nil)
+            
+            self.prepareDatabase {
+                Logger.database.info("Successfully prepared database and reimported standard skins.")
             }
         }
     }
