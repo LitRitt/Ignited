@@ -62,7 +62,8 @@ struct Settings
     static func registerDefaults()
     {
         let defaults = [
-            #keyPath(UserDefaults.buildNumber): 1,
+            #keyPath(UserDefaults.buildNumber): Bundle.main.buildNumber ?? 242,
+            #keyPath(UserDefaults.onboardingHasBeenCompleted): false,
             #keyPath(UserDefaults.legacyDatabaseHasBeenImported): false,
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
@@ -118,6 +119,15 @@ extension Settings
     static var buildNumber: Int {
         set { UserDefaults.standard.buildNumber = newValue }
         get { return UserDefaults.standard.buildNumber }
+    }
+    
+    /// Onboarding
+    static var onboardingHasBeenCompleted: Bool {
+        set { UserDefaults.standard.onboardingHasBeenCompleted = newValue }
+        get {
+            let onboardingHasBeenCompleted = UserDefaults.standard.onboardingHasBeenCompleted
+            return onboardingHasBeenCompleted
+        }
     }
     
     static var sortSaveStatesByOldestFirst: Bool {
@@ -413,4 +423,5 @@ private extension UserDefaults
     @NSManaged var sortSaveStatesByOldestFirst: Bool
     
     @NSManaged var legacyDatabaseHasBeenImported: Bool
+    @NSManaged var onboardingHasBeenCompleted: Bool
 }

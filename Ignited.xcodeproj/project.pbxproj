@@ -89,6 +89,7 @@
 		AC60D84429D88C5400881F0B /* GridCollectionViewGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */; };
 		AC64A1DA2BA7553200438491 /* GBAFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64A1D92BA7553200438491 /* GBAFeatures.swift */; };
 		AC64A1DC2BA7557B00438491 /* GBACoreFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */; };
+		AC64BBEB2C09999A00467ACC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64BBEA2C09999A00467ACC /* OnboardingView.swift */; };
 		AC65B4D02C02F8100060D568 /* IgnitedPro.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AC65B4CF2C02F80D0060D568 /* IgnitedPro.storekit */; };
 		AC65B4D12C03E0550060D568 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC085F3D2C015BD10061007B /* Date+Formatting.swift */; };
 		AC65B4D22C03E0600060D568 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC085F3D2C015BD10061007B /* Date+Formatting.swift */; };
@@ -436,6 +437,7 @@
 		AC60D84329D88C5400881F0B /* GridCollectionViewGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewGameCell.swift; sourceTree = "<group>"; };
 		AC64A1D92BA7553200438491 /* GBAFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBAFeatures.swift; sourceTree = "<group>"; };
 		AC64A1DB2BA7557B00438491 /* GBACoreFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBACoreFeatures.swift; sourceTree = "<group>"; };
+		AC64BBEA2C09999A00467ACC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		AC65B4CE2C02E0A50060D568 /* Ignited.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ignited.xcdatamodel; sourceTree = "<group>"; };
 		AC65B4CF2C02F80D0060D568 /* IgnitedPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IgnitedPro.storekit; sourceTree = "<group>"; };
 		AC65B4D32C03E1760060D568 /* Int+MinutesToFormattedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+MinutesToFormattedString.swift"; sourceTree = "<group>"; };
@@ -933,6 +935,14 @@
 				AC51F1832BAE3A9E003A41D5 /* MGBAOptions.swift */,
 			);
 			path = GBA;
+			sourceTree = "<group>";
+		};
+		AC64BBE92C09996900467ACC /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				AC64BBEA2C09999A00467ACC /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		AC6869072C00EFF00091B693 /* Previews */ = {
@@ -1577,6 +1587,7 @@
 				BFFA71DC1AAC406100EE9DD1 /* AppDelegate.swift */,
 				BFFC46211D59848000AF2CC6 /* Launch */,
 				AC5B25212A4F4E2800591511 /* Scenes */,
+				AC64BBE92C09996900467ACC /* Onboarding */,
 				BFFB709D1AF99ACA00DE56FE /* Emulation */,
 				BF46894D1AAC469800A2586D /* Game Selection */,
 				BF7AE7FA1C2E851F00B1B5BC /* Pause Menu */,
@@ -2161,6 +2172,7 @@
 				ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */,
 				AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */,
 				BFFC464C1D5998D600AF2CC6 /* CheatTableViewCell.swift in Sources */,
+				AC64BBEB2C09999A00467ACC /* OnboardingView.swift in Sources */,
 				BF5942941E09BD1A0051894B /* NSManagedObject+Conveniences.swift in Sources */,
 				BF1F45BF21AF676F00EF9895 /* Box.swift in Sources */,
 				BF7AE80A1C2E8C7600B1B5BC /* UIColor+Theme.swift in Sources */,

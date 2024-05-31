@@ -175,6 +175,12 @@ extension LaunchViewController
                 showGameViewController()
             })
         }
+        
+        if !Settings.onboardingHasBeenCompleted
+        {
+            let onboardingView = OnboardingView.makeViewController()
+            UIApplication.shared.topViewController()?.present(onboardingView, animated: true)
+        }
     }
     
     func updateBuildNumber()
