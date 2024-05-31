@@ -547,6 +547,47 @@ extension DatabaseManager
         }
     }
     
+    func importFromFolder(completionHandler: @escaping (Set<URL>?) -> Void)
+    {
+        var importedURLs = Set<URL>()
+        
+        let documentsDirectoryURL = DatabaseManager.importDirectoryURL
+        
+        do
+        {
+            let contents = try FileManager.default.contentsOfDirectory(at: documentsDirectoryURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            
+            let itemURLs = contents.filter { GameType(fileExtension: $0.pathExtension) != nil || $0.pathExtension.lowercased() == "zip" || $0.pathExtension.lowercased() == "deltaskin" || $0.pathExtension.lowercased() == "ignitedskin" }
+            
+            for url in itemURLs
+            {
+                let destinationURL = FileManager.default.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
+                
+                do
+                {
+                    if FileManager.default.fileExists(atPath: destinationURL.path)
+                    {
+                        try FileManager.default.removeItem(at: destinationURL)
+                    }
+                    
+                    try FileManager.default.moveItem(at: url, to: destinationURL)
+                    importedURLs.insert(destinationURL)
+                }
+                catch
+                {
+                    print("Error importing file at URL", url, error)
+                }
+            }
+            
+        }
+        catch
+        {
+            print(error)
+        }
+        
+        completionHandler(importedURLs)
+    }
+    
     private func extractCompressedGames(at urls: Set<URL>, completion: @escaping ((Set<URL>, Set<ImportError>) -> Void))
     {
         DispatchQueue.global().async {
@@ -820,6 +861,14 @@ extension DatabaseManager
         self.createDirectory(at: backupDirectoryURL)
         
         return backupDirectoryURL
+    }
+    
+    class var importDirectoryURL: URL
+    {
+        let importDirectoryURL = DatabaseManager.defaultDirectoryURL().deletingLastPathComponent().appendingPathComponent("Import")
+        self.createDirectory(at: importDirectoryURL)
+        
+        return importDirectoryURL
     }
     
     class var legacyDatabaseURL: URL
