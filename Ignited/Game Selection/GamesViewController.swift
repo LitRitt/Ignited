@@ -100,8 +100,8 @@ extension GamesViewController
         
         self.placeholderView = RSTPlaceholderView(frame: self.view.bounds)
         self.placeholderView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.placeholderView.textLabel.text = NSLocalizedString("No Games", comment: "")
-        self.placeholderView.detailTextLabel.text = NSLocalizedString("You can import games by pressing the + button in the top right.", comment: "")
+        self.placeholderView.textLabel.text = NSLocalizedString("No Games Yet", comment: "")
+        self.placeholderView.detailTextLabel.text = NSLocalizedString("You can import games by pressing the + button in the top right. You can also place all your games in the (On My \((self.traitCollection.userInterfaceIdiom == .pad) ? "iPad" : "iPhone") -> Ignited -> Import) folder and use the \"From Folder\" import option.", comment: "")
         self.placeholderView.stackView.addArrangedSubview(faqButton)
         self.placeholderView.stackView.setCustomSpacing(20.0, after: self.placeholderView.detailTextLabel)
         self.view.insertSubview(self.placeholderView, at: 0)
