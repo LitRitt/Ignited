@@ -230,6 +230,8 @@ private extension SyncManager
         
         self.syncProgress = nil
         
+        WidgetManager.refresh()
+        
         print("Finished syncing!")
     }
     
