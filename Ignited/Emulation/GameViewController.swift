@@ -291,6 +291,7 @@ class GameViewController: DeltaCore.GameViewController
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnterBackground(with:)), name: UIApplication.didEnterBackgroundNotification, object: UIApplication.shared)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeInactive(with:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.appWillBecomeActive(with:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.settingsDidChange(with:)), name: Settings.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.deepLinkControllerLaunchGame(with:)), name: .deepLinkControllerLaunchGame, object: nil)
@@ -3350,6 +3351,16 @@ private extension GameViewController
            self._isQuickSettingsOpen
         {
             presentedViewController.presentedViewController.dismiss(animated: true)
+        }
+    }
+    
+    @objc func appWillBecomeActive(with notification: Notification)
+    {
+       if let bridge = self.emulatorCore?.deltaCore.emulatorBridge as? MelonDSEmulatorBridge
+        {
+           DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                bridge.forceOpenLid = true
+            }
         }
     }
     
