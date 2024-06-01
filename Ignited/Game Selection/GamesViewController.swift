@@ -504,7 +504,8 @@ extension GamesViewController: ImportControllerDelegate
             }
         }
         
-        if Settings.libraryFeatures.importing.popup
+        if Settings.libraryFeatures.importing.popup,
+           (importedGames != nil || importedControllerSkins != nil)
         {
             DispatchQueue.main.asyncAfter(deadline: .now() + min(0.1 + (Double(urls.count) * 0.1), 5)) {
                 if let window = self.view.window

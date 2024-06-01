@@ -244,7 +244,8 @@ private extension AppDelegate
                     }
                 }
                 
-                if Settings.libraryFeatures.importing.popup
+                if Settings.libraryFeatures.importing.popup,
+                   (importedGames != nil || importedControllerSkins != nil)
                 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + min(0.1 + (Double(importURLs.count) * 0.1), 5)) {
                         if let window = self.window
