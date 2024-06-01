@@ -76,7 +76,6 @@ struct OnboardingView: View {
                                 Text(product.displayPrice)
                                     .font(.caption)
                             }
-                            .shadow(radius: 1)
                             .padding(10)
                         }).disabled(!(PurchaseType(rawValue: product.id)?.available ?? true))
                             .background(
