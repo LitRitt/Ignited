@@ -220,8 +220,13 @@ private extension AppDelegate
 {
     @objc func databaseManagerDidStart(_ notification: Notification)
     {
-        DatabaseManager.shared.repairGameCollections()
-        DatabaseManager.shared.repairDeltaSkins()
+        if !Settings.legacyDatabaseHasBeenRepaired
+        {
+            DatabaseManager.shared.repairGameCollections()
+            DatabaseManager.shared.repairDeltaSkins()
+            
+            Settings.legacyDatabaseHasBeenRepaired = true
+        }
         
         DatabaseManager.shared.importFromFolder() { importURLs in
             if let importURLs = importURLs {

@@ -62,9 +62,10 @@ struct Settings
     static func registerDefaults()
     {
         let defaults = [
-            #keyPath(UserDefaults.buildNumber): Bundle.main.buildNumber ?? 242,
+            #keyPath(UserDefaults.buildNumber): 0,
             #keyPath(UserDefaults.onboardingHasBeenCompleted): false,
             #keyPath(UserDefaults.legacyDatabaseHasBeenImported): false,
+            #keyPath(UserDefaults.legacyDatabaseHasBeenRepaired): false,
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
             #keyPath(UserDefaults.sortSaveStatesByOldestFirst): false,
             Settings.preferredCoreSettingsKey(for: .ds): MelonDS.core.identifier,
@@ -130,6 +131,7 @@ extension Settings
         }
     }
     
+    /// Save States
     static var sortSaveStatesByOldestFirst: Bool {
         set { UserDefaults.standard.sortSaveStatesByOldestFirst = newValue }
         get {
@@ -149,6 +151,7 @@ extension Settings
         }
     }
     
+    /// Library
     static var previousGameCollection: GameCollection? {
         set { UserDefaults.standard.previousGameCollectionIdentifier = newValue?.identifier }
         get {
@@ -161,6 +164,7 @@ extension Settings
         }
     }
     
+    /// Shortcuts
     static var gameShortcutsMode: GameShortcutsMode {
         set { UserDefaults.standard.gameShortcutsMode = newValue.rawValue }
         get {
@@ -206,6 +210,7 @@ extension Settings
         }
     }
     
+    /// Syncing
     static var syncingService: SyncManager.Service? {
         get {
             guard let syncingService = UserDefaults.standard.syncingService else { return nil }
@@ -217,6 +222,7 @@ extension Settings
         }
     }
     
+    /// Database
     static var legacyDatabaseHasBeenImported: Bool {
         set { UserDefaults.standard.legacyDatabaseHasBeenImported = newValue }
         get {
@@ -225,6 +231,15 @@ extension Settings
         }
     }
     
+    static var legacyDatabaseHasBeenRepaired: Bool {
+        set { UserDefaults.standard.legacyDatabaseHasBeenRepaired = newValue }
+        get {
+            let legacyDatabaseHasBeenRepaired = UserDefaults.standard.legacyDatabaseHasBeenRepaired
+            return legacyDatabaseHasBeenRepaired
+        }
+    }
+    
+    /// Cores
     static func preferredCore(for gameType: GameType) -> DeltaCoreProtocol?
     {
         let key = self.preferredCoreSettingsKey(for: gameType)
@@ -245,6 +260,7 @@ extension Settings
         NotificationCenter.default.post(name: Settings.didChangeNotification, object: nil, userInfo: [NotificationUserInfoKey.name: key, NotificationUserInfoKey.core: core])
     }
     
+    /// Controller Skins
     static func preferredControllerSkin(for system: System?, traits: DeltaCore.ControllerSkin.Traits) -> ControllerSkin?
     {
         guard let system = system,
@@ -423,5 +439,6 @@ private extension UserDefaults
     @NSManaged var sortSaveStatesByOldestFirst: Bool
     
     @NSManaged var legacyDatabaseHasBeenImported: Bool
+    @NSManaged var legacyDatabaseHasBeenRepaired: Bool
     @NSManaged var onboardingHasBeenCompleted: Bool
 }
