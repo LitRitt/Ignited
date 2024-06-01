@@ -54,11 +54,11 @@ struct MostPlayedEntryView: View {
                             .mask(
                                 LinearGradient(gradient: Gradient(stops: [
                                     Gradient.Stop(color: Color(white: 0, opacity: 0),
-                                                  location: 0.55),
+                                                  location: 0.6),
                                     Gradient.Stop(color: Color(white: 0, opacity: 0.8),
-                                                  location: 0.65),
+                                                  location: 0.7),
                                     Gradient.Stop(color: Color(white: 0, opacity: 1),
-                                                  location: 0.75)
+                                                  location: 0.8)
                                 ]), startPoint: .top, endPoint: .bottom)
                             )
                     )
@@ -78,11 +78,12 @@ struct MostPlayedEntryView: View {
                     .foregroundColor(.white)
                 Text("Played for \(entry.playTime.formattedString(for: .minute))")
                     .font(.system(size: 11))
-                    .foregroundColor(Color(white: 0.8))
+                    .foregroundColor(Color(white: 0.7))
             }
+            .fontWidth(.condensed)
             .shadow(radius: 2)
             .padding(.horizontal, 12)
-            .padding(.vertical, 8)
+            .padding(.vertical, 6)
             .lineLimit(1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
