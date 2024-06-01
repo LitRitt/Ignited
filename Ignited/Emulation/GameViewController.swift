@@ -188,9 +188,7 @@ class GameViewController: DeltaCore.GameViewController
     
     private var rewindTimer: Timer?
     
-    private var playTimeTimer: Timer?
-    private var playTimePausedTimer: Timer?
-    private var playTimeTimerRemaining: TimeInterval = 0
+    private var playtimeStart: Date?
     
     private var buttonSoundFile: AVAudioFile?
     private var buttonSoundPlayer: AVAudioPlayer?
@@ -573,6 +571,7 @@ extension GameViewController
         }
         
         self.activateRewindTimer()
+        self.setPlaytimeStart()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
@@ -1355,13 +1354,13 @@ private extension GameViewController
 {
     @discardableResult func pauseGameplay() -> Bool
     {
-        self.pausePlaytimeTracker()
+        self.updatePlaytime()
         return self.pauseEmulation()
     }
     
     @discardableResult func resumeGameplay() -> Bool
     {
-        self.resumePlaytimeTracker()
+        self.setPlaytimeStart()
         return self.resumeEmulation()
     }
 }
@@ -3807,70 +3806,25 @@ private extension GameViewController
 //MARK: - Playtime -
 private extension GameViewController
 {
-    func activatePlaytimeTracker()
+    func setPlaytimeStart()
     {
-        if self.playTimeTimer == nil
-        {
-            self.playTimeTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
-                self.updatePlayTime()
-            }
-            NSLog("Playtime tracker activated!")
-        }
+        self.playtimeStart = Date()
     }
     
-    func resumePlaytimeTracker()
+    func updatePlaytime()
     {
-        if self.playTimeTimer == nil
-        {
-            if self.playTimeTimerRemaining > 0
-            {
-                self.playTimePausedTimer = Timer.scheduledTimer(withTimeInterval: self.playTimeTimerRemaining, repeats: false) { _ in
-                    self.updatePlayTime()
-                    self.playTimePausedTimer = nil
-                    self.playTimeTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
-                        self.updatePlayTime()
-                    }
-                }
-            }
-            else
-            {
-                self.playTimeTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
-                    self.updatePlayTime()
-                }
-            }
-            NSLog("Playtime tracker resumed!")
-        }
-    }
-    
-    func pausePlaytimeTracker()
-    {
-        if self.playTimePausedTimer == nil
-        {
-            self.playTimeTimerRemaining = self.playTimeTimer?.fireDate.timeIntervalSinceNow ?? 0
-        }
-        else
-        {
-            self.playTimeTimerRemaining = self.playTimePausedTimer?.fireDate.timeIntervalSinceNow ?? 0
-            self.playTimePausedTimer!.invalidate()
-            self.playTimeTimer = nil
-        }
-        self.playTimeTimer?.invalidate()
-        self.playTimeTimer = nil
-        NSLog("Playtime paused!")
-    }
-    
-    func updatePlayTime()
-    {
-        guard let game = self.game as? Game else { return }
+        guard let game = self.game as? Game,
+              let playtimeStart = self.playtimeStart else { return }
+        
+        let currentDate = Date()
+        let timePassed = currentDate.timeIntervalSince(playtimeStart)
+        
+        guard timePassed > 3 else { return }
         
         let backgroundContext = DatabaseManager.shared.newBackgroundContext()
         backgroundContext.perform {
             let game = backgroundContext.object(with: game.objectID) as! Game
-            
-            let playTime = game.playTime + 1
-            game.playTime = playTime
-            
-            NSLog("Playtime: \(playTime)")
+            game.playTime += UInt32(timePassed)
             
             backgroundContext.saveWithErrorLogging()
         }

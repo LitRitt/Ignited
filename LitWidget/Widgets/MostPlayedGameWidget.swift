@@ -76,7 +76,7 @@ struct MostPlayedEntryView: View {
                     .bold()
                     .font(.system(size: 13))
                     .foregroundColor(.white)
-                Text("Played for \(entry.playTime.formattedString(for: .minute))")
+                Text("Played for \(entry.playTime.secondString)")
                     .font(.system(size: 11))
                     .foregroundColor(Color(white: 0.7))
             }

@@ -9,6 +9,7 @@
 import Foundation
 
 enum TimeUnit: String {
+    case second = "second"
     case minute = "minute"
     case hour = "hour"
     case day = "day"
@@ -21,6 +22,24 @@ extension Date {
                 return "\(Int(length)) \(timeUnit.rawValue) ago"
             } else {
                 return "\(Int(length)) \(timeUnit.rawValue)s ago"
+            }
+        }
+        
+        var seconds = abs(self.distance(to: date))
+        if seconds < 59 {
+            return getFormattedTime(seconds, with: .second)
+        } else {
+            let minutes = (seconds / 60.0).rounded(.up)
+            if minutes < 60 {
+                return getFormattedTime(minutes, with: .minute)
+            } else {
+                let hours = (minutes / 60.0).rounded(.down)
+                if hours < 24 {
+                    return getFormattedTime(hours, with: .hour)
+                } else {
+                    let days = (hours / 24.0).rounded(.down)
+                    return getFormattedTime(days, with: .day)
+                }
             }
         }
         
