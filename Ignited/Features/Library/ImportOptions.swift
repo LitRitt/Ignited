@@ -12,6 +12,10 @@ import Features
 
 struct ImportOptions
 {
+    @Option(name: "Automated Importing",
+            description: "Enable to automatically import files from the Import folder when launching the app.")
+    var automated: Bool = true
+    
     @Option(name: "Sanitize Game Names",
             description: "Enable to remove region and revision tags from game file names when importing them.")
     var sanitize: Bool = true

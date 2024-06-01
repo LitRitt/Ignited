@@ -228,37 +228,40 @@ private extension AppDelegate
             Settings.legacyDatabaseHasBeenRepaired = true
         }
         
-        DatabaseManager.shared.importFromFolder() { importURLs in
-            if let importURLs = importURLs {
-                var importedGames: Set<Game>? = nil
-                var importedControllerSkins: Set<ControllerSkin>? = nil
-                
-                let gameURLs = importURLs.filter { $0.pathExtension.lowercased() != "ignitedskin" && $0.pathExtension.lowercased() != "deltaskin" }
-                DatabaseManager.shared.importGames(at: Set(gameURLs)) { (games, errors) in
-                    if games.count > 0
-                    {
-                        importedGames = games
-                    }
-                }
-                
-                let controllerSkinURLs = importURLs.filter { $0.pathExtension.lowercased() == "ignitedskin" || $0.pathExtension.lowercased() == "deltaskin" }
-                DatabaseManager.shared.importControllerSkins(at: Set(controllerSkinURLs)) { (controllerSkins, errors) in
-                    if controllerSkins.count > 0
-                    {
-                        importedControllerSkins = controllerSkins
-                    }
-                }
-                
-                if Settings.libraryFeatures.importing.popup,
-                   (importedGames != nil || importedControllerSkins != nil)
-                {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + min(0.1 + (Double(importURLs.count) * 0.1), 5)) {
-                        if let window = self.window
+        if Settings.libraryFeatures.importing.automated
+        {
+            DatabaseManager.shared.importFromFolder() { importURLs in
+                if let importURLs = importURLs {
+                    var importedGames: Set<Game>? = nil
+                    var importedControllerSkins: Set<ControllerSkin>? = nil
+                    
+                    let gameURLs = importURLs.filter { $0.pathExtension.lowercased() != "ignitedskin" && $0.pathExtension.lowercased() != "deltaskin" }
+                    DatabaseManager.shared.importGames(at: Set(gameURLs)) { (games, errors) in
+                        if games.count > 0
                         {
-                            let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
-                            
-                            let alertController = UIAlertController.alertController(games: importedGames, controllerSkins: importedControllerSkins, traits: traits)
-                            self.present(alertController)
+                            importedGames = games
+                        }
+                    }
+                    
+                    let controllerSkinURLs = importURLs.filter { $0.pathExtension.lowercased() == "ignitedskin" || $0.pathExtension.lowercased() == "deltaskin" }
+                    DatabaseManager.shared.importControllerSkins(at: Set(controllerSkinURLs)) { (controllerSkins, errors) in
+                        if controllerSkins.count > 0
+                        {
+                            importedControllerSkins = controllerSkins
+                        }
+                    }
+                    
+                    if Settings.libraryFeatures.importing.popup,
+                       (importedGames != nil || importedControllerSkins != nil)
+                    {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + min(0.1 + (Double(importURLs.count) * 0.1), 5)) {
+                            if let window = self.window
+                            {
+                                let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
+                                
+                                let alertController = UIAlertController.alertController(games: importedGames, controllerSkins: importedControllerSkins, traits: traits)
+                                self.present(alertController)
+                            }
                         }
                     }
                 }
