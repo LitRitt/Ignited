@@ -867,6 +867,11 @@ private extension GamesViewController
                      image: UIImage(systemName: "person.fill.questionmark"),
                      handler: { action in
                          UIApplication.shared.openWebpage(site: "https://docs.ignitedemulator.com/help/faq")
+            }),
+            UIAction(title: NSLocalizedString("Show Onboarding", comment: ""),
+                     image: UIImage(systemName: "figure.walk.arrival"),
+                     handler: { action in
+                         self.present(OnboardingView.makeViewController(), animated: true)
             })
         ]
         
