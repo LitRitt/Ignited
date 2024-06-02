@@ -780,20 +780,6 @@ private extension GameCollectionViewController
             return
         }
         
-        let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
-        fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
-        
-        do
-        {
-            let saveStates = try game.managedObjectContext?.fetch(fetchRequest)
-            self.activeSaveState = saveStates?.last
-        }
-        catch
-        {
-            print(error)
-        }
-        
         self.performSegue(withIdentifier: "resumeCurrentGame", sender: game)
     }
     
