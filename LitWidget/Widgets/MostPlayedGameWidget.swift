@@ -12,7 +12,7 @@ import UIKit
 
 struct MostPlayedProvider: TimelineProvider {
     func placeholder(in context: Context) -> MostPlayedEntry {
-        return MostPlayedEntry(isPlaceholder: true)
+        return MostPlayedEntry()
     }
     
     func getSnapshot(in context: Context, completion: @escaping (MostPlayedEntry) -> Void) {
@@ -26,24 +26,52 @@ struct MostPlayedProvider: TimelineProvider {
 
 struct MostPlayedEntry: TimelineEntry {
     var date: Date
-    var name: String
+    var name: String?
     var artwork: UIImage?
-    var playTime: Int
+    var playTime: Int?
     
-    init(isPlaceholder: Bool = false) {
+    init() {
         self.date = Date()
-        self.name = isPlaceholder ? "GBA Game" : SharedSettings.mostPlayedGameName
-        self.artwork = isPlaceholder ? UIImage(named: "GBA") : SharedSettings.mostPlayedGameArtwork
-        self.playTime = isPlaceholder ? 925 : SharedSettings.mostPlayedGameTime
+        self.name = SharedSettings.mostPlayedGameName
+        self.artwork = SharedSettings.mostPlayedGameArtwork
+        self.playTime = SharedSettings.mostPlayedGameTime
     }
 }
 
 struct MostPlayedEntryView: View {
     var entry: MostPlayedProvider.Entry
+    
+    @Environment(\.widgetFamily) var family: WidgetFamily
+    
+    @ViewBuilder
+    var body: some View {
+        switch family {
+        case .systemSmall:
+            MostPlayedEntryViewSmall(entry: entry)
+        case .accessoryRectangular:
+            MostPlayedEntryViewRectangular(entry: entry)
+        case .systemMedium:
+            EmptyView()
+        case .systemLarge:
+            EmptyView()
+        case .systemExtraLarge:
+            EmptyView()
+        case .accessoryCircular:
+            EmptyView()
+        case .accessoryInline:
+            EmptyView()
+        @unknown default:
+            EmptyView()
+        }
+    }
+}
+
+struct MostPlayedEntryViewSmall: View {
+    var entry: MostPlayedProvider.Entry
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            if let artwork = entry.artwork {
+            if let artwork = entry.artwork ?? UIImage(named: "GBA") {
                 Image(uiImage: artwork)
                     .resizable()
                     .aspectRatio(1, contentMode: .fill)
@@ -66,19 +94,25 @@ struct MostPlayedEntryView: View {
                         LinearGradient(gradient: Gradient(stops: [
                             Gradient.Stop(color: Color(white: 0, opacity: 0),
                                           location: 0.5),
-                            Gradient.Stop(color: Color(white: 0, opacity: 0.25),
+                            Gradient.Stop(color: Color(white: 0, opacity: 0.4),
                                           location: 1)
                         ]), startPoint: .top, endPoint: .bottom)
                     )
             }
             VStack(alignment: .leading) {
-                Text(entry.name)
+                Text(entry.name ?? "No Games Played")
                     .bold()
-                    .font(.system(size: 13))
+                    .font(.system(size: 14))
                     .foregroundColor(.white)
-                Text("Played for \(entry.playTime.secondString)")
-                    .font(.system(size: 11))
-                    .foregroundColor(Color(white: 0.7))
+                if let playTime = entry.playTime {
+                    Text("Played for \(playTime.secondString)")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(white: 0.9))
+                } else {
+                    Text("Tap to play!")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(white: 0.9))
+                }
             }
             .fontWidth(.condensed)
             .shadow(radius: 2)
@@ -87,6 +121,33 @@ struct MostPlayedEntryView: View {
             .lineLimit(1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+    }
+}
+
+struct MostPlayedEntryViewRectangular: View {
+    var entry: MostPlayedProvider.Entry
+
+    var body: some View {
+        HStack(alignment: .center) {
+            if let artwork = UIImage(named: "Flame") {
+                Image(uiImage: artwork)
+                    .resizable()
+                    .frame(width: 36, height: 50)
+            }
+            VStack(alignment: .leading) {
+                Text(entry.name ?? "No Games Played")
+                    .bold()
+                    .lineLimit(3)
+                if let playTime = entry.playTime {
+                    Text("Played for \(playTime.secondString)")
+                        .font(.caption)
+                } else {
+                    Text("Tap to play!")
+                        .font(.caption)
+                }
+            }
+        }
+        .fontWidth(.condensed)
     }
 }
 
@@ -100,7 +161,7 @@ struct MostPlayedWidget: Widget {
         }
         .configurationDisplayName("Most Played")
         .description("Shows your most played game's play time.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .accessoryRectangular])
         .contentMarginsDisabled()
     }
 }

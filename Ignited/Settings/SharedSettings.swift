@@ -29,12 +29,12 @@ extension UserDefaults {
     @NSManaged var numberOfGames: Int
     
     // Recently Played Widget
-    @NSManaged var lastPlayedGameName: String
+    @NSManaged var lastPlayedGameName: String?
     @NSManaged var lastPlayedGameArtworkURL: String?
     @NSManaged var lastPlayedGameDate: Double
     
     // Most Played Widget
-    @NSManaged var mostPlayedGameName: String
+    @NSManaged var mostPlayedGameName: String?
     @NSManaged var mostPlayedGameArtworkURL: String?
     @NSManaged var mostPlayedGameTime: Int
 }
@@ -43,10 +43,8 @@ struct SharedSettings {
     static func registerDefaults() {
         let defaults = [
             #keyPath(UserDefaults.numberOfGames): 0,
-            #keyPath(UserDefaults.lastPlayedGameName): "None",
-            #keyPath(UserDefaults.lastPlayedGameDate): 0,
-            #keyPath(UserDefaults.mostPlayedGameName): "None",
-            #keyPath(UserDefaults.mostPlayedGameTime): 0
+            #keyPath(UserDefaults.lastPlayedGameDate): -1,
+            #keyPath(UserDefaults.mostPlayedGameTime): -1,
         ] as [String : Any]
         UserDefaults.shared.register(defaults: defaults)
     }
@@ -56,22 +54,22 @@ extension SharedSettings {
     // Games counter Widget
     static var numberOfGames: Int {
         set { UserDefaults.shared.numberOfGames = newValue }
-        get {
-            return UserDefaults.shared.integer(forKey: #keyPath(UserDefaults.numberOfGames))
-        }
+        get { return UserDefaults.shared.integer(forKey: #keyPath(UserDefaults.numberOfGames)) }
     }
     
     // Recently Played Widget
-    static var lastPlayedGameName: String {
+    static var lastPlayedGameName: String? {
         set { UserDefaults.shared.lastPlayedGameName = newValue }
-        get {
-            return UserDefaults.shared.string(forKey: #keyPath(UserDefaults.lastPlayedGameName)) ?? "No Games Played"
-        }
+        get { return UserDefaults.shared.string(forKey: #keyPath(UserDefaults.lastPlayedGameName)) }
     }
     
-    static var lastPlayedGameDate: Date {
-        set { UserDefaults.shared.lastPlayedGameDate = newValue.timeIntervalSince1970 }
-        get { return Date(timeIntervalSince1970: UserDefaults.shared.double(forKey: #keyPath(UserDefaults.lastPlayedGameDate))) }
+    static var lastPlayedGameDate: Date? {
+        set { UserDefaults.shared.lastPlayedGameDate = newValue?.timeIntervalSince1970 ?? -1 }
+        get {
+            let lastPlayedGameDate = UserDefaults.shared.double(forKey: #keyPath(UserDefaults.lastPlayedGameDate))
+            guard lastPlayedGameDate >= 0 else { return nil }
+            return Date(timeIntervalSince1970: lastPlayedGameDate)
+        }
     }
     
     static var lastPlayedGameArtworkUrl: URL? {
@@ -109,16 +107,18 @@ extension SharedSettings {
     }
     
     // Most Played Widget
-    static var mostPlayedGameName: String {
+    static var mostPlayedGameName: String? {
         set { UserDefaults.shared.mostPlayedGameName = newValue }
-        get {
-            return UserDefaults.shared.string(forKey: #keyPath(UserDefaults.mostPlayedGameName)) ?? "No Games Played"
-        }
+        get { return UserDefaults.shared.string(forKey: #keyPath(UserDefaults.mostPlayedGameName)) }
     }
     
-    static var mostPlayedGameTime: Int {
-        set { UserDefaults.shared.mostPlayedGameTime = newValue }
-        get { return UserDefaults.shared.integer(forKey: #keyPath(UserDefaults.mostPlayedGameTime)) }
+    static var mostPlayedGameTime: Int? {
+        set { UserDefaults.shared.mostPlayedGameTime = newValue ?? -1 }
+        get {
+            let mostPlayedGameTime = UserDefaults.shared.integer(forKey: #keyPath(UserDefaults.mostPlayedGameTime))
+            guard mostPlayedGameTime >= 0 else { return nil }
+            return mostPlayedGameTime
+        }
     }
     
     static var mostPlayedGameArtworkUrl: URL? {

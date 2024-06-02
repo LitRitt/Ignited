@@ -42,9 +42,9 @@ struct WidgetManager {
             SharedSettings.lastPlayedGameArtworkUrl = mostRecentGame.artworkURL
             SharedSettings.lastPlayedGameDate = mostRecentGame.playedDate ?? Date()
         } else {
-            SharedSettings.lastPlayedGameName = "No Games Played"
+            SharedSettings.lastPlayedGameName = nil
             SharedSettings.lastPlayedGameArtworkUrl = nil
-            SharedSettings.lastPlayedGameDate = Date.distantPast
+            SharedSettings.lastPlayedGameDate = nil
         }
         
         if let mostPlayedGame = mostPlayedGames.first {
@@ -52,9 +52,9 @@ struct WidgetManager {
             SharedSettings.mostPlayedGameArtworkUrl = mostPlayedGame.artworkURL
             SharedSettings.mostPlayedGameTime = Int(mostPlayedGame.playTime)
         } else {
-            SharedSettings.mostPlayedGameName = "No Games Played"
+            SharedSettings.mostPlayedGameName = nil
             SharedSettings.mostPlayedGameArtworkUrl = nil
-            SharedSettings.mostPlayedGameTime = 0
+            SharedSettings.mostPlayedGameTime = nil
         }
     }
 }
