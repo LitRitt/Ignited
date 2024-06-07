@@ -345,7 +345,9 @@ class GameViewController: DeltaCore.GameViewController
                 self.performQuickSettingsAction()
             }
         }
-        else if let standardInput = StandardGameControllerInput(input: input), standardInput == .menu
+        else if let standardInput = StandardGameControllerInput(input: input),
+                standardInput == .menu,
+                gameController.inputType == .controllerSkin
         {
             self.isMenuButtonHeldDown = true
 
