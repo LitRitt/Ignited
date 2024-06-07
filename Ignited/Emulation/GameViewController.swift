@@ -817,7 +817,7 @@ extension GameViewController
                 // GPGX core does not support cheats yet.
                 pauseViewController.cheatCodesItem = nil
                 
-            case .gbc?:
+            case .gbc? where self.emulatorCore?.deltaCore == GBC.core:
                 // Rewind is disabled on GBC. Crashes gambette
                 pauseViewController.rewindItem = nil
 
