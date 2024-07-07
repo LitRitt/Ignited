@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GCSupportsGameMode</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.games</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
@@ -227,7 +231,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Ignited uses your microphone to emulate the Nintendo DS microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Press "OK" to allow Ignited to use images from your Photo Library as game artwork.</string>
+	<string>Press &quot;OK&quot; to allow Ignited to use images from your Photo Library as game artwork.</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.com.litritt.ignited</key>
