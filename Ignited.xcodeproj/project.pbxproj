@@ -106,6 +106,17 @@
 		AC6BDBE22BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6BDBE12BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift */; };
 		AC6DC54C2A7E8D00001B5004 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */; };
 		AC720C0D29FDC0C700483B47 /* libFeatures.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8C211F29FDAD970044748D /* libFeatures.a */; };
+		AC7262DA2C49B3530009B577 /* Benefit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262D92C49B3530009B577 /* Benefit.swift */; };
+		AC7262DC2C49B3DE0009B577 /* Campaign.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262DB2C49B3DE0009B577 /* Campaign.swift */; };
+		AC7262DE2C49B41F0009B577 /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262DD2C49B41F0009B577 /* Tier.swift */; };
+		AC7262E02C49B42B0009B577 /* Patron.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262DF2C49B42B0009B577 /* Patron.swift */; };
+		AC7262E22C49B4490009B577 /* PatreonAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262E12C49B4490009B577 /* PatreonAPI.swift */; };
+		AC7262E42C49B4AE0009B577 /* PatreonSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262E32C49B4AE0009B577 /* PatreonSecrets.swift */; };
+		AC7262E82C49B5540009B577 /* PatreonAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262E72C49B5540009B577 /* PatreonAccount.swift */; };
+		AC7262EC2C49B98B0009B577 /* AboutPatreonHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC7262EB2C49B98B0009B577 /* AboutPatreonHeaderView.xib */; };
+		AC7262EE2C49BA370009B577 /* PatreonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262ED2C49BA370009B577 /* PatreonComponents.swift */; };
+		AC7262F02C49BA9B0009B577 /* PatreonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262EF2C49BA9B0009B577 /* PatreonViewController.swift */; };
+		AC7262F22C49BAB30009B577 /* PremiumPatronsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7262F12C49BAB30009B577 /* PremiumPatronsView.swift */; };
 		AC7D55702A07F7A900B66BF1 /* ImageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */; };
 		AC7FCC9B2BC113370072BF7C /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7FCC9A2BC113370072BF7C /* PurchaseManager.swift */; };
 		AC84B56C29FEF5460090F274 /* GameplayFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84B56B29FEF5460090F274 /* GameplayFeatures.swift */; };
@@ -449,6 +460,17 @@
 		AC6997072AF1653A005AF83C /* UIWindow+DeviceShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+DeviceShake.swift"; sourceTree = "<group>"; };
 		AC6BDBE12BAF3B8100BAA7A8 /* Array+LocalizedOptionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+LocalizedOptionValue.swift"; sourceTree = "<group>"; };
 		AC6DC54B2A7E8D00001B5004 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
+		AC7262D92C49B3530009B577 /* Benefit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benefit.swift; sourceTree = "<group>"; };
+		AC7262DB2C49B3DE0009B577 /* Campaign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Campaign.swift; sourceTree = "<group>"; };
+		AC7262DD2C49B41F0009B577 /* Tier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
+		AC7262DF2C49B42B0009B577 /* Patron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patron.swift; sourceTree = "<group>"; };
+		AC7262E12C49B4490009B577 /* PatreonAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatreonAPI.swift; sourceTree = "<group>"; };
+		AC7262E32C49B4AE0009B577 /* PatreonSecrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatreonSecrets.swift; sourceTree = "<group>"; };
+		AC7262E72C49B5540009B577 /* PatreonAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatreonAccount.swift; sourceTree = "<group>"; };
+		AC7262EB2C49B98B0009B577 /* AboutPatreonHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutPatreonHeaderView.xib; sourceTree = "<group>"; };
+		AC7262ED2C49BA370009B577 /* PatreonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatreonComponents.swift; sourceTree = "<group>"; };
+		AC7262EF2C49BA9B0009B577 /* PatreonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatreonViewController.swift; sourceTree = "<group>"; };
+		AC7262F12C49BAB30009B577 /* PremiumPatronsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPatronsView.swift; sourceTree = "<group>"; };
 		AC7D556F2A07F7A900B66BF1 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
 		AC7FCC9A2BC113370072BF7C /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		AC84B56B29FEF5460090F274 /* GameplayFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayFeatures.swift; sourceTree = "<group>"; };
@@ -954,6 +976,38 @@
 			path = Previews;
 			sourceTree = "<group>";
 		};
+		AC7262D82C49B30D0009B577 /* Patreon */ = {
+			isa = PBXGroup;
+			children = (
+				AC7262D92C49B3530009B577 /* Benefit.swift */,
+				AC7262DB2C49B3DE0009B577 /* Campaign.swift */,
+				AC7262DD2C49B41F0009B577 /* Tier.swift */,
+				AC7262DF2C49B42B0009B577 /* Patron.swift */,
+				AC7262E12C49B4490009B577 /* PatreonAPI.swift */,
+				AC7262E32C49B4AE0009B577 /* PatreonSecrets.swift */,
+			);
+			path = Patreon;
+			sourceTree = "<group>";
+		};
+		AC7262E62C49B5460009B577 /* Patreon */ = {
+			isa = PBXGroup;
+			children = (
+				AC7262E72C49B5540009B577 /* PatreonAccount.swift */,
+			);
+			path = Patreon;
+			sourceTree = "<group>";
+		};
+		AC7262EA2C49B9690009B577 /* Patreon */ = {
+			isa = PBXGroup;
+			children = (
+				AC7262EB2C49B98B0009B577 /* AboutPatreonHeaderView.xib */,
+				AC7262ED2C49BA370009B577 /* PatreonComponents.swift */,
+				AC7262EF2C49BA9B0009B577 /* PatreonViewController.swift */,
+				AC7262F12C49BAB30009B577 /* PremiumPatronsView.swift */,
+			);
+			path = Patreon;
+			sourceTree = "<group>";
+		};
 		AC7FCC992BC113090072BF7C /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
@@ -1299,6 +1353,7 @@
 				BF4828811F9027B600028B97 /* Ignited.xcdatamodeld */,
 				BF5942741E09BC740051894B /* Human */,
 				BF5942751E09BC780051894B /* Machine */,
+				AC7262E62C49B5460009B577 /* Patreon */,
 				BF6B82A31F7CC29A00042BFB /* Transformers */,
 				BF5942761E09BC7C0051894B /* Misc */,
 			);
@@ -1493,6 +1548,7 @@
 				AC8C213729FDAF1B0044748D /* Features */,
 				BFE9907E24451DE6006409A7 /* Cores */,
 				AC2059E62A112CA30098266B /* Quick Settings */,
+				AC7262EA2C49B9690009B577 /* Patreon */,
 				BF71CF851FE8FFF1001F1613 /* App Icon Shortcuts */,
 				BF11734E1DA32CEC00047DF8 /* Controllers */,
 				BF1DAD5B1D9F574900E752A7 /* Controller Skins */,
@@ -1598,6 +1654,7 @@
 				BF59428C1E09BCE50051894B /* Importing */,
 				BF930FFB1EB6D6EC00E8DBA0 /* Systems */,
 				BF525EE61FF5F355004AA849 /* Deep Linking */,
+				AC7262D82C49B30D0009B577 /* Patreon */,
 				AC7FCC992BC113090072BF7C /* Purchases */,
 				AC1C223C2BFA4191008B40EF /* Widgets */,
 				ACAB77192B468C50001AB619 /* Protocols */,
@@ -1874,6 +1931,7 @@
 				AC4D519E2B09F881008B245B /* Settings.storyboard in Resources */,
 				BF1F45AB21AF4B5800EF9895 /* SyncResultsViewController.storyboard in Resources */,
 				AC4D51992B09F848008B245B /* PauseMenu.storyboard in Resources */,
+				AC7262EC2C49B98B0009B577 /* AboutPatreonHeaderView.xib in Resources */,
 				AC4D519C2B09F871008B245B /* PausePresentationControllerContentView.xib in Resources */,
 				BF27CC8E1BC9FEA200A20D89 /* Assets.xcassets in Resources */,
 			);
@@ -2031,6 +2089,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC7262E22C49B4490009B577 /* PatreonAPI.swift in Sources */,
 				BFB3645823245A6000CD0EB1 /* LicensesViewController.swift in Sources */,
 				BFC6F7B81F435BC500221B96 /* Input+Display.swift in Sources */,
 				ACED6C302B92636B0080BFD3 /* CGSize+RelativeAndAbsolute.swift in Sources */,
@@ -2071,6 +2130,7 @@
 				AC8E5BCA29CCF77700F32D19 /* UIColor+AdjustHSBA.swift in Sources */,
 				AC3CE7F62A2BA822008A8C43 /* LibraryFeatures.swift in Sources */,
 				ACADE4C92B4DA8450001B050 /* SNESFeatures.swift in Sources */,
+				AC7262EE2C49BA370009B577 /* PatreonComponents.swift in Sources */,
 				BFE593CA21F3F8B7003412A6 /* GameSave.swift in Sources */,
 				BF63A1B521A4B76E00EE8F61 /* RecordVersionsViewController.swift in Sources */,
 				AC65B4D42C03E1760060D568 /* Int+MinutesToFormattedString.swift in Sources */,
@@ -2082,6 +2142,8 @@
 				AC1EAE672A0061910072C858 /* PowerUserOptions.swift in Sources */,
 				BFFC46201D59823500AF2CC6 /* InitialGamesStoryboardSegue.swift in Sources */,
 				BF15AF841F54B43B009B6AAB /* ActionInput.swift in Sources */,
+				AC7262DA2C49B3530009B577 /* Benefit.swift in Sources */,
+				AC7262F02C49BA9B0009B577 /* PatreonViewController.swift in Sources */,
 				AC1EAE6B2A006CC30072C858 /* SkinDebugOptions.swift in Sources */,
 				ACE43DB62B46945F00AD9287 /* JSONDecoder+ManagedObjectContext.swift in Sources */,
 				ACCD93EF2B978E9800BB4F6A /* UIColor+Battery.swift in Sources */,
@@ -2169,6 +2231,7 @@
 				D5864978297756CE0081477E /* CheatBaseView.swift in Sources */,
 				ACD5FA032A0C4C84005CDCF1 /* GBFeatures.swift in Sources */,
 				BF353FFF1C5DA3C500C1184C /* PausePresentationController.swift in Sources */,
+				AC7262F22C49BAB30009B577 /* PremiumPatronsView.swift in Sources */,
 				ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */,
 				AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */,
 				BFFC464C1D5998D600AF2CC6 /* CheatTableViewCell.swift in Sources */,
@@ -2177,6 +2240,7 @@
 				BF1F45BF21AF676F00EF9895 /* Box.swift in Sources */,
 				BF7AE80A1C2E8C7600B1B5BC /* UIColor+Theme.swift in Sources */,
 				AC31535C2AFC094C004EB51E /* UIApplication+Webpage.swift in Sources */,
+				AC7262E02C49B42B0009B577 /* Patron.swift in Sources */,
 				BF797A2D1C2D339F00F1A000 /* UILabel+FontSize.swift in Sources */,
 				BF80E1D21F13117000847008 /* ControllerInputsViewController.swift in Sources */,
 				BF5942641E09BBB10051894B /* LoadControllerSkinImageOperation.swift in Sources */,
@@ -2193,6 +2257,7 @@
 				BF8A333421A484A000A42FD4 /* BadgedTableViewCell.swift in Sources */,
 				AC7FCC9B2BC113370072BF7C /* PurchaseManager.swift in Sources */,
 				AC417DAD2BF71DCD00A540EA /* SwipeGestureOptions.swift in Sources */,
+				AC7262DC2C49B3DE0009B577 /* Campaign.swift in Sources */,
 				BF3540021C5DA3D500C1184C /* PauseStoryboardSegue.swift in Sources */,
 				AC89AC172B8068C0000F65ED /* StandardControllerSkin.swift in Sources */,
 				AC1771D62B9A55FD009AEF4A /* AppPresetOptions.swift in Sources */,
@@ -2200,12 +2265,14 @@
 				AC4BB76D2B094A9A0097E908 /* FeaturesView.swift in Sources */,
 				AC99B33D2B254B10001A2A1F /* PauseMenuOptions.swift in Sources */,
 				AC2059EA2A117B570098266B /* QuickSettingsOptions.swift in Sources */,
+				AC7262E82C49B5540009B577 /* PatreonAccount.swift in Sources */,
 				ACAB773B2B46926F001AB619 /* Keychain.swift in Sources */,
 				BF107EC41BF413F000E0C32C /* GamesViewController.swift in Sources */,
 				BF59426F1E09BC5D0051894B /* DatabaseManager.swift in Sources */,
 				ACED6C372B9277BD0080BFD3 /* GameScreenOptions.swift in Sources */,
 				BF4828861F9028F500028B97 /* System.swift in Sources */,
 				BF13A7561D5D29B0000BB055 /* PreviewGameViewController.swift in Sources */,
+				AC7262E42C49B4AE0009B577 /* PatreonSecrets.swift in Sources */,
 				AC0076DE2B509B4200EBC46C /* LowBatteryOptions.swift in Sources */,
 				BF6866171DCAC8B900BF2D06 /* ControllerSkin+Configuring.swift in Sources */,
 				BF713C0822499ED4004A1A2B /* PreviousHarmony.xcdatamodeld in Sources */,
@@ -2237,6 +2304,7 @@
 				BF7AE8081C2E858400B1B5BC /* GridMenuViewController.swift in Sources */,
 				ACED6C2E2B9262EB0080BFD3 /* CGRect+RelativeAndAbsolute.swift in Sources */,
 				BF6BF31A1EB82146008E83CD /* ClipboardImportOption.swift in Sources */,
+				AC7262DE2C49B41F0009B577 /* Tier.swift in Sources */,
 				BF59427F1E09BC830051894B /* GameCollection.swift in Sources */,
 				ACBAB9022BF91CCF00B796FC /* ImportOptions.swift in Sources */,
 			);

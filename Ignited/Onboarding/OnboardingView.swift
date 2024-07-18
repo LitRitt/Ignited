@@ -62,32 +62,36 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 
-                Text("Ignited aims to be a customizable and user friendly emulator, providing frequent updates and supporting an open and creative community. To access more themes, icons, settings, and to support development of Ignited, consider becoming a Pro member.")
+                Text("""
+Ignited aims to be a customizable and user friendly emulator, supporting an open and creative community. To access more themes, icons, settings, and to support development of Ignited, consider becoming a Pro member. You can become a Pro member by joining my Patreon. Go to settings for more info.
+
+Start customizing your experience by choosing a theme color below. Once you're finished, swipe down to dismiss this message and start adding your games.
+""")
                     .font(.caption)
                     .padding(.vertical, 6)
-                HStack(spacing: 16) {
-                    ForEach(purchaseManager.products, id: \.self) { product in
-                        Button(action: {
-                            purchaseManager.purchase(product)
-                        }, label: {
-                            VStack {
-                                Text(PurchaseType(rawValue: product.id)?.description ?? "Pro")
-                                    .font(.system(size: 20, weight: .semibold))
-                                Text(product.displayPrice)
-                                    .font(.caption)
-                            }
-                            .padding(10)
-                        }).disabled(!(PurchaseType(rawValue: product.id)?.available ?? true))
-                            .background(
-                                Color(uiColor: .systemBackground).opacity(0.2)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                            )
-                    }
-                }
+//                HStack(spacing: 16) {
+//                    ForEach(purchaseManager.products, id: \.self) { product in
+//                        Button(action: {
+//                            purchaseManager.purchase(product)
+//                        }, label: {
+//                            VStack {
+//                                Text(PurchaseType(rawValue: product.id)?.description ?? "Pro")
+//                                    .font(.system(size: 20, weight: .semibold))
+//                                Text(product.displayPrice)
+//                                    .font(.caption)
+//                            }
+//                            .padding(10)
+//                        }).disabled(!(PurchaseType(rawValue: product.id)?.available ?? true))
+//                            .background(
+//                                Color(uiColor: .systemBackground).opacity(0.2)
+//                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+//                            )
+//                    }
+//                }
                 
-                Text("Start customizing your experience by choosing a theme color below. Once you're finished, swipe down to dismiss this message and start adding your games.")
-                    .font(.caption)
-                    .padding(.vertical, 6)
+//                Text("Start customizing your experience by choosing a theme color below. Once you're finished, swipe down to dismiss this message and start adding your games.")
+//                    .font(.caption)
+//                    .padding(.vertical, 6)
                 
                 Picker("Theme Color", selection: self.$themeColor) {
                     ForEach(ThemeColor.allCases.filter { !$0.pro }, id: \.self) { color in

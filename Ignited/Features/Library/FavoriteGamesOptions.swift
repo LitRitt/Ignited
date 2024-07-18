@@ -98,7 +98,7 @@ struct FavoriteGamesOptions
     
     @Option(name: "Style",
             description: "Choose the style to use for favorite game artwork. Pro users can use a customizable style.",
-            values: PurchaseManager.shared.hasUnlockedPro ? FavoriteArtworkStyle.allCases : [.theme, .themeComplimentary])
+            values: Settings.proFeaturesEnabled ? FavoriteArtworkStyle.allCases : [.theme, .themeComplimentary])
     var style: FavoriteArtworkStyle = .theme
     
     @Option(name: "Background Color Mode",

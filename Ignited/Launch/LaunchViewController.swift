@@ -124,6 +124,11 @@ extension LaunchViewController
         
         PurchaseManager.shared.loadProducts()
         PurchaseManager.shared.updatePurchasedProducts()
+        
+        PatreonAPI.shared.refreshPatreonAccount()
+        PatreonAPI.shared.refreshCreatorAccessToken()
+        PatreonAPI.shared.updateProFeatures()
+        
         WidgetManager.refresh()
         
         self.updateBuildNumber()

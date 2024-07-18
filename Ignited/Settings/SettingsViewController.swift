@@ -26,7 +26,8 @@ private extension SettingsViewController
         case controllers
         case controllerSkins
         case shortcuts
-        case pro
+        //case pro
+        case patreon
         case credits
         case support
     }
@@ -70,6 +71,12 @@ private extension SettingsViewController
     {
         case service
         case status
+    }
+    
+    enum PatreonRow: Int, CaseIterable
+    {
+        case patreonPro
+        case patreonPremium
     }
     
     enum CreditsRow: Int, CaseIterable
@@ -191,7 +198,7 @@ private extension SettingsViewController
     {
         self.syncingServiceLabel.text = Settings.syncingService?.localizedName
         
-        self.purchaseLabel.text = PurchaseManager.shared.hasUnlockedPro ? NSLocalizedString("View Membership", comment: ""): NSLocalizedString("Become a Member", comment: "")
+        //self.purchaseLabel.text = Settings.proFeaturesEnabled ? NSLocalizedString("View Pro Memeber", comment: ""): NSLocalizedString("Become a Member", comment: "")
         
         do
         {
@@ -228,6 +235,12 @@ private extension SettingsViewController
     func showProPurchases()
     {
         let hostingController = PurchaseView.makeViewController()
+        self.navigationController?.pushViewController(hostingController, animated: true)
+    }
+    
+    func showPremiumPatrons()
+    {
+        let hostingController = PremiumPatronsView.makeViewController()
         self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
@@ -443,10 +456,17 @@ extension SettingsViewController
             case .ds: self.performSegue(withIdentifier: Segue.dsSettings.rawValue, sender: cell)
             }
             
-        case .pro:
-            self.showProPurchases()
+        case .patreon:
+            switch PatreonRow.allCases[indexPath.row]
+            {
+            case .patreonPro: break
+            case .patreonPremium: self.showPremiumPatrons()
+            }
             
-            tableView.deselectRow(at: indexPath, animated: true)
+//        case .pro:
+//            self.showProPurchases()
+//            
+//            tableView.deselectRow(at: indexPath, animated: true)
             
         case .credits:
             switch CreditsRow.allCases[indexPath.row]

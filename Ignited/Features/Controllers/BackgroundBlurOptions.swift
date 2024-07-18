@@ -113,7 +113,7 @@ struct BackgroundBlurOptions
     
     @Option(name: "Tint Color",
             description: "Choose a color to tint the background blur. Pro user can use both a custom color and a dynamic battery color.",
-            values: PurchaseManager.shared.hasUnlockedPro ? BackgroundBlurTintColor.allCases : [.none, .theme])
+            values: Settings.proFeaturesEnabled ? BackgroundBlurTintColor.allCases : [.none, .theme])
     var tintColor: BackgroundBlurTintColor = .theme
     
     @Option(name: "Custom Tint Color",

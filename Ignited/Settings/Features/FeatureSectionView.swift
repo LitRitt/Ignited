@@ -19,7 +19,7 @@ struct FeatureSection<T: AnyFeature>: View
         Section {
             if feature.allOptions.isEmpty
             {
-                if feature.pro && !PurchaseManager.shared.hasUnlockedPro
+                if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
                         Text(feature.name).addProLabel().addBetaLabel(feature.beta)
@@ -38,7 +38,7 @@ struct FeatureSection<T: AnyFeature>: View
             }
             else
             {
-                if feature.pro && !PurchaseManager.shared.hasUnlockedPro
+                if feature.pro && !Settings.proFeaturesEnabled
                 {
                     HStack {
                         Text(feature.name).addProLabel().addBetaLabel(feature.beta)
@@ -147,7 +147,7 @@ private struct OptionRow<Option: AnyOption, DetailView: View>: View where Detail
                 .environment(\.managedObjectContext, DatabaseManager.shared.viewContext)
                 .environment(\.featureOption, option)
             
-            if pro && !PurchaseManager.shared.hasUnlockedPro
+            if pro && !Settings.proFeaturesEnabled
             {
                 HStack {
                     Text(name).addProLabel().addBetaLabel(beta)

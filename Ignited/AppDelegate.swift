@@ -62,6 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         PurchaseManager.shared.loadProducts()
         PurchaseManager.shared.updatePurchasedProducts()
+        
+        PatreonAPI.shared.refreshPatreonAccount()
+        PatreonAPI.shared.refreshCreatorAccessToken()
+        PatreonAPI.shared.updateProFeatures()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication)

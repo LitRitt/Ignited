@@ -20,7 +20,7 @@
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <color key="separatorColor" systemColor="separatorColor"/>
                         <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ignited 1.11" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Str-BY-agW">
-                            <rect key="frame" x="0.0" y="2183.9999866485596" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="2227.9999866485596" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -580,7 +580,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Ignited Pro" footerTitle="Unlock more icons customization" id="QvT-Yt-oP1">
+                            <tableViewSection headerTitle="Patreon" footerTitle="Unlock more icons and customization" id="QvT-Yt-oP1" userLabel="Patreon">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="faT-qa-JP0" style="IBUITableViewCellStyleDefault" id="4it-3L-j8P">
                                         <rect key="frame" x="20" y="1783.3333225250244" width="335" height="44"/>
@@ -589,7 +589,26 @@
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Join Pro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="faT-qa-JP0">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ignited Pro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="faT-qa-JP0">
+                                                    <rect key="frame" x="20" y="0.0" width="276.66666666666669" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="7mK-Ue-dW7" kind="show" id="anP-K1-QNz"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="9wz-F1-hU2" style="IBUITableViewCellStyleDefault" id="dR6-Ez-mjn">
+                                        <rect key="frame" x="20" y="1827.3333225250244" width="335" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dR6-Ez-mjn" id="H9y-lN-EnA">
+                                            <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Premium Members" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9wz-F1-hU2" userLabel="Premium Members">
                                                     <rect key="frame" x="20" y="0.0" width="276.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -603,7 +622,7 @@
                             <tableViewSection headerTitle="Credits" footerTitle="See what makes Ignited possible" id="foh-L9-g6W">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DetailCell" textLabel="Pum-dL-hGn" detailTextLabel="WQ6-m7-zhh" style="IBUITableViewCellStyleValue1" id="BU4-ee-DGz">
-                                        <rect key="frame" x="20" y="1902.666654586792" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="1946.666654586792" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BU4-ee-DGz" id="fWf-gm-1sf">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -626,7 +645,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DetailCell" textLabel="2K3-IL-94S" style="IBUITableViewCellStyleDefault" id="j7p-ZK-mHq">
-                                        <rect key="frame" x="20" y="1946.666654586792" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="1990.666654586792" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j7p-ZK-mHq" id="BqT-yP-OpS">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -649,7 +668,7 @@
                             <tableViewSection headerTitle="Support" footerTitle="Get help with app issues" id="8b8-db-xLR">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DetailCell" textLabel="NfC-v8-jna" style="IBUITableViewCellStyleDefault" id="W1R-PN-bGf">
-                                        <rect key="frame" x="20" y="2065.9999866485596" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="2109.9999866485596" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W1R-PN-bGf" id="cC9-Xv-7Gb">
                                             <rect key="frame" x="0.0" y="0.0" width="304.66666666666669" height="44"/>
@@ -665,7 +684,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="ActivityCell" id="pbH-PA-Ixh">
-                                        <rect key="frame" x="20" y="2109.9999866485596" width="335" height="44"/>
+                                        <rect key="frame" x="20" y="2153.9999866485596" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pbH-PA-Ixh" id="TbQ-KY-J3R">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
@@ -2178,6 +2197,58 @@ Licensed under Apache 2 license.</string>
             </objects>
             <point key="canvasLocation" x="2513" y="2680"/>
         </scene>
+        <!--Ignited Pro-->
+        <scene sceneID="Ccb-mo-tG9">
+            <objects>
+                <collectionViewController id="7mK-Ue-dW7" customClass="PatreonViewController" customModule="Ignited" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="zTh-GI-Vp0">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="20" id="7B0-wv-58a">
+                            <size key="itemSize" width="157" height="20"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="20" minY="8" maxX="20" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="2IC-vI-lHe" customClass="PatronCollectionViewCell" customModule="Ignited" customModuleProvider="target">
+                                <rect key="frame" x="20" y="8" width="157" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="157" height="20"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mister Patron" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="vPX-kP-X4I">
+                                            <rect key="frame" x="0.0" y="0.0" width="157" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="vPX-kP-X4I" firstAttribute="leading" secondItem="2IC-vI-lHe" secondAttribute="leading" id="Czh-lO-i6k"/>
+                                    <constraint firstAttribute="bottom" secondItem="vPX-kP-X4I" secondAttribute="bottom" id="OVv-Wf-I4R"/>
+                                    <constraint firstItem="vPX-kP-X4I" firstAttribute="top" secondItem="2IC-vI-lHe" secondAttribute="top" id="UbV-wQ-OTe"/>
+                                    <constraint firstAttribute="trailing" secondItem="vPX-kP-X4I" secondAttribute="trailing" id="yab-0P-vFd"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="textLabel" destination="vPX-kP-X4I" id="Byd-3l-0m8"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="7mK-Ue-dW7" id="TxG-lJ-OF7"/>
+                            <outlet property="delegate" destination="7mK-Ue-dW7" id="kKr-sj-86X"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Ignited Pro" largeTitleDisplayMode="always" id="9Aq-jm-qgU"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qb3-a0-9K4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2512" y="-932"/>
+        </scene>
     </scenes>
     <resources>
         <namedColor name="Orange">
@@ -2191,6 +2262,9 @@ Licensed under Apache 2 license.</string>
         </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

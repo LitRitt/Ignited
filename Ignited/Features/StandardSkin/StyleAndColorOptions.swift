@@ -104,7 +104,7 @@ struct StyleAndColorOptions
     
     @Option(name: "Color",
             description: "Choose which color to use for inputs. Pro users can use both a custom color and a dynamic battery color.",
-            values: StandardSkinColor.allCases.filter { !$0.pro || PurchaseManager.shared.hasUnlockedPro })
+            values: StandardSkinColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
     var color: StandardSkinColor = .auto
     
     @Option(name: "Custom Color",

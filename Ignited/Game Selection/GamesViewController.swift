@@ -555,7 +555,7 @@ private extension GamesViewController
             })
         ]
         
-        if PurchaseManager.shared.hasUnlockedPro
+        if Settings.proFeaturesEnabled
         {
             previewOptions.append(UIAction(title: NSLocalizedString("Live Artwork", comment: ""),
                                            image: UIImage(systemName: "photo"),
@@ -682,7 +682,7 @@ private extension GamesViewController
     {
         var themeColorOptions: [UIAction] = []
         
-        for themeColor in ThemeColor.allCases.filter { PurchaseManager.shared.hasUnlockedPro || $0 != .custom }
+        for themeColor in ThemeColor.allCases.filter { Settings.proFeaturesEnabled || $0 != .custom }
         {
             themeColorOptions.append(
                 UIAction(title: themeColor.description,
@@ -801,7 +801,7 @@ private extension GamesViewController
     {
         var artworkStyleOptions: [UIAction] = []
         
-        for artworkStyle in ArtworkStyle.allCases.filter { PurchaseManager.shared.hasUnlockedPro || $0 != .custom }
+        for artworkStyle in ArtworkStyle.allCases.filter { Settings.proFeaturesEnabled || $0 != .custom }
         {
             artworkStyleOptions.append(
                 UIAction(title: artworkStyle.description,

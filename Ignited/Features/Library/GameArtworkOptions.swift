@@ -242,7 +242,7 @@ struct GameArtworkOptions
     
     @Option(name: "Style",
             description: "Choose the style to use for game artwork. Pro users can use a customizable style.",
-            values: PurchaseManager.shared.hasUnlockedPro ? ArtworkStyle.allCases : [.basic, .vibrant, .flat])
+            values: Settings.proFeaturesEnabled ? ArtworkStyle.allCases : [.basic, .vibrant, .flat])
     var style: ArtworkStyle = .basic
     
     @Option(name: "Background Color Mode",

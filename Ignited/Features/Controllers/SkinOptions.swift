@@ -40,7 +40,7 @@ struct SkinOptions
 {
     @Option(name: "Background Color Mode",
             description: "Choose which color to use for the controller skin background. Pro users can select a custom color.",
-            values: PurchaseManager.shared.hasUnlockedPro ? SkinBackgroundColor.allCases : [.none, .theme])
+            values: Settings.proFeaturesEnabled ? SkinBackgroundColor.allCases : [.none, .theme])
     var colorMode: SkinBackgroundColor = .none
     
     @Option(name: "Custom Background Color",

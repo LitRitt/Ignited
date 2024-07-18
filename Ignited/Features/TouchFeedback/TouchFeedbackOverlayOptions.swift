@@ -68,7 +68,7 @@ struct TouchFeedbackOverlayOptions
 {
     @Option(name: "Color",
             description: "Choose the color to use for overlays. Pro users can use both a custom color and a dynamic battery color.",
-            values: TouchOverlayColor.allCases.filter { !$0.pro || PurchaseManager.shared.hasUnlockedPro })
+            values: TouchOverlayColor.allCases.filter { !$0.pro || Settings.proFeaturesEnabled })
     var color: TouchOverlayColor = .theme
     
     @Option(name: "Custom Color",
