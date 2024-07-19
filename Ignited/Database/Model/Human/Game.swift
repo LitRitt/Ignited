@@ -17,6 +17,9 @@ public extension Game
 {
     static let melonDSBIOSIdentifier = "com.litritt.MelonDSDeltaCore.BIOS"
     static let melonDSDSiBIOSIdentifier = "com.litritt.MelonDSDeltaCore.DSiBIOS"
+    
+    static let legacyMelonDSBIOSIdentifier = "com.rileytestut.MelonDSDeltaCore.BIOS"
+    static let legacyMelonDSDSiBIOSIdentifier = "com.rileytestut.MelonDSDeltaCore.DSiBIOS"
 }
 
 @objc(Game)

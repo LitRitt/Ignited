@@ -752,6 +752,15 @@ extension DatabaseManager
                 
                 for game in games
                 {
+                    let temporaryGame = context.object(with: game.objectID) as! Game
+                    
+                    guard game.identifier != Game.legacyMelonDSBIOSIdentifier,
+                          game.identifier != Game.legacyMelonDSDSiBIOSIdentifier else
+                    {
+                        context.delete(temporaryGame)
+                        continue
+                    }
+                    
                     guard let gameType = GameType(fileExtension: game.fileURL.pathExtension),
                           (gameType.rawValue != game.type.rawValue) || repairAll else
                     {
