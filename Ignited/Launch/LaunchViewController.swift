@@ -122,8 +122,8 @@ extension LaunchViewController
         
         guard !self.presentedGameViewController else { return }
         
-        PurchaseManager.shared.loadProducts()
-        PurchaseManager.shared.updatePurchasedProducts()
+        //PurchaseManager.shared.loadProducts()
+        //PurchaseManager.shared.updatePurchasedProducts()
         
         PatreonAPI.shared.refreshPatreonAccount()
         PatreonAPI.shared.refreshCreatorAccessToken()
