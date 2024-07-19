@@ -53,12 +53,12 @@ struct SkinDebugOptions
     
     @Option(name: "Draw Input Boxes",
             description: "Enable to draw the input boxes that determine where inputs are placed on standard skins.",
-            attributes: [.hidden(when: {true})])
+            attributes: [.hidden(when: {false})])
     var inputBoxes: Bool = false
     
     @Option(name: "Show Unsupported Skins",
             description: "Enable to show all controller skins, not just the ones that support your device.",
-            attributes: [.hidden(when: {true})])
+            attributes: [.hidden(when: {false})])
     var unsupportedSkins: Bool = false
     
     @Option(name: "Override Traits",
@@ -79,7 +79,7 @@ struct SkinDebugOptions
     
     @Option(name: "AltSkin Toggle",
             description: "AltSkins (alternate skins) allow you to switch between 2 different versions of a skin. The skins can be swapped using a pause menu button, an optional skin button if provided, or this toggle if necessary. Not all skins support this feature. If you come back to this page while playing a game, you can check below if that skin supports AltSkins.",
-            attributes: [.hidden(when: {true})])
+            attributes: [.hidden(when: {false})])
     var useAlt: Bool = false
     
     @Option(name: "AltSkin Supported", description: "See if your current skin supports AltSkins.", detailView: { value in

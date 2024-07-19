@@ -17,7 +17,7 @@ import Roxas
 struct PowerUserOptions
 {
     @Option(name: "Import Legacy Database",
-            description: "This imports a legacy Ignited games database. The current database will be backed up.",
+            description: "This imports a legacy Ignited or Delta games database. The current database will be backed up.",
             attributes: [.hidden(when: {SharedSettings.numberOfGames > 0 || Settings.legacyDatabaseHasBeenImported})],
             detailView: { _ in
         Button("Import Legacy Database") {
@@ -29,9 +29,9 @@ struct PowerUserOptions
     })
     var importLegacyDatabase: String = ""
     
-    @Option(name: "Find Missing Games",
+    @Option(name: "Repair Games",
             description: "Attempts to find and repair any missing games in the app's database.",
-            attributes: [.hidden(when: {true})],
+            attributes: [.hidden(when: {false})],
             detailView: { _ in
         Button("Find Missing Games") {
             fixGameCollections()
@@ -44,7 +44,7 @@ struct PowerUserOptions
     
     @Option(name: "Find Missing Delta Skins",
             description: "Attempts to find and repair any missing Delta skins.",
-            attributes: [.hidden(when: {true})],
+            attributes: [.hidden(when: {false})],
             detailView: { _ in
         Button("Find Missing Delta Skins") {
             fixDeltaSkins()

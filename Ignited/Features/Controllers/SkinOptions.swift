@@ -62,7 +62,7 @@ struct SkinOptions
     
     @Option(name: "Ignore Input Frames",
             description: "Enable to ignore the inputFrame provided by skins. Fixes improper cropping on legacy skins. Does not affect DS skins.",
-            attributes: [.hidden(when: {true})])
+            attributes: [.hidden(when: {false})])
     var ignoreInputFrames: Bool = true
     
     @Option(name: "Restore Defaults",
