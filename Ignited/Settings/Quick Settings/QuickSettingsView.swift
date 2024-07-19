@@ -76,11 +76,10 @@ struct QuickSettingsView: View
                     }
                     
                     Section {
-                        ForEach(self.quickFeatures(for: self.gameViewController.game?.type)) { group in
-                            NavigationLink(group.description, value: group)
-                                .navigationDestination(for: FeatureGroup.self) { group in
-                                    QuickFeaturesView.makeView(featureGroup: group)
-                                }
+                        ForEach(self.quickFeatures(for: self.gameViewController.game?.type), id: \.self) { group in
+                            NavigationLink(destination: QuickFeaturesView.makeView(featureGroup: group).navigationTitle(Text(group.description))) {
+                                Text(group.description)
+                            }
                         }
                     } header: {
                         Text("Quick Settings")
