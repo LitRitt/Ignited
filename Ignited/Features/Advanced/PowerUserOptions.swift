@@ -16,9 +16,10 @@ import Roxas
 
 struct PowerUserOptions
 {
-    @Option(name: "Import Legacy Database",
+    @Option(name: "Import Database",
             description: "This imports a legacy Ignited or Delta games database. The current database will be backed up.",
-            attributes: [.hidden(when: {SharedSettings.numberOfGames > 0 || Settings.legacyDatabaseHasBeenImported})],
+            //attributes: [.hidden(when: {SharedSettings.numberOfGames > 0 || Settings.legacyDatabaseHasBeenImported})],
+            attributes: [.hidden(when: {SharedSettings.numberOfGames > 5})],
             detailView: { _ in
         Button("Import Legacy Database") {
             importLegacyDatabase()
@@ -366,6 +367,7 @@ extension PowerUserOptions
         
         Logger.database.info("Successfully imported legacy database.")
         Settings.legacyDatabaseHasBeenImported = true
+        Settings.legacyDatabaseHasBeenRepaired = false
     }
     
     static func importLegacyDatabasePrompt()
