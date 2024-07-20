@@ -34,7 +34,7 @@ struct PowerUserOptions
             description: "Attempts to find and repair any missing games in the app's database.",
             attributes: [.hidden(when: {false})],
             detailView: { _ in
-        Button("Find Missing Games") {
+        Button("Repair Games") {
             fixGameCollections()
         }
         .font(.system(size: 17, weight: .bold, design: .default))
@@ -43,11 +43,24 @@ struct PowerUserOptions
     })
     var fixGameCollections: String = ""
     
-    @Option(name: "Find Missing Delta Skins",
-            description: "Attempts to find and repair any missing Delta skins.",
+    @Option(name: "Repair Save States",
+            description: "Attempts to find and repair any missing save states in the app's database.",
             attributes: [.hidden(when: {false})],
             detailView: { _ in
-        Button("Find Missing Delta Skins") {
+        Button("Repair Save States") {
+            fixSaveStates()
+        }
+        .font(.system(size: 17, weight: .bold, design: .default))
+        .foregroundColor(.accentColor)
+        .displayInline()
+    })
+    var fixSaveStates: String = ""
+    
+    @Option(name: "Repair Skins",
+            description: "Attempts to find and repair any missing skins.",
+            attributes: [.hidden(when: {false})],
+            detailView: { _ in
+        Button("Repair Skins") {
             fixDeltaSkins()
         }
         .font(.system(size: 17, weight: .bold, design: .default))
@@ -129,7 +142,19 @@ extension PowerUserOptions
         
         DatabaseManager.shared.repairGameCollections(repairAll: true)
         
-        ToastView.show(NSLocalizedString("Successfully repaired missing games", comment: ""), onEdge: .bottom, duration: 3.0)
+        ToastView.show(NSLocalizedString("Attempted to repair games", comment: ""), onEdge: .bottom, duration: 3.0)
+    }
+    
+    static func fixSaveStates()
+    {
+        guard Settings.advancedFeatures.powerUser.isEnabled else {
+            self.showFeatureDisabledToast()
+            return
+        }
+        
+        DatabaseManager.shared.repairSaveStates()
+        
+        ToastView.show(NSLocalizedString("Attempted to repair save states", comment: ""), onEdge: .bottom, duration: 3.0)
     }
     
     static func fixDeltaSkins()
@@ -139,9 +164,9 @@ extension PowerUserOptions
             return
         }
         
-        DatabaseManager.shared.repairDeltaSkins()
+        DatabaseManager.shared.repairSaveStates()
         
-        ToastView.show(NSLocalizedString("Successfully repaired missing delta skins", comment: ""), onEdge: .bottom, duration: 3.0)
+        ToastView.show(NSLocalizedString("Attempted to repair skins", comment: ""), onEdge: .bottom, duration: 3.0)
     }
 
     static func clearAutoSaveStates()

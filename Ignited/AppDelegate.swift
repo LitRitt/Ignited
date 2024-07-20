@@ -227,6 +227,7 @@ private extension AppDelegate
         if !Settings.legacyDatabaseHasBeenRepaired
         {
             DatabaseManager.shared.repairGameCollections()
+            DatabaseManager.shared.repairSaveStates()
             DatabaseManager.shared.repairDeltaSkins()
             
             Settings.legacyDatabaseHasBeenRepaired = true

@@ -797,6 +797,35 @@ extension DatabaseManager
         }
     }
     
+    func repairSaveStates()
+    {
+        let saveStateFetchRequest: NSFetchRequest<SaveState> = SaveState.fetchRequest()
+        saveStateFetchRequest.returnsObjectsAsFaults = false
+        
+        self.performBackgroundTask { (context) in
+            do
+            {
+                let saveStates = try saveStateFetchRequest.execute()
+                
+                for saveState in saveStates
+                {
+                    if let coreIdentifier = saveState.coreIdentifier
+                    {
+                        let newCoreIdentifier = coreIdentifier.replacingOccurrences(of: "rileytestut", with: "litritt")
+                        
+                        saveState.coreIdentifier = newCoreIdentifier
+                    }
+                }
+                
+                context.saveWithErrorLogging()
+            }
+            catch
+            {
+                print("Failed to fix save states.")
+            }
+        }
+    }
+    
     func repairDeltaSkins()
     {
         let skinFetchRequest: NSFetchRequest<ControllerSkin> = ControllerSkin.fetchRequest()
