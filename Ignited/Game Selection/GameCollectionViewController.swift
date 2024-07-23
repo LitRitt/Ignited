@@ -1031,6 +1031,15 @@ private extension GameCollectionViewController
         default: break
         }
         
+        let resetPlaytimeAction = UIAction(title: NSLocalizedString("Reset Playtime", comment: ""),
+                                           image: UIImage(systemName: "arrow.circlepath"),
+                                           attributes: [.destructive],
+                                           handler: { [unowned self] action in
+            DatabaseManager.shared.resetPlaytime(for: game)
+        })
+        
+        gameSettingsActions.append(resetPlaytimeAction)
+        
         let gameSettingsMenu = UIMenu(title: NSLocalizedString("Settings", comment: ""),
                                       image: UIImage(systemName: "gearshape"),
                                       children: gameSettingsActions)

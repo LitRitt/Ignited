@@ -737,6 +737,19 @@ extension DatabaseManager
         }
     }
     
+    func resetPlaytime(for game: Game)
+    {
+        self.performBackgroundTask { (context) in
+            
+            let game = context.object(with: game.objectID) as! Game
+            
+            game.playedDate = nil
+            game.playTime = 0
+            
+            context.saveWithErrorLogging()
+        }
+    }
+    
     func repairGameCollections(repairAll: Bool = false)
     {
         let gameFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
