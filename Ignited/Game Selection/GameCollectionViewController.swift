@@ -1058,7 +1058,8 @@ private extension GameCollectionViewController
                                   image: UIImage(systemName: "doc"),
                                   children: [importSaveFileAction, exportSaveFileAction])
         
-        let saveMenu = UIMenu(title: NSLocalizedString("Played for \(game.playTime.secondString)", comment: ""),
+        let title = game.playTime == 0 ? "Never Played" : "Played for \(game.playTime.secondString)"
+        let saveMenu = UIMenu(title: NSLocalizedString(title, comment: ""),
                               options: [.displayInline],
                               children: [saveStatesAction, saveFileMenu])
         
