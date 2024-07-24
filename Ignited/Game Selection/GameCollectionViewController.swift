@@ -457,7 +457,7 @@ private extension GameCollectionViewController
         cell.imageSize = CGSize(width: layout.itemWidth, height: layout.itemWidth)
         cell.isFavorite = game.isFavorite
         cell.isPaused = game.fileURL == self.activeEmulatorCore?.game.fileURL
-        cell.neverPlayed = (game.playedDate == nil) && (saveStateCount == 0) && Settings.libraryFeatures.artwork.showNewGames
+        cell.neverPlayed = game.playTime == 0 && Settings.libraryFeatures.artwork.showNewGames
         cell.accentColor = cell.isFavorite ? (Settings.libraryFeatures.favorites.style.backgroundColor ?? UIColor.themeColor) : UIColor.themeColor
         
         if cell.isFavorite
@@ -1036,6 +1036,7 @@ private extension GameCollectionViewController
                                            attributes: [.destructive],
                                            handler: { [unowned self] action in
             DatabaseManager.shared.resetPlaytime(for: game)
+            self.update()
         })
         
         gameSettingsActions.append(resetPlaytimeAction)

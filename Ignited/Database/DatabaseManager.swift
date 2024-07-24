@@ -747,6 +747,8 @@ extension DatabaseManager
             game.playTime = 0
             
             context.saveWithErrorLogging()
+            
+            WidgetManager.refresh()
         }
     }
     
