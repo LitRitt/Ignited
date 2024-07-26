@@ -1029,7 +1029,6 @@
 				AC23D2D52AFDCD2A0056CC3F /* SaveStatesOptions.swift */,
 				ACFFFB572B1BB92600273BB4 /* SustainButtonsOptions.swift */,
 				AC99B33C2B254B10001A2A1F /* PauseMenuOptions.swift */,
-				AC417DAC2BF71DCD00A540EA /* SwipeGestureOptions.swift */,
 			);
 			path = Gameplay;
 			sourceTree = "<group>";
@@ -1049,6 +1048,7 @@
 				ACCD9DBA2A01E48B00B235C4 /* SkinOptions.swift */,
 				AC89DC9A2A4CADD6000DBD0C /* BackgroundBlurOptions.swift */,
 				ACBFE6D52A590CA5002DDD04 /* ControllerOptions.swift */,
+				AC417DAC2BF71DCD00A540EA /* SwipeGestureOptions.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

@@ -24,6 +24,11 @@ struct ControllerFeatures: FeatureContainer
              attributes: [.permanent])
     var controller
     
+    @Feature(name: "Swipe Gestures",
+             description: "Activate actions by performing swipe gestures while holding the menu button.",
+             options: SwipeGestureOptions())
+    var swipeGestures
+    
     @Feature(name: "Background Blur",
              description: "Use a blurred game screen as the background of skins.",
              options: BackgroundBlurOptions())

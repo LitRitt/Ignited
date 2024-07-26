@@ -41,11 +41,6 @@ struct GameplayFeatures: FeatureContainer
              options: RewindOptions())
     var rewind
     
-    @Feature(name: "Swipe Gestures",
-             description: "Activate actions by performing swipe gestures while holding the menu button.",
-             options: SwipeGestureOptions())
-    var swipeGestures
-    
     @Feature(name: "Quick Settings Menu",
              description: "Access common gameplay settings quickly from the pause menu or a controller/skin button.",
              options: QuickSettingsOptions(),

@@ -518,10 +518,10 @@ extension PowerUserOptions
                 Settings.gameplayFeatures.quickSettings.buttonReplacement = nil
                 
             case .swipeGestures:
-                Settings.gameplayFeatures.swipeGestures.up = ActionInput.statusBar
-                Settings.gameplayFeatures.swipeGestures.down = ActionInput.quickSave
-                Settings.gameplayFeatures.swipeGestures.left = ActionInput.screenshot
-                Settings.gameplayFeatures.swipeGestures.right = ActionInput.fastForward
+                Settings.controllerFeatures.swipeGestures.up = ActionInput.statusBar
+                Settings.controllerFeatures.swipeGestures.down = ActionInput.quickSave
+                Settings.controllerFeatures.swipeGestures.left = ActionInput.screenshot
+                Settings.controllerFeatures.swipeGestures.right = ActionInput.fastForward
                 
             case .styleAndColor:
                 Settings.standardSkinFeatures.styleAndColor.style = .filled

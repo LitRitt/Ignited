@@ -3270,9 +3270,9 @@ extension GameViewController
 
     @objc private func handleRightSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
     {
-        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        guard Settings.controllerFeatures.swipeGestures.isEnabled else { return }
         
-        let input = Settings.gameplayFeatures.swipeGestures.right
+        let input = Settings.controllerFeatures.swipeGestures.right
         self.handleSwipeGestureActionInput(input)
 
         self.ignoreNextMenuInput = true
@@ -3280,9 +3280,9 @@ extension GameViewController
     
     @objc private func handleLeftSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
     {
-        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        guard Settings.controllerFeatures.swipeGestures.isEnabled else { return }
         
-        let input = Settings.gameplayFeatures.swipeGestures.left
+        let input = Settings.controllerFeatures.swipeGestures.left
         self.handleSwipeGestureActionInput(input)
 
         self.ignoreNextMenuInput = true
@@ -3290,9 +3290,9 @@ extension GameViewController
     
     @objc private func handleUpSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
     {
-        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        guard Settings.controllerFeatures.swipeGestures.isEnabled else { return }
         
-        let input = Settings.gameplayFeatures.swipeGestures.up
+        let input = Settings.controllerFeatures.swipeGestures.up
         self.handleSwipeGestureActionInput(input)
 
         self.ignoreNextMenuInput = true
@@ -3300,9 +3300,9 @@ extension GameViewController
     
     @objc private func handleDownSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer)
     {
-        guard Settings.gameplayFeatures.swipeGestures.isEnabled else { return }
+        guard Settings.controllerFeatures.swipeGestures.isEnabled else { return }
         
-        let input = Settings.gameplayFeatures.swipeGestures.down
+        let input = Settings.controllerFeatures.swipeGestures.down
         self.handleSwipeGestureActionInput(input)
 
         self.ignoreNextMenuInput = true
