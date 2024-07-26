@@ -12,6 +12,10 @@ import Features
 
 struct SwipeGestureOptions
 {
+    @Option(name: "Quick Hold",
+            description: "Enable to toggle holding an input by tapping it while holding the menu input.")
+    var quickHold: Bool = true
+    
     @Option(name: "Swipe Right Gesture",
             description: "Choose an action to do when performing a right swipe gesture.",
             values: [ActionInput.fastForward, ActionInput.quickSave, ActionInput.quickLoad, ActionInput.screenshot, ActionInput.statusBar, ActionInput.quickSettings, ActionInput.toggleAltRepresentations])

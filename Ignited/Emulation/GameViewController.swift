@@ -404,7 +404,9 @@ class GameViewController: DeltaCore.GameViewController
                 
             }
         }
-        else if self.isMenuButtonHeldDown
+        else if self.isMenuButtonHeldDown,
+                Settings.controllerFeatures.swipeGestures.isEnabled,
+                Settings.controllerFeatures.swipeGestures.quickHold
         {
             self.ignoreNextMenuInput = true
 
