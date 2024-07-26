@@ -700,7 +700,7 @@ extension DatabaseManager
             {
                 game.artworkURL = artworkURL
             }
-            else
+            else if game.artworkURL == nil
             {
                 var artwork: UIImage? = nil
                 
