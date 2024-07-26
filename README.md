@@ -4,7 +4,7 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-Ignited is a multi-core emulator front-end for iOS devices. It provides a beautiful user interface and rich features that other emulators lack. An experience that feels right at home on your premium devices. Join the [Discord](https://discord.gg/qEtKFJt5dR) to follow along with development, suggest new features, and chat. Become a [Patron](https://patreon.com/litritt) to support development and unlock benefits, such as being able to install Ignited straight from a link without having to sideload it.
+A feature packed and customizable emulator made for the modern era.
 
 ## Supported Systems
 - Nintendo Entertainment System (NES)
@@ -19,84 +19,31 @@ Ignited is a multi-core emulator front-end for iOS devices. It provides a beauti
 - Sega Game Gear (GG)
 
 ## Features
-- Accurate, full speed emulation thanks to mature underlying emulator cores.
-    - NES: [Nestopia](https://github.com/0ldsk00l/nestopia)
-    - SNES: [Snes9x](https://github.com/snes9xgit/snes9x)
-    - N64: [mupen64plus](https://github.com/mupen64plus/mupen64plus-core)
-    - GB/GBC: [Gambatte](https://github.com/sinamas/gambatte)
-    - GBA: [mGBA](https://github.com/mgba-emu/mgba)
-    - GBA: [visualboyadvance-m](https://github.com/visualboyadvance-m/visualboyadvance-m) **Legacy*
-    - DS: [melonDS](https://github.com/Arisotura/melonDS)
-    - DS: [DeSmuME](https://github.com/TASEmulators/desmume) **Legacy*
-    - GEN/SMS/GG: [Genesis Plus GX](https://github.com/ekeeke/Genesis-Plus-GX)
-- Beautiful, native UI.
-    - Browse and play your favorite games with a UI designed from the ground up for iOS.
-    - Automatically displays appropriate box art for imported games.
-    - Change a game’s artwork to anything you want, or select from the built-in game artwork database.
-    - Live Artwork displays your most recent auto save state as the artwork.
-- Controller Support
-    - Supports PS4, PS5, Xbox One S, Xbox Series X, and MFi game controllers.
-    - Supports bluetooth (and wired) keyboards, as well as the Apple Smart Keyboard.
-    - Completely customize button mappings on a per-system, per-controller basis.
-    - Map buttons to special “Quick Save”, “Quick Load”, "Quick Settings", and “Fast Forward” actions.
-- Custom Controller Skins
-    - Beautiful built-in controller skins for all systems.
-    - Import controller skins made by others, or even make your own to share with the world!
-- Save States
-    - Save and load save states for any game from the pause menu.
-    - Lock save states to prevent them from being accidentally overwritten.
-    - Automatically makes backup save states to ensure you never lose your progress.
-    - Support for “Quick Saves,” save states that can be quickly saved/loaded with a single button press (requires external controller).
-- Fast Forwarding
-    - Speed through slower parts of games by running the game much faster than normal.
-    - Easily enable or disable from the pause menu, or optionally with a mapped button on an external controller.
-    - Change speeds by long pressing the pause menu button, or using the quick settings menu.
-- Ignited Sync
-    - Sync your games, game saves, save states, cheats, controller skins, and controller mappings between devices.
-    - View version histories of everything you sync and optionally restore them to earlier versions.
-    - Supports both Google Drive and Dropbox.
-- Hold Button
-    - Choose buttons for Ignited to hold down on your behalf, freeing up your thumbs to press other buttons instead.
-    - Perfect for games that typically require one button be held down constantly (ex: run button in Mario games, or the A button in Mario Kart).
-    - Toggle held inputs off/on after settings them by tapping the pause menu button, or long press to change the held inputs.
-- 3D/Haptic Touch
-    - Use 3D or Haptic Touch to “peek” at games, save states, and cheat codes.
-    - App icon shortcuts allow quick access to your most recently played games, or optionally customize the shortcuts to always include certain games.
-- Cheat Codes
-    - NES
-        - Game Genie
-    - SNES: 
-        - Game Genie
-        - Pro Action Replay
-    - N64
-        - GameShark
-    - GBC
-        - Game Genie
-        - GameShark
-    - GBA
-        - Action Replay
-        - Code Breaker
-        - GameShark
-    - DS
-        - Action Replay
-- Gyroscope support  **(WarioWare: Twisted! only)**
-- Microphone support **(DS only)**
+
+- Full Controller Support - Use any modern bluetooth or MFi controller
+- Customizable Controller Skins - Change the color, style, and layout of the standard skins
+- Custom Controller Skins - Create or download new skins to enhance your gameplay
+- Adjustable Fast Forward - Use hold, toggle, or cycle modes to change to game speed to faster or slower than normal
+- Cheats - Adds cheat codes to modify your games
+- Save states - Save and load states, automatic save states, and quick saves
+- Rewind - Go back to a previous point in gameplay within 1-5 minutes on supported systems
+- Ignited Sync - Backup your games and saves
+- App Theming - Choose a theme color to use for the UI, skins, and more
+- Toast Notifications - Get notified when saving, loading, and performing other actions
+- Favorite Games - Mark games as favorites to make them easier to find and play
+- Animated Artwork - Use GIFs as your game artwork
+- Customizable Audio - Choose when game audio plays and how loud
+- Game Screenshots - Save the game screen to Files or Photos with an optional countdown
+- Quick Settings - Access actions and settings quickly during gameplay
+- AirPlay Support - Play your games on an external display
+- Background Blur - Beautiful and customizable background for skins featuring a blurring version of the game screen
+- Vibration - Feel your buttons with customizable vibration feedback
+- Button Sounds - Hear your buttons with customizable audio feedback
+- Touch Overlay - See your buttons with customizable visual feedback
 
 ## Installation
 
-Patrons can install Ignited OTA directly from my site, without needing to sideload it. Non-patrons can still use AltStore to download and update Ignited.
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/705880/114452847-c1db4980-9b8d-11eb-8f8f-de7998562222.png" width=100px height=100px>
-</p>
-
-1. Download AltServer for Mac or PC from https://altstore.io
-2. Connect your iOS device to your computer via lightning cable (or USB-C for iPads).
-3. [Follow these instructions](https://altstore.io/faq/) to install AltStore onto your device with AltServer.
-4. Navigate to https://litritt.com/ignited
-5. Click on the `AltStore Install` link of the Downloads section
-
-Once you've installed Ignited with AltStore, **you'll need to refresh it at least once every 7 days to prevent it from expiring** and requiring a re-installation. AltStore will periodically attempt to refresh your apps in the background when on the same WiFi as AltServer, but you can also manually refresh apps by pressing "Refresh All" in AltStore. AltStore will also let you know whenever a new update is released, allowing you to update Ignited directly within AltStore.
+Install via the public TestFlight invite - https://testflight.apple.com/join/ExWvtjcq
 
 ## Project Overview
 
@@ -114,7 +61,7 @@ Roxas is [Riley Testut](https://github.com/rileytestut)'s framework used across 
 [**Harmony**](https://github.com/LitRitt/Harmony)   
 Harmony is [Riley Testut](https://github.com/rileytestut)'s personal syncing framework designed to sync Core Data databases. Harmony listens for changes to an app's persistent store, then syncs any changes with a remote file service (such as Google Drive or Dropbox).
 
-**Delta Cores**  
+**Delta Cores**
 Each system in Ignited is implemented as its own "Delta Core", which serves as a standard emulation API Ignited can understand regardless of the underlying core. For the most part, you don't interact directly with specific Delta Cores, but rather indirectly through `DeltaCore`.
 
 - [NESDeltaCore](https://github.com/LitRitt/NESDeltaCore)
@@ -128,13 +75,12 @@ Each system in Ignited is implemented as its own "Delta Core", which serves as a
 - [GPGXDeltaCore](https://github.com/LitRitt/GPGXDeltaCore)
 
 ## Project Requirements
+
 - Xcode 12
 - Swift 5+
 - iOS 16 or later
 
 ## Compilation Instructions
-
-> Ignited uses Git LFS to manage large files, so first make sure you have [installed Git LFS](https://git-lfs.github.com).
 
 1. Clone this repository by running the following command in Terminal*  
 ```bash
@@ -145,9 +91,9 @@ $ git clone https://github.com/LitRitt/Ignited.git --recursive
 4. Build + run app! 🎉
 
 ## Licensing
-Due to the licensing of emulator cores used by Ignited, I have no choice but to distribute Ignited under the **AGPLv3 license**. That being said, I explicitly give permission for anyone to use, modify, and distribute all *my* original code for this project in any form, with or without attribution, without fear of legal consequences (dependencies remain under their original licenses, however).
+
+Ignited is licensed under the **AGPLv3 license** which ensures that all improvements made to forks of this project must be made open source in order to benefit all users.
 
 ## Contact Me
 
-* Email: dev@litritt.com
 * Discord: [Ignited Emulator](https://discord.gg/qEtKFJt5dR)
