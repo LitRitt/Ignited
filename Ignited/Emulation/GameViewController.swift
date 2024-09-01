@@ -1078,6 +1078,8 @@ private extension GameViewController
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
         
+        self.controllerView.isRelativeTrackingEnabled = Settings.controllerFeatures.skin.thumbstickMode == .relative
+        
         self.updateButtonAudioFeedbackSound()
         self.updateBackgroundBlur()
         self.updateControllerSkinCustomization()
@@ -3409,6 +3411,9 @@ private extension GameViewController
             
         case Settings.controllerFeatures.skin.settingsKey, Settings.controllerFeatures.skin.$opacity.settingsKey, Settings.controllerFeatures.skin.$backgroundColor.settingsKey, Settings.controllerFeatures.skin.$colorMode.settingsKey, Settings.controllerFeatures.skin.$diagonalDpad.settingsKey:
             self.updateControllerSkinCustomization()
+            
+        case Settings.controllerFeatures.skin.$thumbstickMode.settingsKey:
+            self.controllerView.isRelativeTrackingEnabled = Settings.controllerFeatures.skin.thumbstickMode == .relative
             
         case Settings.touchFeedbackFeatures.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = Settings.touchFeedbackFeatures.touchVibration.strength

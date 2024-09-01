@@ -10,6 +10,23 @@ import SwiftUI
 
 import Features
 
+enum SkinThumbstickMode: String, CaseIterable, CustomStringConvertible
+{
+    case relative = "Relative"
+    case absolute = "Absolute"
+    
+    var description: String {
+        return self.rawValue
+    }
+}
+
+extension SkinThumbstickMode: LocalizedOptionValue
+{
+    var localizedDescription: Text {
+        return Text(self.description)
+    }
+}
+
 enum SkinBackgroundColor: String, CaseIterable, CustomStringConvertible
 {
     case none = "None"
@@ -55,6 +72,11 @@ struct SkinOptions
             unit: "%",
             isPercentage: true)
     var opacity: Double = 0.7
+    
+    @Option(name: "Thumbstick Mode",
+            description: "Change the way thumbsticks on skins behave.\n\nRelative: The middle of the stick is where you first touch. Use this for touchscreen input.\n\nAbsolute: The middle of the stick is where the skin shows it. Use this for controller cases like PlayCase.",
+            values: SkinThumbstickMode.allCases)
+    var thumbstickMode: SkinThumbstickMode = .relative
     
     @Option(name: "Diagonal D-Pad Inputs",
             description: "Enable to allow diagonal inputs on the corners of the D-Pad.")
