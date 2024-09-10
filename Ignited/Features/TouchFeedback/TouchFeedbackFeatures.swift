@@ -6,6 +6,7 @@
 //  Copyright © 2023 LitRitt. All rights reserved.
 //
 
+import UIKit
 import Features
 
 struct TouchFeedbackFeatures: FeatureContainer
@@ -14,7 +15,8 @@ struct TouchFeedbackFeatures: FeatureContainer
     
     @Feature(name: "Touch Vibration",
              description: "Play vibrations when interacting with controller skins.",
-             options: TouchFeedbackVibrationOptions())
+             options: TouchFeedbackVibrationOptions(),
+             attributes: [.hidden(when: { UIDevice.current.userInterfaceIdiom != .phone })])
     var touchVibration
     
     @Feature(name: "Touch Overlay",
