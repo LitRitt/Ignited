@@ -212,6 +212,8 @@ private extension SettingsViewController
         
         self.view.tintColor = UIColor.themeColor
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.tableView.reloadData()
     }
     
@@ -311,6 +313,9 @@ private extension SettingsViewController
             {
                 self.tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             }
+            
+        case Settings.controllerFeatures.playCase.settingsKey:
+            self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
             
         default: break
         }

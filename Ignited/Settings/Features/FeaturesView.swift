@@ -91,6 +91,7 @@ struct FeaturesView: View
         .onReceive(settingsPublisher, perform: { _ in
             self.viewModel.updateSortedFeatures()
         })
+        .safeAreaPadding(PlayCaseOptions.safeAreaEdgeInsets)
     }
 
     // Cannot open existential if return type uses concrete type T in non-covariant position (e.g. Box<T>).
@@ -107,8 +108,7 @@ extension FeaturesView
     static func makeViewController(featureGroup: FeatureGroup) -> UIHostingController<some View>
     {
         let featuresViewModel = ViewModel(featureContainer: featureGroup.container)
-        
-        var featuresView = FeaturesView(viewModel: featuresViewModel)
+        let featuresView = FeaturesView(viewModel: featuresViewModel)
         
         let hostingController = UIHostingController(rootView: featuresView)
         hostingController.title = NSLocalizedString(featureGroup.description, comment: "")

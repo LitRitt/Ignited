@@ -2659,7 +2659,7 @@ extension GameViewController
                     sheet.prefersEdgeAttachedInCompactHeight = true
                     sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
                     sheet.prefersGrabberVisible = true
-                    sheet.presentedViewController.additionalSafeAreaInsets.bottom = Settings.controllerFeatures.playCase.isEnabled ? (UIScreen.main.bounds.height * 0.4) : 0
+                    sheet.presentedViewController.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
                 }
                 
                 self.present(quickSettingsView, animated: true, completion: nil)

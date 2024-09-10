@@ -72,6 +72,8 @@ class ControllersSettingsViewController: UITableViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         let gameControllers = [self.localDeviceController as GameController] + self.connectedControllers
         for gameController in gameControllers
         {

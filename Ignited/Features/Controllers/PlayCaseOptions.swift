@@ -53,3 +53,13 @@ struct PlayCaseOptions
     })
     var downloadSkins: Bool = false
 }
+
+extension PlayCaseOptions {
+    static var safeAreaBottomInset: Double {
+        return Settings.controllerFeatures.playCase.isEnabled ? (UIScreen.main.bounds.height * 0.4) : 0
+    }
+    
+    static var safeAreaEdgeInsets: EdgeInsets {
+        return EdgeInsets(top: 0, leading: 0, bottom: safeAreaBottomInset, trailing: 0)
+    }
+}

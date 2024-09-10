@@ -104,6 +104,12 @@ extension GameCollectionViewController
         self.update()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+    }
+    
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
@@ -287,6 +293,7 @@ private extension GameCollectionViewController
 {
     @objc func update()
     {
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
         self.updateLayout()
         self.collectionView.reloadData()
     }
@@ -1498,7 +1505,8 @@ private extension GameCollectionViewController
         
         switch settingsName
         {
-        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.libraryFeatures.artwork.$forceAspect.settingsKey, Settings.libraryFeatures.artwork.$showNewGames.settingsKey, Settings.libraryFeatures.artwork.$showPauseIcon.settingsKey, Settings.libraryFeatures.favorites.$showStarIcon.settingsKey:
+        case Settings.libraryFeatures.artwork.$size.settingsKey, Settings.libraryFeatures.artwork.$style.settingsKey, Settings.userInterfaceFeatures.theme.$color.settingsKey, Settings.userInterfaceFeatures.theme.$style.settingsKey, Settings.libraryFeatures.artwork.$forceAspect.settingsKey, Settings.libraryFeatures.artwork.$showNewGames.settingsKey, Settings.libraryFeatures.artwork.$showPauseIcon.settingsKey, Settings.libraryFeatures.favorites.$showStarIcon.settingsKey,
+            Settings.controllerFeatures.playCase.settingsKey:
             self.update()
             
         case Settings.libraryFeatures.artwork.$sortOrder.settingsKey, Settings.libraryFeatures.favorites.$sortFirst.settingsKey:

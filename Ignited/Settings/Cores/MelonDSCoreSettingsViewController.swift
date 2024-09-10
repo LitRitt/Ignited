@@ -121,6 +121,8 @@ class MelonDSCoreSettingsViewController: UITableViewController
     {
         super.viewWillAppear(animated)
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.tableView.reloadData()
     }
     

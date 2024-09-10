@@ -123,6 +123,7 @@ struct PremiumPatronsView: View
         .onAppear {
             viewModel.fetchPatrons()
         }
+        .safeAreaPadding(PlayCaseOptions.safeAreaEdgeInsets)
     }
     
     fileprivate init(patrons: [Patron]? = nil, viewModel: ViewModel = ViewModel())

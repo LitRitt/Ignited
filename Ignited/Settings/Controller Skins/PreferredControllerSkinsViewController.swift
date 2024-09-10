@@ -44,6 +44,8 @@ extension PreferredControllerSkinsViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         if let system = self.system
         {
             self.title = self.game?.name ?? system.localizedName

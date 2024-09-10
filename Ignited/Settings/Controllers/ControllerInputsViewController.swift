@@ -65,6 +65,8 @@ class ControllerInputsViewController: UIViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.gameViewController.controllerView.addReceiver(self)
         
         if let navigationController = self.navigationController

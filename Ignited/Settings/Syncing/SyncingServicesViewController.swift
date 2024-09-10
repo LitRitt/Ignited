@@ -40,6 +40,8 @@ class SyncingServicesViewController: UITableViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.activityIndicatorView = UIActivityIndicatorView(style: .medium)
         self.activityIndicatorView.hidesWhenStopped = true
 

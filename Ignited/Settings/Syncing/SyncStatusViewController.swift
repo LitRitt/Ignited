@@ -20,6 +20,8 @@ class SyncStatusViewController: UITableViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.definesPresentationContext = true
         
         self.tableView.dataSource = self.dataSource

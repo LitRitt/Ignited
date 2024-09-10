@@ -58,6 +58,8 @@ class RecordSyncStatusViewController: UITableViewController
     {
         super.viewWillAppear(animated)
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.update()
         self.tableView.reloadData()
     }

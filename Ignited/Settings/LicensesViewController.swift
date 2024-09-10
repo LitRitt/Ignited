@@ -29,6 +29,8 @@ class LicensesViewController: UIViewController
     {
         super.viewDidAppear(animated)
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         _didAppear = true
     }
 

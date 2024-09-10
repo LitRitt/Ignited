@@ -33,6 +33,8 @@ class GameSyncStatusViewController: UITableViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.title = self.game.name
         
         self.tableView.dataSource = self.dataSource

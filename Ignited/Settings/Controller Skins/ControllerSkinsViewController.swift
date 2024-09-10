@@ -56,6 +56,8 @@ extension ControllerSkinsViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.tableView.dataSource = self.dataSource
         self.tableView.prefetchDataSource = self.dataSource
         

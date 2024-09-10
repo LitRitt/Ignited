@@ -292,7 +292,7 @@ private extension PauseViewController
             self.additionalSafeAreaInsets.right = 0
         }
         
-        self.additionalSafeAreaInsets.bottom = Settings.controllerFeatures.playCase.isEnabled ? (UIScreen.main.bounds.height * 0.4) : 0
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
     }
 }
 

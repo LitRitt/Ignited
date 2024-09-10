@@ -37,6 +37,8 @@ class AppIconShortcutsViewController: UITableViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.tableView.register(GameTableViewCell.nib!, forCellReuseIdentifier: RSTCellContentGenericCellIdentifier)
         
         self.navigationItem.searchController = self.gamesDataSource.searchController

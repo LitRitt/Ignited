@@ -86,6 +86,8 @@ class RecordVersionsViewController: UITableViewController
     {
         super.viewDidLoad()
         
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
+        
         self.progressView = UIProgressView(progressViewStyle: .bar)
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
         self.progressView.progress = 0

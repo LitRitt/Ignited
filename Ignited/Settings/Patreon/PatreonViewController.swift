@@ -52,8 +52,9 @@ class PatreonViewController: UICollectionViewController
     {
         super.viewWillAppear(animated)
         
-        self.fetchPatrons()
+        self.additionalSafeAreaInsets.bottom = PlayCaseOptions.safeAreaBottomInset
         
+        self.fetchPatrons()
         self.update()
     }
     

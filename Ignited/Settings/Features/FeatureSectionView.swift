@@ -96,6 +96,7 @@ private struct FeatureDetailView<Feature: AnyFeature>: View
                 }
             }
         }
+        .safeAreaPadding(PlayCaseOptions.safeAreaEdgeInsets)
         .onReceive(settingsPublisher, perform: { _ in
             reload.toggle()
         })
