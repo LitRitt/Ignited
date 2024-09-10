@@ -173,12 +173,16 @@ private extension PauseViewController
         self.screenshotItem = nil
         self.statusBarItem = nil
         self.cheatCodesItem = nil
+        self.fastForwardItem = nil
+        self.sustainButtonsItem = nil
+        self.rewindItem = nil
+        self.microphoneItem = nil
+        self.rotationLockItem = nil
         self.paletteItem = nil
         self.quickSettingsItem = nil
         self.blurBackgroudItem = nil
         self.overscanEditorItem = nil
-        self.sustainButtonsItem = nil
-        self.fastForwardItem = nil
+        self.altSkinItem = nil
         self.debugModeItem = nil
         
         guard self.emulatorCore != nil else { return }
