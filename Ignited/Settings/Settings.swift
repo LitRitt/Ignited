@@ -88,6 +88,7 @@ struct Settings
             Settings.controllerFeatures.swipeGestures.settingsKey.rawValue: true,
             Settings.controllerFeatures.backgroundBlur.settingsKey.rawValue: true,
             Settings.controllerFeatures.controller.settingsKey.rawValue: true,
+            Settings.controllerFeatures.playCase.settingsKey.rawValue: false,
             Settings.airplayFeatures.skins.settingsKey.rawValue: false,
             Settings.libraryFeatures.artwork.settingsKey.rawValue: true,
             Settings.libraryFeatures.animation.settingsKey.rawValue: true,

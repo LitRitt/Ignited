@@ -34,7 +34,7 @@ class PausePresentationController: UIPresentationController
         guard let containerView = self.containerView else { return super.frameOfPresentedViewInContainerView }
         
         var frame: CGRect
-        let contentHeight = self.presentedViewController.preferredContentSize.height
+        let contentHeight = Settings.controllerFeatures.playCase.isEnabled ? 0 : self.presentedViewController.preferredContentSize.height
         
         if contentHeight == 0
         {

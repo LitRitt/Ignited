@@ -38,6 +38,7 @@ class PauseViewController: UIViewController, PauseInfoProviding
     var cheatCodesItem: MenuItem?
     var fastForwardItem: MenuItem?
     var sustainButtonsItem: MenuItem?
+    var playCaseItem: MenuItem?
     var rewindItem: MenuItem?
     var microphoneItem: MenuItem?
     var rotationLockItem: MenuItem?
@@ -107,20 +108,11 @@ extension PauseViewController
             self.pauseNavigationController.navigationBar.tintColor = UIColor.themeColor
             self.pauseNavigationController.view.backgroundColor = UIColor.clear
             
-            let gridMenuViewController = self.pauseNavigationController.topViewController as! GridMenuViewController
-            
             let navigationBarAppearance = self.pauseNavigationController.navigationBar.standardAppearance.copy()
             navigationBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-//            navigationBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.2)
-            
-//            navigationBarAppearance.shadowColor = UIColor.label.withAlphaComponent(0.2)
             self.pauseNavigationController.navigationBar.standardAppearance = navigationBarAppearance
             
-            let transparentBarAppearance = navigationBarAppearance.copy()
-            transparentBarAppearance.backgroundColor = nil
-            transparentBarAppearance.backgroundEffect = nil
-            gridMenuViewController.navigationItem.standardAppearance = transparentBarAppearance
-            
+            let gridMenuViewController = self.pauseNavigationController.topViewController as! GridMenuViewController
             gridMenuViewController.items = self.pauseItems
             
         case "saveStates":
@@ -175,6 +167,7 @@ private extension PauseViewController
         self.cheatCodesItem = nil
         self.fastForwardItem = nil
         self.sustainButtonsItem = nil
+        self.playCaseItem = nil
         self.rewindItem = nil
         self.microphoneItem = nil
         self.rotationLockItem = nil
@@ -226,6 +219,12 @@ private extension PauseViewController
         self.fastForwardItem = MenuItem(text: NSLocalizedString("Fast Forward", comment: ""),
                                         image: UIImage.symbolWithTemplate(name: "forward.fill"),
                                         action: { _ in })
+        
+        self.playCaseItem = MenuItem(text: NSLocalizedString("PlayCase Mode", comment: ""),
+                                        image: UIImage.customSymbolWithTemplate(name: "PlayCase"),
+                                     action: { _ in
+            Settings.controllerFeatures.playCase.isEnabled.toggle()
+        })
         
         self.microphoneItem = MenuItem(text: NSLocalizedString("Microphone", comment: ""),
                                         image: UIImage.symbolWithTemplate(name: "mic.fill"),
@@ -292,6 +291,8 @@ private extension PauseViewController
             self.additionalSafeAreaInsets.left = 0
             self.additionalSafeAreaInsets.right = 0
         }
+        
+        self.additionalSafeAreaInsets.bottom = Settings.controllerFeatures.playCase.isEnabled ? (UIScreen.main.bounds.height * 0.4) : 0
     }
 }
 
@@ -309,6 +310,7 @@ private extension PauseViewController
         case "Sustain Buttons": return self.sustainButtonsItem
         case "Rewind": return self.rewindItem
         case "Fast Forward": return self.fastForwardItem
+        case "PlayCase Mode": return self.playCaseItem
         case "Microphone": return self.microphoneItem
         case "Rotation Lock": return self.rotationLockItem
         case "Palettes": return self.paletteItem

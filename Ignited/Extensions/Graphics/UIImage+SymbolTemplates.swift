@@ -27,6 +27,17 @@ extension UIImage
         return UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: orientation).withRenderingMode(.alwaysTemplate).withTintColor(accentColor)
     }
     
+    static func customSymbolWithTemplate(name: String, pointSize: CGFloat = 30, accentColor: UIColor = UIColor.themeColor, orientation: Orientation = .up) -> UIImage
+    {
+        guard let symbolImage = UIImage(named: name)?.withConfiguration(SymbolConfiguration(pointSize: pointSize)),
+              let cgImage = symbolImage.cgImage else
+        {
+            return UIImage()
+        }
+        
+        return UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: orientation).withRenderingMode(.alwaysTemplate).withTintColor(accentColor)
+    }
+    
     static func makePlaceholder(size: CGFloat = 100) -> UIImage
     {
         let format = UIGraphicsImageRendererFormat()

@@ -75,7 +75,8 @@ struct SkinOptions
     
     @Option(name: "Thumbstick Mode",
             description: "Change the way thumbsticks on skins behave.\n\nRelative: The middle of the stick is where you first touch. Use this for touchscreen input.\n\nAbsolute: The middle of the stick is where the skin shows it. Use this for controller cases like PlayCase.",
-            values: SkinThumbstickMode.allCases)
+            values: SkinThumbstickMode.allCases,
+            attributes: [.hidden(when: { Settings.controllerFeatures.playCase.isEnabled })])
     var thumbstickMode: SkinThumbstickMode = .relative
     
     @Option(name: "Diagonal D-Pad Inputs",

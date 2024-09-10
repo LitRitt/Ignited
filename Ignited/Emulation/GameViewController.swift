@@ -678,6 +678,8 @@ extension GameViewController
                 self.performMicrophoneAction()
             }
             
+            pauseViewController.playCaseItem?.isSelected = Settings.controllerFeatures.playCase.isEnabled
+            
             func makeFastForwardSpeedMenu() -> UIMenu
             {
                 var fastForwardOptions: [UIMenuElement] = []
@@ -1078,7 +1080,7 @@ private extension GameViewController
         self.controllerView.updateControllerSkin()
         self.updateControllerSkin()
         
-        self.controllerView.isRelativeTrackingEnabled = Settings.controllerFeatures.skin.thumbstickMode == .relative
+        self.controllerView.isRelativeTrackingEnabled = (Settings.controllerFeatures.skin.thumbstickMode == .relative) || Settings.controllerFeatures.playCase.isEnabled
         
         self.updateButtonAudioFeedbackSound()
         self.updateBackgroundBlur()
@@ -2651,12 +2653,13 @@ extension GameViewController
                 let quickSettingsView = QuickSettingsView.makeViewController(gameViewController: self)
                 
                 if let sheet = quickSettingsView.sheetPresentationController {
-                    sheet.detents = [.medium(), .large()]
+                    sheet.detents = Settings.controllerFeatures.playCase.isEnabled ? [.large()] : [.medium(), .large()]
                     sheet.largestUndimmedDetentIdentifier = nil
                     sheet.prefersScrollingExpandsWhenScrolledToEdge = true
                     sheet.prefersEdgeAttachedInCompactHeight = true
                     sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = false
                     sheet.prefersGrabberVisible = true
+                    sheet.presentedViewController.additionalSafeAreaInsets.bottom = Settings.controllerFeatures.playCase.isEnabled ? (UIScreen.main.bounds.height * 0.4) : 0
                 }
                 
                 self.present(quickSettingsView, animated: true, completion: nil)
@@ -3413,7 +3416,7 @@ private extension GameViewController
             self.updateControllerSkinCustomization()
             
         case Settings.controllerFeatures.skin.$thumbstickMode.settingsKey:
-            self.controllerView.isRelativeTrackingEnabled = Settings.controllerFeatures.skin.thumbstickMode == .relative
+            self.controllerView.isRelativeTrackingEnabled = (Settings.controllerFeatures.skin.thumbstickMode == .relative) || Settings.controllerFeatures.playCase.isEnabled
             
         case Settings.touchFeedbackFeatures.touchVibration.$strength.settingsKey:
             self.controllerView.hapticFeedbackStrength = Settings.touchFeedbackFeatures.touchVibration.strength

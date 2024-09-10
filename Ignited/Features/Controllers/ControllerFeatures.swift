@@ -6,6 +6,7 @@
 //  Copyright © 2023 LitRitt. All rights reserved.
 //
 
+import UIKit
 import Features
 
 struct ControllerFeatures: FeatureContainer
@@ -33,6 +34,12 @@ struct ControllerFeatures: FeatureContainer
              description: "Use a blurred game screen as the background of skins.",
              options: BackgroundBlurOptions())
     var backgroundBlur
+    
+    @Feature(name: "PlayCase Mode",
+             description: "Enable features to enhance you gameplay experience while using PlayCase.",
+             options: PlayCaseOptions(),
+             attributes: [.hidden(when: { UIDevice.current.userInterfaceIdiom != .phone })])
+    var playCase
     
     private init()
     {
