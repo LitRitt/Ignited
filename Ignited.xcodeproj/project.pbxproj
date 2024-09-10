@@ -2745,7 +2745,7 @@
 				INFOPLIST_FILE = "Ignited/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_LDFLAGS = (
@@ -2786,7 +2786,7 @@
 				INFOPLIST_FILE = "Ignited/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				OTHER_LDFLAGS = (
