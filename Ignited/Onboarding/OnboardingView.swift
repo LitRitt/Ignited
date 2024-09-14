@@ -110,6 +110,11 @@ Start customizing your experience by choosing a theme color below. Once you're f
         .background(.ultraThinMaterial)
         .onDisappear {
             Settings.onboardingHasBeenCompleted = true
+            if !Settings.playCaseHasBeenSeen
+            {
+                let onboardingView = PlayCaseView.makeViewController()
+                UIApplication.shared.topViewController()?.present(onboardingView, animated: true)
+            }
         }
     }
 }

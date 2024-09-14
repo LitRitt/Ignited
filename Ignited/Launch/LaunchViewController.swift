@@ -186,6 +186,11 @@ extension LaunchViewController
             let onboardingView = OnboardingView.makeViewController()
             UIApplication.shared.topViewController()?.present(onboardingView, animated: true)
         }
+        else if !Settings.playCaseHasBeenSeen
+        {
+            let onboardingView = PlayCaseView.makeViewController()
+            UIApplication.shared.topViewController()?.present(onboardingView, animated: true)
+        }
     }
     
     func updateBuildNumber()

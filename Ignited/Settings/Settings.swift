@@ -64,6 +64,7 @@ struct Settings
         let defaults = [
             #keyPath(UserDefaults.buildNumber): 0,
             #keyPath(UserDefaults.onboardingHasBeenCompleted): false,
+            #keyPath(UserDefaults.playCaseHasBeenSeen): false,
             #keyPath(UserDefaults.legacyDatabaseHasBeenImported): false,
             #keyPath(UserDefaults.legacyDatabaseHasBeenRepaired): false,
             #keyPath(UserDefaults.gameShortcutsMode): GameShortcutsMode.recent.rawValue,
@@ -129,6 +130,15 @@ extension Settings
         get {
             let onboardingHasBeenCompleted = UserDefaults.standard.onboardingHasBeenCompleted
             return onboardingHasBeenCompleted
+        }
+    }
+    
+    /// PlayCase
+    static var playCaseHasBeenSeen: Bool {
+        set { UserDefaults.standard.playCaseHasBeenSeen = newValue }
+        get {
+            let playCaseHasBeenSeen = UserDefaults.standard.playCaseHasBeenSeen
+            return playCaseHasBeenSeen
         }
     }
     
@@ -455,4 +465,5 @@ private extension UserDefaults
     @NSManaged var legacyDatabaseHasBeenImported: Bool
     @NSManaged var legacyDatabaseHasBeenRepaired: Bool
     @NSManaged var onboardingHasBeenCompleted: Bool
+    @NSManaged var playCaseHasBeenSeen: Bool
 }

@@ -83,6 +83,8 @@
 		AC51F1842BAE3A9E003A41D5 /* MGBAOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC51F1832BAE3A9E003A41D5 /* MGBAOptions.swift */; };
 		AC52A7F22B67739200261267 /* OptionColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52A7F12B67739200261267 /* OptionColorPickerView.swift */; };
 		AC52A7F42B6773BB00261267 /* OptionSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52A7F32B6773BB00261267 /* OptionSliderView.swift */; };
+		AC53D1CF2C95DD07006AAB98 /* PlayCaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC53D1CE2C95DD07006AAB98 /* PlayCaseView.swift */; };
+		AC53D1D12C95DD71006AAB98 /* PlayCaseLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC53D1D02C95DD71006AAB98 /* PlayCaseLogoView.swift */; };
 		AC56DDF02A35F38D007C8372 /* N64Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC56DDEF2A35F38D007C8372 /* N64Features.swift */; };
 		AC5A40762B2106470049B755 /* MappingGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A40752B2106470049B755 /* MappingGameViewController.swift */; };
 		AC5B25232A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */; };
@@ -445,6 +447,8 @@
 		AC51F1832BAE3A9E003A41D5 /* MGBAOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MGBAOptions.swift; sourceTree = "<group>"; };
 		AC52A7F12B67739200261267 /* OptionColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionColorPickerView.swift; sourceTree = "<group>"; };
 		AC52A7F32B6773BB00261267 /* OptionSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSliderView.swift; sourceTree = "<group>"; };
+		AC53D1CE2C95DD07006AAB98 /* PlayCaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayCaseView.swift; sourceTree = "<group>"; };
+		AC53D1D02C95DD71006AAB98 /* PlayCaseLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayCaseLogoView.swift; sourceTree = "<group>"; };
 		AC56DDEF2A35F38D007C8372 /* N64Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N64Features.swift; sourceTree = "<group>"; };
 		AC5A40752B2106470049B755 /* MappingGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingGameViewController.swift; sourceTree = "<group>"; };
 		AC5B25222A4F4E4B00591511 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
@@ -934,6 +938,15 @@
 				ACCDD4822A6386010034A6C0 /* snap.mp3 */,
 			);
 			path = "Button Sounds";
+			sourceTree = "<group>";
+		};
+		AC53D1CD2C95DCF3006AAB98 /* PlayCase */ = {
+			isa = PBXGroup;
+			children = (
+				AC53D1CE2C95DD07006AAB98 /* PlayCaseView.swift */,
+				AC53D1D02C95DD71006AAB98 /* PlayCaseLogoView.swift */,
+			);
+			path = PlayCase;
 			sourceTree = "<group>";
 		};
 		AC56DDEE2A35F327007C8372 /* N64 */ = {
@@ -1673,6 +1686,7 @@
 				BF525EE61FF5F355004AA849 /* Deep Linking */,
 				AC7262D82C49B30D0009B577 /* Patreon */,
 				AC7FCC992BC113090072BF7C /* Purchases */,
+				AC53D1CD2C95DCF3006AAB98 /* PlayCase */,
 				AC1C223C2BFA4191008B40EF /* Widgets */,
 				ACAB77192B468C50001AB619 /* Protocols */,
 				BF5942571E09BB5D0051894B /* Components */,
@@ -2196,6 +2210,7 @@
 				BF04E6FF1DB8625C000F35D3 /* ControllerSkinsViewController.swift in Sources */,
 				BF5942891E09BC8B0051894B /* _GameCollection.swift in Sources */,
 				AC23D2D62AFDCD2A0056CC3F /* SaveStatesOptions.swift in Sources */,
+				AC53D1D12C95DD71006AAB98 /* PlayCaseLogoView.swift in Sources */,
 				BF34FA111CF1899D006624C7 /* CheatTextView.swift in Sources */,
 				D5AAF27729884F8600F21ACF /* CheatDevice.swift in Sources */,
 				ACCD93F42B97A9CA00BB4F6A /* AirPlayDeviceOptions.swift in Sources */,
@@ -2253,6 +2268,7 @@
 				AC7262F22C49BAB30009B577 /* PremiumPatronsView.swift in Sources */,
 				ACF7E31F29F75BA0000FE071 /* PHPhotoLibrary+Authorization.swift in Sources */,
 				AC14384D2A4F67430099977F /* DSFeatures.swift in Sources */,
+				AC53D1CF2C95DD07006AAB98 /* PlayCaseView.swift in Sources */,
 				BFFC464C1D5998D600AF2CC6 /* CheatTableViewCell.swift in Sources */,
 				AC64BBEB2C09999A00467ACC /* OnboardingView.swift in Sources */,
 				BF5942941E09BD1A0051894B /* NSManagedObject+Conveniences.swift in Sources */,
